@@ -17,6 +17,7 @@ class ColorRes {
   static Color colorBgDark = const Color(0xFF3a3a3a);
   static Color borderColor = const Color(0xFFb2b2b2);
   static Color header = const Color(0xFF005c97);
+  static Color headerDashboard = const Color(0xFF3f3f3f);
   static Color bgDrawer = const Color(0xFF005c97);
   static Color colorPrimaryLight = const Color(0xFFcdb7ff);
   static Color fontDarkGrey = const Color(0xFF414141);
@@ -32,6 +33,7 @@ class ColorRes {
   static Color lightGrey = const Color(0xFF484848);
   static Color hintColor = const Color(0xFF555555);
   static Color bgTextBox = const Color(0xFF333333);
+  static Color greenDot = const Color(0xFF3bd30c);
 }
 
 class DimenRes {

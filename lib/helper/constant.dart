@@ -2,42 +2,22 @@
 
 class Const {
 
-  static var organizationId = "1";
-  static var deviceType = "Android";
+  static var typeBusinessSector =0;
+  static var typeNewCustomer =1;
+  static var typeExistingCustomer =2;
+  static var typeOrg =3;
+  static var typeChallenges =4;
+  static var typePL =5;
+  static var typeReward =6;
+  static var typeRanking =7;
+  static var typeTeam =8;
 
-  static var typeCamera = "1";
-  static var typeGallery = "2";
+  static var typeChecked =9;
+  static var typePeople =10;
+  static var typeBadge =11;
+  static var typeResources =12;
+  static var typeDollar =13;
 
-  static int imgQuality = 20;
-  static double imgScaleProfile = 1;
-
-  static var keyStatus = "status";
-  static var pending = "1";
-  static var canceled = "0";
-  static var accepted = "2";
-
-  static var child = "1";
-  static var parent = "0";
-
-  static var facebook = "facebook";
-  static var email = "email";
-
-  static var isForParent = "1";
-  static var isForFriend = "0";
-
-  static var fontMagic = "SuperMagic";
-
-  static var familySignUp = "familySignUp";
-  static var familyHome = "familyHome";
-
-
-  static var red ="red";
-  static var green ="green";
-  static var purple ="purple";
-  static var blue ="blue";
-
-  static var insert ="1";
-  static var add ="2";
 
 }
 
