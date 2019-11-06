@@ -5,7 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import 'constant.dart';
+import 'helper/constant.dart';
 
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key key}) : super(key: key);

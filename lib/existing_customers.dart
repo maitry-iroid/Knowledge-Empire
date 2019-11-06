@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
 
-class NewCustomerPage extends StatefulWidget {
+import 'helper/Utils.dart';
+import 'helper/res.dart';
+
+class ExistingCustomerPage extends StatefulWidget {
   @override
-  _NewCustomerPageState createState() => _NewCustomerPageState();
+  _ExistingCustomerPageState createState() => _ExistingCustomerPageState();
 }
 
-class _NewCustomerPageState extends State<NewCustomerPage> {
+class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,18 +84,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               textAlign: TextAlign.center,
             ),
           ),
+
           Expanded(
-            flex: 3,
+            flex: 2,
             child: Text(
-              'Resourses',
-              style: TextStyle(color: ColorRes.colorPrimary),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              'Engage',
+              'End Rel.',
               style: TextStyle(color: ColorRes.colorPrimary),
               textAlign: TextAlign.center,
             ),
@@ -122,7 +116,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            'New Customers',
+            'Existing Customers',
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
             textAlign: TextAlign.center,
           ),
@@ -140,7 +134,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           child: Container(
             height: 32,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image:
@@ -157,7 +151,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           child: Container(
             height: 30,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 2),
+            margin: EdgeInsets.symmetric(horizontal: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -174,7 +168,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           child: Container(
             height: 30,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 2),
+            margin: EdgeInsets.symmetric(horizontal: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -191,7 +185,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           child: Container(
             height: 30,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 2),
+            margin: EdgeInsets.only(left: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -203,34 +197,18 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             ),
           ),
         ),
+
         Expanded(
-          flex: 3,
-          child: Container(
-            height: 30,
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 2),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              '8',
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
+          flex: 2,
           child: Container(
             height: 35,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 2),
+            margin: EdgeInsets.symmetric(horizontal: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("engage_now")),
-                    fit: BoxFit.fill)),
+                    image: AssetImage(Utils.getAssetsImg("close")),
+                    fit: BoxFit.fitHeight)),
           ),
         ),
       ],

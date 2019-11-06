@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/dashboard.dart';
+import 'package:ke_employee/dashboard.dart';
+import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/login.dart';
 
 import 'new_customer.dart';
@@ -34,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(Duration(seconds: 0), () async {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => NewCustomerPage()),
+          MaterialPageRoute(builder: (context) => ExistingCustomerPage()),
           ModalRoute.withName("/main_home"));
     });
   }
