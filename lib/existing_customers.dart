@@ -155,24 +155,23 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_2")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3.9")),
                     fit: BoxFit.fill)),
             child: Text(
               'Mobile Dev.',
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
+              style: TextStyle(color: ColorRes.blue, fontSize: 10),
             ),
           ),
         ),
         Expanded(
           flex: 3,
           child: Container(
-            height: 30,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3.9")),
                     fit: BoxFit.fill)),
             child: Text(
               '25 \$',
