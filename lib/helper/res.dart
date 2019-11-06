@@ -11,10 +11,11 @@ class StringRes {
 }
 
 class ColorRes {
-  static Color hintColor = const Color(0xFFB0B0B0);
   static Color white = const Color(0xFFffffff);
   static Color colorPrimary = const Color(0xFFffffff);
   static Color colorAccent = const Color(0xFFffffff);
+  static Color colorBgDark = const Color(0xFF3a3a3a);
+  static Color borderColor = const Color(0xFFb2b2b2);
   static Color header = const Color(0xFF005c97);
   static Color bgDrawer = const Color(0xFF005c97);
   static Color colorPrimaryLight = const Color(0xFFcdb7ff);
@@ -29,6 +30,8 @@ class ColorRes {
   static Color whiteBg = const Color(0xFFf1f1f1);
   static Color blue = const Color(0xFF4991e1);
   static Color lightGrey = const Color(0xFF484848);
+  static Color hintColor = const Color(0xFF555555);
+  static Color bgTextBox = const Color(0xFF333333);
 }
 
 class DimenRes {
