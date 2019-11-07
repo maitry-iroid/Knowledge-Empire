@@ -108,10 +108,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Image(
-          image: AssetImage(Utils.getAssetsImg("back")),
-          width: 40,
-        ),
+       InkResponse(
+         child:  Image(
+           image: AssetImage(Utils.getAssetsImg("back")),
+           width: 40,
+         ),
+         onTap: (){
+           Navigator.pop(context);
+         },
+       ),
         Container(
           alignment: Alignment.center,
           height: 40,
@@ -178,7 +183,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
                     fit: BoxFit.fill)),
             child: Text(
               '25 \$',
@@ -195,7 +200,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
                     fit: BoxFit.fill)),
             child: Text(
               '25 d',
@@ -212,7 +217,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
                     fit: BoxFit.fill)),
             child: Text(
               '8',

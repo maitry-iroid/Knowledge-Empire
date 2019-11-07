@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/business_sector.dart';
+import 'package:ke_employee/challenges.dart';
+import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/new_customer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -163,46 +167,63 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   showMainItem(int type) {
-    return Container(
-      height: 50,
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_main_card")),
-              fit: BoxFit.fill)),
-      child: Row(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Image(
-                image: AssetImage(Utils.getAssetsImg(getImage(type))),
-                width: Utils.getDeviceHeight(context) / 5.5,
-              ),
-              Positioned(
-                right: 5,
-                top: 5,
-                child: Container(
-                  width: 15,
-                  height: 15,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: ColorRes.greenDot),
+    return InkResponse(
+      child: Container(
+        height: 50,
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("bg_main_card")),
+                fit: BoxFit.fill)),
+        child: Row(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Image(
+                  image: AssetImage(Utils.getAssetsImg(getImage(type))),
+                  width: Utils.getDeviceHeight(context) / 5.5,
                 ),
-              )
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Text(
-              getTitle(type),
-              maxLines: 2,
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
-              overflow: TextOverflow.ellipsis,
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: Container(
+                    width: 15,
+                    height: 15,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: ColorRes.greenDot),
+                  ),
+                )
+              ],
             ),
-          )
-        ],
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Text(
+                getTitle(type),
+                maxLines: 2,
+                style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
+          ],
+        ),
       ),
+      onTap: () {
+        if (type == Const.typeBusinessSector) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => BusinessSectorPage()));
+        } else if (type == Const.typeNewCustomer) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => NewCustomerPage()));
+        } else if (type == Const.typeExistingCustomer) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ExistingCustomerPage()));
+        } else if (type == Const.typeChallenges) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ChallengesPage()));
+        }
+      },
     );
   }
 
@@ -253,7 +274,6 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   String getHeaderIcon(int type) {
-
     if (type == Const.typeChecked)
       return "ic_checked_header";
     else if (type == Const.typePeople)
@@ -266,6 +286,5 @@ class DashboardPageState extends State<DashboardPage> {
       return "ic_dollar";
     else
       return "";
-
   }
 }

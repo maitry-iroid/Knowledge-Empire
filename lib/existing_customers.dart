@@ -84,7 +84,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
               textAlign: TextAlign.center,
             ),
           ),
-
           Expanded(
             flex: 2,
             child: Text(
@@ -102,9 +101,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Image(
-          image: AssetImage(Utils.getAssetsImg("back")),
-          width: 40,
+        InkResponse(
+          child:  Image(
+            image: AssetImage(Utils.getAssetsImg("back")),
+            width: 40,
+          ),
+          onTap: (){
+            Navigator.pop(context);
+          },
         ),
         Container(
           alignment: Alignment.center,
@@ -129,19 +133,19 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+
         Expanded(
           flex: 4,
           child: Container(
-            height: 32,
             alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            margin: EdgeInsets.symmetric(horizontal: 5),
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image:
-                        AssetImage(Utils.getAssetsImg("bg_new_customer_item")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
                     fit: BoxFit.fill)),
             child: Text(
-              'New Customers',
+              'Mobile Dev.',
               style: TextStyle(color: ColorRes.blue, fontSize: 15),
             ),
           ),
@@ -149,17 +153,16 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         Expanded(
           flex: 5,
           child: Container(
-            height: 30,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3.9")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_2")),
                     fit: BoxFit.fill)),
             child: Text(
               'Mobile Dev.',
-              style: TextStyle(color: ColorRes.blue, fontSize: 10),
+              style: TextStyle(color: ColorRes.blue, fontSize: 15),
             ),
           ),
         ),
@@ -171,7 +174,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3.9")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
                     fit: BoxFit.fill)),
             child: Text(
               '25 \$',
@@ -182,13 +185,12 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         Expanded(
           flex: 3,
           child: Container(
-            height: 30,
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: 5),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_3")),
+                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
                     fit: BoxFit.fill)),
             child: Text(
               '25 d',
@@ -196,7 +198,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             ),
           ),
         ),
-
         Expanded(
           flex: 2,
           child: Container(

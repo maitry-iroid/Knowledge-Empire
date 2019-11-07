@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ke_employee/dashboard.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/login.dart';
@@ -13,6 +14,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Dumadi'),
@@ -35,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(Duration(seconds: 0), () async {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => ExistingCustomerPage()),
+          MaterialPageRoute(builder: (context) => DashboardPage()),
           ModalRoute.withName("/main_home"));
     });
   }
