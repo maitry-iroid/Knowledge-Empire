@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class StringRes {
-  static var redeemNow = "Redeem Now";
-  static var redeemed = "Redeemed";
-  static var home = "Home";
-  static var specialsEvents = "Coupons and Events";
-  static var subscribe = "Subscribe";
-  static var locator = "Locator";
-  static var specials = "Specials";
+  static var dashboard = "Dashboard";
+  static var businessSector = "Business Sector";
+  static var newCustomers = "New Customers";
+  static var existingCustomers = "Existing Customers";
+  static var organizations = "Organizations";
+  static var challenges = "Challenges";
+  static var pl = "P+L";
+  static var rewards = "Rewards";
+  static var ranking = "Ranking";
+  static var team = "Team";
 }
 
 class ColorRes {
@@ -23,10 +26,10 @@ class ColorRes {
   static Color fontDarkGrey = const Color(0xFF414141);
   static Color fontGrey = const Color(0xFFA2A2A2);
   static Color red = const Color(0xFFff0000);
-  static Color transparnt = const Color(0x7F000000);
+  static Color transparent = const Color(0xff000000);
   static Color blackTransparent = const Color(0xD9000000);
   static Color black = const Color(0xFF000000);
-  static Color whiteTransparnt = const Color(0xD9FFFFFF).withOpacity(0.5);
+  static Color whiteTransparent = const Color(0xD9FFFFFF).withOpacity(0.5);
   static Color greyText = const Color(0xFFb0afaf);
   static Color whiteBg = const Color(0xFFf1f1f1);
   static Color blue = const Color(0xFF4991e1);
@@ -37,6 +40,9 @@ class ColorRes {
   static Color lightBg = const Color(0xFF5b5b5b);
   static Color whiteDarkBg = const Color(0xFF737373);
   static Color bgDescription = const Color(0xFF4f4f4f);
+  static Color bgHeader = const Color(0xFF737377);
+  static Color bgBusSec = const Color(0xFF474747);
+  static Color bgMenu = const Color(0xFF272727);
 }
 
 class DimenRes {

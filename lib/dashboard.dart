@@ -6,6 +6,7 @@ import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/new_customer.dart';
+import 'package:ke_employee/p+L.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -59,13 +60,13 @@ class DashboardPageState extends State<DashboardPage> {
           SizedBox(
             width: 2,
           ),
-          Expanded(
+          type!=Const.typeDollar?Expanded(
             child: Stack(
               children: <Widget>[
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 11,
                   lineHeight: 20.0,
-                  percent: 0.5,
+                  percent: getProgressInt(type),
                   backgroundColor: Colors.grey,
                   progressColor: Colors.blue,
                 ),
@@ -74,13 +75,13 @@ class DashboardPageState extends State<DashboardPage> {
                   left: 4,
                   bottom: 0,
                   child: Text(
-                    "50/100",
-                    style: TextStyle(color: ColorRes.white),
+                    getProgress(type),
+                    style: TextStyle(color: ColorRes.white,),
                   ),
                 )
               ],
             ),
-          )
+          ): Text(' \$ 120.00',style: TextStyle(color: ColorRes.colorPrimary,fontSize: 20),),
         ],
       ),
     );
@@ -148,7 +149,7 @@ class DashboardPageState extends State<DashboardPage> {
       child: GridView.count(
         crossAxisCount: 3,
         shrinkWrap: true,
-        childAspectRatio: 2.22,
+        childAspectRatio: 2.1,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         children: <Widget>[
@@ -222,6 +223,9 @@ class DashboardPageState extends State<DashboardPage> {
         } else if (type == Const.typeChallenges) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => ChallengesPage()));
+        }else if (type == Const.typePL) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => PLPage()));
         }
       },
     );
@@ -286,5 +290,29 @@ class DashboardPageState extends State<DashboardPage> {
       return "ic_dollar";
     else
       return "";
+  }
+
+   getProgress(int type) {
+    if(type==Const.typeChecked){
+      return "30/100";
+    }else if(type==Const.typePeople){
+      return "50/100";
+    }else if(type==Const.typeBadge){
+      return "60/100";
+    }else if(type==Const.typeResources){
+      return "80/100";
+    }else return "50/100";
+  }
+
+  getProgressInt(int type) {
+    if(type==Const.typeChecked){
+      return 0.3;
+    }else if(type==Const.typePeople){
+      return 0.5;
+    }else if(type==Const.typeBadge){
+      return 0.6;
+    }else if(type==Const.typeResources){
+      return 0.8;
+    }else return 0.5;
   }
 }

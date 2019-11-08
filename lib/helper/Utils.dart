@@ -113,4 +113,12 @@ class Utils {
   }
 
 
+  static String getText(BuildContext context, String text) {
+
+//    return AppLocalizations.of(context).tr(text);
+    return text;
+
+  }
+
+
 }

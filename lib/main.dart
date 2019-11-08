@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ke_employee/dashboard.dart';
+import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/existing_customers.dart';
+import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/login.dart';
 
+import 'menu_drawer.dart';
 import 'new_customer.dart';
 
 void main() => runApp(MyApp());
@@ -22,8 +24,9 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Dumadi'),
+      theme: ThemeData(accentColor: ColorRes.transparent, fontFamily: 'Dumadi'),
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -42,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(Duration(seconds: 0), () async {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => DashboardPage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
           ModalRoute.withName("/main_home"));
     });
   }
