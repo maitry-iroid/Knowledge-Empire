@@ -11,6 +11,7 @@ class StringRes {
   static var rewards = "Rewards";
   static var ranking = "Ranking";
   static var team = "Team";
+  static var editProfile = "Edit Profile";
 }
 
 class ColorRes {

@@ -29,7 +29,7 @@ class DashboardPageState extends State<DashboardPage> {
           child: Stack(
             children: <Widget>[
               showMainView(),
-              HeaderView(),
+//              HeaderView(),
             ],
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/new_customer.dart';
+import 'package:ke_employee/profile.dart';
 
 import 'business_sector.dart';
 import 'commonview/header.dart';
@@ -36,8 +37,7 @@ class HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     drawerItems = [
-      DrawerItem(
-          Utils.getText(context, StringRes.dashboard), "team"),
+      DrawerItem(Utils.getText(context, StringRes.dashboard), "team"),
       DrawerItem(
           Utils.getText(context, StringRes.organizations), "organization"),
       DrawerItem(Utils.getText(context, StringRes.pl), "profit-loss"),
@@ -48,7 +48,8 @@ class HomePageState extends State<HomePage> {
       DrawerItem(
           Utils.getText(context, StringRes.existingCustomers), "existing"),
       DrawerItem(Utils.getText(context, StringRes.challenges), "challenges"),
-      DrawerItem(Utils.getText(context, StringRes.newCustomers), "new-customer"),
+      DrawerItem(
+          Utils.getText(context, StringRes.newCustomers), "new-customer"),
       DrawerItem(Utils.getText(context, StringRes.team), "team"),
     ];
   }
@@ -56,11 +57,11 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new DashboardPage();
+        return new ProfilePage();
       case 1:
-        return new PLPage();
+        return new ProfilePage();
       case 2:
-        return new ChallengesPage();
+        return new PLPage();
       case 3:
         return new ChallengesPage();
       case 4:
@@ -91,7 +92,7 @@ class HomePageState extends State<HomePage> {
     var drawerOptions = <Widget>[];
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
-        contentPadding:EdgeInsets.symmetric(horizontal: 5,vertical: 0),
+        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
         title: showMainItem(drawerItems[i]),
         selected: i == _selectedDrawerIndex,
         onTap: () => _onSelectItem(i),
@@ -110,14 +111,21 @@ class HomePageState extends State<HomePage> {
       ),
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            _selectedDrawerIndex!=0? HeaderView():Container(),
-            Expanded(
-              child: _getDrawerItemWidget(_selectedDrawerIndex),
-            )
-          ],
-        ),
+        child: _selectedDrawerIndex == 0
+            ? Stack(
+                children: <Widget>[
+                  _getDrawerItemWidget(_selectedDrawerIndex),
+                  HeaderView(),
+                ],
+              )
+            : Column(
+                children: <Widget>[
+                  HeaderView(),
+                  Expanded(
+                    child: _getDrawerItemWidget(_selectedDrawerIndex),
+                  )
+                ],
+              ),
       ),
     );
   }

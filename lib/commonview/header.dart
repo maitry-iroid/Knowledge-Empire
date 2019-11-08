@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -19,9 +17,12 @@ class HeaderView extends StatelessWidget {
       color: ColorRes.headerDashboard,
       child: Row(
         children: <Widget>[
-          Image(
-            image: AssetImage(Utils.getAssetsImg("ic_menu")),
-            width: 25,
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("ic_menu")),
+              width: 25,
+            ),
+            onTap: () {},
           ),
           SizedBox(
             width: 10,
@@ -47,11 +48,11 @@ class HeaderView extends StatelessWidget {
               children: <Widget>[],
             ),
           ),
-          showHeaderItem(Const.typeChecked,context),
-          showHeaderItem(Const.typePeople,context),
-          showHeaderItem(Const.typeBadge,context),
-          showHeaderItem(Const.typeResources,context),
-          showHeaderItem(Const.typeDollar,context),
+          showHeaderItem(Const.typeChecked, context),
+          showHeaderItem(Const.typePeople, context),
+          showHeaderItem(Const.typeBadge, context),
+          showHeaderItem(Const.typeResources, context),
+          showHeaderItem(Const.typeDollar, context),
           showProfile()
         ],
       ),
@@ -79,33 +80,33 @@ class HeaderView extends StatelessWidget {
           ),
           type != Const.typeDollar
               ? Expanded(
-            child: Stack(
-              children: <Widget>[
-                LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 11,
-                  lineHeight: 20.0,
-                  percent: getProgressInt(type),
-                  backgroundColor: Colors.grey,
-                  progressColor: Colors.blue,
-                ),
-                Positioned(
-                  top: 3,
-                  left: 4,
-                  bottom: 0,
-                  child: Text(
-                    getProgress(type),
-                    style: TextStyle(
-                      color: ColorRes.white,
-                    ),
+                  child: Stack(
+                    children: <Widget>[
+                      LinearPercentIndicator(
+                        width: Utils.getDeviceWidth(context) / 11,
+                        lineHeight: 20.0,
+                        percent: getProgressInt(type),
+                        backgroundColor: Colors.grey,
+                        progressColor: Colors.blue,
+                      ),
+                      Positioned(
+                        top: 3,
+                        left: 4,
+                        bottom: 0,
+                        child: Text(
+                          getProgress(type),
+                          style: TextStyle(
+                            color: ColorRes.white,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 )
-              ],
-            ),
-          )
               : Text(
-            ' \$ 120.00',
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
-          ),
+                  ' \$ 120.00',
+                  style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
+                ),
         ],
       ),
     );
@@ -162,5 +163,4 @@ class HeaderView extends StatelessWidget {
     } else
       return 0.5;
   }
-
 }
