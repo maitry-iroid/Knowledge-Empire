@@ -91,6 +91,7 @@ class HomePageState extends State<HomePage> {
     var drawerOptions = <Widget>[];
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
+        contentPadding:EdgeInsets.symmetric(horizontal: 5,vertical: 0),
         title: showMainItem(drawerItems[i]),
         selected: i == _selectedDrawerIndex,
         onTap: () => _onSelectItem(i),
@@ -123,16 +124,20 @@ class HomePageState extends State<HomePage> {
 
   showMainItem(DrawerItem item) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_menu")),
               fit: BoxFit.fill)),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Image(
-            image: AssetImage(Utils.getAssetsImg(item.icon)),
-            width: 50,
+          Center(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg(item.icon)),
+              height: 50,
+              width: 80,
+            ),
           ),
           SizedBox(
             width: 10,
