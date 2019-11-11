@@ -57,7 +57,7 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new ProfilePage();
+        return new DashboardPage();
       case 1:
         return new ProfilePage();
       case 2:

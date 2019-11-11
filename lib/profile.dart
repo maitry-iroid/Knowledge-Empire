@@ -9,6 +9,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,18 +31,21 @@ class _ProfilePageState extends State<ProfilePage> {
   showFirstHalf() {
     return Expanded(
       flex: 1,
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
-          showTitle(),
-          SizedBox(
-            height: 10,
-          ),
-          showProfile(),
-          showSubHeader(),
-        ],
+      child: Container(
+        color: ColorRes.bgHeader,
+        child: ListView(
+          children: <Widget>[
+            SizedBox(
+              height: 15,
+            ),
+            showTitle(),
+            SizedBox(
+              height: 5,
+            ),
+            showProfile(),
+            showForm(),
+          ],
+        ),
       ),
     );
   }
@@ -44,78 +54,90 @@ class _ProfilePageState extends State<ProfilePage> {
     return Expanded(
       flex: 1,
       child: Container(
-        color: ColorRes.whiteDarkBg,
-        child: Column(
+        margin: EdgeInsets.symmetric(
+            horizontal: Utils.getDeviceWidth(context) / 12),
+        child: ListView(
           children: <Widget>[
-            Expanded(
-              child: Card(
-                elevation: 10,
-                margin: EdgeInsets.all(0),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  color: ColorRes.whiteDarkBg,
-                  height: double.infinity,
-                  child: Stack(
-                    children: <Widget>[
-                      Card(
-                        elevation: 10,
-                        color: ColorRes.whiteDarkBg,
-                        margin: EdgeInsets.only(
-                            top: 20,
-                            bottom: Utils.getDeviceHeight(context) / 7),
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 30, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: ColorRes.bgDescription,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                color: ColorRes.colorPrimary, width: 1),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
-                              style: TextStyle(color: ColorRes.colorPrimary),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 40,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: Utils.getDeviceWidth(context) / 10),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage(Utils.getAssetsImg("bg_blue")),
-                                  fit: BoxFit.fill)),
-                          child: Text(
-                            'Description',
-                            style: TextStyle(
-                                color: ColorRes.colorPrimary, fontSize: 22),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        margin: EdgeInsets.symmetric(horizontal: 30),
-                        child: InkResponse(
-                          child: Image(
-                            image: AssetImage(
-                                Utils.getAssetsImg("engage_segment")),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+            Container(
+              height: 35,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.only(top: 3),
+              alignment: Alignment.center,
+              child: Text(
+                Utils.getText(context, StringRes.settings),
+                style: TextStyle(
+                    color: ColorRes.white, fontSize: 17, letterSpacing: 0.5),
               ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg('setting_bg')))),
+            ),
+            Container(
+              height: 30,
+              margin: EdgeInsets.only(top: 15, bottom: 10),
+              alignment: Alignment.center,
+              child: Text(
+                Utils.getText(context, StringRes.privacyPolicy),
+                style: TextStyle(
+                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+              ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg('privacy_bg')))),
+            ),
+            Container(
+              height: 30,
+              alignment: Alignment.center,
+              child: Text(
+                Utils.getText(context, StringRes.termsConditions),
+                style: TextStyle(
+                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+              ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg('privacy_bg')))),
+            ),
+            Container(
+              height: 30,
+              margin: EdgeInsets.symmetric(vertical: 10),
+              alignment: Alignment.center,
+              child: Text(
+                Utils.getText(context, StringRes.contactUs),
+                style: TextStyle(
+                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+              ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg('privacy_bg')))),
+            ),
+            Container(
+              height: 35,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.only(top: 3),
+              alignment: Alignment.center,
+              child: Text(
+                Utils.getText(context, StringRes.switchProfMode),
+                style: TextStyle(
+                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.7),
+              ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          Utils.getAssetsImg('switch_to_prfsnl_bg')))),
+            ),
+            Container(
+              height: 33,
+              padding: EdgeInsets.only(top: 3),
+              margin: EdgeInsets.symmetric(vertical: 15),
+              alignment: Alignment.center,
+              child: Text(
+                Utils.getText(context, StringRes.logout),
+                style: TextStyle(
+                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+              ),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg('log_out_bg')))),
             ),
           ],
         ),
@@ -123,92 +145,278 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Row showTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg("back")),
-            width: 40,
+  showTitle() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        children: <Widget>[
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("back")),
+              width: 40,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
           ),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height: 40,
-          margin: EdgeInsets.only(left: 10),
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                  fit: BoxFit.fill)),
-          child: Text(
-            Utils.getText(context, StringRes.editProfile),
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
+          Center(
+            child: Container(
+              alignment: Alignment.center,
+              height: 35,
+              margin: EdgeInsets.symmetric(horizontal: 90),
+              padding: EdgeInsets.only(top: 3),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                        Utils.getAssetsImg("setting_bg"),
+                      ),
+                      fit: BoxFit.fill)),
+              child: Text(
+                Utils.getText(context, StringRes.editProfile),
+                style: TextStyle(
+                    color: ColorRes.colorPrimary,
+                    fontSize: 17,
+                    letterSpacing: 0.5),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
   showProfile() {
-    return Stack(
-      children: <Widget>[
-        new Container(
-            width: 70,
-            height: 70,
-            decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                    fit: BoxFit.fill,
-                    image: new AssetImage(
-                        Utils.getAssetsImg("dashboard-background"))))),
-        Positioned(
-          right: 0,
-          top: 0,
-          child: Image(
-            image: AssetImage(
-              Utils.getAssetsImg("edit"),
+    return InkResponse(
+      child: Center(
+        child: Stack(
+          children: <Widget>[
+            new Container(
+              margin: EdgeInsets.all(5),
+              width: 70,
+              height: 70,
+              decoration: new BoxDecoration(
+                  border: Border.all(width: 2, color: Color(0xff7ab1cb)),
+                  shape: BoxShape.circle,
+                  image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: new AssetImage(
+                          Utils.getAssetsImg("dashboard-background")))),
             ),
-            width: 30,
-          ),
-        )
-      ],
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Image(
+                image: AssetImage(
+                  Utils.getAssetsImg("edit"),
+                ),
+                width: 30,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
-  Container showSubHeader() {
+  Container showForm() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
-      margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fill)),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 8,
-            child: Text(
-              'Sector',
-              style: TextStyle(color: ColorRes.colorPrimary),
-              textAlign: TextAlign.center,
+        margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        height: 36,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ColorRes.lightBg.withOpacity(0.5),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 13,
+                          ),
+                          Text(
+                            Utils.getText(context, StringRes.yourName),
+                            style: TextStyle(
+                                color: ColorRes.white,
+                                letterSpacing: 0.5,
+                                fontSize: 12),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 38,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_name_email")),
+                                    fit: BoxFit.fill),
+                              ),
+                              child: TextField(
+                                obscureText: false,
+                                style: TextStyle(
+                                    color: ColorRes.white,
+                                    fontSize: 13,
+                                    letterSpacing: 0.5),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'xxxx xxxx',
+                                    hintStyle:
+                                        TextStyle(color: ColorRes.hintColor)),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("edit")),
+                    width: 40,
+                  ),
+                )
+              ],
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              'Size',
-              style: TextStyle(color: ColorRes.colorPrimary),
-              textAlign: TextAlign.center,
+            SizedBox(
+              height: 10,
             ),
-          ),
-        ],
-      ),
-    );
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        height: 36,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ColorRes.lightBg.withOpacity(0.5),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 13,
+                          ),
+                          Text(
+                            Utils.getText(context, StringRes.yourEmail),
+                            style: TextStyle(
+                                color: ColorRes.white,
+                                letterSpacing: 0.5,
+                                fontSize: 12),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 38,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_name_email")),
+                                    fit: BoxFit.fill),
+                              ),
+                              child: TextField(
+                                obscureText: false,
+                                style: TextStyle(
+                                    color: ColorRes.white,
+                                    fontSize: 13,
+                                    letterSpacing: 0.5),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'xxx@xxx.xxx',
+                                    hintStyle:
+                                        TextStyle(color: ColorRes.hintColor)),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                InkResponse(
+                    child: Container(
+                  width: 40,
+                ))
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(
+                  flex: 2,
+                  child: InkResponse(
+                    child: Container(
+                      height: 35,
+                      padding: EdgeInsets.only(top: 3),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  Utils.getAssetsImg("change_pw_bg")),
+                              fit: BoxFit.fill)),
+                      child: Text(
+                          Utils.getText(context, StringRes.changePassword),
+                          style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 16,
+                              letterSpacing: 0.5)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: InkResponse(
+                    child: Container(
+                      height: 35,
+                      padding: EdgeInsets.only(top: 3),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(Utils.getAssetsImg("save_bg")),
+                              fit: BoxFit.fill)),
+                      child: Text(Utils.getText(context, StringRes.save),
+                          style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 16,
+                              letterSpacing: 0.5)),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 40,
+                )
+              ],
+            )
+          ],
+        ));
   }
 }

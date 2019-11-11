@@ -11,7 +11,18 @@ class StringRes {
   static var rewards = "Rewards";
   static var ranking = "Ranking";
   static var team = "Team";
+
   static var editProfile = "Edit Profile";
+  static var yourName = "Your Name";
+  static var yourEmail= "Your Email";
+  static var changePassword= "Change Password";
+  static var save = "Save";
+  static var settings= "Settings";
+  static var privacyPolicy= "Privacy & Policy";
+  static var termsConditions = "Terms & Conditions";
+  static var contactUs = "Contact Us";
+  static var switchProfMode = "Switch to Professional Mode";
+  static var logout = "Log out";
 }
 
 class ColorRes {
