@@ -55,6 +55,7 @@ class ColorRes {
   static Color bgHeader = const Color(0xFF737377);
   static Color bgBusSec = const Color(0xFF474747);
   static Color bgMenu = const Color(0xFF272727);
+  static Color textBlue = const Color(0xFF2f3d7b);
 }
 
 class DimenRes {

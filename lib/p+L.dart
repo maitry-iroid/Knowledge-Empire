@@ -19,11 +19,7 @@ class _PLPageState extends State<PLPage> {
   }
 
   showMainBody() {
-    return Expanded(
-      child: Row(
-        children: <Widget>[showList(), showChart()],
-      ),
-    );
+    return Container();
   }
 
   showHeader() {

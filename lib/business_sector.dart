@@ -14,13 +14,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: ColorRes.colorBgDark,
-        body: SafeArea(
-          child: Row(
-            children: <Widget>[showFirstHalf(), showSecondHalf()],
-          ),
-        ));
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+              fit: BoxFit.fill)),
+      child: Row(
+        children: <Widget>[showFirstHalf(), showSecondHalf()],
+      ),
+    );
   }
 
   Row showTitle() {
@@ -38,7 +42,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         ),
         Container(
           alignment: Alignment.center,
-          height: 40,
+          height: 35,
           margin: EdgeInsets.only(left: 10),
           padding: EdgeInsets.symmetric(horizontal: 40),
           decoration: BoxDecoration(
@@ -47,7 +51,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   fit: BoxFit.fill)),
           child: Text(
             'Business Sector',
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
+            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),
         )
@@ -58,7 +62,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   Container showSubHeader() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_rounded")),
@@ -139,9 +143,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           showTitle(),
           Container(
             height: 50,
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: EdgeInsets.symmetric(vertical: 5),
             padding: EdgeInsets.only(left: 10, right: 10, top: 2,bottom: 2),
-            color: ColorRes.lightBg,
+//            color: ColorRes.lightBg,
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -197,70 +201,64 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     return Expanded(
       flex: 1,
       child: Container(
-        color: ColorRes.whiteDarkBg,
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Card(
-                elevation: 10,
-                margin: EdgeInsets.all(0),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  color: ColorRes.whiteDarkBg,
-                  height: double.infinity,
-                  child: Stack(
-                    children: <Widget>[
-                      Card(
-                        elevation: 10,
-                        color: ColorRes.whiteDarkBg,
-                        margin: EdgeInsets.only(top: 20,bottom: Utils.getDeviceHeight(context)/7),
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 30, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: ColorRes.bgDescription,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                color: ColorRes.colorPrimary, width: 1),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
-                              style: TextStyle(color: ColorRes.colorPrimary),
-                            ),
-                          ),
+              child: Container(
+                padding: EdgeInsets.all(20),
+                height: double.infinity,
+                child: Stack(
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                                            color: ColorRes.whiteDarkBg,
+                      margin: EdgeInsets.only(top: 20,bottom: Utils.getDeviceHeight(context)/7),
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 30, bottom: 10),
+                        decoration: BoxDecoration(
+                          color: ColorRes.bgDescription,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                              color: ColorRes.colorPrimary, width: 1),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 40,
-                          margin: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/10),
-                          padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                  AssetImage(Utils.getAssetsImg("bg_blue")),
-                                  fit: BoxFit.fill)),
+                        child: SingleChildScrollView(
                           child: Text(
-                            'Description',
-                            style: TextStyle(
-                                color: ColorRes.colorPrimary, fontSize: 22),
-                            textAlign: TextAlign.center,
+                            "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                            style: TextStyle(color: ColorRes.colorPrimary),
                           ),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        margin: EdgeInsets.symmetric(horizontal: 30),
-                        child: InkResponse(
-                          child:  Image(image: AssetImage(Utils.getAssetsImg("engage_segment")),),
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 35,
+                        margin: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/10),
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                AssetImage(Utils.getAssetsImg("bg_blue")),
+                                fit: BoxFit.fill)),
+                        child: Text(
+                          'Description',
+                          style: TextStyle(
+                              color: ColorRes.colorPrimary, fontSize: 17),
+                          textAlign: TextAlign.center,
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      child: InkResponse(
+                        child:  Image(image: AssetImage(Utils.getAssetsImg("engage_segment")),),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),

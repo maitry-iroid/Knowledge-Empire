@@ -9,7 +9,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -21,8 +20,25 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
-        child: Row(
-          children: <Widget>[showFirstHalf(), showSecondHalf()],
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+                  fit: BoxFit.fill)),
+          child: Row(
+            children: <Widget>[
+              showFirstHalf(),
+              Container(
+                margin: EdgeInsets.only(top: 40,bottom: 40,left: 25),
+                height: double.infinity,
+                width: 1,
+                color: ColorRes.greyText.withOpacity(0.5),
+              ),
+              showSecondHalf()
+            ],
+          ),
         ),
       ),
     );
@@ -32,7 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return Expanded(
       flex: 1,
       child: Container(
-        color: ColorRes.bgHeader,
         child: ListView(
           children: <Widget>[
             SizedBox(
@@ -70,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('setting_bg')))),
+                      image: AssetImage(Utils.getAssetsImg('bg_setting')))),
             ),
             Container(
               height: 30,
@@ -79,11 +94,13 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Text(
                 Utils.getText(context, StringRes.privacyPolicy),
                 style: TextStyle(
-                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+                  color: ColorRes.white,
+                  fontSize: 15,
+                ),
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('privacy_bg')))),
+                      image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
             ),
             Container(
               height: 30,
@@ -91,11 +108,13 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Text(
                 Utils.getText(context, StringRes.termsConditions),
                 style: TextStyle(
-                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+                  color: ColorRes.white,
+                  fontSize: 15,
+                ),
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('privacy_bg')))),
+                      image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
             ),
             Container(
               height: 30,
@@ -104,40 +123,44 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Text(
                 Utils.getText(context, StringRes.contactUs),
                 style: TextStyle(
-                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+                  color: ColorRes.white,
+                  fontSize: 15,
+                ),
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('privacy_bg')))),
+                      image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
             ),
             Container(
               height: 35,
               margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.only(top: 3),
+              padding: EdgeInsets.only(left: 8, right: 8),
               alignment: Alignment.center,
               child: Text(
                 Utils.getText(context, StringRes.switchProfMode),
                 style: TextStyle(
-                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.7),
+                    color: ColorRes.white, fontSize: 15, letterSpacing: 0.7),
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(
-                          Utils.getAssetsImg('switch_to_prfsnl_bg')))),
+                      image:
+                          AssetImage(Utils.getAssetsImg('bg_switch_to_prfsnl')),
+                      fit: BoxFit.fill)),
             ),
             Container(
               height: 33,
-              padding: EdgeInsets.only(top: 3),
               margin: EdgeInsets.symmetric(vertical: 15),
               alignment: Alignment.center,
               child: Text(
                 Utils.getText(context, StringRes.logout),
                 style: TextStyle(
-                    color: ColorRes.white, fontSize: 16, letterSpacing: 0.5),
+                  color: ColorRes.white,
+                  fontSize: 16,
+                ),
               ),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('log_out_bg')))),
+                      image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
             ),
           ],
         ),
@@ -164,19 +187,18 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.center,
               height: 35,
               margin: EdgeInsets.symmetric(horizontal: 90),
-              padding: EdgeInsets.only(top: 3),
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
-                        Utils.getAssetsImg("setting_bg"),
+                        Utils.getAssetsImg("bg_setting"),
                       ),
                       fit: BoxFit.fill)),
               child: Text(
                 Utils.getText(context, StringRes.editProfile),
                 style: TextStyle(
-                    color: ColorRes.colorPrimary,
-                    fontSize: 17,
-                    letterSpacing: 0.5),
+                  color: ColorRes.colorPrimary,
+                  fontSize: 17,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -247,10 +269,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Text(
                             Utils.getText(context, StringRes.yourName),
-                            style: TextStyle(
-                                color: ColorRes.white,
-                                letterSpacing: 0.5,
-                                fontSize: 12),
+                            style:
+                                TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
                           SizedBox(
                             width: 10,
@@ -269,9 +289,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: TextField(
                                 obscureText: false,
                                 style: TextStyle(
-                                    color: ColorRes.white,
-                                    fontSize: 13,
-                                    letterSpacing: 0.5),
+                                  color: ColorRes.white,
+                                  fontSize: 13,
+                                ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'xxxx xxxx',
@@ -318,10 +338,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Text(
                             Utils.getText(context, StringRes.yourEmail),
-                            style: TextStyle(
-                                color: ColorRes.white,
-                                letterSpacing: 0.5,
-                                fontSize: 12),
+                            style:
+                                TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
                           SizedBox(
                             width: 10,
@@ -340,9 +358,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: TextField(
                                 obscureText: false,
                                 style: TextStyle(
-                                    color: ColorRes.white,
-                                    fontSize: 13,
-                                    letterSpacing: 0.5),
+                                  color: ColorRes.white,
+                                  fontSize: 13,
+                                ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'xxx@xxx.xxx',
@@ -373,19 +391,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: InkResponse(
                     child: Container(
                       height: 35,
-                      padding: EdgeInsets.only(top: 3),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage(
-                                  Utils.getAssetsImg("change_pw_bg")),
+                                  Utils.getAssetsImg("bg_change_pw")),
                               fit: BoxFit.fill)),
-                      child: Text(
-                          Utils.getText(context, StringRes.changePassword),
-                          style: TextStyle(
-                              color: ColorRes.white,
-                              fontSize: 16,
-                              letterSpacing: 0.5)),
+                      child:
+                          Text(Utils.getText(context, StringRes.changePassword),
+                              style: TextStyle(
+                                color: ColorRes.white,
+                                fontSize: 15,
+                              )),
                     ),
                   ),
                 ),
@@ -397,17 +414,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: InkResponse(
                     child: Container(
                       height: 35,
-                      padding: EdgeInsets.only(top: 3),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg("save_bg")),
+                              image: AssetImage(Utils.getAssetsImg("bg_save")),
                               fit: BoxFit.fill)),
                       child: Text(Utils.getText(context, StringRes.save),
                           style: TextStyle(
-                              color: ColorRes.white,
-                              fontSize: 16,
-                              letterSpacing: 0.5)),
+                            color: ColorRes.white,
+                            fontSize: 15,
+                          )),
                     ),
                   ),
                 ),

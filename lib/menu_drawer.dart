@@ -5,6 +5,7 @@ import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/profile.dart';
+import 'package:ke_employee/ranking.dart';
 
 import 'business_sector.dart';
 import 'commonview/header.dart';
@@ -63,7 +64,7 @@ class HomePageState extends State<HomePage> {
       case 2:
         return new PLPage();
       case 3:
-        return new ChallengesPage();
+        return new RankingPage();
       case 4:
         return new ChallengesPage();
       case 5:

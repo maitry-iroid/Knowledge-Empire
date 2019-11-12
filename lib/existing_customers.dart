@@ -15,20 +15,27 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     return Scaffold(
         backgroundColor: ColorRes.colorBgDark,
         body: SafeArea(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                showTitle(),
-                showSubHeader(),
-                showItems()
-              ],
-            ),
-          ),
-        ));
+            child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            Utils.getAssetsImg('bg_dashboard_trans')),
+                        fit: BoxFit.fill)),
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 10,
+                      ),
+                      showTitle(),
+                      showSubHeader(),
+                      showItems()
+                    ],
+                  ),
+                ))));
   }
 
   Expanded showItems() {
@@ -102,11 +109,11 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         InkResponse(
-          child:  Image(
+          child: Image(
             image: AssetImage(Utils.getAssetsImg("back")),
             width: 40,
           ),
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
         ),
@@ -133,7 +140,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-
         Expanded(
           flex: 4,
           child: Container(

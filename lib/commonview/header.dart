@@ -22,7 +22,11 @@ class HeaderView extends StatelessWidget {
               image: AssetImage(Utils.getAssetsImg("ic_menu")),
               width: 25,
             ),
-            onTap: () {},
+            onTap: () {
+
+
+
+            },
           ),
           SizedBox(
             width: 10,

@@ -12,68 +12,64 @@ class ChallengesPage extends StatefulWidget {
 class _ChallengesPageState extends State<ChallengesPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorRes.colorBgDark,
-      body: SafeArea(
-        child: Stack(
+    return Stack(
+      children: <Widget>[
+        Image(
+          image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+          width: double.infinity,
+          fit: BoxFit.fill,
+        ),
+        Column(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                showTitle(),
-                showMainBody(),
-              ],
-            ),
-            Card(
-              margin: EdgeInsets.all(0),
-              elevation: 10,
-              child: Container(
-                color: ColorRes.colorBgDark,
-                height: 1,
-              ),
-            ),
+            showTitle(),
+            showMainBody(),
           ],
         ),
-      ),
+        Card(
+          margin: EdgeInsets.all(0),
+          elevation: 10,
+          child: Container(
+            color: ColorRes.colorBgDark,
+            height: 1,
+          ),
+        ),
+      ],
     );
   }
 
   showTitle() {
-    return Card(
-      elevation: 10,
-      margin: EdgeInsets.all(0),
-      child: Container(
-        height: 50,
+    return  Container(
 //        padding: EdgeInsets.symmetric(vertical: 5),
-        color: ColorRes.bgHeader,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("back")),
-                width: 40,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
+    margin: EdgeInsets.only(top: 10),
+      color: Colors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("back")),
+              width: 40,
             ),
-            Container(
-              alignment: Alignment.center,
-              height: 40,
-              margin: EdgeInsets.only(left: 10),
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                      fit: BoxFit.fill)),
-              child: Text(
-                'Challenges',
-                style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
-        ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          Container(
+            alignment: Alignment.center,
+            height: 40,
+            margin: EdgeInsets.only(left: 10),
+            padding: EdgeInsets.symmetric(horizontal: 40),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                    fit: BoxFit.fill)),
+            child: Text(
+              'Challenges',
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -83,7 +79,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
       child: Container(
         margin: EdgeInsets.all(15),
         child: Row(
-          children: <Widget>[showFriends(), showBusinessSectors(), showRewards()],
+          children: <Widget>[
+            showFriends(),
+            showBusinessSectors(),
+            showRewards()
+          ],
         ),
       ),
     );
@@ -187,7 +187,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 },
               ),
             ),
-
           ],
         ),
       ),
@@ -215,8 +214,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
               height: 30,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("rounded_rect_blue")),
-                  )),
+                image: AssetImage(Utils.getAssetsImg("rounded_rect_blue")),
+              )),
               child: Text(
                 'Rewards',
                 style: TextStyle(color: ColorRes.white, fontSize: 18),
@@ -232,11 +231,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
             ),
             InkResponse(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 20,left: 20,right: 20),
-                child: Image(image: AssetImage(Utils.getAssetsImg("btn_send_challenge")),height: 25,fit: BoxFit.fill,),
-              )
-            ),
+                child: Container(
+              margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg("bg_switch_to_prfsnl")),
+                height: 25,
+                fit: BoxFit.fill,
+              ),
+            )),
           ],
         ),
       ),
@@ -263,7 +265,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
               )
             ],
           ),
-          SizedBox(height: 3,),
+          SizedBox(
+            height: 3,
+          ),
           LinearPercentIndicator(
             width: Utils.getDeviceWidth(context) / 3.4,
             lineHeight: 20.0,
@@ -275,6 +279,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       ),
     );
   }
+
   showRewardItem(int index) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7),
@@ -295,7 +300,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
               )
             ],
           ),
-          SizedBox(height: 3,),
+          SizedBox(
+            height: 3,
+          ),
           LinearPercentIndicator(
             width: Utils.getDeviceWidth(context) / 3.4,
             lineHeight: 20.0,

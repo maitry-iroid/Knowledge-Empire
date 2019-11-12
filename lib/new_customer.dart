@@ -12,19 +12,23 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: ColorRes.colorBgDark,
         body: SafeArea(
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
-                ),
-                showTitle(),
-                showSubHeader(),
-                showItems()
-              ],
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),fit: BoxFit.fill)),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  showTitle(),
+                  showSubHeader(),
+                  showItems()
+                ],
+              ),
             ),
           ),
         ));

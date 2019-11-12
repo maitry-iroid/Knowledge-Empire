@@ -60,9 +60,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Dumadi
+    - family: TrulyMadly
       fonts:
-        - asset: assets/fonts/dumadi.otf
+        - asset: assets/fonts/Truly Madly Dpad.otf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
