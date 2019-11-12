@@ -4,8 +4,10 @@ import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/new_customer.dart';
+import 'package:ke_employee/organization.dart';
 import 'package:ke_employee/profile.dart';
 import 'package:ke_employee/ranking.dart';
+import 'package:ke_employee/rewards.dart';
 
 import 'business_sector.dart';
 import 'commonview/header.dart';
@@ -60,13 +62,13 @@ class HomePageState extends State<HomePage> {
       case 0:
         return new DashboardPage();
       case 1:
-        return new ProfilePage();
+        return new OrganizationsPage();
       case 2:
         return new PLPage();
       case 3:
         return new RankingPage();
       case 4:
-        return new ChallengesPage();
+        return new RewardsPage();
       case 5:
         return new BusinessSectorPage();
       case 6:
@@ -76,7 +78,7 @@ class HomePageState extends State<HomePage> {
       case 8:
         return new NewCustomerPage();
       case 9:
-        return new ChallengesPage();
+        return new ProfilePage();
 
       default:
         return new Text("Error");

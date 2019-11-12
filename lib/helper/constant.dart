@@ -18,6 +18,15 @@ class Const {
   static var typeResources =12;
   static var typeDollar =13;
 
+  static var typeHR =13;
+  static var typeServices =14;
+  static var typeMarketing =15;
+  static var typeSales =16;
+  static var typeOperations =17;
+  static var typeLegal=18;
+  static var typeFinance=19;
+  static var typeCRM=20;
+
 
 }
 

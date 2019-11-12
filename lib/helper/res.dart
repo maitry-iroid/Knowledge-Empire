@@ -23,6 +23,7 @@ class StringRes {
   static var contactUs = "Contact Us";
   static var switchProfMode = "Switch to Professional Mode";
   static var logout = "Log out";
+
 }
 
 class ColorRes {
