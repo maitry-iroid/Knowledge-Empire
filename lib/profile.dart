@@ -176,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
           InkResponse(
             child: Image(
               image: AssetImage(Utils.getAssetsImg("back")),
-              width: 40,
+              width: 35,
             ),
             onTap: () {
               Navigator.pop(context);

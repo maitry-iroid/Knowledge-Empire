@@ -125,12 +125,11 @@ class _RankingPageState extends State<RankingPage> {
                 ],
               )),
           Container(
-            height: 60,
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 45,
-                  height: 45,
+                  width: 35,
+                  height: 35,
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
                   alignment: Alignment.center,
@@ -140,15 +139,14 @@ class _RankingPageState extends State<RankingPage> {
                           fit: BoxFit.fill)),
                   child: Text(
                     'You',
-                    style: TextStyle(color: ColorRes.white, fontSize: 17),
+                    style: TextStyle(color: ColorRes.white, fontSize: 15),
                   ),
                 ),
                 Expanded(
-                  flex: 8,
+                  flex: 15,
                   child: Container(
-                    width: Utils.getDeviceWidth(context) / 12,
+                    height: 30,
                     margin: EdgeInsets.symmetric(vertical: 11, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -158,39 +156,39 @@ class _RankingPageState extends State<RankingPage> {
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                          flex: 9,
-                          child: Text(
-                            'Name',
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 17),
-                            textAlign: TextAlign.center,
+                          flex: 2,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 18),
+                            child: Text(
+                              'Name',
+                              style:
+                              TextStyle(color: ColorRes.white, fontSize: 15),maxLines: 1,
+                            ),
                           ),
                         ),
                         Expanded(
-                          flex: 5,
-                          child: Text('Company Name',
+                          flex: 2,
+                          child: Text('Company Name gggggggggggggg',
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 17),
+                                  color: ColorRes.white, fontSize: 15),maxLines: 1,
                               textAlign: TextAlign.center),
                         ),
-                        Expanded(
-                          flex: 5,
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text('Score',
-                                style: TextStyle(
-                                    color: ColorRes.white, fontSize: 17),
-                                textAlign: TextAlign.right),
-                          ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Text('Score',
+                              style: TextStyle(
+                                  color: ColorRes.white, fontSize: 15),
+                              textAlign: TextAlign.right),
                         ),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    height: 30,
+                    margin: EdgeInsets.only( left: 0),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -200,15 +198,16 @@ class _RankingPageState extends State<RankingPage> {
                             fit: BoxFit.fill)),
                     child: Text(
                       'Challenge',
-                      style: TextStyle(color: ColorRes.white, fontSize: 17),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
                     width: 45,
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    height: 30,
+                    margin: EdgeInsets.only( left: 2,right:5),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -218,7 +217,7 @@ class _RankingPageState extends State<RankingPage> {
                             fit: BoxFit.fill)),
                     child: Text(
                       'Friend',
-                      style: TextStyle(color: ColorRes.white, fontSize: 17),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
                 ),
@@ -267,7 +266,7 @@ class _RankingPageState extends State<RankingPage> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 9,
+            flex: 16,
             child: Container(
               width: Utils.getDeviceWidth(context) / 12,
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
@@ -277,9 +276,10 @@ class _RankingPageState extends State<RankingPage> {
                   color: ColorRes.white,
                   borderRadius: BorderRadius.circular(20)),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    flex: 2,
+                    flex: 4,
                     child: Row(
                       children: <Widget>[
                         SizedBox(
@@ -321,8 +321,9 @@ class _RankingPageState extends State<RankingPage> {
                       ],
                     ),
                   ),
+                  Container(color:ColorRes.greyText,width: 1,margin: EdgeInsets.symmetric(vertical: 5),),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Text('Company Name',
                         maxLines: 1,
                         style:
@@ -349,7 +350,7 @@ class _RankingPageState extends State<RankingPage> {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg('ic_challenge')),
@@ -357,7 +358,7 @@ class _RankingPageState extends State<RankingPage> {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg('add_emplyee')),

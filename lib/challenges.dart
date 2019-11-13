@@ -48,7 +48,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           InkResponse(
             child: Image(
               image: AssetImage(Utils.getAssetsImg("back")),
-              width: 40,
+              width: DimenRes.titleBarHeight,
             ),
             onTap: () {
               Navigator.pop(context);
@@ -56,7 +56,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           ),
           Container(
             alignment: Alignment.center,
-            height: 40,
+            height: DimenRes.titleBarHeight,
             margin: EdgeInsets.only(left: 10),
             padding: EdgeInsets.symmetric(horizontal: 40),
             decoration: BoxDecoration(
@@ -65,7 +65,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     fit: BoxFit.fill)),
             child: Text(
               'Challenges',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
               textAlign: TextAlign.center,
             ),
           )

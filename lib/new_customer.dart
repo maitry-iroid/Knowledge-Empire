@@ -115,7 +115,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
        InkResponse(
          child:  Image(
            image: AssetImage(Utils.getAssetsImg("back")),
-           width: 40,
+           width: DimenRes.titleBarHeight,
          ),
          onTap: (){
            Navigator.pop(context);
@@ -123,16 +123,16 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
        ),
         Container(
           alignment: Alignment.center,
-          height: 40,
+          height: DimenRes.titleBarHeight,
           margin: EdgeInsets.only(left: 10),
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
             'New Customers',
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 22),
+            style: TextStyle(color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
             textAlign: TextAlign.center,
           ),
         )

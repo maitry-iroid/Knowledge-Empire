@@ -24,6 +24,9 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
           showTitle(),
           Expanded(
             child: Stack(
@@ -91,11 +94,13 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Expanded(child: Container(),),
+        Expanded(
+          child: Container(),
+        ),
         InkResponse(
           child: Image(
             image: AssetImage(Utils.getAssetsImg("back")),
-            width: 40,
+            width: DimenRes.titleBarHeight,
           ),
           onTap: () {
             Navigator.pop(context);
@@ -103,7 +108,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         ),
         Container(
           alignment: Alignment.center,
-          height: 35,
+          height: DimenRes.titleBarHeight,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           margin: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
@@ -116,12 +121,14 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             Utils.getText(context, StringRes.organizations),
             style: TextStyle(
               color: ColorRes.colorPrimary,
-              fontSize: 17,
+              fontSize: DimenRes.titleTextSize,
             ),
             textAlign: TextAlign.center,
           ),
         ),
-        Expanded(child: Container(),),
+        Expanded(
+          child: Container(),
+        ),
       ],
     );
   }
@@ -142,9 +149,12 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             Image(
               image: AssetImage(Utils.getAssetsImg('info')),
               fit: BoxFit.fill,
-              width: 20,
+              width: 15,
             )
           ],
+        ),
+        SizedBox(
+          height: 5,
         ),
         Image(
           image: AssetImage(Utils.getAssetsImg('user_org')),
@@ -157,14 +167,14 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             Image(
               image: AssetImage(Utils.getAssetsImg('minus')),
               fit: BoxFit.fill,
-              width: 20,
+              width: 15,
             ),
             SizedBox(
               width: 5,
             ),
             LinearPercentIndicator(
-              width: Utils.getDeviceWidth(context) / 11,
-              lineHeight: 20.0,
+              width: Utils.getDeviceWidth(context) / 12,
+              lineHeight: 15.0,
               percent: 0.5,
               backgroundColor: Colors.grey,
               progressColor: Colors.blue,
@@ -175,7 +185,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             Image(
               image: AssetImage(Utils.getAssetsImg('plus')),
               fit: BoxFit.fill,
-              width: 20,
+              width: 15,
             )
           ],
         ),

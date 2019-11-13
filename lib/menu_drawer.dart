@@ -33,6 +33,9 @@ class HomePage extends StatefulWidget {
 List<DrawerItem> drawerItems;
 
 class HomePageState extends State<HomePage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   int _selectedDrawerIndex = 0;
 
   @override
@@ -103,6 +106,7 @@ class HomePageState extends State<HomePage> {
     }
 
     return new Scaffold(
+      key: _scaffoldKey,
       drawer: new SizedBox(
         width: Utils.getDeviceWidth(context) / 2.5,
         child: Drawer(
@@ -118,12 +122,12 @@ class HomePageState extends State<HomePage> {
             ? Stack(
                 children: <Widget>[
                   _getDrawerItemWidget(_selectedDrawerIndex),
-                  HeaderView(),
+                  HeaderView(scaffoldKey: _scaffoldKey,),
                 ],
               )
             : Column(
                 children: <Widget>[
-                  HeaderView(),
+                  HeaderView(scaffoldKey: _scaffoldKey,),
                   Expanded(
                     child: _getDrawerItemWidget(_selectedDrawerIndex),
                   )

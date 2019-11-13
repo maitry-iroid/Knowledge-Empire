@@ -57,13 +57,14 @@ class ColorRes {
   static Color bgBusSec = const Color(0xFF474747);
   static Color bgMenu = const Color(0xFF272727);
   static Color textBlue = const Color(0xFF2f3d7b);
+  static Color textLightBlue = const Color(0xFF7bbdff);
 }
 
 class DimenRes {
-  static double titleBarHeight = 0.08;
+  static double titleBarHeight = 35;
   static double drawerWidth = 0.8;
   static double closeIconSize = 0.1;
   static double closeIconPadding = 0.045;
-  static double titleTextSize =20;
+  static double titleTextSize =17;
   static double inputFieldHeight =42;
 }
