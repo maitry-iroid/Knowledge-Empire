@@ -1,27 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+class ForgotPasswordPage extends StatefulWidget {
+  ForgotPasswordPage({Key key}) : super(key: key);
 
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: ColorRes.fontDarkGrey,
       body: Container(
         height: double.infinity,
@@ -39,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.centerRight,
                 child: Container(
                   width: Utils.getDeviceWidth(context) / 2.3,
-                  height: Utils.getDeviceHeight(context) / 1.7,
+                  height: Utils.getDeviceHeight(context) / 2,
                   margin: EdgeInsets.only(right: 20),
                   decoration: BoxDecoration(
                     color: ColorRes.colorBgDark,
@@ -59,11 +53,16 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Container(
-          height: 15,
+          height: 25,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             color: ColorRes.borderColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(9), topRight: Radius.circular(9)),
+          ),
+          child: Text(
+            'Forgot Password?'.toUpperCase(),
+            style: TextStyle(color: ColorRes.white, fontSize: 17),
           ),
         ),
         Container(
@@ -73,9 +72,8 @@ class _LoginPageState extends State<LoginPage> {
         Expanded(
           child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: ListView(
-                padding: EdgeInsets.all(0),
                 children: <Widget>[
                   Row(
                     children: <Widget>[
@@ -105,7 +103,8 @@ class _LoginPageState extends State<LoginPage> {
                                 TextStyle(color: ColorRes.white, fontSize: 13),
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'EMAIL ID',
+                                hintText:
+                                    'Enter registered email'.toUpperCase(),
                                 hintStyle:
                                     TextStyle(color: ColorRes.hintColor)),
                           ),
@@ -115,60 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(
                     height: 10,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getAssetsImg("pw")),
-                        width: 50,
-                        height: 50,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 40,
-                          margin: EdgeInsets.only(left: 8),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              color: ColorRes.bgTextBox,
-                              border: Border.all(
-                                color: ColorRes.white,
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextField(
-                            controller: passwordController,
-                            keyboardType: TextInputType.text,
-                            obscureText: true,
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 13),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'PASSWORD',
-                                hintStyle:
-                                    TextStyle(color: ColorRes.hintColor)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkResponse(
-                      child: Text(
-                        "Forgot Password?".toUpperCase(),
-                        style: TextStyle(color: ColorRes.white),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPasswordPage()));
-                      },
-                    ),
                   ),
                   InkResponse(
                     child: Container(
@@ -183,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                             fit: BoxFit.fill),
                       ),
                       child: Text(
-                        "Login",
+                        "SEND",
                         style: TextStyle(color: ColorRes.white),
                       ),
                     ),
@@ -197,18 +142,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   validateForm() {
-
-    Utils.showChangePasswordDialog(_scaffoldKey, "");
-
-//
-//    if (emailController.text.isEmpty) {
-//      Utils.showToast("Email can't be empty.");
-//      return;
-//    }
-//
-//    if (passwordController.text.isEmpty) {
-//      Utils.showToast("Password can't be empty.");
-//      return;
-//    }
+    if (emailController.text.isEmpty) {
+      Utils.showToast("Email can't be empty.");
+      return;
+    }
   }
 }

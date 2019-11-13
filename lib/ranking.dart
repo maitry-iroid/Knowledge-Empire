@@ -11,33 +11,19 @@ class _RankingPageState extends State<RankingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorRes.colorBgDark,
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[showFirstColumn(), showSecondColumn()],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),fit:BoxFit.fill),),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[showFirstColumn(), showSecondColumn()],
+        ),
       ),
     );
   }
 
   showFirstColumn() {
-    var arrProfit = ['Day', 'Month'];
-
-//    return Container(
-//      height: 50,
-//      child: ListView.builder(
-//        scrollDirection: Axis.vertical,
-//        shrinkWrap: true,
-//        itemCount: arrProfit.length,
-//        itemBuilder: (BuildContext context, int index) {
-//          return OptionItem(
-//            selectOption, // callback function, setstate for parent
-//            index: index,
-//            isSelected: _selectedOption == index ? true : false,
-//            title: arrProfit[index],
-//          );
-//        },
-//      ),
-//    );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,7 +214,7 @@ class _RankingPageState extends State<RankingPage> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              itemCount: 5,
+              itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
                 return getItem(index);
               },
@@ -262,7 +248,7 @@ class _RankingPageState extends State<RankingPage> {
 
   getItem(int index) {
     return Container(
-      height: 40,
+      height: 38,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -315,7 +301,7 @@ class _RankingPageState extends State<RankingPage> {
                           child: Text('Name',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  color: ColorRes.textBlue, fontSize: 17),
+                                  color: ColorRes.textBlue, fontSize: 16),
                               textAlign: TextAlign.left),
                         ),
                       ],
@@ -327,12 +313,12 @@ class _RankingPageState extends State<RankingPage> {
                     child: Text('Company Name',
                         maxLines: 1,
                         style:
-                            TextStyle(color: ColorRes.textBlue, fontSize: 17),
+                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
                         textAlign: TextAlign.center),
                   ),
                   Container(
                     height: 52,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 13),
                     margin: EdgeInsets.only(right: 1),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -342,7 +328,7 @@ class _RankingPageState extends State<RankingPage> {
                     ),
                     child: Text(
                       '90',
-                      style: TextStyle(color: ColorRes.white, fontSize: 20),
+                      style: TextStyle(color: ColorRes.white, fontSize: 18),
                     ),
                   ),
                 ],
@@ -441,7 +427,7 @@ class _CustomItemState extends State<CustomItem> {
                 fit: BoxFit.fill)),
         child: Text(
           widget.title,
-          style: TextStyle(color: ColorRes.white, fontSize: 17),
+          style: TextStyle(color: ColorRes.white, fontSize: 15),
         ),
       ),
     );

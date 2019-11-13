@@ -38,9 +38,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   showTitle() {
-    return  Container(
+    return Container(
 //        padding: EdgeInsets.symmetric(vertical: 5),
-    margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 10),
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +65,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     fit: BoxFit.fill)),
             child: Text(
               'Challenges',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
+              style: TextStyle(
+                  color: ColorRes.colorPrimary,
+                  fontSize: DimenRes.titleTextSize),
               textAlign: TextAlign.center,
             ),
           )

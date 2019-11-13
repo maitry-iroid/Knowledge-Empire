@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(Duration(seconds: 0), () async {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => LoginPage()),
           ModalRoute.withName("/main_home"));
     });
   }

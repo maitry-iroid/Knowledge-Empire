@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-//import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
+
+import 'constant.dart';
 
 
 class WebApi {
@@ -9,28 +11,30 @@ class WebApi {
 
   static var headers = {HttpHeaders.contentTypeHeader: 'application/json'};
 
- /* Future<SliderImagesResponse> getSliderImages(Map<String, String> jsonMap) async {
-    try {
-      final response = await http.post(
-          baseUrl + "slider/images/" + Const.organizationId,
-          headers: headers,body: json.encode(jsonMap));
+  var Data;
 
-      if (response.statusCode == 200) {
-        SliderImagesResponse eventResponse =
-            SliderImagesResponse.fromJson(json.decode(response.body));
-
-        return eventResponse;
-      }
-
-      print(response.body);
-      return null;
-    } catch (e) {
-      print(e);
-      return null;
-    }
+  Future<dynamic> login(Map<String, String> jsonMap) async {
+//    try {
+//      final response = await http.post(
+//          baseUrl + "slider/images/" + Const.organizationId,
+//          headers: headers,body: json.encode(jsonMap));
+//
+//      if (response.statusCode == 200) {
+//        SliderImagesResponse eventResponse =
+//            SliderImagesResponse.fromJson(json.decode(response.body));
+//
+//        return eventResponse;
+//      }
+//
+//      print(response.body);
+//      return null;
+//    } catch (e) {
+//      print(e);
+//      return null;
+//    }
   }
 
-  Future<EventResponse> getPosts(Map jsonMap, int page) async {
+  /*Future<EventResponse> getPosts(Map jsonMap, int page) async {
     try {
       final response = await http.post(
           baseUrl + "posts?page=" + page.toString(),

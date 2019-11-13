@@ -49,17 +49,17 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 ),
                 Positioned(
                   left: Utils.getDeviceWidth(context) / 6,
-                  top: Utils.getDeviceHeight(context) / 12,
+                  top: Utils.getDeviceHeight(context) / 10,
                   child: showItem(Const.typeHR),
                 ),
                 Positioned(
                   left: Utils.getDeviceWidth(context) / 2.7,
-                  top: Utils.getDeviceHeight(context) / 12,
+                  top: Utils.getDeviceHeight(context) / 15,
                   child: showItem(Const.typeServices),
                 ),
                 Positioned(
                   right: Utils.getDeviceWidth(context) / 6,
-                  top: Utils.getDeviceHeight(context) / 12,
+                  top: Utils.getDeviceHeight(context) / 10,
                   child: showItem(Const.typeMarketing),
                 ),
                 Positioned(

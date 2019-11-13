@@ -5,10 +5,10 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatelessWidget {
-
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final bool isShowMenu;
 
-  HeaderView({this.scaffoldKey});
+  HeaderView({this.scaffoldKey, this.isShowMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +23,19 @@ class HeaderView extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          InkResponse(
-            child: Image(
-              image: AssetImage(
-                Utils.getAssetsImg("menu"),
-              ),
-              fit: BoxFit.fill,
-            ),
-            onTap: () {
-              scaffoldKey.currentState.openDrawer();
-            },
-          ),
+          isShowMenu
+              ? InkResponse(
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg("menu"),
+                    ),
+                    fit: BoxFit.fill,
+                  ),
+                  onTap: () {
+                    scaffoldKey.currentState.openDrawer();
+                  },
+                )
+              : Container(),
           SizedBox(
             width: 8,
           ),
@@ -101,29 +103,29 @@ class HeaderView extends StatelessWidget {
           ),
           type != Const.typeDollar
               ? Stack(
-            children: <Widget>[
-              LinearPercentIndicator(
-                width: Utils.getDeviceWidth(context) / 12,
-                lineHeight: 18.0,
-                percent: getProgressInt(type),
-                backgroundColor: Colors.grey,
-                progressColor: Colors.blue,
-              ),
-              Positioned(
-                top: 1,
-                left: 4,
-                bottom: 0,
-                child: Text(
-                  getProgress(type),
-                  style: TextStyle(color: ColorRes.white, fontSize: 14),
-                ),
-              )
-            ],
-          )
+                  children: <Widget>[
+                    LinearPercentIndicator(
+                      width: Utils.getDeviceWidth(context) / 12,
+                      lineHeight: 18.0,
+                      percent: getProgressInt(type),
+                      backgroundColor: Colors.grey,
+                      progressColor: Colors.blue,
+                    ),
+                    Positioned(
+                      top: 1,
+                      left: 4,
+                      bottom: 0,
+                      child: Text(
+                        getProgress(type),
+                        style: TextStyle(color: ColorRes.white, fontSize: 14),
+                      ),
+                    )
+                  ],
+                )
               : Text(
-            ' \$ 120.00',
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
-          ),
+                  ' \$ 120.00',
+                  style: TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
+                ),
         ],
       ),
     );

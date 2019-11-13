@@ -24,6 +24,9 @@ class DrawerItem {
 }
 
 class HomePage extends StatefulWidget {
+  HomePage({Key key, this.initialPosition}) : super(key: key);
+  final int initialPosition;
+
   @override
   State<StatefulWidget> createState() {
     return new HomePageState();
@@ -33,7 +36,6 @@ class HomePage extends StatefulWidget {
 List<DrawerItem> drawerItems;
 
 class HomePageState extends State<HomePage> {
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int _selectedDrawerIndex = 0;
@@ -43,7 +45,6 @@ class HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     drawerItems = [
-      DrawerItem(Utils.getText(context, StringRes.dashboard), "team"),
       DrawerItem(
           Utils.getText(context, StringRes.organizations), "organization"),
       DrawerItem(Utils.getText(context, StringRes.pl), "profit-loss"),
@@ -58,29 +59,29 @@ class HomePageState extends State<HomePage> {
           Utils.getText(context, StringRes.newCustomers), "new-customer"),
       DrawerItem(Utils.getText(context, StringRes.team), "team"),
     ];
+
+    _selectedDrawerIndex = widget.initialPosition;
   }
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new DashboardPage();
-      case 1:
         return new OrganizationsPage();
-      case 2:
+      case 1:
         return new PLPage();
-      case 3:
+      case 2:
         return new RankingPage();
-      case 4:
+      case 3:
         return new RewardsPage();
-      case 5:
+      case 4:
         return new BusinessSectorPage();
-      case 6:
+      case 5:
         return new ExistingCustomerPage();
-      case 7:
+      case 6:
         return new ChallengesPage();
-      case 8:
+      case 7:
         return new NewCustomerPage();
-      case 9:
+      case 8:
         return new ProfilePage();
 
       default:
@@ -118,21 +119,16 @@ class HomePageState extends State<HomePage> {
       ),
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
-        child: _selectedDrawerIndex == 0
-            ? Stack(
-                children: <Widget>[
-                  _getDrawerItemWidget(_selectedDrawerIndex),
-                  HeaderView(scaffoldKey: _scaffoldKey,),
-                ],
-              )
-            : Column(
-                children: <Widget>[
-                  HeaderView(scaffoldKey: _scaffoldKey,),
-                  Expanded(
-                    child: _getDrawerItemWidget(_selectedDrawerIndex),
-                  )
-                ],
-              ),
+        child: Column(
+          children: <Widget>[
+            HeaderView(
+              scaffoldKey: _scaffoldKey,isShowMenu: true,
+            ),
+            Expanded(
+              child: _getDrawerItemWidget(_selectedDrawerIndex),
+            )
+          ],
+        )
       ),
     );
   }
@@ -162,58 +158,16 @@ class HomePageState extends State<HomePage> {
               item.title,
               textAlign: TextAlign.center,
               maxLines: 2,
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
               overflow: TextOverflow.ellipsis,
             ),
+          ), SizedBox(
+            width: 15,
           )
         ],
       ),
     );
   }
 
-  getTitle(int type) {
-    if (type == Const.typeBusinessSector)
-      return "Business Sector";
-    else if (type == Const.typeNewCustomer)
-      return "New Customers";
-    else if (type == Const.typeExistingCustomer)
-      return "Existing Customers";
-    else if (type == Const.typeOrg)
-      return "Organizations";
-    else if (type == Const.typeChallenges)
-      return "Challenges";
-    else if (type == Const.typePL)
-      return "P+L";
-    else if (type == Const.typeReward)
-      return "Rewards";
-    else if (type == Const.typeRanking)
-      return "Ranking";
-    else if (type == Const.typeTeam)
-      return "Team";
-    else
-      return "";
-  }
 
-  getImage(int type) {
-    if (type == Const.typeBusinessSector)
-      return "ic_business";
-    else if (type == Const.typeNewCustomer)
-      return "ic_new_customer";
-    else if (type == Const.typeExistingCustomer)
-      return "ic_existing_customer";
-    else if (type == Const.typeOrg)
-      return "ic_org";
-    else if (type == Const.typeChallenges)
-      return "ic_ranking";
-    else if (type == Const.typePL)
-      return "ic_PL";
-    else if (type == Const.typeReward)
-      return "ic_reward";
-    else if (type == Const.typeRanking)
-      return "ic_ranking";
-    else if (type == Const.typeTeam)
-      return "menu_team";
-    else
-      return "";
-  }
 }

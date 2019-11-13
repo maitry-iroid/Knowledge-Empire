@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:ke_employee/dialogs/change_password.dart';
 
 class Utils {
   static double getDeviceWidth(BuildContext context) {
@@ -28,6 +31,21 @@ class Utils {
 //        timeInSecForIos: 3,
 //        backgroundColor: Colors.black87,
 //        textColor: Colors.white);
+  }
+
+  static showToast(String message) {
+//    _scaffoldKey.currentState.showSnackBar(SnackBar(
+//      content: Text(message),
+//      duration: const Duration(milliseconds: 2000),
+//    ));
+
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 3,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white);
   }
 
 //  static Future<bool> isInternetConnectedWithAlert(
@@ -112,13 +130,15 @@ class Utils {
     return DateFormat("dd-MM-yyyy HH:mm:ss").format(dateTime);
   }
 
-
   static String getText(BuildContext context, String text) {
-
 //    return AppLocalizations.of(context).tr(text);
     return text;
-
   }
 
-
+  static showChangePasswordDialog(
+      GlobalKey<ScaffoldState> _scaffoldKey, String senderAccessCode) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => ChangePasswordDialog());
+  }
 }
