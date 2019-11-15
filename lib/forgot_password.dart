@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/forgot_password_request.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   ForgotPasswordPage({Key key}) : super(key: key);
@@ -12,6 +13,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
                   child: showLoginForm(),
-                ))
+                )),
+            showCircularProgress()
           ],
         ),
       ),
@@ -141,10 +144,45 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
+  Widget showCircularProgress() {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
+
   validateForm() {
     if (emailController.text.isEmpty) {
       Utils.showToast("Email can't be empty.");
       return;
     }
+
+    Utils.hideKeyboard(context);
+    setState(() {
+      isLoading = true;
+    });
+
+    ForgotPasswordRequest rq = ForgotPasswordRequest();
+    rq.email = emailController.text.trim();
+
+    WebApi().forgotPassword(rq.toJson()).then((data) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+          Utils.showToast("Mail send Successfully.");
+          Navigator.pop(context);
+        } else {
+          Utils.showToast(data.msg);
+        }
+      }else{
+        Utils.showToast('Something went worng.');
+      }
+    });
   }
 }

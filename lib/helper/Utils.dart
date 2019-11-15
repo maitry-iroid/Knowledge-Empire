@@ -4,14 +4,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+
 
 class Utils {
   static double getDeviceWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
+    return MediaQuery
+        .of(context)
+        .size
+        .width;
   }
 
   static double getDeviceHeight(BuildContext context) {
-    return MediaQuery.of(context).size.height;
+    return MediaQuery
+        .of(context)
+        .size
+        .height;
   }
 
   static getAssetsImg(String name) {
@@ -86,7 +95,9 @@ class Utils {
 
   static getHours(DateTime dateTime) {
     try {
-      int hours = dateTime.difference(DateTime.now()).inHours % 24;
+      int hours = dateTime
+          .difference(DateTime.now())
+          .inHours % 24;
 
       return hours < 0 ? "0" : hours.toString();
     } catch (e) {
@@ -97,7 +108,9 @@ class Utils {
 
   static getMinutes(DateTime dateTime) {
     try {
-      int minutes = dateTime.difference(DateTime.now()).inMinutes % 60;
+      int minutes = dateTime
+          .difference(DateTime.now())
+          .inMinutes % 60;
 
       return minutes < 0 ? "0" : minutes.toString();
     } catch (e) {
@@ -135,10 +148,25 @@ class Utils {
     return text;
   }
 
-  static showChangePasswordDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey, String senderAccessCode) async {
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
+      String senderAccessCode) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog());
+  }
+
+  static String generateMd5(String input) {
+    return md5.convert(utf8.encode(input)).toString();
+  }
+
+  static getSecret(String email, String password) {
+    String text = email
+        .split('')
+        .reversed
+        .toString() + email
+        .split('')
+        .reversed
+        .toString();
+    return generateMd5(text);
   }
 }

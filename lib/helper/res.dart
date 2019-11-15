@@ -47,7 +47,7 @@ class ColorRes {
   static Color whiteBg = const Color(0xFFf1f1f1);
   static Color blue = const Color(0xFF4991e1);
   static Color lightGrey = const Color(0xFF484848);
-  static Color hintColor = const Color(0xFF555555);
+  static Color hintColor = const Color(0xFF606060);
   static Color bgTextBox = const Color(0xFF333333);
   static Color greenDot = const Color(0xFF3bd30c);
   static Color lightBg = const Color(0xFF5b5b5b);

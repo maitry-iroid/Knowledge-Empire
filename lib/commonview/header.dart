@@ -138,7 +138,8 @@ class HeaderView extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: ColorRes.colorPrimary)),
+          image: DecorationImage(image: AssetImage(Utils.getAssetsImg('user_org'))),
+          border: Border.all(color: ColorRes.textLightBlue)),
     );
   }
 
@@ -163,7 +164,7 @@ class HeaderView extends StatelessWidget {
     } else if (type == Const.typePeople) {
       return "50/100";
     } else if (type == Const.typeBadge) {
-      return "60/100";
+      return "97%";
     } else if (type == Const.typeResources) {
       return "80/100";
     } else
@@ -176,7 +177,7 @@ class HeaderView extends StatelessWidget {
     } else if (type == Const.typePeople) {
       return 0.5;
     } else if (type == Const.typeBadge) {
-      return 0.6;
+      return 0.97;
     } else if (type == Const.typeResources) {
       return 0.8;
     } else

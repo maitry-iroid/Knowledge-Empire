@@ -56,27 +56,19 @@ class DashboardPageState extends State<DashboardPage> {
             child: InkResponse(
                 child: Image(
                   image: AssetImage(Utils.getAssetsImg("business_sectors")),
-                  height: 130,
+                  height: Utils.getDeviceHeight(context) / 2.8,
                 ),
                 onTap: () {
                   performItemClick(Const.typeBusinessSector);
                 }),
           ),
           Positioned(
-            bottom: 20,
-            left: Utils.getDeviceWidth(context) / 3.7,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("glasses")),
-              height: 35,
-            ),
-          ),
-          Positioned(
             bottom: Utils.getDeviceHeight(context) / 4,
-            left: Utils.getDeviceWidth(context) / 8,
+            left: Utils.getDeviceWidth(context) / 6,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("rewards")),
-                width: 120,
+                height: Utils.getDeviceHeight(context) / 3.2,
               ),
               onTap: () {
                 performItemClick(Const.typeReward);
@@ -85,11 +77,11 @@ class DashboardPageState extends State<DashboardPage> {
           ),
           Positioned(
             top: 40,
-            right: 40,
+            left: Utils.getDeviceWidth(context) / 1.66,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("ranking")),
-                width: 220,
+                height: Utils.getDeviceHeight(context) / 2.8,
               ),
               onTap: () {
                 performItemClick(Const.typeRanking);
@@ -98,11 +90,11 @@ class DashboardPageState extends State<DashboardPage> {
           ),
           Positioned(
             top: 40,
-            left: 50,
+            right: Utils.getDeviceWidth(context) / 1.62,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("organization")),
-                width: 200,
+                height: Utils.getDeviceHeight(context) / 2.7,
               ),
               onTap: () {
                 performItemClick(Const.typeOrg);
@@ -116,7 +108,7 @@ class DashboardPageState extends State<DashboardPage> {
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                height: 150,
+                height: Utils.getDeviceHeight(context)/2.8,
               ),
               onTap: () {
                 performItemClick(Const.typePL);
@@ -124,12 +116,12 @@ class DashboardPageState extends State<DashboardPage> {
             ),
           ),
           Positioned(
-            bottom: Utils.getDeviceHeight(context) / 5,
-            left: Utils.getDeviceWidth(context) / 2.5,
+            bottom: Utils.getDeviceHeight(context) / 4,
+            left: Utils.getDeviceWidth(context) / 2.4,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("team")),
-                height: 130,
+                height: Utils.getDeviceHeight(context)/3.2,
               ),
               onTap: () {
                 performItemClick(Const.typeTeam);
@@ -142,7 +134,7 @@ class DashboardPageState extends State<DashboardPage> {
             child: InkResponse(
                 child: Image(
                   image: AssetImage(Utils.getAssetsImg("new-customer")),
-                  height: 160,
+                  height: Utils.getDeviceHeight(context)/2.5,
                 ),
                 onTap: () {
                   performItemClick(Const.typeNewCustomer);
@@ -150,22 +142,22 @@ class DashboardPageState extends State<DashboardPage> {
           ),
           Positioned(
               bottom: 0,
-              right: 20,
+              left: Utils.getDeviceWidth(context) / 1.4,
               child: InkResponse(
                   child: Image(
                     image: AssetImage(Utils.getAssetsImg("existing")),
-                    width: 180,
+                    height: Utils.getDeviceHeight(context) / 3.1,
                   ),
                   onTap: () {
                     performItemClick(Const.typeExistingCustomer);
                   })),
           Positioned(
             bottom: Utils.getDeviceHeight(context) / 5,
-            right: Utils.getDeviceWidth(context) / 13,
+            left: Utils.getDeviceWidth(context) / 1.5,
             child: InkResponse(
                 child: Image(
                   image: AssetImage(Utils.getAssetsImg("challenges")),
-                  width: 180,
+                  height: Utils.getDeviceHeight(context) / 3,
                 ),
                 onTap: () {
                   performItemClick(Const.typeChallenges);

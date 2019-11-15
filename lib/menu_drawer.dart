@@ -14,6 +14,7 @@ import 'commonview/header.dart';
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
+import 'login.dart';
 import 'p+L.dart';
 
 class DrawerItem {
@@ -57,7 +58,7 @@ class HomePageState extends State<HomePage> {
       DrawerItem(Utils.getText(context, StringRes.challenges), "challenges"),
       DrawerItem(
           Utils.getText(context, StringRes.newCustomers), "new-customer"),
-      DrawerItem(Utils.getText(context, StringRes.team), "team"),
+      DrawerItem(Utils.getText(context, StringRes.logout), "team"),
     ];
 
     _selectedDrawerIndex = widget.initialPosition;
@@ -83,15 +84,16 @@ class HomePageState extends State<HomePage> {
         return new NewCustomerPage();
       case 8:
         return new ProfilePage();
-
       default:
         return new Text("Error");
     }
   }
 
   _onSelectItem(int index) {
-    setState(() => _selectedDrawerIndex = index);
-    Navigator.of(context).pop(); // close the drawer
+    if (mounted) {
+      setState(() => _selectedDrawerIndex = index);
+      Navigator.of(context).pop(); // close the drawer
+    }
   }
 
   @override
@@ -119,17 +121,29 @@ class HomePageState extends State<HomePage> {
       ),
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            HeaderView(
-              scaffoldKey: _scaffoldKey,isShowMenu: true,
+          child: Column(
+        children: <Widget>[
+          HeaderView(
+            scaffoldKey: _scaffoldKey,
+            isShowMenu: true,
+          ),
+          Expanded(
+            child: _getDrawerItemWidget(_selectedDrawerIndex),
+          ),
+          InkResponse(
+            child: Text(
+              'Logout',
+              style: TextStyle(fontSize: 30, color: ColorRes.white),
             ),
-            Expanded(
-              child: _getDrawerItemWidget(_selectedDrawerIndex),
-            )
-          ],
-        )
-      ),
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  ModalRoute.withName("/home"));
+            },
+          )
+        ],
+      )),
     );
   }
 
@@ -161,13 +175,12 @@ class HomePageState extends State<HomePage> {
               style: TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
               overflow: TextOverflow.ellipsis,
             ),
-          ), SizedBox(
+          ),
+          SizedBox(
             width: 15,
           )
         ],
       ),
     );
   }
-
-
 }

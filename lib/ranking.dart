@@ -94,20 +94,22 @@ class _RankingPageState extends State<RankingPage> {
                       );
                     },
                   ),
-                  ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: arrTime.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TimeItem(
-                        selectTime, // callback function, setstate for parent
-                        index: index,
-                        isSelected: _selectedTime == index ? true : false,
-                        title: arrTime[index],
-                      );
-                    },
-                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: arrTime.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TimeItem(
+                          selectTime, // callback function, setstate for parent
+                          index: index,
+                          isSelected: _selectedTime == index ? true : false,
+                          title: arrTime[index],
+                        );
+                      },
+                    ),
+                  )
                 ],
               )),
           Container(
