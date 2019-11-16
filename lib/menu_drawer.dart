@@ -1,21 +1,18 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/challenges.dart';
-import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/organization.dart';
-import 'package:ke_employee/profile.dart';
 import 'package:ke_employee/ranking.dart';
 import 'package:ke_employee/rewards.dart';
+import 'package:ke_employee/team.dart';
 
+import 'P+L.dart';
 import 'business_sector.dart';
 import 'commonview/header.dart';
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
-import 'login.dart';
-import 'p+L.dart';
 
 class DrawerItem {
   String title;
@@ -58,10 +55,30 @@ class HomePageState extends State<HomePage> {
       DrawerItem(Utils.getText(context, StringRes.challenges), "challenges"),
       DrawerItem(
           Utils.getText(context, StringRes.newCustomers), "new-customer"),
-      DrawerItem(Utils.getText(context, StringRes.logout), "team"),
+      DrawerItem(Utils.getText(context, StringRes.team), "team"),
     ];
 
-    _selectedDrawerIndex = widget.initialPosition;
+
+    if(widget.initialPosition==Const.typeOrg)
+      _selectedDrawerIndex = 0;
+    else if(widget.initialPosition==Const.typePL)
+      _selectedDrawerIndex = 1;
+     else if(widget.initialPosition==Const.typeRanking)
+      _selectedDrawerIndex = 2;
+     else if(widget.initialPosition==Const.typeReward)
+      _selectedDrawerIndex = 3;
+     else if(widget.initialPosition==Const.typeBusinessSector)
+      _selectedDrawerIndex = 4;
+     else if(widget.initialPosition==Const.typeExistingCustomer)
+      _selectedDrawerIndex = 5;
+     else if(widget.initialPosition==Const.typeChallenges)
+      _selectedDrawerIndex = 6;
+     else if(widget.initialPosition==Const.typeNewCustomer)
+      _selectedDrawerIndex = 7;
+     else if(widget.initialPosition==Const.typeTeam)
+      _selectedDrawerIndex = 8;
+
+//    _selectedDrawerIndex = widget.initialPosition;
   }
 
   _getDrawerItemWidget(int pos) {
@@ -83,7 +100,7 @@ class HomePageState extends State<HomePage> {
       case 7:
         return new NewCustomerPage();
       case 8:
-        return new ProfilePage();
+        return new TeamPage();
       default:
         return new Text("Error");
     }
@@ -130,18 +147,7 @@ class HomePageState extends State<HomePage> {
           Expanded(
             child: _getDrawerItemWidget(_selectedDrawerIndex),
           ),
-          InkResponse(
-            child: Text(
-              'Logout',
-              style: TextStyle(fontSize: 30, color: ColorRes.white),
-            ),
-            onTap: () {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                  ModalRoute.withName("/home"));
-            },
-          )
+
         ],
       )),
     );

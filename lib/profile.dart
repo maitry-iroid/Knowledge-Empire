@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/header.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'helper/Utils.dart';
+import 'helper/prefkeys.dart';
 import 'helper/res.dart';
+import 'login.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -9,15 +13,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  TextEditingController nameController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
+
+    nameController.text = Injector.userData.name;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
         child: Container(
@@ -27,16 +38,26 @@ class _ProfilePageState extends State<ProfilePage> {
               image: DecorationImage(
                   image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
                   fit: BoxFit.fill)),
-          child: Row(
+          child: Column(
             children: <Widget>[
-              showFirstHalf(),
-              Container(
-                margin: EdgeInsets.only(top: 40,bottom: 40,left: 25),
-                height: double.infinity,
-                width: 1,
-                color: ColorRes.greyText.withOpacity(0.5),
+              HeaderView(
+                isShowMenu: false,
+                scaffoldKey: _scaffoldKey,
               ),
-              showSecondHalf()
+              Expanded(
+                child: Row(
+                  children: <Widget>[
+                    showFirstHalf(),
+                    Container(
+                      margin: EdgeInsets.only(top: 40, bottom: 40, left: 25),
+                      height: double.infinity,
+                      width: 1,
+                      color: ColorRes.greyText.withOpacity(0.5),
+                    ),
+                    showSecondHalf()
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -147,21 +168,29 @@ class _ProfilePageState extends State<ProfilePage> {
                           AssetImage(Utils.getAssetsImg('bg_switch_to_prfsnl')),
                       fit: BoxFit.fill)),
             ),
-            Container(
-              height: 33,
-              margin: EdgeInsets.symmetric(vertical: 15),
-              alignment: Alignment.center,
-              child: Text(
-                Utils.getText(context, StringRes.logout),
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: 16,
+            InkResponse(
+              child: Container(
+                height: 33,
+                margin: EdgeInsets.symmetric(vertical: 15),
+                alignment: Alignment.center,
+                child: Text(
+                  Utils.getText(context, StringRes.logout),
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 16,
+                  ),
                 ),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
               ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
-            ),
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    ModalRoute.withName("/home"));
+              },
+            )
           ],
         ),
       ),
@@ -287,6 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fit: BoxFit.fill),
                               ),
                               child: TextField(
+                                controller: nameController,
                                 obscureText: false,
                                 style: TextStyle(
                                   color: ColorRes.white,
@@ -294,7 +324,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: 'xxxx xxxx',
+                                    hintText: "xxxx xxxx",
                                     hintStyle:
                                         TextStyle(color: ColorRes.hintColor)),
                               ),
@@ -363,7 +393,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: 'xxx@xxx.xxx',
+                                    hintText: Injector.prefs
+                                        .getString(PrefKeys.email),
                                     hintStyle:
                                         TextStyle(color: ColorRes.hintColor)),
                               ),
@@ -404,6 +435,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontSize: 15,
                               )),
                     ),
+                    onTap: () {
+
+                      Utils.showChangePasswordDialog(_scaffoldKey,true);
+                    },
                   ),
                 ),
                 SizedBox(

@@ -1,28 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/dashboard_new.dart' ;
+import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/menu_drawer.dart';
 import 'package:ke_employee/models/change_password_request.dart';
-
-//import 'package:yoyokids/helper/constant.dart';
-//import 'package:yoyokids/helper/res.dart';
-//import 'package:yoyokids/helper/utils.dart';
-//import 'package:yoyokids/injection/dependency_injection.dart';
-//import 'package:yoyokids/models/user.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
   ChangePasswordDialog({
     Key key,
-    this.scaffoldKey,
+    this.isFromProfile,
   }) : super(key: key);
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
+  final bool isFromProfile;
 
   @override
   ChangePasswordDialogState createState() => new ChangePasswordDialogState();
@@ -247,30 +239,29 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         isLoading = false;
       });
 
-      if (data!=null) {
+      if (data != null) {
         if (data.flag == "true") {
-                Utils.showToast("password changed Successfully.");
+          Utils.showToast("password changed Successfully.");
 
-        //        Navigator.pop(context);
-              } else {
-                Utils.showToast(data.msg);
-              }
-      }else{
+          if (widget.isFromProfile) {
+            Navigator.pop(context);
+          } else {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => DashboardNewPage()),
+                ModalRoute.withName("/login"));
+          }
+        } else {
+          Utils.showToast(data.msg);
+        }
+      } else {
         Utils.showToast("Something went wrong.");
       }
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardPage()),
-          ModalRoute.withName("/login"));
-
     });
-
-
   }
 
   void navigateToDasboard() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => DashboardPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DashboardNewPage()));
   }
 }

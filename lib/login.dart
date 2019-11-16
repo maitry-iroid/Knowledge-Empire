@@ -179,7 +179,6 @@ class _LoginPageState extends State<LoginPage> {
           await Injector.prefs
               .setString(PrefKeys.userId, loginResponseData.userId);
           await Injector.prefs.setString(PrefKeys.email, loginRequest.email);
-          await Injector.prefs.setString(PrefKeys.accessToken, loginResponseData.accessToken);
           await Injector.prefs.setString(
               PrefKeys.user, json.encode(loginResponseData.toJson()));
 
@@ -210,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
   void navigateToDashboard() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => DashboardPage()),
+        MaterialPageRoute(builder: (context) => DashboardNewPage()),
         ModalRoute.withName("/login"));
   }
 

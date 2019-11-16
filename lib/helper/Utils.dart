@@ -149,10 +149,10 @@ class Utils {
   }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      String senderAccessCode) async {
+      bool isFromProfile) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => ChangePasswordDialog());
+        builder: (BuildContext context) => ChangePasswordDialog(isFromProfile: isFromProfile,));
   }
 
   static String generateMd5(String input) {

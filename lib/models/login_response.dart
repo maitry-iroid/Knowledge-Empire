@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ke_employee/models/login_request_data.dart';
 import 'package:ke_employee/models/login_response_data.dart';
 
 part 'login_response.g.dart';

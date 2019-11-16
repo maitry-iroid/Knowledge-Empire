@@ -1,14 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:http/http.dart' as http;
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/login_response.dart';
-import 'package:ke_employee/models/login_response_data.dart';
-
-import 'constant.dart';
 
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
@@ -16,9 +11,7 @@ class WebApi {
   static var headers = {
     HttpHeaders.contentTypeHeader: 'application/json',
     HttpHeaders.authorizationHeader:
-        Injector.prefs.getString(PrefKeys.accessToken) == null
-            ? ""
-            : "pig " + Injector.prefs.getString(PrefKeys.accessToken),
+        Injector.userData == null ? "" : "pig " + Injector.userData.accessToken,
     'devicetype': 'android',
     'deviceid': Injector.deviceId
   };
@@ -40,7 +33,8 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.body);
-        LoginResponse loginRequest = LoginResponse.fromJson(jsonDecode(response.body));
+        LoginResponse loginRequest =
+            LoginResponse.fromJson(jsonDecode(response.body));
         return loginRequest;
       }
 
@@ -61,7 +55,8 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.body);
-        LoginResponse loginRequest = LoginResponse.fromJson(jsonDecode(response.body));
+        LoginResponse loginRequest =
+            LoginResponse.fromJson(jsonDecode(response.body));
         return loginRequest;
       }
       print(response.body);
@@ -77,11 +72,12 @@ class WebApi {
       final response = await http.post(baseUrl,
           headers: headers,
           body:
-          json.encode(getRequest('change_password', json.encode(jsonMap))));
+              json.encode(getRequest('change_password', json.encode(jsonMap))));
 
       if (response.statusCode == 200) {
         print(response.body);
-        LoginResponse loginRequest = LoginResponse.fromJson(jsonDecode(response.body));
+        LoginResponse loginRequest =
+            LoginResponse.fromJson(jsonDecode(response.body));
         return loginRequest;
       }
 

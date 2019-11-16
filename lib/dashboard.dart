@@ -6,10 +6,9 @@ import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/new_customer.dart';
-import 'package:ke_employee/p+L.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import 'P+L.dart';
 import 'helper/constant.dart';
 
 class DashboardPage extends StatefulWidget {

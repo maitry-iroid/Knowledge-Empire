@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/profile.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatelessWidget {
@@ -55,7 +57,7 @@ class HeaderView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Riddhi",
+                  Injector.userData.name,
                   style: TextStyle(color: ColorRes.textLightBlue, fontSize: 15),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -64,7 +66,7 @@ class HeaderView extends StatelessWidget {
                   height: 2,
                 ),
                 Text(
-                  "Patel",
+                  Injector.userData.phone,
                   style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -77,7 +79,7 @@ class HeaderView extends StatelessWidget {
           showHeaderItem(Const.typeBadge, context),
           showHeaderItem(Const.typeResources, context),
           showHeaderItem(Const.typeDollar, context),
-          showProfile()
+          showProfile(context)
         ],
       ),
     );
@@ -131,15 +133,27 @@ class HeaderView extends StatelessWidget {
     );
   }
 
-  showProfile() {
-    return Container(
-      width: 30,
-      height: 30,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(image: AssetImage(Utils.getAssetsImg('user_org'))),
-          border: Border.all(color: ColorRes.textLightBlue)),
+  showProfile(BuildContext context) {
+    return InkResponse(
+      child: Container(
+        width: 30,
+        height: 30,
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg('user_org'))),
+            border: Border.all(color: ColorRes.textLightBlue)),
+      ),
+      onTap: () {
+
+
+        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
+        print(route1.isCurrent);
+        if (!route1.isCurrent) {
+          Navigator.push(context, route1);
+        }
+      },
     );
   }
 

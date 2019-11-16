@@ -1,24 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/business_sector.dart';
-import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/commonview/header.dart';
-import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/menu_drawer.dart';
-import 'package:ke_employee/new_customer.dart';
-import 'package:ke_employee/p+L.dart';
 
 import 'helper/constant.dart';
 
-class DashboardPage extends StatefulWidget {
-  DashboardPage({Key key}) : super(key: key);
+class DashboardNewPage extends StatefulWidget {
+  DashboardNewPage({Key key}) : super(key: key);
 
-  DashboardPageState createState() => DashboardPageState();
+  DashboardNewPageState createState() => DashboardNewPageState();
 }
 
-class DashboardPageState extends State<DashboardPage> {
+class DashboardNewPageState extends State<DashboardNewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

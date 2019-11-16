@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
 
-class RewardsPage extends StatefulWidget {
+class PLPage extends StatefulWidget {
   @override
-  _RewardsPageState createState() => _RewardsPageState();
+  _PLPageState createState() => _PLPageState();
 }
 
-class _RewardsPageState extends State<RewardsPage> {
+class _PLPageState extends State<PLPage> {
   var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   @override
@@ -34,7 +34,7 @@ class _RewardsPageState extends State<RewardsPage> {
         InkResponse(
           child: Image(
             image: AssetImage(Utils.getAssetsImg("back")),
-            width: 40,
+            width: 35,
           ),
           onTap: () {
             Navigator.pop(context);
@@ -50,7 +50,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringRes.rewards,
+            StringRes.pl,
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),
@@ -144,36 +144,35 @@ class _RewardsPageState extends State<RewardsPage> {
           Container(
             height: 50,
             margin: EdgeInsets.symmetric(vertical: 5),
-            padding: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 2,bottom: 2),
 //            color: ColorRes.lightBg,
             child: Row(
               children: <Widget>[
                 Expanded(
-                    child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 8),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    textAlign: TextAlign.center,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    alignment: Alignment.center,
+                    child: TextField(
+                      textAlign: TextAlign.center,
 //                      controller: searchCtrl,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
 //                        hintText: 'Search for keywords',
-                      hintStyle: TextStyle(fontSize: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
+                        hintStyle: TextStyle(fontSize: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
                         ),
+                        filled: true,
+                        fillColor: ColorRes.colorPrimary,
                       ),
-                      filled: true,
-                      fillColor: ColorRes.colorPrimary,
                     ),
-                  ),
-                )),
-                SizedBox(
-                  width: 5,
+                  )
                 ),
+                SizedBox(width: 5,),
                 Image(
                   height: 35,
                   image: AssetImage(
@@ -212,9 +211,8 @@ class _RewardsPageState extends State<RewardsPage> {
                   children: <Widget>[
                     Card(
                       elevation: 10,
-                      color: ColorRes.whiteDarkBg,
-                      margin: EdgeInsets.only(
-                          top: 20, bottom: Utils.getDeviceHeight(context) / 7),
+                                            color: ColorRes.whiteDarkBg,
+                      margin: EdgeInsets.only(top: 20,bottom: Utils.getDeviceHeight(context)/7),
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 30, bottom: 10),
@@ -237,14 +235,13 @@ class _RewardsPageState extends State<RewardsPage> {
                       child: Container(
                         alignment: Alignment.center,
                         height: 35,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: Utils.getDeviceWidth(context) / 10),
+                        margin: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/10),
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image:
-                                    AssetImage(Utils.getAssetsImg("bg_blue")),
+                                AssetImage(Utils.getAssetsImg("bg_blue")),
                                 fit: BoxFit.fill)),
                         child: Text(
                           'Description',
@@ -258,16 +255,14 @@ class _RewardsPageState extends State<RewardsPage> {
                       alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.symmetric(horizontal: 30),
                       child: InkResponse(
-                        child: Image(
-                          image:
-                              AssetImage(Utils.getAssetsImg("engage_segment")),
-                        ),
+                        child:  Image(image: AssetImage(Utils.getAssetsImg("engage_segment")),),
                       ),
                     )
                   ],
                 ),
               ),
             ),
+
           ],
         ),
       ),

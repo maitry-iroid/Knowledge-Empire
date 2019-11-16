@@ -53,7 +53,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                   child: showItem(Const.typeHR),
                 ),
                 Positioned(
-                  left: Utils.getDeviceWidth(context) / 2.7,
+                  left: Utils.getDeviceWidth(context) / 2.6,
                   top: Utils.getDeviceHeight(context) / 15,
                   child: showItem(Const.typeServices),
                 ),
@@ -68,7 +68,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                   child: showItem(Const.typeSales),
                 ),
                 Positioned(
-                  left: Utils.getDeviceWidth(context) / 2.7,
+                  left: Utils.getDeviceWidth(context) / 2.6,
                   bottom: Utils.getDeviceHeight(context) / 12,
                   child: showItem(Const.typeOperations),
                 ),
@@ -209,5 +209,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     else if (type == Const.typeLegal)
       return "Legal";
     else if (type == Const.typeFinance) return "Finance";
+    else return "";
   }
 }

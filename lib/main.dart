@@ -3,14 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ke_employee/dashboard_new.dart';
-import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/login.dart';
 
 import 'injection/dependency_injection.dart';
 import 'menu_drawer.dart';
-import 'new_customer.dart';
 
 void main() => setupLocator();
 
@@ -38,7 +36,7 @@ class MyApp extends StatelessWidget {
         '/login': (BuildContext context) => LoginPage(),
 //        '/splash': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => HomePage(),
-        '/dashboard': (BuildContext context) => DashboardPage(),
+        '/dashboard': (BuildContext context) => DashboardNewPage(),
 //        '/contacts': (BuildContext context) => ContactsScreen(),
       },
       debugShowCheckedModeBanner: false,
@@ -68,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => DashboardPage()),
+            MaterialPageRoute(builder: (context) => DashboardNewPage()),
             ModalRoute.withName("/login"));
       }
     });
