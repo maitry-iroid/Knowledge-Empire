@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 
+import 'commonview/background.dart';
+
 class RankingPage extends StatefulWidget {
   @override
   _RankingPageState createState() => _RankingPageState();
@@ -14,7 +16,7 @@ class _RankingPageState extends State<RankingPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),fit:BoxFit.fill),),
+        decoration: CommonView.getBGDecoration(),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[showFirstColumn(), showSecondColumn()],
@@ -438,7 +440,7 @@ class _CustomItemState extends State<CustomItem> {
 
 //-----------------------
 
-class TimeItem extends StatefulWidget {
+ class TimeItem extends StatefulWidget {
   final String title;
   final int index;
   final bool isSelected;

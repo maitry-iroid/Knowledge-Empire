@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 
 import 'helper/Utils.dart';
 import 'helper/res.dart';
@@ -17,10 +18,7 @@ class _TeamPageState extends State<TeamPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-              fit: BoxFit.fill)),
+      decoration: CommonView.getBGDecoration(),
       child: Row(
         children: <Widget>[showFirstHalf(), showSecondHalf()],
       ),

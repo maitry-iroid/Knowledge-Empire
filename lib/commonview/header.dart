@@ -4,6 +4,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/profile.dart';
+import 'package:notifier/main_notifier.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatelessWidget {
@@ -18,71 +19,80 @@ class HeaderView extends StatelessWidget {
   }
 
   showHeaderView(BuildContext context) {
-    return Container(
-      height: Utils.getDeviceHeight(context) / 7,
+    return Notifier.of(context).register<String>('changeMode', (data) {
+      print('notified');
+
+      return Container(
+        height: Utils.getDeviceHeight(context) / 7,
 //      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-      color: ColorRes.headerDashboard,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          isShowMenu
-              ? InkResponse(
-                  child: Image(
-                    image: AssetImage(
-                      Utils.getAssetsImg("menu"),
-                    ),
-                    fit: BoxFit.fill,
+        color: Injector.isBusinessMode
+            ? ColorRes.headerDashboard
+            : Color(0xFF000040),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            isShowMenu
+                ? InkResponse(
+              child: Image(
+                image: AssetImage(
+                  Utils.getAssetsImg("menu"),
+                ),
+                fit: BoxFit.fill,
+              ),
+              onTap: () {
+                scaffoldKey.currentState.openDrawer();
+              },
+            )
+                : Container(),
+            SizedBox(
+              width: 8,
+            ),
+            InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg("ic_menu")),
+                width: 25,
+              ),
+              onTap: () {},
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    Injector.userData.name,
+                    style:
+                    TextStyle(color: ColorRes.textLightBlue, fontSize: 15),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  onTap: () {
-                    scaffoldKey.currentState.openDrawer();
-                  },
-                )
-              : Container(),
-          SizedBox(
-            width: 8,
-          ),
-          InkResponse(
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("ic_menu")),
-              width: 25,
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    Injector.userData.phone,
+                    style:
+                    TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
+              ),
             ),
-            onTap: () {},
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  Injector.userData.name,
-                  style: TextStyle(color: ColorRes.textLightBlue, fontSize: 15),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  Injector.userData.phone,
-                  style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                )
-              ],
-            ),
-          ),
-          showHeaderItem(Const.typeChecked, context),
-          showHeaderItem(Const.typePeople, context),
-          showHeaderItem(Const.typeBadge, context),
-          showHeaderItem(Const.typeResources, context),
-          showHeaderItem(Const.typeDollar, context),
-          showProfile(context)
-        ],
-      ),
-    );
+            showHeaderItem(Const.typeChecked, context),
+            showHeaderItem(Const.typePeople, context),
+            showHeaderItem(Const.typeBadge, context),
+            showHeaderItem(Const.typeResources, context),
+            showHeaderItem(Const.typeDollar, context),
+            showProfile(context)
+          ],
+        ),
+      );
+      ;
+    });
   }
 
   showHeaderItem(int type, BuildContext context) {
@@ -90,44 +100,39 @@ class HeaderView extends StatelessWidget {
       height: 40,
       padding: EdgeInsets.only(left: 4, right: 4),
       margin: EdgeInsets.symmetric(horizontal: 1),
-      decoration: BoxDecoration(
+      decoration: Injector.isBusinessMode
+          ? BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-              fit: BoxFit.fill)),
+              fit: BoxFit.fill))
+          : BoxDecoration(),
       child: Row(
         children: <Widget>[
-          Image(
-            image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
-            height: 30,
-          ),
-          SizedBox(
-            width: 2,
-          ),
-          type != Const.typeDollar
-              ? Stack(
-                  children: <Widget>[
-                    LinearPercentIndicator(
-                      width: Utils.getDeviceWidth(context) / 12,
-                      lineHeight: 18.0,
-                      percent: getProgressInt(type),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.blue,
-                    ),
-                    Positioned(
-                      top: 1,
-                      left: 4,
-                      bottom: 0,
-                      child: Text(
-                        getProgress(type),
-                        style: TextStyle(color: ColorRes.white, fontSize: 14),
-                      ),
-                    )
-                  ],
-                )
-              : Text(
-                  ' \$ 120.00',
-                  style: TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
-                ),
+          LinearPercentIndicator(
+            animation: true,
+            animationDuration: 2000,
+            width: Utils.getDeviceWidth(context) / 12,
+            linearStrokeCap: LinearStrokeCap.roundAll,
+            lineHeight: 18,
+            center: type == Const.typeDollar
+                ? Text(
+              ' \$ 120.00',
+              style:
+              TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
+            )
+                : Text(
+              getProgress(type),
+              style: TextStyle(color: ColorRes.white, fontSize: 14),
+            ),
+            leading: Image(
+              image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
+              height: 30,
+            ),
+            percent: getProgressInt(type),
+            backgroundColor: Colors.grey,
+            progressColor: Colors.blue,
+
+          )
         ],
       ),
     );
@@ -146,8 +151,6 @@ class HeaderView extends StatelessWidget {
             border: Border.all(color: ColorRes.textLightBlue)),
       ),
       onTap: () {
-
-
         Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
         print(route1.isCurrent);
         if (!route1.isCurrent) {

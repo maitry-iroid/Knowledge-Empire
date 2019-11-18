@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 
+import 'commonview/background.dart';
 import 'helper/Utils.dart';
+import 'helper/constant.dart';
 import 'helper/prefkeys.dart';
 import 'helper/res.dart';
 import 'login.dart';
@@ -25,19 +29,21 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
   }
 
+  Notifier _notifier;
+
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: ColorRes.colorBgDark,
+      backgroundColor:
+          Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
       body: SafeArea(
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                  fit: BoxFit.fill)),
+          decoration: CommonView.getBGDecoration(),
           child: Column(
             children: <Widget>[
               HeaderView(
@@ -152,21 +158,40 @@ class _ProfilePageState extends State<ProfilePage> {
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
             ),
-            Container(
-              height: 35,
-              margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.only(left: 8, right: 8),
-              alignment: Alignment.center,
-              child: Text(
-                Utils.getText(context, StringRes.switchProfMode),
-                style: TextStyle(
-                    color: ColorRes.white, fontSize: 15, letterSpacing: 0.7),
+            InkResponse(
+              child: Container(
+                height: 35,
+                margin: EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(left: 8, right: 8),
+                alignment: Alignment.center,
+                child: Text(
+                  Utils.getText(
+                      context,
+                      Injector.isBusinessMode
+                          ? StringRes.switchProfMode
+                          : StringRes.switchBusinessMode),
+                  style: TextStyle(
+                      color: ColorRes.white, fontSize: 15, letterSpacing: 0.7),
+                ),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            Utils.getAssetsImg('bg_switch_to_prfsnl')),
+                        fit: BoxFit.fill)),
               ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image:
-                          AssetImage(Utils.getAssetsImg('bg_switch_to_prfsnl')),
-                      fit: BoxFit.fill)),
+              onTap: () async {
+                if (Injector.isBusinessMode)
+                  await Injector.prefs
+                      .setInt(PrefKeys.mode, Const.professionalMode);
+                else
+                  await Injector.prefs
+                      .setInt(PrefKeys.mode, Const.businessMode);
+                setState(() {
+                  Injector.isBusinessMode = !Injector.isBusinessMode;
+                });
+
+                _notifier.notify('changeMode', 'Sending data from notfier!');
+              },
             ),
             InkResponse(
               child: Container(
@@ -386,6 +411,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fit: BoxFit.fill),
                               ),
                               child: TextField(
+                                enabled: false,
                                 obscureText: false,
                                 style: TextStyle(
                                   color: ColorRes.white,
@@ -436,8 +462,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               )),
                     ),
                     onTap: () {
-
-                      Utils.showChangePasswordDialog(_scaffoldKey,true);
+                      Utils.showChangePasswordDialog(_scaffoldKey, true);
                     },
                   ),
                 ),

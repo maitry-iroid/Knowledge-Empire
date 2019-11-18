@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -12,6 +13,32 @@ class ChallengesPage extends StatefulWidget {
 class _ChallengesPageState extends State<ChallengesPage> {
   @override
   Widget build(BuildContext context) {
+
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: CommonView.getBGDecoration(),
+      child: Stack(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              showTitle(),
+              showMainBody(),
+            ],
+          ),
+          Card(
+            margin: EdgeInsets.all(0),
+            elevation: 10,
+            child: Container(
+              color: ColorRes.colorBgDark,
+              height: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+
+
     return Stack(
       children: <Widget>[
         Image(

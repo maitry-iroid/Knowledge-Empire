@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
 
     LoginRequestData loginRequest = LoginRequestData();
     loginRequest.email = emailController.text.trim();
-    loginRequest.password = passwordController.text.trim();
+    loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret =
         Utils.getSecret(loginRequest.email, loginRequest.password);
 
@@ -186,15 +186,11 @@ class _LoginPageState extends State<LoginPage> {
             isLoading = false;
           });
 
-//          if (data.data.isPasswordChanged == "0") {
-//            Utils.showChangePasswordDialog(_scaffoldKey, "");
-//          } else {
-//            navigateToDashboard();
-//          }
-
-
-          navigateToDashboard();
-
+          if (data.data.isPasswordChanged == "0") {
+            Utils.showChangePasswordDialog(_scaffoldKey, false);
+          } else {
+            navigateToDashboard();
+          }
         } else {
           setState(() {
             isLoading = false;

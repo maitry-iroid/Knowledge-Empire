@@ -10,7 +10,8 @@ ChangePasswordRequest _$ChangePasswordRequestFromJson(
     Map<String, dynamic> json) {
   return ChangePasswordRequest()
     ..email = json['email'] as String
-    ..password = json['password'] as String;
+    ..password = json['password'] as String
+    ..oldPassword = json['oldPassword'] as String;
 }
 
 Map<String, dynamic> _$ChangePasswordRequestToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ChangePasswordRequestToJson(
     <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
+      'oldPassword': instance.oldPassword,
     };

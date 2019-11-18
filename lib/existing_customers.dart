@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
 
@@ -18,13 +19,9 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            Utils.getAssetsImg('bg_dashboard_trans')),
-                        fit: BoxFit.fill)),
+                decoration: BoxDecoration(image: CommonView.getBGDecoration()),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  margin: EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -51,16 +48,17 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Container showSubHeader() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15),
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      height: 25,
+      margin: EdgeInsets.only(top: 8, bottom: 5),
+      padding: EdgeInsets.only(right: 3),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fitWidth)),
+              fit: BoxFit.fill)),
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 4,
+            flex: 6,
             child: Text(
               'Name',
               style: TextStyle(color: ColorRes.colorPrimary),
@@ -68,7 +66,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 7,
             child: Text(
               'Sector',
               style: TextStyle(color: ColorRes.colorPrimary),
@@ -76,7 +74,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Text(
               'Value',
               style: TextStyle(color: ColorRes.colorPrimary),
@@ -84,7 +82,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Text(
               'Loyalty',
               style: TextStyle(color: ColorRes.colorPrimary),
@@ -128,7 +126,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   fit: BoxFit.fill)),
           child: Text(
             StringRes.existingCustomers,
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
+            style: TextStyle(
+                color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
             textAlign: TextAlign.center,
           ),
         )
@@ -138,85 +137,67 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Widget showItem(int index) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Expanded(
-          flex: 4,
           child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              'Mobile Dev.',
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
-            ),
-          ),
+              height: 25,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bg_record_white")),
+                      fit: BoxFit.fill)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      'Mobile Dev.',
+                      style: TextStyle(
+                        color: ColorRes.blue,
+                        fontSize: 15,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 6,
+                    child: Text(
+                      'Mobile Dev.',
+                      style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      '25 \$',
+                      style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      '25 d',
+                      style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              )),
         ),
-        Expanded(
-          flex: 5,
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_2")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              'Mobile Dev.',
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              '25 \$',
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 5),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_rounded_1")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              '25 d',
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            height: 35,
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("close")),
-                    fit: BoxFit.fitHeight)),
-          ),
-        ),
+        Container(
+          height: 35,
+          width: 35,
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 15, right: 20),
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("close")),
+                  fit: BoxFit.fill)),
+        )
       ],
     );
   }

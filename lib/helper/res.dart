@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class StringRes {
   static var dashboard = "Dashboard";
@@ -14,21 +15,23 @@ class StringRes {
 
   static var editProfile = "Edit Profile";
   static var yourName = "Your Name";
-  static var yourEmail= "Your Email";
-  static var changePassword= "Change Password";
+  static var yourEmail = "Your Email";
+  static var changePassword = "Change Password";
   static var save = "Save";
-  static var settings= "Settings";
-  static var privacyPolicy= "Privacy & Policy";
+  static var settings = "Settings";
+  static var privacyPolicy = "Privacy & Policy";
   static var termsConditions = "Terms & Conditions";
   static var contactUs = "Contact Us";
   static var switchProfMode = "Switch to Professional Mode";
+  static var switchBusinessMode = "Switch to Business Mode";
   static var logout = "Log out";
-
 }
 
 class ColorRes {
   static Color white = const Color(0xFFffffff);
-  static Color colorPrimary = const Color(0xFFffffff);
+  static Color colorPrimary = Injector.isBusinessMode ? colorBgDark : white;
+  static Color headerPrimary =
+      Injector.isBusinessMode ? headerDashboard : Color(0xFF000040);
   static Color colorAccent = const Color(0xFFffffff);
   static Color colorBgDark = const Color(0xFF3a3a3a);
   static Color borderColor = const Color(0xFFb2b2b2);
@@ -58,6 +61,9 @@ class ColorRes {
   static Color bgMenu = const Color(0xFF272727);
   static Color textBlue = const Color(0xFF2f3d7b);
   static Color textLightBlue = const Color(0xFF7bbdff);
+  static Color textRecordBlue = const Color(0xFF0080ff);
+  static Color textPrimary =
+      Injector.isBusinessMode ? white : Color(0xFF8c8c8c);
 }
 
 class DimenRes {
@@ -65,6 +71,6 @@ class DimenRes {
   static double drawerWidth = 0.8;
   static double closeIconSize = 0.1;
   static double closeIconPadding = 0.045;
-  static double titleTextSize =17;
-  static double inputFieldHeight =42;
+  static double titleTextSize = 17;
+  static double inputFieldHeight = 42;
 }

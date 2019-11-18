@@ -6,7 +6,9 @@ import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/login.dart';
+import 'package:notifier/notifier_provider.dart';
 
+import 'helper/constant.dart';
 import 'injection/dependency_injection.dart';
 import 'menu_drawer.dart';
 
@@ -15,7 +17,9 @@ void main() => setupLocator();
 Future setupLocator() async {
   await Injector.getInstance();
 
-  runApp(MyApp());
+  runApp(NotifierProvider(
+    child: MyApp(),
+  ),);
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +34,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          accentColor: ColorRes.transparent, fontFamily: 'TrulyMadly'),
+          accentColor: ColorRes.transparent,
+          fontFamily: 'TrulyMadly',
+          backgroundColor: Injector.mode == Const.businessMode
+              ? ColorRes.colorBgDark
+              : ColorRes.white),
       home: MyHomePage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
@@ -58,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer(Duration(seconds: 0), () async {
       String userId = Injector.prefs.getString(PrefKeys.userId);
 
-      if ( userId == null||userId.isEmpty ) {
+      if (userId == null || userId.isEmpty) {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => LoginPage()),

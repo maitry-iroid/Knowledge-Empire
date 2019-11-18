@@ -6,6 +6,7 @@ part 'change_password_request.g.dart';
 class ChangePasswordRequest {
   String email = "";
   String password = "";
+  String oldPassword = "";
 
   ChangePasswordRequest();
 

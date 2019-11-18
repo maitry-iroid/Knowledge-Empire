@@ -27,6 +27,9 @@ class Const {
   static var typeFinance=19;
   static var typeCRM=20;
 
+  static var businessMode=21;
+  static var professionalMode=22;
+
 
 }
 

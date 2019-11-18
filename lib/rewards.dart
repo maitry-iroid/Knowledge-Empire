@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
 
@@ -17,10 +18,7 @@ class _RewardsPageState extends State<RewardsPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-              fit: BoxFit.fill)),
+      decoration: CommonView.getBGDecoration(),
       child: Row(
         children: <Widget>[showFirstHalf(), showSecondHalf()],
       ),
@@ -34,7 +32,7 @@ class _RewardsPageState extends State<RewardsPage> {
         InkResponse(
           child: Image(
             image: AssetImage(Utils.getAssetsImg("back")),
-            width: 40,
+            width: DimenRes.titleBarHeight,
           ),
           onTap: () {
             Navigator.pop(context);
@@ -42,7 +40,7 @@ class _RewardsPageState extends State<RewardsPage> {
         ),
         Container(
           alignment: Alignment.center,
-          height: 35,
+          height: DimenRes.titleBarHeight,
           margin: EdgeInsets.only(left: 10),
           padding: EdgeInsets.symmetric(horizontal: 40),
           decoration: BoxDecoration(
@@ -90,178 +88,245 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  Widget showItem(int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          flex: 8,
-          child: Container(
-            height: 32,
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 10),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image:
-                        AssetImage(Utils.getAssetsImg("bg_new_customer_item")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              arrSector[index],
-              style: TextStyle(color: ColorRes.blue, fontSize: 15),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            height: 35,
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 5, right: 10),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("value")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              '10',
-              style: TextStyle(color: ColorRes.white, fontSize: 22),
-            ),
-          ),
-        ),
-      ],
-    );
+  int _selectedItem = 0;
+
+  selectItem(index) {
+    setState(() {
+      _selectedItem = index;
+      print(selectItem.toString());
+    });
   }
 
   showFirstHalf() {
     return Expanded(
       flex: 1,
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
-          showTitle(),
-          Container(
-            height: 50,
-            margin: EdgeInsets.symmetric(vertical: 5),
-            padding: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
-//            color: ColorRes.lightBg,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                    child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 8),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-//                      controller: searchCtrl,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-//                        hintText: 'Search for keywords',
-                      hintStyle: TextStyle(fontSize: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: ColorRes.colorPrimary,
-                    ),
-                  ),
-                )),
-                SizedBox(
-                  width: 5,
+      child: Container(
+        color: ColorRes.colorBgDark,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              height: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg('bg_reward_sub')),
+                      fit: BoxFit.fill)),
+              child: Text(
+                'Category',
+                style: TextStyle(color: ColorRes.white, fontSize: 15),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: Container(
+                color: ColorRes.colorBgDark,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: arrSector.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CategoryItem(
+                      selectItem, // callback function, setstate for parent
+                      index: index,
+                      isSelected: _selectedItem == index ? true : false,
+                      title: arrSector[index],
+                    );
+                  },
                 ),
-                Image(
-                  height: 35,
-                  image: AssetImage(
-                    Utils.getAssetsImg("search"),
-                  ),
-                  fit: BoxFit.fill,
-                )
-              ],
-            ),
-          ),
-          showSubHeader(),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (BuildContext context, int index) {
-                return showItem(index);
-              },
-            ),
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   showSecondHalf() {
     return Expanded(
-      flex: 1,
+      flex: 3,
       child: Container(
         child: Column(
           children: <Widget>[
+            showTitle(),
+            Card(
+              color: ColorRes.lightGrey,
+              margin: EdgeInsets.all(10),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: Container(
+                height: Utils.getDeviceHeight(context) / 3.5,
+              ),
+            ),
             Expanded(
               child: Container(
-                padding: EdgeInsets.all(20),
                 height: double.infinity,
-                child: Stack(
+                child: Row(
                   children: <Widget>[
-                    Card(
-                      elevation: 10,
-                      color: ColorRes.whiteDarkBg,
-                      margin: EdgeInsets.only(
-                          top: 20, bottom: Utils.getDeviceHeight(context) / 7),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            left: 10, right: 10, top: 30, bottom: 10),
-                        decoration: BoxDecoration(
-                          color: ColorRes.bgDescription,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                              color: ColorRes.colorPrimary, width: 1),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
-                            style: TextStyle(color: ColorRes.colorPrimary),
+                    Expanded(
+                      flex: 1,
+                      child: Stack(
+                        children: <Widget>[
+                          Card(
+                            elevation: 10,
+                            color: ColorRes.whiteDarkBg,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            margin: EdgeInsets.only(
+                                top: 14,
+                                bottom: Utils.getDeviceHeight(context) / 12,
+                                right: 5,
+                                left: 10),
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 18, bottom: 18),
+                              decoration: BoxDecoration(
+                                color: ColorRes.bgDescription,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color: ColorRes.colorPrimary, width: 1),
+                              ),
+                              child: SingleChildScrollView(
+                                child: Text(
+                                  "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                                  style:
+                                  TextStyle(color: ColorRes.colorPrimary),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 30,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal:
+                                      Utils.getDeviceWidth(context) / 10),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg("bg_achivement")),
+                                      fit: BoxFit.fill)),
+                              child: Text(
+                                'Achivement',
+                                style: TextStyle(
+                                    color: ColorRes.colorPrimary, fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 32,
+                              margin: EdgeInsets.only(
+                                  left:
+                                  Utils.getDeviceWidth(context) / 12,right:
+                                  Utils.getDeviceWidth(context) / 12,bottom: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg("bg_innovation")),
+                                      fit: BoxFit.fill)),
+                              child: Text(
+                                '10+ Innovation',
+                                style: TextStyle(
+                                    color: ColorRes.colorPrimary, fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 35,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: Utils.getDeviceWidth(context) / 10),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image:
-                                    AssetImage(Utils.getAssetsImg("bg_blue")),
-                                fit: BoxFit.fill)),
-                        child: Text(
-                          'Description',
-                          style: TextStyle(
-                              color: ColorRes.colorPrimary, fontSize: 17),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomCenter,
-                      margin: EdgeInsets.symmetric(horizontal: 30),
-                      child: InkResponse(
-                        child: Image(
-                          image:
-                              AssetImage(Utils.getAssetsImg("engage_segment")),
-                        ),
+                    Expanded(
+                      flex: 1,
+                      child: Stack(
+                        children: <Widget>[
+                          Card(
+                            elevation: 10,
+                            color: ColorRes.whiteDarkBg,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            margin: EdgeInsets.only(
+                                top: 20,
+                                bottom: Utils.getDeviceHeight(context) / 11,
+                                right: 10,
+                                left: 5),
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 18, bottom: 18),
+                              decoration: BoxDecoration(
+                                color: ColorRes.bgDescription,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color: ColorRes.colorPrimary, width: 1),
+                              ),
+                              child: SingleChildScrollView(
+                                child: Text(
+                                  "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                                  style:
+                                      TextStyle(color: ColorRes.colorPrimary,fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 30,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal:
+                                  Utils.getDeviceWidth(context) / 10),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg("bg_achivement")),
+                                      fit: BoxFit.fill)),
+                              child: Text(
+                                'Achivement',
+                                style: TextStyle(
+                                    color: ColorRes.colorPrimary, fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 32,
+                              margin: EdgeInsets.only(
+                                  left:
+                                  Utils.getDeviceWidth(context) / 12,right:
+                              Utils.getDeviceWidth(context) / 12,bottom: 20),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg("bg_innovation")),
+                                      fit: BoxFit.fill)),
+                              child: Text(
+                                'Claim: +10 Innovation',
+                                style: TextStyle(
+                                    color: ColorRes.colorPrimary, fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   ],
@@ -269,6 +334,71 @@ class _RewardsPageState extends State<RewardsPage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+//  -----------------------------
+
+}
+
+//-----------------------
+
+class CategoryItem extends StatefulWidget {
+  final String title;
+  final int index;
+  final bool isSelected;
+  Function(int) selectItem;
+
+  CategoryItem(
+    this.selectItem, {
+    Key key,
+    this.title,
+    this.index,
+    this.isSelected,
+  }) : super(key: key);
+
+  _CategoryItemState createState() => _CategoryItemState();
+}
+
+//Widget showItem(int index) {
+//  return Container(
+//    height: 35,
+//    alignment: Alignment.center,
+//    margin: EdgeInsets.only(left: 10),
+//    decoration: BoxDecoration(
+//        image: DecorationImage(
+//            image: AssetImage(Utils.getAssetsImg("bg_reward_sub2")),
+//            fit: BoxFit.fill)),
+//    child: Text(
+//      arrSector[index],
+//      style: TextStyle(color: ColorRes.white, fontSize: 15),
+//    ),
+//  );
+//}
+
+class _CategoryItemState extends State<CategoryItem> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        widget.selectItem(widget.index);
+      },
+      child: Container(
+        height: 35,
+        margin: EdgeInsets.only(left: 10, right: 10),
+//        padding: EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg(widget.isSelected
+                    ? "bg_reward_sub_selected"
+                    : "bg_reward_sub2")),
+                fit: BoxFit.fill)),
+        child: Text(
+          widget.title,
+          style: TextStyle(color: ColorRes.white, fontSize: 15),
         ),
       ),
     );

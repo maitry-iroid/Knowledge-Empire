@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 
@@ -16,10 +17,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                fit: BoxFit.fill)),
+        decoration: CommonView.getBGDecoration(),
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -50,19 +48,19 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   Container showSubHeader() {
     return Container(
-      height: 30,
-      margin: EdgeInsets.only(left: 0,right: 4,top: 5,bottom: 5),
+      height: 25,
+      margin: EdgeInsets.only(left: 0, right: 4, top: 8, bottom: 8),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fitWidth)),
+              fit: BoxFit.fill)),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 4,
             child: Text(
               'Name',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ),
@@ -70,7 +68,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 5,
             child: Text(
               'Sector',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ),
@@ -78,7 +76,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               'Value',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ),
@@ -86,7 +84,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               'Loyalty',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ),
@@ -94,7 +92,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               'Resourses',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ),
@@ -102,7 +100,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               'Engage',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ),
@@ -134,7 +132,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            'New Customers',
+            StringRes.newCustomers,
             style: TextStyle(
                 color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
             textAlign: TextAlign.center,
@@ -148,66 +146,78 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-       Expanded(
-         child:  Container(
-           height: 25,
-             padding: EdgeInsets.only(left: 10),
-             decoration: BoxDecoration(
-                 image: DecorationImage(
-                     image: AssetImage(Utils.getAssetsImg("bg_record_customer")),
-                     fit: BoxFit.fill)),
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: <Widget>[
-                 Expanded(
-                   flex: 4,
-                   child: Text(
-                     'New Customers',
-                     style: TextStyle(color: ColorRes.white, fontSize: 13,),textAlign: TextAlign.center,
-                   ),
-                 ),
-                 Expanded(
-                   flex: 5,
-                   child: Text(
-                     'Mobile Dev.',
-                     style: TextStyle(color: ColorRes.white, fontSize: 13),textAlign: TextAlign.center,
-                   ),
-                 ),
-                 Expanded(
-                   flex: 3,
-                   child: Text(
-                     '25 \$',
-                     style: TextStyle(color: ColorRes.white, fontSize: 13),textAlign: TextAlign.center,
-                   ),
-                 ),
-                 Expanded(
-                   flex: 3,
-                   child: Text(
-                     '25 d',
-                     style: TextStyle(color: ColorRes.white, fontSize: 13),textAlign: TextAlign.center,
-                   ),
-                 ),
-                 Expanded(
-                   flex: 3,
-                   child: Text(
-                     '8',
-                     style: TextStyle(color: ColorRes.white, fontSize: 15),textAlign: TextAlign.center,
-                   ),
-                 ),
-               ],
-             )
-         ),
-       ),
+        Expanded(
+          child: Container(
+              height: 25,
+              padding: EdgeInsets.only(left: 10),
+              margin: EdgeInsets.symmetric(vertical: 2),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bg_record_white")),
+                      fit: BoxFit.fill)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    flex: 4,
+                    child: Text(
+                      'New Customers',
+                      style: TextStyle(
+                        color: ColorRes.textRecordBlue,
+                        fontSize: 13,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Text(
+                      'Mobile Dev.',
+                      style: TextStyle(
+                          color: ColorRes.textRecordBlue, fontSize: 13),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      '25 \$',
+                      style: TextStyle(
+                          color: ColorRes.textRecordBlue, fontSize: 13),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      '25 d',
+                      style: TextStyle(
+                          color: ColorRes.textRecordBlue, fontSize: 13),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      '8',
+                      style: TextStyle(
+                          color: ColorRes.textRecordBlue, fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              )),
+        ),
         Container(
-          height: 28,
-          width: 80,
+          height: 26,
           alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 2,right: 2,top: 2),
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          margin: EdgeInsets.only(left: 10, right: 2),
+          padding: EdgeInsets.only(left: 15,right: 15),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("engage_now")),
+                  image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
                   fit: BoxFit.fill)),
+          child: Text('Engage Now',style: TextStyle(color: ColorRes.white,fontSize: 14),),
         ),
       ],
     );

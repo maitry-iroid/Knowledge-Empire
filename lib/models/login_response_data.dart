@@ -6,10 +6,12 @@ part 'login_response_data.g.dart';
 class LoginResponseData {
   String userId = "";
   String name = "";
+  String email = "";
   String phone = "";
   String address = "";
   String createdAt = "";
   String isPasswordChanged = "";
+  String profileImage = "";
   String accessToken = "";
 
   LoginResponseData();

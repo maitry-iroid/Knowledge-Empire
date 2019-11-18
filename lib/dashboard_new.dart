@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/menu_drawer.dart';
 
 import 'helper/constant.dart';
@@ -14,6 +16,15 @@ class DashboardNewPage extends StatefulWidget {
 }
 
 class DashboardNewPageState extends State<DashboardNewPage> {
+  @override
+  void initState()  {
+    super.initState();
+
+    if (Injector.prefs.getInt(PrefKeys.mode) == null) {
+       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +114,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                height: Utils.getDeviceHeight(context)/2.8,
+                height: Utils.getDeviceHeight(context) / 2.8,
               ),
               onTap: () {
                 performItemClick(Const.typePL);
@@ -116,7 +127,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("team")),
-                height: Utils.getDeviceHeight(context)/3.2,
+                height: Utils.getDeviceHeight(context) / 3.2,
               ),
               onTap: () {
                 performItemClick(Const.typeTeam);
@@ -129,7 +140,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
             child: InkResponse(
                 child: Image(
                   image: AssetImage(Utils.getAssetsImg("new-customer")),
-                  height: Utils.getDeviceHeight(context)/2.5,
+                  height: Utils.getDeviceHeight(context) / 2.5,
                 ),
                 onTap: () {
                   performItemClick(Const.typeNewCustomer);

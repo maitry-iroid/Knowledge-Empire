@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -17,10 +18,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       width: double.infinity,
       height: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 30),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-              fit: BoxFit.fill)),
+      decoration: CommonView.getBGDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
