@@ -4,6 +4,7 @@ import 'package:ke_employee/commonview/background.dart';
 
 import 'helper/Utils.dart';
 import 'helper/res.dart';
+import 'helper/string_res.dart';
 
 class TeamPage extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _TeamPageState extends State<TeamPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringRes.team,
+            Utils.getText(context, StringResBusiness.team),
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),
@@ -142,35 +143,36 @@ class _TeamPageState extends State<TeamPage> {
           Container(
             height: 50,
             margin: EdgeInsets.symmetric(vertical: 5),
-            padding: EdgeInsets.only(left: 10, right: 10, top: 2,bottom: 2),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
 //            color: ColorRes.lightBg,
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 8),
-                    alignment: Alignment.center,
-                    child: TextField(
-                      textAlign: TextAlign.center,
+                    child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  alignment: Alignment.center,
+                  child: TextField(
+                    textAlign: TextAlign.center,
 //                      controller: searchCtrl,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
 //                        hintText: 'Search for keywords',
-                        hintStyle: TextStyle(fontSize: 16),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
-                          ),
+                      hintStyle: TextStyle(fontSize: 16),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
                         ),
-                        filled: true,
-                        fillColor: ColorRes.colorPrimary,
                       ),
+                      filled: true,
+                      fillColor: ColorRes.colorPrimary,
                     ),
-                  )
+                  ),
+                )),
+                SizedBox(
+                  width: 5,
                 ),
-                SizedBox(width: 5,),
                 Image(
                   height: 35,
                   image: AssetImage(
@@ -209,8 +211,9 @@ class _TeamPageState extends State<TeamPage> {
                   children: <Widget>[
                     Card(
                       elevation: 10,
-                                            color: ColorRes.whiteDarkBg,
-                      margin: EdgeInsets.only(top: 20,bottom: Utils.getDeviceHeight(context)/7),
+                      color: ColorRes.whiteDarkBg,
+                      margin: EdgeInsets.only(
+                          top: 20, bottom: Utils.getDeviceHeight(context) / 7),
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 30, bottom: 10),
@@ -233,13 +236,14 @@ class _TeamPageState extends State<TeamPage> {
                       child: Container(
                         alignment: Alignment.center,
                         height: 35,
-                        margin: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/10),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: Utils.getDeviceWidth(context) / 10),
                         padding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image:
-                                AssetImage(Utils.getAssetsImg("bg_blue")),
+                                    AssetImage(Utils.getAssetsImg("bg_blue")),
                                 fit: BoxFit.fill)),
                         child: Text(
                           'Description',
@@ -253,14 +257,16 @@ class _TeamPageState extends State<TeamPage> {
                       alignment: Alignment.bottomCenter,
                       margin: EdgeInsets.symmetric(horizontal: 30),
                       child: InkResponse(
-                        child:  Image(image: AssetImage(Utils.getAssetsImg("engage_segment")),),
+                        child: Image(
+                          image:
+                              AssetImage(Utils.getAssetsImg("engage_segment")),
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
             ),
-
           ],
         ),
       ),

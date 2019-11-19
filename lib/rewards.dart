@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
+import 'helper/string_res.dart';
 
 class RewardsPage extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringRes.rewards,
+            StringResBusiness.rewards,
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),

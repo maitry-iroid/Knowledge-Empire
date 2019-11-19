@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
-class StringRes {
-  static var dashboard = "Dashboard";
-  static var businessSector = "Business Sector";
-  static var newCustomers = "New Customers";
-  static var existingCustomers = "Existing Customers";
-  static var organizations = "Organizations";
-  static var challenges = "Challenges";
-  static var pl = "P+L";
-  static var rewards = "Rewards";
-  static var ranking = "Ranking";
-  static var team = "Team";
-
-  static var editProfile = "Edit Profile";
-  static var yourName = "Your Name";
-  static var yourEmail = "Your Email";
-  static var changePassword = "Change Password";
-  static var save = "Save";
-  static var settings = "Settings";
-  static var privacyPolicy = "Privacy & Policy";
-  static var termsConditions = "Terms & Conditions";
-  static var contactUs = "Contact Us";
-  static var switchProfMode = "Switch to Professional Mode";
-  static var switchBusinessMode = "Switch to Business Mode";
-  static var logout = "Log out";
-}
 
 class ColorRes {
   static Color white = const Color(0xFFffffff);
   static Color colorPrimary = Injector.isBusinessMode ? colorBgDark : white;
   static Color headerPrimary =
       Injector.isBusinessMode ? headerDashboard : Color(0xFF000040);
+  static Color headerBlue = const Color(0xFF000040);
   static Color colorAccent = const Color(0xFFffffff);
   static Color colorBgDark = const Color(0xFF3a3a3a);
   static Color borderColor = const Color(0xFFb2b2b2);
@@ -49,6 +25,8 @@ class ColorRes {
   static Color greyText = const Color(0xFFb0afaf);
   static Color whiteBg = const Color(0xFFf1f1f1);
   static Color blue = const Color(0xFF4991e1);
+  static Color blueMenuUnSelected = const Color(0xFF819bbc);
+  static Color blueMenuSelected = const Color(0xFF3f6798);
   static Color lightGrey = const Color(0xFF484848);
   static Color hintColor = const Color(0xFF606060);
   static Color bgTextBox = const Color(0xFF333333);

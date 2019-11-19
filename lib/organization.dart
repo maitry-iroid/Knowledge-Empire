@@ -5,6 +5,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
+import 'helper/string_res.dart';
 
 class OrganizationsPage extends StatefulWidget {
   @override
@@ -116,7 +117,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                   ),
                   fit: BoxFit.fill)),
           child: Text(
-            Utils.getText(context, StringRes.organizations),
+            Utils.getText(context, StringResBusiness.organizations),
             style: TextStyle(
               color: ColorRes.colorPrimary,
               fontSize: DimenRes.titleTextSize,

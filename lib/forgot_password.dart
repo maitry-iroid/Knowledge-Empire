@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/forgot_password_request.dart';
 
@@ -80,14 +81,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getAssetsImg("email1")),
-                        width: 50,
-                        height: 50,
-                      ),
+
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(left: 8),
+                          margin: EdgeInsets.symmetric(horizontal: 10),
                           height: 40,
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
@@ -107,7 +104,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText:
-                                    'Enter registered email'.toUpperCase(),
+                                    Utils.getText(context, StringResBusiness.enterRegisteredEmail).toUpperCase(),
                                 hintStyle:
                                     TextStyle(color: ColorRes.hintColor)),
                           ),

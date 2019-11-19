@@ -7,8 +7,10 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/forgot_password.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/home.dart';
 import 'package:ke_employee/models/login_request_data.dart';
 import 'package:ke_employee/models/login_response_data.dart';
 
@@ -133,8 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                             fit: BoxFit.fill),
                       ),
                       child: Text(
-                        "Login",
-                        style: TextStyle(color: ColorRes.white),
+                        Utils.getText(context, StringResBusiness.login).toUpperCase(),
+                        style: TextStyle(color: ColorRes.white,fontSize: 15),
                       ),
                     ),
                     onTap: validateForm,
@@ -205,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
   void navigateToDashboard() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => DashboardNewPage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
         ModalRoute.withName("/login"));
   }
 
@@ -233,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
               obscureText: false,
-              style: TextStyle(color: ColorRes.white, fontSize: 13),
+              style: TextStyle(color: ColorRes.white, fontSize: 15),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'EMAIL ID',
@@ -269,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: passwordController,
               keyboardType: TextInputType.text,
               obscureText: true,
-              style: TextStyle(color: ColorRes.white, fontSize: 13),
+              style: TextStyle(color: ColorRes.white, fontSize: 15),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'PASSWORD',

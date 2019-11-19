@@ -5,7 +5,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/menu_drawer.dart';
+import 'package:ke_employee/home.dart';
 
 import 'helper/constant.dart';
 
@@ -16,6 +16,9 @@ class DashboardNewPage extends StatefulWidget {
 }
 
 class DashboardNewPageState extends State<DashboardNewPage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState()  {
     super.initState();
@@ -28,6 +31,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
         child: Container(
@@ -36,9 +40,10 @@ class DashboardNewPageState extends State<DashboardNewPage> {
           child: Stack(
             children: <Widget>[
               showMainView(),
-              HeaderView(
-                isShowMenu: false,
-              ),
+//              HeaderView(
+//                scaffoldKey: _scaffoldKey,
+//                isShowMenu: true,
+//              ),
             ],
           ),
         ),
@@ -57,19 +62,19 @@ class DashboardNewPageState extends State<DashboardNewPage> {
       child: Stack(
         children: <Widget>[
           Positioned(
-            left: 20,
-            bottom: 0,
+            left: 18,
+            bottom: 5,
             child: InkResponse(
                 child: Image(
                   image: AssetImage(Utils.getAssetsImg("business_sectors")),
-                  height: Utils.getDeviceHeight(context) / 2.8,
+                  height: Utils.getDeviceHeight(context) / 2.85,
                 ),
                 onTap: () {
                   performItemClick(Const.typeBusinessSector);
                 }),
           ),
           Positioned(
-            bottom: Utils.getDeviceHeight(context) / 4,
+            bottom: Utils.getDeviceHeight(context) / 3.9,
             left: Utils.getDeviceWidth(context) / 6,
             child: InkResponse(
               child: Image(

@@ -20,36 +20,39 @@ class HeaderView extends StatelessWidget {
 
   showHeaderView(BuildContext context) {
     return Notifier.of(context).register<String>('changeMode', (data) {
-      print('notified');
-
       return Container(
-        height: Utils.getDeviceHeight(context) / 7,
+        height: Utils.getDeviceHeight(context) / 7.5,
 //      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         color: Injector.isBusinessMode
             ? ColorRes.headerDashboard
-            : Color(0xFF000040),
+            : ColorRes.headerBlue,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             isShowMenu
                 ? InkResponse(
-              child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg("menu"),
-                ),
-                fit: BoxFit.fill,
-              ),
-              onTap: () {
-                scaffoldKey.currentState.openDrawer();
-              },
-            )
+                    child: Image(
+                      image: AssetImage(
+                        Utils.getAssetsImg("menu"),
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                    onTap: () {
+                      scaffoldKey.currentState.openDrawer();
+                    },
+                  )
                 : Container(),
             SizedBox(
               width: 8,
             ),
             InkResponse(
               child: Image(
-                image: AssetImage(Utils.getAssetsImg("ic_menu")),
+                image: AssetImage(
+                  Utils.getAssetsImg("ic_menu"),
+                ),
+                color: Injector.isBusinessMode
+                    ? ColorRes.textLightBlue
+                    : ColorRes.white,
                 width: 25,
               ),
               onTap: () {},
@@ -63,9 +66,12 @@ class HeaderView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    Injector.userData.name,
-                    style:
-                    TextStyle(color: ColorRes.textLightBlue, fontSize: 15),
+                    Injector.userData != null ? Injector.userData.name : "",
+                    style: TextStyle(
+                        color: Injector.isBusinessMode
+                            ? ColorRes.textLightBlue
+                            : ColorRes.white,
+                        fontSize: 15),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -74,8 +80,11 @@ class HeaderView extends StatelessWidget {
                   ),
                   Text(
                     Injector.userData.phone,
-                    style:
-                    TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+                    style: TextStyle(
+                        color: Injector.isBusinessMode
+                            ? ColorRes.white
+                            : ColorRes.textLightBlue,
+                        fontSize: 15),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   )
@@ -91,48 +100,52 @@ class HeaderView extends StatelessWidget {
           ],
         ),
       );
-      ;
     });
   }
 
   showHeaderItem(int type, BuildContext context) {
     return Container(
-      height: 40,
+      height: 37,
       padding: EdgeInsets.only(left: 4, right: 4),
       margin: EdgeInsets.symmetric(horizontal: 1),
-      decoration: Injector.isBusinessMode
-          ? BoxDecoration(
+      decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-              fit: BoxFit.fill))
-          : BoxDecoration(),
+              fit: BoxFit.fill)),
       child: Row(
         children: <Widget>[
-          LinearPercentIndicator(
-            animation: true,
-            animationDuration: 2000,
-            width: Utils.getDeviceWidth(context) / 12,
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            lineHeight: 18,
-            center: type == Const.typeDollar
-                ? Text(
-              ' \$ 120.00',
-              style:
-              TextStyle(color: ColorRes.colorPrimary, fontSize: 18),
-            )
-                : Text(
-              getProgress(type),
-              style: TextStyle(color: ColorRes.white, fontSize: 14),
-            ),
-            leading: Image(
-              image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
-              height: 30,
-            ),
-            percent: getProgressInt(type),
-            backgroundColor: Colors.grey,
-            progressColor: Colors.blue,
-
-          )
+          Image(
+            image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
+            height: 25,
+          ),
+          SizedBox(
+            width: 2,
+          ),
+          type != Const.typeDollar
+              ? Stack(
+                  children: <Widget>[
+                    LinearPercentIndicator(
+                      width: Utils.getDeviceWidth(context) / 12,
+                      lineHeight: 18.0,
+                      percent: getProgressInt(type),
+                      backgroundColor: Colors.grey,
+                      progressColor: Colors.blue,
+                    ),
+                    Positioned(
+                      top: 1,
+                      left: 4,
+                      bottom: 0,
+                      child: Text(
+                        getProgress(type),
+                        style: TextStyle(color: ColorRes.white, fontSize: 14),
+                      ),
+                    )
+                  ],
+                )
+              : Text(
+                  ' \$ 120.00',
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                ),
         ],
       ),
     );

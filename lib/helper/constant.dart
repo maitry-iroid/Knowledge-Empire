@@ -11,24 +11,26 @@ class Const {
   static var typeReward =6;
   static var typeRanking =7;
   static var typeTeam =8;
+  static var typeHome =9;
+  static var typeProfile =10;
 
-  static var typeChecked =9;
-  static var typePeople =10;
-  static var typeBadge =11;
-  static var typeResources =12;
-  static var typeDollar =13;
+  static var typeChecked =11;
+  static var typePeople =12;
+  static var typeBadge =13;
+  static var typeResources =14;
+  static var typeDollar =15;
 
-  static var typeHR =13;
-  static var typeServices =14;
-  static var typeMarketing =15;
-  static var typeSales =16;
-  static var typeOperations =17;
-  static var typeLegal=18;
-  static var typeFinance=19;
-  static var typeCRM=20;
+  static var typeHR =16;
+  static var typeServices =17;
+  static var typeMarketing =18;
+  static var typeSales =19;
+  static var typeOperations =20;
+  static var typeLegal=21;
+  static var typeFinance=22;
+  static var typeCRM=23;
 
-  static var businessMode=21;
-  static var professionalMode=22;
+  static var businessMode=24;
+  static var professionalMode=25;
 
 
 }

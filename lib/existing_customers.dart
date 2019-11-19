@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
+import 'helper/string_res.dart';
 
 class ExistingCustomerPage extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(image: CommonView.getBGDecoration()),
+                decoration: CommonView.getBGDecoration(),
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
@@ -125,7 +126,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringRes.existingCustomers,
+            StringResBusiness.existingCustomers,
             style: TextStyle(
                 color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
             textAlign: TextAlign.center,

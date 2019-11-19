@@ -10,16 +10,18 @@ import 'package:notifier/notifier_provider.dart';
 
 import 'helper/constant.dart';
 import 'injection/dependency_injection.dart';
-import 'menu_drawer.dart';
+import 'home.dart';
 
 void main() => setupLocator();
 
 Future setupLocator() async {
   await Injector.getInstance();
 
-  runApp(NotifierProvider(
-    child: MyApp(),
-  ),);
+  runApp(
+    NotifierProvider(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +40,13 @@ class MyApp extends StatelessWidget {
           fontFamily: 'TrulyMadly',
           backgroundColor: Injector.mode == Const.businessMode
               ? ColorRes.colorBgDark
-              : ColorRes.white),
+              : ColorRes.white,
+          textTheme: TextTheme(
+            headline: TextStyle(fontSize: 17.0,color: Injector.isBusinessMode?ColorRes.white:ColorRes.colorBgDark),
+            title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+            body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+
+          )),
       home: MyHomePage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
@@ -74,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       } else {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => DashboardNewPage()),
+            MaterialPageRoute(builder: (context) => HomePage()),
             ModalRoute.withName("/login"));
       }
     });

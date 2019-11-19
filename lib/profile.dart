@@ -9,6 +9,7 @@ import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/prefkeys.dart';
 import 'helper/res.dart';
+import 'helper/string_res.dart';
 import 'login.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -46,10 +47,6 @@ class _ProfilePageState extends State<ProfilePage> {
           decoration: CommonView.getBGDecoration(),
           child: Column(
             children: <Widget>[
-              HeaderView(
-                isShowMenu: false,
-                scaffoldKey: _scaffoldKey,
-              ),
               Expanded(
                 child: Row(
                   children: <Widget>[
@@ -106,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: EdgeInsets.only(top: 3),
               alignment: Alignment.center,
               child: Text(
-                Utils.getText(context, StringRes.settings),
+                Utils.getText(context, StringResBusiness.settings),
                 style: TextStyle(
                     color: ColorRes.white, fontSize: 17, letterSpacing: 0.5),
               ),
@@ -119,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: EdgeInsets.only(top: 15, bottom: 10),
               alignment: Alignment.center,
               child: Text(
-                Utils.getText(context, StringRes.privacyPolicy),
+                Utils.getText(context, StringResBusiness.privacyPolicy),
                 style: TextStyle(
                   color: ColorRes.white,
                   fontSize: 15,
@@ -133,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 30,
               alignment: Alignment.center,
               child: Text(
-                Utils.getText(context, StringRes.termsConditions),
+                Utils.getText(context, StringResBusiness.termsConditions),
                 style: TextStyle(
                   color: ColorRes.white,
                   fontSize: 15,
@@ -148,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: EdgeInsets.symmetric(vertical: 10),
               alignment: Alignment.center,
               child: Text(
-                Utils.getText(context, StringRes.contactUs),
+                Utils.getText(context, StringResBusiness.contactUs),
                 style: TextStyle(
                   color: ColorRes.white,
                   fontSize: 15,
@@ -168,8 +165,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Utils.getText(
                       context,
                       Injector.isBusinessMode
-                          ? StringRes.switchProfMode
-                          : StringRes.switchBusinessMode),
+                          ? StringResBusiness.switchProfMode
+                          : StringResBusiness.switchBusinessMode),
                   style: TextStyle(
                       color: ColorRes.white, fontSize: 15, letterSpacing: 0.7),
                 ),
@@ -199,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 margin: EdgeInsets.symmetric(vertical: 15),
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(context, StringRes.logout),
+                  Utils.getText(context, StringResBusiness.logout),
                   style: TextStyle(
                     color: ColorRes.white,
                     fontSize: 16,
@@ -209,7 +206,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     image: DecorationImage(
                         image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
               ),
-              onTap: () {
+              onTap: () async {
+                await Injector.prefs.clear();
+
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => LoginPage()),
@@ -248,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       fit: BoxFit.fill)),
               child: Text(
-                Utils.getText(context, StringRes.editProfile),
+                Utils.getText(context, StringResBusiness.editProfile),
                 style: TextStyle(
                   color: ColorRes.colorPrimary,
                   fontSize: 17,
@@ -322,7 +321,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 13,
                           ),
                           Text(
-                            Utils.getText(context, StringRes.yourName),
+                            Utils.getText(context, StringResBusiness.yourName),
                             style:
                                 TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
@@ -392,7 +391,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 13,
                           ),
                           Text(
-                            Utils.getText(context, StringRes.yourEmail),
+                            Utils.getText(context, StringResBusiness.yourEmail),
                             style:
                                 TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
@@ -454,12 +453,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               image: AssetImage(
                                   Utils.getAssetsImg("bg_change_pw")),
                               fit: BoxFit.fill)),
-                      child:
-                          Text(Utils.getText(context, StringRes.changePassword),
-                              style: TextStyle(
-                                color: ColorRes.white,
-                                fontSize: 15,
-                              )),
+                      child: Text(
+                          Utils.getText(
+                              context, StringResBusiness.changePassword),
+                          style: TextStyle(
+                            color: ColorRes.white,
+                            fontSize: 15,
+                          )),
                     ),
                     onTap: () {
                       Utils.showChangePasswordDialog(_scaffoldKey, true);
@@ -479,11 +479,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           image: DecorationImage(
                               image: AssetImage(Utils.getAssetsImg("bg_save")),
                               fit: BoxFit.fill)),
-                      child: Text(Utils.getText(context, StringRes.save),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
-                          )),
+                      child:
+                          Text(Utils.getText(context, StringResBusiness.save),
+                              style: TextStyle(
+                                color: ColorRes.white,
+                                fontSize: 15,
+                              )),
                     ),
                   ),
                 ),

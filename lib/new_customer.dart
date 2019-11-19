@@ -4,6 +4,8 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 
+import 'helper/string_res.dart';
+
 class NewCustomerPage extends StatefulWidget {
   @override
   _NewCustomerPageState createState() => _NewCustomerPageState();
@@ -132,7 +134,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringRes.newCustomers,
+            StringResBusiness.newCustomers,
             style: TextStyle(
                 color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
             textAlign: TextAlign.center,

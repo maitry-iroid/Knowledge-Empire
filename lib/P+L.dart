@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
+import 'helper/string_res.dart';
 
 class PLPage extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _PLPageState extends State<PLPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringRes.pl,
+            StringResBusiness.pl,
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),
