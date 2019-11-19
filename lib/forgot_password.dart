@@ -40,11 +40,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   margin: EdgeInsets.only(right: 20),
                   decoration: BoxDecoration(
                     color: ColorRes.colorBgDark,
-                    border: Border.all(color: ColorRes.colorPrimary, width: 1),
+                    border: Border.all(color: ColorRes.white, width: 1),
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
                   child: showLoginForm(),
                 )),
+            SafeArea(
+              child: IconButton(
+                icon: new Icon(Icons.arrow_back, color: Colors.white,size: 40,),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
             showCircularProgress()
           ],
         ),
@@ -54,7 +60,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   showLoginForm() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
           height: 25,
@@ -65,77 +71,58 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 topLeft: Radius.circular(9), topRight: Radius.circular(9)),
           ),
           child: Text(
-            'Forgot Password?'.toUpperCase(),
+            Utils.getText(context, StringResBusiness.forgotPassword).toUpperCase(),
             style: TextStyle(color: ColorRes.white, fontSize: 17),
           ),
         ),
         Container(
           height: 1,
-          color: ColorRes.colorPrimary,
+          color: ColorRes.white,
         ),
-        Expanded(
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          height: 40,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+              color: ColorRes.bgTextBox,
+              border: Border.all(
+                color: ColorRes.white,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: TextField(
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            obscureText: false,
+            style: TextStyle(color: ColorRes.white, fontSize: 15),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: Utils.getText(
+                        context, StringResBusiness.enterRegisteredEmail)
+                    .toUpperCase(),
+                hintStyle: TextStyle(color: ColorRes.hintColor)),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        InkResponse(
           child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: ListView(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          height: 40,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              color: ColorRes.bgTextBox,
-                              border: Border.all(
-                                color: ColorRes.white,
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextField(
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            obscureText: false,
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 13),
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText:
-                                    Utils.getText(context, StringResBusiness.enterRegisteredEmail).toUpperCase(),
-                                hintStyle:
-                                    TextStyle(color: ColorRes.hintColor)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  InkResponse(
-                    child: Container(
-                      margin: EdgeInsets.only(right: 50, left: 70, top: 20),
-                      alignment: Alignment.center,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                ExactAssetImage('assets/images/btn_login.png'),
-                            alignment: Alignment.topCenter,
-                            fit: BoxFit.fill),
-                      ),
-                      child: Text(
-                        "SEND",
-                        style: TextStyle(color: ColorRes.white),
-                      ),
-                    ),
-                    onTap: validateForm,
-                  )
-                ],
-              )),
+            alignment: Alignment.center,
+            height: 40,
+            width: 100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: ExactAssetImage(Utils.getAssetsImg('btn_login')),
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.fill),
+            ),
+            child: Text(
+              Utils.getText(context, StringResBusiness.send).toUpperCase(),
+              style: TextStyle(color: ColorRes.white,fontSize: 17),
+            ),
+          ),
+          onTap: validateForm,
         ),
       ],
     );
@@ -177,7 +164,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         } else {
           Utils.showToast(data.msg);
         }
-      }else{
+      } else {
         Utils.showToast('Something went worng.');
       }
     });

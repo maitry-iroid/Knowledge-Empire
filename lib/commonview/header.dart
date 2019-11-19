@@ -10,8 +10,9 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class HeaderView extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
+  final Function openProfile;
 
-  HeaderView({this.scaffoldKey, this.isShowMenu});
+  HeaderView({this.scaffoldKey, this.isShowMenu, this.openProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -153,24 +154,26 @@ class HeaderView extends StatelessWidget {
 
   showProfile(BuildContext context) {
     return InkResponse(
-      child: Container(
-        width: 30,
-        height: 30,
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg('user_org'))),
-            border: Border.all(color: ColorRes.textLightBlue)),
-      ),
-      onTap: () {
-        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
-        print(route1.isCurrent);
-        if (!route1.isCurrent) {
-          Navigator.push(context, route1);
-        }
-      },
-    );
+        child: Container(
+          width: 30,
+          height: 30,
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg('user_org'))),
+              border: Border.all(color: ColorRes.textLightBlue)),
+        ),
+        onTap:
+            openProfile /*() {
+        openProfile
+//        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
+//        print(route1.isCurrent);
+//        if (!route1.isCurrent) {
+//          Navigator.push(context, route1);
+//        }
+      },*/
+        );
   }
 
   String getHeaderIcon(int type) {

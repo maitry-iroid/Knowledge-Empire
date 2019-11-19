@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'helper/string_res.dart';
 
@@ -50,59 +51,63 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   Container showSubHeader() {
     return Container(
-      height: 25,
+      height: Injector.isBusinessMode?30:25,
       margin: EdgeInsets.only(left: 0, right: 4, top: 8, bottom: 8),
       decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fill)),
+          borderRadius: BorderRadius.circular(20),
+          color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+          image: Injector.isBusinessMode
+              ? DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_rounded")),
+                  fit: BoxFit.fill)
+              : null),
       child: Row(
         children: <Widget>[
           Expanded(
             flex: 4,
             child: Text(
-              'Name',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+              Utils.getText(context, StringResBusiness.name),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 5,
             child: Text(
-              'Sector',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+              Utils.getText(context, StringResBusiness.sector),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
-              'Value',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+              Utils.getText(context, StringResBusiness.value),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
-              'Loyalty',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+              Utils.getText(context, StringResBusiness.loyalty),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
-              'Resourses',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+              Utils.getText(context, StringResBusiness.resources),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
-              'Engage',
-              style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
+              Utils.getText(context, StringResBusiness.engage),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
@@ -126,13 +131,19 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         ),
         Container(
           alignment: Alignment.center,
-          height: DimenRes.titleBarHeight,
+          height:DimenRes.titleBarHeight,
           margin: EdgeInsets.only(left: 10),
           padding: EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                  fit: BoxFit.fill)),
+              border: Injector.isBusinessMode?null:Border.all(color: ColorRes.white,width: 1),
+              color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+              borderRadius:
+                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              image: Injector.isBusinessMode
+                  ? DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                      fit: BoxFit.fill)
+                  : null),
           child: Text(
             StringResBusiness.newCustomers,
             style: TextStyle(
@@ -150,20 +161,25 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       children: <Widget>[
         Expanded(
           child: Container(
-              height: 25,
+              height: Injector.isBusinessMode?30:25,
               padding: EdgeInsets.only(left: 10),
-              margin: EdgeInsets.symmetric(vertical: 2),
+              margin: EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
-                  image: DecorationImage(
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.white,
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  image: Injector.isBusinessMode?DecorationImage(
                       image: AssetImage(Utils.getAssetsImg("bg_record_white")),
-                      fit: BoxFit.fill)),
+                      fit: BoxFit.fill):null),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     flex: 4,
                     child: Text(
-                      'New Customers',
+                      Utils.getText(context, StringResBusiness.newCustomers),
                       style: TextStyle(
                         color: ColorRes.textRecordBlue,
                         fontSize: 13,
@@ -211,15 +227,20 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
         ),
         Container(
-          height: 26,
+          height: Injector.isBusinessMode?32:25,
           alignment: Alignment.center,
           margin: EdgeInsets.only(left: 10, right: 2),
-          padding: EdgeInsets.only(left: 15,right: 15),
+          padding: EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-              image: DecorationImage(
+              color: Injector.isBusinessMode?null:ColorRes.headerBlue,
+              borderRadius: Injector.isBusinessMode?null:BorderRadius.circular(20),
+              image:Injector.isBusinessMode? DecorationImage(
                   image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                  fit: BoxFit.fill)),
-          child: Text('Engage Now',style: TextStyle(color: ColorRes.white,fontSize: 14),),
+                  fit: BoxFit.fill):null),
+          child: Text(
+            Utils.getText(context, StringResBusiness.engageNow),
+            style: TextStyle(color: ColorRes.white, fontSize: 14),
+          ),
         ),
       ],
     );

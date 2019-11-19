@@ -9,7 +9,7 @@ class ColorRes {
       Injector.isBusinessMode ? headerDashboard : Color(0xFF000040);
   static Color headerBlue = const Color(0xFF000040);
   static Color colorAccent = const Color(0xFFffffff);
-  static Color colorBgDark = const Color(0xFF3a3a3a);
+  static Color colorBgDark = const Color(0xFFe8e8e8);
   static Color borderColor = const Color(0xFFb2b2b2);
   static Color header = const Color(0xFF005c97);
   static Color headerDashboard = const Color(0xFF3f3f3f);
@@ -42,10 +42,14 @@ class ColorRes {
   static Color textRecordBlue = const Color(0xFF0080ff);
   static Color textPrimary =
       Injector.isBusinessMode ? white : Color(0xFF8c8c8c);
+  static Color titleBlueProf = Color(0xFF3f6798);
+  static Color bgProf = Color(0xFFf6f6f6);
+  static Color textProf = Color(0xFF8c8c8c);
 }
 
 class DimenRes {
-  static double titleBarHeight = 35;
+  static double titleBarHeight = 33;
+  static double titleBarHeightProf = 35;
   static double drawerWidth = 0.8;
   static double closeIconSize = 0.1;
   static double closeIconPadding = 0.045;

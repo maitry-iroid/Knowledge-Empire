@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
@@ -13,6 +12,10 @@ import 'helper/string_res.dart';
 import 'login.dart';
 
 class ProfilePage extends StatefulWidget {
+
+
+
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -249,7 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Text(
                 Utils.getText(context, StringResBusiness.editProfile),
                 style: TextStyle(
-                  color: ColorRes.colorPrimary,
+                  color: ColorRes.white,
                   fontSize: 17,
                 ),
                 textAlign: TextAlign.center,

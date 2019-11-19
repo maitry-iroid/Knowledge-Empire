@@ -45,7 +45,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
             alignment: Alignment.center,
             child: Container(
                 height: Utils.getDeviceHeight(context) / 2.5,
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
                   children: <Widget>[

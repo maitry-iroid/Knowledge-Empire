@@ -5,6 +5,7 @@ import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
+import 'injection/dependency_injection.dart';
 
 class ExistingCustomerPage extends StatefulWidget {
   @override
@@ -49,13 +50,16 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Container showSubHeader() {
     return Container(
-      height: 25,
+      height: Injector.isBusinessMode?30:25,
       margin: EdgeInsets.only(top: 8, bottom: 5),
       padding: EdgeInsets.only(right: 3),
       decoration: BoxDecoration(
-          image: DecorationImage(
+          color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+          borderRadius:
+          Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode?DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fill)),
+              fit: BoxFit.fill):null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -122,9 +126,13 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           margin: EdgeInsets.only(left: 10),
           padding: EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
-              image: DecorationImage(
+              color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+              border: Injector.isBusinessMode?null:Border.all(color: ColorRes.white,width: 1),
+              borderRadius:
+              Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              image: Injector.isBusinessMode?DecorationImage(
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                  fit: BoxFit.fill)),
+                  fit: BoxFit.fill):null),
           child: Text(
             StringResBusiness.existingCustomers,
             style: TextStyle(
@@ -141,12 +149,16 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       children: <Widget>[
         Expanded(
           child: Container(
-              height: 25,
+              height: Injector.isBusinessMode?30:25,
+              margin: EdgeInsets.symmetric(vertical: 5),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  image: DecorationImage(
+                  color: Injector.isBusinessMode ? null : ColorRes.white,
+                  borderRadius:
+                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  image: Injector.isBusinessMode?DecorationImage(
                       image: AssetImage(Utils.getAssetsImg("bg_record_white")),
-                      fit: BoxFit.fill)),
+                      fit: BoxFit.fill):null),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

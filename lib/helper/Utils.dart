@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class Utils {
   static double getDeviceWidth(BuildContext context) {
@@ -158,5 +159,9 @@ class Utils {
     print('secret' + text);
 
     return generateMd5(text);
+  }
+
+  static getTitleHeight(){
+    return Injector.isBusinessMode?35.0:30.0;
   }
 }

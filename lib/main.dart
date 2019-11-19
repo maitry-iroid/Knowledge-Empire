@@ -42,10 +42,22 @@ class MyApp extends StatelessWidget {
               ? ColorRes.colorBgDark
               : ColorRes.white,
           textTheme: TextTheme(
-            headline: TextStyle(fontSize: 17.0,color: Injector.isBusinessMode?ColorRes.white:ColorRes.colorBgDark),
-            title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-            body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-
+            headline: TextStyle(
+                fontSize: 17.0,
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.colorBgDark),
+            title: TextStyle(
+                fontSize: 17,
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.colorBgDark),
+            body1: TextStyle(fontSize: 15, color: ColorRes.white),
+            body2: TextStyle(
+                fontSize: 14,
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.colorBgDark),
           )),
       home: MyHomePage(),
       routes: <String, WidgetBuilder>{
@@ -75,15 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
       String userId = Injector.prefs.getString(PrefKeys.userId);
 
       if (userId == null || userId.isEmpty) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            ModalRoute.withName("/home"));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
       } else {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-            ModalRoute.withName("/login"));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
       }
     });
   }

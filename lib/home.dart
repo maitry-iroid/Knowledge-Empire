@@ -122,6 +122,14 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  openProfile() {
+//    _onSelectItem(10);
+    if (mounted) {
+      setState(() => _selectedDrawerIndex = 10);
+//      Navigator.of(context).pop(); // close the drawer
+    }
+  }
+
   _onSelectItem(int index) {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
@@ -162,6 +170,7 @@ class HomePageState extends State<HomePage> {
                     HeaderView(
                       scaffoldKey: _scaffoldKey,
                       isShowMenu: true,
+                      openProfile: openProfile,
                     ),
                     Expanded(
                       child: _getDrawerItemWidget(_selectedDrawerIndex),
@@ -174,6 +183,7 @@ class HomePageState extends State<HomePage> {
                     HeaderView(
                       scaffoldKey: _scaffoldKey,
                       isShowMenu: true,
+                      openProfile: openProfile,
                     ),
                   ],
                 )),

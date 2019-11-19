@@ -32,6 +32,19 @@ class StringResBusiness {
   static var currentPassword = "Current Password";
   static var reEnterPassword = "Re-enter new Password";
   static var cancel = "Cancel";
+  static var send = "Send";
+  static var forgotPassword = "Forgot Password?";
+
+  static var sector = "Sector";
+  static var size = "Size";
+  static var description = "Description";
+
+  static var name = "Name";
+  static var value = "Value";
+  static var loyalty = "Loyalty";
+  static var resources = "Resources";
+  static var engage = "Engage";
+  static var engageNow = "Engage Now";
 
   //business sectors
 

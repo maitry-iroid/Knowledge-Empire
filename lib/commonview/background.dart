@@ -10,6 +10,6 @@ class CommonView {
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
                 fit: BoxFit.fill))
-        : BoxDecoration(color: ColorRes.white);
+        : BoxDecoration(color: ColorRes.bgProf);
   }
 }

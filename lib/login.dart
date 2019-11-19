@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.only(right: 20),
                   decoration: BoxDecoration(
                     color: ColorRes.colorBgDark,
-                    border: Border.all(color: ColorRes.colorPrimary, width: 1),
+                    border: Border.all(color: ColorRes.white, width: 1),
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
                   child: showLoginForm(),
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         Container(
           height: 1,
-          color: ColorRes.colorPrimary,
+          color: ColorRes.white,
         ),
         Expanded(
           child: Container(
