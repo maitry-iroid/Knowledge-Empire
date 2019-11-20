@@ -50,7 +50,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             width: 35,
           ),
           onTap: () {
-            Navigator.pop(context);
+            Utils.performBack(context);
           },
         ),
         Container(

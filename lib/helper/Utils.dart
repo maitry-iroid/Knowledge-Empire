@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 //import 'package:fluttertoast/fluttertoast.dart';
@@ -131,6 +132,13 @@ class Utils {
   static getCurrentFormattedDateTime() {
     DateTime dateTime = DateTime.now();
     return DateFormat("dd-MM-yyyy HH:mm:ss").format(dateTime);
+  }
+
+  static performBack(BuildContext context){
+    if (!Navigator.canPop(context))
+      SystemNavigator.pop();
+    else
+      Navigator.pop(context);
   }
 
   static String getText(BuildContext context, String text) {

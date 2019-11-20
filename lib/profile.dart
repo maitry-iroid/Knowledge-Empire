@@ -235,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
               width: 35,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Utils.performBack(context);
             },
           ),
           Center(

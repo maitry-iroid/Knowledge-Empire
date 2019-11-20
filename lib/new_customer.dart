@@ -126,7 +126,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             width: DimenRes.titleBarHeight,
           ),
           onTap: () {
-            Navigator.pop(context);
+            Utils.performBack(context);
           },
         ),
         Container(

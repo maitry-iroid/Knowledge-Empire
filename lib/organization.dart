@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -102,7 +103,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             width: DimenRes.titleBarHeight,
           ),
           onTap: () {
-            Navigator.pop(context);
+           Utils.performBack(context);
           },
         ),
         Container(
@@ -207,7 +208,9 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       return "Operations";
     else if (type == Const.typeLegal)
       return "Legal";
-    else if (type == Const.typeFinance) return "Finance";
-    else return "";
+    else if (type == Const.typeFinance)
+      return "Finance";
+    else
+      return "";
   }
 }

@@ -87,12 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
       String userId = Injector.prefs.getString(PrefKeys.userId);
 
       if (userId == null || userId.isEmpty) {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
       } else {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
         );

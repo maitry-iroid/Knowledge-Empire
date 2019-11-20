@@ -36,7 +36,7 @@ class _RewardsPageState extends State<RewardsPage> {
             width: DimenRes.titleBarHeight,
           ),
           onTap: () {
-            Navigator.pop(context);
+            Utils.performBack(context);
           },
         ),
         Container(

@@ -36,7 +36,7 @@ class _TeamPageState extends State<TeamPage> {
             width: 35,
           ),
           onTap: () {
-            Navigator.pop(context);
+            Utils.performBack(context);
           },
         ),
         Container(

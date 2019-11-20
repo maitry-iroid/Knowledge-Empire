@@ -3,7 +3,6 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/profile.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

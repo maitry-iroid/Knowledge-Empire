@@ -78,7 +78,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               width: DimenRes.titleBarHeight,
             ),
             onTap: () {
-              Navigator.pop(context);
+              Utils.performBack(context);
             },
           ),
           Container(
