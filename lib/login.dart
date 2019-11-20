@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        "Forgot Password?".toUpperCase(),
+                        Utils.getText(context, StringResBusiness.forgotPassword).toUpperCase(),
                         style: TextStyle(color: ColorRes.white),
                       ),
                       onTap: () {
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image:
-                                ExactAssetImage('assets/images/btn_login.png'),
+                                ExactAssetImage(Utils.getAssetsImg('btn_login')),
                             alignment: Alignment.topCenter,
                             fit: BoxFit.fill),
                       ),

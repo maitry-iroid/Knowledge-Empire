@@ -79,7 +79,7 @@ class HeaderView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    Injector.userData.phone,
+                    Injector.userData!=null?Injector.userData.phone:"",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.white

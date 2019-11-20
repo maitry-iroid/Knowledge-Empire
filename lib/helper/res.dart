@@ -9,7 +9,7 @@ class ColorRes {
       Injector.isBusinessMode ? headerDashboard : Color(0xFF000040);
   static Color headerBlue = const Color(0xFF000040);
   static Color colorAccent = const Color(0xFFffffff);
-  static Color colorBgDark = const Color(0xFFe8e8e8);
+  static Color colorBgDark = const Color(0xFF3a3a3a);
   static Color borderColor = const Color(0xFFb2b2b2);
   static Color header = const Color(0xFF005c97);
   static Color headerDashboard = const Color(0xFF3f3f3f);
