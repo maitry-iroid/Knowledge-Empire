@@ -26,37 +26,6 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  Row showTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg("back")),
-            width: DimenRes.titleBarHeight,
-          ),
-          onTap: () {
-            Utils.performBack(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height: DimenRes.titleBarHeight,
-          margin: EdgeInsets.only(left: 10),
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                  fit: BoxFit.fill)),
-          child: Text(
-            StringResBusiness.rewards,
-            style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
-    );
-  }
 
   Container showSubHeader() {
     return Container(
@@ -151,7 +120,8 @@ class _RewardsPageState extends State<RewardsPage> {
       child: Container(
         child: Column(
           children: <Widget>[
-            showTitle(),
+            SizedBox(height: 10,),
+            CommonView.showTitle(context,StringResBusiness.rewards),
             Card(
               color: ColorRes.lightGrey,
               margin: EdgeInsets.all(10),

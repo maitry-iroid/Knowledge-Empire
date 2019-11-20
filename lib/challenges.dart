@@ -4,6 +4,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
+import 'helper/string_res.dart';
 
 class ChallengesPage extends StatefulWidget {
   @override
@@ -22,7 +23,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              showTitle(),
+              SizedBox(height: 10,),
+              CommonView.showTitle(context,StringResBusiness.challenges),
               showMainBody(),
             ],
           ),
@@ -48,7 +50,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         ),
         Column(
           children: <Widget>[
-            showTitle(),
+            CommonView.showTitle(context,StringResBusiness.newCustomers),
             showMainBody(),
           ],
         ),
@@ -64,44 +66,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-  showTitle() {
-    return Container(
-//        padding: EdgeInsets.symmetric(vertical: 5),
-      margin: EdgeInsets.only(top: 10),
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          InkResponse(
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("back")),
-              width: DimenRes.titleBarHeight,
-            ),
-            onTap: () {
-              Utils.performBack(context);
-            },
-          ),
-          Container(
-            alignment: Alignment.center,
-            height: DimenRes.titleBarHeight,
-            margin: EdgeInsets.only(left: 10),
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              'Challenges',
-              style: TextStyle(
-                  color: ColorRes.colorPrimary,
-                  fontSize: DimenRes.titleTextSize),
-              textAlign: TextAlign.center,
-            ),
-          )
-        ],
-      ),
-    );
-  }
 
   showMainBody() {
     return Expanded(

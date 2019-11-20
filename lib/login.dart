@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui' as prefix0;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,8 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringResBusiness.forgotPassword).toUpperCase(),
+                        Utils.getText(context, StringResBusiness.forgotPassword)
+                            .toUpperCase(),
                         style: TextStyle(color: ColorRes.white),
                       ),
                       onTap: () {
@@ -128,14 +130,15 @@ class _LoginPageState extends State<LoginPage> {
                           vertical: 5),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image:
-                                ExactAssetImage(Utils.getAssetsImg('btn_login')),
+                            image: ExactAssetImage(
+                                Utils.getAssetsImg('btn_login')),
                             alignment: Alignment.topCenter,
                             fit: BoxFit.fill),
                       ),
                       child: Text(
-                        Utils.getText(context, StringResBusiness.login).toUpperCase(),
-                        style: TextStyle(color: ColorRes.white,fontSize: 15),
+                        Utils.getText(context, StringResBusiness.login)
+                            .toUpperCase(),
+                        style: TextStyle(color: ColorRes.white, fontSize: 15),
                       ),
                     ),
                     onTap: validateForm,
@@ -183,6 +186,8 @@ class _LoginPageState extends State<LoginPage> {
           await Injector.prefs.setString(
               PrefKeys.user, json.encode(loginResponseData.toJson()));
 
+          Injector.userData = loginResponseData;
+
           setState(() {
             isLoading = false;
           });
@@ -219,29 +224,29 @@ class _LoginPageState extends State<LoginPage> {
           height: 50,
         ),
         Expanded(
-          child: Container(
-            margin: EdgeInsets.only(left: 8),
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                color: ColorRes.bgTextBox,
-                border: Border.all(
-                  color: ColorRes.white,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TextField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              obscureText: false,
-              style: TextStyle(color: ColorRes.white, fontSize: 15),
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'EMAIL ID',
-                  hintStyle: TextStyle(color: ColorRes.hintColor)),
-            ),
-          ),
-        )
+            child: Container(
+                decoration: BoxDecoration(
+                    color: ColorRes.bgTextBox,
+                    border: Border.all(width: 1, color: ColorRes.white),
+                    borderRadius: BorderRadius.circular(10)),
+                margin: EdgeInsets.only(left: 8),
+                child: Center(
+                  child: TextField(
+                    controller: emailController,
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 16, color: ColorRes.white),
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10),
+                        hintText:
+                            Utils.getText(context, StringResBusiness.emailId)
+                                .toUpperCase(),
+                        hintStyle: TextStyle(color: ColorRes.hintColor),
+                        border: InputBorder.none),
+                  ),
+                )))
       ],
     );
   }
@@ -255,29 +260,30 @@ class _LoginPageState extends State<LoginPage> {
           height: 50,
         ),
         Expanded(
-          child: Container(
-            height: 40,
-            margin: EdgeInsets.only(left: 8),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                color: ColorRes.bgTextBox,
-                border: Border.all(
-                  color: ColorRes.white,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TextField(
-              controller: passwordController,
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              style: TextStyle(color: ColorRes.white, fontSize: 15),
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'PASSWORD',
-                  hintStyle: TextStyle(color: ColorRes.hintColor)),
-            ),
-          ),
-        )
+            child: Container(
+                decoration: BoxDecoration(
+                    color: ColorRes.bgTextBox,
+                    border: Border.all(width: 1, color: ColorRes.white),
+                    borderRadius: BorderRadius.circular(10)),
+                margin: EdgeInsets.only(left: 8),
+                child: Center(
+                  child: TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 16, color: ColorRes.white),
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10),
+                        hintText:
+                            Utils.getText(context, StringResBusiness.password)
+                                .toUpperCase(),
+                        hintStyle: TextStyle(color: ColorRes.hintColor),
+                        border: InputBorder.none),
+                  ),
+                )))
       ],
     );
   }

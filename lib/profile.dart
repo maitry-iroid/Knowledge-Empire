@@ -12,10 +12,6 @@ import 'helper/string_res.dart';
 import 'login.dart';
 
 class ProfilePage extends StatefulWidget {
-
-
-
-
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -54,12 +50,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   children: <Widget>[
                     showFirstHalf(),
-                    Container(
-                      margin: EdgeInsets.only(top: 40, bottom: 40, left: 25),
-                      height: double.infinity,
-                      width: 1,
-                      color: ColorRes.greyText.withOpacity(0.5),
-                    ),
+//                    Container(
+//                      margin: EdgeInsets.only( left: 25),
+//                      height: double.infinity,
+//                      width: 1,
+//                      color: ColorRes.greyText.withOpacity(0.5),
+//                    ),
                     showSecondHalf()
                   ],
                 ),
@@ -95,130 +91,149 @@ class _ProfilePageState extends State<ProfilePage> {
   showSecondHalf() {
     return Expanded(
       flex: 1,
-      child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: Utils.getDeviceWidth(context) / 12),
-        child: ListView(
-          children: <Widget>[
-            Container(
-              height: 35,
-              margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.only(top: 3),
-              alignment: Alignment.center,
-              child: Text(
-                Utils.getText(context, StringResBusiness.settings),
-                style: TextStyle(
-                    color: ColorRes.white, fontSize: 17, letterSpacing: 0.5),
-              ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('bg_setting')))),
-            ),
-            Container(
-              height: 30,
-              margin: EdgeInsets.only(top: 15, bottom: 10),
-              alignment: Alignment.center,
-              child: Text(
-                Utils.getText(context, StringResBusiness.privacyPolicy),
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: 15,
-                ),
-              ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
-            ),
-            Container(
-              height: 30,
-              alignment: Alignment.center,
-              child: Text(
-                Utils.getText(context, StringResBusiness.termsConditions),
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: 15,
-                ),
-              ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
-            ),
-            Container(
-              height: 30,
-              margin: EdgeInsets.symmetric(vertical: 10),
-              alignment: Alignment.center,
-              child: Text(
-                Utils.getText(context, StringResBusiness.contactUs),
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: 15,
-                ),
-              ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('bg_privacy')))),
-            ),
-            InkResponse(
-              child: Container(
-                height: 35,
-                margin: EdgeInsets.only(top: 15),
-                padding: EdgeInsets.only(left: 8, right: 8),
+      child: Card(
+        color: Injector.isBusinessMode?Colors.transparent:ColorRes.bgProf,
+        margin: EdgeInsets.all(0),
+        elevation: Injector.isBusinessMode?0:10,
+        child: Container(
+          color: Colors.transparent,
+          margin: EdgeInsets.symmetric(
+              horizontal: Utils.getDeviceWidth(context) / 12),
+          child: ListView(
+            children: <Widget>[
+              Container(
+                height: Injector.isBusinessMode?35:30,
+                margin: EdgeInsets.only(top: 15,left: 50,right: 50),
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(
-                      context,
-                      Injector.isBusinessMode
-                          ? StringResBusiness.switchProfMode
-                          : StringResBusiness.switchBusinessMode),
+                  Utils.getText(context, StringResBusiness.settings),
                   style: TextStyle(
-                      color: ColorRes.white, fontSize: 15, letterSpacing: 0.7),
+                      color: ColorRes.white, fontSize: 17, letterSpacing: 0.5),
                 ),
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            Utils.getAssetsImg('bg_switch_to_prfsnl')),
-                        fit: BoxFit.fill)),
+                    color: Injector.isBusinessMode?null:ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode?null:BorderRadius.circular(20),
+                    image:Injector.isBusinessMode? DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg('bg_setting'))):null),
               ),
-              onTap: () async {
-                if (Injector.isBusinessMode)
-                  await Injector.prefs
-                      .setInt(PrefKeys.mode, Const.professionalMode);
-                else
-                  await Injector.prefs
-                      .setInt(PrefKeys.mode, Const.businessMode);
-                setState(() {
-                  Injector.isBusinessMode = !Injector.isBusinessMode;
-                });
-
-                _notifier.notify('changeMode', 'Sending data from notfier!');
-              },
-            ),
-            InkResponse(
-              child: Container(
-                height: 33,
-                margin: EdgeInsets.symmetric(vertical: 15),
+              Container(
+                height: 30,
+                margin: EdgeInsets.only(top: 15, bottom: 10),
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(context, StringResBusiness.logout),
+                  Utils.getText(context, StringResBusiness.privacyPolicy),
                   style: TextStyle(
                     color: ColorRes.white,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                 ),
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
+                    color: Injector.isBusinessMode?null:ColorRes.bgSettings,
+                    borderRadius: Injector.isBusinessMode?null:BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg('bg_privacy')))
+                        : null),
               ),
-              onTap: () async {
-                await Injector.prefs.clear();
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                child: Text(
+                  Utils.getText(context, StringResBusiness.termsConditions),
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 15,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode?null:ColorRes.bgSettings,
+                    borderRadius: Injector.isBusinessMode?null:BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg('bg_privacy')))
+                        : null),
+              ),
+              Container(
+                height: 30,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                alignment: Alignment.center,
+                child: Text(
+                  Utils.getText(context, StringResBusiness.contactUs),
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 15,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode?null:ColorRes.bgSettings,
+                    borderRadius: Injector.isBusinessMode?null:BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg('bg_privacy')))
+                        : null),
+              ),
+              InkResponse(
+                child: Container(
+                  height: 35,
+                  margin: EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  alignment: Alignment.center,
+                  child: Text(
+                    Utils.getText(
+                        context,
+                        Injector.isBusinessMode
+                            ? StringResBusiness.switchProfMode
+                            : StringResBusiness.switchBusinessMode),
+                    style: TextStyle(
+                        color: ColorRes.white, fontSize: 15, letterSpacing: 0.7),
+                  ),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg('bg_switch_to_prfsnl')),
+                          fit: BoxFit.fill)),
+                ),
+                onTap: () async {
+                  if (Injector.isBusinessMode)
+                    await Injector.prefs
+                        .setInt(PrefKeys.mode, Const.professionalMode);
+                  else
+                    await Injector.prefs
+                        .setInt(PrefKeys.mode, Const.businessMode);
+                  setState(() {
+                    Injector.isBusinessMode = !Injector.isBusinessMode;
+                  });
 
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    ModalRoute.withName("/home"));
-              },
-            )
-          ],
+                  _notifier.notify('changeMode', 'Sending data from notfier!');
+                },
+              ),
+              InkResponse(
+                child: Container(
+                  height: 33,
+                  margin: EdgeInsets.symmetric(vertical: 15),
+                  alignment: Alignment.center,
+                  child: Text(
+                    Utils.getText(context, StringResBusiness.logout),
+                    style: TextStyle(
+                      color: ColorRes.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
+                ),
+                onTap: () async {
+                  await Injector.prefs.clear();
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      ModalRoute.withName("/home"));
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -241,14 +256,16 @@ class _ProfilePageState extends State<ProfilePage> {
           Center(
             child: Container(
               alignment: Alignment.center,
-              height: 35,
-              margin: EdgeInsets.symmetric(horizontal: 90),
+              height: Utils.getTitleHeight(),
+              margin: EdgeInsets.only(left: 90,right:90,top: 2),
               decoration: BoxDecoration(
-                  image: DecorationImage(
+                  color: Injector.isBusinessMode?null:ColorRes.titleBlueProf,
+                  borderRadius: Injector.isBusinessMode?null:BorderRadius.circular(20),
+                  image: Injector.isBusinessMode?DecorationImage(
                       image: AssetImage(
                         Utils.getAssetsImg("bg_setting"),
                       ),
-                      fit: BoxFit.fill)),
+                      fit: BoxFit.fill):null),
               child: Text(
                 Utils.getText(context, StringResBusiness.editProfile),
                 style: TextStyle(

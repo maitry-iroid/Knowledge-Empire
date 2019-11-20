@@ -12,6 +12,7 @@ class StringResBusiness {
   static var team = "Team";
   static var profile = "Profile";
 
+  static var emailId = "Email Id";
   static var editProfile = "Edit Profile";
   static var yourName = "Your Name";
   static var yourEmail = "Your Email";
@@ -28,6 +29,7 @@ class StringResBusiness {
 
   static var enterRegisteredEmail = "Enter Registered Email Id";
 
+  static var password = "Password";
   static var newPassword = "New Password";
   static var currentPassword = "Current Password";
   static var reEnterPassword = "Re-enter new Password";
@@ -45,6 +47,10 @@ class StringResBusiness {
   static var resources = "Resources";
   static var engage = "Engage";
   static var engageNow = "Engage Now";
+  static var engageSegment = "Engage Segment";
+  static var endRel = "End Rel.";
+
+  static var searchForKeywords = "Search for keywords";
 
   //business sectors
 

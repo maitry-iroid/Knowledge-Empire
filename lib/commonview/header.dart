@@ -105,7 +105,7 @@ class HeaderView extends StatelessWidget {
 
   showHeaderItem(int type, BuildContext context) {
     return Container(
-      height: 37,
+      height: 40,
       padding: EdgeInsets.only(left: 4, right: 4),
       margin: EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
@@ -124,15 +124,21 @@ class HeaderView extends StatelessWidget {
           type != Const.typeDollar
               ? Stack(
                   children: <Widget>[
-                    LinearPercentIndicator(
-                      width: Utils.getDeviceWidth(context) / 12,
-                      lineHeight: 18.0,
-                      percent: getProgressInt(type),
-                      backgroundColor: Colors.grey,
-                      progressColor: Colors.blue,
-                    ),
+                   Container(
+                     height: 30,
+                     alignment: Alignment.center,
+                     decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_rounded_1')))),
+                     padding: EdgeInsets.symmetric(vertical: 2),
+                     child:  LinearPercentIndicator(
+                       width: Utils.getDeviceWidth(context) / 12,
+                       lineHeight: 16.0,
+                       percent: getProgressInt(type),
+                       backgroundColor: Colors.transparent,
+                       progressColor: Colors.blue,
+                     ),
+                   ),
                     Positioned(
-                      top: 1,
+                      top: 6,
                       left: 4,
                       bottom: 0,
                       child: Text(

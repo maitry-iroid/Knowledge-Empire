@@ -134,10 +134,31 @@ class Utils {
     return DateFormat("dd-MM-yyyy HH:mm:ss").format(dateTime);
   }
 
-  static performBack(BuildContext context){
-    if (!Navigator.canPop(context))
-      SystemNavigator.pop();
-    else
+  static performBack(BuildContext context) {
+    if (!Navigator.canPop(context)) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text('Are you sure want to exit the app?'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Yes'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    SystemNavigator.pop();
+                  },
+                ),
+                FlatButton(
+                  child: Text('No'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            );
+          });
+    } else
       Navigator.pop(context);
   }
 
@@ -160,16 +181,15 @@ class Utils {
   }
 
   static getSecret(String email, String password) {
-    String text = email.split('').reversed.join() +
-        password.split('').reversed.join();
-
+    String text =
+        email.split('').reversed.join() + password.split('').reversed.join();
 
     print('secret' + text);
 
     return generateMd5(text);
   }
 
-  static getTitleHeight(){
-    return Injector.isBusinessMode?35.0:30.0;
+  static getTitleHeight() {
+    return Injector.isBusinessMode ? 35.0 : 30.0;
   }
 }

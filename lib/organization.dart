@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
@@ -27,7 +28,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           SizedBox(
             height: 10,
           ),
-          showTitle(),
+          CommonView.showTitle(context,StringResBusiness.organizations),
           Expanded(
             child: Stack(
               children: <Widget>[
@@ -39,7 +40,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                       right: Utils.getDeviceWidth(context) / 10,
                       top: Utils.getDeviceHeight(context) / 5),
                   child: Image(
-                    image: AssetImage(Utils.getAssetsImg('table_org')),
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode?'table_org':'org_table_prof')),
                   ),
                 ),
                 Positioned(
@@ -90,48 +91,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     );
   }
 
-  showTitle() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: Container(),
-        ),
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg("back")),
-            width: DimenRes.titleBarHeight,
-          ),
-          onTap: () {
-           Utils.performBack(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height: DimenRes.titleBarHeight,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    Utils.getAssetsImg("bg_setting"),
-                  ),
-                  fit: BoxFit.fill)),
-          child: Text(
-            Utils.getText(context, StringResBusiness.organizations),
-            style: TextStyle(
-              color: ColorRes.colorPrimary,
-              fontSize: DimenRes.titleTextSize,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Expanded(
-          child: Container(),
-        ),
-      ],
-    );
-  }
 
   showItem(int type) {
     return Column(
@@ -141,13 +100,13 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           children: <Widget>[
             Text(
               getTitle(type),
-              style: TextStyle(fontSize: 15, color: ColorRes.white),
+              style: TextStyle(fontSize: 15, color: ColorRes.hintColor),
             ),
             SizedBox(
               width: 5,
             ),
             Image(
-              image: AssetImage(Utils.getAssetsImg('info')),
+              image: AssetImage(Utils.getAssetsImg('info'),),color: Injector.isBusinessMode?ColorRes.white:ColorRes.hintColor,
               fit: BoxFit.fill,
               width: 15,
             )
@@ -177,7 +136,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               lineHeight: 15.0,
               percent: 0.5,
               backgroundColor: Colors.grey,
-              progressColor: Colors.blue,
+              progressColor: Injector.isBusinessMode?Colors.blue:ColorRes.titleBlueProf,
             ),
             SizedBox(
               width: 5,

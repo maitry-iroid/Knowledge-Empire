@@ -29,7 +29,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      showTitle(),
+                      CommonView.showTitle(context,StringResBusiness.existingCustomers),
                       showSubHeader(),
                       showItems()
                     ],
@@ -65,40 +65,40 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Expanded(
             flex: 6,
             child: Text(
-              'Name',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              Utils.getText(context, StringResBusiness.name),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 7,
             child: Text(
-              'Sector',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              Utils.getText(context, StringResBusiness.sector),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 4,
             child: Text(
-              'Value',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              Utils.getText(context, StringResBusiness.value),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 4,
             child: Text(
-              'Loyalty',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              Utils.getText(context, StringResBusiness.loyalty),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
           Expanded(
             flex: 2,
             child: Text(
-              'End Rel.',
-              style: TextStyle(color: ColorRes.colorPrimary),
+              Utils.getText(context, StringResBusiness.endRel),
+              style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
           ),
@@ -107,42 +107,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     );
   }
 
-  Row showTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg("back")),
-            width: DimenRes.titleBarHeight,
-          ),
-          onTap: () {
-            Utils.performBack(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height: DimenRes.titleBarHeight,
-          margin: EdgeInsets.only(left: 10),
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          decoration: BoxDecoration(
-              color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-              border: Injector.isBusinessMode?null:Border.all(color: ColorRes.white,width: 1),
-              borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(20),
-              image: Injector.isBusinessMode?DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                  fit: BoxFit.fill):null),
-          child: Text(
-            StringResBusiness.existingCustomers,
-            style: TextStyle(
-                color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
-    );
-  }
 
   Widget showItem(int index) {
     return Row(

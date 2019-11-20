@@ -28,7 +28,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               SizedBox(
                 height: 10,
               ),
-              showTitle(),
+              CommonView.showTitle(context,StringResBusiness.newCustomers),
               showSubHeader(),
               showItems()
             ],
@@ -116,44 +116,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     );
   }
 
-  Row showTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg("back")),
-            width: DimenRes.titleBarHeight,
-          ),
-          onTap: () {
-            Utils.performBack(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height:DimenRes.titleBarHeight,
-          margin: EdgeInsets.only(left: 10),
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          decoration: BoxDecoration(
-              border: Injector.isBusinessMode?null:Border.all(color: ColorRes.white,width: 1),
-              color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
-              image: Injector.isBusinessMode
-                  ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                      fit: BoxFit.fill)
-                  : null),
-          child: Text(
-            StringResBusiness.newCustomers,
-            style: TextStyle(
-                color: ColorRes.colorPrimary, fontSize: DimenRes.titleTextSize),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
-    );
-  }
 
   Widget showItem(int index) {
     return Row(
@@ -182,7 +144,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       Utils.getText(context, StringResBusiness.newCustomers),
                       style: TextStyle(
                         color: ColorRes.textRecordBlue,
-                        fontSize: 13,
+                        fontSize: 15,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -192,7 +154,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     child: Text(
                       'Mobile Dev.',
                       style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 13),
+                          color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -201,7 +163,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     child: Text(
                       '25 \$',
                       style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 13),
+                          color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -210,7 +172,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     child: Text(
                       '25 d',
                       style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 13),
+                          color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
                   ),

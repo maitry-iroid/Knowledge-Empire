@@ -27,6 +27,21 @@ class _RankingPageState extends State<RankingPage> {
 
   showFirstColumn() {
 
+//   return ListView.builder(
+//      scrollDirection: Axis.vertical,
+////      shrinkWrap: true,
+//      physics: ClampingScrollPhysics(),
+//      itemCount: arrTime.length,
+//      itemBuilder: (BuildContext context, int index) {
+//        return TimeItem(
+//          selectTime, // callback function, setstate for parent
+//          index: index,
+//          isSelected: _selectedTime == index ? true : false,
+//          title: arrTime[index],
+//        );
+//      },
+//    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -70,9 +85,11 @@ class _RankingPageState extends State<RankingPage> {
   int _selectedTime = 0;
   int _selectedOption = 0;
 
+  var arr = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
+  var arrTime = ['Day', 'Month', 'Year'];
+
   showSecondColumn() {
-    var arr = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
-    var arrTime = ['Day', 'Month', 'Year'];
+
 
     return Expanded(
       child: Column(
@@ -458,6 +475,51 @@ class _CustomItemState extends State<CustomItem> {
 }
 
 class _TimeItemState extends State<TimeItem> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        widget.selectItem(widget.index);
+      },
+      child: Container(
+        width: Utils.getDeviceWidth(context) / 12,
+        margin: EdgeInsets.symmetric(vertical: 11, horizontal: 3),
+//        padding: EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg(widget.isSelected
+                    ? "ranking_selected"
+                    : "ranking_unselected")),
+                fit: BoxFit.fill)),
+        child: Text(
+          widget.title,
+          style: TextStyle(color: ColorRes.white, fontSize: 15),
+        ),
+      ),
+    );
+  }
+}
+//-----------------------
+
+ class ProfitItem extends StatefulWidget {
+  final String title;
+  final int index;
+  final bool isSelected;
+  Function(int) selectItem;
+
+  ProfitItem(
+    this.selectItem, {
+    Key key,
+    this.title,
+    this.index,
+    this.isSelected,
+  }) : super(key: key);
+
+  _ProfitItemState createState() => _ProfitItemState();
+}
+
+class _ProfitItemState extends State<TimeItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

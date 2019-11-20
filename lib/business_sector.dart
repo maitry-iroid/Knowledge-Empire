@@ -40,41 +40,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     );
   }
 
-  Row showTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg("back")),
-            width: 35,
-          ),
-          onTap: () {
-            Utils.performBack(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height: Utils.getTitleHeight(),
-          margin: EdgeInsets.only(left: 10),
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          decoration: BoxDecoration(
-              color: Injector.isBusinessMode?null:ColorRes.titleBlueProf,
-              borderRadius: BorderRadius.circular(20),
-              image: Injector.isBusinessMode
-                  ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                      fit: BoxFit.fill)
-                  : null),
-          child: Text(
-            Utils.getText(context, StringResBusiness.businessSector),
-            style: TextStyle(color: ColorRes.white, fontSize: 17),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
-    );
-  }
 
   Container showSubHeader() {
     return Container(
@@ -121,7 +86,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           child: Container(
             height: Utils.getTitleHeight(),
             alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 10, top: 5,right: 10),
+            margin: EdgeInsets.only(left: 10, top: 5, right: 10),
             decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? null : ColorRes.white,
                 borderRadius:
@@ -171,12 +136,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFirstHalf() {
     return Expanded(
       flex: 1,
-      child: Column(
+      child: ListView(
         children: <Widget>[
           SizedBox(
             height: 10,
           ),
-          showTitle(),
+          CommonView.showTitle(context, StringResBusiness.businessSector),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
             padding: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
@@ -185,33 +150,34 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               children: <Widget>[
                 Expanded(
                     child: Container(
-                  height: 30,
-                  padding: EdgeInsets.only(top: 8, left: 15, right: 15),
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: ColorRes.white,
-                  ),
-                  alignment: Alignment.topLeft,
-                  child: TextField(
-                    textAlign: TextAlign.left,
-//                      controller: searchCtrl,
-                    keyboardType: TextInputType.text,
-
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search for keywords',
-                      hintStyle: TextStyle(fontSize: 15),
-                    ),
-                  ),
-                )),
+                        margin:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: ColorRes.white,
+                        ),
+                        alignment: Alignment.topLeft,
+                        child: TextField(
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontSize: 14, color: ColorRes.hintColor),
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 10),
+                              hintText: Utils.getText(
+                                  context, StringResBusiness.searchForKeywords),
+                              hintStyle: TextStyle(color: ColorRes.hintColor),
+                              border: InputBorder.none),
+                        ))),
                 SizedBox(
                   width: 5,
                 ),
                 Image(
                   height: 35,
                   image: AssetImage(
-                    Utils.getAssetsImg("search"),
+                    Utils.getAssetsImg(Injector.isBusinessMode?"search":'search_prof'),
                   ),
                   fit: BoxFit.fill,
                 )
@@ -219,13 +185,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ),
           ),
           showSubHeader(),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (BuildContext context, int index) {
-                return showItem(index);
-              },
-            ),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: arrSector.length,
+            itemBuilder: (BuildContext context, int index) {
+              return showItem(index);
+            },
           )
         ],
       ),
@@ -261,7 +227,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                             ? ColorRes.bgDescription
                             : ColorRes.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Injector.isBusinessMode?Border.all(color: ColorRes.white, width: 1):null,
+                        border: Injector.isBusinessMode
+                            ? Border.all(color: ColorRes.white, width: 1)
+                            : null,
                       ),
                       child: SingleChildScrollView(
                         child: Text(
@@ -284,7 +252,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                          color: Injector.isBusinessMode?null:ColorRes.titleBlueProf,
+                          color: Injector.isBusinessMode
+                              ? null
+                              : ColorRes.titleBlueProf,
                           borderRadius: BorderRadius.circular(20),
                           image: Injector.isBusinessMode
                               ? DecorationImage(
@@ -299,19 +269,34 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       ),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    margin: EdgeInsets.symmetric(horizontal: 30),
-                    child: InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("engage_segment")),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
           ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: Utils.getTitleHeight(),
+            margin: EdgeInsets.symmetric(
+                horizontal: Utils.getDeviceWidth(context) / 8,vertical: 20),
+            padding:
+            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+                color: Injector.isBusinessMode
+                    ? null
+                    : ColorRes.headerBlue,
+                borderRadius: BorderRadius.circular(20),
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                    image:
+                    AssetImage(Utils.getAssetsImg("bg_blue")),
+                    fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(context, StringResBusiness.engageSegment),
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              textAlign: TextAlign.center,
+            ),
+          )
         ],
       ),
     );
