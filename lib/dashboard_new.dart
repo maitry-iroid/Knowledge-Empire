@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_introduction_tooltip/flutter_introduction_tooltip.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -170,7 +173,8 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                   height: Utils.getDeviceHeight(context) / 3,
                 ),
                 onTap: () {
-                  performItemClick(Const.typeChallenges);
+//                  performItemClick(Const.typeChallenges);
+                showTutorial(context);
                 }),
           )
         ],
@@ -186,4 +190,31 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                   initialPosition: type,
                 )));
   }
+
+  bool isShowing = false;
+
+  void showTutorial(BuildContext context) async {
+    if (!isShowing) {
+      new Timer(Duration(milliseconds: 100), () async {
+        try {
+          FlutterIntroductionTooltip.showTopTutorialOnWidget(
+              context,
+              _scaffoldKey,
+              Colors.blue,
+                  () => popAndNextTutorial(context),
+              "MAMA",
+              "MAMA IS A LOREM IPSUM",
+              "ALRIGHT");
+          print("SHOWING");
+          setState(() {
+            isShowing = true;
+          });
+        } catch (e) {
+          print("ERROR $e");
+        }
+      });
+    }
+  }
+
+  popAndNextTutorial(BuildContext context) {}
 }

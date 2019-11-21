@@ -258,7 +258,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     });
 
     ChangePasswordRequest rq = ChangePasswordRequest();
-    rq.email = Injector.prefs.getString(PrefKeys.email);
+    rq.userId = Injector.userData.userId;
     rq.oldPassword = Utils.generateMd5(pass1Controller.text.trim());
     rq.password = Utils.generateMd5(pass2Controller.text.trim());
 

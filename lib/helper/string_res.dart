@@ -52,6 +52,14 @@ class StringResBusiness {
 
   static var searchForKeywords = "Search for keywords";
 
+  static var textHr = "Lets hire 10 more employees in HR for X \$ to increase the total employee capacity by Y";
+  static var textServices = "If we hire 10 service engineers for X \$ we will be able to increase our customer capacity by Y";
+  static var textMarketing = "Lets hire 10 more marketing professionals for X \$ to increasecustomer revenues by Y";
+  static var textSales = "We need to hire 10 more Sales Reps for X \$ to increase our capacity to engage new customers by Y";
+  static var textOperations = "With 10 more employees in Operations for X \$ wecould reduce the needed Sales resources to win new customers by Y";
+  static var textCRM ="An investment of 10 employees and X \$ in CRM will enable us to increase customer loyalty by Y";
+  static var textFinance ="If we invest into 10 more Accountants for X \$ we will be able to reduce our cost by Y";
+  static var textLegal ="We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y";
   //business sectors
 
 

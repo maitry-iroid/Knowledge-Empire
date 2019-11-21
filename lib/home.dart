@@ -96,29 +96,29 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new DashboardNewPage();
+        return DashboardNewPage();
       case 1:
-        return new BusinessSectorPage();
+        return BusinessSectorPage();
       case 2:
-        return new NewCustomerPage();
+        return NewCustomerPage();
       case 3:
-        return new ExistingCustomerPage();
+        return ExistingCustomerPage();
       case 4:
-        return new RewardsPage();
+        return RewardsPage();
       case 5:
-        return new TeamPage();
+        return TeamPage();
       case 6:
-        return new ChallengesPage();
+        return ChallengesPage();
       case 7:
-        return new OrganizationsPage();
+        return OrganizationsPage();
       case 8:
-        return new PLPage();
+        return PLPage();
       case 9:
-        return new RankingPage();
+        return RankingPage();
       case 10:
-        return new ProfilePage();
+        return ProfilePage();
       default:
-        return new Text("Error");
+        return Text("Error");
     }
   }
 

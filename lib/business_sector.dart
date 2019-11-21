@@ -51,7 +51,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               Injector.isBusinessMode ? null : BorderRadius.circular(20),
           image: Injector.isBusinessMode
               ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_rounded")),
+                  image: AssetImage(Utils.getAssetsImg("business_sec_header")),
                   fit: BoxFit.fill)
               : null),
       child: Row(
