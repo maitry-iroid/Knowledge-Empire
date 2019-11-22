@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
@@ -23,6 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   TextEditingController nameController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -44,28 +46,33 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor:
           Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
       body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: CommonView.getBGDecoration(),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Row(
-                  children: <Widget>[
-                    showFirstHalf(),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: CommonView.getBGDecoration(),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[
+                        showFirstHalf(),
 //                    Container(
 //                      margin: EdgeInsets.only( left: 25),
 //                      height: double.infinity,
 //                      width: 1,
 //                      color: ColorRes.greyText.withOpacity(0.5),
 //                    ),
-                    showSecondHalf()
-                  ],
-                ),
-              )
-            ],
-          ),
+                        showSecondHalf()
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            CommonView.showCircularProgress(isLoading)
+          ],
         ),
       ),
     );
@@ -326,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   image: new DecorationImage(
                       fit: BoxFit.fill,
                       image: _image != null
-                          ? Image.file(_image)
+                          ? FileImage(_image)
                           : new AssetImage(
                               Utils.getAssetsImg("dashboard-background")))),
             ),
@@ -343,7 +350,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-      onTap: getImage,
+//      onTap: getImage,
     );
   }
 
@@ -471,8 +478,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: Injector.prefs
-                                        .getString(PrefKeys.email),
+                                    hintText: Injector.userData.email,
                                     hintStyle:
                                         TextStyle(color: ColorRes.hintColor)),
                               ),
@@ -539,6 +545,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontSize: 15,
                               )),
                     ),
+                    onTap: updateProfile,
                   ),
                 ),
                 Container(
@@ -548,5 +555,32 @@ class _ProfilePageState extends State<ProfilePage> {
             )
           ],
         ));
+  }
+
+  updateProfile() {
+    var req = {
+      'userId': Injector.userData.userId,
+      'name': nameController.text.trim(),
+      'profileImage':""
+    };
+
+    setState(() {
+      isLoading = true;
+    });
+
+    WebApi().updateProfile(req, _image).then((data) {
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+          Utils.showToast("Profile updated successfully!");
+        }
+      } else {
+        Utils.showToast("Something went wrong.");
+      }
+    });
   }
 }

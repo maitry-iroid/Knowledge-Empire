@@ -66,7 +66,7 @@ class HeaderView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    Injector.userData != null ? Injector.userData.name : "",
+                    Injector.userData != null ? Injector.userData.companyName : "",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.textLightBlue
@@ -79,7 +79,7 @@ class HeaderView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    Injector.userData != null ? Injector.userData.phone : "",
+                    Injector.userData != null ? Injector.userData.manager : "",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.white

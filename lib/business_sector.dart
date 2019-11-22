@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/learning_module_data.dart';
 
 import 'helper/Utils.dart';
 import 'helper/res.dart';
@@ -13,7 +15,23 @@ class BusinessSectorPage extends StatefulWidget {
 }
 
 class _BusinessSectorPageState extends State<BusinessSectorPage> {
-  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
+//  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
+
+  List<LearningModuleData> arrLearningModules = List();
+  List<LearningModuleData> arrFinalLearningModules = List();
+
+  bool isLoading = false;
+  TextEditingController searchController = TextEditingController();
+  String searchText = "";
+  LearningModuleData selectedModule = LearningModuleData();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    fetchLearningModules();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +39,34 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       width: double.infinity,
       height: double.infinity,
       decoration: CommonView.getBGDecoration(),
-      child: Row(
+      child: Stack(
         children: <Widget>[
-          showFirstHalf(),
-          Expanded(
-            flex: 1,
-            child: Injector.isBusinessMode
-                ? Card(
-                    color: Colors.transparent,
-                    elevation: 20,
-                    margin: EdgeInsets.all(0),
-                    child: showSecondHalf(),
-                  )
-                : showSecondHalf(),
-          )
+          Row(
+            children: <Widget>[
+              showFirstHalf(),
+              Expanded(
+                flex: 1,
+                child: Injector.isBusinessMode
+                    ? Card(
+                        color: Colors.transparent,
+                        elevation: 20,
+                        margin: EdgeInsets.all(0),
+                        child: showSecondHalf(),
+                      )
+                    : showSecondHalf(),
+              )
+            ],
+          ),
+          CommonView.showCircularProgress(isLoading)
         ],
       ),
     );
   }
 
-
   Container showSubHeader() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      margin: EdgeInsets.only(left: 20, right: 10, bottom: 10),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius:
@@ -78,58 +100,68 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Widget showItem(int index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          flex: 9,
-          child: Container(
-            height: Utils.getTitleHeight(),
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 10, top: 5, right: 10),
-            decoration: BoxDecoration(
-                color: Injector.isBusinessMode ? null : ColorRes.white,
-                borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(
-                            Utils.getAssetsImg("bg_new_customer_item")),
-                        fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              arrSector[index],
-              style: TextStyle(
-                  color: Injector.isBusinessMode
-                      ? ColorRes.blue
-                      : ColorRes.textProf,
-                  fontSize: 15),
+    return InkResponse(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            flex: 9,
+            child: Container(
+              height: Utils.getTitleHeight(),
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(left: 20, top: 5, right: 10),
+              decoration: BoxDecoration(
+                  color: Injector.isBusinessMode ? null : ColorRes.white,
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg("bg_new_customer_item")),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                arrFinalLearningModules[index].moduleName,
+                style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.blue
+                        : ColorRes.textProf,
+                    fontSize: 15),
+              ),
             ),
           ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Container(
-            height: 30,
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            decoration: BoxDecoration(
-                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("value")),
-                        fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              '10',
-              style: TextStyle(color: ColorRes.white, fontSize: 22),
+          Expanded(
+            flex: 3,
+            child: Container(
+              height: 30,
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+              decoration: BoxDecoration(
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg("value")),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                arrFinalLearningModules[index].question,
+                style: TextStyle(color: ColorRes.white, fontSize: 22),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
+      onTap: () {
+        setState(() {
+          selectedModule = arrFinalLearningModules[index];
+        });
+      },
     );
   }
 
@@ -144,7 +176,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           CommonView.showTitle(context, StringResBusiness.businessSector),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
-            padding: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
+            padding: EdgeInsets.only(left: 20, right: 10, top: 2, bottom: 2),
 //            color: ColorRes.lightBg,
             child: Row(
               children: <Widget>[
@@ -158,9 +190,24 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         ),
                         alignment: Alignment.topLeft,
                         child: TextField(
+                          onChanged: (text) {
+                            arrFinalLearningModules.clear();
+                            searchText = text;
+
+                            setState(() {
+                              if (text.isEmpty) {
+                                arrFinalLearningModules
+                                    .addAll(arrLearningModules);
+                              } else {
+//                              present = 0;
+                                searchData();
+                              }
+                            });
+                          },
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
                           maxLines: 1,
+                          controller: searchController,
                           style: TextStyle(
                               fontSize: 14, color: ColorRes.hintColor),
                           decoration: InputDecoration(
@@ -177,7 +224,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 Image(
                   height: 35,
                   image: AssetImage(
-                    Utils.getAssetsImg(Injector.isBusinessMode?"search":'search_prof'),
+                    Utils.getAssetsImg(
+                        Injector.isBusinessMode ? "search" : 'search_prof'),
                   ),
                   fit: BoxFit.fill,
                 )
@@ -188,7 +236,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: arrSector.length,
+            itemCount: arrFinalLearningModules.length,
             itemBuilder: (BuildContext context, int index) {
               return showItem(index);
             },
@@ -208,6 +256,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               padding: EdgeInsets.all(20),
               height: double.infinity,
               child: Stack(
+                fit: StackFit.expand,
                 children: <Widget>[
                   Card(
                     elevation: 10,
@@ -233,7 +282,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       ),
                       child: SingleChildScrollView(
                         child: Text(
-                          "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                          selectedModule.moduleDescription,
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
@@ -273,32 +322,104 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            height: Utils.getTitleHeight(),
-            margin: EdgeInsets.symmetric(
-                horizontal: Utils.getDeviceWidth(context) / 8,vertical: 20),
-            padding:
-            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-                color: Injector.isBusinessMode
-                    ? null
-                    : ColorRes.headerBlue,
-                borderRadius: BorderRadius.circular(20),
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                    image:
-                    AssetImage(Utils.getAssetsImg("bg_blue")),
-                    fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              Utils.getText(context, StringResBusiness.engageSegment),
-              style: TextStyle(color: ColorRes.white, fontSize: 17),
-              textAlign: TextAlign.center,
-            ),
-          )
+          selectedModule.isAssign == "0"
+              ? InkResponse(
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    height: Utils.getTitleHeight(),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: Utils.getDeviceWidth(context) / 8,
+                        vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: Injector.isBusinessMode
+                            ? null
+                            : ColorRes.headerBlue,
+                        borderRadius: BorderRadius.circular(20),
+                        image: Injector.isBusinessMode
+                            ? DecorationImage(
+                                image:
+                                    AssetImage(Utils.getAssetsImg("bg_blue")),
+                                fit: BoxFit.fill)
+                            : null),
+                    child: Text(
+                      Utils.getText(context, StringResBusiness.engageSegment),
+                      style: TextStyle(color: ColorRes.white, fontSize: 17),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onTap: assignUserToModule,
+                )
+              : Container()
         ],
       ),
     );
+  }
+
+  void fetchLearningModules() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    WebApi().getLearningModule().then((data) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+          setState(() {
+            arrLearningModules.addAll(data.data);
+            arrFinalLearningModules.addAll(data.data);
+
+            if (arrLearningModules.length > 0) {
+              selectedModule = arrLearningModules[0];
+            }
+          });
+        }
+      } else
+        Utils.showToast("Something went wrong");
+    });
+  }
+
+  void assignUserToModule() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    WebApi().assignUserToModule(selectedModule.moduleId).then((data) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+          Utils.showToast("Assigned successfully!");
+
+//          setState(() {
+//
+//          });  arrLearningModules
+////                    .where(
+////                        (module) => module.moduleId == selectedModule.moduleId)
+////                    .first
+////                    .isAssign ==
+////                "1";
+
+          fetchLearningModules();
+        }
+      } else
+        Utils.showToast("Something went wrong");
+    });
+  }
+
+  void searchData() {
+    var data = arrLearningModules
+        .where((module) =>
+            module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
+    print("search_data___" + data.length.toString());
+
+    arrFinalLearningModules.addAll(data);
   }
 }

@@ -3,6 +3,7 @@ import 'dart:ui' as prefix0;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/forgot_password.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -57,20 +58,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: showLoginForm(),
                 )),
-            showCircularProgress()
+            CommonView.showCircularProgress(isLoading)
           ],
         ),
       ),
-    );
-  }
-
-  Widget showCircularProgress() {
-    if (isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
-    return Container(
-      height: 0.0,
-      width: 0.0,
     );
   }
 
@@ -182,7 +173,6 @@ class _LoginPageState extends State<LoginPage> {
 
           await Injector.prefs
               .setString(PrefKeys.userId, loginResponseData.userId);
-          await Injector.prefs.setString(PrefKeys.email, loginRequest.email);
           await Injector.prefs.setString(
               PrefKeys.user, json.encode(loginResponseData.toJson()));
 
@@ -197,6 +187,8 @@ class _LoginPageState extends State<LoginPage> {
           } else {
             navigateToDashboard();
           }
+
+//          navigateToDashboard();
         } else {
           setState(() {
             isLoading = false;

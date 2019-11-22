@@ -49,7 +49,7 @@ class HomePageState extends State<HomePage> {
     super.initState();
     drawerItems = [
       DrawerItem(
-          Utils.getText(context, StringResBusiness.home), "organization"),
+          Utils.getText(context, StringResBusiness.home), "house"),
       DrawerItem(Utils.getText(context, StringResBusiness.businessSector),
           "business_sectors"),
       DrawerItem(Utils.getText(context, StringResBusiness.newCustomers),
@@ -64,7 +64,7 @@ class HomePageState extends State<HomePage> {
           "organization"),
       DrawerItem(Utils.getText(context, StringResBusiness.pl), "profit-loss"),
       DrawerItem(Utils.getText(context, StringResBusiness.ranking), "ranking"),
-      DrawerItem(Utils.getText(context, StringResBusiness.profile), "team"),
+      DrawerItem(Utils.getText(context, StringResBusiness.profile), "profile"),
     ];
 
     if (widget.initialPosition == Const.typeHome)

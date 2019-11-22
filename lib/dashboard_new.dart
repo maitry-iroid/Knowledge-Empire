@@ -173,8 +173,8 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                   height: Utils.getDeviceHeight(context) / 3,
                 ),
                 onTap: () {
-//                  performItemClick(Const.typeChallenges);
-                showTutorial(context);
+                  performItemClick(Const.typeChallenges);
+//                showTutorial(context);
                 }),
           )
         ],
