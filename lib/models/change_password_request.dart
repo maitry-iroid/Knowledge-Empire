@@ -4,7 +4,7 @@ part 'change_password_request.g.dart';
 
 @JsonSerializable()
 class ChangePasswordRequest {
-  String email = "";
+  String userId = "";
   String password = "";
   String oldPassword = "";
 

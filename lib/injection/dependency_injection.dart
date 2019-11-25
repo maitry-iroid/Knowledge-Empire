@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -23,16 +25,16 @@ class Injector {
   Injector._internal();
 
   static getInstance() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
-    mode = prefs.getInt(PrefKeys.mode);
-    isBusinessMode = mode == Const.businessMode;
+    prefs = await SharedPreferences.getInstance();
 
-    deviceId = await FlutterUdid.udid;
     if (prefs.getString(PrefKeys.user) != null &&
         prefs.getString(PrefKeys.user).isNotEmpty)
       userData = LoginResponseData.fromJson(
           json.decode(prefs.getString(PrefKeys.user)));
+
+    mode = prefs.getInt(PrefKeys.mode);
+    isBusinessMode = mode == Const.businessMode;
+
+    deviceId = await FlutterUdid.udid;
   }
 }

@@ -25,8 +25,7 @@ class CommonView {
         ),
         InkResponse(
           child: Image(
-            image: AssetImage(Utils.getAssetsImg(
-                Injector.isBusinessMode ? "back" : 'back_prof')),
+            image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode?"back":'back_prof')),
             width: DimenRes.titleBarHeight,
           ),
           onTap: () {
@@ -44,7 +43,7 @@ class CommonView {
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(width: 1, color: ColorRes.white),
-              color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+              color: Injector.isBusinessMode?null:ColorRes.titleBlueProf,
               image: Injector.isBusinessMode
                   ? DecorationImage(
                       image: AssetImage(
@@ -284,6 +283,13 @@ class CommonView {
     );
   }
 
-
+  static   Widget showCircularProgress(bool isLoading) {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
 }
-

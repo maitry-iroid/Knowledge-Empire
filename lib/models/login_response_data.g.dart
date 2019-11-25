@@ -16,7 +16,11 @@ LoginResponseData _$LoginResponseDataFromJson(Map<String, dynamic> json) {
     ..createdAt = json['createdAt'] as String
     ..isPasswordChanged = json['isPasswordChanged'] as String
     ..profileImage = json['profileImage'] as String
-    ..accessToken = json['accessToken'] as String;
+    ..accessToken = json['accessToken'] as String
+    ..activeCompany = json['activeCompany'] as String
+    ..country = json['country'] as String
+    ..companyName = json['companyName'] as String
+    ..manager = json['manager'] as String;
 }
 
 Map<String, dynamic> _$LoginResponseDataToJson(LoginResponseData instance) =>
@@ -30,4 +34,8 @@ Map<String, dynamic> _$LoginResponseDataToJson(LoginResponseData instance) =>
       'isPasswordChanged': instance.isPasswordChanged,
       'profileImage': instance.profileImage,
       'accessToken': instance.accessToken,
+      'activeCompany': instance.activeCompany,
+      'country': instance.country,
+      'companyName': instance.companyName,
+      'manager': instance.manager,
     };

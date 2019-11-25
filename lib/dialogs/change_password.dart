@@ -40,14 +40,15 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       child: Stack(
         children: <Widget>[
           Container(
-            height: Utils.getDeviceHeight(context),
+//            height: Utils.getDeviceHeight(context),
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
-                height: Utils.getDeviceHeight(context) / 2.7,
+                height: Utils.getDeviceHeight(context) / 2.5,
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
+                  alignment: Alignment.center,
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(
@@ -57,6 +58,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                           bottom: 0),
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
@@ -258,7 +260,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     });
 
     ChangePasswordRequest rq = ChangePasswordRequest();
-    rq.email = Injector.prefs.getString(PrefKeys.email);
+    rq.userId = Injector.userData.userId;
     rq.oldPassword = Utils.generateMd5(pass1Controller.text.trim());
     rq.password = Utils.generateMd5(pass2Controller.text.trim());
 

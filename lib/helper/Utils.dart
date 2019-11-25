@@ -7,7 +7,11 @@ import 'package:intl/intl.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:ke_employee/dialogs/org_info.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+
+import 'constant.dart';
 
 class Utils {
   static double getDeviceWidth(BuildContext context) {
@@ -176,6 +180,15 @@ class Utils {
             ));
   }
 
+  static showOrgInfoDialog(
+      GlobalKey<ScaffoldState> _scaffoldKey, int orgType) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => OrgInfoDialog(
+              text: getOrgText(orgType),
+            ));
+  }
+
   static String generateMd5(String input) {
     return md5.convert(utf8.encode(input)).toString();
   }
@@ -191,5 +204,26 @@ class Utils {
 
   static getTitleHeight() {
     return Injector.isBusinessMode ? 35.0 : 30.0;
+  }
+
+  static getOrgText(int orgType) {
+    if (orgType == Const.typeHR) {
+      return StringResBusiness.textHr;
+    } else if (orgType == Const.typeServices) {
+      return StringResBusiness.textServices;
+    } else if (orgType == Const.typeMarketing) {
+      return StringResBusiness.textMarketing;
+    } else if (orgType == Const.typeSales) {
+      return StringResBusiness.textSales;
+    } else if (orgType == Const.typeOperations) {
+      return StringResBusiness.textOperations;
+    } else if (orgType == Const.typeLegal) {
+      return StringResBusiness.textLegal;
+    } else if (orgType == Const.typeFinance) {
+      return StringResBusiness.textFinance;
+    } else if (orgType == Const.typeCRM) {
+      return StringResBusiness.textCRM;
+    } else
+      return "";
   }
 }

@@ -66,7 +66,7 @@ class HeaderView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    Injector.userData != null ? Injector.userData.name : "",
+                    Injector.userData != null ? Injector.userData.companyName : "",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.textLightBlue
@@ -79,7 +79,7 @@ class HeaderView extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    Injector.userData!=null?Injector.userData.phone:"",
+                    Injector.userData != null ? Injector.userData.manager : "",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.white
@@ -123,24 +123,27 @@ class HeaderView extends StatelessWidget {
           ),
           type != Const.typeDollar
               ? Stack(
+                  alignment: Alignment.centerLeft,
                   children: <Widget>[
-                   Container(
-                     height: 30,
-                     alignment: Alignment.center,
-                     decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_rounded_1')))),
-                     padding: EdgeInsets.symmetric(vertical: 2),
-                     child:  LinearPercentIndicator(
-                       width: Utils.getDeviceWidth(context) / 12,
-                       lineHeight: 16.0,
-                       percent: getProgressInt(type),
-                       backgroundColor: Colors.transparent,
-                       progressColor: Colors.blue,
-                     ),
-                   ),
+                    Container(
+                      height: 24,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage(Utils.getAssetsImg('bg_progress')),
+                              fit: BoxFit.fill)),
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      child: LinearPercentIndicator(
+                        width: Utils.getDeviceWidth(context) / 12,
+                        lineHeight: 18.0,
+                        percent: getProgressInt(type),
+                        backgroundColor: Colors.transparent,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
                     Positioned(
-                      top: 6,
                       left: 4,
-                      bottom: 0,
                       child: Text(
                         getProgress(type),
                         style: TextStyle(color: ColorRes.white, fontSize: 14),

@@ -13,6 +13,10 @@ class LoginResponseData {
   String isPasswordChanged = "";
   String profileImage = "";
   String accessToken = "";
+  String activeCompany = "";
+  String country = "";
+  String companyName = "";
+  String manager = "";
 
   LoginResponseData();
 
