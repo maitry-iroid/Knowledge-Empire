@@ -40,9 +40,9 @@ class WebApi {
       'api_secret': '1a42cc080ef2464a60134473276fe42e',
       'api_request': req,
       'data': data,
-//      'profileImage': file != null
-//          ? await MultipartFile.fromFile(file.path,filename: "image.jpg")
-//          : null,
+      'profileImage': file != null
+          ? await MultipartFile.fromFile(file.path,filename: "image.jpg")
+          : null,
     });
   }
 
@@ -137,7 +137,7 @@ class WebApi {
 
     try {
       FormData formData =
-          await getRequest('updateProfile', json.encode(jsonMap));
+          await getUploadProfileRequest('updateProfile', json.encode(jsonMap),file);
 
       final response = await dio.post("", data: formData,
           onSendProgress: (int sent, int total) {
@@ -238,7 +238,7 @@ class WebApi {
 
     BaseOptions options = new BaseOptions(
         baseUrl: "http://13.127.186.25:7000/api",
-        connectTimeout: 5000,
+        connectTimeout: 10000,
         receiveTimeout: 3000,
         headers: headers);
 

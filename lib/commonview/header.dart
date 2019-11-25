@@ -66,7 +66,9 @@ class HeaderView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    Injector.userData != null ? Injector.userData.companyName : "",
+                    Injector.userData != null
+                        ? Injector.userData.companyName
+                        : "",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.textLightBlue
@@ -169,7 +171,9 @@ class HeaderView extends StatelessWidget {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg('user_org'))),
+                  image: Injector.userData.profileImage != null
+                      ? NetworkImage(Injector.userData.profileImage)
+                      : AssetImage(Utils.getAssetsImg('user_org')),fit: BoxFit.fill),
               border: Border.all(color: ColorRes.textLightBlue)),
         ),
         onTap:

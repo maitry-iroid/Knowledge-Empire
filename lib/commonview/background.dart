@@ -46,7 +46,7 @@ class CommonView {
               image: Injector.isBusinessMode
                   ? DecorationImage(
                       image: AssetImage(
-                        Utils.getAssetsImg("bg_setting"),
+                        Utils.getAssetsImg("bg_blue"),
                       ),
                       fit: BoxFit.fill)
                   : null),

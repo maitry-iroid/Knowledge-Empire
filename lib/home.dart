@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/challenges.dart';
+import 'package:ke_employee/dashboard.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -49,7 +50,7 @@ class HomePageState extends State<HomePage> {
     super.initState();
     drawerItems = [
       DrawerItem(
-          Utils.getText(context, StringResBusiness.home), "house"),
+          Utils.getText(context, StringResBusiness.home), "main_screen_icon"),
       DrawerItem(Utils.getText(context, StringResBusiness.businessSector),
           "business_sectors"),
       DrawerItem(Utils.getText(context, StringResBusiness.newCustomers),
@@ -64,7 +65,8 @@ class HomePageState extends State<HomePage> {
           "organization"),
       DrawerItem(Utils.getText(context, StringResBusiness.pl), "profit-loss"),
       DrawerItem(Utils.getText(context, StringResBusiness.ranking), "ranking"),
-      DrawerItem(Utils.getText(context, StringResBusiness.profile), "profile"),
+      DrawerItem(
+          Utils.getText(context, StringResBusiness.profile), "profile_icon"),
     ];
 
     if (widget.initialPosition == Const.typeHome)
@@ -96,7 +98,7 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return DashboardNewPage();
+        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
       case 1:
         return BusinessSectorPage();
       case 2:
@@ -201,7 +203,7 @@ class HomePageState extends State<HomePage> {
                 : i == _selectedDrawerIndex
                     ? ColorRes.blueMenuSelected
                     : ColorRes.blueMenuUnSelected,
-            border: i == _selectedDrawerIndex
+            border: (!Injector.isBusinessMode && i == _selectedDrawerIndex)
                 ? Border.all(
                     color: ColorRes.white,
                     width: 1,
@@ -210,7 +212,10 @@ class HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(10),
             image: Injector.isBusinessMode
                 ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_menu")),
+                    image: AssetImage(Utils.getAssetsImg(
+                        i == _selectedDrawerIndex
+                            ? "slide_menu_highlight"
+                            : "bg_menu")),
                     fit: BoxFit.fill)
                 : null),
         child: Row(

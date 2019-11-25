@@ -33,6 +33,13 @@ class Const {
   static var professionalMode=25;
 
 
+  static var typeCamera = 101;
+  static var typeGallery = 102;
+
+
+  static int imgQuality = 20;
+  static double imgScaleProfile = 1;
+
 }
 
 

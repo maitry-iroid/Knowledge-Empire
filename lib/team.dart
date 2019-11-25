@@ -20,8 +20,8 @@ class _TeamPageState extends State<TeamPage> {
       width: double.infinity,
       height: double.infinity,
       decoration: CommonView.getBGDecoration(),
-      child: Row(
-        children: <Widget>[showFirstHalf(), showSecondHalf()],
+      child: Column(
+        children: <Widget>[CommonView.showTitle(context,StringResBusiness.team)],
       ),
     );
   }

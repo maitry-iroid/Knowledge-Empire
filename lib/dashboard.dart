@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'P+L.dart';
 import 'helper/constant.dart';
+import 'home.dart';
 
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key key}) : super(key: key);
@@ -59,28 +60,35 @@ class DashboardPageState extends State<DashboardPage> {
           SizedBox(
             width: 2,
           ),
-          type!=Const.typeDollar?Expanded(
-            child: Stack(
-              children: <Widget>[
-                LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 11,
-                  lineHeight: 20.0,
-                  percent: getProgressInt(type),
-                  backgroundColor: Colors.grey,
-                  progressColor: Colors.blue,
-                ),
-                Positioned(
-                  top: 3,
-                  left: 4,
-                  bottom: 0,
-                  child: Text(
-                    getProgress(type),
-                    style: TextStyle(color: ColorRes.white,),
+          type != Const.typeDollar
+              ? Expanded(
+                  child: Stack(
+                    children: <Widget>[
+                      LinearPercentIndicator(
+                        width: Utils.getDeviceWidth(context) / 11,
+                        lineHeight: 20.0,
+                        percent: getProgressInt(type),
+                        backgroundColor: Colors.grey,
+                        progressColor: Colors.blue,
+                      ),
+                      Positioned(
+                        top: 3,
+                        left: 4,
+                        bottom: 0,
+                        child: Text(
+                          getProgress(type),
+                          style: TextStyle(
+                            color: ColorRes.white,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 )
-              ],
-            ),
-          ): Text(' \$ 120.00',style: TextStyle(color: ColorRes.colorPrimary,fontSize: 20),),
+              : Text(
+                  ' \$ 120.00',
+                  style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
+                ),
         ],
       ),
     );
@@ -210,24 +218,18 @@ class DashboardPageState extends State<DashboardPage> {
         ),
       ),
       onTap: () {
-        if (type == Const.typeBusinessSector) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => BusinessSectorPage()));
-        } else if (type == Const.typeNewCustomer) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NewCustomerPage()));
-        } else if (type == Const.typeExistingCustomer) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ExistingCustomerPage()));
-        } else if (type == Const.typeChallenges) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ChallengesPage()));
-        }else if (type == Const.typePL) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PLPage()));
-        }
+        performItemClick(type);
       },
     );
+  }
+
+  performItemClick(int type) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  initialPosition: type,
+                )));
   }
 
   getTitle(int type) {
@@ -291,27 +293,29 @@ class DashboardPageState extends State<DashboardPage> {
       return "";
   }
 
-   getProgress(int type) {
-    if(type==Const.typeChecked){
+  getProgress(int type) {
+    if (type == Const.typeChecked) {
       return "30/100";
-    }else if(type==Const.typePeople){
+    } else if (type == Const.typePeople) {
       return "50/100";
-    }else if(type==Const.typeBadge){
+    } else if (type == Const.typeBadge) {
       return "60/100";
-    }else if(type==Const.typeResources){
+    } else if (type == Const.typeResources) {
       return "80/100";
-    }else return "50/100";
+    } else
+      return "50/100";
   }
 
   getProgressInt(int type) {
-    if(type==Const.typeChecked){
+    if (type == Const.typeChecked) {
       return 0.3;
-    }else if(type==Const.typePeople){
+    } else if (type == Const.typePeople) {
       return 0.5;
-    }else if(type==Const.typeBadge){
+    } else if (type == Const.typeBadge) {
       return 0.6;
-    }else if(type==Const.typeResources){
+    } else if (type == Const.typeResources) {
       return 0.8;
-    }else return 0.5;
+    } else
+      return 0.5;
   }
 }

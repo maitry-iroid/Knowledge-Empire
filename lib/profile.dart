@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,14 +29,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     nameController.text = Injector.userData.name;
+
+    photoUrl = Injector.userData != null
+        ? Injector.userData.profileImage != null
+            ? Injector.userData.profileImage
+            : ""
+        : "";
+
     super.initState();
   }
 
   Notifier _notifier;
   File _image;
+  String photoUrl = "";
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +83,6 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
-  }
-
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _image = image;
-    });
   }
 
   showFirstHalf() {
@@ -328,14 +327,19 @@ class _ProfilePageState extends State<ProfilePage> {
               width: 70,
               height: 70,
               decoration: new BoxDecoration(
-                  border: Border.all(width: 2, color: Color(0xff7ab1cb)),
-                  shape: BoxShape.circle,
-                  image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: _image != null
-                          ? FileImage(_image)
-                          : new AssetImage(
-                              Utils.getAssetsImg("dashboard-background")))),
+                border: Border.all(width: 2, color: Color(0xff7ab1cb)),
+                shape: BoxShape.circle,
+                image: new DecorationImage(
+                  fit: BoxFit.fill,
+                  image: _image != null
+                      ? FileImage(_image)
+                      : photoUrl != null
+                          ? NetworkImage(photoUrl)
+                          : AssetImage(
+                              Utils.getAssetsImg("dashboard-background"),
+                            ),
+                ),
+              ),
             ),
             Positioned(
               right: 0,
@@ -350,7 +354,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-//      onTap: getImage,
+      onTap: () => showPhotoOptionDialog(context),
     );
   }
 
@@ -557,26 +561,95 @@ class _ProfilePageState extends State<ProfilePage> {
         ));
   }
 
+  Future getImage(int type) async {
+    var tempImage = await ImagePicker.pickImage(
+      source:
+          type == Const.typeGallery ? ImageSource.gallery : ImageSource.camera,
+      imageQuality: Const.imgQuality,
+    );
+
+    if (tempImage != null) {
+      setState(() {
+        photoUrl = "";
+        _image = tempImage;
+      });
+    }
+  }
+
+  void showPhotoOptionDialog(BuildContext mainContext) {
+    // flutter defined function
+    showDialog(
+      context: mainContext,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              InkResponse(
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  child: Text("Choose photo"),
+                  alignment: Alignment.center,
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  getImage(Const.typeGallery);
+                },
+              ),
+              Container(
+                height: 1,
+                color: ColorRes.fontGrey,
+              ),
+              InkResponse(
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  child: Text("Take photo"),
+                  alignment: Alignment.center,
+                ),
+                onTap: () async {
+                  Navigator.pop(context);
+                  getImage(Const.typeCamera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   updateProfile() {
     var req = {
       'userId': Injector.userData.userId,
       'name': nameController.text.trim(),
-      'profileImage':""
+      'profileImage': ""
     };
 
     setState(() {
       isLoading = true;
     });
 
-    WebApi().updateProfile(req, _image).then((data) {
-
+    WebApi().updateProfile(req, _image).then((data) async {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
         if (data.flag == "true") {
+          data.data.accessToken = Injector.userData.accessToken;
+
+          await Injector.prefs
+              .setString(PrefKeys.user, json.encode(data.data.toJson()));
+
+          Injector.userData = data.data;
+
           Utils.showToast("Profile updated successfully!");
+
+          if (_image != null) {
+            _notifier.notify('changeMode', 'Sending data from notfier!');
+          }
         }
       } else {
         Utils.showToast("Something went wrong.");
