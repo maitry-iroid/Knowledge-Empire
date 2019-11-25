@@ -6,6 +6,7 @@ import 'helper/Utils.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 
+
 class RewardsPage extends StatefulWidget {
   @override
   _RewardsPageState createState() => _RewardsPageState();
