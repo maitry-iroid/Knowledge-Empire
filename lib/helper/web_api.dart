@@ -13,7 +13,6 @@ import 'package:ke_employee/models/login_response_data.dart';
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
 
-
   static getRequest(String req, String data) {
     return {
       'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
@@ -23,7 +22,7 @@ class WebApi {
     };
   }
 
-  static getUploadProfileRequest(getRequestString req, String data, File file) async {
+  static getUploadProfileRequest(String req, String data, File file) async {
     return FormData.fromMap({
       'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
       'api_secret': '1a42cc080ef2464a60134473276fe42e',
@@ -35,17 +34,16 @@ class WebApi {
     });
   }
 
-  Dio dio  = Dio();
+  Dio dio = Dio();
 
   Future<LoginResponse> login(Map<String, dynamic> jsonMap) async {
-
     initDio();
 
     print("login_request__" + json.encode(jsonMap));
 
     try {
-      final response = await dio.post("",
-          data: json.encode(('login', json.encode(jsonMap))));
+      final response =
+          await dio.post("", data: json.encode(json.encode(jsonMap)));
 
       if (response.statusCode == 200) {
         print(response.data);
