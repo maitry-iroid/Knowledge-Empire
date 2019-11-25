@@ -22,7 +22,7 @@ class DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorRes.colorBgDark,
+      backgroundColor: ColorRes.white,
       body: SafeArea(
         child: Container(
           height: double.infinity,
@@ -181,7 +181,7 @@ class DashboardPageState extends State<DashboardPage> {
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("bg_main_card")),
+                image: AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),//bg_main_card
                 fit: BoxFit.fill)),
         child: Row(
           children: <Widget>[
@@ -257,6 +257,29 @@ class DashboardPageState extends State<DashboardPage> {
 
   getImage(int type) {
     if (type == Const.typeBusinessSector)
+      return "ic_pro_home_business";
+    else if (type == Const.typeNewCustomer)
+      return "ic_pro_home_customer";
+    else if (type == Const.typeExistingCustomer)
+      return "ic_pro_home_exis_customer";
+    else if (type == Const.typeOrg)
+      return "ic_pro_home_organization";
+    else if (type == Const.typeChallenges)
+      return "ic_pro_home_challenges";
+    else if (type == Const.typePL)
+      return "ic_pro_home_pl";
+    else if (type == Const.typeReward)
+      return "ic_pro_home_rewards";
+    else if (type == Const.typeRanking)
+      return "ic_pro_home_ranking";
+    else if (type == Const.typeTeam)
+      return "ic_pro_home_team";
+    else
+      return "";
+  }
+
+  /*getImage(int type) {
+    if (type == Const.typeBusinessSector)
       return "ic_business";
     else if (type == Const.typeNewCustomer)
       return "ic_new_customer";
@@ -276,7 +299,7 @@ class DashboardPageState extends State<DashboardPage> {
       return "ic_team";
     else
       return "";
-  }
+  }*/
 
   String getHeaderIcon(int type) {
     if (type == Const.typeChecked)

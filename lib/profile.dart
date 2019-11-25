@@ -15,6 +15,7 @@ import 'helper/prefkeys.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'login.dart';
+import 'home.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -236,6 +237,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   });
 
                   _notifier.notify('changeMode', 'Sending data from notfier!');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
                 },
               ),
               InkResponse(
@@ -255,6 +260,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
                 ),
                 onTap: () async {
+
                   await Injector.prefs.clear();
 
                   Navigator.pushAndRemoveUntil(

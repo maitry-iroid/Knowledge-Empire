@@ -34,7 +34,7 @@ class WebApi {
     };
   }
 
-  static getUploadProfileRequest(String req, String data, File file) async {
+  static getUploadProfileRequest(getRequestString req, String data, File file) async {
     return FormData.fromMap({
       'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
       'api_secret': '1a42cc080ef2464a60134473276fe42e',
@@ -55,6 +55,7 @@ class WebApi {
   Dio dio = Dio(options);
 
   Future<LoginResponse> login(Map<String, dynamic> jsonMap) async {
+
     initDio();
 
     print("login_request__" + json.encode(jsonMap));
@@ -62,7 +63,7 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('login', json.encode(jsonMap))));
+          data: json.encode(('login', json.encode(jsonMap))));
 
       if (response.statusCode == 200) {
         print(response.data);
