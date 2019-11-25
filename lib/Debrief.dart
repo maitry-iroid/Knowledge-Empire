@@ -174,7 +174,7 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-          height: 50,
+//          height: 50,
           margin: EdgeInsets.only(left: 6, right: 6,top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 3),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
@@ -188,27 +188,27 @@ class _CategoryItemState extends State<CategoryItem> {
                       : "rounded_rectangle_8371")),
                   //rounded_rectangle_837gray
                   fit: BoxFit.fill)),
-          child: Row(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Title(
-                  color: ColorRes.greenDot,
-                  child: new Text(_indexShow[widget.index],
-                      style: TextStyle(
-                          color: (widget.isSelected
-                              ? ColorRes.white
-                              : Colors.black)))),
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Expanded(
-                child: new Text(
-                  "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohelloellohellohellohellohell",
-                  style: TextStyle(
-                      color:
-                      (widget.isSelected ? ColorRes.white : Colors.black)),
-                ),
-              )
-            ],
-          )
+            child: Row(
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+                Title(
+                    color: ColorRes.greenDot,
+                    child: new Text(_indexShow[widget.index],
+                        style: TextStyle(
+                            color: (widget.isSelected
+                                ? ColorRes.white
+                                : Colors.black)))),
+                Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+                Expanded(
+                  child: new Text(
+                    "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohelloellohellohellohellohell",
+                    style: TextStyle(
+                        color:
+                        (widget.isSelected ? ColorRes.white : Colors.black)),
+                  ),
+                )
+              ],
+            ),
 //        Text(
 //          widget.title,
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),

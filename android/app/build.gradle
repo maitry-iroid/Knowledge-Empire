@@ -28,7 +28,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/iroid/Documents/FlutterProjects/ke_employee/android/keystore/ke-employee.jks')
+            storeFile file('../keystore/ke-employee.jks')
             storePassword '123456'
             keyAlias = 'ke-employee'
             keyPassword '123456'
