@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (userId == null || userId.isEmpty) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       } else {
         Navigator.pushReplacement(
