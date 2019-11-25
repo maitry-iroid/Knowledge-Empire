@@ -71,7 +71,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 topLeft: Radius.circular(9), topRight: Radius.circular(9)),
           ),
           child: Text(
-            Utils.getText(context, StringResBusiness.forgotPassword).toUpperCase(),
+            Utils.getText(context, StringRes.forgotPassword).toUpperCase(),
             style: TextStyle(color: ColorRes.white, fontSize: 17),
           ),
         ),
@@ -98,7 +98,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: Utils.getText(
-                        context, StringResBusiness.enterRegisteredEmail)
+                        context, StringRes.enterRegisteredEmail)
                     .toUpperCase(),
                 hintStyle: TextStyle(color: ColorRes.hintColor)),
           ),
@@ -118,7 +118,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   fit: BoxFit.fill),
             ),
             child: Text(
-              Utils.getText(context, StringResBusiness.send).toUpperCase(),
+              Utils.getText(context, StringRes.send).toUpperCase(),
               style: TextStyle(color: ColorRes.white,fontSize: 17),
             ),
           ),

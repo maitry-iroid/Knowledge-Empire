@@ -8,10 +8,12 @@ import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:ke_employee/dialogs/org_info.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'constant.dart';
+import 'localization.dart';
 
 class Utils {
   static double getDeviceWidth(BuildContext context) {
@@ -168,7 +170,21 @@ class Utils {
 
   static String getText(BuildContext context, String text) {
 //    return AppLocalizations.of(context).tr(text);
-    return text;
+
+    return AppLocalizations.of(context).text(text);
+
+    if (Injector.prefs.getString(PrefKeys.userId) != null &&
+        Injector.prefs.getString(PrefKeys.userId).isNotEmpty) {
+      return Injector.isBusinessMode
+          ? StringRes.localizedValues['en'][text] != null
+              ? StringRes.localizedValues['en'][text]
+              : ""
+          : StringRes.localizedValuesProf['en'][text] != null
+              ? StringRes.localizedValuesProf['en'][text]
+              : "";
+    } else {
+      return StringRes.localizedValues['en'][text]!=null?StringRes.localizedValues['en'][text]:"";
+    }
   }
 
   static showChangePasswordDialog(
@@ -208,21 +224,21 @@ class Utils {
 
   static getOrgText(int orgType) {
     if (orgType == Const.typeHR) {
-      return StringResBusiness.textHr;
+      return StringRes.textHr;
     } else if (orgType == Const.typeServices) {
-      return StringResBusiness.textServices;
+      return StringRes.textServices;
     } else if (orgType == Const.typeMarketing) {
-      return StringResBusiness.textMarketing;
+      return StringRes.textMarketing;
     } else if (orgType == Const.typeSales) {
-      return StringResBusiness.textSales;
+      return StringRes.textSales;
     } else if (orgType == Const.typeOperations) {
-      return StringResBusiness.textOperations;
+      return StringRes.textOperations;
     } else if (orgType == Const.typeLegal) {
-      return StringResBusiness.textLegal;
+      return StringRes.textLegal;
     } else if (orgType == Const.typeFinance) {
-      return StringResBusiness.textFinance;
+      return StringRes.textFinance;
     } else if (orgType == Const.typeCRM) {
-      return StringResBusiness.textCRM;
+      return StringRes.textCRM;
     } else
       return "";
   }

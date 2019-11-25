@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringResBusiness.forgotPassword)
+                        Utils.getText(context, StringRes.forgotPassword)
                             .toUpperCase(),
                         style: TextStyle(color: ColorRes.white),
                       ),
@@ -127,8 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                             fit: BoxFit.fill),
                       ),
                       child: Text(
-                        Utils.getText(context, StringResBusiness.login)
-                            .toUpperCase(),
+                        Utils.getText(context,StringRes.login).toUpperCase(),
                         style: TextStyle(color: ColorRes.white, fontSize: 15),
                       ),
                     ),
@@ -233,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10),
                         hintText:
-                            Utils.getText(context, StringResBusiness.emailId)
+                            Utils.getText(context, StringRes.emailId)
                                 .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
                         border: InputBorder.none),
@@ -270,7 +269,7 @@ class _LoginPageState extends State<LoginPage> {
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10),
                         hintText:
-                            Utils.getText(context, StringResBusiness.password)
+                            Utils.getText(context, StringRes.password)
                                 .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
                         border: InputBorder.none),

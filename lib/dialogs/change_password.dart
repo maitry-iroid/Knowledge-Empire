@@ -38,16 +38,18 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   showSetupPin(BuildContext context) {
     return Center(
       child: Stack(
+        fit: StackFit.loose,
         children: <Widget>[
           Container(
 //            height: Utils.getDeviceHeight(context),
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
-                height: Utils.getDeviceHeight(context) / 2.5,
+                height: Utils.getDeviceHeight(context) / 2.3,
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
+                  fit: StackFit.expand,
                   alignment: Alignment.center,
                   children: <Widget>[
                     Container(
@@ -67,6 +69,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                             fit: BoxFit.fill),
                       ),
                       child: ListView(
+                        shrinkWrap: true,
                         children: <Widget>[
                           Container(
                               decoration: BoxDecoration(
@@ -88,7 +91,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                           const EdgeInsets.symmetric(
                                               vertical: 8.0, horizontal: 10),
                                       hintText: Utils.getText(context,
-                                          StringResBusiness.currentPassword),
+                                          StringRes.currentPassword),
                                       hintStyle:
                                           TextStyle(color: ColorRes.hintColor),
                                       border: InputBorder.none),
@@ -115,7 +118,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                           const EdgeInsets.symmetric(
                                               vertical: 8.0, horizontal: 10),
                                       hintText: Utils.getText(context,
-                                          StringResBusiness.newPassword),
+                                          StringRes.newPassword),
                                       hintStyle:
                                           TextStyle(color: ColorRes.hintColor),
                                       border: InputBorder.none),
@@ -141,7 +144,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                           const EdgeInsets.symmetric(
                                               vertical: 8.0, horizontal: 10),
                                       hintText: Utils.getText(context,
-                                          StringResBusiness.reEnterPassword),
+                                          StringRes.reEnterPassword),
                                       hintStyle:
                                           TextStyle(color: ColorRes.hintColor),
                                       border: InputBorder.none),
@@ -181,7 +184,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                           fit: BoxFit.fill)),
                                   child: Text(
                                     Utils.getText(
-                                        context, StringResBusiness.save),
+                                        context, StringRes.save),
                                     style: TextStyle(
                                         fontSize: 17, color: ColorRes.white),
                                   )),
@@ -205,7 +208,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                           fit: BoxFit.fill)),
                                   child: Text(
                                     Utils.getText(
-                                        context, StringResBusiness.cancel),
+                                        context, StringRes.cancel),
                                     style: TextStyle(
                                         fontSize: 17, color: ColorRes.white),
                                   )),

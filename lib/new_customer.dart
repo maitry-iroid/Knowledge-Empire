@@ -28,7 +28,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               SizedBox(
                 height: 10,
               ),
-              CommonView.showTitle(context,StringResBusiness.newCustomers),
+              CommonView.showTitle(context,StringRes.newCustomers),
               showSubHeader(),
               showItems()
             ],
@@ -66,7 +66,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 4,
             child: Text(
-              Utils.getText(context, StringResBusiness.name),
+              Utils.getText(context, StringRes.name),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -74,7 +74,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 5,
             child: Text(
-              Utils.getText(context, StringResBusiness.sector),
+              Utils.getText(context, StringRes.sector),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -82,7 +82,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 3,
             child: Text(
-              Utils.getText(context, StringResBusiness.value),
+              Utils.getText(context, StringRes.value),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -90,7 +90,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 3,
             child: Text(
-              Utils.getText(context, StringResBusiness.loyalty),
+              Utils.getText(context, StringRes.loyalty),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -98,7 +98,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 3,
             child: Text(
-              Utils.getText(context, StringResBusiness.resources),
+              Utils.getText(context, StringRes.resources),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -106,7 +106,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 3,
             child: Text(
-              Utils.getText(context, StringResBusiness.engage),
+              Utils.getText(context, StringRes.engage),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -141,7 +141,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 4,
                     child: Text(
-                      Utils.getText(context, StringResBusiness.newCustomers),
+                      Utils.getText(context, StringRes.newCustomers),
                       style: TextStyle(
                         color: ColorRes.textRecordBlue,
                         fontSize: 15,
@@ -200,7 +200,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
                   fit: BoxFit.fill):null),
           child: Text(
-            Utils.getText(context, StringResBusiness.engageNow),
+            Utils.getText(context, StringRes.engageNow),
             style: TextStyle(color: ColorRes.white, fontSize: 14),
           ),
         ),

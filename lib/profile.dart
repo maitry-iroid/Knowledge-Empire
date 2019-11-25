@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 margin: EdgeInsets.only(top: 15, left: 50, right: 50),
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(context, StringResBusiness.settings),
+                  Utils.getText(context, StringRes.settings),
                   style: TextStyle(
                       color: ColorRes.white, fontSize: 17, letterSpacing: 0.5),
                 ),
@@ -144,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 margin: EdgeInsets.only(top: 15, bottom: 10),
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(context, StringResBusiness.privacyPolicy),
+                  Utils.getText(context, StringRes.privacyPolicy),
                   style: TextStyle(
                     color: ColorRes.white,
                     fontSize: 15,
@@ -164,7 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 30,
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(context, StringResBusiness.termsConditions),
+                  Utils.getText(context, StringRes.termsConditions),
                   style: TextStyle(
                     color: ColorRes.white,
                     fontSize: 15,
@@ -185,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 margin: EdgeInsets.symmetric(vertical: 10),
                 alignment: Alignment.center,
                 child: Text(
-                  Utils.getText(context, StringResBusiness.contactUs),
+                  Utils.getText(context, StringRes.contactUs),
                   style: TextStyle(
                     color: ColorRes.white,
                     fontSize: 15,
@@ -211,8 +211,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     Utils.getText(
                         context,
                         Injector.isBusinessMode
-                            ? StringResBusiness.switchProfMode
-                            : StringResBusiness.switchBusinessMode),
+                            ? StringRes.switchProfMode
+                            : StringRes.switchBusinessMode),
                     style: TextStyle(
                         color: ColorRes.white,
                         fontSize: 15,
@@ -244,7 +244,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   margin: EdgeInsets.symmetric(vertical: 15),
                   alignment: Alignment.center,
                   child: Text(
-                    Utils.getText(context, StringResBusiness.logout),
+                    Utils.getText(context, StringRes.logout),
                     style: TextStyle(
                       color: ColorRes.white,
                       fontSize: 16,
@@ -303,7 +303,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fit: BoxFit.fill)
                       : null),
               child: Text(
-                Utils.getText(context, StringResBusiness.editProfile),
+                Utils.getText(context, StringRes.editProfile),
                 style: TextStyle(
                   color: ColorRes.white,
                   fontSize: 17,
@@ -385,7 +385,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 13,
                           ),
                           Text(
-                            Utils.getText(context, StringResBusiness.yourName),
+                            Utils.getText(context, StringRes.yourName),
                             style:
                                 TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
@@ -455,7 +455,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 13,
                           ),
                           Text(
-                            Utils.getText(context, StringResBusiness.yourEmail),
+                            Utils.getText(context, StringRes.yourEmail),
                             style:
                                 TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
@@ -518,7 +518,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fit: BoxFit.fill)),
                       child: Text(
                           Utils.getText(
-                              context, StringResBusiness.changePassword),
+                              context, StringRes.changePassword),
                           style: TextStyle(
                             color: ColorRes.white,
                             fontSize: 15,
@@ -543,7 +543,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               image: AssetImage(Utils.getAssetsImg("bg_save")),
                               fit: BoxFit.fill)),
                       child:
-                          Text(Utils.getText(context, StringResBusiness.save),
+                          Text(Utils.getText(context, StringRes.save),
                               style: TextStyle(
                                 color: ColorRes.white,
                                 fontSize: 15,

@@ -21,7 +21,7 @@ class _PLPageState extends State<PLPage> {
       height: double.infinity,
       decoration:CommonView.getBGDecoration(),
       child: Column(
-        children: <Widget>[CommonView.showTitle(context,StringResBusiness.pl)],
+        children: <Widget>[CommonView.showTitle(context,StringRes.pl)],
       ),
     );
   }
@@ -49,7 +49,7 @@ class _PLPageState extends State<PLPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            StringResBusiness.pl,
+            StringRes.pl,
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),

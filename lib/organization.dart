@@ -32,7 +32,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             SizedBox(
               height: 10,
             ),
-            CommonView.showTitle(context, StringResBusiness.organizations),
+            CommonView.showTitle(context, StringRes.organizations),
             Expanded(
               child: Stack(
                 children: <Widget>[

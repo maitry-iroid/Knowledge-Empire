@@ -51,51 +51,55 @@ class HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    drawerItems = [
-      DrawerItem(
-          Utils.getText(context, StringResBusiness.home), "main_screen_icon"),
-      DrawerItem(Utils.getText(context, StringResBusiness.businessSector),
-          "business_sectors"),
-      DrawerItem(Utils.getText(context, StringResBusiness.newCustomers),
-          "new-customer"),
-      DrawerItem(Utils.getText(context, StringResBusiness.existingCustomers),
-          "existing"),
-      DrawerItem(Utils.getText(context, StringResBusiness.rewards), "rewards"),
-      DrawerItem(Utils.getText(context, StringResBusiness.team), "team"),
-      DrawerItem(
-          Utils.getText(context, StringResBusiness.challenges), "challenges"),
-      DrawerItem(Utils.getText(context, StringResBusiness.organizations),
-          "organization"),
-      DrawerItem(Utils.getText(context, StringResBusiness.pl), "profit-loss"),
-      DrawerItem(Utils.getText(context, StringResBusiness.ranking), "ranking"),
-      DrawerItem(
-          Utils.getText(context, StringResBusiness.profile), "profile_icon"),
-    ];
 
-    if (widget.initialPosition == Const.typeHome)
-      _selectedDrawerIndex = 0;
-    else if (widget.initialPosition == Const.typeBusinessSector)
-      _selectedDrawerIndex = 1;
-    else if (widget.initialPosition == Const.typeNewCustomer)
-      _selectedDrawerIndex = 2;
-    else if (widget.initialPosition == Const.typeExistingCustomer)
-      _selectedDrawerIndex = 3;
-    else if (widget.initialPosition == Const.typeReward)
-      _selectedDrawerIndex = 4;
-    else if (widget.initialPosition == Const.typeTeam)
-      _selectedDrawerIndex = 5;
-    else if (widget.initialPosition == Const.typeChallenges)
-      _selectedDrawerIndex = 6;
-    else if (widget.initialPosition == Const.typeOrg)
-      _selectedDrawerIndex = 7;
-    else if (widget.initialPosition == Const.typePL)
-      _selectedDrawerIndex = 8;
-    else if (widget.initialPosition == Const.typeRanking)
-      _selectedDrawerIndex = 9;
-    else if (widget.initialPosition == Const.typeProfile)
-      _selectedDrawerIndex = 10;
-    else
-      _selectedDrawerIndex = 0;
+    Future.delayed(Duration.zero,(){
+      drawerItems = [
+        DrawerItem(
+            Utils.getText(context, StringRes.home), "main_screen_icon"),
+        DrawerItem(Utils.getText(context, StringRes.businessSector),
+            "business_sectors"),
+        DrawerItem(Utils.getText(context, StringRes.newCustomers),
+            "new-customer"),
+        DrawerItem(Utils.getText(context, StringRes.existingCustomers),
+            "existing"),
+        DrawerItem(Utils.getText(context, StringRes.rewards), "rewards"),
+        DrawerItem(Utils.getText(context, StringRes.team), "team"),
+        DrawerItem(
+            Utils.getText(context, StringRes.challenges), "challenges"),
+        DrawerItem(Utils.getText(context, StringRes.organizations),
+            "organization"),
+        DrawerItem(Utils.getText(context, StringRes.pl), "profit-loss"),
+        DrawerItem(Utils.getText(context, StringRes.ranking), "ranking"),
+        DrawerItem(
+            Utils.getText(context, StringRes.profile), "profile_icon"),
+      ];
+
+      if (widget.initialPosition == Const.typeHome)
+        _selectedDrawerIndex = 0;
+      else if (widget.initialPosition == Const.typeBusinessSector)
+        _selectedDrawerIndex = 1;
+      else if (widget.initialPosition == Const.typeNewCustomer)
+        _selectedDrawerIndex = 2;
+      else if (widget.initialPosition == Const.typeExistingCustomer)
+        _selectedDrawerIndex = 3;
+      else if (widget.initialPosition == Const.typeReward)
+        _selectedDrawerIndex = 4;
+      else if (widget.initialPosition == Const.typeTeam)
+        _selectedDrawerIndex = 5;
+      else if (widget.initialPosition == Const.typeChallenges)
+        _selectedDrawerIndex = 6;
+      else if (widget.initialPosition == Const.typeOrg)
+        _selectedDrawerIndex = 7;
+      else if (widget.initialPosition == Const.typePL)
+        _selectedDrawerIndex = 8;
+      else if (widget.initialPosition == Const.typeRanking)
+        _selectedDrawerIndex = 9;
+      else if (widget.initialPosition == Const.typeProfile)
+        _selectedDrawerIndex = 10;
+      else
+        _selectedDrawerIndex = 0;
+    });
+
   }
 
   _getDrawerItemWidget(int pos) {

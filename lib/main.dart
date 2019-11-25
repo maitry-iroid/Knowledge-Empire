@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -9,6 +10,7 @@ import 'package:ke_employee/login.dart';
 import 'package:notifier/notifier_provider.dart';
 
 import 'helper/constant.dart';
+import 'helper/localization.dart';
 import 'injection/dependency_injection.dart';
 import 'home.dart';
 
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
                     ? ColorRes.white
                     : ColorRes.colorBgDark),
           )),
-      home: MyHomePage(),
+      home: Injector.prefs.getString(PrefKeys.userId)!=null?HomePage():LoginPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
 //        '/splash': (BuildContext context) => SplashScreen(),
@@ -68,40 +70,51 @@ class MyApp extends StatelessWidget {
 //        '/contacts': (BuildContext context) => ContactsScreen(),
       },
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        const AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('es', ''),
+        // ... other locales the app supports
+      ],
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(Duration(seconds: 0), () async {
-      String userId = Injector.prefs.getString(PrefKeys.userId);
-
-      if (userId == null || userId.isEmpty) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
+//class MyHomePage extends StatefulWidget {
+//  MyHomePage({Key key}) : super(key: key);
+//
+//  @override
+//  _MyHomePageState createState() => _MyHomePageState();
+//}
+//
+//class _MyHomePageState extends State<MyHomePage> {
+//  @override
+//  void initState() {
+//    super.initState();
+//
+//    Future.delayed(Duration(milliseconds: 5000), () {
+//      String userId = Injector.prefs.getString(PrefKeys.userId);
+//
+//      if (userId == null || userId.isEmpty) {
+//        Navigator.pushReplacement(
+//          context,
+//          MaterialPageRoute(builder: (context) => LoginPage()),
+//        );
+//      } else {
+//        Navigator.pushReplacement(
+//          context,
+//          MaterialPageRoute(builder: (context) => HomePage()),
+//        );
+//      }
+//    });
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container();
+//  }
+//}

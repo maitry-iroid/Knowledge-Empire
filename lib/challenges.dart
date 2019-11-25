@@ -24,7 +24,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           Column(
             children: <Widget>[
               SizedBox(height: 10,),
-              CommonView.showTitle(context,StringResBusiness.challenges),
+              CommonView.showTitle(context,StringRes.challenges),
               showMainBody(),
             ],
           ),
@@ -50,7 +50,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         ),
         Column(
           children: <Widget>[
-            CommonView.showTitle(context,StringResBusiness.newCustomers),
+            CommonView.showTitle(context,StringRes.newCustomers),
             showMainBody(),
           ],
         ),

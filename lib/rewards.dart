@@ -122,7 +122,7 @@ class _RewardsPageState extends State<RewardsPage> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 10,),
-            CommonView.showTitle(context,StringResBusiness.rewards),
+            CommonView.showTitle(context,StringRes.rewards),
             Card(
               color: ColorRes.lightGrey,
               margin: EdgeInsets.all(10),

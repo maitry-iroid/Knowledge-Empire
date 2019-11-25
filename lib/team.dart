@@ -21,7 +21,7 @@ class _TeamPageState extends State<TeamPage> {
       height: double.infinity,
       decoration: CommonView.getBGDecoration(),
       child: Column(
-        children: <Widget>[CommonView.showTitle(context,StringResBusiness.team)],
+        children: <Widget>[CommonView.showTitle(context,StringRes.team)],
       ),
     );
   }
@@ -49,7 +49,7 @@ class _TeamPageState extends State<TeamPage> {
                   image: AssetImage(Utils.getAssetsImg("bg_blue")),
                   fit: BoxFit.fill)),
           child: Text(
-            Utils.getText(context, StringResBusiness.team),
+            Utils.getText(context, StringRes.team),
             style: TextStyle(color: ColorRes.colorPrimary, fontSize: 17),
             textAlign: TextAlign.center,
           ),
