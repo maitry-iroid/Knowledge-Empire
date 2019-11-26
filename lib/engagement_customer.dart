@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/Debrief.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
+import 'commonview/header.dart';
 import 'helper/res.dart';
 import 'Customer_Situation.dart';
 import 'commonview/background.dart';
@@ -20,7 +21,20 @@ class EngagementCustomerHome extends StatefulWidget {
 class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
 //  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   int _selectedItem = 0;
+
+  openProfile() {
+//    _onSelectItem(10);
+    if (mounted) {
+      setState(() => _selectedDrawerIndex = 10);
+//      Navigator.of(context).pop(); // close the drawer
+    }
+  }
+
+  int _selectedDrawerIndex = 0;
 
   selectItem(index) {
     setState(() {
@@ -29,15 +43,23 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SafeArea(child: Column(
         children: <Widget>[
+          Container(
+            child: HeaderView(
+              scaffoldKey: _scaffoldKey,
+              isShowMenu: true,
+              openProfile: openProfile,
+            ),
+          ),
           Container(
             height: 40,
             decoration: BoxDecoration(color: ColorRes.textProf
-                ),
+            ),
             child: Container(
 //                decoration: BoxDecoration(color: Colors.blue),
                 child: CommonView.showTitle(context, 'Enagagement')),
@@ -56,15 +78,15 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
                 children: <Widget>[
                   Expanded(
                       flex: 1,
-                      child: 
+                      child:
                       Column(
                         children: <Widget>[
                           Expanded(
                               flex: 5,
                               child: CommonView.image(context, "vector_smart_object1")),
                           Expanded(
-                            flex: 4,
-                            child: CommonView.questionAndExplanation(context, "Question")
+                              flex: 4,
+                              child: CommonView.questionAndExplanation(context, "Question")
                           )
                         ],
                       )
@@ -87,7 +109,7 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
                               color: ColorRes.bgDescription,
                               borderRadius: BorderRadius.circular(12),
                               border:
-                                  Border.all(color: ColorRes.white, width: 1),
+                              Border.all(color: ColorRes.white, width: 1),
                             ),
                             child: ListView.builder(
                               shrinkWrap: true,
@@ -104,7 +126,7 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
                                   // callback function, setstate for parent
                                   index: index,
                                   isSelected:
-                                      _selectedItem == index ? true : false,
+                                  _selectedItem == index ? true : false,
 //                                  title: arrSector[index],
                                 );
                               },
@@ -142,7 +164,7 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
             ),
           ),
         ],
-      ),
+      ),)
     );
   }
 }
@@ -181,7 +203,7 @@ class _CategoryItemState extends State<CategoryItem> {
       child: Container(
 //          height: 60,
           margin: EdgeInsets.only(left: 6, right: 6,top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 3),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
 //          margin: EdgeInsets.only(left: 10, right: 10, top: 6),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,

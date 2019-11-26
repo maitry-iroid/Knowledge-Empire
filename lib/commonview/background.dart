@@ -100,7 +100,7 @@ class CommonView {
           child: Container(
             margin: EdgeInsets.only(top: 0),
             padding: EdgeInsets.only(
-                left: 10, right: 10, top: 25),
+                left: 10, right: 10, top: 20),
             decoration: BoxDecoration(
               color: ColorRes.bgDescription,
               borderRadius: BorderRadius.circular(12),
