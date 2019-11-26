@@ -408,7 +408,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           fetchLearningModules();
         }
       } else
-        Utils.showToast("Something went wrong");
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
     });
   }
 

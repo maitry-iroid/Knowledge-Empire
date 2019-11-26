@@ -4,7 +4,7 @@ class StringRes {
   static var newCustomers = "newCustomers";
   static var existingCustomers = "existingCustomers";
   static var organizations = "organizations";
-  static var challenges = "challenges ";
+  static var challenges = "challenges";
   static var pl = "pl";
   static var rewards = "rewards";
   static var ranking = "ranking";
@@ -52,6 +52,7 @@ class StringRes {
   static var textCRM = "textCRM";
   static var textFinance = "textFinance";
   static var textLegal = "textLegal";
+  static var somethingWrong = "somethingWrong";
 
   //business sectors
 
@@ -118,6 +119,7 @@ class StringRes {
           'f we invest into 10 more Accountants for X \$ we will be able to reduce our cost by Y',
       'textLegal':
           'We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y',
+      'somethingWrong':'Something went wrong'
     },
     'es': {
       'title': 'Hola Mundo',
@@ -187,6 +189,7 @@ class StringRes {
       'f we invest into 10 more Accountants for X \$ we will be able to reduce our cost by Y',
       'textLegal':
       'We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y',
+      'somethingWrong':'Something went wrong'
     },
     'es': {
       'title': 'Hola Mundo',
