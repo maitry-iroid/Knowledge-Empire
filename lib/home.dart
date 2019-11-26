@@ -40,7 +40,7 @@ class HomePage extends StatefulWidget {
   }
 }
 
-List<DrawerItem> drawerItems;
+List<DrawerItem> drawerItems = List();
 
 class HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();

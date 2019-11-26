@@ -129,67 +129,16 @@ class StringRes {
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
       'home': "Home",
-      'businessSector': "Learning Modules",
-      'newCustomers': "New Customers",
+      'businessSector': "Subscriptions",
+      'newCustomers': "Questions",
       'existingCustomers': "Existing Customers",
-      'organizations': "Organizations",
+      'organizations': "Employees",
       'challenges': "Challenges",
       'pl': "P+L",
       'rewards': "Rewards",
       'ranking': "Ranking",
-      'team': "Team",
-      'profile': "Profile",
-      'emailId': 'Email Id',
-      'editProfile': 'Edit Profile',
-      'yourName': 'Your Name',
-      'yourEmail': 'Your Email',
-      'changePassword': 'Change Password',
-      'save': 'Save',
-      'settings': 'Settings',
-      'privacyPolicy': 'Privacy & Policy',
-      'termsConditions': 'Terms & Conditions',
-      'contactUs': 'Contact Us',
-      'switchProfMode': 'Switch to Professional Mode',
-      'switchBusinessMode': 'Switch to Business Mode',
-      'logout': 'Log out',
-      'login': 'Login',
-      'enterRegisteredEmail': 'Enter Registered Email Id',
-      'password': 'Password',
-      'newPassword': 'New Password',
-      'currentPassword': 'Current Password',
-      'reEnterPassword': 'Re-enter new Password',
-      'cancel': 'Cancel',
-      'send': 'Send',
-      'forgotPassword': 'Forgot Password?',
-      'sector': 'Sector',
-      'size': 'Size',
-      'description': 'Description',
-      'name': 'Name',
-      'value': 'Value',
-      'loyalty': 'Loyalty',
-      'resources': 'Resources',
-      'engage': 'Engage',
-      'engageNow': 'Engage Now',
-      'engageSegment': 'Engage Segment',
-      'endRel': 'End Rel.',
-      'searchForKeywords': 'Search for keywords',
-      'textHr':
-      'Lets hire 10 more employees in HR for X \$ to increase the total employee capacity by Y',
-      'textServices':
-      'If we hire 10 service engineers for X \$ we will be able to increase our customer capacity by Y',
-      'textMarketing':
-      'Lets hire 10 more marketing professionals for X \$ to increasecustomer revenues by Y',
-      'textSales':
-      'We need to hire 10 more Sales Reps for X \$ to increase our capacity to engage new customers by Y',
-      'textOperations':
-      'With 10 more employees in Operations for X \$ wecould reduce the needed Sales resources to win new customers by Y',
-      'textCRM':
-      'n investment of 10 employees and X \$ in CRM will enable us to increase customer loyalty by Y',
-      'textFinance':
-      'f we invest into 10 more Accountants for X \$ we will be able to reduce our cost by Y',
-      'textLegal':
-      'We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y',
-      'somethingWrong':'Something went wrong'
+      'team': "Team"
+
     },
     'es': {
       'title': 'Hola Mundo',

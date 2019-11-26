@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class AppLocalizations {
   AppLocalizations(this.locale);
@@ -14,11 +15,13 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-
-  String  text(String text) {
-    return StringRes.localizedValues[locale.languageCode][text];
+  String text(String text) {
+    return Injector.isBusinessMode
+        ? StringRes.localizedValues[locale.languageCode][text]
+        : StringRes.localizedValuesProf[locale.languageCode][text] != null
+            ? StringRes.localizedValuesProf[locale.languageCode][text]
+            : StringRes.localizedValues[locale.languageCode][text];
   }
-
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -37,6 +40,3 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   @override
   bool shouldReload(AppLocalizationsDelegate old) => false;
 }
-
-
-

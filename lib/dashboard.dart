@@ -5,6 +5,7 @@ import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -234,23 +235,23 @@ class DashboardPageState extends State<DashboardPage> {
 
   getTitle(int type) {
     if (type == Const.typeBusinessSector)
-      return "Business\nSector";
+      return Utils.getText(context, StringRes.businessSector);
     else if (type == Const.typeNewCustomer)
-      return "New\nCustomers";
+      return Utils.getText(context, StringRes.newCustomers);
     else if (type == Const.typeExistingCustomer)
-      return "Existing\nCustomers";
+      return Utils.getText(context, StringRes.existingCustomers);
     else if (type == Const.typeOrg)
-      return "Organizations";
+      return Utils.getText(context, StringRes.organizations);
     else if (type == Const.typeChallenges)
-      return "Challenges";
+      return Utils.getText(context, StringRes.challenges);
     else if (type == Const.typePL)
-      return "P+L";
+      return Utils.getText(context, StringRes.pl);
     else if (type == Const.typeReward)
-      return "Rewards";
+      return Utils.getText(context, StringRes.rewards);
     else if (type == Const.typeRanking)
-      return "Ranking";
+      return Utils.getText(context, StringRes.ranking);
     else if (type == Const.typeTeam)
-      return "Team";
+      return Utils.getText(context, StringRes.team);
     else
       return "";
   }
