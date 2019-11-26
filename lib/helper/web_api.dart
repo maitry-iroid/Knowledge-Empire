@@ -43,7 +43,7 @@ class WebApi {
 
     try {
       final response =
-          await dio.post("", data: json.encode(json.encode(jsonMap)));
+          await dio.post("", data: json.encode(getRequest('login', json.encode(jsonMap))));
 
       if (response.statusCode == 200) {
         print(response.data);
