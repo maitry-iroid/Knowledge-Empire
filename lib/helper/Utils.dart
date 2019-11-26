@@ -171,7 +171,7 @@ class Utils {
   static String getText(BuildContext context, String text) {
 //    return AppLocalizations.of(context).tr(text);
 
-    return AppLocalizations.of(context).text(text);
+    return AppLocalizations.of(context).text(text)!=null?AppLocalizations.of(context).text(text):text;
 
     if (Injector.prefs.getString(PrefKeys.userId) != null &&
         Injector.prefs.getString(PrefKeys.userId).isNotEmpty) {
