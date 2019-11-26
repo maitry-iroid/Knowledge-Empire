@@ -10,6 +10,7 @@ import 'package:crypto/crypto.dart';
 import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'constant.dart';
@@ -142,7 +143,11 @@ class Utils {
 
   static performBack(BuildContext context) {
     if (!Navigator.canPop(context)) {
-      showDialog(
+
+      Navigator.pop(context);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+
+      /*showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -151,8 +156,8 @@ class Utils {
                 FlatButton(
                   child: Text('Yes'),
                   onPressed: () {
-                    Navigator.pop(context);
-                    SystemNavigator.pop();
+
+//                    SystemNavigator.pop();
                   },
                 ),
                 FlatButton(
@@ -163,7 +168,7 @@ class Utils {
                 )
               ],
             );
-          });
+          });*/
     } else
       Navigator.pop(context);
   }

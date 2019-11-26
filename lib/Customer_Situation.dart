@@ -198,7 +198,7 @@ class _CategoryItemState extends State<CategoryItem> {
       child: Container(
 //          height: 50,
         margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-        padding: EdgeInsets.only(left: 10, right: 10, top: 3),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
 //          margin: EdgeInsets.only(left: 10, right: 10, top: 6),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
@@ -223,7 +223,7 @@ class _CategoryItemState extends State<CategoryItem> {
             Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
             Expanded(
               child: new Text(
-                "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohelloellohellohellohellohell",
+                "hellohellohellohellohellohellohellohellohellohellhellohelloellohellohellohellohell",
                 style: TextStyle(
                     color: (widget.isSelected ? ColorRes.white : Colors.black)),
               ),
