@@ -41,6 +41,9 @@ class Const {
   static int imgQuality = 20;
   static double imgScaleProfile = 1;
 
+  static String subscribe= "1";
+  static String unSubscribe= "0";
+
 }
 
 

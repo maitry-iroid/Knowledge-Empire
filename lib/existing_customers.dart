@@ -67,7 +67,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.name),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center, maxLines: 1,
             ),
           ),
           Expanded(
@@ -75,7 +75,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.sector),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center, maxLines: 1,
             ),
           ),
           Expanded(
@@ -83,7 +83,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.value),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center, maxLines: 1,
             ),
           ),
           Expanded(
@@ -91,7 +91,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.loyalty),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center, maxLines: 1,
             ),
           ),
           Expanded(
@@ -99,7 +99,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.endRel),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.center, maxLines: 1,
             ),
           ),
         ],

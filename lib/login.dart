@@ -227,13 +227,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: TextField(
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 16, color: ColorRes.white),
+                    style: TextStyle(fontSize: 17, color: ColorRes.white),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10),
+                            vertical: 8.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.emailId)
                             .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
@@ -266,10 +267,10 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 16, color: ColorRes.white),
+                    style: TextStyle(fontSize: 17, color: ColorRes.white),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10),
+                            vertical: 8.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.password)
                             .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),

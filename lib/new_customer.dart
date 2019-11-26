@@ -70,6 +70,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.name),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -78,6 +79,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.sector),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -86,6 +88,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.value),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -102,6 +105,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.resources),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -110,6 +114,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.engage),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
         ],
@@ -149,6 +154,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         fontSize: 15,
                       ),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
@@ -158,6 +164,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
@@ -167,6 +174,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
@@ -176,6 +184,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
@@ -185,6 +194,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                 ],
@@ -210,7 +220,10 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               ),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EngagementCustomer()));
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                        builder: (context) => EngagementCustomer()));
               },
             )),
       ],

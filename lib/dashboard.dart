@@ -26,75 +26,15 @@ class DashboardPageState extends State<DashboardPage> {
       backgroundColor: ColorRes.white,
       body: SafeArea(
         child: Container(
+          margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 7.5),
           height: double.infinity,
           width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              showHeaderView(),
-              Expanded(
-                child: showMainView(),
-              )
-            ],
-          ),
+          child: showMainView()
         ),
       ),
     );
   }
 
-  showHeaderItem(int type) {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 6.6,
-      height: 40,
-      padding: EdgeInsets.only(left: 4),
-      margin: EdgeInsets.symmetric(horizontal: 1),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-              fit: BoxFit.fill)),
-      child: Row(
-        children: <Widget>[
-          Image(
-            image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
-            height: 30,
-          ),
-          SizedBox(
-            width: 2,
-          ),
-          Expanded(
-            child: type != Const.typeDollar
-                ? Stack(
-                    children: <Widget>[
-                      LinearPercentIndicator(
-                        width: Utils.getDeviceWidth(context) / 11,
-                        lineHeight: 20.0,
-                        percent: getProgressInt(type),
-                        backgroundColor: Colors.grey,
-                        progressColor: Colors.blue,
-                      ),
-                      Positioned(
-                        top: 3,
-                        left: 4,
-                        bottom: 0,
-                        child: Text(
-                          getProgress(type),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                : Text(
-                    ' \$ 120.00',
-                    style:
-                        TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
-                  ),
-          )
-        ],
-      ),
-    );
-  }
 
   showProfile() {
     return Container(
@@ -107,70 +47,27 @@ class DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  showHeaderView() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-      color: ColorRes.headerDashboard,
-      child: Row(
-        children: <Widget>[
-          Image(
-            image: AssetImage(Utils.getAssetsImg("ic_menu")),
-            width: 25,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Riddhi",
-                style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                "Patel",
-                style: TextStyle(color: ColorRes.colorPrimary, fontSize: 15),
-              )
-            ],
-          ),
-          Expanded(
-            child: Row(
-              children: <Widget>[],
-            ),
-          ),
-          showHeaderItem(Const.typeChecked),
-          showHeaderItem(Const.typePeople),
-          showHeaderItem(Const.typeBadge),
-          showHeaderItem(Const.typeResources),
-          showHeaderItem(Const.typeDollar),
-          showProfile()
-        ],
-      ),
-    );
-  }
 
   showMainView() {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
       child: GridView.count(
         crossAxisCount: 3,
         shrinkWrap: true,
         childAspectRatio: 2.1,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
         children: <Widget>[
           showMainItem(Const.typeBusinessSector),
           showMainItem(Const.typeNewCustomer),
           showMainItem(Const.typeExistingCustomer),
-          showMainItem(Const.typeOrg),
-          showMainItem(Const.typeChallenges),
-          showMainItem(Const.typePL),
           showMainItem(Const.typeReward),
-          showMainItem(Const.typeRanking),
           showMainItem(Const.typeTeam),
+          showMainItem(Const.typeChallenges),
+          showMainItem(Const.typeOrg),
+          showMainItem(Const.typePL),
+          showMainItem(Const.typeRanking),
+
         ],
       ),
     );
@@ -179,7 +76,7 @@ class DashboardPageState extends State<DashboardPage> {
   showMainItem(int type) {
     return InkResponse(
       child: Container(
-        height: 50,
+//         height: Utils.getDeviceHeight(context) / 15,
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -192,7 +89,7 @@ class DashboardPageState extends State<DashboardPage> {
               children: <Widget>[
                 Image(
                   image: AssetImage(Utils.getAssetsImg(getImage(type))),
-                  width: Utils.getDeviceHeight(context) / 5.5,
+                  width: Utils.getDeviceHeight(context) / 5.8,
                 ),
                 Positioned(
                   right: 5,

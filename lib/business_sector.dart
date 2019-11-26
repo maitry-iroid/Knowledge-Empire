@@ -7,6 +7,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/learning_module_data.dart';
 
 import 'helper/Utils.dart';
+import 'helper/constant.dart';
 import 'helper/res.dart';
 
 class BusinessSectorPage extends StatefulWidget {
@@ -101,61 +102,73 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   Widget showItem(int index) {
     return InkResponse(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            flex: 9,
-            child: Container(
-              height: Utils.getTitleHeight(),
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(left: 20, top: 5, right: 10),
-              decoration: BoxDecoration(
-                  color: Injector.isBusinessMode ? null : ColorRes.white,
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg("bg_new_customer_item")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                arrFinalLearningModules[index].moduleName,
-                style: TextStyle(
-                    color: Injector.isBusinessMode
-                        ? ColorRes.blue
-                        : ColorRes.textProf,
-                    fontSize: 15),
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(left: 20,right: 10),
+        padding: EdgeInsets.only(top: 5,bottom:5,left: 8),
+        decoration: BoxDecoration(
+            image: (selectedModule.moduleId ==
+                    arrFinalLearningModules[index].moduleId)
+                ? DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(
+                        Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
+                    fit: BoxFit.fill)
+                : null),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              flex: 9,
+              child: Container(
+                height: 28,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.white,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image: AssetImage(
+                                Utils.getAssetsImg("bg_new_customer_item")),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  arrFinalLearningModules[index].moduleName,
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.blue
+                          : ColorRes.textProf,
+                      fontSize: 15),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              height: 30,
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              decoration: BoxDecoration(
-                  color:
-                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg("value")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                arrFinalLearningModules[index].question,
-                style: TextStyle(color: ColorRes.white, fontSize: 22),
+            Expanded(
+              flex: 3,
+              child: Container(
+                height: 30,
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: BoxDecoration(
+                    color:
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image: AssetImage(Utils.getAssetsImg("value")),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  arrFinalLearningModules[index].question,
+                  style: TextStyle(color: ColorRes.white, fontSize: 22),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       onTap: () {
         setState(() {
@@ -249,92 +262,60 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showSecondHalf() {
     return Container(
       color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
-      child: Column(
+      child: ListView(
         children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              height: double.infinity,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Card(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: Injector.isBusinessMode
-                        ? ColorRes.whiteDarkBg
-                        : ColorRes.white,
-                    margin: EdgeInsets.only(
-                        top: 20),
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          left: 10, right: 10, top: 30, bottom: 10),
-                      decoration: BoxDecoration(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.bgDescription
-                            : ColorRes.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Injector.isBusinessMode
-                            ? Border.all(color: ColorRes.white, width: 1)
-                            : null,
-                      ),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          selectedModule.moduleDescription,
-                          style: TextStyle(
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.textProf),
-                        ),
-                      ),
-                    ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: <Widget>[
+                Card(
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: Utils.getTitleHeight(),
-                      margin: EdgeInsets.only(
-                          left: Utils.getDeviceWidth(context) / 10,right: Utils.getDeviceWidth(context) / 10),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          color: Injector.isBusinessMode
-                              ? null
-                              : ColorRes.titleBlueProf,
-                          borderRadius: BorderRadius.circular(20),
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
-                                  image:
-                                      AssetImage(Utils.getAssetsImg("bg_blue")),
-                                  fit: BoxFit.fill)
-                              : null),
-                      child: Text(
-                        Utils.getText(context, StringRes.description),
-                        style: TextStyle(color: ColorRes.white, fontSize: 17),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          selectedModule.isAssign == "0"
-              ? InkResponse(
+                  color: Injector.isBusinessMode
+                      ? ColorRes.whiteDarkBg
+                      : ColorRes.white,
+                  margin: EdgeInsets.only(top: 20),
                   child: Container(
-                    alignment: Alignment.bottomCenter,
+                    padding: EdgeInsets.only(
+                        left: 10, right: 10, top: 30, bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.bgDescription
+                          : ColorRes.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Injector.isBusinessMode
+                          ? Border.all(color: ColorRes.white, width: 1)
+                          : null,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Text(
+                        selectedModule.moduleDescription,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                            color: Injector.isBusinessMode
+                                ? ColorRes.white
+                                : ColorRes.textProf),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    alignment: Alignment.center,
                     height: Utils.getTitleHeight(),
-                    margin: EdgeInsets.symmetric(
-                        horizontal: Utils.getDeviceWidth(context) / 8,
-                        vertical: 20),
+                    margin: EdgeInsets.only(
+                        top: Injector.isBusinessMode ? 3 : 5,
+                        left: Utils.getDeviceWidth(context) / 10,
+                        right: Utils.getDeviceWidth(context) / 10),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                         color: Injector.isBusinessMode
                             ? null
-                            : ColorRes.headerBlue,
+                            : ColorRes.titleBlueProf,
                         borderRadius: BorderRadius.circular(20),
                         image: Injector.isBusinessMode
                             ? DecorationImage(
@@ -343,14 +324,47 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                 fit: BoxFit.fill)
                             : null),
                     child: Text(
-                      Utils.getText(context, StringRes.engageSegment),
+                      Utils.getText(context, StringRes.description),
                       style: TextStyle(color: ColorRes.white, fontSize: 17),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  onTap: assignUserToModule,
-                )
-              : Container()
+                ),
+              ],
+            ),
+          ),
+          InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                height: Utils.getTitleHeight(),
+                margin: EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 8,
+                    vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
+                    borderRadius: BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image:
+                                AssetImage(Utils.getAssetsImg("bg_subscribe")),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(
+                      context,
+                      selectedModule.isAssign == "0"
+                          ? StringRes.subscribe
+                          : StringRes.unSubscribe),
+                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () {
+                assignUserToModule(selectedModule.isAssign == "0"
+                    ? Const.subscribe
+                    : Const.unSubscribe);
+              })
         ],
       ),
     );
@@ -369,6 +383,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       if (data != null) {
         if (data.flag == "true") {
           setState(() {
+            arrLearningModules.clear();
+            arrFinalLearningModules.clear();
             arrLearningModules.addAll(data.data);
             arrFinalLearningModules.addAll(data.data);
 
@@ -382,19 +398,27 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     });
   }
 
-  void assignUserToModule() async {
+  void assignUserToModule(String type) async {
     setState(() {
       isLoading = true;
     });
 
-    WebApi().assignUserToModule(selectedModule.moduleId).then((data) {
+    WebApi().assignUserToModule(selectedModule.moduleId, type).then((data) {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
         if (data.flag == "true") {
-          Utils.showToast("Assigned successfully!");
+          if (type == Const.subscribe) {
+            Utils.showToast("Subscribed successfully!");
+            selectedModule.isAssign = "1";
+          } else {
+            Utils.showToast("Unsubscribed successfully!");
+            selectedModule.isAssign = "0";
+          }
+          setState(() {});
+        }
 
 //          setState(() {
 //
@@ -405,8 +429,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 ////                    .isAssign ==
 ////                "1";
 
-          fetchLearningModules();
-        }
+        fetchLearningModules();
       } else
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
     });

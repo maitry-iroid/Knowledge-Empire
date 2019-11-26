@@ -193,13 +193,14 @@ class WebApi {
     }
   }
 
-  Future<LoginResponse> assignUserToModule(String moduleId) async {
+  Future<LoginResponse> assignUserToModule(String moduleId, String type) async {
     initDio();
 
     var req = json.encode({
       'userId': Injector.userData.userId,
       'companyId': Injector.userData.activeCompany,
-      'moduleId': moduleId
+      'moduleId': moduleId,
+      'type':type
     });
 
     print("assignUserToModule" + " - " + req);

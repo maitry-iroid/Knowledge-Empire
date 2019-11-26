@@ -30,8 +30,12 @@ class _ProfilePageState extends State<ProfilePage> {
   TextEditingController nameController = TextEditingController();
   bool isLoading = false;
 
+  FocusNode myFocusNode;
+
   @override
   void initState() {
+    myFocusNode = FocusNode();
+
     nameController.text = Injector.userData.name;
 
     photoUrl = Injector.userData != null
@@ -46,6 +50,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Notifier _notifier;
   File _image;
   String photoUrl = "";
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -216,6 +226,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         Injector.isBusinessMode
                             ? StringRes.switchProfMode
                             : StringRes.switchBusinessMode),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: ColorRes.white,
                         fontSize: 15,
@@ -262,7 +274,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
                 ),
                 onTap: logout,
-
               )
             ],
           ),
@@ -304,7 +315,8 @@ class _ProfilePageState extends State<ProfilePage> {
   showTitle() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           InkResponse(
             child: Image(
@@ -317,9 +329,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Center(
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.center,
               height: Utils.getTitleHeight(),
-              margin: EdgeInsets.only(left: 90, right: 90, top: 2),
+              margin: EdgeInsets.only(top: 2),
               decoration: BoxDecoration(
                   color:
                       Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
@@ -339,9 +352,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: ColorRes.white,
                   fontSize: 17,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
             ),
+          ),
+          Container(
+            width: 35,
           )
         ],
       ),
@@ -437,6 +455,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: TextField(
                                 controller: nameController,
                                 obscureText: false,
+                                focusNode: myFocusNode,
                                 style: TextStyle(
                                   color: ColorRes.white,
                                   fontSize: 13,
@@ -459,6 +478,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     image: AssetImage(Utils.getAssetsImg("edit")),
                     width: 40,
                   ),
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(myFocusNode);
+                  },
                 )
               ],
             ),
@@ -534,7 +556,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 15,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
                   flex: 2,
@@ -542,6 +564,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Container(
                       height: 35,
                       alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage(
@@ -560,7 +583,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 SizedBox(
-                  width: 30,
+                  width: 10,
                 ),
                 Expanded(
                   flex: 1,

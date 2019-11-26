@@ -108,37 +108,63 @@ class HeaderView extends StatelessWidget {
   showHeaderItem(int type, BuildContext context) {
     return Container(
       height: 40,
-      padding: EdgeInsets.only(left: 4, right: 4),
+      padding:
+          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       margin: EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-              fit: BoxFit.fill)),
+          image: Injector.isBusinessMode
+              ? DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+                  fit: BoxFit.fill)
+              : null),
       child: Row(
         children: <Widget>[
-          Image(
-            image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
-            height: 25,
+          Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Injector.isBusinessMode
+                  ? Container()
+                  : Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorRes.white, width: 1),
+                          borderRadius: BorderRadius.circular(12.5)),
+                    ),
+              Image(
+                image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
+                height: 26,
+              ),
+            ],
           ),
           SizedBox(
-            width: 2,
+            width: 4,
           ),
           type != Const.typeDollar
               ? Stack(
                   alignment: Alignment.centerLeft,
                   children: <Widget>[
                     Container(
-                      height: 24,
+                      height: Injector.isBusinessMode ? 19 : 21,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage(Utils.getAssetsImg('bg_progress')),
-                              fit: BoxFit.fill)),
-                      padding: EdgeInsets.symmetric(vertical: 2),
+                          color: ColorRes.greyText,
+//                          image: Injector.isBusinessMode
+//                              ? DecorationImage(
+//                                  image: AssetImage(
+//                                      Utils.getAssetsImg('bg_progress')),
+//                                  fit: BoxFit.fill)
+//                              : null,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Injector.isBusinessMode
+                              ? null
+                              : Border.all(color: ColorRes.white, width: 1)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 0,
+                          horizontal: Injector.isBusinessMode ? 0 : 1),
                       child: LinearPercentIndicator(
                         width: Utils.getDeviceWidth(context) / 12,
-                        lineHeight: 18.0,
+                        lineHeight: 19.0,
                         percent: getProgressInt(type),
                         backgroundColor: Colors.transparent,
                         progressColor: Colors.blue,
@@ -173,7 +199,8 @@ class HeaderView extends StatelessWidget {
               image: DecorationImage(
                   image: Injector.userData.profileImage != null
                       ? NetworkImage(Injector.userData.profileImage)
-                      : AssetImage(Utils.getAssetsImg('user_org')),fit: BoxFit.fill),
+                      : AssetImage(Utils.getAssetsImg('user_org')),
+                  fit: BoxFit.fill),
               border: Border.all(color: ColorRes.textLightBlue)),
         ),
         onTap:
