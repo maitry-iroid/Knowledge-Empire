@@ -52,62 +52,30 @@ class HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
 
-    Future.delayed(Duration.zero, () {
-      drawerItems = [
-        DrawerItem(Utils.getText(context, StringRes.home),
-            Injector.isBusinessMode ? "main_screen_icon" : "main_screen_icon"),
-        DrawerItem(
-            Utils.getText(context, StringRes.businessSector),
-            Injector.isBusinessMode
-                ? "business_sectors"
-                : "ic_pro_business_sectors"),
-        DrawerItem(Utils.getText(context, StringRes.newCustomers),
-            Injector.isBusinessMode ? "new-customer" : "ic_pro_new_cutomer"),
-        DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-            Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
-        DrawerItem(Utils.getText(context, StringRes.rewards),
-            Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
-        DrawerItem(Utils.getText(context, StringRes.team),
-            Injector.isBusinessMode ? "team" : "ic_pro_team"),
-        DrawerItem(Utils.getText(context, StringRes.challenges),
-            Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
-        DrawerItem(Utils.getText(context, StringRes.organizations),
-            Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
-        DrawerItem(Utils.getText(context, StringRes.pl),
-            Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
-        DrawerItem(Utils.getText(context, StringRes.ranking),
-            Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
-        DrawerItem(Utils.getText(context, StringRes.profile),
-            Injector.isBusinessMode ? "profile_icon" : "profile_icon"),
-      ];
-
-      if (widget.initialPosition == Const.typeHome)
-        _selectedDrawerIndex = 0;
-      else if (widget.initialPosition == Const.typeBusinessSector)
-        _selectedDrawerIndex = 1;
-      else if (widget.initialPosition == Const.typeNewCustomer)
-        _selectedDrawerIndex = 2;
-      else if (widget.initialPosition == Const.typeExistingCustomer)
-        _selectedDrawerIndex = 3;
-      else if (widget.initialPosition == Const.typeReward)
-        _selectedDrawerIndex = 4;
-      else if (widget.initialPosition == Const.typeTeam)
-        _selectedDrawerIndex = 5;
-      else if (widget.initialPosition == Const.typeChallenges)
-        _selectedDrawerIndex = 6;
-      else if (widget.initialPosition == Const.typeOrg)
-        _selectedDrawerIndex = 7;
-      else if (widget.initialPosition == Const.typePL)
-        _selectedDrawerIndex = 8;
-      else if (widget.initialPosition == Const.typeRanking)
-        _selectedDrawerIndex = 9;
-      else if (widget.initialPosition == Const.typeProfile)
-        _selectedDrawerIndex = 10;
-      else
-        _selectedDrawerIndex = 0;
-    });
-
-    setState(() {});
+    if (widget.initialPosition == Const.typeHome)
+      _selectedDrawerIndex = 0;
+    else if (widget.initialPosition == Const.typeBusinessSector)
+      _selectedDrawerIndex = 1;
+    else if (widget.initialPosition == Const.typeNewCustomer)
+      _selectedDrawerIndex = 2;
+    else if (widget.initialPosition == Const.typeExistingCustomer)
+      _selectedDrawerIndex = 3;
+    else if (widget.initialPosition == Const.typeReward)
+      _selectedDrawerIndex = 4;
+    else if (widget.initialPosition == Const.typeTeam)
+      _selectedDrawerIndex = 5;
+    else if (widget.initialPosition == Const.typeChallenges)
+      _selectedDrawerIndex = 6;
+    else if (widget.initialPosition == Const.typeOrg)
+      _selectedDrawerIndex = 7;
+    else if (widget.initialPosition == Const.typePL)
+      _selectedDrawerIndex = 8;
+    else if (widget.initialPosition == Const.typeRanking)
+      _selectedDrawerIndex = 9;
+    else if (widget.initialPosition == Const.typeProfile)
+      _selectedDrawerIndex = 10;
+    else
+      _selectedDrawerIndex = 0;
   }
 
   _getDrawerItemWidget(int pos) {
@@ -159,55 +127,89 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var drawerOptions = <Widget>[];
-    for (var i = 0; i < drawerItems.length; i++) {
-      drawerOptions.add(new ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-        title: showMainItem(drawerItems[i], i),
-        selected: i == _selectedDrawerIndex,
-        onTap: () => _onSelectItem(i),
-      ));
-    }
+    return Notifier.of(context).register<String>('changeMode', (data) {
+      drawerItems = [
+        DrawerItem(Utils.getText(context, StringRes.home),
+            Injector.isBusinessMode ? "main_screen_icon" : "ic_home_prof"),
+        DrawerItem(
+            Utils.getText(context, StringRes.businessSector),
+            Injector.isBusinessMode
+                ? "business_sectors"
+                : "ic_pro_business_sectors"),
+        DrawerItem(Utils.getText(context, StringRes.newCustomers),
+            Injector.isBusinessMode ? "new-customer" : "ic_pro_new_cutomer"),
+        DrawerItem(Utils.getText(context, StringRes.existingCustomers),
+            Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
+        DrawerItem(Utils.getText(context, StringRes.rewards),
+            Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
+        DrawerItem(Utils.getText(context, StringRes.team),
+            Injector.isBusinessMode ? "team" : "ic_pro_team"),
+        DrawerItem(Utils.getText(context, StringRes.challenges),
+            Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
+        DrawerItem(Utils.getText(context, StringRes.organizations),
+            Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
+        DrawerItem(Utils.getText(context, StringRes.pl),
+            Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
+        DrawerItem(Utils.getText(context, StringRes.ranking),
+            Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
+        DrawerItem(Utils.getText(context, StringRes.profile),
+            Injector.isBusinessMode ? "profile_icon" : "ic_profile_prof"),
+      ];
 
-    return new Scaffold(
-      key: _scaffoldKey,
-      drawer: new SizedBox(
-        width: Utils.getDeviceWidth(context) / 2.5,
-        child: Drawer(
-            child: Notifier.of(context).register<String>('changeMode', (data) {
-          return Container(
-            color:
-                Injector.isBusinessMode ? ColorRes.bgMenu : ColorRes.headerBlue,
-            child: new ListView(children: drawerOptions),
-          );
-        })),
-      ),
-      backgroundColor: ColorRes.colorBgDark,
-      body: SafeArea(
-          child: _selectedDrawerIndex != 0
-              ? Column(
-                  children: <Widget>[
-                    HeaderView(
-                      scaffoldKey: _scaffoldKey,
-                      isShowMenu: true,
-                      openProfile: openProfile,
-                    ),
-                    Expanded(
-                      child: _getDrawerItemWidget(_selectedDrawerIndex),
-                    ),
-                  ],
-                )
-              : Stack(
-                  children: <Widget>[
-                    _getDrawerItemWidget(_selectedDrawerIndex),
-                    HeaderView(
-                      scaffoldKey: _scaffoldKey,
-                      isShowMenu: true,
-                      openProfile: openProfile,
-                    ),
-                  ],
-                )),
-    );
+
+
+      var drawerOptions = <Widget>[];
+      for (var i = 0; i < drawerItems.length; i++) {
+        drawerOptions.add(new ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          title: showMainItem(drawerItems[i], i),
+          selected: i == _selectedDrawerIndex,
+          onTap: () => _onSelectItem(i),
+        ));
+      }
+
+      return new Scaffold(
+        key: _scaffoldKey,
+        drawer: new SizedBox(
+          width: Utils.getDeviceWidth(context) / 2.5,
+          child: Drawer(
+              child:
+                  Notifier.of(context).register<String>('changeMode', (data) {
+            return Container(
+              color: Injector.isBusinessMode
+                  ? ColorRes.bgMenu
+                  : ColorRes.headerBlue,
+              child: new ListView(children: drawerOptions),
+            );
+          })),
+        ),
+        backgroundColor: ColorRes.colorBgDark,
+        body: SafeArea(
+            child: _selectedDrawerIndex != 0
+                ? Column(
+                    children: <Widget>[
+                      HeaderView(
+                        scaffoldKey: _scaffoldKey,
+                        isShowMenu: true,
+                        openProfile: openProfile,
+                      ),
+                      Expanded(
+                        child: _getDrawerItemWidget(_selectedDrawerIndex),
+                      ),
+                    ],
+                  )
+                : Stack(
+                    children: <Widget>[
+                      _getDrawerItemWidget(_selectedDrawerIndex),
+                      HeaderView(
+                        scaffoldKey: _scaffoldKey,
+                        isShowMenu: true,
+                        openProfile: openProfile,
+                      ),
+                    ],
+                  )),
+      );
+    });
   }
 
   showMainItem(DrawerItem item, int i) {

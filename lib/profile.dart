@@ -239,10 +239,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   });
 
                   _notifier.notify('changeMode', 'Sending data from notfier!');
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+//                  Navigator.pushReplacement(
+//                    context,
+//                    MaterialPageRoute(builder: (context) => HomePage()),
+//                  );
                 },
               ),
               InkResponse(

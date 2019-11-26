@@ -86,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: ListView(
+                shrinkWrap: true,
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
                   showEmailView(),
@@ -112,26 +113,28 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                  InkResponse(
-                    child: Container(
-                      height: 30,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: Utils.getDeviceWidth(context) / 8,
-                          vertical: 5),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: ExactAssetImage(
-                                Utils.getAssetsImg('btn_login')),
-                            alignment: Alignment.topCenter,
-                            fit: BoxFit.fill),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/8),
+                    child: InkResponse(
+                      child: Container(
+                        height: 30,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: ExactAssetImage(
+                                  Utils.getAssetsImg('btn_login')),
+                              alignment: Alignment.topCenter,
+                              fit: BoxFit.fill),
+                        ),
+                        child: Text(
+                          Utils.getText(context, StringRes.login).toUpperCase(),
+                          style: TextStyle(color: ColorRes.white, fontSize: 15),
+                        ),
                       ),
-                      child: Text(
-                        Utils.getText(context,StringRes.login).toUpperCase(),
-                        style: TextStyle(color: ColorRes.white, fontSize: 15),
-                      ),
+                      onTap: validateForm,
                     ),
-                    onTap: validateForm,
                   )
                 ],
               )),
@@ -231,9 +234,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10),
-                        hintText:
-                            Utils.getText(context, StringRes.emailId)
-                                .toUpperCase(),
+                        hintText: Utils.getText(context, StringRes.emailId)
+                            .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
                         border: InputBorder.none),
                   ),
@@ -268,9 +270,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 10),
-                        hintText:
-                            Utils.getText(context, StringRes.password)
-                                .toUpperCase(),
+                        hintText: Utils.getText(context, StringRes.password)
+                            .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
                         border: InputBorder.none),
                   ),

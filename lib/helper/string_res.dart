@@ -119,7 +119,7 @@ class StringRes {
           'f we invest into 10 more Accountants for X \$ we will be able to reduce our cost by Y',
       'textLegal':
           'We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y',
-      'somethingWrong':'Something went wrong'
+      'somethingWrong': 'Something went wrong'
     },
     'es': {
       'title': 'Hola Mundo',
@@ -129,16 +129,17 @@ class StringRes {
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
       'home': "Home",
-      'businessSector': "Subscriptions",
-      'newCustomers': "Questions",
-      'existingCustomers': "Existing Customers",
-      'organizations': "Employees",
+      'businessSector': "Learning Module",
+      'newCustomers': "Open Learnings",
+      'existingCustomers': "Completed Learnings",
+      'organizations': "Power-Up",
       'challenges': "Challenges",
-      'pl': "P+L",
+      'pl': "Performance",
       'rewards': "Rewards",
       'ranking': "Ranking",
-      'team': "Team"
-
+      'team': "Team",
+      'sector': 'Module',
+      'size': 'Q&A',
     },
     'es': {
       'title': 'Hola Mundo',
