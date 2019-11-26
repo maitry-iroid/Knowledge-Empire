@@ -2,6 +2,7 @@
 
 class Const {
 
+  static var deviceType ="android";
   static var typeBusinessSector =0;
   static var typeNewCustomer =1;
   static var typeExistingCustomer =2;

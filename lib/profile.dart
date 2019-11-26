@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/LogoutRequest.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
@@ -16,6 +17,7 @@ import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'login.dart';
 import 'home.dart';
+import 'models/login_response_data.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -259,21 +261,44 @@ class _ProfilePageState extends State<ProfilePage> {
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
                 ),
-                onTap: () async {
+                onTap: logout,
 
-                  await Injector.prefs.clear();
-
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      ModalRoute.withName("/home"));
-                },
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  logout() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    LogoutRequest rq = LogoutRequest();
+    rq.userId = Injector.userData.userId;
+    rq.deviceToken = Injector.userData.accessToken;
+    rq.deviceType = Const.deviceType;
+
+    WebApi().logout(rq.toJson()).then((data) async {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+          await Injector.prefs.clear();
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+              ModalRoute.withName("/home"));
+        } else {
+          Utils.showToast(data.msg);
+        }
+      }
+    });
   }
 
   showTitle() {
@@ -522,13 +547,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               image: AssetImage(
                                   Utils.getAssetsImg("bg_change_pw")),
                               fit: BoxFit.fill)),
-                      child: Text(
-                          Utils.getText(
-                              context, StringRes.changePassword),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
-                          )),
+                      child:
+                          Text(Utils.getText(context, StringRes.changePassword),
+                              style: TextStyle(
+                                color: ColorRes.white,
+                                fontSize: 15,
+                              )),
                     ),
                     onTap: () {
                       Utils.showChangePasswordDialog(_scaffoldKey, true);
@@ -548,12 +572,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           image: DecorationImage(
                               image: AssetImage(Utils.getAssetsImg("bg_save")),
                               fit: BoxFit.fill)),
-                      child:
-                          Text(Utils.getText(context, StringRes.save),
-                              style: TextStyle(
-                                color: ColorRes.white,
-                                fontSize: 15,
-                              )),
+                      child: Text(Utils.getText(context, StringRes.save),
+                          style: TextStyle(
+                            color: ColorRes.white,
+                            fontSize: 15,
+                          )),
                     ),
                     onTap: updateProfile,
                   ),

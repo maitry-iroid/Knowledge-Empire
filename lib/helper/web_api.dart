@@ -36,6 +36,30 @@ class WebApi {
 
   Dio dio = Dio();
 
+  Future<LoginResponse> logout(Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("logout_request__" + json.encode(jsonMap));
+
+    try {
+      final response =
+      await dio.post("", data: json.encode(getRequest('logout', json.encode(jsonMap))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        LoginResponse loginRequest =
+        LoginResponse.fromJson(jsonDecode(response.data));
+        return loginRequest;
+      }
+
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
   Future<LoginResponse> login(Map<String, dynamic> jsonMap) async {
     initDio();
 
@@ -66,7 +90,8 @@ class WebApi {
     try {
       final response = await dio.post("",
           data:
-              json.encode(getRequest('forgot_password', json.encode(jsonMap))));
+              json.encode(getRequest('forgot_password', json.encode(jsonMap)))
+      );
 
       if (response.statusCode == 200) {
         print(response.data);
