@@ -267,7 +267,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         ? ColorRes.whiteDarkBg
                         : ColorRes.white,
                     margin: EdgeInsets.only(
-                        top: 20, bottom: Utils.getDeviceHeight(context) / 7),
+                        top: 20),
                     child: Container(
                       padding: EdgeInsets.only(
                           left: 10, right: 10, top: 30, bottom: 10),
@@ -296,8 +296,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     child: Container(
                       alignment: Alignment.center,
                       height: Utils.getTitleHeight(),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: Utils.getDeviceWidth(context) / 10),
+                      margin: EdgeInsets.only(
+                          left: Utils.getDeviceWidth(context) / 10,right: Utils.getDeviceWidth(context) / 10),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(

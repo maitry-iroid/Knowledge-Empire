@@ -61,9 +61,9 @@ class DashboardPageState extends State<DashboardPage> {
           SizedBox(
             width: 2,
           ),
-          type != Const.typeDollar
-              ? Expanded(
-                  child: Stack(
+          Expanded(
+            child: type != Const.typeDollar
+                ? Stack(
                     children: <Widget>[
                       LinearPercentIndicator(
                         width: Utils.getDeviceWidth(context) / 11,
@@ -84,12 +84,13 @@ class DashboardPageState extends State<DashboardPage> {
                         ),
                       )
                     ],
+                  )
+                : Text(
+                    ' \$ 120.00',
+                    style:
+                        TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
                   ),
-                )
-              : Text(
-                  ' \$ 120.00',
-                  style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
-                ),
+          )
         ],
       ),
     );
@@ -182,7 +183,8 @@ class DashboardPageState extends State<DashboardPage> {
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),//bg_main_card
+                image: AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),
+                //bg_main_card
                 fit: BoxFit.fill)),
         child: Row(
           children: <Widget>[
