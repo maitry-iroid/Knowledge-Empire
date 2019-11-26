@@ -51,63 +51,34 @@ class HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-//    drawerItems = [
-//      DrawerItem(
-//          Utils.getText(context, StringRes.home), Injector.isBusinessMode ? "main_screen_icon" : "main_screen_icon"),
-//      DrawerItem(Utils.getText(context, StringRes.businessSector), Injector.isBusinessMode ? "business_sectors" : "ic_pro_business_sectors"),
-//      DrawerItem(Utils.getText(context, StringRes.newCustomers), Injector.isBusinessMode ? "new-customer" :  "ic_pro_new_cutomer"),
-//      DrawerItem(Utils.getText(context, StringRes.existingCustomers), Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
-//      DrawerItem(Utils.getText(context, StringRes.rewards), Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
-//      DrawerItem(Utils.getText(context, StringRes.team), Injector.isBusinessMode ? "team" : "ic_pro_team"),
-//      DrawerItem(
-//          Utils.getText(context, StringRes.challenges), Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
-//      DrawerItem(Utils.getText(context, StringRes.organizations), Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
-//      DrawerItem(Utils.getText(context, StringRes.pl), Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
-//      DrawerItem(Utils.getText(context, StringRes.ranking), Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
-//      DrawerItem(Utils.getText(context, StringRes.profile), Injector.isBusinessMode ? "profile_icon" : "profile_icon"),
-//    ];
 
-//    [
-//      DrawerItem(
-//          Utils.getText(context, StringRes.home), "main_screen_icon"),
-//      DrawerItem(Utils.getText(context, StringRes.businessSector),
-//          "business_sectors"),
-//      DrawerItem(Utils.getText(context, StringRes.newCustomers),
-//          "new-customer"),
-//      DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-//          "existing"),
-//      DrawerItem(Utils.getText(context, StringRes.rewards), "rewards"),
-//      DrawerItem(Utils.getText(context, StringRes.team), "team"),
-//      DrawerItem(
-//          Utils.getText(context, StringRes.challenges), "challenges"),
-//      DrawerItem(Utils.getText(context, StringRes.organizations),
-//          "organization"),
-//      DrawerItem(Utils.getText(context, StringRes.pl), "profit-loss"),
-//      DrawerItem(Utils.getText(context, StringRes.ranking), "ranking"),
-//      DrawerItem(
-//          Utils.getText(context, StringRes.profile), "profile_icon"),
-//    ];
-
-    Future.delayed(Duration.zero,(){
+    Future.delayed(Duration.zero, () {
       drawerItems = [
+        DrawerItem(Utils.getText(context, StringRes.home),
+            Injector.isBusinessMode ? "main_screen_icon" : "main_screen_icon"),
         DrawerItem(
-            Utils.getText(context, StringRes.home), "main_screen_icon"),
-        DrawerItem(Utils.getText(context, StringRes.businessSector),
-            "business_sectors"),
+            Utils.getText(context, StringRes.businessSector),
+            Injector.isBusinessMode
+                ? "business_sectors"
+                : "ic_pro_business_sectors"),
         DrawerItem(Utils.getText(context, StringRes.newCustomers),
-            "new-customer"),
+            Injector.isBusinessMode ? "new-customer" : "ic_pro_new_cutomer"),
         DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-            "existing"),
-        DrawerItem(Utils.getText(context, StringRes.rewards), "rewards"),
-        DrawerItem(Utils.getText(context, StringRes.team), "team"),
-        DrawerItem(
-            Utils.getText(context, StringRes.challenges), "challenges"),
+            Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
+        DrawerItem(Utils.getText(context, StringRes.rewards),
+            Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
+        DrawerItem(Utils.getText(context, StringRes.team),
+            Injector.isBusinessMode ? "team" : "ic_pro_team"),
+        DrawerItem(Utils.getText(context, StringRes.challenges),
+            Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
         DrawerItem(Utils.getText(context, StringRes.organizations),
-            "organization"),
-        DrawerItem(Utils.getText(context, StringRes.pl), "profit-loss"),
-        DrawerItem(Utils.getText(context, StringRes.ranking), "ranking"),
-        DrawerItem(
-            Utils.getText(context, StringRes.profile), "profile_icon"),
+            Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
+        DrawerItem(Utils.getText(context, StringRes.pl),
+            Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
+        DrawerItem(Utils.getText(context, StringRes.ranking),
+            Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
+        DrawerItem(Utils.getText(context, StringRes.profile),
+            Injector.isBusinessMode ? "profile_icon" : "profile_icon"),
       ];
 
       if (widget.initialPosition == Const.typeHome)
@@ -136,11 +107,7 @@ class HomePageState extends State<HomePage> {
         _selectedDrawerIndex = 0;
     });
 
-
-    setState(() {
-
-    });
-
+    setState(() {});
   }
 
   _getDrawerItemWidget(int pos) {
