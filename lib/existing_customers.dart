@@ -29,7 +29,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      CommonView.showTitle(context,StringResBusiness.existingCustomers),
+                      CommonView.showTitle(context,StringRes.existingCustomers),
                       showSubHeader(),
                       showItems()
                     ],
@@ -65,7 +65,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Expanded(
             flex: 6,
             child: Text(
-              Utils.getText(context, StringResBusiness.name),
+              Utils.getText(context, StringRes.name),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -73,7 +73,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Expanded(
             flex: 7,
             child: Text(
-              Utils.getText(context, StringResBusiness.sector),
+              Utils.getText(context, StringRes.sector),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -81,7 +81,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Expanded(
             flex: 4,
             child: Text(
-              Utils.getText(context, StringResBusiness.value),
+              Utils.getText(context, StringRes.value),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -89,7 +89,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Expanded(
             flex: 4,
             child: Text(
-              Utils.getText(context, StringResBusiness.loyalty),
+              Utils.getText(context, StringRes.loyalty),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),
@@ -97,7 +97,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Expanded(
             flex: 2,
             child: Text(
-              Utils.getText(context, StringResBusiness.endRel),
+              Utils.getText(context, StringRes.endRel),
               style: Theme.of(context).textTheme.body1,
               textAlign: TextAlign.center,
             ),

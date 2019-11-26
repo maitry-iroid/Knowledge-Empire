@@ -81,7 +81,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           Expanded(
             flex: 8,
             child: Text(
-              Utils.getText(context, StringResBusiness.sector),
+              Utils.getText(context, StringRes.sector),
               style: TextStyle(color: ColorRes.white),
               textAlign: TextAlign.center,
             ),
@@ -89,7 +89,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           Expanded(
             flex: 3,
             child: Text(
-              Utils.getText(context, StringResBusiness.size),
+              Utils.getText(context, StringRes.size),
               style: TextStyle(color: ColorRes.white),
               textAlign: TextAlign.center,
             ),
@@ -173,7 +173,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           SizedBox(
             height: 10,
           ),
-          CommonView.showTitle(context, StringResBusiness.businessSector),
+          CommonView.showTitle(context, StringRes.businessSector),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
             padding: EdgeInsets.only(left: 20, right: 10, top: 2, bottom: 2),
@@ -214,7 +214,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 10),
                               hintText: Utils.getText(
-                                  context, StringResBusiness.searchForKeywords),
+                                  context, StringRes.searchForKeywords),
                               hintStyle: TextStyle(color: ColorRes.hintColor),
                               border: InputBorder.none),
                         ))),
@@ -312,7 +312,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                   fit: BoxFit.fill)
                               : null),
                       child: Text(
-                        Utils.getText(context, StringResBusiness.description),
+                        Utils.getText(context, StringRes.description),
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                         textAlign: TextAlign.center,
                       ),
@@ -343,7 +343,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                 fit: BoxFit.fill)
                             : null),
                     child: Text(
-                      Utils.getText(context, StringResBusiness.engageSegment),
+                      Utils.getText(context, StringRes.engageSegment),
                       style: TextStyle(color: ColorRes.white, fontSize: 17),
                       textAlign: TextAlign.center,
                     ),

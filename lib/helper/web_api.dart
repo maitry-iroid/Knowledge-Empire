@@ -13,18 +13,6 @@ import 'package:ke_employee/models/login_response_data.dart';
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
 
-  static var headers = {
-    HttpHeaders.contentTypeHeader: 'application/json',
-    HttpHeaders.authorizationHeader: Injector.userData == null
-        ? ""
-        : "pig " +
-            LoginResponseData.fromJson(
-                    json.decode(Injector.prefs.getString(PrefKeys.user)))
-                .accessToken,
-    'devicetype': 'android',
-    'deviceid': Injector.deviceId
-  };
-
   static getRequest(String req, String data) {
     return {
       'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
@@ -34,34 +22,28 @@ class WebApi {
     };
   }
 
+  static getUploadProfileRequest(String req, String data, File file) async {
     return FormData.fromMap({
       'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
       'api_secret': '1a42cc080ef2464a60134473276fe42e',
       'api_request': req,
       'data': data,
       'profileImage': file != null
-          ? await MultipartFile.fromFile(file.path,filename: "image.jpg")
+          ? await MultipartFile.fromFile(file.path, filename: "image.jpg")
           : null,
     });
   }
 
-  static BaseOptions options = new BaseOptions(
-      baseUrl: "http://13.127.186.25:7000/api",
-//      connectTimeout: 5000,
-//      receiveTimeout: 3000,
-      headers: headers);
-
-  Dio dio = Dio(options);
+  Dio dio = Dio();
 
   Future<LoginResponse> login(Map<String, dynamic> jsonMap) async {
-
     initDio();
 
     print("login_request__" + json.encode(jsonMap));
-    print("headers" + headers.toString());
 
     try {
-      final response = await dio.post("",
+      final response =
+          await dio.post("", data: json.encode(json.encode(jsonMap)));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -79,7 +61,6 @@ class WebApi {
   }
 
   Future<LoginResponse> forgotPassword(Map<String, dynamic> jsonMap) async {
-
     initDio();
 
     try {
@@ -105,7 +86,6 @@ class WebApi {
     initDio();
 
     print("change_password_request__" + json.encode(jsonMap));
-    print("headers" + headers.toString());
 
     try {
       final response = await dio.post("",
@@ -135,8 +115,8 @@ class WebApi {
     print("headers" + dio.options.headers.toString());
 
     try {
-      FormData formData =
-          await getUploadProfileRequest('updateProfile', json.encode(jsonMap),file);
+      FormData formData = await getUploadProfileRequest(
+          'updateProfile', json.encode(jsonMap), file);
 
       final response = await dio.post("", data: formData,
           onSendProgress: (int sent, int total) {
