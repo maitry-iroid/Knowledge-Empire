@@ -1,40 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/Debrief.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/home.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'commonview/header.dart';
+import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'Customer_Situation.dart';
 import 'commonview/background.dart';
 
-class EngagementCustomer extends StatelessWidget {
+class EngagementCustomer extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return EngagementCustomerHome();
-  }
+  _EngagementCustomerState createState() => _EngagementCustomerState();
 }
 
-class EngagementCustomerHome extends StatefulWidget {
-  @override
-  _EngagementCustomerHomeState createState() => _EngagementCustomerHomeState();
-}
-
-class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
-//  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
-
-
+class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int _selectedItem = 0;
-
-  openProfile() {
-//    _onSelectItem(10);
-    if (mounted) {
-      setState(() => _selectedDrawerIndex = 10);
-//      Navigator.of(context).pop(); // close the drawer
-    }
-  }
-
-  int _selectedDrawerIndex = 0;
 
   selectItem(index) {
     setState(() {
@@ -43,90 +27,76 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Column(
+        body: SafeArea(
+      child: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
-          Container(
-            child: HeaderView(
-              scaffoldKey: _scaffoldKey,
-              isShowMenu: true,
-              openProfile: openProfile,
-            ),
-          ),
-          Container(
-            height: 40,
-            decoration: BoxDecoration(color: ColorRes.textProf
-            ),
-            child: Container(
-//                decoration: BoxDecoration(color: Colors.blue),
-                child: CommonView.showTitle(context, 'Enagagement')),
-          ),
-          Expanded(
-            flex: 8,
-            child: Container(
-              decoration: BoxDecoration(
-                color: ColorRes.colorBgDark,
-//                image: DecorationImage(
-//                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-//                  fit: BoxFit.fill,
-//                ),
-              ),
-              child: Row(
+          Injector.isBusinessMode
+              ? Image(
+                  image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+                  fit: BoxFit.fill,
+                )
+              : Container(color:  ColorRes.bgProf,),
+          Column(
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: CommonView.showTitle(
+                      context, Utils.getText(context, StringRes.engagement))),
+              Expanded(
+                  child: Row(
                 children: <Widget>[
                   Expanded(
                       flex: 1,
-                      child:
-                      Column(
+                      child: Column(
                         children: <Widget>[
+                          Container(
+
+                            height: Utils.getDeviceHeight(context) / 2.3,
+                            child: CommonView.image(
+                                context, "vector_smart_object1"),
+                          ),
                           Expanded(
-                              flex: 5,
-                              child: CommonView.image(context, "vector_smart_object1")),
-                          Expanded(
-                              flex: 4,
-                              child: CommonView.questionAndExplanation(context, "Question")
-                          )
+                              child: CommonView.questionAndExplanation(
+                                  context, "Question"))
                         ],
-                      )
-                  ),
+                      )),
                   Expanded(
                     flex: 1,
                     child: Stack(
+                      fit: StackFit.expand,
                       children: <Widget>[
                         Card(
                           elevation: 10,
-//                          color: ColorRes.whiteDarkBg,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
                           margin: EdgeInsets.only(
-                              top: 25, bottom: 10, right: 15, left: 8),
+                              top: 20, bottom: 15, right: 15, left: 8),
                           child: Container(
+                            alignment: Alignment.center,
                             padding: EdgeInsets.only(
                                 left: 10, right: 10, top: 15, bottom: 18),
                             decoration: BoxDecoration(
-                              color: ColorRes.bgDescription,
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.bgDescription
+                                  : null,
                               borderRadius: BorderRadius.circular(12),
                               border:
-                              Border.all(color: ColorRes.white, width: 1),
+                                  Border.all(color: ColorRes.white, width: 1),
                             ),
                             child: ListView.builder(
                               shrinkWrap: true,
                               physics: ClampingScrollPhysics(),
                               itemCount: 4,
                               itemBuilder: (BuildContext context, int index) {
-//                                GestureDetector(
-//                                  onTap: () {
-//                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
-//                                  },
-//                                );
                                 return CategoryItem(
                                   selectItem,
-                                  // callback function, setstate for parent
                                   index: index,
                                   isSelected:
-                                  _selectedItem == index ? true : false,
+                                      _selectedItem == index ? true : false,
 //                                  title: arrSector[index],
                                 );
                               },
@@ -140,14 +110,25 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
                             height: 30,
                             margin: EdgeInsets.symmetric(
                                 horizontal: Utils.getDeviceWidth(context) / 6,
-                                vertical: 10),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
+                                vertical: 5),
+                            padding: EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("eddit_profile")),
-                                    fit: BoxFit.fill)),
+                                borderRadius: Injector.isBusinessMode
+                                    ? null
+                                    : BorderRadius.circular(20),
+                                border: Injector.isBusinessMode
+                                    ? null
+                                    : Border.all(
+                                        width: 1, color: ColorRes.white),
+                                color: Injector.isBusinessMode
+                                    ? null
+                                    : ColorRes.titleBlueProf,
+                                image: Injector.isBusinessMode
+                                    ? DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            "eddit_profile")),
+                                        fit: BoxFit.fill)
+                                    : null),
                             child: Text(
                               'Answers',
                               style: TextStyle(
@@ -160,12 +141,12 @@ class _EngagementCustomerHomeState extends State<EngagementCustomerHome> {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
+              )),
+            ],
+          )
         ],
-      ),)
-    );
+      ),
+    ));
   }
 }
 
@@ -197,52 +178,65 @@ class _CategoryItemState extends State<CategoryItem> {
 //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Customer()),
+          MaterialPageRoute(
+              builder: (context) => HomePage(
+                    initialPageType: Const.typeDebrief,
+                  )),
         );
       },
       child: Container(
 //          height: 60,
-          margin: EdgeInsets.only(left: 6, right: 6,top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
-//          margin: EdgeInsets.only(left: 10, right: 10, top: 6),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-//              borderRadius: BorderRadius.circular(15),
-//          color: (widget.isSelected ? ColorRes.greenDot : ColorRes.white)
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                      ? "rounded_rectangle_837_blue"
-                      : "rounded_rectangle_8371")),
-                  fit: BoxFit.fill)),
-            child: Row(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-                Title(
-                    color: ColorRes.greenDot,
-                    child: new Text(_indexShow[widget.index],
-                        style: TextStyle(
-                            color: (widget.isSelected
-                                ? ColorRes.white
-                                : Colors.black)))),
-                Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: new Text(
-                      "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
-                      style: TextStyle(
-                          color:
-                              (widget.isSelected ? ColorRes.white : Colors.black)),
-                    ),
-                  ),
-                )
-              ],
-            ),
+        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius:
+                Injector.isBusinessMode ? null : BorderRadius.circular(15),
+            border: Injector.isBusinessMode
+                ? null
+                : Border.all(
+                    width: 1,
+                    color:
+                        widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
+            color: Injector.isBusinessMode
+                ? null
+                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
+            image: Injector.isBusinessMode
+                ? (DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(widget.isSelected
+                        ? "rounded_rectangle_837_blue"
+                        : "rounded_rectangle_8371")),
+                    fit: BoxFit.fill))
+                : null),
+        child: Row(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+            Title(
+                color: ColorRes.greenDot,
+                child: new Text(_indexShow[widget.index],
+                    style: TextStyle(
+                        color: (widget.isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf)))),
+            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+            Expanded(
+              child: SingleChildScrollView(
+                child: new Text(
+                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
+                  style: TextStyle(
+                      color: (widget.isSelected
+                          ? ColorRes.white
+                          : ColorRes.textProf)),
+                ),
+              ),
+            )
+          ],
+        ),
 //        Text(
 //          widget.title,
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
-          ),
+      ),
     );
   }
 }

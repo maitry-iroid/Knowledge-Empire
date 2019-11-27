@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/Debrief.dart';
 import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/dashboard.dart';
 import 'package:ke_employee/dashboard_new.dart';
+import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/new_customer.dart';
@@ -19,26 +22,22 @@ import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
-import 'Customer_Situation.dart';
-import 'engagement_customer.dart';
-import 'Debrief.dart';
-import 'intro_screen.dart';
+
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.initialPageType}) : super(key: key);
+  final int initialPageType;
+
+  @override
+  State<StatefulWidget> createState() {
+    return new HomePageState();
+  }
+}
 
 class DrawerItem {
   String title;
   String icon;
 
   DrawerItem(this.title, this.icon);
-}
-
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.initialPosition}) : super(key: key);
-  final int initialPosition;
-
-  @override
-  State<StatefulWidget> createState() {
-    return new HomePageState();
-  }
 }
 
 List<DrawerItem> drawerItems = List();
@@ -53,28 +52,32 @@ class HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
 
-    if (widget.initialPosition == Const.typeHome)
+    if (widget.initialPageType == Const.typeHome)
       _selectedDrawerIndex = 0;
-    else if (widget.initialPosition == Const.typeBusinessSector)
+    else if (widget.initialPageType == Const.typeBusinessSector)
       _selectedDrawerIndex = 1;
-    else if (widget.initialPosition == Const.typeNewCustomer)
+    else if (widget.initialPageType == Const.typeNewCustomer)
       _selectedDrawerIndex = 2;
-    else if (widget.initialPosition == Const.typeExistingCustomer)
+    else if (widget.initialPageType == Const.typeExistingCustomer)
       _selectedDrawerIndex = 3;
-    else if (widget.initialPosition == Const.typeReward)
+    else if (widget.initialPageType == Const.typeReward)
       _selectedDrawerIndex = 4;
-    else if (widget.initialPosition == Const.typeTeam)
+    else if (widget.initialPageType == Const.typeTeam)
       _selectedDrawerIndex = 5;
-    else if (widget.initialPosition == Const.typeChallenges)
+    else if (widget.initialPageType == Const.typeChallenges)
       _selectedDrawerIndex = 6;
-    else if (widget.initialPosition == Const.typeOrg)
+    else if (widget.initialPageType == Const.typeOrg)
       _selectedDrawerIndex = 7;
-    else if (widget.initialPosition == Const.typePL)
+    else if (widget.initialPageType == Const.typePL)
       _selectedDrawerIndex = 8;
-    else if (widget.initialPosition == Const.typeRanking)
+    else if (widget.initialPageType == Const.typeRanking)
       _selectedDrawerIndex = 9;
-    else if (widget.initialPosition == Const.typeProfile)
+    else if (widget.initialPageType == Const.typeProfile)
       _selectedDrawerIndex = 10;
+    else if (widget.initialPageType == Const.typeEngagement)
+      _selectedDrawerIndex = 11;
+    else if (widget.initialPageType == Const.typeDebrief)
+      _selectedDrawerIndex = 12;
     else
       _selectedDrawerIndex = 0;
   }
@@ -82,8 +85,7 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-//        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
-        return Injector.isBusinessMode ? IntroScreen() : DashboardPage();
+        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
       case 1:
         return BusinessSectorPage();
       case 2:
@@ -94,9 +96,6 @@ class HomePageState extends State<HomePage> {
         return RewardsPage();
       case 5:
         return TeamPage();
-//        return EngagementCustomer();
-//        return new Customer();
-//        return new Debrief();
       case 6:
         return ChallengesPage();
       case 7:
@@ -158,8 +157,6 @@ class HomePageState extends State<HomePage> {
             Injector.isBusinessMode ? "profile_icon" : "ic_profile_prof"),
       ];
 
-
-
       var drawerOptions = <Widget>[];
       for (var i = 0; i < drawerItems.length; i++) {
         drawerOptions.add(new ListTile(
@@ -196,13 +193,13 @@ class HomePageState extends State<HomePage> {
                         openProfile: openProfile,
                       ),
                       Expanded(
-                        child: _getDrawerItemWidget(_selectedDrawerIndex),
+                        child: getPage(),
                       ),
                     ],
                   )
                 : Stack(
                     children: <Widget>[
-                      _getDrawerItemWidget(_selectedDrawerIndex),
+                      getPage(),
                       HeaderView(
                         scaffoldKey: _scaffoldKey,
                         isShowMenu: true,
@@ -269,5 +266,16 @@ class HomePageState extends State<HomePage> {
         ),
       );
     });
+  }
+
+  getPage() {
+    print("selectedIndex");
+    print(_selectedDrawerIndex);
+    if (_selectedDrawerIndex == 11)
+      return EngagementCustomer();
+    else if (_selectedDrawerIndex == 12)
+      return CustomerSituationPage();
+    else
+      return _getDrawerItemWidget(_selectedDrawerIndex);
   }
 }

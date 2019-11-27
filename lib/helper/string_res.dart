@@ -55,6 +55,8 @@ class StringRes {
   static var somethingWrong = "somethingWrong";
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
+  static var engagement = "engagement";
+  static var debrief = "debrief";
 
   //business sectors
 
@@ -122,8 +124,10 @@ class StringRes {
       'textLegal':
           'We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y',
       'somethingWrong': 'Something went wrong',
-      "subscribe": "Subscribe",
-      "unSubscribe": "Unsubscribe"
+      'subscribe': 'Subscribe',
+      'unSubscribe': 'Unsubscribe',
+      'engagement': 'Engagement',
+      'debrief': 'Debrief'
     },
     'es': {
       'title': 'Hola Mundo',
@@ -144,6 +148,8 @@ class StringRes {
       'team': "Team",
       'sector': 'Module',
       'size': 'Q&A',
+      'engagement': 'Customer Situation',
+      'debrief': 'Customer Situation'
     },
     'es': {
       'title': 'Hola Mundo',

@@ -4,8 +4,10 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
+import 'helper/constant.dart';
 import 'helper/string_res.dart';
 
 class NewCustomerPage extends StatefulWidget {
@@ -200,32 +202,36 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 ],
               )),
         ),
-        Container(
-            height: Injector.isBusinessMode ? 32 : 25,
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 10, right: 2),
-            padding: EdgeInsets.only(left: 15, right: 15),
-            decoration: BoxDecoration(
-                color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
-                borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                        fit: BoxFit.fill)
-                    : null),
-            child: InkResponse(
+        InkResponse(
+          child: Container(
+              height: Injector.isBusinessMode ? 32 : 25,
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(left: 10, right: 2),
+              padding: EdgeInsets.only(left: 15, right: 15),
+              decoration: BoxDecoration(
+                  color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                          fit: BoxFit.fill)
+                      : null),
               child: Text(
                 Utils.getText(context, StringRes.engageNow),
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
-              ),
-              onTap: () {
-//                Navigator.push(
-//                    context,
-//                    MaterialPageRoute(
-//                        builder: (context) => EngagementCustomer()));
-              },
-            )),
+              )),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomePage(
+                          initialPageType: Const.typeEngagement,
+                        )));
+          },
+        ),
       ],
     );
   }

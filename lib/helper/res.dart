@@ -43,7 +43,7 @@ class ColorRes {
   static Color textPrimary =
       Injector.isBusinessMode ? white : Color(0xFF8c8c8c);
   static Color titleBlueProf = Color(0xFF3f6798);
-  static Color bgProf = Color(0xFFf6f6f6);
+  static Color bgProf = Color(0xFFe8e8e8);
   static Color textProf = Color(0xFF8c8c8c);
   static Color bgSettings= Color(0xFF959595);
 }

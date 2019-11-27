@@ -34,64 +34,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             ),
             CommonView.showTitle(context, StringRes.organizations),
             Expanded(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    width: Utils.getDeviceWidth(context),
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                        left: Utils.getDeviceWidth(context) / 10,
-                        right: Utils.getDeviceWidth(context) / 10,
-                        top: Utils.getDeviceHeight(context) / 5),
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg(
-                          Injector.isBusinessMode
-                              ? 'table_org'
-                              : 'org_table_prof')),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    top: Utils.getDeviceHeight(context) / 4.5,
-                    child: showItem(Const.typeCRM),
-                  ),
-                  Positioned(
-                    left: Utils.getDeviceWidth(context) / 6,
-                    top: Utils.getDeviceHeight(context) / 10,
-                    child: showItem(Const.typeHR),
-                  ),
-                  Positioned(
-                    left: Utils.getDeviceWidth(context) / 2.6,
-                    top: Utils.getDeviceHeight(context) / 15,
-                    child: showItem(Const.typeServices),
-                  ),
-                  Positioned(
-                    right: Utils.getDeviceWidth(context) / 6,
-                    top: Utils.getDeviceHeight(context) / 10,
-                    child: showItem(Const.typeMarketing),
-                  ),
-                  Positioned(
-                    left: Utils.getDeviceWidth(context) / 6,
-                    bottom: Utils.getDeviceHeight(context) / 8,
-                    child: showItem(Const.typeSales),
-                  ),
-                  Positioned(
-                    left: Utils.getDeviceWidth(context) / 2.6,
-                    bottom: Utils.getDeviceHeight(context) / 12,
-                    child: showItem(Const.typeOperations),
-                  ),
-                  Positioned(
-                    right: Utils.getDeviceWidth(context) / 6,
-                    bottom: Utils.getDeviceHeight(context) / 8,
-                    child: showItem(Const.typeLegal),
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: Utils.getDeviceHeight(context) / 4.5,
-                    child: showItem(Const.typeFinance),
-                  ),
-                ],
-              ),
+              child: showItems(),
             )
           ],
         ),
@@ -103,8 +46,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     return InkResponse(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 getTitle(type),
@@ -138,6 +83,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             width: 30,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Image(
@@ -209,5 +155,70 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       return "Finance";
     else
       return "";
+  }
+
+  showItems() {
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: Utils.getDeviceWidth(context),
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(
+              left: Utils.getDeviceWidth(context) / 10,
+              right: Utils.getDeviceWidth(context) / 10,
+              top: Utils.getDeviceHeight(context) / 5),
+          child: Image(
+            image: AssetImage(Utils.getAssetsImg(
+                Injector.isBusinessMode
+                    ? 'table_org'
+                    : 'org_table_prof')),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: showItem(Const.typeCRM),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  showItem(Const.typeHR),
+                  showItem(Const.typeSales)
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  showItem(Const.typeServices),
+                  showItem(Const.typeOperations)
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  showItem(Const.typeMarketing),
+                  showItem(Const.typeLegal)
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: showItem(Const.typeFinance),
+            ),
+          ],
+        )
+      ],
+    );
   }
 }

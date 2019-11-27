@@ -19,15 +19,14 @@ class DashboardNewPage extends StatefulWidget {
 }
 
 class DashboardNewPageState extends State<DashboardNewPage> {
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
 
     if (Injector.prefs.getInt(PrefKeys.mode) == null) {
-       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
+      Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
     }
   }
 
@@ -54,131 +53,173 @@ class DashboardNewPageState extends State<DashboardNewPage> {
     );
   }
 
-
   showMainView() {
     return Container(
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("dashboard-background")),
+              image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
               fit: BoxFit.fill)),
       child: Stack(
+        fit: StackFit.loose,
         children: <Widget>[
           Positioned(
-            left: 18,
-            bottom: 5,
-            child: InkResponse(
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg("business_sectors")),
-                  height: Utils.getDeviceHeight(context) / 2.85,
-                ),
-                onTap: () {
-                  performItemClick(Const.typeBusinessSector);
-                }),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 3.9,
-            left: Utils.getDeviceWidth(context) / 6,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("rewards")),
-                height: Utils.getDeviceHeight(context) / 3.2,
-              ),
-              onTap: () {
-                performItemClick(Const.typeReward);
-              },
-            ),
-          ),
-          Positioned(
             top: 40,
-            left: Utils.getDeviceWidth(context) / 1.66,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("ranking")),
-                height: Utils.getDeviceHeight(context) / 2.8,
-              ),
-              onTap: () {
-                performItemClick(Const.typeRanking);
-              },
-            ),
-          ),
-          Positioned(
-            top: 40,
-            right: Utils.getDeviceWidth(context) / 1.62,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("organization")),
-                height: Utils.getDeviceHeight(context) / 2.7,
-              ),
-              onTap: () {
-                performItemClick(Const.typeOrg);
-              },
-            ),
-          ),
-          Positioned(
-            top: 40,
-            left: Utils.getDeviceWidth(context) / 3,
-            right: Utils.getDeviceWidth(context) / 2.9,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                height: Utils.getDeviceHeight(context) / 2.8,
-              ),
-              onTap: () {
-                performItemClick(Const.typePL);
-              },
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 4,
-            left: Utils.getDeviceWidth(context) / 2.4,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("team")),
-                height: Utils.getDeviceHeight(context) / 3.2,
-              ),
-              onTap: () {
-                performItemClick(Const.typeTeam);
-              },
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: Utils.getDeviceWidth(context) / 2.8,
-            child: InkResponse(
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg("new-customer")),
-                  height: Utils.getDeviceHeight(context) / 2.5,
-                ),
-                onTap: () {
-                  performItemClick(Const.typeNewCustomer);
-                }),
-          ),
-          Positioned(
-              bottom: 0,
-              left: Utils.getDeviceWidth(context) / 1.4,
-              child: InkResponse(
+            right: Utils.getDeviceWidth(context) / 10,
+            child: Row(
+              children: <Widget>[
+                InkResponse(
                   child: Image(
-                    image: AssetImage(Utils.getAssetsImg("existing")),
-                    height: Utils.getDeviceHeight(context) / 3.1,
+                    image: AssetImage(Utils.getAssetsImg("organization")),
+                    height: Utils.getDeviceHeight(context) / 2.8,
                   ),
                   onTap: () {
-                    performItemClick(Const.typeExistingCustomer);
-                  })),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 5,
-            left: Utils.getDeviceWidth(context) / 1.5,
-            child: InkResponse(
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg("challenges")),
-                  height: Utils.getDeviceHeight(context) / 3,
+                    performItemClick(Const.typeOrg);
+                  },
                 ),
-                onTap: () {
-                  performItemClick(Const.typeChallenges);
+                InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("profit-loss")),
+                    height: Utils.getDeviceHeight(context) / 2.8,
+                  ),
+                  onTap: () {
+                    performItemClick(Const.typePL);
+                  },
+                ),
+                InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("ranking")),
+                    height: Utils.getDeviceHeight(context) / 2.8,
+                  ),
+                  onTap: () {
+                    performItemClick(Const.typeTeam);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: Utils.getDeviceWidth(context),
+            margin: EdgeInsets.only(
+              top: Utils.getDeviceHeight(context) / 2.8,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("rewards")),
+                      height: Utils.getDeviceHeight(context) / 2.9,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeReward);
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Image(
+                  image: AssetImage(Utils.getAssetsImg("pencils")),
+                  height: Utils.getDeviceHeight(context) / 5,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("team")),
+                      height: Utils.getDeviceHeight(context) / 2.4,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeTeam);
+                    },
+                  ),
+                ),
+                Image(
+                  image: AssetImage(Utils.getAssetsImg("papers_rack")),
+                  height: Utils.getDeviceHeight(context) / 9,
+                ),
+                InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("challenges")),
+                      height: Utils.getDeviceHeight(context) / 3.3,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeChallenges);
 //                showTutorial(context);
-                }),
-          )
+                    }),
+              ],
+            ),
+          ),
+          Container(
+//            color: ColorRes.blue,
+            width: Utils.getDeviceWidth(context),
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
+                      height: Utils.getDeviceHeight(context) / 2.85,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeBusinessSector);
+                    }),
+                InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("new-customer")),
+                      height: Utils.getDeviceHeight(context) / 2.5,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeNewCustomer);
+                    }),
+                SizedBox(
+                  width: Utils.getDeviceWidth(context) / 20,
+                ),
+                InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("existing")),
+                      height: Utils.getDeviceHeight(context) / 3.1,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeExistingCustomer);
+                    }),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 6,
+            left: Utils.getDeviceWidth(context) / 3.3,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("mobile")),
+              height: Utils.getDeviceHeight(context) / 12,
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 12,
+            left: Utils.getDeviceWidth(context) / 4,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("glasses")),
+              height: Utils.getDeviceHeight(context) / 15,
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 8,
+            right: Utils.getDeviceWidth(context) / 3.7,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("coffee_cup")),
+              height: Utils.getDeviceHeight(context) / 8,
+            ),
+          ),
         ],
       ),
     );
@@ -189,7 +230,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
         context,
         MaterialPageRoute(
             builder: (context) => HomePage(
-                  initialPosition: type,
+                  initialPageType: type,
                 )));
   }
 
@@ -203,7 +244,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
               context,
               _scaffoldKey,
               Colors.blue,
-                  () => popAndNextTutorial(context),
+              () => popAndNextTutorial(context),
               "MAMA",
               "MAMA IS A LOREM IPSUM",
               "ALRIGHT");
