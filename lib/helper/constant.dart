@@ -15,6 +15,8 @@ class Const {
   static var typeHome =9;
   static var typeProfile =10;
 
+  static var typeName =26;
+
   static var typeChecked =11;
   static var typePeople =12;
   static var typeBadge =13;

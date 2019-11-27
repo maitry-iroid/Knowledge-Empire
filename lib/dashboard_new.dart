@@ -52,6 +52,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
     );
   }
 
+
   showMainView() {
     return Container(
       width: double.infinity,

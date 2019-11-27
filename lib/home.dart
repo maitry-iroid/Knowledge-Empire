@@ -22,6 +22,7 @@ import 'helper/string_res.dart';
 import 'Customer_Situation.dart';
 import 'engagement_customer.dart';
 import 'Debrief.dart';
+import 'intro_screen.dart';
 
 class DrawerItem {
   String title;
@@ -81,7 +82,8 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
+//        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
+        return Injector.isBusinessMode ? IntroScreen() : DashboardPage();
       case 1:
         return BusinessSectorPage();
       case 2:
