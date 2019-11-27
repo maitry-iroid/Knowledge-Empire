@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_tooltip/flutter_introduction_tooltip.dart';
+import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -74,19 +75,37 @@ class IntroScreenState extends State<IntroScreen> {
         children: <Widget>[
           //-----------
 
-          Positioned(
+          selectedType == Const.typeName
+              ? Container() :Positioned(
             top: Utils.getDeviceHeight(context) / 2.35,
             left: 10,
 //            right: Utils.getDeviceWidth(context) / 1.62,
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("intro_bub_back")),
-                height: Utils.getDeviceHeight(context) / 8,
+                height: Utils.getDeviceHeight(context) / 10,
               ),
               onTap: () {
-
                 setState(() {
                   if (selectedType == Const.typeName) {
+                    selectedType = Const.typeRanking;
+                  } else if (selectedType == Const.typeRanking) {
+                    selectedType = Const.typePL;
+                  } else if (selectedType == Const.typePL) {
+                    selectedType = Const.typeOrg;
+                  } else if (selectedType == Const.typeOrg) {
+                    selectedType = Const.typeChallenges;
+                  } else if (selectedType == Const.typeChallenges) {
+                    selectedType = Const.typeTeam;
+                  } else if (selectedType == Const.typeTeam) {
+                    selectedType = Const.typeReward;
+                  } else if (selectedType == Const.typeReward) {
+                    selectedType = Const.typeExistingCustomer;
+                  } else if (selectedType == Const.typeExistingCustomer) {
+                    selectedType = Const.typeNewCustomer;
+                  } else if (selectedType == Const.typeNewCustomer) {
+                    selectedType = Const.typeBusinessSector;
+                  } else if (selectedType == Const.typeBusinessSector) {
                     selectedType = Const.typeProfile;
                   } else if (selectedType == Const.typeProfile) {
                     selectedType = Const.typeDollar;
@@ -106,6 +125,10 @@ class IntroScreenState extends State<IntroScreen> {
             ),
           ),
 
+//          selectedType == Const.typeRanking
+//              ? Container(
+////            Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardNewPage())),
+//          ) :
           Positioned(
             top: Utils.getDeviceHeight(context) / 2.35,
             right: 10,
@@ -113,7 +136,7 @@ class IntroScreenState extends State<IntroScreen> {
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg("intro_bub_next")),
-                height: Utils.getDeviceHeight(context) / 8,
+                height: Utils.getDeviceHeight(context) / 10,
               ),
               onTap: () {
                 setState(() {
@@ -130,7 +153,25 @@ class IntroScreenState extends State<IntroScreen> {
                   } else if (selectedType == Const.typeDollar) {
                     selectedType = Const.typeProfile;
                   } else if (selectedType == Const.typeProfile) {
-                    selectedType = Const.typeName;
+                    selectedType = Const.typeBusinessSector;
+                  } else if (selectedType == Const.typeBusinessSector) {
+                    selectedType = Const.typeNewCustomer;
+                  } else if (selectedType == Const.typeNewCustomer) {
+                    selectedType = Const.typeExistingCustomer;
+                  } else if (selectedType == Const.typeExistingCustomer) {
+                    selectedType = Const.typeReward;
+                  } else if (selectedType == Const.typeReward) {
+                    selectedType = Const.typeTeam;
+                  } else if (selectedType == Const.typeTeam) {
+                    selectedType = Const.typeChallenges;
+                  } else if (selectedType == Const.typeChallenges) {
+                    selectedType = Const.typeOrg;
+                  } else if (selectedType == Const.typeOrg) {
+                    selectedType = Const.typePL;
+                  } else if (selectedType == Const.typePL) {
+                    selectedType = Const.typeRanking;
+                  } else if (selectedType == Const.typeRanking) {
+                    DashboardNewPage();
                   }
                 });
               },
@@ -143,8 +184,8 @@ class IntroScreenState extends State<IntroScreen> {
                   right: Utils.getDeviceWidth(context) / 1.9,
                   child: InkResponse(
                     child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg("intro_bub_companyname")),
+                      image: AssetImage(
+                          Utils.getAssetsImg("intro_bub_companyname")),
                       height: Utils.getDeviceHeight(context) / 2.4,
                     ),
                     onTap: () {},
@@ -162,8 +203,7 @@ class IntroScreenState extends State<IntroScreen> {
                           Utils.getAssetsImg("intro_bub_sales_stat")),
                       height: Utils.getDeviceHeight(context) / 1.60,
                     ),
-                    onTap: () {
-                    },
+                    onTap: () {},
                   ),
                 )
               : Container(),
@@ -178,8 +218,7 @@ class IntroScreenState extends State<IntroScreen> {
                           AssetImage(Utils.getAssetsImg("intro_bub_emp_stat")),
                       height: Utils.getDeviceHeight(context) / 1.55,
                     ),
-                    onTap: () {
-                    },
+                    onTap: () {},
                   ),
                 )
               : Container(),
@@ -195,8 +234,7 @@ class IntroScreenState extends State<IntroScreen> {
                           Utils.getAssetsImg("intro_bub_customer_stat")),
                       height: Utils.getDeviceHeight(context) / 1.9,
                     ),
-                    onTap: () {
-                    },
+                    onTap: () {},
                   ),
                 )
               : Container(),
@@ -212,8 +250,7 @@ class IntroScreenState extends State<IntroScreen> {
                           Utils.getAssetsImg("intro_bub_brand_value")),
                       height: Utils.getDeviceHeight(context) / 1.90,
                     ),
-                    onTap: () {
-                    },
+                    onTap: () {},
                   ),
                 )
               : Container(),
@@ -225,12 +262,10 @@ class IntroScreenState extends State<IntroScreen> {
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_cash")),
+                      image: AssetImage(Utils.getAssetsImg("intro_bub_cash")),
                       height: Utils.getDeviceHeight(context) / 1.6,
                     ),
-                    onTap: () {
-                    },
+                    onTap: () {},
                   ),
                 )
               : Container(),
@@ -246,8 +281,270 @@ class IntroScreenState extends State<IntroScreen> {
                           AssetImage(Utils.getAssetsImg("intro_bub_profile")),
                       height: Utils.getDeviceHeight(context) / 2.3,
                     ),
+                    onTap: () {},
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeBusinessSector
+              ? Positioned(
+                  left: 18,
+                  bottom: 5,
+                  child: InkResponse(
+                      child: Image(
+                        image:
+                            AssetImage(Utils.getAssetsImg("business_sectors")),
+                        height: Utils.getDeviceHeight(context) / 2.85,
+                      ),
+                      onTap: () {
+                      }),
+                )
+              : Container(),
+
+          selectedType == Const.typeBusinessSector
+              ? Positioned(
+                  bottom: 70,
+                  left: Utils.getDeviceWidth(context) / 3.0,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(
+                            Utils.getAssetsImg("intro_bub_business_sectors")),
+                        height: Utils.getDeviceHeight(context) / 1.6,
+                      ),
+                      onTap: () {}),
+                )
+              : Container(),
+
+          selectedType == Const.typeNewCustomer
+              ? Positioned(
+                  bottom: 0,
+                  left: Utils.getDeviceWidth(context) / 2.8,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("new-customer")),
+                        height: Utils.getDeviceHeight(context) / 2.5,
+                      ),
+                      onTap: () {
+                      }),
+                )
+              : Container(),
+
+          selectedType == Const.typeNewCustomer
+              ? Positioned(
+                  bottom: 110,
+                  left: Utils.getDeviceWidth(context) / 3.5,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(
+                            Utils.getAssetsImg("intro_bub_new_customer")),
+                        height: Utils.getDeviceHeight(context) / 1.8,
+                      ),
+                      onTap: () {}),
+                )
+              : Container(),
+
+          selectedType == Const.typeExistingCustomer
+              ? Positioned(
+                  bottom: 0,
+                  left: Utils.getDeviceWidth(context) / 1.4,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("existing")),
+                        height: Utils.getDeviceHeight(context) / 3.1,
+                      ),
+                      onTap: () {
+                      }))
+              : Container(),
+
+          selectedType == Const.typeExistingCustomer
+              ? Positioned(
+                  bottom: 50,
+                  left: Utils.getDeviceWidth(context) / 3.2,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(
+                            Utils.getAssetsImg("intro_bub_existing_customer")),
+                        height: Utils.getDeviceHeight(context) / 1.6,
+                      ),
+                      onTap: () {}),
+                )
+              : Container(),
+
+          selectedType == Const.typeReward
+              ? Positioned(
+                  bottom: Utils.getDeviceHeight(context) / 3.9,
+                  left: Utils.getDeviceWidth(context) / 6,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("rewards")),
+                      height: Utils.getDeviceHeight(context) / 3.2,
+                    ),
                     onTap: () {
                     },
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeReward
+              ? Positioned(
+                  bottom: Utils.getDeviceHeight(context) / 2.8,
+                  left: Utils.getDeviceWidth(context) / 3.0,
+                  child: InkResponse(
+                    child: Image(
+                      image:
+                          AssetImage(Utils.getAssetsImg("intro_bub_rewards")),
+                      height: Utils.getDeviceHeight(context) / 2.8,
+                    ),
+                    onTap: () {},
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeTeam
+              ? Positioned(
+                  bottom: Utils.getDeviceHeight(context) / 4,
+                  left: Utils.getDeviceWidth(context) / 2.4,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("team")),
+                      height: Utils.getDeviceHeight(context) / 3.2,
+                    ),
+                    onTap: () {
+                    },
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeTeam
+              ? Positioned(
+                  top: Utils.getDeviceHeight(context) / 6.0,
+                  left: Utils.getDeviceWidth(context) / 1.8,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("intro_bub_team")),
+                      height: Utils.getDeviceHeight(context) / 2.6,
+                    ),
+                    onTap: () {},
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeChallenges
+              ? Positioned(
+                  bottom: Utils.getDeviceHeight(context) / 5,
+                  left: Utils.getDeviceWidth(context) / 1.5,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("challenges")),
+                        height: Utils.getDeviceHeight(context) / 3,
+                      ),
+                      onTap: () {
+//                showTutorial(context);
+                      }),
+                )
+              : Container(),
+
+          selectedType == Const.typeChallenges
+              ? Positioned(
+                  top: 60,
+                  left: Utils.getDeviceWidth(context) / 4,
+                  right: Utils.getDeviceWidth(context) / 3.2,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(
+                          Utils.getAssetsImg("intro_bub_challenges")),
+                      height: Utils.getDeviceHeight(context) / 1.9,
+                    ),
+                    onTap: () {},
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeOrg
+              ? Positioned(
+                  top: 40,
+                  right: Utils.getDeviceWidth(context) / 1.62,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("organization")),
+                      height: Utils.getDeviceHeight(context) / 2.7,
+                    ),
+                    onTap: () {
+                    },
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeOrg
+              ? Positioned(
+                  top: 100,
+                  left: Utils.getDeviceWidth(context) / 2.8,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(
+                            Utils.getAssetsImg("intro_bub_organization")),
+                        height: Utils.getDeviceHeight(context) / 1.7,
+                      ),
+                      onTap: () {}),
+                )
+              : Container(),
+
+          selectedType == Const.typePL
+              ? Positioned(
+                  top: 40,
+                  left: Utils.getDeviceWidth(context) / 3,
+                  right: Utils.getDeviceWidth(context) / 2.9,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("profit-loss")),
+                      height: Utils.getDeviceHeight(context) / 2.8,
+                    ),
+                    onTap: () {
+                    },
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typePL
+              ? Positioned(
+                  bottom: 30,
+                  left: Utils.getDeviceWidth(context) / 4.1,
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("intro_bub_pl")),
+                        height: Utils.getDeviceHeight(context) / 1.8,
+                      ),
+                      onTap: () {}),
+                )
+              : Container(),
+
+          selectedType == Const.typeRanking
+              ? Positioned(
+                  top: 40,
+                  left: Utils.getDeviceWidth(context) / 1.66,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("ranking")),
+                      height: Utils.getDeviceHeight(context) / 2.8,
+                    ),
+                    onTap: () {
+                    },
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeRanking
+              ? Positioned(
+                  bottom: 80,
+//            left: Utils.getDeviceWidth(context) / 1.9,
+                  right: Utils.getDeviceWidth(context) / 2.7,
+                  child: InkResponse(
+                    child: Image(
+                      image:
+                          AssetImage(Utils.getAssetsImg("intro_bub_ranking")),
+                      height: Utils.getDeviceHeight(context) / 2.3,
+                    ),
+                    onTap: () {},
                   ),
                 )
               : Container(),
