@@ -197,7 +197,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
           ),
           Positioned(
             bottom: Utils.getDeviceHeight(context) / 6,
-            left: Utils.getDeviceWidth(context) / 3.5,
+            left: Utils.getDeviceWidth(context) / 3.3,
             child: Image(
               image: AssetImage(Utils.getAssetsImg("mobile")),
               height: Utils.getDeviceHeight(context) / 12,
