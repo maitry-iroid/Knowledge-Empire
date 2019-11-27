@@ -44,23 +44,23 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
               color: ColorRes.white,
             ),
             child: Text(
-              widget.text,
+              Utils.getText(context, widget.text),
               style: TextStyle(color: ColorRes.blue, fontSize: 17),
             ),
           ),
           Positioned(
               right: 10,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: InkResponse(
+              child: InkResponse(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
                   child: Image(
                     image: AssetImage(Utils.getAssetsImg('close_dialog')),
                     width: 20,
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
                 ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ))
         ],
       ),

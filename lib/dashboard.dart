@@ -128,7 +128,7 @@ class DashboardPageState extends State<DashboardPage> {
         context,
         MaterialPageRoute(
             builder: (context) => HomePage(
-                  initialPosition: type,
+                  initialPageType: type,
                 )));
   }
 
