@@ -39,7 +39,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
                   fit: BoxFit.fill,
                 )
-              : Container(),
+              : Container(color:  ColorRes.bgProf,),
           Column(
             children: <Widget>[
               Container(
@@ -54,6 +54,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       child: Column(
                         children: <Widget>[
                           Container(
+
                             height: Utils.getDeviceHeight(context) / 2.3,
                             child: CommonView.image(
                                 context, "vector_smart_object1"),
