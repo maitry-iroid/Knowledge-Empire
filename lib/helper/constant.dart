@@ -16,6 +16,7 @@ class Const {
   static var typeProfile =10;
 
   static var typeName =26;
+  static var typeSideMenu=27;
 
   static var typeChecked =11;
   static var typePeople =12;

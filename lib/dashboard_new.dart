@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
 
+import 'commonview/header.dart';
 import 'helper/constant.dart';
 
 class DashboardNewPage extends StatefulWidget {
@@ -42,10 +43,10 @@ class DashboardNewPageState extends State<DashboardNewPage> {
           child: Stack(
             children: <Widget>[
               showMainView(),
-//              HeaderView(
-//                scaffoldKey: _scaffoldKey,
-//                isShowMenu: true,
-//              ),
+              HeaderView(
+                scaffoldKey: _scaffoldKey,
+                isShowMenu: true,
+              ),
             ],
           ),
         ),
