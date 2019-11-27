@@ -82,8 +82,7 @@ class HomePageState extends State<HomePage> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-//        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
-        return Injector.isBusinessMode ? IntroScreen() : DashboardPage();
+        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
       case 1:
         return BusinessSectorPage();
       case 2:
@@ -94,10 +93,6 @@ class HomePageState extends State<HomePage> {
         return RewardsPage();
       case 5:
         return TeamPage();
-//        return EngagementCustomer();
-//        return new Customer();
-//        return new Debrief();
-
       case 6:
         return ChallengesPage();
       case 7:

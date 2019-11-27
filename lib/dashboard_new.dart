@@ -52,7 +52,6 @@ class DashboardNewPageState extends State<DashboardNewPage> {
     );
   }
 
-
   showMainView() {
     return Container(
       width: double.infinity,
@@ -102,10 +101,11 @@ class DashboardNewPageState extends State<DashboardNewPage> {
           Container(
             width: Utils.getDeviceWidth(context),
             margin: EdgeInsets.only(
-              top: Utils.getDeviceHeight(context) /2.5,
+              top: Utils.getDeviceHeight(context) / 2.8,
             ),
             child: Row(
-            mainAxisAlignment:MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(bottom: 10),
@@ -129,14 +129,17 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                 SizedBox(
                   width: 20,
                 ),
-                InkResponse(
-                  child: Image(
-                    image: AssetImage(Utils.getAssetsImg("team")),
-                    height: Utils.getDeviceHeight(context) / 2.4,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("team")),
+                      height: Utils.getDeviceHeight(context) / 2.4,
+                    ),
+                    onTap: () {
+                      performItemClick(Const.typeTeam);
+                    },
                   ),
-                  onTap: () {
-                    performItemClick(Const.typeTeam);
-                  },
                 ),
                 Image(
                   image: AssetImage(Utils.getAssetsImg("papers_rack")),
@@ -164,8 +167,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
               children: <Widget>[
                 InkResponse(
                     child: Image(
-                      image:
-                      AssetImage(Utils.getAssetsImg("business_sectors")),
+                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
                       height: Utils.getDeviceHeight(context) / 2.85,
                     ),
                     onTap: () {
@@ -180,7 +182,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                       performItemClick(Const.typeNewCustomer);
                     }),
                 SizedBox(
-                  width: Utils.getDeviceWidth(context)/20,
+                  width: Utils.getDeviceWidth(context) / 20,
                 ),
                 InkResponse(
                     child: Image(
@@ -190,7 +192,6 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                     onTap: () {
                       performItemClick(Const.typeExistingCustomer);
                     }),
-
               ],
             ),
           ),
