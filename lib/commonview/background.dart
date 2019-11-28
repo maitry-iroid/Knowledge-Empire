@@ -242,13 +242,9 @@ class CommonView {
 //          Utils.performBack(context);
 //          },
           alignment: Alignment.center,
-          height: 40,
+          height: 30,
           width: 40,
 
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("back")),
-                  fit: BoxFit.fill)),
 //                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
         ),
         Container(

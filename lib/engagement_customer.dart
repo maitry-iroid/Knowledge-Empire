@@ -9,6 +9,7 @@ import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'Customer_Situation.dart';
 import 'commonview/background.dart';
+import 'models/Answer.dart';
 
 class EngagementCustomer extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int _selectedItem = 0;
+
+  List<Answer> arrAnswer = List();
 
   selectItem(index) {
     setState(() {
@@ -44,8 +47,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             children: <Widget>[
               Container(
                   margin: EdgeInsets.only(top: 10),
-                  child: CommonView.showTitle(
-                      context, Utils.getText(context, StringRes.engagement))),
+                  child: CommonView.topThreeButton(context, StringRes.engagement, StringRes.next)
+//                  CommonView.showTitle(
+//                      context, Utils.getText(context, StringRes.engagement))
+              ),
               Expanded(
                   child: Row(
                 children: <Widget>[
@@ -90,7 +95,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             child: ListView.builder(
                               shrinkWrap: true,
                               physics: ClampingScrollPhysics(),
-                              itemCount: 4,
+                              itemCount: arrAnswer.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return CategoryItem(
                                   selectItem,
@@ -150,7 +155,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 }
 
-class CategoryItem extends StatefulWidget {
+ class CategoryItem extends StatefulWidget {
   final String title;
   final int index;
   final bool isSelected;
@@ -168,23 +173,35 @@ class CategoryItem extends StatefulWidget {
 }
 
 class _CategoryItemState extends State<CategoryItem> {
-  var _indexShow = ["A", "B", "C", "D"];
+
+
+
+
+
+//  var arrAnswers = ["A", "B", "C", "D"];
+
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         widget.selectItem(widget.index);
+
+        setState(() {
+          arrAnswer[widget.index].isSelected = true;
+        });
+
 //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage(
-                    initialPageType: Const.typeDebrief,
-                  )),
-        );
+//        Navigator.push(
+//          context,
+//          MaterialPageRoute(
+//              builder: (context) => HomePage(
+//                    initialPageType: Const.typeDebrief,
+//                  )),
+//        );
       },
-      child: Container(
+      child: ( arrAnswer[widget.index].isSelected ? Container(
 //          height: 60,
         margin: EdgeInsets.only(left: 6, right: 6, top: 6),
         padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
@@ -203,9 +220,11 @@ class _CategoryItemState extends State<CategoryItem> {
                 : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
             image: Injector.isBusinessMode
                 ? (DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                        ? "rounded_rectangle_837_blue"
-                        : "rounded_rectangle_8371")),
+                    image: AssetImage(Utils.getAssetsImg ("rounded_rectangle_8371")
+//                      (widget.isSelected
+//                        ? "rounded_rectangle_837_blue"
+//                        : "rounded_rectangle_8371")
+                    ),
                     fit: BoxFit.fill))
                 : null),
         child: Row(
@@ -213,11 +232,12 @@ class _CategoryItemState extends State<CategoryItem> {
             Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
             Title(
                 color: ColorRes.greenDot,
-                child: new Text(_indexShow[widget.index],
+                child: new Text(arrAnswer[widget.index].text,
                     style: TextStyle(
-                        color: (widget.isSelected
-                            ? ColorRes.white
-                            : ColorRes.textProf)))),
+//                        color: (widget.isSelected
+//                            ? ColorRes.white
+//                            : ColorRes.textProf)
+                    ))),
             Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
             Expanded(
               child: SingleChildScrollView(
@@ -236,7 +256,64 @@ class _CategoryItemState extends State<CategoryItem> {
 //          widget.title,
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
-      ),
+      ) : Container(
+//          height: 60,
+        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius:
+            Injector.isBusinessMode ? null : BorderRadius.circular(15),
+            border: Injector.isBusinessMode
+                ? null
+                : Border.all(
+                width: 1,
+                color:
+                widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
+            color: Injector.isBusinessMode
+                ? null
+                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
+            image: Injector.isBusinessMode
+                ? (DecorationImage(
+                image: AssetImage(Utils.getAssetsImg ("rounded_rectangle_837_blue")
+//                  (widget.isSelected
+//                    ? "rounded_rectangle_837_blue"
+//                    : "rounded_rectangle_8371")
+                ),
+                fit: BoxFit.fill))
+                : null),
+        child: Row(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+            Title(
+                color: ColorRes.greenDot,
+                child: new Text(arrAnswer[widget.index].text,
+                    style: TextStyle(
+                        color: ColorRes.white
+//                        (widget.isSelected
+//                            ? ColorRes.white
+//                            : ColorRes.textProf)
+                    ))),
+            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+            Expanded(
+              child: SingleChildScrollView(
+                child: new Text(
+                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
+                  style: TextStyle(
+                      color: (widget.isSelected
+                          ? ColorRes.white
+                          : ColorRes.textProf)),
+                ),
+              ),
+            )
+          ],
+        ),
+//        Text(
+//          widget.title,
+//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
+//        ),
+      )
+    )
     );
   }
 }

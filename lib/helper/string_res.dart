@@ -62,6 +62,7 @@ class StringRes {
   static var nextLevel = "nextLevel";
   static var friends = "friends";
   static var sendChallenge = "sendChallenge";
+  static var next = "next";
 
   //business sectors
 
