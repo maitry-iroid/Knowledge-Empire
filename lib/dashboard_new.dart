@@ -61,11 +61,12 @@ class DashboardNewPageState extends State<DashboardNewPage> {
               image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
               fit: BoxFit.fill)),
       child: Stack(
-        fit: StackFit.loose,
+        fit: StackFit.expand,
+        alignment: Alignment.center,
         children: <Widget>[
           Positioned(
             top: 40,
-            right: Utils.getDeviceWidth(context) / 10,
+//            right: Utils.getDeviceWidth(context) / 10,
             child: Row(
               children: <Widget>[
                 InkResponse(
@@ -98,13 +99,21 @@ class DashboardNewPageState extends State<DashboardNewPage> {
               ],
             ),
           ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context)/3.2,
+            right: Utils.getDeviceWidth(context) / 3.2,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("papers_rack")),
+              height: Utils.getDeviceHeight(context) / 9,
+            ),
+          ),
           Container(
             width: Utils.getDeviceWidth(context),
             margin: EdgeInsets.only(
-              top: Utils.getDeviceHeight(context) / 2.8,
+              top: Utils.getDeviceHeight(context) / 3.8,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
@@ -119,18 +128,8 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                Image(
-                  image: AssetImage(Utils.getAssetsImg("pencils")),
-                  height: Utils.getDeviceHeight(context) / 5,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 20),
+                  padding: EdgeInsets.only(bottom: 20,left: 10),
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("team")),
@@ -141,10 +140,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
                     },
                   ),
                 ),
-                Image(
-                  image: AssetImage(Utils.getAssetsImg("papers_rack")),
-                  height: Utils.getDeviceHeight(context) / 9,
-                ),
+
                 InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("challenges")),
@@ -195,6 +191,15 @@ class DashboardNewPageState extends State<DashboardNewPage> {
               ],
             ),
           ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context)/3.2,
+            left: Utils.getDeviceWidth(context) / 3.3,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("pencils")),
+              height: Utils.getDeviceHeight(context) / 5,
+            ),
+          ),
+
           Positioned(
             bottom: Utils.getDeviceHeight(context) / 6,
             left: Utils.getDeviceWidth(context) / 3.3,
