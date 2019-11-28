@@ -27,7 +27,7 @@ class CommonView {
           child: Image(
             image: AssetImage(Utils.getAssetsImg(
                 Injector.isBusinessMode ? "back" : 'back_prof')),
-            width: DimenRes.titleBarHeight,
+            width: Utils.getDeviceHeight(context)/12,
           ),
           onTap: () {
             Utils.performBack(context);
@@ -35,7 +35,7 @@ class CommonView {
         ),
         Container(
           alignment: Alignment.center,
-          height: DimenRes.titleBarHeight,
+          height: Utils.getDeviceHeight(context)/12,
           padding: EdgeInsets.symmetric(horizontal: 20),
           margin: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
