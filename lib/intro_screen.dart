@@ -59,7 +59,8 @@ class IntroScreenState extends State<IntroScreen> {
               ),
               showIntroMenu(),
               showSelectedMainView(),
-              showIntroHeaderImage(),
+//              showIntroHeaderImage(),
+              showHeaderView(context)
             ],
           ),
         ),
@@ -67,55 +68,56 @@ class IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  showIntroHeaderImage() {
-//    return Notifier.of(context).register<String>('changeMode', (data) {
-      return Container(
-        height: Utils.getDeviceHeight(context) / 7.5,
-        width: Utils.getDeviceWidth(context) / 1.2,
+  showHeaderView(BuildContext context) {
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      height: Utils.getDeviceHeight(context) / 7.5,
 //      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-//        color: Injector.isBusinessMode
-//            ? ColorRes.transparent.withOpacity(0.5)
-//            : ColorRes.headerBlue,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-
-            Expanded(
-              flex: 1,
-              child: selectedType == Const.typeSideMenu
-                  ? Image(
-                image: AssetImage(
-                  Utils.getAssetsImg("menu"),
-                ),
-                fit: BoxFit.fill,
-              )
-                  : Container(),
-            ),
-
-            Expanded(
-              flex: 1,
-              child: InkResponse(
-                child: selectedType == Const.typeName
-                    ? Image(
-                  image: AssetImage(
-                    Utils.getAssetsImg("ic_menu"),
-                  ),
-                  color: Injector.isBusinessMode
-                      ? ColorRes.textLightBlue
-                      : ColorRes.white,
-                  width: 25,
-//                      width: Utils.getDeviceHeight(context) / 15,
-                  height: Utils.getDeviceHeight(context) / 15,
-                )
-                    : Container(),
-                onTap: () {},
+//      color: Injector.isBusinessMode
+//          ? ColorRes.headerDashboard
+//          : ColorRes.headerBlue,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Visibility(
+            child: Image(
+              image: AssetImage(
+                Utils.getAssetsImg("menu"),
               ),
+              fit: BoxFit.fill,
             ),
-
-            Expanded(
-              flex: 3,
-              child: selectedType == Const.typeName
-                  ? Column(
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: false,
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          Visibility(
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                  Utils.getAssetsImg("ic_menu"),
+                ),
+                color: Injector.isBusinessMode
+                    ? ColorRes.textLightBlue
+                    : ColorRes.white,
+                width: 25,
+              ),
+              onTap: () {},
+            ),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType==Const.typeSideMenu?true:false,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Visibility(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -135,9 +137,7 @@ class IntroScreenState extends State<IntroScreen> {
                     height: 2,
                   ),
                   Text(
-                    Injector.userData != null
-                        ? Injector.userData.manager
-                        : "",
+                    Injector.userData != null ? Injector.userData.manager : "",
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.white
@@ -147,61 +147,185 @@ class IntroScreenState extends State<IntroScreen> {
                     overflow: TextOverflow.ellipsis,
                   )
                 ],
-              )
-                  : Container(),
+              ),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: selectedType == Const.typeName ? true : false,
             ),
-            Expanded(
-                flex: 2,
-                child: selectedType == Const.typeChecked
-                    ? showHeaderItem(Const.typeChecked, context)  : Container()),
-            Expanded(
-              flex: 2,
-              child: selectedType == Const.typePeople
-                  ? showHeaderItem(Const.typePeople, context)
-                  : Container(),
-            ),
-            Expanded(
-              flex: 2,
-              child: selectedType == Const.typeBadge
-                  ? showHeaderItem(Const.typeBadge, context)
-                  : Container(),
-            ),
-            Expanded(
-              flex: 2,
-              child: selectedType == Const.typeResources
-                  ? showHeaderItem(Const.typeResources, context)
-                  : Container(),
-            ),
-            Expanded(
-              flex: 2,
-              child: selectedType == Const.typeDollar
-                  ? showHeaderItem(Const.typeDollar, context)
-                  : Container(),
-            ),
-            Expanded(
-              flex: 1,
-              child: selectedType == Const.typeProfile
-                  ? showProfile(context)
-                  : Container(),
-            ),
-
-          ],
-        ),
-      );
+          ),
+          Visibility(
+            child: showHeaderItem(Const.typeChecked, context),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType == Const.typeChecked ? true : false,
+          ),
+          Visibility(
+            child: showHeaderItem(Const.typePeople, context),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType == Const.typePeople ? true : false,
+          ),
+          Visibility(
+            child: showHeaderItem(Const.typeBadge, context),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType == Const.typeBadge ? true : false,
+          ),
+          Visibility(
+            child: showHeaderItem(Const.typeResources, context),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType == Const.typeResources ? true : false,
+          ),
+          Visibility(
+            child: showHeaderItem(Const.typeDollar, context),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType == Const.typeDollar ? true : false,
+          ),
+          Visibility(
+            child: showProfile(context),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: selectedType == Const.typeProfile ? true : false,
+          ),
+        ],
+      ),
+    );
   }
 
+  showIntroHeaderImage() {
+//    return Notifier.of(context).register<String>('changeMode', (data) {
+    return Container(
+      height: Utils.getDeviceHeight(context) / 7.5,
+      width: Utils.getDeviceWidth(context) / 1,
+//      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+//        color: Injector.isBusinessMode
+//            ? ColorRes.transparent.withOpacity(0.5)
+//            : ColorRes.headerBlue,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Image(
+            image: AssetImage(
+              Utils.getAssetsImg("menu"),
+            ),
+            fit: BoxFit.fill,
+          ),
+          SizedBox(
+            width: 8,
+          ),
+          selectedType == Const.typeName
+              ? InkResponse(
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg("ic_menu"),
+                    ),
+                    color: Injector.isBusinessMode
+                        ? ColorRes.textLightBlue
+                        : ColorRes.white,
+                    width: 25,
+                  ),
+                  onTap: () {},
+                )
+              : Container(),
+          SizedBox(
+            width: 10,
+          ),
+//          Expanded(
+//            child: selectedType == Const.typeName
+//                ? Column(
+//                    crossAxisAlignment: CrossAxisAlignment.start,
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    children: <Widget>[
+//                      Text(
+//                        Injector.userData != null
+//                            ? Injector.userData.companyName
+//                            : "",
+//                        style: TextStyle(
+//                            color: Injector.isBusinessMode
+//                                ? ColorRes.textLightBlue
+//                                : ColorRes.white,
+//                            fontSize: 15),
+//                        maxLines: 1,
+//                        overflow: TextOverflow.ellipsis,
+//                      ),
+//                      SizedBox(
+//                        height: 2,
+//                      ),
+//                      Text(
+//                        Injector.userData != null
+//                            ? Injector.userData.manager
+//                            : "",
+//                        style: TextStyle(
+//                            color: Injector.isBusinessMode
+//                                ? ColorRes.white
+//                                : ColorRes.textLightBlue,
+//                            fontSize: 15),
+//                        maxLines: 1,
+//                        overflow: TextOverflow.ellipsis,
+//                      )
+//                    ],
+//                  )
+//                : Container(),
+//          ),
+//          Visibility(
+//            child: showHeaderItem(Const.typeChecked, context),
+//            maintainSize: true,
+//            maintainAnimation: true,
+//            maintainState: true,
+//            visible: true,
+//          ),
+//          new Opacity(opacity: selectedType == Const.typeChecked?1:0, child: ),
+          selectedType == Const.typeChecked
+              ? showHeaderItem(Const.typeChecked, context)
+              : Container(
+                  color: ColorRes.blue,
+                ),
+          selectedType == Const.typePeople
+              ? showHeaderItem(Const.typePeople, context)
+              : Container(
+                  color: ColorRes.black,
+                ),
+          selectedType == Const.typeBadge
+              ? showHeaderItem(Const.typeBadge, context)
+              : Container(
+                  color: ColorRes.blue,
+                ),
+          selectedType == Const.typeResources
+              ? showHeaderItem(Const.typeResources, context)
+              : Container(color: ColorRes.black),
+          selectedType == Const.typeDollar
+              ? showHeaderItem(Const.typeDollar, context)
+              : Container(
+                  color: ColorRes.blue,
+                ),
+          selectedType == Const.typeProfile
+              ? showProfile(context)
+              : Container(color: ColorRes.black)
+        ],
+      ),
+    );
+  }
 
   showHeaderItem(int type, BuildContext context) {
     return Container(
       height: 40,
       padding:
-      EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       margin: EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
           image: Injector.isBusinessMode
               ? DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-              fit: BoxFit.fill)
+                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+                  fit: BoxFit.fill)
               : null),
       child: Row(
         children: <Widget>[
@@ -211,12 +335,12 @@ class IntroScreenState extends State<IntroScreen> {
               Injector.isBusinessMode
                   ? Container()
                   : Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                    border: Border.all(color: ColorRes.white, width: 1),
-                    borderRadius: BorderRadius.circular(12.5)),
-              ),
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: ColorRes.white, width: 1),
+                          borderRadius: BorderRadius.circular(12.5)),
+                    ),
               Image(
                 image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
                 height: 26,
@@ -228,52 +352,51 @@ class IntroScreenState extends State<IntroScreen> {
           ),
           type != Const.typeDollar
               ? Stack(
-            alignment: Alignment.centerLeft,
-            children: <Widget>[
-              Container(
-                height: Injector.isBusinessMode ? 19 : 21,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: ColorRes.greyText,
+                  alignment: Alignment.centerLeft,
+                  children: <Widget>[
+                    Container(
+                      height: Injector.isBusinessMode ? 19 : 21,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: ColorRes.greyText,
 //                          image: Injector.isBusinessMode
 //                              ? DecorationImage(
 //                                  image: AssetImage(
 //                                      Utils.getAssetsImg('bg_progress')),
 //                                  fit: BoxFit.fill)
 //                              : null,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Injector.isBusinessMode
-                        ? null
-                        : Border.all(color: ColorRes.white, width: 1)),
-                padding: EdgeInsets.symmetric(
-                    vertical: 0,
-                    horizontal: Injector.isBusinessMode ? 0 : 1),
-                child: LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 12,
-                  lineHeight: 19.0,
-                  percent: getProgressInt(type),
-                  backgroundColor: Colors.transparent,
-                  progressColor: Colors.blue,
-                ),
-              ),
-              Positioned(
-                left: 4,
-                child: Text(
-                  getProgress(type),
-                  style: TextStyle(color: ColorRes.white, fontSize: 14),
-                ),
-              )
-            ],
-          )
+                          borderRadius: BorderRadius.circular(12),
+                          border: Injector.isBusinessMode
+                              ? null
+                              : Border.all(color: ColorRes.white, width: 1)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 0,
+                          horizontal: Injector.isBusinessMode ? 0 : 1),
+                      child: LinearPercentIndicator(
+                        width: Utils.getDeviceWidth(context) / 12,
+                        lineHeight: 19.0,
+                        percent: getProgressInt(type),
+                        backgroundColor: Colors.transparent,
+                        progressColor: Colors.blue,
+                      ),
+                    ),
+                    Positioned(
+                      left: 4,
+                      child: Text(
+                        getProgress(type),
+                        style: TextStyle(color: ColorRes.white, fontSize: 14),
+                      ),
+                    )
+                  ],
+                )
               : Text(
-            ' \$ 120.00',
-            style: TextStyle(color: ColorRes.white, fontSize: 16),
-          ),
+                  ' \$ 120.00',
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                ),
         ],
       ),
     );
   }
-
 
   showProfile(BuildContext context) {
     return InkResponse(
@@ -291,7 +414,7 @@ class IntroScreenState extends State<IntroScreen> {
               border: Border.all(color: ColorRes.textLightBlue)),
         ),
         onTap: () {}
-      /*openProfile () {
+        /*openProfile () {
         openProfile
 //        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
 //        print(route1.isCurrent);
@@ -299,9 +422,8 @@ class IntroScreenState extends State<IntroScreen> {
 //          Navigator.push(context, route1);
 //        }
       },*/
-    );
+        );
   }
-
 
   String getHeaderIcon(int type) {
     if (type == Const.typeChecked)
