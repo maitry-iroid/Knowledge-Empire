@@ -57,6 +57,9 @@ class StringRes {
   static var unSubscribe = "unSubscribe";
   static var engagement = "engagement";
   static var debrief = "debrief";
+  static var category = "category";
+  static var achievement = "achievement";
+  static var nextLevel = "nextLevel";
 
   //business sectors
 
@@ -127,7 +130,10 @@ class StringRes {
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
       'engagement': 'Engagement',
-      'debrief': 'Debrief'
+      'debrief': 'Debrief',
+      'category': 'Category',
+      'achievement': 'Achievement',
+      'nextLevel': 'Next Level'
     },
     'es': {
       'title': 'Hola Mundo',

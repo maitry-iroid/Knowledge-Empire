@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
-
 
 class RewardsPage extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
-  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
+  var arrCategories = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   @override
   Widget build(BuildContext context) {
@@ -23,38 +23,6 @@ class _RewardsPageState extends State<RewardsPage> {
       decoration: CommonView.getBGDecoration(),
       child: Row(
         children: <Widget>[showFirstHalf(), showSecondHalf()],
-      ),
-    );
-  }
-
-
-  Container showSubHeader() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
-      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fill)),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 8,
-            child: Text(
-              'Sector',
-              style: TextStyle(color: ColorRes.colorPrimary),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              'Size',
-              style: TextStyle(color: ColorRes.colorPrimary),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -71,45 +39,54 @@ class _RewardsPageState extends State<RewardsPage> {
   showFirstHalf() {
     return Expanded(
       flex: 1,
-      child: Container(
-        color: ColorRes.colorBgDark,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              height: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg('bg_reward_sub')),
-                      fit: BoxFit.fill)),
-              child: Text(
-                'Category',
-                style: TextStyle(color: ColorRes.white, fontSize: 15),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: Container(
-                color: ColorRes.colorBgDark,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: arrSector.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CategoryItem(
-                      selectItem, // callback function, setstate for parent
-                      index: index,
-                      isSelected: _selectedItem == index ? true : false,
-                      title: arrSector[index],
-                    );
-                  },
+      child: Card(
+        color: Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.bgProf,
+        margin: EdgeInsets.all(0),
+        elevation: 10,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color:
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image:
+                                AssetImage(Utils.getAssetsImg('bg_reward_sub')),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(context, StringRes.category),
+                  style: TextStyle(color: ColorRes.white, fontSize: 17),
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: Container(
+                  color: ColorRes.bgProf,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: arrCategories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CategoryItem(
+                        selectItem, // callback function, setstate for parent
+                        index: index,
+                        isSelected: _selectedItem == index ? true : false,
+                        title: arrCategories[index],
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -118,195 +95,139 @@ class _RewardsPageState extends State<RewardsPage> {
   showSecondHalf() {
     return Expanded(
       flex: 3,
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 10,),
-            CommonView.showTitle(context,StringRes.rewards),
-            Card(
-              color: ColorRes.lightGrey,
-              margin: EdgeInsets.all(10),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              child: Container(
-                height: Utils.getDeviceHeight(context) / 3.5,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
+          CommonView.showTitle(context, StringRes.rewards),
+          Card(
+            color: ColorRes.whiteDarkBg,
+            margin: EdgeInsets.all(10),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Container(
+              height: Utils.getDeviceHeight(context) / 3.6,
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            width: Utils.getDeviceWidth(context) / 7,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+            decoration: BoxDecoration(
+                borderRadius:
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                border: Injector.isBusinessMode
+                    ? null
+                    : Border.all(width: 1, color: ColorRes.white),
+                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                        image: AssetImage(
+                          Utils.getAssetsImg("bg_blue"),
+                        ),
+                        fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(
+                  context, Utils.getText(context, StringRes.description)),
+              style: TextStyle(
+                color: ColorRes.white,
+                fontSize: DimenRes.titleTextSize,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              child: Row(
+                children: <Widget>[
+                  showFirstAchivement(1),
+                  showFirstAchivement(2)
+                ],
               ),
             ),
-            Expanded(
-              child: Container(
-                height: double.infinity,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: Stack(
-                        children: <Widget>[
-                          Card(
-                            elevation: 10,
-                            color: ColorRes.whiteDarkBg,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            margin: EdgeInsets.only(
-                                top: 14,
-                                bottom: Utils.getDeviceHeight(context) / 12,
-                                right: 5,
-                                left: 10),
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 18, bottom: 18),
-                              decoration: BoxDecoration(
-                                color: ColorRes.bgDescription,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                    color: ColorRes.colorPrimary, width: 1),
-                              ),
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
-                                  style:
-                                  TextStyle(color: ColorRes.colorPrimary),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 30,
-                              margin: EdgeInsets.symmetric(
-                                  horizontal:
-                                      Utils.getDeviceWidth(context) / 10),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("bg_achivement")),
-                                      fit: BoxFit.fill)),
-                              child: Text(
-                                'Achivement',
-                                style: TextStyle(
-                                    color: ColorRes.colorPrimary, fontSize: 14),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 32,
-                              margin: EdgeInsets.only(
-                                  left:
-                                  Utils.getDeviceWidth(context) / 12,right:
-                                  Utils.getDeviceWidth(context) / 12,bottom: 20),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("bg_innovation")),
-                                      fit: BoxFit.fill)),
-                              child: Text(
-                                '10+ Innovation',
-                                style: TextStyle(
-                                    color: ColorRes.colorPrimary, fontSize: 14),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Stack(
-                        children: <Widget>[
-                          Card(
-                            elevation: 10,
-                            color: ColorRes.whiteDarkBg,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            margin: EdgeInsets.only(
-                                top: 20,
-                                bottom: Utils.getDeviceHeight(context) / 11,
-                                right: 10,
-                                left: 5),
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 18, bottom: 18),
-                              decoration: BoxDecoration(
-                                color: ColorRes.bgDescription,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                    color: ColorRes.colorPrimary, width: 1),
-                              ),
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
-                                  style:
-                                      TextStyle(color: ColorRes.colorPrimary,fontSize: 14),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 30,
-                              margin: EdgeInsets.symmetric(
-                                  horizontal:
-                                  Utils.getDeviceWidth(context) / 10),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("bg_achivement")),
-                                      fit: BoxFit.fill)),
-                              child: Text(
-                                'Achivement',
-                                style: TextStyle(
-                                    color: ColorRes.colorPrimary, fontSize: 14),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 32,
-                              margin: EdgeInsets.only(
-                                  left:
-                                  Utils.getDeviceWidth(context) / 12,right:
-                              Utils.getDeviceWidth(context) / 12,bottom: 20),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("bg_innovation")),
-                                      fit: BoxFit.fill)),
-                              child: Text(
-                                'Claim: +10 Innovation',
-                                style: TextStyle(
-                                    color: ColorRes.colorPrimary, fontSize: 14),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  showFirstAchivement(int type) {
+    return Expanded(
+      flex: 1,
+      child: Stack(
+        fit: StackFit.loose,
+        alignment: Alignment.center,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            color: ColorRes.bgDescription,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            margin: EdgeInsets.only(
+                top: 14,
+                bottom: Utils.getDeviceHeight(context) / 15,
+                right: 2.5,
+                left: 2.5),
+            child: Container(
+              padding:
+                  EdgeInsets.only(left: 10, right: 10, top: 18, bottom: 18),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: ColorRes.white, width: 1),
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                  style: TextStyle(
+                    color: ColorRes.white,
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            top: 0,
+            child: Container(
+              alignment: Alignment.center,
+              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bg_achivement")),
+                      fit: BoxFit.fill)),
+              child: Text(
+                Utils.getText(context,
+                    type == 1 ? StringRes.achievement : StringRes.nextLevel),
+                style: TextStyle(color: ColorRes.white, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              alignment: Alignment.center,
+              height: 32,
+              margin: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bg_innovation")),
+                      fit: BoxFit.fill)),
+              child: Text(
+                '10+ Innovation',
+                style: TextStyle(color: ColorRes.white, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -334,22 +255,6 @@ class CategoryItem extends StatefulWidget {
   _CategoryItemState createState() => _CategoryItemState();
 }
 
-//Widget showItem(int index) {
-//  return Container(
-//    height: 35,
-//    alignment: Alignment.center,
-//    margin: EdgeInsets.only(left: 10),
-//    decoration: BoxDecoration(
-//        image: DecorationImage(
-//            image: AssetImage(Utils.getAssetsImg("bg_reward_sub2")),
-//            fit: BoxFit.fill)),
-//    child: Text(
-//      arrSector[index],
-//      style: TextStyle(color: ColorRes.white, fontSize: 15),
-//    ),
-//  );
-//}
-
 class _CategoryItemState extends State<CategoryItem> {
   @override
   Widget build(BuildContext context) {
@@ -358,19 +263,33 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-        height: 35,
-        margin: EdgeInsets.only(left: 10, right: 10),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
+        height: Injector.isBusinessMode ? 35 : 30,
+        margin: EdgeInsets.only(
+            left: 10, right: 10, top: Injector.isBusinessMode ? 0 : 5),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                    ? "bg_reward_sub_selected"
-                    : "bg_reward_sub2")),
-                fit: BoxFit.fill)),
+            color: Injector.isBusinessMode
+                ? null
+                : widget.isSelected ? ColorRes.titleBlueProf : null,
+            border: Injector.isBusinessMode
+                ? null
+                : Border.all(width: 1, color: ColorRes.titleBlueProf),
+            borderRadius:
+                Injector.isBusinessMode ? null : BorderRadius.circular(10),
+            image: Injector.isBusinessMode
+                ? DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(widget.isSelected
+                        ? "bg_reward_sub_selected"
+                        : "bg_reward_sub2")),
+                    fit: BoxFit.fill)
+                : null),
         child: Text(
           widget.title,
-          style: TextStyle(color: ColorRes.white, fontSize: 15),
+          style: TextStyle(
+              color: Injector.isBusinessMode
+                  ? ColorRes.white
+                  : widget.isSelected ? ColorRes.white : ColorRes.textBlue,
+              fontSize: 15),
         ),
       ),
     );
