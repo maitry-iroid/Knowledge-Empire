@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/engagement_customer.dart';
+
+import '../home.dart';
 
 class CommonView {
   static getBGDecoration() {
@@ -27,7 +30,7 @@ class CommonView {
           child: Image(
             image: AssetImage(Utils.getAssetsImg(
                 Injector.isBusinessMode ? "back" : 'back_prof')),
-            width: Utils.getDeviceHeight(context)/12,
+            width: Utils.getDeviceHeight(context) / 12,
           ),
           onTap: () {
             Utils.performBack(context);
@@ -35,7 +38,7 @@ class CommonView {
         ),
         Container(
           alignment: Alignment.center,
-          height: Utils.getDeviceHeight(context)/12,
+          height: Utils.getDeviceHeight(context) / 12,
           padding: EdgeInsets.symmetric(horizontal: 20),
           margin: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
@@ -124,12 +127,11 @@ class CommonView {
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 border: Injector.isBusinessMode
                     ? null
                     : Border.all(width: 1, color: ColorRes.white),
                 color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-
                 image: Injector.isBusinessMode
                     ? DecorationImage(
                         image: AssetImage(Utils.getAssetsImg("eddit_profile")),
@@ -293,5 +295,201 @@ class CommonView {
       height: 0.0,
       width: 0.0,
     );
+  }
+
+  static Widget showDashboardView(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
+              fit: BoxFit.fill)),
+      child: Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.center,
+        children: <Widget>[
+          Positioned(
+            top: 40,
+//            right: Utils.getDeviceWidth(context) / 10,
+            child: Row(
+              children: <Widget>[
+                InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("organization")),
+                    width: Utils.getDeviceWidth(context) / 4.5,
+                  ),
+                  onTap: () {
+                    performItemClick(context, Const.typeOrg);
+                  },
+                ),
+                InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("profit-loss")),
+                    width: Utils.getDeviceWidth(context) / 4.5,
+                  ),
+                  onTap: () {
+                    performItemClick(context, Const.typePL);
+                  },
+                ),
+                InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("ranking")),
+                    width: Utils.getDeviceWidth(context) / 4.5,
+                  ),
+                  onTap: () {
+                    performItemClick(context, Const.typeRanking);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 3.2,
+            right: Utils.getDeviceWidth(context) / 3.5,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("papers_rack")),
+              height: Utils.getDeviceHeight(context) / 9,
+            ),
+          ),
+          Container(
+            width: Utils.getDeviceWidth(context),
+            margin: EdgeInsets.only(
+              top: Utils.getDeviceHeight(context) / 4.2,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(bottom: 40, left: 20),
+                    child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("rewards")),
+//                      height: Utils.getDeviceHeight(context) / 2.9,
+                        width: Utils.getDeviceHeight(context) / 3.0,
+                      ),
+                      onTap: () {
+                        performItemClick(context, Const.typeReward);
+                      },
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
+                    child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("team")),
+//                      height: Utils.getDeviceHeight(context) / 2.4,
+                        width: Utils.getDeviceHeight(context) / 3.0,
+                      ),
+                      onTap: () {
+                        performItemClick(context, Const.typeTeam);
+                      },
+                    )),
+                Padding(
+                  padding:
+                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                  child: InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("challenges")),
+//                      height: Utils.getDeviceHeight(context) / 3.3,
+                        width: Utils.getDeviceHeight(context) / 2.6,
+                      ),
+                      onTap: () {
+                        performItemClick(context, Const.typeChallenges);
+                      }),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 10,
+            right: 10,
+            child: Container(
+              width: Utils.getDeviceWidth(context),
+              alignment: Alignment.bottomCenter,
+//              color: ColorRes.black,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  InkResponse(
+                      child: Image(
+                        image:
+                            AssetImage(Utils.getAssetsImg("business_sectors")),
+//                      height: Utils.getDeviceHeight(context) / 2.85,
+                        width: Utils.getDeviceWidth(context) / 3.5,
+                      ),
+                      onTap: () {
+                        performItemClick(context, Const.typeBusinessSector);
+                      }),
+                  InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("new-customer")),
+                        width: Utils.getDeviceWidth(context) / 4.2,
+                      ),
+                      onTap: () {
+                        performItemClick(context, Const.typeNewCustomer);
+                      }),
+//                SizedBox(
+//                  width: Utils.getDeviceWidth(context) / 20,
+//                ),
+                  InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("existing")),
+//                      height: Utils.getDeviceHeight(context) / 3.1,
+                        width: Utils.getDeviceWidth(context) / 4.6,
+                      ),
+                      onTap: () {
+                        performItemClick(context, Const.typeExistingCustomer);
+                      }),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 3.2,
+            left: Utils.getDeviceWidth(context) / 3.5,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("pencils")),
+              height: Utils.getDeviceHeight(context) / 5,
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 6,
+            left: Utils.getDeviceWidth(context) / 3.3,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("mobile")),
+              height: Utils.getDeviceHeight(context) / 12,
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 12,
+            left: Utils.getDeviceWidth(context) / 4,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("glasses")),
+              height: Utils.getDeviceHeight(context) / 15,
+            ),
+          ),
+          Positioned(
+            bottom: Utils.getDeviceHeight(context) / 8,
+            right: Utils.getDeviceWidth(context) / 3.7,
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg("coffee_cup")),
+              height: Utils.getDeviceHeight(context) / 8,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static performItemClick(BuildContext context, int type) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  initialPageType: type,
+                )));
   }
 }

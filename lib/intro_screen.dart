@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_tooltip/flutter_introduction_tooltip.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
 import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
@@ -45,7 +45,7 @@ class IntroScreenState extends State<IntroScreen> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              showMainView(),
+              CommonView.showDashboardView(context),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -57,9 +57,8 @@ class IntroScreenState extends State<IntroScreen> {
                             Utils.getAssetsImg("intro_bub_background")),
                         fit: BoxFit.fill)),
               ),
-              showIntroMenu(),
+              showIntroBubbleView(),
               showSelectedMainView(),
-//              showIntroHeaderImage(),
               showHeaderView(context)
             ],
           ),
@@ -72,10 +71,6 @@ class IntroScreenState extends State<IntroScreen> {
     return Container(
       width: Utils.getDeviceWidth(context),
       height: Utils.getDeviceHeight(context) / 7.5,
-//      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-//      color: Injector.isBusinessMode
-//          ? ColorRes.headerDashboard
-//          : ColorRes.headerBlue,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -110,7 +105,7 @@ class IntroScreenState extends State<IntroScreen> {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            visible: selectedType==Const.typeSideMenu?true:false,
+            visible: selectedType == Const.typeSideMenu ? true : false,
           ),
           SizedBox(
             width: 10,
@@ -154,41 +149,11 @@ class IntroScreenState extends State<IntroScreen> {
               visible: selectedType == Const.typeName ? true : false,
             ),
           ),
-          Visibility(
-            child: showHeaderItem(Const.typeChecked, context),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typeChecked ? true : false,
-          ),
-          Visibility(
-            child: showHeaderItem(Const.typePeople, context),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typePeople ? true : false,
-          ),
-          Visibility(
-            child: showHeaderItem(Const.typeBadge, context),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typeBadge ? true : false,
-          ),
-          Visibility(
-            child: showHeaderItem(Const.typeResources, context),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typeResources ? true : false,
-          ),
-          Visibility(
-            child: showHeaderItem(Const.typeDollar, context),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typeDollar ? true : false,
-          ),
+          showHeaderItem(Const.typeChecked, context),
+          showHeaderItem(Const.typePeople, context),
+          showHeaderItem(Const.typeBadge, context),
+          showHeaderItem(Const.typeResources, context),
+          showHeaderItem(Const.typeDollar, context),
           Visibility(
             child: showProfile(context),
             maintainSize: true,
@@ -201,199 +166,91 @@ class IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  showIntroHeaderImage() {
-//    return Notifier.of(context).register<String>('changeMode', (data) {
-    return Container(
-      height: Utils.getDeviceHeight(context) / 7.5,
-      width: Utils.getDeviceWidth(context) / 1,
-//      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-//        color: Injector.isBusinessMode
-//            ? ColorRes.transparent.withOpacity(0.5)
-//            : ColorRes.headerBlue,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image(
-            image: AssetImage(
-              Utils.getAssetsImg("menu"),
-            ),
-            fit: BoxFit.fill,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          selectedType == Const.typeName
-              ? InkResponse(
-                  child: Image(
-                    image: AssetImage(
-                      Utils.getAssetsImg("ic_menu"),
-                    ),
-                    color: Injector.isBusinessMode
-                        ? ColorRes.textLightBlue
-                        : ColorRes.white,
-                    width: 25,
-                  ),
-                  onTap: () {},
-                )
-              : Container(),
-          SizedBox(
-            width: 10,
-          ),
-//          Expanded(
-//            child: selectedType == Const.typeName
-//                ? Column(
-//                    crossAxisAlignment: CrossAxisAlignment.start,
-//                    mainAxisAlignment: MainAxisAlignment.center,
-//                    children: <Widget>[
-//                      Text(
-//                        Injector.userData != null
-//                            ? Injector.userData.companyName
-//                            : "",
-//                        style: TextStyle(
-//                            color: Injector.isBusinessMode
-//                                ? ColorRes.textLightBlue
-//                                : ColorRes.white,
-//                            fontSize: 15),
-//                        maxLines: 1,
-//                        overflow: TextOverflow.ellipsis,
-//                      ),
-//                      SizedBox(
-//                        height: 2,
-//                      ),
-//                      Text(
-//                        Injector.userData != null
-//                            ? Injector.userData.manager
-//                            : "",
-//                        style: TextStyle(
-//                            color: Injector.isBusinessMode
-//                                ? ColorRes.white
-//                                : ColorRes.textLightBlue,
-//                            fontSize: 15),
-//                        maxLines: 1,
-//                        overflow: TextOverflow.ellipsis,
-//                      )
-//                    ],
-//                  )
-//                : Container(),
-//          ),
-//          Visibility(
-//            child: showHeaderItem(Const.typeChecked, context),
-//            maintainSize: true,
-//            maintainAnimation: true,
-//            maintainState: true,
-//            visible: true,
-//          ),
-//          new Opacity(opacity: selectedType == Const.typeChecked?1:0, child: ),
-          selectedType == Const.typeChecked
-              ? showHeaderItem(Const.typeChecked, context)
-              : Container(
-                  color: ColorRes.blue,
-                ),
-          selectedType == Const.typePeople
-              ? showHeaderItem(Const.typePeople, context)
-              : Container(
-                  color: ColorRes.black,
-                ),
-          selectedType == Const.typeBadge
-              ? showHeaderItem(Const.typeBadge, context)
-              : Container(
-                  color: ColorRes.blue,
-                ),
-          selectedType == Const.typeResources
-              ? showHeaderItem(Const.typeResources, context)
-              : Container(color: ColorRes.black),
-          selectedType == Const.typeDollar
-              ? showHeaderItem(Const.typeDollar, context)
-              : Container(
-                  color: ColorRes.blue,
-                ),
-          selectedType == Const.typeProfile
-              ? showProfile(context)
-              : Container(color: ColorRes.black)
-        ],
-      ),
-    );
-  }
-
   showHeaderItem(int type, BuildContext context) {
-    return Container(
-      height: 40,
-      padding:
-          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
-      margin: EdgeInsets.symmetric(horizontal: 1),
-      decoration: BoxDecoration(
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-                  fit: BoxFit.fill)
-              : null),
-      child: Row(
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Injector.isBusinessMode
-                  ? Container()
-                  : Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: ColorRes.white, width: 1),
-                          borderRadius: BorderRadius.circular(12.5)),
-                    ),
-              Image(
-                image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
-                height: 26,
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 4,
-          ),
-          type != Const.typeDollar
-              ? Stack(
-                  alignment: Alignment.centerLeft,
-                  children: <Widget>[
-                    Container(
-                      height: Injector.isBusinessMode ? 19 : 21,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: ColorRes.greyText,
+    return Visibility(
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      visible: selectedType == type ? true : false,
+      child: Container(
+        height: 40,
+        padding:
+            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+        margin: EdgeInsets.symmetric(horizontal: 1),
+        decoration: BoxDecoration(
+            image: Injector.isBusinessMode
+                ? DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+                    fit: BoxFit.fill)
+                : null),
+        child: Row(
+          children: <Widget>[
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Injector.isBusinessMode
+                    ? Container()
+                    : Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: ColorRes.white, width: 1),
+                            borderRadius: BorderRadius.circular(12.5)),
+                      ),
+                Image(
+                  image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
+                  height: 26,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            type != Const.typeDollar
+                ? Stack(
+                    alignment: Alignment.centerLeft,
+                    children: <Widget>[
+                      Container(
+                        height: Injector.isBusinessMode ? 19 : 21,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: ColorRes.greyText,
 //                          image: Injector.isBusinessMode
 //                              ? DecorationImage(
 //                                  image: AssetImage(
 //                                      Utils.getAssetsImg('bg_progress')),
 //                                  fit: BoxFit.fill)
 //                              : null,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Injector.isBusinessMode
-                              ? null
-                              : Border.all(color: ColorRes.white, width: 1)),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 0,
-                          horizontal: Injector.isBusinessMode ? 0 : 1),
-                      child: LinearPercentIndicator(
-                        width: Utils.getDeviceWidth(context) / 12,
-                        lineHeight: 19.0,
-                        percent: getProgressInt(type),
-                        backgroundColor: Colors.transparent,
-                        progressColor: Colors.blue,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(color: ColorRes.white, width: 1)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: Injector.isBusinessMode ? 0 : 1),
+                        child: LinearPercentIndicator(
+                          width: Utils.getDeviceWidth(context) / 12,
+                          lineHeight: 19.0,
+                          percent: getProgressInt(type),
+                          backgroundColor: Colors.transparent,
+                          progressColor: Colors.blue,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      left: 4,
-                      child: Text(
-                        getProgress(type),
-                        style: TextStyle(color: ColorRes.white, fontSize: 14),
-                      ),
-                    )
-                  ],
-                )
-              : Text(
-                  ' \$ 120.00',
-                  style: TextStyle(color: ColorRes.white, fontSize: 16),
-                ),
-        ],
+                      Positioned(
+                        left: 4,
+                        child: Text(
+                          getProgress(type),
+                          style: TextStyle(color: ColorRes.white, fontSize: 14),
+                        ),
+                      )
+                    ],
+                  )
+                : Text(
+                    ' \$ 120.00',
+                    style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  ),
+          ],
+        ),
       ),
     );
   }
@@ -467,171 +324,164 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   showSelectedMainView() {
-    return Container(
-//      width: double.infinity,
-//      height: double.infinity,
-//      decoration: BoxDecoration(
-//          image: DecorationImage(
-//              image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
-//              fit: BoxFit.fill)),
-      child: Stack(
-        fit: StackFit.expand,
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            top: 40,
+    return Stack(
+      fit: StackFit.expand,
+      alignment: Alignment.center,
+      children: <Widget>[
+        Positioned(
+          top: 40,
 //            right: Utils.getDeviceWidth(context) / 10,
-            child: Row(
-              children: <Widget>[
-                selectedType == Const.typeOrg
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("organization")),
-                          width: Utils.getDeviceWidth(context) / 3.5,
-                        ),
-                        onTap: () {},
-                      )
-                    : Container(
-                        width: Utils.getDeviceWidth(context) / 3.5,
+          child: Row(
+            children: <Widget>[
+              selectedType == Const.typeOrg
+                  ? InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("organization")),
+                        width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-                selectedType == Const.typePL
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                          width: Utils.getDeviceWidth(context) / 3.5,
-                        ),
-                        onTap: () {},
-                      )
-                    : Container(
-                        width: Utils.getDeviceWidth(context) / 3.5,
+                      onTap: () {},
+                    )
+                  : Container(
+                      width: Utils.getDeviceWidth(context) / 4.5,
+                    ),
+              selectedType == Const.typePL
+                  ? InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("profit-loss")),
+                        width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-                selectedType == Const.typeRanking
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("ranking")),
-                          width: Utils.getDeviceWidth(context) / 3.4,
-                        ),
-                        onTap: () {},
-                      )
-                    : Container(
-                        width: Utils.getDeviceWidth(context) / 3.4,
+                      onTap: () {},
+                    )
+                  : Container(
+                      width: Utils.getDeviceWidth(context) / 4.5,
+                    ),
+              selectedType == Const.typeRanking
+                  ? InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("ranking")),
+                        width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-              ],
-            ),
+                      onTap: () {},
+                    )
+                  : Container(
+                      width: Utils.getDeviceWidth(context) / 4.5,
+                    ),
+            ],
           ),
-          Container(
-            width: Utils.getDeviceWidth(context),
-            margin: EdgeInsets.only(
-              top: Utils.getDeviceHeight(context) / 4.2,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 40, left: 20),
-                  child: selectedType == Const.typeReward
-                      ? InkResponse(
-                          child: Image(
-                            image: AssetImage(Utils.getAssetsImg("rewards")),
+        ),
+        Container(
+          width: Utils.getDeviceWidth(context),
+          margin: EdgeInsets.only(
+            top: Utils.getDeviceHeight(context) / 4.2,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: 40, left: 20),
+                child: selectedType == Const.typeReward
+                    ? InkResponse(
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg("rewards")),
 //                      height: Utils.getDeviceHeight(context) / 2.9,
-                            width: Utils.getDeviceHeight(context) / 3.0,
-                          ),
-                        )
-                      : Container(
                           width: Utils.getDeviceHeight(context) / 3.0,
                         ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
-                  child: selectedType == Const.typeTeam
-                      ? InkResponse(
-                          child: Image(
-                            image: AssetImage(Utils.getAssetsImg("team")),
+                      )
+                    : Container(
+                        width: Utils.getDeviceHeight(context) / 3.0,
+                      ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
+                child: selectedType == Const.typeTeam
+                    ? InkResponse(
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg("team")),
 //                      height: Utils.getDeviceHeight(context) / 2.4,
-                            width: Utils.getDeviceHeight(context) / 3.0,
-                          ),
-                        )
-                      : Container(
                           width: Utils.getDeviceHeight(context) / 3.0,
                         ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
-                  child: selectedType == Const.typeChallenges
-                      ? InkResponse(
-                          child: Image(
-                            image: AssetImage(Utils.getAssetsImg("challenges")),
+                      )
+                    : Container(
+                        width: Utils.getDeviceHeight(context) / 3.0,
+                      ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                child: selectedType == Const.typeChallenges
+                    ? InkResponse(
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg("challenges")),
 //                      height: Utils.getDeviceHeight(context) / 3.3,
-                            width: Utils.getDeviceHeight(context) / 2.6,
-                          ),
-                          onTap: () {})
-                      : Container(width: Utils.getDeviceHeight(context) / 2.6),
-                ),
-              ],
-            ),
+                          width: Utils.getDeviceHeight(context) / 2.6,
+                        ),
+                        onTap: () {})
+                    : Container(width: Utils.getDeviceHeight(context) / 2.6),
+              ),
+            ],
           ),
-          Container(
+        ),
+        Container(
 //            color: ColorRes.blue,
-            width: Utils.getDeviceWidth(context),
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
+          width: Utils.getDeviceWidth(context),
+          alignment: Alignment.bottomCenter,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
 //            Padding(
 //            padding: EdgeInsets.only(bottom: 00, left: 00, right: 0), //420,
 //            child:
-                selectedType == Const.typeBusinessSector
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(
-                              Utils.getAssetsImg("business_sectors")),
+              selectedType == Const.typeBusinessSector
+                  ? InkResponse(
+                      child: Image(
+                        image:
+                            AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                          width: Utils.getDeviceWidth(context) / 2.8,
-                        ),
-                        onTap: () {
-                          performItemClick(Const.typeBusinessSector);
-                        })
-                    : Container(width: Utils.getDeviceWidth(context) / 2.8),
+                        width: Utils.getDeviceWidth(context) / 3.5,
+                      ),
+                      onTap: () {
+                        performItemClick(Const.typeBusinessSector);
+                      })
+                  : Container(width: Utils.getDeviceWidth(context) / 3.5),
 //            ),
 //      Padding(
 //        padding: EdgeInsets.only(bottom: 00, left: 00, right: 0), //420,
 //        child:
-                selectedType == Const.typeNewCustomer
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("new-customer")),
-                          width: Utils.getDeviceWidth(context) / 3.0,
-                        ),
-                        onTap: () {
-                          performItemClick(Const.typeNewCustomer);
-                        })
-                    : Container(
-                        width: Utils.getDeviceWidth(context) / 3.1,
+              selectedType == Const.typeNewCustomer
+                  ? InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("new-customer")),
+                        width: Utils.getDeviceWidth(context) / 4.2,
                       ),
+                      onTap: () {
+                        performItemClick(Const.typeNewCustomer);
+                      })
+                  : Container(
+                      width: Utils.getDeviceWidth(context) / 4.2,
+                    ),
 //    ),
 //                SizedBox(
 //                  width: Utils.getDeviceWidth(context) / 2,
 //                ),
-                selectedType == Const.typeExistingCustomer
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("existing")),
-                          width: Utils.getDeviceWidth(context) / 3.3,
-                        ),
-                        onTap: () {
-                          performItemClick(Const.typeExistingCustomer);
-                        })
-                    : Container(
-                        width: Utils.getDeviceWidth(context) / 3.3,
+              selectedType == Const.typeExistingCustomer
+                  ? InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("existing")),
+                        width: Utils.getDeviceWidth(context) / 4.6,
                       ),
-              ],
-            ),
+                      onTap: () {
+                        performItemClick(Const.typeExistingCustomer);
+                      })
+                  : Container(
+                      width: Utils.getDeviceWidth(context) / 4.6,
+                    ),
+            ],
           ),
+        ),
 
-          /*Positioned(
+        /*Positioned(
             bottom: Utils.getDeviceHeight(context)/3.2,
             left: Utils.getDeviceWidth(context) / 3.5,
             child: Image(
@@ -664,8 +514,7 @@ class IntroScreenState extends State<IntroScreen> {
               height: Utils.getDeviceHeight(context) / 8,
             ),
           ),*/
-        ],
-      ),
+      ],
     );
   }
 
@@ -689,19 +538,22 @@ class IntroScreenState extends State<IntroScreen> {
                 InkResponse(
                   child: Image(
                     image: AssetImage(Utils.getAssetsImg("organization")),
-                    width: Utils.getDeviceWidth(context) / 3.6,
+                    width: Utils.getDeviceWidth(context) / 4.3,
                   ),
+                  onTap: () {
+                    Utils.showToast("hello");
+                  },
                 ),
                 InkResponse(
                   child: Image(
                     image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                    width: Utils.getDeviceWidth(context) / 3.6,
+                    width: Utils.getDeviceWidth(context) / 4.2,
                   ),
                 ),
                 InkResponse(
                   child: Image(
                     image: AssetImage(Utils.getAssetsImg("ranking")),
-                    width: Utils.getDeviceWidth(context) / 3.6,
+                    width: Utils.getDeviceWidth(context) / 4.2,
                   ),
                 ),
               ],
@@ -709,7 +561,7 @@ class IntroScreenState extends State<IntroScreen> {
           ),
           Positioned(
             bottom: Utils.getDeviceHeight(context) / 3.2,
-            right: Utils.getDeviceWidth(context) / 3.2,
+            right: Utils.getDeviceWidth(context) / 3.5,
             child: Image(
               image: AssetImage(Utils.getAssetsImg("papers_rack")),
               height: Utils.getDeviceHeight(context) / 9,
@@ -756,44 +608,50 @@ class IntroScreenState extends State<IntroScreen> {
               ],
             ),
           ),
-          Container(
-//            color: ColorRes.blue,
-            width: Utils.getDeviceWidth(context),
-            alignment: Alignment.bottomCenter,
-            child: Row(
-//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
+          Positioned(
+            bottom: 0,
+            left: 10,
+            right: 10,
+            child: Container(
+              width: Utils.getDeviceWidth(context),
+              alignment: Alignment.bottomCenter,
+//              color: ColorRes.black,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  InkResponse(
+                      child: Image(
+                        image:
+                            AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                      width: Utils.getDeviceWidth(context) / 2.8,
-                    ),
-                    onTap: () {
-                      performItemClick(Const.typeBusinessSector);
-                    }),
-                InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("new-customer")),
-                      width: Utils.getDeviceWidth(context) / 3.1,
-                    ),
-                    onTap: () {
-                      performItemClick(Const.typeNewCustomer);
-                    }),
-                SizedBox(
-                  width: Utils.getDeviceWidth(context) / 20,
-                ),
-                InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("existing")),
+                        width: Utils.getDeviceWidth(context) / 3.5,
+                      ),
+                      onTap: () {
+                        performItemClick(Const.typeBusinessSector);
+                      }),
+                  InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("new-customer")),
+                        width: Utils.getDeviceWidth(context) / 4.2,
+                      ),
+                      onTap: () {
+                        performItemClick(Const.typeNewCustomer);
+                      }),
+//                SizedBox(
+//                  width: Utils.getDeviceWidth(context) / 20,
+//                ),
+                  InkResponse(
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg("existing")),
 //                      height: Utils.getDeviceHeight(context) / 3.1,
-                      width: Utils.getDeviceWidth(context) / 3.7,
-                    ),
-                    onTap: () {
-                      performItemClick(Const.typeExistingCustomer);
-                    }),
-              ],
+                        width: Utils.getDeviceWidth(context) / 4.6,
+                      ),
+                      onTap: () {
+                        performItemClick(Const.typeExistingCustomer);
+                      }),
+                ],
+              ),
             ),
           ),
           Positioned(
@@ -871,7 +729,7 @@ class IntroScreenState extends State<IntroScreen> {
 
   //----------------------
 
-  showIntroMenu() {
+  showIntroBubbleView() {
     return Container(
 //      width: double.infinity,
 //      height: double.infinity,
@@ -1114,19 +972,6 @@ class IntroScreenState extends State<IntroScreen> {
               : Container(),
 
 //--------------------------------------------------------------------------------------------------------------
-//          selectedType == Const.typeBusinessSector
-//              ? Positioned(
-//                  left: 18,
-//                  bottom: 5,
-//                  child: InkResponse(
-//                      child: Image(
-//                        image:
-//                            AssetImage(Utils.getAssetsImg("business_sectors")),
-//                        height: Utils.getDeviceHeight(context) / 2.85,
-//                      ),
-//                      onTap: () {}),
-//                )
-//              : Container(),
 
           selectedType == Const.typeBusinessSector
               ? Positioned(
@@ -1142,19 +987,6 @@ class IntroScreenState extends State<IntroScreen> {
                 )
               : Container(),
 
-//          selectedType == Const.typeNewCustomer
-//              ? Positioned(
-//                  bottom: 0,
-//                  left: Utils.getDeviceWidth(context) / 2.8,
-//                  child: InkResponse(
-//                      child: Image(
-//                        image: AssetImage(Utils.getAssetsImg("new-customer")),
-//                        height: Utils.getDeviceHeight(context) / 2.5,
-//                      ),
-//                      onTap: () {}),
-//                )
-//              : Container(),
-
           selectedType == Const.typeNewCustomer
               ? Positioned(
                   bottom: 110,
@@ -1169,18 +1001,6 @@ class IntroScreenState extends State<IntroScreen> {
                 )
               : Container(),
 
-//          selectedType == Const.typeExistingCustomer
-//              ? Positioned(
-//                  bottom: 0,
-//                  left: Utils.getDeviceWidth(context) / 1.4,
-//                  child: InkResponse(
-//                      child: Image(
-//                        image: AssetImage(Utils.getAssetsImg("existing")),
-//                        height: Utils.getDeviceHeight(context) / 3.1,
-//                      ),
-//                      onTap: () {}))
-//              : Container(),
-
           selectedType == Const.typeExistingCustomer
               ? Positioned(
                   bottom: 50,
@@ -1194,20 +1014,6 @@ class IntroScreenState extends State<IntroScreen> {
                       onTap: () {}),
                 )
               : Container(),
-
-//          selectedType == Const.typeReward
-//              ? Positioned(
-//                  bottom: Utils.getDeviceHeight(context) / 3.9,
-//                  left: Utils.getDeviceWidth(context) / 6,
-//                  child: InkResponse(
-//                    child: Image(
-//                      image: AssetImage(Utils.getAssetsImg("rewards")),
-//                      height: Utils.getDeviceHeight(context) / 3.2,
-//                    ),
-//                    onTap: () {},
-//                  ),
-//                )
-//              : Container(),
 
           selectedType == Const.typeReward
               ? Positioned(
@@ -1224,20 +1030,6 @@ class IntroScreenState extends State<IntroScreen> {
                 )
               : Container(),
 
-//          selectedType == Const.typeTeam
-//              ? Positioned(
-//                  bottom: Utils.getDeviceHeight(context) / 4,
-//                  left: Utils.getDeviceWidth(context) / 2.4,
-//                  child: InkResponse(
-//                    child: Image(
-//                      image: AssetImage(Utils.getAssetsImg("team")),
-//                      height: Utils.getDeviceHeight(context) / 3.2,
-//                    ),
-//                    onTap: () {},
-//                  ),
-//                )
-//              : Container(),
-
           selectedType == Const.typeTeam
               ? Positioned(
                   top: Utils.getDeviceHeight(context) / 6.0,
@@ -1251,21 +1043,6 @@ class IntroScreenState extends State<IntroScreen> {
                   ),
                 )
               : Container(),
-
-//          selectedType == Const.typeChallenges
-//              ? Positioned(
-//                  bottom: Utils.getDeviceHeight(context) / 5,
-//                  left: Utils.getDeviceWidth(context) / 1.5,
-//                  child: InkResponse(
-//                      child: Image(
-//                        image: AssetImage(Utils.getAssetsImg("challenges")),
-//                        height: Utils.getDeviceHeight(context) / 3,
-//                      ),
-//                      onTap: () {
-////                showTutorial(context);
-//                      }),
-//                )
-//              : Container(),
 
           selectedType == Const.typeChallenges
               ? Positioned(
@@ -1283,20 +1060,6 @@ class IntroScreenState extends State<IntroScreen> {
                 )
               : Container(),
 
-//          selectedType == Const.typeOrg
-//              ? Positioned(
-//                  top: 40,
-//                  right: Utils.getDeviceWidth(context) / 1.62,
-//                  child: InkResponse(
-//                    child: Image(
-//                      image: AssetImage(Utils.getAssetsImg("organization")),
-//                      height: Utils.getDeviceHeight(context) / 2.7,
-//                    ),
-//                    onTap: () {},
-//                  ),
-//                )
-//              : Container(),
-
           selectedType == Const.typeOrg
               ? Positioned(
                   top: 100,
@@ -1311,21 +1074,6 @@ class IntroScreenState extends State<IntroScreen> {
                 )
               : Container(),
 
-//          selectedType == Const.typePL
-//              ? Positioned(
-//                  top: 40,
-//                  left: Utils.getDeviceWidth(context) / 3,
-//                  right: Utils.getDeviceWidth(context) / 2.9,
-//                  child: InkResponse(
-//                    child: Image(
-//                      image: AssetImage(Utils.getAssetsImg("profit-loss")),
-//                      height: Utils.getDeviceHeight(context) / 2.8,
-//                    ),
-//                    onTap: () {},
-//                  ),
-//                )
-//              : Container(),
-
           selectedType == Const.typePL
               ? Positioned(
                   bottom: 30,
@@ -1338,20 +1086,6 @@ class IntroScreenState extends State<IntroScreen> {
                       onTap: () {}),
                 )
               : Container(),
-
-//          selectedType == Const.typeRanking
-//              ? Positioned(
-//                  top: 40,
-//                  left: Utils.getDeviceWidth(context) / 1.66,
-//                  child: InkResponse(
-//                    child: Image(
-//                      image: AssetImage(Utils.getAssetsImg("ranking")),
-//                      height: Utils.getDeviceHeight(context) / 2.8,
-//                    ),
-//                    onTap: () {},
-//                  ),
-//                )
-//              : Container(),
 
           selectedType == Const.typeRanking
               ? Positioned(
