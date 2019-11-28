@@ -111,14 +111,14 @@ class DashboardNewPageState extends State<DashboardNewPage> {
           Container(
             width: Utils.getDeviceWidth(context),
             margin: EdgeInsets.only(
-              top: Utils.getDeviceHeight(context) / 3.8,
+              top: Utils.getDeviceHeight(context) / 4.2,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(bottom: 10),
+                  padding: EdgeInsets.only(bottom: 40),
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("rewards")),
@@ -194,7 +194,7 @@ class DashboardNewPageState extends State<DashboardNewPage> {
           ),
           Positioned(
             bottom: Utils.getDeviceHeight(context)/3.2,
-            left: Utils.getDeviceWidth(context) / 3.3,
+            left: Utils.getDeviceWidth(context) / 3.5,
             child: Image(
               image: AssetImage(Utils.getAssetsImg("pencils")),
               height: Utils.getDeviceHeight(context) / 5,
