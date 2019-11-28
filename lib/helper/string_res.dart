@@ -60,6 +60,8 @@ class StringRes {
   static var category = "category";
   static var achievement = "achievement";
   static var nextLevel = "nextLevel";
+  static var friends = "friends";
+  static var sendChallenge = "sendChallenge";
 
   //business sectors
 
@@ -133,7 +135,9 @@ class StringRes {
       'debrief': 'Debrief',
       'category': 'Category',
       'achievement': 'Achievement',
-      'nextLevel': 'Next Level'
+      'nextLevel': 'Next Level',
+      'friends': 'Friends',
+      'sendChallenge': 'Send Challenge'
     },
     'es': {
       'title': 'Hola Mundo',

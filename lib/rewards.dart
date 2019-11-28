@@ -69,7 +69,6 @@ class _RewardsPageState extends State<RewardsPage> {
               ),
               Expanded(
                 child: Container(
-                  color: ColorRes.bgProf,
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
@@ -113,7 +112,7 @@ class _RewardsPageState extends State<RewardsPage> {
           ),
           Container(
             alignment: Alignment.center,
-            width: Utils.getDeviceWidth(context) / 7,
+            width: 130,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
             decoration: BoxDecoration(
                 borderRadius:
