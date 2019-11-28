@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                     ? ColorRes.white
                     : ColorRes.colorBgDark),
           )),
-      home: Injector.prefs.getString(PrefKeys.userId)!=null?IntroScreen():LoginPage(),
+      home: Injector.prefs.getString(PrefKeys.userId)!=null?HomePage():LoginPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
 //        '/splash': (BuildContext context) => SplashScreen(),
