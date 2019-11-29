@@ -11,6 +11,10 @@ import 'Customer_Situation.dart';
 import 'commonview/background.dart';
 import 'models/Answer.dart';
 
+
+
+
+
 class EngagementCustomer extends StatefulWidget {
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -19,9 +23,9 @@ class EngagementCustomer extends StatefulWidget {
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  int _selectedItem = 0;
-
   List<Answer> arrAnswer = List();
+
+  int _selectedItem = 0;
 
   selectItem(index) {
     setState(() {
@@ -267,6 +271,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 }
 
+
+//------------------------------------------------------------
+//Full screen in show Answers
+
 class FunkyOverlayAnswers extends StatefulWidget {
 //  bool CheckQuestion;
 
@@ -276,11 +284,9 @@ class FunkyOverlayAnswers extends StatefulWidget {
 
 class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     with SingleTickerProviderStateMixin {
-
-
-
   AnimationController controller;
   Animation<double> scaleAnimation;
+
 
   @override
   void initState() {
@@ -297,6 +303,19 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 
     controller.forward();
 
+    Answer answer = Answer();
+    answer.text = StringRes.loremIpsum;
+    Answer answer1 = Answer();
+    answer1.text = StringRes.loremIpsum;
+    Answer answer2 = Answer();
+    answer2.text = StringRes.loremIpsum;
+    Answer answer3 = Answer();
+    answer3.text = StringRes.loremIpsum;
+
+    arrAnswer.add(answer);
+    arrAnswer.add(answer1);
+    arrAnswer.add(answer2);
+    arrAnswer.add(answer3);
   }
 
   @override
@@ -312,18 +331,194 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
-              padding: const EdgeInsets.all(70.0),
-//              child:  ,
-            ),
+//              padding: const EdgeInsets.all(60.0),
+                padding: const EdgeInsets.only(
+                    top: 0, bottom: 0, right: 0, left: 00),
+                child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                      shape:
+                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
+                      child: Container(
+                        height: Utils.getDeviceHeight(context)/1.8,
+                        width: Utils.getDeviceWidth(context)/1.2,
+                        margin: EdgeInsets.only(top: 0),
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                        decoration: BoxDecoration(
+                          color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: ColorRes.white, width: 1),
+                        ),
+                        child:  ListView.builder(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        itemCount: arrAnswer.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return showItem(index);
+                        },
+                      ),
+                      ),
+                    ),
+
+
+                    Positioned(
+                      top: 0,
+//                      alignment: Alignment.topCenter,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 25,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: Utils.getDeviceWidth(context) / 3,
+                            vertical: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: Injector.isBusinessMode
+                                ? null
+                                : BorderRadius.circular(20),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(width: 1, color: ColorRes.white),
+                            color: Injector.isBusinessMode
+                                ? null
+                                : ColorRes.titleBlueProf,
+                            image: Injector.isBusinessMode
+                                ? DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("eddit_profile")),
+                                    fit: BoxFit.fill)
+                                : null),
+                        child: Text(
+                          'Answers',
+                          style: TextStyle(color: ColorRes.white, fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    //Full Screen Alert Show Question : -
+//                  Align(
+//                    alignment: Alignment.bottomRight,
+//                    child: InkResponse(
+//                      onTap: () {
+//                        showDialog(
+//                          context: context,
+//                          builder: (_) => FunkyOverlayAnswers(),
+//                        );
+//                      },
+//                      child: Container(
+//                          alignment: Alignment.center,
+//                          height: Utils.getDeviceWidth(context) / 35,
+//                          width: Utils.getDeviceWidth(context) / 35,
+//                          decoration: BoxDecoration(
+//                              image: Injector.isBusinessMode
+//                                  ? DecorationImage(
+//                                  image: AssetImage(Utils.getAssetsImg(
+//                                      "full_expand_question_answers")),
+//                                  fit: BoxFit.fill)
+//                                  : null)),
+//                    ),
+//                  )
+                  ],
+                )),
           ),
         ),
       ),
     );
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  int _selectedItem = 0;
+
+  List<Answer> arrAnswer = List();
+
+  selectItem(index) {
+    setState(() {
+      _selectedItem = index;
+      print(selectItem.toString());
+    });
+  }
+
+  Widget showItem(int index) {
+    return GestureDetector(
+        onTap: () {
+          setState(() {
+            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+          });
+        },
+        child: Container(
+//          height: 60,
+          margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius:
+                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(
+                      width: 1,
+                      color: arrAnswer[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
+              color: Injector.isBusinessMode
+                  ? null
+                  : (arrAnswer[index].isSelected
+                      ? ColorRes.greenDot
+                      : ColorRes.white),
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg(
+                          arrAnswer[index].isSelected
+                              ? "rounded_rectangle_837_blue"
+                              : "rounded_rectangle_8371")),
+                      fit: BoxFit.fill))
+                  : null),
+          child: Row(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              Title(
+                  color: ColorRes.greenDot,
+                  child: new Text(
+                    "A",
+                    style: TextStyle(
+                      color: (arrAnswer[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.textProf),
+                    ),
+                  )),
+              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: new Text(
+                    arrAnswer[index].text,
+                    style: TextStyle(
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf)),
+                    maxLines: 3,
+                    overflow: TextOverflow.fade,
+                  ),
+                ),
+              )
+            ],
+          ),
+//        Text(
+//          widget.title,
+//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
+//        ),
+        ));
+  }
 }
 
+
+
 //----------------------------------------
+//Question full screen show Alertdialog
+
 class FunkyOverlay extends StatefulWidget {
 //  bool CheckQuestion;
 
@@ -331,8 +526,8 @@ class FunkyOverlay extends StatefulWidget {
   State<StatefulWidget> createState() => FunkyOverlayState();
 }
 
-class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderStateMixin {
-
+class FunkyOverlayState extends State<FunkyOverlay>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
 
@@ -352,11 +547,14 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
     controller.forward();
   }
 
+  bool checkimg = true;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Material(
         color: Colors.transparent,
+
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
@@ -365,9 +563,108 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
-              padding: const EdgeInsets.all(70.0),
-              child:
-                  CommonView.questionAndExplanation(context, "Question", false),
+              padding: const EdgeInsets.all(0.0),
+              child: Stack(
+                fit: StackFit.loose,
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Card(
+                    elevation: 10,
+                    shape:
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
+                    child: Container(
+                      height: Utils.getDeviceHeight(context)/2,
+                      width: Utils.getDeviceWidth(context)/1.5,
+                      margin: EdgeInsets.only(top: 0),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                      decoration: BoxDecoration(
+                        color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: ColorRes.white, width: 1),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Text(
+                          "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                          style: TextStyle(
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.white
+                                  : ColorRes.textProf,
+                              fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ),
+                 Positioned(
+                   top: 0,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 30,
+                      margin: (checkimg == true ? EdgeInsets.symmetric(
+                          horizontal: Utils.getDeviceWidth(context) / 6) : EdgeInsets.symmetric(
+                          horizontal: Utils.getDeviceWidth(context) / 3)),
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                          border: Injector.isBusinessMode
+                              ? null
+                              : Border.all(width: 1, color: ColorRes.white),
+                          color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                          image: Injector.isBusinessMode
+                              ? DecorationImage(
+                              image: AssetImage(Utils.getAssetsImg("eddit_profile")),
+                              fit: BoxFit.fill)
+                              : null),
+                      child: Text(
+                        "Question",
+                        style: TextStyle(color: ColorRes.white, fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  //Full Screen Alert Show
+                 /* Positioned(
+                    top: 0,
+                     right: 0,
+//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
+//                        .topRight),
+//          Alignment.bottomRight,
+                    child: InkResponse(
+//                        onTap: () {
+////                          (checkimg == true ? showDialog(
+////                            context: context,
+////                            builder: (_) => FunkyOverlay(),
+////                          ) : null );
+//
+//                        },
+                        child: (checkimg == true ? Container(
+                            alignment: Alignment.center,
+                            height: Utils.getDeviceWidth(context) / 35,
+                            width: Utils.getDeviceWidth(context) / 35,
+                            decoration: BoxDecoration(
+                                image: Injector.isBusinessMode
+                                    ? DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg(
+                                            "close_dialog" )),
+                                    fit: BoxFit.fill)
+                                    : null)) : Container(
+                            alignment: Alignment.center,
+                            height: Utils.getDeviceWidth(context) / 40,
+                            width: Utils.getDeviceWidth(context) / 40,
+                            decoration: BoxDecoration(
+                                image: Injector.isBusinessMode
+                                    ? DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("close_dialog")),
+                                    fit: BoxFit.fill)
+                                    : null))
+                        )
+                    ),
+                  )*/
+                ],
+              )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
             ),

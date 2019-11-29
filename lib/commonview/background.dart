@@ -123,8 +123,9 @@ class CommonView {
           child: Container(
             alignment: Alignment.center,
             height: 30,
-            margin: EdgeInsets.symmetric(
-                horizontal: Utils.getDeviceWidth(context) / 6),
+            margin: (checkimg == true ? EdgeInsets.symmetric(
+    horizontal: Utils.getDeviceWidth(context) / 6) : EdgeInsets.symmetric(
+    horizontal: Utils.getDeviceWidth(context) / 3)),
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
@@ -263,6 +264,7 @@ class CommonView {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
+
         Container(
           child: InkResponse(
             child: Image(
@@ -282,7 +284,7 @@ class CommonView {
 //          ),
 //          onTap: () {
 //          Utils.performBack(context);
-//          },
+//          },          Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage()));
           alignment: Alignment.center,
           height: 30,
           width: 40,
@@ -305,18 +307,23 @@ class CommonView {
             textAlign: TextAlign.center,
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          height: 30,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                  fit: BoxFit.fill)),
-          child: Text(
-            secondTitle,
-            style: TextStyle(color: ColorRes.white, fontSize: 16),
-            textAlign: TextAlign.center,
+        InkResponse(
+          onTap: () {
+
+          },
+          child: Container(
+            alignment: Alignment.center,
+            height: 30,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                    fit: BoxFit.fill)),
+            child: Text(
+              secondTitle,
+              style: TextStyle(color: ColorRes.white, fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
           ),
         )
       ],
