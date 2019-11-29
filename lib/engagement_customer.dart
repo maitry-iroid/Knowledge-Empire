@@ -252,12 +252,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 child: SingleChildScrollView(
                   child: new Text(
                     arrAnswer[index].text,
-                    style: TextStyle(
+                    style: TextStyle(fontSize: 12,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
-                    maxLines: 3,
-                    overflow: TextOverflow.fade,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               )
