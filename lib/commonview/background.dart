@@ -13,9 +13,9 @@ class CommonView {
   static getBGDecoration() {
     return Injector.isBusinessMode
         ? BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                fit: BoxFit.fill))
+        image: DecorationImage(
+            image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+            fit: BoxFit.fill))
         : BoxDecoration(color: ColorRes.bgProf);
   }
 
@@ -43,17 +43,17 @@ class CommonView {
           margin: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
               borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              Injector.isBusinessMode ? null : BorderRadius.circular(20),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(width: 1, color: ColorRes.white),
               color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
               image: Injector.isBusinessMode
                   ? DecorationImage(
-                      image: AssetImage(
-                        Utils.getAssetsImg("bg_blue"),
-                      ),
-                      fit: BoxFit.fill)
+                  image: AssetImage(
+                    Utils.getAssetsImg("bg_blue"),
+                  ),
+                  fit: BoxFit.fill)
                   : null),
           child: Text(
             Utils.getText(context, Utils.getText(context, title)),
@@ -88,14 +88,15 @@ class CommonView {
     return img;
   }
 
-  static questionAndExplanation(BuildContext context, String title) {
+  static questionAndExplanation(BuildContext context, String title,
+      bool checkimg) {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
         Card(
           elevation: 10,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
           child: Container(
             margin: EdgeInsets.only(top: 0),
@@ -127,15 +128,15 @@ class CommonView {
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 border: Injector.isBusinessMode
                     ? null
                     : Border.all(width: 1, color: ColorRes.white),
                 color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("eddit_profile")),
-                        fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg("eddit_profile")),
+                    fit: BoxFit.fill)
                     : null),
             child: Text(
               title,
@@ -144,9 +145,48 @@ class CommonView {
             ),
           ),
         ),
+        //Full Screen Alert Show
+        Align(
+          alignment: (checkimg == true ? Alignment.bottomRight : Alignment
+              .topRight),
+//          Alignment.bottomRight,
+          child: InkResponse(
+              onTap: () {
+                (checkimg == true ? showDialog(
+                  context: context,
+                  builder: (_) => FunkyOverlay(),
+                ) : null );
+
+              },
+              child: (checkimg == true ? Container(
+                  alignment: Alignment.center,
+                  height: Utils.getDeviceWidth(context) / 20,
+                  width: Utils.getDeviceWidth(context) / 20,
+                  decoration: BoxDecoration(
+                      image: Injector.isBusinessMode
+                          ? DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg(
+                              "full_expand_question_answers" )),
+                          fit: BoxFit.fill)
+                          : null)) : Container(
+                  alignment: Alignment.center,
+                  height: Utils.getDeviceWidth(context) / 40,
+                  width: Utils.getDeviceWidth(context) / 40,
+                  decoration: BoxDecoration(
+                      image: Injector.isBusinessMode
+                          ? DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg("close_dialog")),
+                          fit: BoxFit.fill)
+                          : null))
+              )
+          ),
+        )
       ],
     );
   }
+
 
 /*
   static answers(BuildContext context, String title){
@@ -218,8 +258,8 @@ class CommonView {
   }
 */
 
-  static topThreeButton(
-      BuildContext context, String firstTitle, String secondTitle) {
+  static topThreeButton(BuildContext context, String firstTitle,
+      String secondTitle) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -383,7 +423,7 @@ class CommonView {
                     )),
                 Padding(
                   padding:
-                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                  EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("challenges")),
@@ -412,7 +452,7 @@ class CommonView {
                   InkResponse(
                       child: Image(
                         image:
-                            AssetImage(Utils.getAssetsImg("business_sectors")),
+                        AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
                         width: Utils.getDeviceWidth(context) / 3.5,
                       ),
@@ -484,8 +524,11 @@ class CommonView {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomePage(
+            builder: (context) =>
+                HomePage(
                   initialPageType: type,
                 )));
   }
 }
+
+

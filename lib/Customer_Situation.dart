@@ -151,7 +151,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                           ),
                           Expanded(
                               child: CommonView.questionAndExplanation(
-                                  context, "Question"))
+                                  context, "Question", false))
                         ],
                       )),
                 ],

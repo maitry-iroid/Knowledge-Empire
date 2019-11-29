@@ -88,8 +88,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                 context, "vector_smart_object1"),
                           ),
                           Expanded(
-                              child: CommonView.questionAndExplanation(
-                                  context, "Question"))
+                            child: CommonView.questionAndExplanation(
+                                context, "Question", true),
+                          ),
                         ],
                       )),
                   Expanded(
@@ -159,6 +160,29 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             ),
                           ),
                         ),
+                        //Full Screen Alert Show Question : -
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: InkResponse(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => FunkyOverlayAnswers(),
+                              );
+                            },
+                            child: Container(
+                                alignment: Alignment.center,
+                                height: Utils.getDeviceWidth(context) / 20,
+                                width: Utils.getDeviceWidth(context) / 20,
+                                decoration: BoxDecoration(
+                                    image: Injector.isBusinessMode
+                                        ? DecorationImage(
+                                            image: AssetImage(Utils.getAssetsImg(
+                                                "full_expand_question_answers")),
+                                            fit: BoxFit.fill)
+                                        : null)),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -240,6 +264,117 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
         ));
+  }
+}
+
+class FunkyOverlayAnswers extends StatefulWidget {
+//  bool CheckQuestion;
+
+  @override
+  State<StatefulWidget> createState() => FunkyOverlayAnswersState();
+}
+
+class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
+    with SingleTickerProviderStateMixin {
+
+
+
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(70.0),
+//              child:  ,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+
+//----------------------------------------
+class FunkyOverlay extends StatefulWidget {
+//  bool CheckQuestion;
+
+  @override
+  State<StatefulWidget> createState() => FunkyOverlayState();
+}
+
+class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderStateMixin {
+
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(70.0),
+              child:
+                  CommonView.questionAndExplanation(context, "Question", false),
+//              child: CommonView.questionAndExplanationFullAlert(
+//                context, "Question"),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

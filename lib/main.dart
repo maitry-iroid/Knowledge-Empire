@@ -68,6 +68,7 @@ class MyApp extends StatelessWidget {
 //        '/splash': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => HomePage(),
         '/dashboard': (BuildContext context) => DashboardNewPage(),
+        '/intro': (BuildContext context) => IntroPage(),
 //        '/contacts': (BuildContext context) => ContactsScreen(),
       },
       debugShowCheckedModeBanner: false,

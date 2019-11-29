@@ -126,7 +126,7 @@ class _DebriefPageState extends State<DebriefPage> {
                           Expanded(
                             flex: 4,
                             child: CommonView.questionAndExplanation(
-                                context, 'Explanation'),
+                                context, 'Explanation', false),
                           )
                         ],
                       ))

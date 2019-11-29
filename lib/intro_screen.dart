@@ -13,6 +13,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
+import 'login.dart';
 
 class IntroPage extends StatefulWidget {
   IntroPage({Key key}) : super(key: key);
@@ -346,7 +347,7 @@ class IntroPageState extends State<IntroPage> {
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
+                        width: Utils.getDeviceWidth(context) / 4.4,
                       ),
                       onTap: () {},
                     )
@@ -357,7 +358,7 @@ class IntroPageState extends State<IntroPage> {
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("ranking")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
+                        width: Utils.getDeviceWidth(context) / 4.3,
                       ),
                       onTap: () {},
                     )
@@ -432,7 +433,7 @@ class IntroPageState extends State<IntroPage> {
                   ? Image(
                       image: AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                      width: Utils.getDeviceWidth(context) / 3.5,
+                      width: Utils.getDeviceWidth(context) / 3.3,
                     )
                   : Container(width: Utils.getDeviceWidth(context) / 3.5),
               selectedType == Const.typeNewCustomer
@@ -451,7 +452,7 @@ class IntroPageState extends State<IntroPage> {
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("existing")),
-                        width: Utils.getDeviceWidth(context) / 4.6,
+                        width: Utils.getDeviceWidth(context) / 4.4,
                       ),
                       onTap: () {
                         performItemClick(Const.typeExistingCustomer);
@@ -551,9 +552,8 @@ class IntroPageState extends State<IntroPage> {
 //                      height: Utils.getDeviceHeight(context) / 3.3,
                         width: Utils.getDeviceHeight(context) / 2.6,
                       ),
-                      onTap: () {}),
                 ),
-              ],
+                )],
             ),
           ),
           Positioned(
@@ -573,19 +573,15 @@ class IntroPageState extends State<IntroPage> {
                         image:
                             AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                        width: Utils.getDeviceWidth(context) / 3.5,
+                        width: Utils.getDeviceWidth(context) / 3.4,
                       ),
-                      onTap: () {
-                        performItemClick(Const.typeBusinessSector);
-                      }),
+                     ),
                   InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("new-customer")),
                         width: Utils.getDeviceWidth(context) / 4.2,
                       ),
-                      onTap: () {
-                        performItemClick(Const.typeNewCustomer);
-                      }),
+                     ),
 //                SizedBox(
 //                  width: Utils.getDeviceWidth(context) / 20,
 //                ),
@@ -595,9 +591,7 @@ class IntroPageState extends State<IntroPage> {
 //                      height: Utils.getDeviceHeight(context) / 3.1,
                         width: Utils.getDeviceWidth(context) / 4.6,
                       ),
-                      onTap: () {
-                        performItemClick(Const.typeExistingCustomer);
-                      }),
+                     ),
                 ],
               ),
             ),
@@ -755,10 +749,14 @@ class IntroPageState extends State<IntroPage> {
                         ),
                         onTap: () {
                           setState(() {
-                            Navigator.push(
+                            Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                MaterialPageRoute(builder: (context) => HomePage()),
+                                ModalRoute.withName("/home"));
+//                            Navigator.push(
+//                                context,
+//                                MaterialPageRoute(
+//                                    builder: (context) => HomePage()));
                           });
                         },
                       )))
@@ -859,7 +857,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeBadge
               ? Positioned(
                   top: 70,
-                  left: Utils.getDeviceWidth(context) / 2.10,
+                  left: Utils.getDeviceWidth(context) / 1.90,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
@@ -891,7 +889,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeDollar
               ? Positioned(
                   top: 70,
-                  left: Utils.getDeviceWidth(context) / 2.30,
+                  left: Utils.getDeviceWidth(context) / 2.10,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
@@ -906,7 +904,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeProfile
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 1.9,
+                  left: Utils.getDeviceWidth(context) / 1.8,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
