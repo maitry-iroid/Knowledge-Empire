@@ -321,7 +321,7 @@ class _ProfilePageState extends State<ProfilePage> {
           InkResponse(
             child: Image(
               image: AssetImage(Utils.getAssetsImg("back")),
-              width: 35,
+              width: 30,
             ),
             onTap: () {
               Utils.performBack(context);
@@ -331,7 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.center,
-              height: Utils.getTitleHeight(),
+              height: 30,
               margin: EdgeInsets.only(top: 2),
               decoration: BoxDecoration(
                   color:
@@ -359,7 +359,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Container(
-            width: 35,
+            width: 30,
           )
         ],
       ),
