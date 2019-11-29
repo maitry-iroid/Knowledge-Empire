@@ -14,13 +14,13 @@ import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
 
-class IntroScreen extends StatefulWidget {
-  IntroScreen({Key key}) : super(key: key);
+class IntroPage extends StatefulWidget {
+  IntroPage({Key key}) : super(key: key);
 
-  IntroScreenState createState() => IntroScreenState();
+  IntroPageState createState() => IntroPageState();
 }
 
-class IntroScreenState extends State<IntroScreen> {
+class IntroPageState extends State<IntroPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int selectedType = Const.typeName;
@@ -29,9 +29,7 @@ class IntroScreenState extends State<IntroScreen> {
   void initState() {
     super.initState();
 
-    if (Injector.prefs.getInt(PrefKeys.mode) == null) {
-      Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
-    }
+    Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
   }
 
   @override
@@ -430,25 +428,13 @@ class IntroScreenState extends State<IntroScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-//            Padding(
-//            padding: EdgeInsets.only(bottom: 00, left: 00, right: 0), //420,
-//            child:
               selectedType == Const.typeBusinessSector
-                  ? InkResponse(
-                      child: Image(
-                        image:
-                            AssetImage(Utils.getAssetsImg("business_sectors")),
+                  ? Image(
+                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                        width: Utils.getDeviceWidth(context) / 3.5,
-                      ),
-                      onTap: () {
-                        performItemClick(Const.typeBusinessSector);
-                      })
+                      width: Utils.getDeviceWidth(context) / 3.5,
+                    )
                   : Container(width: Utils.getDeviceWidth(context) / 3.5),
-//            ),
-//      Padding(
-//        padding: EdgeInsets.only(bottom: 00, left: 00, right: 0), //420,
-//        child:
               selectedType == Const.typeNewCustomer
                   ? InkResponse(
                       child: Image(
@@ -461,10 +447,6 @@ class IntroScreenState extends State<IntroScreen> {
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.2,
                     ),
-//    ),
-//                SizedBox(
-//                  width: Utils.getDeviceWidth(context) / 2,
-//                ),
               selectedType == Const.typeExistingCustomer
                   ? InkResponse(
                       child: Image(
@@ -480,40 +462,6 @@ class IntroScreenState extends State<IntroScreen> {
             ],
           ),
         ),
-
-        /*Positioned(
-            bottom: Utils.getDeviceHeight(context)/3.2,
-            left: Utils.getDeviceWidth(context) / 3.5,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("pencils")),
-              height: Utils.getDeviceHeight(context) / 5,
-            ),
-          ),
-
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 6,
-            left: Utils.getDeviceWidth(context) / 3.3,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("mobile")),
-              height: Utils.getDeviceHeight(context) / 12,
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 12,
-            left: Utils.getDeviceWidth(context) / 4,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("glasses")),
-              height: Utils.getDeviceHeight(context) / 15,
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 8,
-            right: Utils.getDeviceWidth(context) / 3.7,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("coffee_cup")),
-              height: Utils.getDeviceHeight(context) / 8,
-            ),
-          ),*/
       ],
     );
   }
@@ -810,7 +758,7 @@ class IntroScreenState extends State<IntroScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DashboardNewPage()));
+                                    builder: (context) => HomePage()));
                           });
                         },
                       )))

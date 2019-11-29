@@ -12,6 +12,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
+import 'package:ke_employee/intro_screen.dart';
 import 'package:ke_employee/models/login_request_data.dart';
 import 'package:ke_employee/models/login_response_data.dart';
 
@@ -114,7 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/8),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Utils.getDeviceWidth(context) / 8),
                     child: InkResponse(
                       child: Container(
                         height: 30,
@@ -205,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
   void navigateToDashboard() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => IntroPage()),
         ModalRoute.withName("/login"));
   }
 

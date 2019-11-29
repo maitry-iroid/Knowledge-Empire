@@ -31,6 +31,28 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+
+
+    Answer answer = Answer();
+    answer.text = StringRes.loremIpsum;
+    Answer answer1 = Answer();
+    answer1.text = StringRes.loremIpsum;
+    Answer answer2 = Answer();
+    answer2.text = StringRes.loremIpsum;
+    Answer answer3 = Answer();
+    answer3.text = StringRes.loremIpsum;
+
+    arrAnswer.add(answer);
+    arrAnswer.add(answer1);
+    arrAnswer.add(answer2);
+    arrAnswer.add(answer3);
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
@@ -42,15 +64,18 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
                   fit: BoxFit.fill,
                 )
-              : Container(color:  ColorRes.bgProf,),
+              : Container(
+                  color: ColorRes.bgProf,
+                ),
           Column(
             children: <Widget>[
               Container(
                   margin: EdgeInsets.only(top: 10),
-                  child: CommonView.topThreeButton(context, StringRes.engagement, StringRes.next)
+                  child: CommonView.topThreeButton(
+                      context, StringRes.engagement, StringRes.next)
 //                  CommonView.showTitle(
 //                      context, Utils.getText(context, StringRes.engagement))
-              ),
+                  ),
               Expanded(
                   child: Row(
                 children: <Widget>[
@@ -59,7 +84,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       child: Column(
                         children: <Widget>[
                           Container(
-
                             height: Utils.getDeviceHeight(context) / 2.3,
                             child: CommonView.image(
                                 context, "vector_smart_object1"),
@@ -97,13 +121,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               physics: ClampingScrollPhysics(),
                               itemCount: arrAnswer.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return CategoryItem(
-                                  selectItem,
-                                  index: index,
-                                  isSelected:
-                                      _selectedItem == index ? true : false,
-//                                  title: arrSector[index],
-                                );
+                                return showItem(index);
                               },
                             ),
                           ),
@@ -153,167 +171,173 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       ),
     ));
   }
-}
 
- class CategoryItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  Function(int) selectItem;
-
-  CategoryItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
-
-  _CategoryItemState createState() => _CategoryItemState();
-}
-
-class _CategoryItemState extends State<CategoryItem> {
-
-
-
-
-
-//  var arrAnswers = ["A", "B", "C", "D"];
-
-
-
-  @override
-  Widget build(BuildContext context) {
+  Widget showItem(int index) {
     return GestureDetector(
-      onTap: () {
-        widget.selectItem(widget.index);
-
-        setState(() {
-          arrAnswer[widget.index].isSelected = true;
-        });
-
-//        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(
-//              builder: (context) => HomePage(
-//                    initialPageType: Const.typeDebrief,
-//                  )),
-//        );
-      },
-      child: ( arrAnswer[widget.index].isSelected ? Container(
+        onTap: () {
+          setState(() {
+            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+          });
+        },
+        child: Container(
 //          height: 60,
-        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(15),
-            border: Injector.isBusinessMode
-                ? null
-                : Border.all(
-                    width: 1,
-                    color:
-                        widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
-            color: Injector.isBusinessMode
-                ? null
-                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
-            image: Injector.isBusinessMode
-                ? (DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg ("rounded_rectangle_8371")
+          margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius:
+                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(
+                      width: 1,
+                      color: arrAnswer[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
+              color: Injector.isBusinessMode
+                  ? null
+                  : (arrAnswer[index].isSelected
+                      ? ColorRes.greenDot
+                      : ColorRes.white),
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
+                      image: AssetImage(
+                          Utils.getAssetsImg("rounded_rectangle_8371")
 //                      (widget.isSelected
 //                        ? "rounded_rectangle_837_blue"
 //                        : "rounded_rectangle_8371")
-                    ),
-                    fit: BoxFit.fill))
-                : null),
-        child: Row(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-            Title(
-                color: ColorRes.greenDot,
-                child: new Text(arrAnswer[widget.index].text,
+                          ),
+                      fit: BoxFit.fill))
+                  : null),
+          child: Row(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              Title(
+                  color: ColorRes.greenDot,
+                  child: new Text("A",
+                      style: TextStyle(
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf),
+
+                          ),)),
+              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: new Text(
+                    arrAnswer[index].text,
                     style: TextStyle(
-//                        color: (widget.isSelected
-//                            ? ColorRes.white
-//                            : ColorRes.textProf)
-                    ))),
-            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-            Expanded(
-              child: SingleChildScrollView(
-                child: new Text(
-                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
-                  style: TextStyle(
-                      color: (widget.isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf)),
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf)),maxLines: 3,overflow: TextOverflow.fade,
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
+              )
+            ],
+          ),
 //        Text(
 //          widget.title,
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
-      ) : Container(
-//          height: 60,
-        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius:
-            Injector.isBusinessMode ? null : BorderRadius.circular(15),
-            border: Injector.isBusinessMode
-                ? null
-                : Border.all(
-                width: 1,
-                color:
-                widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
-            color: Injector.isBusinessMode
-                ? null
-                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
-            image: Injector.isBusinessMode
-                ? (DecorationImage(
-                image: AssetImage(Utils.getAssetsImg ("rounded_rectangle_837_blue")
-//                  (widget.isSelected
-//                    ? "rounded_rectangle_837_blue"
-//                    : "rounded_rectangle_8371")
-                ),
-                fit: BoxFit.fill))
-                : null),
-        child: Row(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-            Title(
-                color: ColorRes.greenDot,
-                child: new Text(arrAnswer[widget.index].text,
-                    style: TextStyle(
-                        color: ColorRes.white
-//                        (widget.isSelected
-//                            ? ColorRes.white
-//                            : ColorRes.textProf)
-                    ))),
-            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-            Expanded(
-              child: SingleChildScrollView(
-                child: new Text(
-                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
-                  style: TextStyle(
-                      color: (widget.isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf)),
-                ),
-              ),
-            )
-          ],
-        ),
-//        Text(
-//          widget.title,
-//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-//        ),
-      )
-    )
-    );
+        ));
   }
 }
+
+// class CategoryItem extends StatefulWidget {
+//  final String title;
+//  final int index;
+//  final bool isSelected;
+//  Function(int) selectItem;
+//
+//  CategoryItem(
+//    this.selectItem, {
+//    Key key,
+//    this.title,
+//    this.index,
+//    this.isSelected,
+//  }) : super(key: key);
+//
+//  _CategoryItemState createState() => _CategoryItemState();
+//}
+//
+//class _CategoryItemState extends State<CategoryItem> {
+//
+//
+//
+//
+//
+////  var arrAnswers = ["A", "B", "C", "D"];
+//
+//
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return GestureDetector(
+//      onTap: () {
+//        widget.selectItem(widget.index);
+//
+//        setState(() {
+//          arrAnswer[widget.index].isSelected = true;
+//        });
+//
+//      },
+//      child: Container(
+////          height: 60,
+//        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+//        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+//        alignment: Alignment.center,
+//        decoration: BoxDecoration(
+//            borderRadius:
+//                Injector.isBusinessMode ? null : BorderRadius.circular(15),
+//            border: Injector.isBusinessMode
+//                ? null
+//                : Border.all(
+//                    width: 1,
+//                    color:
+//                        widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
+//            color: Injector.isBusinessMode
+//                ? null
+//                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
+//            image: Injector.isBusinessMode
+//                ? (DecorationImage(
+//                    image: AssetImage(Utils.getAssetsImg ("rounded_rectangle_8371")
+////                      (widget.isSelected
+////                        ? "rounded_rectangle_837_blue"
+////                        : "rounded_rectangle_8371")
+//                    ),
+//                    fit: BoxFit.fill))
+//                : null),
+//        child: Row(
+//          children: <Widget>[
+//            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+//            Title(
+//                color: ColorRes.greenDot,
+//                child: new Text(arrAnswer[widget.index].text,
+//                    style: TextStyle(
+////                        color: (widget.isSelected
+////                            ? ColorRes.white
+////                            : ColorRes.textProf)
+//                    ))),
+//            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+//            Expanded(
+//              child: SingleChildScrollView(
+//                child: new Text(
+//                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
+//                  style: TextStyle(
+//                      color: (widget.isSelected
+//                          ? ColorRes.white
+//                          : ColorRes.textProf)),
+//                ),
+//              ),
+//            )
+//          ],
+//        ),
+////        Text(
+////          widget.title,
+////          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
+////        ),
+//      )
+//
+//    );
+//  }
+//}
