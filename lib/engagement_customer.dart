@@ -34,7 +34,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void initState() {
     // TODO: implement initState
 
-
     Answer answer = Answer();
     answer.text = StringRes.loremIpsum;
     Answer answer1 = Answer();
@@ -201,12 +200,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(
-                          Utils.getAssetsImg("rounded_rectangle_8371")
-//                      (widget.isSelected
-//                        ? "rounded_rectangle_837_blue"
-//                        : "rounded_rectangle_8371")
-                          ),
+                      image: AssetImage(Utils.getAssetsImg(
+                          arrAnswer[index].isSelected
+                              ? "rounded_rectangle_837_blue"
+                              : "rounded_rectangle_8371")),
                       fit: BoxFit.fill))
                   : null),
           child: Row(
@@ -214,13 +211,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
               Title(
                   color: ColorRes.greenDot,
-                  child: new Text("A",
-                      style: TextStyle(
-                        color: (arrAnswer[index].isSelected
-                            ? ColorRes.white
-                            : ColorRes.textProf),
-
-                          ),)),
+                  child: new Text(
+                    "A",
+                    style: TextStyle(
+                      color: (arrAnswer[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.textProf),
+                    ),
+                  )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
               Expanded(
                 child: SingleChildScrollView(
@@ -229,7 +227,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     style: TextStyle(
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
-                            : ColorRes.textProf)),maxLines: 3,overflow: TextOverflow.fade,
+                            : ColorRes.textProf)),
+                    maxLines: 3,
+                    overflow: TextOverflow.fade,
                   ),
                 ),
               )
