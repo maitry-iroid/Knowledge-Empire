@@ -37,7 +37,7 @@ class _DebriefPageState extends State<DebriefPage> {
                 ),
             child: Container(
 //                decoration: BoxDecoration(color: Colors.blue),
-                child: CommonView.topThreeButton(context, 'Debrief', 'Next')),
+                child: CommonView.topThreeButton(context, 'Debrief', 'Next', null)),
           ),
           Expanded(
             flex: 8,
@@ -126,7 +126,7 @@ class _DebriefPageState extends State<DebriefPage> {
                           Expanded(
                             flex: 4,
                             child: CommonView.questionAndExplanation(
-                                context, 'Explanation', false),
+                                context, 'Explanation', false, null),
                           )
                         ],
                       ))

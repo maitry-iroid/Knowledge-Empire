@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/engagement_customer.dart';
+import 'package:ke_employee/models/questions_response.dart';
 
 import '../home.dart';
 
@@ -77,9 +80,11 @@ class CommonView {
       decoration: BoxDecoration(
         color: ColorRes.white,
         image: DecorationImage(
-            image: AssetImage(
-              Utils.getAssetsImg(image),
-            ),
+          image: new NetworkImage(image),
+
+//            image: AssetImage(
+//              Utils.getAssetsImg(image),
+//            ),
             fit: BoxFit.fill),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -89,7 +94,7 @@ class CommonView {
   }
 
   static questionAndExplanation(BuildContext context, String title,
-      bool checkimg) {
+      bool checkimg, String Questions) {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -108,7 +113,7 @@ class CommonView {
             ),
             child: SingleChildScrollView(
               child: Text(
-                "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                Questions,
                 style: TextStyle(
                     color: Injector.isBusinessMode
                         ? ColorRes.white
@@ -260,7 +265,7 @@ class CommonView {
 */
 
   static topThreeButton(BuildContext context, String firstTitle,
-      String secondTitle) {
+      String secondTitle, int selectedIndex, QuestionData questionData) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -309,7 +314,8 @@ class CommonView {
         ),
         InkResponse(
           onTap: () {
-
+            questionData.answer = prefix0.arrAnswer;
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData,)));
           },
           child: Container(
             alignment: Alignment.center,

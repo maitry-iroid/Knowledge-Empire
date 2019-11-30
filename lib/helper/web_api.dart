@@ -9,6 +9,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/learning_module_response.dart';
 import 'package:ke_employee/models/login_response.dart';
 import 'package:ke_employee/models/login_response_data.dart';
+import 'package:ke_employee/models/questions_response.dart';
 
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
@@ -36,22 +37,39 @@ class WebApi {
 
   Dio dio = Dio();
 
-  Future<LoginResponse> logout(Map<String, dynamic> jsonMap) async {
+  Future<QuestionsRequest> getQuestions(Map<String, dynamic> jsonMap) async {
     initDio();
 
-    print("logout_request__" + json.encode(jsonMap));
+    print("questions_request__" + json.encode(jsonMap));
+    try {
+      final response =
+      await dio.post("", data: json.encode(getRequest('getQuestions', json.encode(jsonMap))));
+      if (response.statusCode == 200) {
+        print(response.data);
+        QuestionsRequest questionRequest =
+        QuestionsRequest.fromJson(jsonDecode(response.data));
+        return questionRequest;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 
+  Future<LoginResponse> logout(Map<String, dynamic> jsonMap) async {
+    initDio();
+    print("logout_request__" + json.encode(jsonMap));
     try {
       final response =
       await dio.post("", data: json.encode(getRequest('logout', json.encode(jsonMap))));
-
       if (response.statusCode == 200) {
         print(response.data);
         LoginResponse loginRequest =
         LoginResponse.fromJson(jsonDecode(response.data));
         return loginRequest;
       }
-
       print(response.data);
       return null;
     } catch (e) {

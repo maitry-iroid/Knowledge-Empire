@@ -9,6 +9,8 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
+import 'helper/web_api.dart';
+import 'models/questions_response.dart';
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -16,27 +18,86 @@ class NewCustomerPage extends StatefulWidget {
 }
 
 class _NewCustomerPageState extends State<NewCustomerPage> {
+
+
+  bool isLoading = false;
+
+  List<QuestionData> arrQuestions = List();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getQuestions();
+  }
+
+
+  getQuestions() {
+
+    setState(() {
+      isLoading = true;
+    });
+
+    var req = {
+      'userId': Injector.userData.userId,
+    };
+
+    WebApi().getQuestions(req).then((data) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+          arrQuestions = data.data;
+        } else {
+          Utils.showToast(data.msg);
+        }
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+    });
+  }
+
+  Widget showCircularProgress() {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
+//  CommonView.showCircularProgress(isLoading)
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: CommonView.getBGDecoration(),
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 10,
+      child: Stack(
+        children: <Widget>[
+          Align(child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: CommonView.getBGDecoration(),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CommonView.showTitle(context, StringRes.newCustomers),
+                  showSubHeader(),
+                  showItems()
+                ],
               ),
-              CommonView.showTitle(context, StringRes.newCustomers),
-              showSubHeader(),
-              showItems()
-            ],
+            ),
           ),
-        ),
+          ),
+          Container(child: showCircularProgress()),
+        ],
       ),
     ));
   }
@@ -44,7 +105,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   Expanded showItems() {
     return Expanded(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: arrQuestions.length,
         itemBuilder: (BuildContext context, int index) {
           return showItem(index);
         },
@@ -150,7 +211,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 4,
                     child: Text(
-                      Utils.getText(context, StringRes.newCustomers),
+//                      Utils.getText(context, StringRes.newCustomers),
+                      arrQuestions[index].title,
                       style: TextStyle(
                         color: ColorRes.textRecordBlue,
                         fontSize: 15,
@@ -162,7 +224,18 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 5,
                     child: Text(
-                      'Mobile Dev.',
+                      arrQuestions[index].moduleName,
+                      style: TextStyle(
+                          color: ColorRes.textRecordBlue, fontSize: 15),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                    ),
+                  ),
+
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                        ("${arrQuestions[index].value} \$"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -172,7 +245,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      '25 \$',
+                        ("${arrQuestions[index].loyalty} d"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -182,17 +255,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      '25 d',
-                      style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      '8',
+                        arrQuestions[index].resource,
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -224,12 +287,14 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomePage(
-                          initialPageType: Const.typeEngagement,
-                        )));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => EngagementCustomer(questionData: arrQuestions[index],)));
+//            Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                    builder: (context) =>
+//                        HomePage(
+//                          initialPageType: Const.typeEngagement,
+//                        )));
           },
         ),
       ],

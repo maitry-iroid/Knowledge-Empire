@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/Debrief.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/questions_response.dart' ;
 import 'commonview/header.dart';
-import 'helper/constant.dart';
 import 'helper/res.dart';
-import 'Customer_Situation.dart';
 import 'commonview/background.dart';
-import 'models/Answer.dart';
+import 'models/questions_response.dart';
 
+List<Answer> arrAnswer = List();
 
+int _selectedItem = 0;
 
+QuestionData questionData;
 
+List abcdList = List();
 
 class EngagementCustomer extends StatefulWidget {
+//  List<QuestionData> arrQuestions = List();
+
+//  EngagementCustomer({Key key, this.arrQuestions}) : super(key: key);
+
+  final  QuestionData questionData;
+
+  EngagementCustomer({Key key, this.questionData}) : super(key: key);
+
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
 }
@@ -23,9 +32,7 @@ class EngagementCustomer extends StatefulWidget {
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List<Answer> arrAnswer = List();
-
-  int _selectedItem = 0;
+  List abcdIndex = ['A','B','C','D'];
 
   selectItem(index) {
     setState(() {
@@ -34,24 +41,21 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     });
   }
 
+
+  openProfile() {
+    if (mounted) {
+//      setState(() => _selectedDrawerIndex = 10);
+      setState(() => _selectedItem = 10);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
 
-    Answer answer = Answer();
-    answer.text = StringRes.loremIpsum;
-    Answer answer1 = Answer();
-    answer1.text = StringRes.loremIpsum;
-    Answer answer2 = Answer();
-    answer2.text = StringRes.loremIpsum;
-    Answer answer3 = Answer();
-    answer3.text = StringRes.loremIpsum;
-
-    arrAnswer.add(answer);
-    arrAnswer.add(answer1);
-    arrAnswer.add(answer2);
-    arrAnswer.add(answer3);
-
+    questionData =widget.questionData;
+    arrAnswer = widget.questionData.answer;
+    abcdList = abcdIndex;
     super.initState();
   }
 
@@ -59,141 +63,153 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Stack(
-        fit: StackFit.expand,
+      child: Column(
         children: <Widget>[
-          Injector.isBusinessMode
-              ? Image(
-                  image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                  fit: BoxFit.fill,
-                )
-              : Container(
-                  color: ColorRes.bgProf,
-                ),
-          Column(
+          HeaderView(
+            scaffoldKey: _scaffoldKey,
+            isShowMenu: true,
+            openProfile: openProfile,
+          ),
+          Expanded(child: Stack(
+            fit: StackFit.expand,
             children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: CommonView.topThreeButton(
-                      context, StringRes.engagement, StringRes.next)
+              Injector.isBusinessMode
+                  ? Image(
+                image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+//                  image: AssetImage(Utils.getAssetsImg(arrQuestions.question)),
+                fit: BoxFit.fill,
+              )
+                  : Container(
+                color: ColorRes.bgProf,
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: CommonView.topThreeButton(
+                          context, StringRes.engagement, StringRes.next, _selectedItem, questionData)
 //                  CommonView.showTitle(
 //                      context, Utils.getText(context, StringRes.engagement))
                   ),
-              Expanded(
-                  child: Row(
-                children: <Widget>[
                   Expanded(
-                      flex: 1,
-                      child: Column(
+                      child: Row(
                         children: <Widget>[
-                          Container(
-                            height: Utils.getDeviceHeight(context) / 2.3,
-                            child: CommonView.image(
-                                context, "vector_smart_object1"),
-                          ),
                           Expanded(
-                            child: CommonView.questionAndExplanation(
-                                context, "Question", true),
+                              flex: 1,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    height: Utils.getDeviceHeight(context) / 2.3,
+//                                    child: CommonView.image(
+//                                        context, "vector_smart_object1"),
+                                      child: CommonView.image(
+                                          context, questionData.mediaLink)
+                                  ),
+                                  Expanded(
+                                    child: CommonView.questionAndExplanation(
+                                        context, Utils.getText(context, StringRes.question), true, questionData.question),
+                                  ),
+                                ],
+                              )),
+                          Expanded(
+                            flex: 1,
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: <Widget>[
+                                Card(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0)),
+                                  margin: EdgeInsets.only(
+                                      top: 20, bottom: 15, right: 15, left: 8),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.only(
+                                        left: 10, right: 10, top: 15, bottom: 18),
+                                    decoration: BoxDecoration(
+                                      color: Injector.isBusinessMode
+                                          ? ColorRes.bgDescription
+                                          : null,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border:
+                                      Border.all(color: ColorRes.white, width: 1),
+                                    ),
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: ClampingScrollPhysics(),
+                                      itemCount: arrAnswer.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return showItem(index);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 30,
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: Utils.getDeviceWidth(context) / 6,
+                                        vertical: 5),
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: Injector.isBusinessMode
+                                            ? null
+                                            : BorderRadius.circular(20),
+                                        border: Injector.isBusinessMode
+                                            ? null
+                                            : Border.all(
+                                            width: 1, color: ColorRes.white),
+                                        color: Injector.isBusinessMode
+                                            ? null
+                                            : ColorRes.titleBlueProf,
+                                        image: Injector.isBusinessMode
+                                            ? DecorationImage(
+                                            image: AssetImage(Utils.getAssetsImg(
+                                                "eddit_profile")),
+                                            fit: BoxFit.fill)
+
+                                            : null),
+                                    child: Text(Utils.getText(context, StringRes.answers),
+                                      style: TextStyle(
+                                          color: ColorRes.white, fontSize: 18),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                //Full Screen Alert Show Question : -
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: InkResponse(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => FunkyOverlayAnswers(),
+                                      );
+                                    },
+                                    child: Container(
+                                        alignment: Alignment.center,
+                                        height: Utils.getDeviceWidth(context) / 20,
+                                        width: Utils.getDeviceWidth(context) / 20,
+                                        decoration: BoxDecoration(
+                                            image: Injector.isBusinessMode
+                                                ? DecorationImage(
+                                                image: AssetImage(Utils.getAssetsImg(
+                                                    "full_expand_question_answers")),
+                                                fit: BoxFit.fill)
+                                                : null)),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       )),
-                  Expanded(
-                    flex: 1,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: <Widget>[
-                        Card(
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          margin: EdgeInsets.only(
-                              top: 20, bottom: 15, right: 15, left: 8),
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(
-                                left: 10, right: 10, top: 15, bottom: 18),
-                            decoration: BoxDecoration(
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.bgDescription
-                                  : null,
-                              borderRadius: BorderRadius.circular(12),
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1),
-                            ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: ClampingScrollPhysics(),
-                              itemCount: arrAnswer.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return showItem(index);
-                              },
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 30,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: Utils.getDeviceWidth(context) / 6,
-                                vertical: 5),
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: Injector.isBusinessMode
-                                    ? null
-                                    : BorderRadius.circular(20),
-                                border: Injector.isBusinessMode
-                                    ? null
-                                    : Border.all(
-                                        width: 1, color: ColorRes.white),
-                                color: Injector.isBusinessMode
-                                    ? null
-                                    : ColorRes.titleBlueProf,
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
-                                        image: AssetImage(Utils.getAssetsImg(
-                                            "eddit_profile")),
-                                        fit: BoxFit.fill)
-                                    : null),
-                            child: Text(
-                              'Answers',
-                              style: TextStyle(
-                                  color: ColorRes.white, fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        //Full Screen Alert Show Question : -
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: InkResponse(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) => FunkyOverlayAnswers(),
-                              );
-                            },
-                            child: Container(
-                                alignment: Alignment.center,
-                                height: Utils.getDeviceWidth(context) / 20,
-                                width: Utils.getDeviceWidth(context) / 20,
-                                decoration: BoxDecoration(
-                                    image: Injector.isBusinessMode
-                                        ? DecorationImage(
-                                            image: AssetImage(Utils.getAssetsImg(
-                                                "full_expand_question_answers")),
-                                            fit: BoxFit.fill)
-                                        : null)),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ],
-              )),
+              )
             ],
-          )
+          ))
         ],
       ),
     ));
@@ -240,7 +256,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               Title(
                   color: ColorRes.greenDot,
                   child: new Text(
-                    "A",
+                    abcdList[index],
                     style: TextStyle(
                       color: (arrAnswer[index].isSelected
                           ? ColorRes.white
@@ -251,8 +267,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               Expanded(
                 child: SingleChildScrollView(
                   child: new Text(
-                    arrAnswer[index].text,
-                    style: TextStyle(fontSize: 12,
+                    arrAnswer[index].answer,
+                    style: TextStyle(
+                        fontSize: 12,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
@@ -271,9 +288,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 }
 
-
 //------------------------------------------------------------
-//Full screen in show Answers
+//Answers Select Full screen in show
 
 class FunkyOverlayAnswers extends StatefulWidget {
 //  bool CheckQuestion;
@@ -286,7 +302,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
-
 
   @override
   void initState() {
@@ -302,20 +317,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     });
 
     controller.forward();
-
-    Answer answer = Answer();
-    answer.text = StringRes.loremIpsum;
-    Answer answer1 = Answer();
-    answer1.text = StringRes.loremIpsum;
-    Answer answer2 = Answer();
-    answer2.text = StringRes.loremIpsum;
-    Answer answer3 = Answer();
-    answer3.text = StringRes.loremIpsum;
-
-    arrAnswer.add(answer);
-    arrAnswer.add(answer1);
-    arrAnswer.add(answer2);
-    arrAnswer.add(answer3);
   }
 
   @override
@@ -331,39 +332,41 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
-//              padding: const EdgeInsets.all(60.0),
-                padding: const EdgeInsets.only(
-                    top: 0, bottom: 0, right: 0, left: 00),
+              padding: const EdgeInsets.all(25.0),
+//                padding: const EdgeInsets.only(
+//                    top: 0, bottom: 0, right: 0, left: 00),
                 child: Stack(
                   fit: StackFit.loose,
                   alignment: Alignment.center,
                   children: <Widget>[
                     Card(
                       elevation: 10,
-                      shape:
-                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 15, bottom: 15, right: 15, left: 15),
                       child: Container(
-                        height: Utils.getDeviceHeight(context)/1.8,
-                        width: Utils.getDeviceWidth(context)/1.2,
+                        height: Utils.getDeviceHeight(context) / 1.8,
+                        width: Utils.getDeviceWidth(context) / 1.2,
                         margin: EdgeInsets.only(top: 0),
                         padding: EdgeInsets.only(left: 10, right: 10, top: 20),
                         decoration: BoxDecoration(
-                          color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.bgDescription
+                              : null,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: ColorRes.white, width: 1),
                         ),
-                        child:  ListView.builder(
-                        shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
-                        itemCount: arrAnswer.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return showItem(index);
-                        },
-                      ),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: arrAnswer.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return showItem(index);
+                          },
+                        ),
                       ),
                     ),
-
 
                     Positioned(
                       top: 0,
@@ -392,35 +395,34 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                                     fit: BoxFit.fill)
                                 : null),
                         child: Text(
-                          'Answers',
+                          Utils.getText(context, StringRes.answers),
                           style: TextStyle(color: ColorRes.white, fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                     //Full Screen Alert Show Question : -
-//                  Align(
+                    Positioned(
+                      top: 0,
+                      right: 0,
 //                    alignment: Alignment.bottomRight,
-//                    child: InkResponse(
-//                      onTap: () {
-//                        showDialog(
-//                          context: context,
-//                          builder: (_) => FunkyOverlayAnswers(),
-//                        );
-//                      },
-//                      child: Container(
-//                          alignment: Alignment.center,
-//                          height: Utils.getDeviceWidth(context) / 35,
-//                          width: Utils.getDeviceWidth(context) / 35,
-//                          decoration: BoxDecoration(
-//                              image: Injector.isBusinessMode
-//                                  ? DecorationImage(
-//                                  image: AssetImage(Utils.getAssetsImg(
-//                                      "full_expand_question_answers")),
-//                                  fit: BoxFit.fill)
-//                                  : null)),
-//                    ),
-//                  )
+                      child: InkResponse(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: Utils.getDeviceWidth(context) / 40,
+                            width: Utils.getDeviceWidth(context) / 40,
+                            decoration: BoxDecoration(
+                                image: Injector.isBusinessMode
+                                    ? DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            "close_dialog")),
+                                        fit: BoxFit.fill)
+                                    : null)),
+                      ),
+                    )
                   ],
                 )),
           ),
@@ -431,16 +433,16 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  int _selectedItem = 0;
+//  int _selectedItem = 0;
+//
+//  List<Answer> arrAnswer = List();
 
-  List<Answer> arrAnswer = List();
-
-  selectItem(index) {
-    setState(() {
-      _selectedItem = index;
-      print(selectItem.toString());
-    });
-  }
+//  selectItem(index) {
+//    setState(() {
+//      _selectedItem = index;
+//      print(selectItem.toString());
+//    });
+//  }
 
   Widget showItem(int index) {
     return GestureDetector(
@@ -483,7 +485,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
               Title(
                   color: ColorRes.greenDot,
                   child: new Text(
-                    "A",
+                    abcdList[index],
                     style: TextStyle(
                       color: (arrAnswer[index].isSelected
                           ? ColorRes.white
@@ -494,7 +496,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
               Expanded(
                 child: SingleChildScrollView(
                   child: new Text(
-                    arrAnswer[index].text,
+                    arrAnswer[index].answer,
                     style: TextStyle(
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
@@ -513,8 +515,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
         ));
   }
 }
-
-
 
 //----------------------------------------
 //Question full screen show Alertdialog
@@ -554,7 +554,6 @@ class FunkyOverlayState extends State<FunkyOverlay>
     return Center(
       child: Material(
         color: Colors.transparent,
-
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
@@ -563,111 +562,122 @@ class FunkyOverlayState extends State<FunkyOverlay>
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Stack(
-                fit: StackFit.loose,
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Card(
-                    elevation: 10,
-                    shape:
-                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                    margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
-                    child: Container(
-                      height: Utils.getDeviceHeight(context)/2,
-                      width: Utils.getDeviceWidth(context)/1.5,
-                      margin: EdgeInsets.only(top: 0),
-                      padding: EdgeInsets.only(left: 10, right: 10, top: 20),
-                      decoration: BoxDecoration(
-                        color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: ColorRes.white, width: 1),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
-                          style: TextStyle(
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.textProf,
-                              fontSize: 14),
+                padding: const EdgeInsets.all(25.0),
+                child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 15, bottom: 15, right: 15, left: 15),
+                      child: Container(
+                        height: Utils.getDeviceHeight(context) / 2,
+                        width: Utils.getDeviceWidth(context) / 1.5,
+                        margin: EdgeInsets.only(top: 0),
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                        decoration: BoxDecoration(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.bgDescription
+                              : null,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: ColorRes.white, width: 1),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                            style: TextStyle(
+                                color: Injector.isBusinessMode
+                                    ? ColorRes.white
+                                    : ColorRes.textProf,
+                                fontSize: 14),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                 Positioned(
-                   top: 0,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      margin: (checkimg == true ? EdgeInsets.symmetric(
-                          horizontal: Utils.getDeviceWidth(context) / 6) : EdgeInsets.symmetric(
-                          horizontal: Utils.getDeviceWidth(context) / 3)),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                          border: Injector.isBusinessMode
-                              ? null
-                              : Border.all(width: 1, color: ColorRes.white),
-                          color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg("eddit_profile")),
-                              fit: BoxFit.fill)
-                              : null),
-                      child: Text(
-                        "Question",
-                        style: TextStyle(color: ColorRes.white, fontSize: 18),
-                        textAlign: TextAlign.center,
+                    Positioned(
+                      top: 0,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 30,
+                        margin: (checkimg == true
+                            ? EdgeInsets.symmetric(
+                                horizontal: Utils.getDeviceWidth(context) / 6)
+                            : EdgeInsets.symmetric(
+                                horizontal: Utils.getDeviceWidth(context) / 3)),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: Injector.isBusinessMode
+                                ? null
+                                : BorderRadius.circular(20),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(width: 1, color: ColorRes.white),
+                            color: Injector.isBusinessMode
+                                ? null
+                                : ColorRes.titleBlueProf,
+                            image: Injector.isBusinessMode
+                                ? DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("eddit_profile")),
+                                    fit: BoxFit.fill)
+                                : null),
+                        child: Text(
+                          "Question",
+                          style: TextStyle(color: ColorRes.white, fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
-                  //Full Screen Alert Show
-                 /* Positioned(
-                    top: 0,
-                     right: 0,
+                    //Full Screen Alert Show
+                    Positioned(
+                      top: 0,
+                      right: 0,
 //                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
 //                        .topRight),
 //          Alignment.bottomRight,
-                    child: InkResponse(
-//                        onTap: () {
-////                          (checkimg == true ? showDialog(
-////                            context: context,
-////                            builder: (_) => FunkyOverlay(),
-////                          ) : null );
-//
-//                        },
-                        child: (checkimg == true ? Container(
-                            alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 35,
-                            width: Utils.getDeviceWidth(context) / 35,
-                            decoration: BoxDecoration(
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg(
-                                            "close_dialog" )),
-                                    fit: BoxFit.fill)
-                                    : null)) : Container(
-                            alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 40,
-                            width: Utils.getDeviceWidth(context) / 40,
-                            decoration: BoxDecoration(
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("close_dialog")),
-                                    fit: BoxFit.fill)
-                                    : null))
-                        )
-                    ),
-                  )*/
-                ],
-              )
+                      child: InkResponse(
+                          onTap: () {
+                            Navigator.pop(context);
+
+//                          (checkimg == true ? showDialog(
+//                            context: context,
+//                            builder: (_) => FunkyOverlay(),
+//                          ) : null );
+                          },
+                          child: (checkimg == true
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: Injector.isBusinessMode
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.fill)
+                                          : null))
+                              : Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: Injector.isBusinessMode
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.fill)
+                                          : null)))),
+                    )
+                  ],
+                )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
