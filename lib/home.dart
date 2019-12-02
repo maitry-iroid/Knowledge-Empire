@@ -7,6 +7,7 @@ import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/questions_response.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/organization.dart';
 import 'package:ke_employee/profile.dart';
@@ -24,8 +25,16 @@ import 'helper/res.dart';
 import 'helper/string_res.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.initialPageType}) : super(key: key);
   final int initialPageType;
+
+  final  QuestionData questionDataHomeScr;
+  final QuestionData questionDataSituation;
+
+  HomePage({Key key, this.initialPageType, this.questionDataHomeScr, this.questionDataSituation}) : super(key: key);
+
+//  final  QuestionData questionData;
+//
+//  HomePage({Key key, this.questionData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -272,9 +281,9 @@ class HomePageState extends State<HomePage> {
     print("selectedIndex");
     print(_selectedDrawerIndex);
     if (_selectedDrawerIndex == 11)
-      return EngagementCustomer();
+      return EngagementCustomer(questionDataEngCustomer: widget.questionDataHomeScr);
     else if (_selectedDrawerIndex == 12)
-      return CustomerSituationPage();
+      return CustomerSituationPage(questionDataCustomerSituation: widget.questionDataSituation);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }

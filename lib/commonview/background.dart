@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/Customer_Situation.dart';
-import 'package:ke_employee/engagement_customer.dart' as prefix0;
+import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/Customer_Situation.dart';
+
+//import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
+
+//import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/models/questions_response.dart';
@@ -16,9 +20,9 @@ class CommonView {
   static getBGDecoration() {
     return Injector.isBusinessMode
         ? BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-            fit: BoxFit.fill))
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+                fit: BoxFit.fill))
         : BoxDecoration(color: ColorRes.bgProf);
   }
 
@@ -41,22 +45,22 @@ class CommonView {
         ),
         Container(
           alignment: Alignment.center,
-          height:30,
+          height: 30,
           padding: EdgeInsets.symmetric(horizontal: 20),
           margin: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(width: 1, color: ColorRes.white),
               color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
               image: Injector.isBusinessMode
                   ? DecorationImage(
-                  image: AssetImage(
-                    Utils.getAssetsImg("bg_blue"),
-                  ),
-                  fit: BoxFit.fill)
+                      image: AssetImage(
+                        Utils.getAssetsImg("bg_blue"),
+                      ),
+                      fit: BoxFit.fill)
                   : null),
           child: Text(
             Utils.getText(context, Utils.getText(context, title)),
@@ -79,29 +83,33 @@ class CommonView {
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 20),
       decoration: BoxDecoration(
         color: ColorRes.white,
-        image: DecorationImage(
-          image: new NetworkImage(image),
+          image: DecorationImage(
+            image: image != null ? new NetworkImage(image) : null,
+              fit: BoxFit.fill),
+       /* image: image != null && image.isNotEmpty
+            ? DecorationImage(
+//            image: image != null ? new NetworkImage(image) : null,
 
-//            image: AssetImage(
-//              Utils.getAssetsImg(image),
-//            ),
-            fit: BoxFit.fill),
+                image: AssetImage(
+                  Utils.getAssetsImg(image),
+                ),
+                fit: BoxFit.fill)
+            : null,*/
         borderRadius: BorderRadius.circular(10),
       ),
     );
-
     return img;
   }
 
-  static questionAndExplanation(BuildContext context, String title,
-      bool checkimg, String Questions) {
+  static questionAndExplanation(
+      BuildContext context, String title, bool checkimg, String Questions) {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
         Card(
           elevation: 10,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
           child: Container(
             margin: EdgeInsets.only(top: 0),
@@ -128,21 +136,23 @@ class CommonView {
           child: Container(
             alignment: Alignment.center,
             height: 30,
-            margin: (checkimg == true ? EdgeInsets.symmetric(
-    horizontal: Utils.getDeviceWidth(context) / 6) : EdgeInsets.symmetric(
-    horizontal: Utils.getDeviceWidth(context) / 3)),
+            margin: (checkimg == true
+                ? EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 6)
+                : EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 3)),
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 border: Injector.isBusinessMode
                     ? null
                     : Border.all(width: 1, color: ColorRes.white),
                 color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("eddit_profile")),
-                    fit: BoxFit.fill)
+                        image: AssetImage(Utils.getAssetsImg("eddit_profile")),
+                        fit: BoxFit.fill)
                     : null),
             child: Text(
               title,
@@ -153,46 +163,45 @@ class CommonView {
         ),
         //Full Screen Alert Show
         Align(
-          alignment: (checkimg == true ? Alignment.bottomRight : Alignment
-              .topRight),
+          alignment:
+              (checkimg == true ? Alignment.bottomRight : Alignment.topRight),
 //          Alignment.bottomRight,
           child: InkResponse(
               onTap: () {
-                (checkimg == true ? showDialog(
-                  context: context,
-                  builder: (_) => FunkyOverlay(),
-                ) : null );
-
+                (checkimg == true
+                    ? showDialog(
+                        context: context,
+                        builder: (_) => FunkyOverlay(),
+                      )
+                    : null);
               },
-              child: (checkimg == true ? Container(
-                  alignment: Alignment.center,
-                  height: Utils.getDeviceWidth(context) / 20,
-                  width: Utils.getDeviceWidth(context) / 20,
-                  decoration: BoxDecoration(
-                      image: Injector.isBusinessMode
-                          ? DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg(
-                              "full_expand_question_answers" )),
-                          fit: BoxFit.fill)
-                          : null)) : Container(
-                  alignment: Alignment.center,
-                  height: Utils.getDeviceWidth(context) / 40,
-                  width: Utils.getDeviceWidth(context) / 40,
-                  decoration: BoxDecoration(
-                      image: Injector.isBusinessMode
-                          ? DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg("close_dialog")),
-                          fit: BoxFit.fill)
-                          : null))
-              )
-          ),
+              child: (checkimg == true
+                  ? Container(
+                      alignment: Alignment.center,
+                      height: Utils.getDeviceWidth(context) / 20,
+                      width: Utils.getDeviceWidth(context) / 20,
+                      decoration: BoxDecoration(
+                          image: Injector.isBusinessMode
+                              ? DecorationImage(
+                                  image: AssetImage(Utils.getAssetsImg(
+                                      "full_expand_question_answers")),
+                                  fit: BoxFit.fill)
+                              : null))
+                  : Container(
+                      alignment: Alignment.center,
+                      height: Utils.getDeviceWidth(context) / 40,
+                      width: Utils.getDeviceWidth(context) / 40,
+                      decoration: BoxDecoration(
+                          image: Injector.isBusinessMode
+                              ? DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("close_dialog")),
+                                  fit: BoxFit.fill)
+                              : null)))),
         )
       ],
     );
   }
-
 
 /*
   static answers(BuildContext context, String title){
@@ -269,7 +278,6 @@ class CommonView {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-
         Container(
           child: InkResponse(
             child: Image(
@@ -314,8 +322,17 @@ class CommonView {
         ),
         InkResponse(
           onTap: () {
-            questionData.answer = prefix0.arrAnswer;
-            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData,)));
+//            questionData.answer = arrAnswerr;
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomePage(
+                        initialPageType: Const.typeDebrief,
+                        questionDataSituation: questionData,
+                      )),
+            );
           },
           child: Container(
             alignment: Alignment.center,
@@ -436,7 +453,7 @@ class CommonView {
                     )),
                 Padding(
                   padding:
-                  EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("challenges")),
@@ -465,7 +482,7 @@ class CommonView {
                   InkResponse(
                       child: Image(
                         image:
-                        AssetImage(Utils.getAssetsImg("business_sectors")),
+                            AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
                         width: Utils.getDeviceWidth(context) / 3.5,
                       ),
@@ -537,11 +554,8 @@ class CommonView {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                HomePage(
+            builder: (context) => HomePage(
                   initialPageType: type,
                 )));
   }
 }
-
-

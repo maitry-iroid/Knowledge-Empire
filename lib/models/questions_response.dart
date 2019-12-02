@@ -97,7 +97,7 @@ class QuestionData {
 class Answer {
   String answerId="";
   String answer="";
-  bool isSelected =false;
+  bool isSelected = false;
 
   Answer({this.answerId, this.answer});
 

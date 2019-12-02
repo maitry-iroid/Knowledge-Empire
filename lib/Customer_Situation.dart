@@ -18,20 +18,25 @@ import 'Customer_Situation.dart';
 import 'commonview/background.dart';
 import 'models/questions_response.dart';
 
-List<Answer> arrAnswer = List();
+List<Answer> arrAnswerSituation = List();
 
 int _selectedItem = 0;
 
-QuestionData questionData;
+QuestionData questionDataCustSituation = QuestionData();
+
+List abcdList = List();
 
 class CustomerSituationPage extends StatefulWidget {
-
 //  final int selectedIndex;
 //  CustomerSituationPage({Key key, this.selectedIndex}) : super(key: key);
 
-  final  QuestionData questionData;
+//  final  QuestionData questionData;
+//  CustomerSituationPage({Key key, this.questionData}) : super(key: key);
 
-  CustomerSituationPage({Key key, this.questionData}) : super(key: key);
+  final QuestionData questionDataCustomerSituation;
+
+  CustomerSituationPage({Key key, this.questionDataCustomerSituation})
+      : super(key: key);
 
   @override
   _CustomerSituationPageState createState() => _CustomerSituationPageState();
@@ -42,27 +47,27 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
 //  int _selectedItem = 0;
 
+  List abcdIndex = ['A', 'B', 'C', 'D'];
+
   openProfile() {
     if (mounted) {
 //      setState(() => _selectedDrawerIndex = 10);
-      setState(() => _selectedItem = 10);
+      setState(() => _selectedItem = 12);
     }
   }
 
-  selectItem(index) {
-    setState(() {
-//      _selectedItem = index;
-//    _selectedItem = index;
-      print(selectItem.toString());
-    });
-  }
+  selectItem(index) {}
 
   @override
   void initState() {
     // TODO: implement initState
 //    _selectedItem = widget.selectedIndex;
 
-    questionData = widget.questionData;
+    questionDataCustSituation = widget.questionDataCustomerSituation;
+    arrAnswerSituation = widget.questionDataCustomerSituation.answer;
+
+    abcdList = abcdIndex;
+
     super.initState();
   }
 
@@ -80,64 +85,54 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     return Scaffold(
 //        backgroundColor: ColorRes.colorBgDark,
         body: SafeArea(
-            child: Column(
-      children: <Widget>[
-        HeaderView(
-          scaffoldKey: _scaffoldKey,
-          isShowMenu: true,
-          openProfile: openProfile,
-        ),
-        Expanded(
-          child: Stack(
-            fit: StackFit.expand,
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Injector.isBusinessMode
+              ? Image(
+                  image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+                  fit: BoxFit.fill,
+                )
+              : Container(
+                  color: ColorRes.bgProf,
+                ),
+          Column(
             children: <Widget>[
-              Injector.isBusinessMode
-                  ? Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                      fit: BoxFit.fill,
-                    )
-                  : Container(
-                      color: ColorRes.bgProf,
-                    ),
-              Column(
+              Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: CommonView.showTitle(
+                      context, Utils.getText(context, StringRes.debrief))),
+              Expanded(
+                  child: Row(
                 children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: CommonView.showTitle(
-                          context, Utils.getText(context, StringRes.debrief))),
                   Expanded(
-                      child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Card(
-                              elevation: 10,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              margin: EdgeInsets.only(
-                                  top: 20, bottom: 15, right: 15, left: 8),
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, top: 15, bottom: 18),
-                                decoration: BoxDecoration(
-                                  color: Injector.isBusinessMode
-                                      ? ColorRes.bgDescription
-                                      : null,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: ColorRes.white, width: 1),
-                                ),
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: ClampingScrollPhysics(),
-                                  itemCount: 4,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
+                    flex: 1,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          margin: EdgeInsets.only(
+                              top: 20, bottom: 15, right: 15, left: 8),
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, top: 15, bottom: 18),
+                            decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.bgDescription
+                                  : null,
+                              borderRadius: BorderRadius.circular(12),
+                              border:
+                                  Border.all(color: ColorRes.white, width: 1),
+                            ),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: arrAnswerSituation.length,
+                              itemBuilder: (BuildContext context, int index) {
 //                                return CategoryItem(
 //                                  selectItem,
 //                                  index: index,
@@ -145,104 +140,132 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                                      _selectedItem == index ? true : false,
 ////                                  title: arrSector[index],
 //                                );
-                                    return showItem(index);
-                                  },
-                                ),
-                              ),
+                                return showItem(index);
+                              },
                             ),
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 30,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: Utils.getDeviceWidth(context) / 6,
+                                vertical: 5),
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                borderRadius: Injector.isBusinessMode
+                                    ? null
+                                    : BorderRadius.circular(20),
+                                border: Injector.isBusinessMode
+                                    ? null
+                                    : Border.all(
+                                        width: 1, color: ColorRes.white),
+                                color: Injector.isBusinessMode
+                                    ? null
+                                    : ColorRes.titleBlueProf,
+                                image: Injector.isBusinessMode
+                                    ? DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            "eddit_profile")),
+                                        fit: BoxFit.fill)
+                                    : null),
+                            child: Text(
+                              Utils.getText(context, StringRes.answers),
+                              style: TextStyle(
+                                  color: ColorRes.white, fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: InkResponse(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertCheckAnswersCorrect(),
+                              );
+                            },
+                            child: Container(
                                 alignment: Alignment.center,
-                                height: 30,
-                                margin: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Utils.getDeviceWidth(context) / 6,
-                                    vertical: 5),
-                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                height: Utils.getDeviceWidth(context) / 20,
+                                width: Utils.getDeviceWidth(context) / 20,
                                 decoration: BoxDecoration(
-                                    borderRadius: Injector.isBusinessMode
-                                        ? null
-                                        : BorderRadius.circular(20),
-                                    border: Injector.isBusinessMode
-                                        ? null
-                                        : Border.all(
-                                            width: 1, color: ColorRes.white),
-                                    color: Injector.isBusinessMode
-                                        ? null
-                                        : ColorRes.titleBlueProf,
                                     image: Injector.isBusinessMode
                                         ? DecorationImage(
-                                            image: AssetImage(
-                                                Utils.getAssetsImg(
-                                                    "eddit_profile")),
+                                            image: AssetImage(Utils.getAssetsImg(
+                                                "full_expand_question_answers")),
                                             fit: BoxFit.fill)
-                                        : null),
-                                child: Text(
-                                  'Answers',
-                                  style: TextStyle(
-                                      color: ColorRes.white, fontSize: 18),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: InkResponse(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => AlertCheckAnswersCorrect(),
-                                  );
-                                },
-                                child: Container(
-                                    alignment: Alignment.center,
-                                    height: Utils.getDeviceWidth(context) / 20,
-                                    width: Utils.getDeviceWidth(context) / 20,
-                                    decoration: BoxDecoration(
-                                        image: Injector.isBusinessMode
-                                            ? DecorationImage(
-                                                image: AssetImage(
-                                                    Utils.getAssetsImg(
-                                                        "full_expand_question_answers")),
-                                                fit: BoxFit.fill)
-                                            : null)),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: Utils.getDeviceHeight(context) / 2.2,
-                                child: CommonView.image(
-                                    context, "vector_smart_object1"),
-                              ),
-                              Expanded(
-                                  child: CommonView.questionAndExplanation(
-                                      context, "Question", true, null))
-                            ],
-                          )),
-                    ],
-                  )),
+                                        : null)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: Utils.getDeviceHeight(context) / 2.2,
+                            child: CommonView.image(
+                                context,
+                                questionDataCustSituation
+                                    .mediaLink), //"vector_smart_object1"
+                          ),
+                          Expanded(
+                              child: CommonView.questionAndExplanation(
+                                  context,
+                                  Utils.getText(context, StringRes.question),
+                                  true,
+                                  questionDataCustSituation.question))
+                        ],
+                      )),
                 ],
-              )
+              )),
             ],
-          ),
-        )
-      ],
-    )));
+          )
+        ],
+      ),
+    ));
+  }
+
+  checkAnswer(int index) {
+//    Widget child;
+    if (arrAnswerSituation[index].isSelected == true) {
+      if (questionDataCustSituation.correctAnswerId ==
+          arrAnswerSituation[index].answerId) {
+        return Utils.getAssetsImg("bg_green");
+      } else {
+        return Utils.getAssetsImg("rounded_rectangle_837gray");
+      }
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
+      return Utils.getAssetsImg("bg_green");
+    } else {
+      return Utils.getAssetsImg("rounded_rectangle_8371");
+    }
+    return Utils.getAssetsImg("bg_green");
+  }
+
+  checkTextColor(int index) {
+    if (arrAnswerSituation[index].isSelected == true) {
+        return ColorRes.white;
+    } else if (questionDataCustSituation.correctAnswerId == arrAnswerSituation[index].answerId) {
+      return ColorRes.white;
+    } else {
+      return ColorRes.textProf;
+    }
   }
 
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
-          setState(() {
-            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-          });
+//          setState(() {
+//            arrAnswerSituation[index].isSelected = !arrAnswerSituation[index].isSelected;
+//          });
         },
         child: Container(
 //          height: 60,
@@ -256,20 +279,24 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   ? null
                   : Border.all(
                       width: 1,
-                      color: arrAnswer[index].isSelected
+                      color: arrAnswerSituation[index].isSelected
                           ? ColorRes.white
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
-                  : (arrAnswer[index].isSelected
+                  : (arrAnswerSituation[index].isSelected
                       ? ColorRes.greenDot
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(
-                          arrAnswer[index].isSelected
-                              ? "rounded_rectangle_837_blue"
-                              : "rounded_rectangle_8371")),
+                      image: AssetImage(
+                        checkAnswer(index),
+//                          Utils.getAssetsImg(
+//                          arrAnswerSituation[index].isSelected
+//                              ? "rounded_rectangle_837_blue"
+//                              : "rounded_rectangle_8371"
+//                      )
+                      ),
                       fit: BoxFit.fill))
                   : null),
           child: Row(
@@ -278,23 +305,29 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               Title(
                   color: ColorRes.greenDot,
                   child: new Text(
-                    "A",
+                    abcdList[index],
                     style: TextStyle(
-                      color: (arrAnswer[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf),
+                      color: (
+                          checkTextColor(index)
+//                          arrAnswerSituation[index].isSelected
+//                          ? ColorRes.white
+//                          : ColorRes.textProf
+                      ),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
               Expanded(
                 child: SingleChildScrollView(
                   child: new Text(
-                    arrAnswer[index].answer,
+                    arrAnswerSituation[index].answer,
                     style: TextStyle(
                         fontSize: 12,
-                        color: (arrAnswer[index].isSelected
-                            ? ColorRes.white
-                            : ColorRes.textProf)),
+                        color: (
+                          checkTextColor(index)
+//                            arrAnswerSituation[index].isSelected
+//                            ? ColorRes.white
+//                            : ColorRes.textProf
+                        )),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -382,9 +415,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: ClampingScrollPhysics(),
-                          itemCount: arrAnswer.length,
+                          itemCount: arrAnswerSituation.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return showItems(index);
+                            return showItemsFullScreen(index);
                           },
                         ),
                       ),
@@ -417,7 +450,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                                     fit: BoxFit.fill)
                                 : null),
                         child: Text(
-                          'Answers',
+                          Utils.getText(context, StringRes.answers),
                           style: TextStyle(color: ColorRes.white, fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -457,7 +490,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 
 //  int _selectedItem = 0;
 //
-//  List<Answer> arrAnswer = List();
+//  List<Answer> arrAnswerSituation = List();
 
 //  selectItem(index) {
 //    setState(() {
@@ -466,12 +499,39 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //    });
 //  }
 
-  Widget showItems(int index) {
+  checkAnswer(int index) {
+//    Widget child;
+    if (arrAnswerSituation[index].isSelected == true) {
+      if (questionDataCustSituation.correctAnswerId ==
+          arrAnswerSituation[index].answerId) {
+        return Utils.getAssetsImg("bg_green");
+      } else {
+        return Utils.getAssetsImg("rounded_rectangle_837gray");
+      }
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
+      return Utils.getAssetsImg("bg_green");
+    } else {
+      return Utils.getAssetsImg("rounded_rectangle_8371");
+    }
+  }
+
+  checkTextColor(int index) {
+    if (arrAnswerSituation[index].isSelected == true) {
+      return ColorRes.white;
+    } else if (questionDataCustSituation.correctAnswerId == arrAnswerSituation[index].answerId) {
+      return ColorRes.white;
+    } else {
+      return ColorRes.textProf;
+    }
+  }
+
+  Widget showItemsFullScreen(int index) {
     return GestureDetector(
         onTap: () {
-          setState(() {
-            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-          });
+//          setState(() {
+//            arrAnswerSituation[index].isSelected = !arrAnswerSituation[index].isSelected;
+//          });
         },
         child: Container(
 //          height: 60,
@@ -485,20 +545,22 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   ? null
                   : Border.all(
                       width: 1,
-                      color: arrAnswer[index].isSelected
+                      color: arrAnswerSituation[index].isSelected
                           ? ColorRes.white
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
-                  : (arrAnswer[index].isSelected
+                  : (arrAnswerSituation[index].isSelected
                       ? ColorRes.greenDot
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(
-                          arrAnswer[index].isSelected
-                              ? "rounded_rectangle_837_blue"
-                              : "rounded_rectangle_8371")),
+                      image: AssetImage(checkAnswer(index)
+//                          Utils.getAssetsImg(
+//                          arrAnswerSituation[index].isSelected
+//                              ? "rounded_rectangle_837_blue"
+//                              : "rounded_rectangle_8371")
+                          ),
                       fit: BoxFit.fill))
                   : null),
           child: Row(
@@ -507,22 +569,28 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
               Title(
                   color: ColorRes.greenDot,
                   child: new Text(
-                    "A",
+                    abcdList[index],
                     style: TextStyle(
-                      color: (arrAnswer[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf),
+                      color: (
+                      checkTextColor(index)
+//                          arrAnswerSituation[index].isSelected
+//                          ? ColorRes.white
+//                          : ColorRes.textProf
+                      ),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
               Expanded(
                 child: SingleChildScrollView(
                   child: new Text(
-                    arrAnswer[index].answer,
+                    arrAnswerSituation[index].answer,
                     style: TextStyle(
-                        color: (arrAnswer[index].isSelected
-                            ? ColorRes.white
-                            : ColorRes.textProf)),
+                        color: (
+                        checkTextColor(index)
+//                            arrAnswerSituation[index].isSelected
+//                            ? ColorRes.white
+//                            : ColorRes.textProf
+                        )),
                     maxLines: 3,
                     overflow: TextOverflow.fade,
                   ),

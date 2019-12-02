@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/engagement_customer.dart';
+import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/home.dart';
@@ -287,14 +288,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => EngagementCustomer(questionData: arrQuestions[index],)));
-//            Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                    builder: (context) =>
-//                        HomePage(
-//                          initialPageType: Const.typeEngagement,
-//                        )));
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => EngagementCustomer(questionData: arrQuestions[index],)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        HomePage(
+                          initialPageType: Const.typeEngagement,
+                          questionDataHomeScr: arrQuestions[index],
+                        )));
           },
         ),
       ],
