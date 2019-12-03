@@ -697,6 +697,9 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
+
+                      Utils.playClickSound();
+
                       setState(() {
                         if (selectedType == Const.typeName) {
                           selectedType = Const.typeRanking;
@@ -770,6 +773,9 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
+
+                      Utils.playClickSound();
+
                       setState(() {
                         if (selectedType == Const.typeName) {
                           selectedType = Const.typeChecked;

@@ -146,6 +146,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   validateForm() async {
+
+    Utils.playClickSound();
+
     if (emailController.text.isEmpty) {
       Utils.showToast("Email can't be empty.");
       return;

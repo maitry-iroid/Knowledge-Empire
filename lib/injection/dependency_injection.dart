@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -17,6 +19,8 @@ class Injector {
   static LoginResponseData userData;
   static int mode;
   static bool isBusinessMode = true;
+ static AudioPlayer audioPlayer;
+ static AudioCache audioCache;
 
 //  factory Injector {
 //    return _singleton;
@@ -36,5 +40,8 @@ class Injector {
     isBusinessMode = mode == Const.businessMode;
 
     deviceId = await FlutterUdid.udid;
+
+    audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+    audioCache = AudioCache();
   }
 }
