@@ -13,7 +13,8 @@ LearningModuleData _$LearningModuleDataFromJson(Map<String, dynamic> json) {
     ..moduleDescription = json['moduleDescription'] as String
     ..question = json['question'] as String
     ..isAssign = json['isAssign'] as String
-    ..moduleStatus = json['moduleStatus'] as String;
+    ..moduleStatus = json['moduleStatus'] as String
+    ..companyId = json['companyId'] as String;
 }
 
 Map<String, dynamic> _$LearningModuleDataToJson(LearningModuleData instance) =>
@@ -24,4 +25,6 @@ Map<String, dynamic> _$LearningModuleDataToJson(LearningModuleData instance) =>
       'question': instance.question,
       'isAssign': instance.isAssign,
       'moduleStatus': instance.moduleStatus,
+      'companyId': instance.companyId,
+
     };

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/learning_module_data.dart';
 import 'package:ke_employee/models/learning_module_response.dart';
 import 'package:ke_employee/models/login_response.dart';
 import 'package:ke_employee/models/login_response_data.dart';
@@ -181,7 +182,29 @@ class WebApi {
     }
   }
 
-  Future<LearningModuleResponse> getLearningModule() async {
+
+//  Future<LearningModuleResponse> getLearningModule(Map<String, dynamic> jsonMap) async {
+//    initDio();
+//
+//    print("questions_request__" + json.encode(jsonMap));
+//    try {
+//      final response =
+//      await dio.post("", data: json.encode(getRequest('getLearningModule', json.encode(jsonMap))));
+//      if (response.statusCode == 200) {
+//        print(response.data);
+//        LearningModuleResponse learningModuleResponse =
+//        LearningModuleResponse.fromJson(jsonDecode(response.data));
+//        return learningModuleResponse;
+//      }
+//      print(response.data);
+//      return null;
+//    } catch (e) {
+//      print(e);
+//      return null;
+//    }
+//  }
+
+ Future<LearningModuleResponse> getLearningModule() async {
     initDio();
 
     var req = json.encode({'userId': Injector.userData.userId});
@@ -211,12 +234,12 @@ class WebApi {
     }
   }
 
-  Future<LoginResponse> assignUserToModule(String moduleId, String type) async {
+  Future<LoginResponse> assignUserToModule(String moduleId, String type, String companyId) async {
     initDio();
 
     var req = json.encode({
       'userId': Injector.userData.userId,
-      'companyId': Injector.userData.activeCompany,
+      'companyId': companyId,
       'moduleId': moduleId,
       'type':type
     });

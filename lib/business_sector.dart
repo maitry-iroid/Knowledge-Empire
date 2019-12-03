@@ -104,8 +104,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     return InkResponse(
       child: Container(
         alignment: Alignment.center,
-        margin: EdgeInsets.only(left: 20,right: 10),
-        padding: EdgeInsets.only(top: 5,bottom:5,left: 8),
+        margin: EdgeInsets.only(left: 20, right: 10),
+        padding: EdgeInsets.only(top: 5, bottom: 5, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.moduleId ==
                     arrFinalLearningModules[index].moduleId)
@@ -361,9 +361,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 ),
               ),
               onTap: () {
-                assignUserToModule(selectedModule.isAssign == "0"
-                    ? Const.subscribe
-                    : Const.unSubscribe);
+                assignUserToModule(
+                  selectedModule.isAssign == "0"
+                      ? Const.subscribe
+                      : Const.unSubscribe,
+                );
               })
         ],
       ),
@@ -388,7 +390,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             arrLearningModules.addAll(data.data);
             arrFinalLearningModules.addAll(data.data);
 
-            if (arrLearningModules.length > 0) {
+            if (arrLearningModules.length > 0 && selectedModule.moduleId.isEmpty) {
               selectedModule = arrLearningModules[0];
             }
           });
@@ -398,12 +400,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     });
   }
 
+  //
   void assignUserToModule(String type) async {
     setState(() {
       isLoading = true;
     });
 
-    WebApi().assignUserToModule(selectedModule.moduleId, type).then((data) {
+    WebApi()
+        .assignUserToModule(
+            selectedModule.moduleId, type, selectedModule.companyId)
+        .then((data) {
       setState(() {
         isLoading = false;
       });
