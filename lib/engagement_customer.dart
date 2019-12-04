@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/questions_response.dart';
-import 'commonview/header.dart';
-import 'helper/res.dart';
+
 import 'commonview/background.dart';
-import 'models/questions_response.dart';
+import 'helper/res.dart';
+import 'models/questions.dart';
 
 List<Answer> arrAnswer = List();
 
@@ -188,13 +187,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               decoration: BoxDecoration(
                                   image:
 //                                  Injector.isBusinessMode ?
-                                  DecorationImage (
+                                      DecorationImage(
                                           image: AssetImage(Utils.getAssetsImg(
                                               "full_expand_question_answers")),
-                                          fit: BoxFit.fill
-                                  )
+                                          fit: BoxFit.fill)
 //                                  : null
-                              )),
+                                  )),
                         ),
                       )
                     ],

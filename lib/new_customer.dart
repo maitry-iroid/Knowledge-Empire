@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/engagement_customer.dart';
-import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -288,7 +286,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 ],
               )),
         ),
-
         InkResponse(
           child: Container(
               height: Injector.isBusinessMode ? 32 : 25,
@@ -311,14 +308,20 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
-//            Navigator.push(context, MaterialPageRoute(builder: (context) => EngagementCustomer(questionData: arrQuestions[index],)));
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomePage(
-                          initialPageType: Const.typeEngagement,
-                          questionDataHomeScr: arrQuestions[index],
-                        )));
+            if (Injector.userData.salesPersonCount >
+                arrQuestions[index].resource) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            initialPageType: Const.typeEngagement,
+                            questionDataHomeScr: arrQuestions[index],
+                          )));
+            } else {
+              Utils.showToast("You need atleast " +
+                  arrQuestions[index].resource.toString() +
+                  " Sales persons to attempt this Question. You can add more Sales persons from the Organization.");
+            }
           },
         ),
       ],
@@ -360,11 +363,13 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     var random = ((Random().nextInt(10))) / 10;
 
-    var a = max(pow(questionData.counter, 2), 1);
-    var b = questionData.counter * random;
-    var c = (1 + loyaltyBonus);
+    var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
+        min(questionData.counter, 10) * random;
+    ;
+    var b = (1 + (0.01 * min(questionAnswered, 900)));
+    var c = (2 - resourceBonus);
 
-    var finalValue = (a + b * c).toStringAsFixed(0);
+    var finalValue = (a * b * c).toStringAsFixed(0);
 
     print("finalValue");
     print(finalValue);

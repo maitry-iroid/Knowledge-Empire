@@ -32,7 +32,9 @@ class LoginResponse {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
-    data = json['data'] != null ? new LoginResponseData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? new LoginResponseData.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -61,21 +63,9 @@ class LoginResponseData {
   String companyName;
   String manager;
   String activeCompany;
+  int salesPersonCount = 0;
 
-  LoginResponseData(
-      {this.userId,
-        this.name,
-        this.email,
-        this.phone,
-        this.address,
-        this.country,
-        this.createdAt,
-        this.isPasswordChanged,
-        this.profileImage,
-        this.accessToken,
-        this.companyName,
-        this.manager,
-        this.activeCompany});
+  LoginResponseData();
 
   LoginResponseData.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -111,4 +101,3 @@ class LoginResponseData {
     return data;
   }
 }
-

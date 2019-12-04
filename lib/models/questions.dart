@@ -1,7 +1,6 @@
-
 class QuestionRequest {
-  String userId="";
-  String moduleId ="";
+  String userId = "";
+  String moduleId = "";
 
   QuestionRequest({this.userId, this.moduleId});
 
@@ -18,11 +17,10 @@ class QuestionRequest {
   }
 }
 
-
 class QuestionsResponse {
-  String flag="";
-  String result="";
-  String msg="";
+  String flag = "";
+  String result = "";
+  String msg = "";
   List<QuestionData> data = List();
 
   QuestionsResponse({this.flag, this.result, this.msg, this.data});
@@ -52,19 +50,19 @@ class QuestionsResponse {
 }
 
 class QuestionData {
-  String questionId="";
-  String title="";
-  String question="";
-  String moduleName="";
-  String description="";
-  String correctAnswerId="";
-  String loyalty="";
-  String resource="";
-  String value="";
-  String mediaLink="";
+  String questionId = "";
+  String title = "";
+  String question = "";
+  String moduleName = "";
+  String description = "";
+  String correctAnswerId = "";
+  String loyalty = "";
+  int resource = 0;
+  String value = "";
+  String mediaLink = "";
   List<Answer> answer = List();
-  int counter=0;
-  int daysInList=0;
+  int counter = 0;
+  int daysInList = 0;
 
   QuestionData();
 
@@ -107,8 +105,8 @@ class QuestionData {
 }
 
 class Answer {
-  String answerId="";
-  String answer="";
+  String answerId = "";
+  String answer = "";
   bool isSelected = false;
 
   Answer({this.answerId, this.answer});
