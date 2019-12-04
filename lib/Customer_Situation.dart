@@ -193,12 +193,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                                 height: Utils.getDeviceWidth(context) / 20,
                                 width: Utils.getDeviceWidth(context) / 20,
                                 decoration: BoxDecoration(
-                                    image: Injector.isBusinessMode
-                                        ? DecorationImage(
+                                    image:
+//                                    Injector.isBusinessMode ?
+                                    DecorationImage(
                                             image: AssetImage(Utils.getAssetsImg(
                                                 "full_expand_question_answers")),
-                                            fit: BoxFit.fill)
-                                        : null)),
+                                            fit: BoxFit.fill
+                                    )
+//                                        : null
+                                )
+                            ),
                           ),
                         )
                       ],
@@ -287,8 +291,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   : (arrAnswerSituation[index].isSelected
                       ? ColorRes.greenDot
                       : ColorRes.white),
-              image: Injector.isBusinessMode
-                  ? (DecorationImage(
+              image:
+//              Injector.isBusinessMode ? (
+                  DecorationImage(
                       image: AssetImage(
                         checkAnswer(index),
 //                          Utils.getAssetsImg(
@@ -297,8 +302,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                              : "rounded_rectangle_8371"
 //                      )
                       ),
-                      fit: BoxFit.fill))
-                  : null),
+                      fit: BoxFit.fill)
+//          ): null
+        ),
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -553,16 +559,18 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   : (arrAnswerSituation[index].isSelected
                       ? ColorRes.greenDot
                       : ColorRes.white),
-              image: Injector.isBusinessMode
-                  ? (DecorationImage(
+              image:
+//              Injector.isBusinessMode ? (
+                  DecorationImage(
                       image: AssetImage(checkAnswer(index)
 //                          Utils.getAssetsImg(
 //                          arrAnswerSituation[index].isSelected
 //                              ? "rounded_rectangle_837_blue"
 //                              : "rounded_rectangle_8371")
                           ),
-                      fit: BoxFit.fill))
-                  : null),
+                      fit: BoxFit.fill)
+//              ): null
+          ),
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),

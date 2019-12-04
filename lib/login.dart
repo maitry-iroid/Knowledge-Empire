@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
         Expanded(
           child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: ListView(
                 shrinkWrap: true,
                 padding: EdgeInsets.all(0),

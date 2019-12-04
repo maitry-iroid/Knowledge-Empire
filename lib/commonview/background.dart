@@ -181,23 +181,27 @@ class CommonView {
                       height: Utils.getDeviceWidth(context) / 20,
                       width: Utils.getDeviceWidth(context) / 20,
                       decoration: BoxDecoration(
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
+                          image:
+//                          Injector.isBusinessMode ?
+                          DecorationImage(
                                   image: AssetImage(Utils.getAssetsImg(
                                       "full_expand_question_answers")),
                                   fit: BoxFit.fill)
-                              : null))
+//                              : null
+                      ))
                   : Container(
                       alignment: Alignment.center,
                       height: Utils.getDeviceWidth(context) / 40,
                       width: Utils.getDeviceWidth(context) / 40,
                       decoration: BoxDecoration(
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
+                          image:
+//                          Injector.isBusinessMode ?
+                          DecorationImage(
                                   image: AssetImage(
                                       Utils.getAssetsImg("close_dialog")),
                                   fit: BoxFit.fill)
-                              : null)))),
+//                              : null
+                      )))),
         )
       ],
     );
