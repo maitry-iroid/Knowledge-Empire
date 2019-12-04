@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -23,11 +27,34 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   List<QuestionData> arrQuestions = List();
 
+  int questionAnswered = 1;
+  int loyaltyBonus = 0;
+  int resourceBonus = 0;
+  int valueBonus = 0;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getQuestions();
+
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) {
+        getQuestions();
+      } else {
+        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+          List<String> jsonQuestionData =
+              Injector.prefs.getStringList(PrefKeys.questionData);
+
+          jsonQuestionData.forEach((jsonQuestion) {
+            arrQuestions.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+          });
+
+          if (arrQuestions != null) {
+            setState(() {});
+          }
+        }
+      }
+    });
   }
 
   getQuestions() {
@@ -231,7 +258,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      ("${arrQuestions[index].value} \$"),
+                      ("${getValue(arrQuestions[index])} \$"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -241,7 +268,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      ("${arrQuestions[index].loyalty} d"),
+                      ("${getLoyalty(arrQuestions[index])} d"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -251,7 +278,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      arrQuestions[index].resource,
+                      getResource(arrQuestions[index]),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -295,5 +322,52 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         ),
       ],
     );
+  }
+
+  getValue(QuestionData questionData) {
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
+    var b = (1 + (0.01 * min(questionAnswered, 900)));
+    var c = (1 + valueBonus);
+
+    var finalValue = (a * b * c).toStringAsFixed(0);
+
+    print("finalValue");
+    print(finalValue);
+
+    return finalValue;
+  }
+
+  getLoyalty(QuestionData questionData) {
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = max(pow(questionData.counter, 2), 1);
+    var b = questionData.counter * random;
+    var c = (1 + loyaltyBonus);
+
+    var finalValue = (a + b * c).toStringAsFixed(0);
+
+    print("finalValue");
+    print(finalValue);
+
+    return finalValue;
+  }
+
+  getResource(QuestionData questionData) {
+//    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
+
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = max(pow(questionData.counter, 2), 1);
+    var b = questionData.counter * random;
+    var c = (1 + loyaltyBonus);
+
+    var finalValue = (a + b * c).toStringAsFixed(0);
+
+    print("finalValue");
+    print(finalValue);
+
+    return finalValue;
   }
 }

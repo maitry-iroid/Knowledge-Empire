@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -347,7 +350,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           width: 40,
                         ),
                         onTap: () {
-//                          downloadAllQuestions();
+                          downloadAllQuestions();
                         },
                       )
                     : Container(),
@@ -483,7 +486,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.userId = Injector.userData.userId;
     rq.moduleId = selectedModule.moduleId;
 
-    WebApi().getQuestions(rq.toJson()).then((questionResponse) {
+    WebApi().getQuestions(rq.toJson()).then((questionResponse) async {
       setState(() {
         isLoading = false;
       });
@@ -492,7 +495,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (questionResponse.flag == "true") {
           List<QuestionData> arrQuestions = questionResponse.data;
 
-          arrQuestions.forEach((questionData) {});
+          Utils.saveQuestionLocally(arrQuestions);
         }
       }
     });

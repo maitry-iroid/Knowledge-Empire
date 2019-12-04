@@ -63,19 +63,10 @@ class QuestionData {
   String value="";
   String mediaLink="";
   List<Answer> answer = List();
+  int counter=0;
+  int daysInList=0;
 
-  QuestionData(
-      {this.questionId,
-        this.title,
-        this.question,
-        this.moduleName,
-        this.description,
-        this.correctAnswerId,
-        this.loyalty,
-        this.resource,
-        this.value,
-        this.mediaLink,
-        this.answer});
+  QuestionData();
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];

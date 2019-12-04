@@ -33,6 +33,7 @@ dependencies:
   image_picker: 0.6.2+1
   dio: ^3.0.7
   audioplayers: 0.13.2
+  connectivity: ^0.4.5+7
 #  objectdb: 1.0.7+1
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/Customer_Situation.dart';
 import 'package:ke_employee/Debrief.dart';
@@ -58,7 +61,7 @@ class DrawerItem {
 
 List<DrawerItem> drawerItems = List();
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   int _selectedDrawerIndex = 0;
@@ -67,6 +70,7 @@ class HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     if (widget.initialPageType == Const.typeHome)
       _selectedDrawerIndex = 0;
@@ -96,6 +100,30 @@ class HomePageState extends State<HomePage> {
       _selectedDrawerIndex = 12;
     else
       _selectedDrawerIndex = 0;
+  }
+
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+
+
+      Utils.showToast("resumed");
+
+      _connectivitySubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+
+        Utils.showToast(result.toString());
+
+      });
+
+
+    } else if (state == AppLifecycleState.inactive) {
+
+      Utils.showToast("inactive");
+
+      _connectivitySubscription.cancel();
+    }
   }
 
   _getDrawerItemWidget(int pos) {
