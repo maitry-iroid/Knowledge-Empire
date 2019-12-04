@@ -288,6 +288,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 ],
               )),
         ),
+
         InkResponse(
           child: Container(
               height: Injector.isBusinessMode ? 32 : 25,
