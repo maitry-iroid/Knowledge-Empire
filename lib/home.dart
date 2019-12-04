@@ -9,7 +9,7 @@ import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/existing_customers.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/questions_response.dart';
+import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/organization.dart';
 import 'package:ke_employee/profile.dart';

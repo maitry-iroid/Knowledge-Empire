@@ -1,12 +1,33 @@
-class QuestionsRequest {
+
+class QuestionRequest {
+  String userId="";
+  String moduleId ="";
+
+  QuestionRequest({this.userId, this.moduleId});
+
+  QuestionRequest.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    moduleId = json['moduleId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['moduleId'] = this.moduleId;
+    return data;
+  }
+}
+
+
+class QuestionsResponse {
   String flag="";
   String result="";
   String msg="";
   List<QuestionData> data = List();
 
-  QuestionsRequest({this.flag, this.result, this.msg, this.data});
+  QuestionsResponse({this.flag, this.result, this.msg, this.data});
 
-  QuestionsRequest.fromJson(Map<String, dynamic> json) {
+  QuestionsResponse.fromJson(Map<String, dynamic> json) {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];

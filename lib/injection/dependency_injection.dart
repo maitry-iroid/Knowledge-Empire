@@ -1,13 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/models/login_response_data.dart';
+import 'package:ke_employee/models/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Injector {
@@ -19,8 +16,9 @@ class Injector {
   static LoginResponseData userData;
   static int mode;
   static bool isBusinessMode = true;
- static AudioPlayer audioPlayer;
- static AudioCache audioCache;
+  static AudioPlayer audioPlayer;
+  static AudioCache audioCache;
+
 
 //  factory Injector {
 //    return _singleton;

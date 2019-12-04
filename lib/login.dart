@@ -13,8 +13,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/intro_screen.dart';
-import 'package:ke_employee/models/login_request_data.dart';
-import 'package:ke_employee/models/login_response_data.dart';
+import 'package:ke_employee/models/login.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -159,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    LoginRequestData loginRequest = LoginRequestData();
+    LoginRequest loginRequest = LoginRequest();
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret =

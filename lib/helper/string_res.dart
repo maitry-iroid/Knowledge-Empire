@@ -55,6 +55,7 @@ class StringRes {
   static var somethingWrong = "somethingWrong";
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
+  static var subscribed = "subscribed";
   static var engagement = "engagement";
   static var debrief = "debrief";
   static var category = "category";
@@ -135,6 +136,7 @@ class StringRes {
       'somethingWrong': 'Something went wrong',
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
+      'subscribed': 'Subscribed',
       'engagement': 'Engagement',
       'debrief': 'Debrief',
       'category': 'Category',

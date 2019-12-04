@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/questions_response.dart' ;
+import 'package:ke_employee/models/questions.dart';
 import 'commonview/header.dart';
 import 'helper/res.dart';
 import 'commonview/background.dart';
-import 'models/questions_response.dart';
+import 'models/questions.dart';
 
 List<Answer> arrAnswer = List();
 

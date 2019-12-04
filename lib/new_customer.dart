@@ -11,7 +11,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
 import 'helper/web_api.dart';
-import 'models/questions_response.dart';
+import 'models/questions.dart';
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -19,8 +19,6 @@ class NewCustomerPage extends StatefulWidget {
 }
 
 class _NewCustomerPageState extends State<NewCustomerPage> {
-
-
   bool isLoading = false;
 
   List<QuestionData> arrQuestions = List();
@@ -32,18 +30,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     getQuestions();
   }
 
-
   getQuestions() {
-
     setState(() {
       isLoading = true;
     });
 
-    var req = {
-      'userId': Injector.userData.userId,
-    };
+    QuestionRequest rq = QuestionRequest();
+    rq.userId = Injector.userData.userId;
 
-    WebApi().getQuestions(req).then((data) {
+    WebApi().getQuestions(rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
@@ -69,8 +64,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       width: 0.0,
     );
   }
-//  CommonView.showCircularProgress(isLoading)
 
+//  CommonView.showCircularProgress(isLoading)
 
   @override
   Widget build(BuildContext context) {
@@ -78,24 +73,25 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         body: SafeArea(
       child: Stack(
         children: <Widget>[
-          Align(child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: CommonView.getBGDecoration(),
+          Align(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CommonView.showTitle(context, StringRes.newCustomers),
-                  showSubHeader(),
-                  showItems()
-                ],
+              width: double.infinity,
+              height: double.infinity,
+              decoration: CommonView.getBGDecoration(),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CommonView.showTitle(context, StringRes.newCustomers),
+                    showSubHeader(),
+                    showItems()
+                  ],
+                ),
               ),
             ),
-          ),
           ),
           Container(child: showCircularProgress()),
         ],
@@ -232,11 +228,10 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       maxLines: 1,
                     ),
                   ),
-
                   Expanded(
                     flex: 3,
                     child: Text(
-                        ("${arrQuestions[index].value} \$"),
+                      ("${arrQuestions[index].value} \$"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -246,7 +241,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                        ("${arrQuestions[index].loyalty} d"),
+                      ("${arrQuestions[index].loyalty} d"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -256,7 +251,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                        arrQuestions[index].resource,
+                      arrQuestions[index].resource,
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -292,8 +287,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        HomePage(
+                    builder: (context) => HomePage(
                           initialPageType: Const.typeEngagement,
                           questionDataHomeScr: arrQuestions[index],
                         )));

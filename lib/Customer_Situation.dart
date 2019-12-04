@@ -16,7 +16,7 @@ import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'Customer_Situation.dart';
 import 'commonview/background.dart';
-import 'models/questions_response.dart';
+import 'models/questions.dart';
 
 List<Answer> arrAnswerSituation = List();
 
