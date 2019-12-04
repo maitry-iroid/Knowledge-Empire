@@ -247,4 +247,8 @@ class Utils {
     } else
       return "";
   }
+
+  static playClickSound(){
+    Injector.audioCache.play("sounds/all_button_clicks.wav");
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/Customer_Situation.dart';
 import 'package:ke_employee/Debrief.dart';
@@ -27,10 +29,15 @@ import 'helper/string_res.dart';
 class HomePage extends StatefulWidget {
   final int initialPageType;
 
-  final  QuestionData questionDataHomeScr;
+  final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
 
-  HomePage({Key key, this.initialPageType, this.questionDataHomeScr, this.questionDataSituation}) : super(key: key);
+  HomePage(
+      {Key key,
+      this.initialPageType,
+      this.questionDataHomeScr,
+      this.questionDataSituation})
+      : super(key: key);
 
 //  final  QuestionData questionData;
 //
@@ -122,6 +129,7 @@ class HomePageState extends State<HomePage> {
 
   openProfile() {
 //    _onSelectItem(10);
+
     if (mounted) {
       setState(() => _selectedDrawerIndex = 10);
 //      Navigator.of(context).pop(); // close the drawer
@@ -129,7 +137,12 @@ class HomePageState extends State<HomePage> {
   }
 
   _onSelectItem(int index) {
+
+    Utils.playClickSound();
+
     if (mounted) {
+//      Injector.audioPlayer.play("assets/sounds/all_button_clicks.wav",isLocal: true);
+
       setState(() => _selectedDrawerIndex = index);
       Navigator.of(context).pop(); // close the drawer
     }
@@ -281,9 +294,11 @@ class HomePageState extends State<HomePage> {
     print("selectedIndex");
     print(_selectedDrawerIndex);
     if (_selectedDrawerIndex == 11)
-      return EngagementCustomer(questionDataEngCustomer: widget.questionDataHomeScr);
+      return EngagementCustomer(
+          questionDataEngCustomer: widget.questionDataHomeScr);
     else if (_selectedDrawerIndex == 12)
-      return CustomerSituationPage(questionDataCustomerSituation: widget.questionDataSituation);
+      return CustomerSituationPage(
+          questionDataCustomerSituation: widget.questionDataSituation);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }
