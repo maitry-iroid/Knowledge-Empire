@@ -238,6 +238,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   checkAnswer(int index) {
 //    Widget child;
+
     if (arrAnswerSituation[index].isSelected == true) {
       if (questionDataCustSituation.correctAnswerId ==
           arrAnswerSituation[index].answerId) {
@@ -250,6 +251,25 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       return Utils.getAssetsImg("bg_green");
     } else {
       return Utils.getAssetsImg("rounded_rectangle_8371");
+    }
+    return Utils.getAssetsImg("bg_green");
+  }
+
+  checkAnswerBusinessMode(int index) {
+//    Widget child;
+
+    if (arrAnswerSituation[index].isSelected == true) {
+      if (questionDataCustSituation.correctAnswerId ==
+          arrAnswerSituation[index].answerId) {
+        return ColorRes.greenDot;
+      } else {
+        return ColorRes.greyText;
+      }
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
+      return ColorRes.greenDot;
+    } else {
+      return ColorRes.white;
     }
     return Utils.getAssetsImg("bg_green");
   }
@@ -288,11 +308,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
-                  : (arrAnswerSituation[index].isSelected
-                      ? ColorRes.greenDot
-                      : ColorRes.white),
+                  : checkAnswerBusinessMode(index),
+//              (arrAnswerSituation[index].isSelected
+//                      ? ColorRes.greenDot
+//                      : ColorRes.white),
               image:
-//              Injector.isBusinessMode ? (
+              Injector.isBusinessMode ? (
                   DecorationImage(
                       image: AssetImage(
                         checkAnswer(index),
@@ -303,7 +324,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                      )
                       ),
                       fit: BoxFit.fill)
-//          ): null
+          ): null
         ),
           child: Row(
             children: <Widget>[
@@ -522,6 +543,25 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     }
   }
 
+  checkAnswerBusinessMode(int index) {
+//    Widget child;
+
+    if (arrAnswerSituation[index].isSelected == true) {
+      if (questionDataCustSituation.correctAnswerId ==
+          arrAnswerSituation[index].answerId) {
+        return ColorRes.greenDot;
+      } else {
+        return ColorRes.greyText;
+      }
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
+      return ColorRes.greenDot;
+    } else {
+      return ColorRes.white;
+    }
+    return Utils.getAssetsImg("bg_green");
+  }
+
   checkTextColor(int index) {
     if (arrAnswerSituation[index].isSelected == true) {
       return ColorRes.white;
@@ -556,11 +596,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
-                  : (arrAnswerSituation[index].isSelected
-                      ? ColorRes.greenDot
-                      : ColorRes.white),
+                  : checkAnswerBusinessMode(index),
+//              (arrAnswerSituation[index].isSelected
+//                      ? ColorRes.greenDot
+//                      : ColorRes.white),
               image:
-//              Injector.isBusinessMode ? (
+              Injector.isBusinessMode ? (
                   DecorationImage(
                       image: AssetImage(checkAnswer(index)
 //                          Utils.getAssetsImg(
@@ -569,7 +610,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                              : "rounded_rectangle_8371")
                           ),
                       fit: BoxFit.fill)
-//              ): null
+              ): null
           ),
           child: Row(
             children: <Widget>[

@@ -78,14 +78,19 @@ class CommonView {
     );
   }
 
+  //http://www.pdf995.com/samples/pdf.pdf
+  //https://www.radiantmediaplayer.com/media/bbb-360p.mp4
   static image(BuildContext context, String image) {
     var img = Container(
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 20),
       decoration: BoxDecoration(
         color: ColorRes.white,
-          image: DecorationImage(
-            image: image != null ? new NetworkImage(image) : null,
-              fit: BoxFit.fill),
+
+//          image: DecorationImage(
+//            image: image != null ? new NetworkImage(image) : null,
+//              fit: BoxFit.fill),
+
+
        /* image: image != null && image.isNotEmpty
             ? DecorationImage(
 //            image: image != null ? new NetworkImage(image) : null,
@@ -95,6 +100,7 @@ class CommonView {
                 ),
                 fit: BoxFit.fill)
             : null,*/
+
         borderRadius: BorderRadius.circular(10),
       ),
     );
