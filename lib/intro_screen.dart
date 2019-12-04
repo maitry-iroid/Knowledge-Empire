@@ -540,7 +540,7 @@ class IntroPageState extends State<IntroPage> {
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("team")),
 //                      height: Utils.getDeviceHeight(context) / 2.4,
-                        width: Utils.getDeviceHeight(context) / 3.0,
+                        width: Utils.getDeviceHeight(context) / 3.9,
                       ),
                     )),
                 Padding(
@@ -817,7 +817,7 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeName
               ? Positioned(
-                  top: 70,
+                  top: 65,
                   right: Utils.getDeviceWidth(context) / 1.9,
                   child: InkResponse(
                     child: Image(
@@ -832,8 +832,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeChecked
               ? Positioned(
-                  top: 70,
-                  left: Utils.getDeviceWidth(context) / 3.30,
+                  top: 65,
+                  left: Utils.getDeviceWidth(context) / 3.40,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -847,7 +847,7 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typePeople
               ? Positioned(
-                  top: 70,
+                  top: 65,
                   left: Utils.getDeviceWidth(context) / 2.35,
                   child: InkResponse(
                     child: Image(
@@ -862,8 +862,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeBadge
               ? Positioned(
-                  top: 70,
-                  left: Utils.getDeviceWidth(context) / 1.90,
+                  top: 65,
+                  left: Utils.getDeviceWidth(context) / 2.00,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
@@ -878,8 +878,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeResources
               ? Positioned(
-                  top: 70,
-                  left: Utils.getDeviceWidth(context) / 2.30,
+                  top: 65,
+                  left: Utils.getDeviceWidth(context) / 2.35,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
@@ -894,7 +894,7 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeDollar
               ? Positioned(
-                  top: 70,
+                  top: 65,
                   left: Utils.getDeviceWidth(context) / 2.10,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
@@ -941,8 +941,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeNewCustomer
               ? Positioned(
-                  bottom: 110,
-                  left: Utils.getDeviceWidth(context) / 3.5,
+                  bottom: 70,
+                  left: Utils.getDeviceWidth(context) / 3.2,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
@@ -956,7 +956,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeExistingCustomer
               ? Positioned(
                   bottom: 50,
-                  left: Utils.getDeviceWidth(context) / 3.2,
+                  left: Utils.getDeviceWidth(context) / 3.4,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
@@ -970,7 +970,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeReward
               ? Positioned(
                   bottom: Utils.getDeviceHeight(context) / 2.8,
-                  left: Utils.getDeviceWidth(context) / 3.0,
+                  left: Utils.getDeviceWidth(context) / 3.5,
                   child: InkResponse(
                     child: Image(
                       image:
@@ -984,8 +984,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeTeam
               ? Positioned(
-                  top: Utils.getDeviceHeight(context) / 6.0,
-                  left: Utils.getDeviceWidth(context) / 1.8,
+                  top: Utils.getDeviceHeight(context) / 6.4,
+                  left: Utils.getDeviceWidth(context) / 1.7,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("intro_bub_team")),
@@ -1000,7 +1000,7 @@ class IntroPageState extends State<IntroPage> {
               ? Positioned(
                   top: 60,
                   left: Utils.getDeviceWidth(context) / 4,
-                  right: Utils.getDeviceWidth(context) / 3.2,
+                  right: Utils.getDeviceWidth(context) / 3.0,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -1015,12 +1015,12 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeOrg
               ? Positioned(
                   top: 100,
-                  left: Utils.getDeviceWidth(context) / 2.8,
+                  left: Utils.getDeviceWidth(context) / 2.6,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg("intro_bub_organization")),
-                        height: Utils.getDeviceHeight(context) / 1.7,
+                        height: Utils.getDeviceHeight(context) / 1.8,
                       ),
                       onTap: () {}),
                 )
@@ -1043,7 +1043,7 @@ class IntroPageState extends State<IntroPage> {
               ? Positioned(
                   bottom: 80,
 //            left: Utils.getDeviceWidth(context) / 1.9,
-                  right: Utils.getDeviceWidth(context) / 2.7,
+                  right: Utils.getDeviceWidth(context) / 2.6,
                   child: InkResponse(
                     child: Image(
                       image:

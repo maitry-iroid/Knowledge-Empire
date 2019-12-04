@@ -30,7 +30,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent.withOpacity(0.8),
       body: showSetupPin(context),
     );
   }
@@ -59,7 +59,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                           right: Utils.getDeviceWidth(context) / 5.5,
                           bottom: 0),
                       padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -88,12 +88,12 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                       fontSize: 14, color: ColorRes.white),
                                   decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 10),
+                                      const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 10),
                                       hintText: Utils.getText(context,
                                           StringRes.currentPassword),
                                       hintStyle:
-                                          TextStyle(color: ColorRes.hintColor),
+                                      TextStyle(color: ColorRes.hintColor),
                                       border: InputBorder.none),
                                 ),
                               )),
@@ -115,12 +115,12 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                       fontSize: 14, color: ColorRes.white),
                                   decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 10),
+                                      const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 10),
                                       hintText: Utils.getText(context,
                                           StringRes.newPassword),
                                       hintStyle:
-                                          TextStyle(color: ColorRes.hintColor),
+                                      TextStyle(color: ColorRes.hintColor),
                                       border: InputBorder.none),
                                 ),
                               )),
@@ -141,12 +141,12 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                       fontSize: 14, color: ColorRes.white),
                                   decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 10),
+                                      const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 10),
                                       hintText: Utils.getText(context,
                                           StringRes.reEnterPassword),
                                       hintStyle:
-                                          TextStyle(color: ColorRes.hintColor),
+                                      TextStyle(color: ColorRes.hintColor),
                                       border: InputBorder.none),
                                 ),
                               )),
@@ -240,15 +240,21 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 
   void validateData() async {
-    if (pass1Controller.text.trim().isEmpty) {
+    if (pass1Controller.text
+        .trim()
+        .isEmpty) {
       Utils.showToast("Please enter old Password.");
       return;
     }
-    if (pass2Controller.text.trim().isEmpty) {
+    if (pass2Controller.text
+        .trim()
+        .isEmpty) {
       Utils.showToast("Please enter new Password.");
       return;
     }
-    if (pass3Controller.text.trim().isEmpty) {
+    if (pass3Controller.text
+        .trim()
+        .isEmpty) {
       Utils.showToast("Please re-eneter new Password.");
       return;
     }
