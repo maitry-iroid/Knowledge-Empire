@@ -59,7 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   showLoginForm() {
-    return ListView(
+    return Column(
       children: <Widget>[
         Container(
           height: 25,
@@ -78,52 +78,59 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           height: 1,
           color: ColorRes.white,
         ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          height: 40,
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              color: ColorRes.bgTextBox,
-              border: Border.all(
-                color: ColorRes.white,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: TextField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            obscureText: false,
-            style: TextStyle(color: ColorRes.white, fontSize: 15),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: Utils.getText(
-                    context, StringRes.enterRegisteredEmail)
-                    .toUpperCase(),
-                hintStyle: TextStyle(color: ColorRes.hintColor)),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        InkResponse(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal:  Utils.getDeviceWidth(context)/8),
-            alignment: Alignment.center,
-            height: 40,
-            width: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: ExactAssetImage(Utils.getAssetsImg('btn_login')),
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fill),
-            ),
-            child: Text(
-              Utils.getText(context, StringRes.send).toUpperCase(),
-              style: TextStyle(color: ColorRes.white,fontSize: 17),
-            ),
-          ),
-          onTap: validateForm,
-        ),
+       Expanded(
+         child: ListView(
+           children: <Widget>[
+             Container(
+               margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+               height: 40,
+               padding: EdgeInsets.symmetric(horizontal: 10),
+               decoration: BoxDecoration(
+                   color: ColorRes.bgTextBox,
+                   border: Border.all(
+                     color: ColorRes.white,
+                     width: 1,
+                   ),
+                   borderRadius: BorderRadius.all(Radius.circular(10))),
+               child: TextField(
+                 controller: emailController,
+                 keyboardType: TextInputType.emailAddress,
+                 obscureText: false,
+                 style: TextStyle(color: ColorRes.white, fontSize: 15),
+                 decoration: InputDecoration(
+                     border: InputBorder.none,
+                     hintText: Utils.getText(
+                         context, StringRes.enterRegisteredEmail)
+                         .toUpperCase(),
+                     hintStyle: TextStyle(color: ColorRes.hintColor)),
+               ),
+             ),
+             SizedBox(
+               height: 10,
+             ),
+             InkResponse(
+               child: Container(
+                 margin: EdgeInsets.symmetric(horizontal:  Utils.getDeviceWidth(context)/8),
+                 alignment: Alignment.center,
+                 height: 40,
+                 width: 100,
+                 decoration: BoxDecoration(
+                   image: DecorationImage(
+                       image: ExactAssetImage(Utils.getAssetsImg('btn_login')),
+                       alignment: Alignment.topCenter,
+                       fit: BoxFit.fill),
+                 ),
+                 child: Text(
+                   Utils.getText(context, StringRes.send).toUpperCase(),
+                   style: TextStyle(color: ColorRes.white,fontSize: 17),
+                 ),
+               ),
+               onTap: validateForm,
+             ),
+           ],
+         ),
+       )
+
       ],
     );
   }

@@ -56,13 +56,15 @@ class QuestionData {
   String moduleName = "";
   String description = "";
   String correctAnswerId = "";
-  String loyalty = "";
+  int loyalty = 0;
   int resource = 0;
-  String value = "";
+  int value = 0;
   String mediaLink = "";
   List<Answer> answer = List();
   int counter = 0;
   int daysInList = 0;
+  int attemptTime = 0;
+  bool isAnsweredCorrect = false;
 
   QuestionData();
 

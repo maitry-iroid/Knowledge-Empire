@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -44,7 +45,13 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Injector.prefs.getStringList(PrefKeys.questionData);
 
           jsonQuestionData.forEach((jsonQuestion) {
-            arrQuestions.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+            QuestionData questionData =
+                QuestionData.fromJson(json.decode(jsonQuestion));
+
+            if (questionData.attemptTime == 0 ||
+                questionData.attemptTime -
+                        DateTime.now().millisecondsSinceEpoch >
+                    24) arrQuestions.add(questionData);
           });
 
           if (arrQuestions != null) {
