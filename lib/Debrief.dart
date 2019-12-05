@@ -120,8 +120,9 @@ class _DebriefPageState extends State<DebriefPage> {
                         children: <Widget>[
                           Expanded(
                             flex: 5,
-                            child: CommonView.image(
-                                context, 'vector_smart_object3'),
+//                            child:
+//                            CommonView.image(
+//                                context, 'vector_smart_object3'),
                           ),
                           Expanded(
                             flex: 4,
@@ -164,6 +165,7 @@ class _CategoryItemState extends State<CategoryItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         widget.selectItem(widget.index);
       },
       child: Container(

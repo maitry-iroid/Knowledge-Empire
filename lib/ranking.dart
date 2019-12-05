@@ -401,6 +401,7 @@ class _OptionItemState extends State<OptionItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          Utils.playClickSound();
           widget.selectItem(widget.index);
         },
         child: Image(
@@ -433,6 +434,7 @@ class _CustomItemState extends State<CustomItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -479,6 +481,7 @@ class _TimeItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -524,6 +527,7 @@ class _ProfitItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         widget.selectItem(widget.index);
       },
       child: Container(

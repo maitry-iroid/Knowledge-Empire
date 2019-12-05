@@ -106,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: ColorRes.white),
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         Navigator.push(
                             context,
                             MaterialPageRoute(

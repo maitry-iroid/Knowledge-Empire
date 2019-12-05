@@ -118,6 +118,7 @@ class DashboardPageState extends State<DashboardPage> {
         ),
       ),
       onTap: () {
+        Utils.playClickSound();
         performItemClick(type);
       },
     );

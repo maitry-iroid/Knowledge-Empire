@@ -189,6 +189,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                         fontSize: 17, color: ColorRes.white),
                                   )),
                               onTap: () {
+                                Utils.playClickSound();
                                 Utils.hideKeyboard(context);
 
                                 validateData();
@@ -213,6 +214,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                         fontSize: 17, color: ColorRes.white),
                                   )),
                               onTap: () {
+                                Utils.playClickSound();
                                 Utils.hideKeyboard(context);
 
                                 Navigator.pop(context);

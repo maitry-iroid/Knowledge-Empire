@@ -36,6 +36,7 @@ class _PLPageState extends State<PLPage> {
             width: 35,
           ),
           onTap: () {
+            Utils.playClickSound();
             Utils.performBack(context);
           },
         ),

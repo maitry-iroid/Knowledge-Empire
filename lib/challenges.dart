@@ -228,6 +228,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         _onSelected(index);
 //          selectItem(index);
 //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
@@ -265,6 +266,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         selectItem(index);
       },
       child: Container(

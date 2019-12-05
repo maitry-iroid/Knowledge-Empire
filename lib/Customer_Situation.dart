@@ -183,6 +183,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                           alignment: Alignment.bottomRight,
                           child: InkResponse(
                             onTap: () {
+                              Utils.playClickSound();
                               showDialog(
                                 context: context,
                                 builder: (_) => AlertCheckAnswersCorrect(),
@@ -214,10 +215,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         children: <Widget>[
                           Container(
                             height: Utils.getDeviceHeight(context) / 2.2,
-                            child: CommonView.image(
-                                context,
-                                questionDataCustSituation
-                                    .mediaLink), //"vector_smart_object1"
+//                            child: CommonView.image(
+//                                context,
+//                                questionDataCustSituation
+//                                    .mediaLink), //"vector_smart_object1"
                           ),
                           Expanded(
                               child: CommonView.questionAndExplanation(
@@ -287,6 +288,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
+
 //          setState(() {
 //            arrAnswerSituation[index].isSelected = !arrAnswerSituation[index].isSelected;
 //          });
@@ -490,6 +492,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
+                          Utils.playClickSound();
                           Navigator.pop(context);
                         },
                         child: Container(
