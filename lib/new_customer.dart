@@ -365,7 +365,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
         min(questionData.counter, 10) * random;
-    ;
     var b = (1 + (0.01 * min(questionAnswered, 900)));
     var c = (2 - resourceBonus);
 
