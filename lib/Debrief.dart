@@ -165,6 +165,7 @@ class _CategoryItemState extends State<CategoryItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Utils.playClickSound();
         widget.selectItem(widget.index);
       },
       child: Container(

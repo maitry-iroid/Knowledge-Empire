@@ -455,7 +455,6 @@ class IntroPageState extends State<IntroPage> {
                         width: Utils.getDeviceWidth(context) / 4.4,
                       ),
                       onTap: () {
-                        performItemClick(Const.typeExistingCustomer);
                       })
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.6,
@@ -751,6 +750,7 @@ class IntroPageState extends State<IntroPage> {
                           height: Utils.getDeviceHeight(context) / 10,
                         ),
                         onTap: () {
+                          Utils.playClickSound();
                           setState(() {
                             Navigator.pushAndRemoveUntil(
                                 context,

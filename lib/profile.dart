@@ -239,6 +239,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fit: BoxFit.fill)),
                 ),
                 onTap: () async {
+                  Utils.playClickSound();
                   if (Injector.isBusinessMode)
                     await Injector.prefs
                         .setInt(PrefKeys.mode, Const.professionalMode);
@@ -282,6 +283,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   logout() async {
+    Utils.playClickSound();
     setState(() {
       isLoading = true;
     });
@@ -478,6 +480,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 40,
                   ),
                   onTap: () {
+                    Utils.playClickSound();
                     FocusScope.of(context).requestFocus(myFocusNode);
                   },
                 )
@@ -577,6 +580,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               )),
                     ),
                     onTap: () {
+                      Utils.playClickSound();
                       Utils.showChangePasswordDialog(_scaffoldKey, true);
                     },
                   ),
@@ -629,6 +633,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void showPhotoOptionDialog(BuildContext mainContext) {
     // flutter defined function
+    Utils.playClickSound();
     showDialog(
       context: mainContext,
       builder: (BuildContext context) {
@@ -645,6 +650,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () {
+                  Utils.playClickSound();
                   Navigator.pop(context);
                   getImage(Const.typeGallery);
                 },
@@ -660,6 +666,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () async {
+                  Utils.playClickSound();
                   Navigator.pop(context);
                   getImage(Const.typeCamera);
                 },
@@ -672,6 +679,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   updateProfile() {
+    Utils.playClickSound();
     var req = {
       'userId': Injector.userData.userId,
       'name': nameController.text.trim(),

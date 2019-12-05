@@ -131,6 +131,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         ],
       ),
       onTap: () {
+        Utils.playClickSound();
         Utils.showOrgInfoDialog(_scaffoldKey, type);
       },
     );

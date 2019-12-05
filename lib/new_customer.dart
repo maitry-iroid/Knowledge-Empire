@@ -308,6 +308,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
+            Utils.playClickSound();
             if (Injector.userData.salesPersonCount >
                 arrQuestions[index].resource) {
               Navigator.push(

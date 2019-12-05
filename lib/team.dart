@@ -36,6 +36,7 @@ class _TeamPageState extends State<TeamPage> {
             width: 35,
           ),
           onTap: () {
+            Utils.playClickSound();
             Utils.performBack(context);
           },
         ),

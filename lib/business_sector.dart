@@ -175,6 +175,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         ),
       ),
       onTap: () {
+        Utils.playClickSound();
         setState(() {
           selectedModule = arrFinalLearningModules[index];
         });
@@ -350,6 +351,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           width: 40,
                         ),
                         onTap: () {
+                          Utils.playClickSound();
                           downloadAllQuestions();
                         },
                       )
@@ -383,6 +385,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       ),
                     ),
                     onTap: () {
+                      Utils.playClickSound();
                       if (selectedModule.isAssign == "0") {
                         assignUserToModule(Const.subscribe);
                       }

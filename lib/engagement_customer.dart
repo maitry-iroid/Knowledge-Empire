@@ -4,7 +4,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'commonview/background.dart';
-import 'models/questions_response.dart';
+//import 'models/questions_response.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
@@ -208,6 +208,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         alignment: Alignment.bottomRight,
                         child: InkResponse(
                           onTap: () {
+                            Utils.playClickSound();
                             showDialog(
                               context: context,
                               builder: (_) => FunkyOverlayAnswers(),
@@ -242,6 +243,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
+          Utils.playClickSound();
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
@@ -433,6 +435,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
+                          Utils.playClickSound();
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -472,6 +475,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
   Widget showItemFullScree(int index) {
     return GestureDetector(
         onTap: () {
+          Utils.playClickSound();
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
@@ -665,6 +669,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
 //          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
+                            Utils.playClickSound();
                             Navigator.pop(context);
 
 //                          (checkimg == true ? showDialog(

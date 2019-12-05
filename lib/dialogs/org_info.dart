@@ -59,6 +59,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                   ),
                 ),
                 onTap: () {
+                  Utils.playClickSound();
                   Navigator.pop(context);
                 },
               ))
