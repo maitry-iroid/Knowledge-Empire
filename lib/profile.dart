@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/LogoutRequest.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
@@ -17,7 +16,7 @@ import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'login.dart';
 import 'home.dart';
-import 'models/login_response_data.dart';
+import 'models/logout.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

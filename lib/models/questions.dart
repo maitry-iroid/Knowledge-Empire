@@ -1,12 +1,31 @@
-class QuestionsRequest {
-  String flag="";
-  String result="";
-  String msg="";
+class QuestionRequest {
+  String userId = "";
+  String moduleId = "";
+
+  QuestionRequest({this.userId, this.moduleId});
+
+  QuestionRequest.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    moduleId = json['moduleId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['moduleId'] = this.moduleId;
+    return data;
+  }
+}
+
+class QuestionsResponse {
+  String flag = "";
+  String result = "";
+  String msg = "";
   List<QuestionData> data = List();
 
-  QuestionsRequest({this.flag, this.result, this.msg, this.data});
+  QuestionsResponse({this.flag, this.result, this.msg, this.data});
 
-  QuestionsRequest.fromJson(Map<String, dynamic> json) {
+  QuestionsResponse.fromJson(Map<String, dynamic> json) {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
@@ -31,30 +50,21 @@ class QuestionsRequest {
 }
 
 class QuestionData {
-  String questionId="";
-  String title="";
-  String question="";
-  String moduleName="";
-  String description="";
-  String correctAnswerId="";
-  String loyalty="";
-  String resource="";
-  String value="";
-  String mediaLink="";
+  String questionId = "";
+  String title = "";
+  String question = "";
+  String moduleName = "";
+  String description = "";
+  String correctAnswerId = "";
+  String loyalty = "";
+  int resource = 0;
+  String value = "";
+  String mediaLink = "";
   List<Answer> answer = List();
+  int counter = 0;
+  int daysInList = 0;
 
-  QuestionData(
-      {this.questionId,
-        this.title,
-        this.question,
-        this.moduleName,
-        this.description,
-        this.correctAnswerId,
-        this.loyalty,
-        this.resource,
-        this.value,
-        this.mediaLink,
-        this.answer});
+  QuestionData();
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -95,8 +105,8 @@ class QuestionData {
 }
 
 class Answer {
-  String answerId="";
-  String answer="";
+  String answerId = "";
+  String answer = "";
   bool isSelected = false;
 
   Answer({this.answerId, this.answer});

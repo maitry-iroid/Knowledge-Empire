@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +13,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/questions.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -59,21 +61,34 @@ class Utils {
         textColor: Colors.white);
   }
 
-//  static Future<bool> isInternetConnectedWithAlert(
-//      GlobalKey<ScaffoldState> _scaffoldKey) async {
-//    bool isConnected = false;
-//
-//    var connectivityResult = await (Connectivity().checkConnectivity());
-//    if (connectivityResult == ConnectivityResult.mobile ||
-//        connectivityResult == ConnectivityResult.wifi) {
-//      isConnected = true;
-//    } else {
-//      showSnackBar(_scaffoldKey, "Please check your internet connectivity.");
-//      isConnected = false;
-//    }
-//
-//    return isConnected;
-//  }
+  static Future<bool> isInternetConnectedWithAlert() async {
+    bool isConnected = false;
+
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      isConnected = true;
+    } else {
+      showToast("Please check your internet connectivity.");
+      isConnected = false;
+    }
+
+    return isConnected;
+  }
+
+  static Future<bool> isInternetConnected() async {
+    bool isConnected = false;
+
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      isConnected = true;
+    } else {
+      isConnected = false;
+    }
+
+    return isConnected;
+  }
 
 //  static Future<String> getDeviceId() async {
 //    String identifier;
@@ -143,9 +158,9 @@ class Utils {
 
   static performBack(BuildContext context) {
     if (!Navigator.canPop(context)) {
-
       Navigator.pop(context);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
 
       /*showDialog(
           context: context,
@@ -176,7 +191,9 @@ class Utils {
   static String getText(BuildContext context, String text) {
 //    return AppLocalizations.of(context).tr(text);
 
-    return AppLocalizations.of(context).text(text)!=null?AppLocalizations.of(context).text(text):text;
+    return AppLocalizations.of(context).text(text) != null
+        ? AppLocalizations.of(context).text(text)
+        : text;
 
     if (Injector.prefs.getString(PrefKeys.userId) != null &&
         Injector.prefs.getString(PrefKeys.userId).isNotEmpty) {
@@ -188,7 +205,9 @@ class Utils {
               ? StringRes.localizedValuesProf['en'][text]
               : "";
     } else {
-      return StringRes.localizedValues['en'][text]!=null?StringRes.localizedValues['en'][text]:"";
+      return StringRes.localizedValues['en'][text] != null
+          ? StringRes.localizedValues['en'][text]
+          : "";
     }
   }
 
@@ -248,7 +267,29 @@ class Utils {
       return "";
   }
 
-  static playClickSound(){
+  static playClickSound() {
     Injector.audioCache.play("sounds/all_button_clicks.wav");
+  }
+
+  static saveQuestionLocally(List<QuestionData> arrQuestions) async {
+    List<String> jsonQuestionData = List();
+    List<QuestionData> questionData_ = List();
+
+    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+      List<String> jsonQuestionData =
+          Injector.prefs.getStringList(PrefKeys.questionData);
+
+      jsonQuestionData.forEach((jsonQuestion) {
+        questionData_.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+      });
+    }
+
+    questionData_.addAll(arrQuestions);
+
+    questionData_.forEach((questionData) {
+      jsonQuestionData.add(json.encode(questionData));
+    });
+
+    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
   }
 }

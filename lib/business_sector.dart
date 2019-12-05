@@ -1,14 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/learning_module_data.dart';
+import 'package:ke_employee/models/questions.dart';
 
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
+import 'models/get_learning_module.dart';
 
 class BusinessSectorPage extends StatefulWidget {
   @override
@@ -333,40 +337,59 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               ],
             ),
           ),
-          InkResponse(
-              child: Container(
-                alignment: Alignment.center,
-                height: Utils.getTitleHeight(),
-                margin: EdgeInsets.symmetric(
-                    horizontal: Utils.getDeviceWidth(context) / 8,
-                    vertical: 20),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
-                    borderRadius: BorderRadius.circular(20),
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg("bg_subscribe")),
-                            fit: BoxFit.fill)
-                        : null),
-                child: Text(
-                  Utils.getText(
-                      context,
-                      selectedModule.isAssign == "0"
-                          ? StringRes.subscribe
-                          : StringRes.unSubscribe),
-                  style: TextStyle(color: ColorRes.white, fontSize: 17),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              onTap: () {
-                assignUserToModule(
-                  selectedModule.isAssign == "0"
-                      ? Const.subscribe
-                      : Const.unSubscribe,
-                );
-              })
+          Container(
+            height: 35,
+            margin: EdgeInsets.symmetric(vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                selectedModule.isAssign == "1"
+                    ? InkResponse(
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg('ic_download')),
+                          width: 40,
+                        ),
+                        onTap: () {
+                          downloadAllQuestions();
+                        },
+                      )
+                    : Container(),
+                InkResponse(
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      decoration: BoxDecoration(
+                          color: Injector.isBusinessMode
+                              ? null
+                              : ColorRes.headerBlue,
+                          borderRadius: Injector.isBusinessMode
+                              ? null
+                              : BorderRadius.circular(20),
+                          image: Injector.isBusinessMode
+                              ? DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("bg_subscribe")),
+                                  fit: BoxFit.fill)
+                              : null),
+                      child: Text(
+                        Utils.getText(
+                            context,
+                            selectedModule.isAssign == "0"
+                                ? StringRes.subscribe
+                                : StringRes.subscribed),
+                        style: TextStyle(color: ColorRes.white, fontSize: 17),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () {
+                      if (selectedModule.isAssign == "0") {
+                        assignUserToModule(Const.subscribe);
+                      }
+                    })
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -390,7 +413,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             arrLearningModules.addAll(data.data);
             arrFinalLearningModules.addAll(data.data);
 
-            if (arrLearningModules.length > 0 && selectedModule.moduleId.isEmpty) {
+            if (arrLearningModules.length > 0 &&
+                (selectedModule.moduleId == null ||
+                    selectedModule.moduleId.isEmpty)) {
               selectedModule = arrLearningModules[0];
             }
           });
@@ -450,5 +475,29 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     print("search_data___" + data.length.toString());
 
     arrFinalLearningModules.addAll(data);
+  }
+
+  void downloadAllQuestions() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    QuestionRequest rq = QuestionRequest();
+    rq.userId = Injector.userData.userId;
+    rq.moduleId = selectedModule.moduleId;
+
+    WebApi().getQuestions(rq.toJson()).then((questionResponse) async {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (questionResponse != null) {
+        if (questionResponse.flag == "true") {
+          List<QuestionData> arrQuestions = questionResponse.data;
+
+          Utils.saveQuestionLocally(arrQuestions);
+        }
+      }
+    });
   }
 }

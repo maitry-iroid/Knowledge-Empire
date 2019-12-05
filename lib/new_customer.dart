@@ -1,9 +1,11 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/engagement_customer.dart';
-import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -11,7 +13,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
 import 'helper/web_api.dart';
-import 'models/questions_response.dart';
+import 'models/questions.dart';
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -19,31 +21,49 @@ class NewCustomerPage extends StatefulWidget {
 }
 
 class _NewCustomerPageState extends State<NewCustomerPage> {
-
-
   bool isLoading = false;
 
   List<QuestionData> arrQuestions = List();
+
+  int questionAnswered = 1;
+  int loyaltyBonus = 0;
+  int resourceBonus = 0;
+  int valueBonus = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getQuestions();
+
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) {
+        getQuestions();
+      } else {
+        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+          List<String> jsonQuestionData =
+              Injector.prefs.getStringList(PrefKeys.questionData);
+
+          jsonQuestionData.forEach((jsonQuestion) {
+            arrQuestions.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+          });
+
+          if (arrQuestions != null) {
+            setState(() {});
+          }
+        }
+      }
+    });
   }
 
-
   getQuestions() {
-
     setState(() {
       isLoading = true;
     });
 
-    var req = {
-      'userId': Injector.userData.userId,
-    };
+    QuestionRequest rq = QuestionRequest();
+    rq.userId = Injector.userData.userId;
 
-    WebApi().getQuestions(req).then((data) {
+    WebApi().getQuestions(rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
@@ -69,8 +89,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       width: 0.0,
     );
   }
-//  CommonView.showCircularProgress(isLoading)
 
+//  CommonView.showCircularProgress(isLoading)
 
   @override
   Widget build(BuildContext context) {
@@ -78,24 +98,25 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         body: SafeArea(
       child: Stack(
         children: <Widget>[
-          Align(child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: CommonView.getBGDecoration(),
+          Align(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CommonView.showTitle(context, StringRes.newCustomers),
-                  showSubHeader(),
-                  showItems()
-                ],
+              width: double.infinity,
+              height: double.infinity,
+              decoration: CommonView.getBGDecoration(),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CommonView.showTitle(context, StringRes.newCustomers),
+                    showSubHeader(),
+                    showItems()
+                  ],
+                ),
               ),
             ),
-          ),
           ),
           Container(child: showCircularProgress()),
         ],
@@ -232,11 +253,10 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       maxLines: 1,
                     ),
                   ),
-
                   Expanded(
                     flex: 3,
                     child: Text(
-                        ("${arrQuestions[index].value} \$"),
+                      ("${getValue(arrQuestions[index])} \$"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -246,7 +266,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                        ("${arrQuestions[index].loyalty} d"),
+                      ("${getLoyalty(arrQuestions[index])} d"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -256,7 +276,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                        arrQuestions[index].resource,
+                      getResource(arrQuestions[index]),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -288,18 +308,72 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
-//            Navigator.push(context, MaterialPageRoute(builder: (context) => EngagementCustomer(questionData: arrQuestions[index],)));
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        HomePage(
-                          initialPageType: Const.typeEngagement,
-                          questionDataHomeScr: arrQuestions[index],
-                        )));
+            if (Injector.userData.salesPersonCount >
+                arrQuestions[index].resource) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                            initialPageType: Const.typeEngagement,
+                            questionDataHomeScr: arrQuestions[index],
+                          )));
+            } else {
+              Utils.showToast("You need atleast " +
+                  arrQuestions[index].resource.toString() +
+                  " Sales persons to attempt this Question. You can add more Sales persons from the Organization.");
+            }
           },
         ),
       ],
     );
+  }
+
+  getValue(QuestionData questionData) {
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
+    var b = (1 + (0.01 * min(questionAnswered, 900)));
+    var c = (1 + valueBonus);
+
+    var finalValue = (a * b * c).toStringAsFixed(0);
+
+    print("finalValue");
+    print(finalValue);
+
+    return finalValue;
+  }
+
+  getLoyalty(QuestionData questionData) {
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = max(pow(questionData.counter, 2), 1);
+    var b = questionData.counter * random;
+    var c = (1 + loyaltyBonus);
+
+    var finalValue = (a + b * c).toStringAsFixed(0);
+
+    print("finalValue");
+    print(finalValue);
+
+    return finalValue;
+  }
+
+  getResource(QuestionData questionData) {
+//    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
+
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
+        min(questionData.counter, 10) * random;
+    ;
+    var b = (1 + (0.01 * min(questionAnswered, 900)));
+    var c = (2 - resourceBonus);
+
+    var finalValue = (a * b * c).toStringAsFixed(0);
+
+    print("finalValue");
+    print(finalValue);
+
+    return finalValue;
   }
 }

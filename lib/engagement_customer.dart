@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/questions_response.dart';
-import 'commonview/header.dart';
-import 'helper/res.dart';
+
 import 'commonview/background.dart';
 import 'models/questions_response.dart';
 import 'package:video_player/video_player.dart';
@@ -12,6 +10,8 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'helper/res.dart';
+import 'models/questions.dart';
 
 List<Answer> arrAnswer = List();
 
