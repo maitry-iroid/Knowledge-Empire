@@ -7,6 +7,11 @@ import 'commonview/header.dart';
 import 'helper/res.dart';
 import 'commonview/background.dart';
 import 'models/questions_response.dart';
+import 'package:video_player/video_player.dart';
+
+import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 
 List<Answer> arrAnswer = List();
 
@@ -35,6 +40,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   List abcdIndex = ['A', 'B', 'C', 'D'];
   int _selectedDrawerIndex = 0;
 
+
+  VideoPlayerController _videoPlay;
+
   selectItem(index) {
     setState(() {
       _selectedItem = index;
@@ -49,14 +57,32 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
+
+
   @override
   void initState() {
     // TODO: implement initState
-
+    super.initState();
     questionData = widget.questionDataEngCustomer;
     arrAnswer = widget.questionDataEngCustomer.answer;
     abcdList = abcdIndex;
-    super.initState();
+
+
+    _videoPlay = VideoPlayerController.network(
+        'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {
+          _videoPlay.play();
+        });
+      });
+    _videoPlay.play();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _videoPlay.dispose();
   }
 
   @override
@@ -92,11 +118,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                            height: Utils.getDeviceHeight(context) / 2.3,
+                          height: Utils.getDeviceHeight(context) / 2.3,
 //                                    child: CommonView.image(
 //                                        context, "vector_smart_object1"),
-                            child: CommonView.image(
-                                context, questionData.mediaLink)),
+                          child:
+
+//                          CommonView.image(
+//                              context, _videoPlay)
+
+                          CommonView.image(
+                                context, questionData.mediaLink)
+                        ),
                         Expanded(
                           child: CommonView.questionAndExplanation(
                               context,
@@ -188,13 +220,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               decoration: BoxDecoration(
                                   image:
 //                                  Injector.isBusinessMode ?
-                                  DecorationImage (
+                                      DecorationImage(
                                           image: AssetImage(Utils.getAssetsImg(
                                               "full_expand_question_answers")),
-                                          fit: BoxFit.fill
-                                  )
+                                          fit: BoxFit.fill)
 //                                  : null
-                              )),
+                                  )),
                         ),
                       )
                     ],

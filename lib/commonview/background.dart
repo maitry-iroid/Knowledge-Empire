@@ -13,6 +13,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/models/questions_response.dart';
+import 'package:video_player/video_player.dart';
 
 import '../home.dart';
 
@@ -81,14 +82,15 @@ class CommonView {
   //http://www.pdf995.com/samples/pdf.pdf
   //https://www.radiantmediaplayer.com/media/bbb-360p.mp4
   static image(BuildContext context, String image) {
-    var img = Container(
+    //VideoPlayerController _videoPlay
+   return Container(
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 20),
       decoration: BoxDecoration(
         color: ColorRes.white,
 
-//          image: DecorationImage(
-//            image: image != null ? new NetworkImage(image) : null,
-//              fit: BoxFit.fill),
+          image: DecorationImage(
+            image: image != null ? new NetworkImage(image) : null,
+              fit: BoxFit.fill),
 
 
        /* image: image != null && image.isNotEmpty
@@ -104,7 +106,21 @@ class CommonView {
         borderRadius: BorderRadius.circular(10),
       ),
     );
-    return img;
+
+  //video show code: -
+
+//    return Container(
+//      margin: EdgeInsets.only(left: 7, right: 7, bottom: 7, top: 7),
+//
+//      child:  _videoPlay.value.initialized
+//          ? AspectRatio(
+//        aspectRatio: _videoPlay.value.aspectRatio,
+//        child: VideoPlayer(_videoPlay),
+//      )
+//          : Container(),
+//
+//    );
+
   }
 
   static questionAndExplanation(

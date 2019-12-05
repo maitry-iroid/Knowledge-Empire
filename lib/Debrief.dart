@@ -120,8 +120,9 @@ class _DebriefPageState extends State<DebriefPage> {
                         children: <Widget>[
                           Expanded(
                             flex: 5,
-                            child: CommonView.image(
-                                context, 'vector_smart_object3'),
+//                            child:
+//                            CommonView.image(
+//                                context, 'vector_smart_object3'),
                           ),
                           Expanded(
                             flex: 4,
