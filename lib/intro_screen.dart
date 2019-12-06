@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,15 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
+import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
+import 'helper/web_api.dart';
 import 'login.dart';
+import 'models/get_customer_value.dart';
 
 class IntroPage extends StatefulWidget {
   IntroPage({Key key}) : super(key: key);
@@ -23,8 +28,15 @@ class IntroPage extends StatefulWidget {
 
 class IntroPageState extends State<IntroPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  Notifier _notifier;
   int selectedType = Const.typeName;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+//    _notifier.notify('changeMode', 'Sending data from notfier!');
+  }
 
   @override
   void initState() {
@@ -33,8 +45,26 @@ class IntroPageState extends State<IntroPage> {
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
   }
 
+  void getCustomerValues() {
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi()
+        .getCustomerValue(context, rq.toJson())
+        .then((customerValueData) async {
+      if (customerValueData != null) {
+        await Injector.prefs.setString(PrefKeys.customerValueData,
+            json.encode(customerValueData.toJson()));
+
+        Injector.customerValueData = customerValueData;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: ColorRes.colorBgDark,
@@ -148,10 +178,10 @@ class IntroPageState extends State<IntroPage> {
               visible: selectedType == Const.typeName ? true : false,
             ),
           ),
-          showHeaderItem(Const.typeChecked, context),
-          showHeaderItem(Const.typePeople, context),
+          showHeaderItem(Const.typeSalesPersons, context),
+          showHeaderItem(Const.typeEmployee, context),
           showHeaderItem(Const.typeBadge, context),
-          showHeaderItem(Const.typeResources, context),
+          showHeaderItem(Const.typeServicesPerson, context),
           showHeaderItem(Const.typeDollar, context),
           Visibility(
             child: showProfile(context),
@@ -282,13 +312,13 @@ class IntroPageState extends State<IntroPage> {
   }
 
   String getHeaderIcon(int type) {
-    if (type == Const.typeChecked)
+    if (type == Const.typeSalesPersons)
       return "ic_checked_header";
-    else if (type == Const.typePeople)
+    else if (type == Const.typeEmployee)
       return "ic_people";
     else if (type == Const.typeBadge)
       return "ic_badge";
-    else if (type == Const.typeResources)
+    else if (type == Const.typeServicesPerson)
       return "ic_resourses";
     else if (type == Const.typeDollar)
       return "ic_dollar";
@@ -297,26 +327,26 @@ class IntroPageState extends State<IntroPage> {
   }
 
   getProgress(int type) {
-    if (type == Const.typeChecked) {
+    if (type == Const.typeSalesPersons) {
       return "30/100";
-    } else if (type == Const.typePeople) {
+    } else if (type == Const.typeEmployee) {
       return "50/100";
     } else if (type == Const.typeBadge) {
       return "97%";
-    } else if (type == Const.typeResources) {
+    } else if (type == Const.typeServicesPerson) {
       return "80/100";
     } else
       return "50/100";
   }
 
   getProgressInt(int type) {
-    if (type == Const.typeChecked) {
+    if (type == Const.typeSalesPersons) {
       return 0.3;
-    } else if (type == Const.typePeople) {
+    } else if (type == Const.typeEmployee) {
       return 0.5;
     } else if (type == Const.typeBadge) {
       return 0.97;
-    } else if (type == Const.typeResources) {
+    } else if (type == Const.typeServicesPerson) {
       return 0.8;
     } else
       return 0.5;
@@ -454,8 +484,7 @@ class IntroPageState extends State<IntroPage> {
                         image: AssetImage(Utils.getAssetsImg("existing")),
                         width: Utils.getDeviceWidth(context) / 4.4,
                       ),
-                      onTap: () {
-                      })
+                      onTap: () {})
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.6,
                     ),
@@ -546,13 +575,14 @@ class IntroPageState extends State<IntroPage> {
                   padding:
                       EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                   child: InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("challenges")),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("challenges")),
 //                      height: Utils.getDeviceHeight(context) / 3.3,
-                        width: Utils.getDeviceHeight(context) / 2.6,
-                      ),
-                ),
-                )],
+                      width: Utils.getDeviceHeight(context) / 2.6,
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
           Positioned(
@@ -568,29 +598,28 @@ class IntroPageState extends State<IntroPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   InkResponse(
-                      child: Image(
-                        image:
-                            AssetImage(Utils.getAssetsImg("business_sectors")),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                        width: Utils.getDeviceWidth(context) / 3.4,
-                      ),
-                     ),
+                      width: Utils.getDeviceWidth(context) / 3.4,
+                    ),
+                  ),
                   InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("new-customer")),
-                        width: Utils.getDeviceWidth(context) / 4.2,
-                      ),
-                     ),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("new-customer")),
+                      width: Utils.getDeviceWidth(context) / 4.2,
+                    ),
+                  ),
 //                SizedBox(
 //                  width: Utils.getDeviceWidth(context) / 20,
 //                ),
                   InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("existing")),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("existing")),
 //                      height: Utils.getDeviceHeight(context) / 3.1,
-                        width: Utils.getDeviceWidth(context) / 4.6,
-                      ),
-                     ),
+                      width: Utils.getDeviceWidth(context) / 4.6,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -696,7 +725,6 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
-
                       Utils.playClickSound();
 
                       setState(() {
@@ -723,14 +751,14 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeDollar;
                         } else if (selectedType == Const.typeDollar) {
-                          selectedType = Const.typeResources;
-                        } else if (selectedType == Const.typeResources) {
+                          selectedType = Const.typeServicesPerson;
+                        } else if (selectedType == Const.typeServicesPerson) {
                           selectedType = Const.typeBadge;
                         } else if (selectedType == Const.typeBadge) {
-                          selectedType = Const.typePeople;
-                        } else if (selectedType == Const.typePeople) {
-                          selectedType = Const.typeChecked;
-                        } else if (selectedType == Const.typeChecked) {
+                          selectedType = Const.typeEmployee;
+                        } else if (selectedType == Const.typeEmployee) {
+                          selectedType = Const.typeSalesPersons;
+                        } else if (selectedType == Const.typeSalesPersons) {
                           selectedType = Const.typeName;
                         }
                       });
@@ -754,7 +782,8 @@ class IntroPageState extends State<IntroPage> {
                           setState(() {
                             Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => HomePage()),
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
                                 ModalRoute.withName("/home"));
 //                            Navigator.push(
 //                                context,
@@ -773,19 +802,18 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
-
                       Utils.playClickSound();
 
                       setState(() {
                         if (selectedType == Const.typeName) {
-                          selectedType = Const.typeChecked;
-                        } else if (selectedType == Const.typeChecked) {
-                          selectedType = Const.typePeople;
-                        } else if (selectedType == Const.typePeople) {
+                          selectedType = Const.typeSalesPersons;
+                        } else if (selectedType == Const.typeSalesPersons) {
+                          selectedType = Const.typeEmployee;
+                        } else if (selectedType == Const.typeEmployee) {
                           selectedType = Const.typeBadge;
                         } else if (selectedType == Const.typeBadge) {
-                          selectedType = Const.typeResources;
-                        } else if (selectedType == Const.typeResources) {
+                          selectedType = Const.typeServicesPerson;
+                        } else if (selectedType == Const.typeServicesPerson) {
                           selectedType = Const.typeDollar;
                         } else if (selectedType == Const.typeDollar) {
                           selectedType = Const.typeProfile;
@@ -830,7 +858,7 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeChecked
+          selectedType == Const.typeSalesPersons
               ? Positioned(
                   top: 65,
                   left: Utils.getDeviceWidth(context) / 3.40,
@@ -845,7 +873,7 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-          selectedType == Const.typePeople
+          selectedType == Const.typeEmployee
               ? Positioned(
                   top: 65,
                   left: Utils.getDeviceWidth(context) / 2.35,
@@ -876,7 +904,7 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeResources
+          selectedType == Const.typeServicesPerson
               ? Positioned(
                   top: 65,
                   left: Utils.getDeviceWidth(context) / 2.35,

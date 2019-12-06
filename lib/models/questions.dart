@@ -65,6 +65,7 @@ class QuestionData {
   int daysInList = 0;
   int attemptTime = 0;
   bool isAnsweredCorrect = false;
+  bool isSynced = false;
 
   QuestionData();
 

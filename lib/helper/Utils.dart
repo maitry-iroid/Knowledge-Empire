@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -88,6 +89,15 @@ class Utils {
     }
 
     return isConnected;
+  }
+
+  static showLoader(BuildContext context) async {
+    await showDialog(
+        context: context, builder: (BuildContext context) => Loader());
+  }
+
+  static closeLoader(BuildContext context) {
+    Navigator.pop(context);
   }
 
 //  static Future<String> getDeviceId() async {
@@ -291,5 +301,20 @@ class Utils {
     });
 
     await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
+  }
+
+  static List<QuestionData> getQuestionsLocally() {
+    List<QuestionData> questionData = List();
+
+    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+      List<String> jsonQuestionData =
+          Injector.prefs.getStringList(PrefKeys.questionData);
+
+      jsonQuestionData.forEach((jsonQuestion) {
+        questionData.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+      });
+    }
+
+    return questionData;
   }
 }

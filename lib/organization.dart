@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/manage_organization.dart';
+import 'package:ke_employee/models/organization.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
@@ -16,6 +19,18 @@ class OrganizationsPage extends StatefulWidget {
 
 class _OrganizationsPageState extends State<OrganizationsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  OrganizationData organizationData;
+
+  List<Organization> arrOrganization = List();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getOrganization();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +49,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             ),
             CommonView.showTitle(context, StringRes.organizations),
             Expanded(
-              child: showItems(),
+              child: arrOrganization.length > 0 ? showItems() : Container(),
             )
           ],
         ),
@@ -43,93 +58,124 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   showItem(int type) {
-    return InkResponse(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                getTitle(type),
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Injector.isBusinessMode
-                        ? ColorRes.white
-                        : ColorRes.hintColor),
+    int position = type - 1;
+
+    Organization organization = arrOrganization[position];
+
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              getTitle(position),
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : ColorRes.hintColor),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Image(
+              image: AssetImage(
+                Utils.getAssetsImg('info'),
               ),
-              SizedBox(
-                width: 5,
+              color: Injector.isBusinessMode
+                  ? ColorRes.white
+                  : ColorRes.hintColor,
+              fit: BoxFit.fill,
+              width: 15,
+            )
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            Image(
+              image: AssetImage(Utils.getAssetsImg('user_org')),
+              fit: BoxFit.fill,
+              width: 30,
+            ),
+            Positioned(
+              left: 12,
+              right: 0,
+              bottom: 1,
+              child: Text(
+                organization.level.toString(),
+                style: TextStyle(color: ColorRes.white, fontSize: 15),
               ),
-              Image(
-                image: AssetImage(
-                  Utils.getAssetsImg('info'),
+            )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkResponse(
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg('minus')),
+                  fit: BoxFit.fill,
+                  width: 15,
                 ),
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.hintColor,
-                fit: BoxFit.fill,
-                width: 15,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Image(
-            image: AssetImage(Utils.getAssetsImg('user_org')),
-            fit: BoxFit.fill,
-            width: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image(
-                image: AssetImage(Utils.getAssetsImg('minus')),
-                fit: BoxFit.fill,
-                width: 15,
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 15,
-                    width: Utils.getDeviceWidth(context) / 13,
-                    margin: EdgeInsets.symmetric(horizontal: 2),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('bg_progress_2')),
-                            fit: BoxFit.fill)),
+              onTap: (){
+                manageLevel(position, Const.subtract);
+              },
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                  height: 15,
+                  width: Utils.getDeviceWidth(context) / 13,
+                  margin: EdgeInsets.symmetric(horizontal: 2),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image:
+                          AssetImage(Utils.getAssetsImg('bg_progress_2')),
+                          fit: BoxFit.fill)),
 //                padding: EdgeInsets.symmetric(vertical: 2),
-                  ),
-                  LinearPercentIndicator(
-                    width: Utils.getDeviceWidth(context) / 12,
-                    lineHeight: 15.0,
-                    percent: 0.05,
-                    backgroundColor: Colors.transparent,
-                    progressColor: Colors.blue,
-                  )
-                ],
+                ),
+                LinearPercentIndicator(
+                  width: Utils.getDeviceWidth(context) / 12,
+                  lineHeight: 15.0,
+                  percent: getProgress(position),
+                  backgroundColor: Colors.transparent,
+                  progressColor: Colors.blue,
+                )
+              ],
+            ),
+            InkResponse(
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg('add')),
+                  fit: BoxFit.fill,
+                  width: 15,
+                ),
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Image(
-                image: AssetImage(Utils.getAssetsImg('plus')),
-                fit: BoxFit.fill,
-                width: 15,
-              )
-            ],
-          ),
-        ],
-      ),
+              onTap: (){
+                manageLevel(position, Const.add);
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+
+    return InkResponse(
+
       onTap: () {
         Utils.playClickSound();
         Utils.showOrgInfoDialog(_scaffoldKey, type);
@@ -137,25 +183,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     );
   }
 
-  String getTitle(int type) {
-    if (type == Const.typeCRM)
-      return "CRM";
-    else if (type == Const.typeHR)
-      return "HR";
-    else if (type == Const.typeServices)
-      return "Service";
-    else if (type == Const.typeMarketing)
-      return "Marketing";
-    else if (type == Const.typeSales)
-      return "Sales";
-    else if (type == Const.typeOperations)
-      return "Operations";
-    else if (type == Const.typeLegal)
-      return "Legal";
-    else if (type == Const.typeFinance)
-      return "Finance";
-    else
-      return "";
+  String getTitle(int position) {
+    return Utils.getText(context, arrOrganization[position].name);
   }
 
   showItems() {
@@ -170,9 +199,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               top: Utils.getDeviceHeight(context) / 5),
           child: Image(
             image: AssetImage(Utils.getAssetsImg(
-                Injector.isBusinessMode
-                    ? 'table_org'
-                    : 'org_table_prof')),
+                Injector.isBusinessMode ? 'table_org' : 'org_table_prof')),
           ),
         ),
         Row(
@@ -221,5 +248,55 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         )
       ],
     );
+  }
+
+  void getOrganization() {
+    Utils.isInternetConnectedWithAlert().then((_) {
+      GetOrganizationRequest rq = GetOrganizationRequest();
+      rq.userId = Injector.userData.userId;
+
+      WebApi()
+          .getOrganizations(context, rq.toJson())
+          .then((getOrganizationData) {
+        if (getOrganizationData != null) {
+          organizationData = getOrganizationData;
+          arrOrganization = getOrganizationData.organization;
+
+          setState(() {});
+        }
+      });
+    });
+  }
+
+  getProgress(int type) {
+    var progress = arrOrganization[type].employeeCount /
+        (organizationData.totalEmpCount != 0
+            ? organizationData.totalEmpCount
+            : 1);
+
+    print("progress___" + progress.toString());
+
+//    return progress.toDouble();
+    return 0.5;
+  }
+
+  manageLevel(int position, int action) {
+    Utils.isInternetConnectedWithAlert().then((_) {
+      ManageOrganizationRequest rq = ManageOrganizationRequest();
+      rq.userId = Injector.userData.userId;
+      rq.action = action;
+      rq.type = arrOrganization[position].type;
+
+      WebApi()
+          .manageOrganizations(context, rq.toJson())
+          .then((getOrganizationData) {
+        if (getOrganizationData != null) {
+          organizationData = getOrganizationData;
+          arrOrganization[position] = organizationData.organization[0];
+
+          setState(() {});
+        }
+      });
+    });
   }
 }

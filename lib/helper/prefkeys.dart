@@ -4,4 +4,5 @@ class PrefKeys {
   static var mode = "mode";
   static var isLoginFirstTime = "isLoginFirstTime";
   static var questionData = "questionData";
+  static var customerValueData = "customerValueData";
 }

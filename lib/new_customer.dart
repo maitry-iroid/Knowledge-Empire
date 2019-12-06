@@ -263,7 +263,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      ("${getValue(arrQuestions[index])} \$"),
+                      ("${getValue(index).toString()} \$"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -273,7 +273,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      ("${getLoyalty(arrQuestions[index])} d"),
+                      ("${getLoyalty(index).toString()} d"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -283,7 +283,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      getResource(arrQuestions[index]),
+                      getResource(index).toString(),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -336,37 +336,51 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     );
   }
 
-  getValue(QuestionData questionData) {
+  getValue(int index) {
+    QuestionData questionData = arrQuestions[index];
+
     var random = ((Random().nextInt(10))) / 10;
 
     var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
     var b = (1 + (0.01 * min(questionAnswered, 900)));
     var c = (1 + valueBonus);
 
-    var finalValue = (a * b * c).toStringAsFixed(0);
+    int finalValue = int.parse((a * b * c).toStringAsFixed(0));
 
     print("finalValue");
     print(finalValue);
 
+    questionData.value = finalValue;
+
+    arrQuestions[index] = questionData;
+
     return finalValue;
   }
 
-  getLoyalty(QuestionData questionData) {
+  getLoyalty(int index) {
+    QuestionData questionData = arrQuestions[index];
+
     var random = ((Random().nextInt(10))) / 10;
 
     var a = max(pow(questionData.counter, 2), 1);
     var b = questionData.counter * random;
     var c = (1 + loyaltyBonus);
 
-    var finalValue = (a + b * c).toStringAsFixed(0);
+    var finalValue = int.parse((a + b * c).toStringAsFixed(0));
 
     print("finalValue");
     print(finalValue);
 
+    questionData.value = finalValue;
+
+    arrQuestions[index] = questionData;
+
     return finalValue;
   }
 
-  getResource(QuestionData questionData) {
+  getResource(int index) {
+    QuestionData questionData = arrQuestions[index];
+
 //    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
 
     var random = ((Random().nextInt(10))) / 10;
@@ -376,10 +390,14 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     var b = (1 + (0.01 * min(questionAnswered, 900)));
     var c = (2 - resourceBonus);
 
-    var finalValue = (a * b * c).toStringAsFixed(0);
+    var finalValue = int.parse((a * b * c).toStringAsFixed(0));
 
     print("finalValue");
     print(finalValue);
+
+    questionData.resource = finalValue;
+
+    arrQuestions[index] = questionData;
 
     return finalValue;
   }
