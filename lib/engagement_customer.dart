@@ -133,42 +133,35 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       decoration: BoxDecoration(
-                          borderRadius:
-                          Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                          borderRadius: Injector.isBusinessMode
+                              ? null
+                              : BorderRadius.circular(15),
 //                          border: Injector.isBusinessMode
 //                              ? null
 //                              : Border.all(
 //                              width: 1,
 //                              color: ColorRes.blueMenuSelected),
                           color: Injector.isBusinessMode
-                              ? null : ColorRes.blueMenuSelected,
+                              ? null
+                              : ColorRes.blueMenuSelected,
                           image: Injector.isBusinessMode
                               ? (DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg("eddit_profile")),
-                              fit: BoxFit.fill))
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("eddit_profile")),
+                                  fit: BoxFit.fill))
                               : null),
 
                       child: Text(
-                        Utils.getText(context, Injector.isBusinessMode ? StringRes.engagement : StringRes.engagement),
+                        Utils.getText(
+                            context,
+                            Injector.isBusinessMode
+                                ? StringRes.engagement
+                                : StringRes.engagement),
                         style: TextStyle(color: ColorRes.white, fontSize: 16),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     InkResponse(
-                      onTap: () {
-                        Utils.playClickSound();
-//            questionData.answer = arrAnswerr;
-//            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                    initialPageType: Const.typeDebrief,
-                                    questionDataSituation: questionData,
-                                  )),
-                        );
-                      },
                       child: Container(
                         alignment: Alignment.center,
                         height: 30,
@@ -185,6 +178,33 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      onTap: () {
+                        Utils.playClickSound();
+//            questionData.answer = arrAnswerr;
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
+
+//                        List<String> arrCorrectAnswer = questionData.correctAnswerId.split(',').toList();
+                        String selectedAnswer ="";
+
+                        arrAnswer.forEach((answer)=>{
+                          if(answer.isSelected){
+                          selectedAnswer += answer.answerId+","}
+
+                        });
+
+                        questionData.isAnsweredCorrect = true;
+
+
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePage(
+                                    initialPageType: Const.typeDebrief,
+                                    questionDataSituation: questionData,
+                                  )),
+                        );
+                      },
                     )
                   ],
                 )

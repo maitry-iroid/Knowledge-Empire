@@ -103,6 +103,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       return  Utils.incorrectAnswerSound();
     }
 //    return Utils.getAssetsImg("rounded_rectangle_8371");
+
+//  questionData.isAnsweredCorrect
   }
 
   @override

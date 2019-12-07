@@ -60,7 +60,6 @@ class QuestionData {
 //  String loyalty = "";
 //  String resource = "";
 //  String value = "";
-  int loyalty = 0;
   int resource = 0;
   int value = 0;
   String mediaLink = "";
