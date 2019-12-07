@@ -63,7 +63,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     super.initState();
     checkAudio();
-    correctWrongImage();
+//    correctWrongImage();
   }
 
   correctWrongImage() {
@@ -224,10 +224,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         children: <Widget>[
                           Container(
                             height: Utils.getDeviceHeight(context) / 2.2,
-                            child: CommonView.image(
-                                context, questionDataCustSituation.mediaLink),
-//                            child: CommonView.image(context,
-//                                correctWrongImage()), //"vector_smart_object1"
+//                            child: CommonView.image(
+//                                context, questionDataCustSituation.mediaLink),
+                            child: CommonView.image(context,
+                                correctWrongImage()), //"vector_smart_object1"
                           ),
                           Expanded(
                               child: CommonView.questionAndExplanation(
