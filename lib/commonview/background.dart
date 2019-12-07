@@ -13,6 +13,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/models/questions.dart';
+
 //import 'package:ke_employee/models/questions_response.dart';
 import 'package:video_player/video_player.dart';
 
@@ -87,7 +88,7 @@ class CommonView {
   //https://www.radiantmediaplayer.com/media/bbb-360p.mp4
   static image(BuildContext context, String image) {
     //VideoPlayerController _videoPlay
-   return Container(
+    return Container(
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 20),
       decoration: BoxDecoration(
         color: ColorRes.white,
@@ -98,9 +99,11 @@ class CommonView {
             new NetworkImage(image) :
             null,
               fit: BoxFit.fill),
+        image: DecorationImage(
+            image: image != null ? new NetworkImage(image) : null,
+            fit: BoxFit.fill),
 
-
-       /* image: image != null && image.isNotEmpty
+        /* image: image != null && image.isNotEmpty
             ? DecorationImage(
 //            image: image != null ? new NetworkImage(image) : null,
 
@@ -114,7 +117,7 @@ class CommonView {
       ),
     );
 
-  //video show code: -
+    //video show code: -
 
 //    return Container(
 //      margin: EdgeInsets.only(left: 7, right: 7, bottom: 7, top: 7),
@@ -127,7 +130,6 @@ class CommonView {
 //          : Container(),
 //
 //    );
-
   }
 
   static questionAndExplanation(
@@ -213,12 +215,12 @@ class CommonView {
                       decoration: BoxDecoration(
                           image:
 //                          Injector.isBusinessMode ?
-                          DecorationImage(
+                              DecorationImage(
                                   image: AssetImage(Utils.getAssetsImg(
                                       "full_expand_question_answers")),
                                   fit: BoxFit.fill)
 //                              : null
-                      ))
+                          ))
                   : Container(
                       alignment: Alignment.center,
                       height: Utils.getDeviceWidth(context) / 40,
@@ -226,12 +228,12 @@ class CommonView {
                       decoration: BoxDecoration(
                           image:
 //                          Injector.isBusinessMode ?
-                          DecorationImage(
+                              DecorationImage(
                                   image: AssetImage(
                                       Utils.getAssetsImg("close_dialog")),
                                   fit: BoxFit.fill)
 //                              : null
-                      )))),
+                          )))),
         )
       ],
     );

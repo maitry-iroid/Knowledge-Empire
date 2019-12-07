@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
+import 'helper/prefkeys.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'injection/dependency_injection.dart';
+import 'models/questions.dart';
 
 class ExistingCustomerPage extends StatefulWidget {
   @override
@@ -13,6 +17,32 @@ class ExistingCustomerPage extends StatefulWidget {
 }
 
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
+  List<QuestionData> arrQuestions = List();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+      List<String> jsonQuestionData =
+          Injector.prefs.getStringList(PrefKeys.questionData);
+
+      jsonQuestionData.forEach((jsonQuestion) {
+        QuestionData questionData =
+            QuestionData.fromJson(json.decode(jsonQuestion));
+
+        if (questionData.isAnsweredCorrect &&
+            questionData.attemptTime - DateTime.now().millisecondsSinceEpoch <
+                24*60*60*1000) arrQuestions.add(questionData);
+      });
+
+      if (arrQuestions != null) {
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +59,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      CommonView.showTitle(context,StringRes.existingCustomers),
+                      CommonView.showTitle(
+                          context, StringRes.existingCustomers),
                       showSubHeader(),
                       showItems()
                     ],
@@ -40,7 +71,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   Expanded showItems() {
     return Expanded(
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: arrQuestions.length,
         itemBuilder: (BuildContext context, int index) {
           return showItem(index);
         },
@@ -50,16 +81,18 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Container showSubHeader() {
     return Container(
-      height: Injector.isBusinessMode?30:25,
+      height: Injector.isBusinessMode ? 30 : 25,
       margin: EdgeInsets.only(top: 8, bottom: 5),
       padding: EdgeInsets.only(right: 3),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius:
-          Injector.isBusinessMode ? null : BorderRadius.circular(20),
-          image: Injector.isBusinessMode?DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-              fit: BoxFit.fill):null),
+              Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode
+              ? DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_rounded")),
+                  fit: BoxFit.fill)
+              : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -67,7 +100,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.name),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center, maxLines: 1,
+              textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -75,7 +109,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.sector),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center, maxLines: 1,
+              textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -83,7 +118,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.value),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center, maxLines: 1,
+              textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -91,7 +127,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.loyalty),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center, maxLines: 1,
+              textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(
@@ -99,7 +136,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Text(
               Utils.getText(context, StringRes.endRel),
               style: Theme.of(context).textTheme.body1,
-              textAlign: TextAlign.center, maxLines: 1,
+              textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
         ],
@@ -107,29 +145,31 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     );
   }
 
-
   Widget showItem(int index) {
     return Row(
       children: <Widget>[
         Expanded(
           child: Container(
-              height: Injector.isBusinessMode?30:25,
+              height: Injector.isBusinessMode ? 30 : 25,
               margin: EdgeInsets.symmetric(vertical: 5),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: Injector.isBusinessMode ? null : ColorRes.white,
-                  borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                  image: Injector.isBusinessMode?DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_record_white")),
-                      fit: BoxFit.fill):null),
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("bg_record_white")),
+                          fit: BoxFit.fill)
+                      : null),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     flex: 5,
-                    child: Text(
-                      'Mobile Dev.',
+                    child: Text(arrQuestions[index].title,
                       style: TextStyle(
                         color: ColorRes.blue,
                         fontSize: 15,
@@ -140,7 +180,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   Expanded(
                     flex: 6,
                     child: Text(
-                      'Mobile Dev.',
+                      arrQuestions[index].moduleName,
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
@@ -148,7 +188,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      '25 \$',
+                      arrQuestions[index].value.toString()+' \$',
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
@@ -156,7 +196,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      '25 d',
+                      arrQuestions[index].loyalty.toString()+' d',
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),

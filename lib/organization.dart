@@ -1,18 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/injection/dependency_injection.dart' as prefix0;
+import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/manage_organization.dart';
+import 'package:ke_employee/models/organization.dart';
+import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
-import 'helper/web_api.dart';
-import 'models/getorganization.dart';
-
-
-OrganizationResponsedata arrOrganization = OrganizationResponsedata();
 
 class OrganizationsPage extends StatefulWidget {
   @override
@@ -22,40 +27,23 @@ class OrganizationsPage extends StatefulWidget {
 class _OrganizationsPageState extends State<OrganizationsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  bool isLoading = false;
+  OrganizationData organizationData;
+  Notifier _notifier;
+
+  List<Organization> arrOrganization = List();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    downloadAllQuestions();
+
+    getOrganization();
   }
-
-  void downloadAllQuestions() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    OrganizationRequest rq = OrganizationRequest();
-    rq.userId = Injector.userData.userId;
-
-    WebApi().getOrganization(rq.toJson()).then((organationResponse) async {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (organationResponse != null) {
-        if (organationResponse.flagstr == "true") {
-//          List<OrganizationResponsedata> arrOrganization = organationResponse.;
-          arrOrganization = organationResponse.data;
-        }
-      }
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
@@ -71,7 +59,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             ),
             CommonView.showTitle(context, StringRes.organizations),
             Expanded(
-              child: showItems(),
+              child: arrOrganization.length > 0 ? showItems() : Container(),
             )
           ],
         ),
@@ -80,119 +68,123 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   showItem(int type) {
-    return InkResponse(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                getTitle(type),
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Injector.isBusinessMode
-                        ? ColorRes.white
-                        : ColorRes.hintColor),
+    int position = type - 1;
+
+    Organization organization = arrOrganization[position];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              getTitle(position),
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : ColorRes.hintColor),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Image(
+              image: AssetImage(
+                Utils.getAssetsImg('info'),
               ),
-              SizedBox(
-                width: 5,
+              color:
+                  Injector.isBusinessMode ? ColorRes.white : ColorRes.hintColor,
+              fit: BoxFit.fill,
+              width: 15,
+            )
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Stack(
+          fit: StackFit.loose,
+          children: <Widget>[
+            Image(
+              image: AssetImage(Utils.getAssetsImg('user_org')),
+              fit: BoxFit.fill,
+              width: 30,
+            ),
+            Positioned(
+              left: 12,
+              right: 0,
+              bottom: 1,
+              child: Text(
+                organization.level.toString(),
+                style: TextStyle(color: ColorRes.white, fontSize: 15),
               ),
-              Image(
-                image: AssetImage(
-                  Utils.getAssetsImg('info'),
+            )
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InkResponse(
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg('minus')),
+                  fit: BoxFit.fill,
+                  width: 15,
                 ),
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.hintColor,
-                fit: BoxFit.fill,
-                width: 15,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Image(
-            image: AssetImage(Utils.getAssetsImg('user_org')),
-            fit: BoxFit.fill,
-            width: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Image(
-                image: AssetImage(Utils.getAssetsImg('minus')),
-                fit: BoxFit.fill,
-                width: 15,
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Container(
-                    height: 15,
-                    width: Utils.getDeviceWidth(context) / 13,
-                    margin: EdgeInsets.symmetric(horizontal: 2),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('bg_progress_2')),
-                            fit: BoxFit.fill)),
+              onTap: () {
+                showConfirmDialog(position, Const.subtract);
+              },
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                  height: 15,
+                  width: Utils.getDeviceWidth(context) / 13,
+                  margin: EdgeInsets.symmetric(horizontal: 2),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg('bg_progress_2')),
+                          fit: BoxFit.fill)),
 //                padding: EdgeInsets.symmetric(vertical: 2),
-                  ),
-                  LinearPercentIndicator(
-                    width: Utils.getDeviceWidth(context) / 12,
-                    lineHeight: 15.0,
-                    percent: 0.05,
-                    backgroundColor: Colors.transparent,
-                    progressColor: Colors.blue,
-                  )
-                ],
+                ),
+                LinearPercentIndicator(
+                  width: Utils.getDeviceWidth(context) / 12,
+                  lineHeight: 15.0,
+                  percent: getProgress(position),
+                  backgroundColor: Colors.transparent,
+                  progressColor: Colors.blue,
+                )
+              ],
+            ),
+            InkResponse(
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg('plus')),
+                  fit: BoxFit.fill,
+                  width: 15,
+                ),
               ),
-              SizedBox(
-                width: 5,
-              ),
-              Image(
-                image: AssetImage(Utils.getAssetsImg('plus')),
-                fit: BoxFit.fill,
-                width: 15,
-              )
-            ],
-          ),
-        ],
-      ),
-      onTap: () {
-        Utils.playClickSound();
-        Utils.showOrgInfoDialog(_scaffoldKey, type);
-      },
+              onTap: () {
+                showConfirmDialog(position, Const.add);
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 
-  String getTitle(int type) {
-    if (type == Const.typeCRM)
-      return "CRM";
-    else if (type == Const.typeHR)
-      return "HR";
-    else if (type == Const.typeServices)
-      return "Service";
-    else if (type == Const.typeMarketing)
-      return "Marketing";
-    else if (type == Const.typeSales)
-      return "Sales";
-    else if (type == Const.typeOperations)
-      return "Operations";
-    else if (type == Const.typeLegal)
-      return "Legal";
-    else if (type == Const.typeFinance)
-      return "Finance";
-    else
-      return "";
+  String getTitle(int position) {
+    return Utils.getText(context, arrOrganization[position].name);
   }
 
   showItems() {
@@ -207,9 +199,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               top: Utils.getDeviceHeight(context) / 5),
           child: Image(
             image: AssetImage(Utils.getAssetsImg(
-                Injector.isBusinessMode
-                    ? 'table_org'
-                    : 'org_table_prof')),
+                Injector.isBusinessMode ? 'table_org' : 'org_table_prof')),
           ),
         ),
         Row(
@@ -258,5 +248,96 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         )
       ],
     );
+  }
+
+  void getOrganization() {
+    Utils.isInternetConnectedWithAlert().then((_) {
+      GetOrganizationRequest rq = GetOrganizationRequest();
+      rq.userId = Injector.userData.userId;
+
+      WebApi()
+          .getOrganizations(context, rq.toJson())
+          .then((getOrganizationData) {
+        if (getOrganizationData != null) {
+          organizationData = getOrganizationData;
+          arrOrganization = getOrganizationData.organization;
+
+          setState(() {});
+        }
+      });
+    });
+  }
+
+  getProgress(int position) {
+    if (arrOrganization[position].employeeCount == null) return 0.0;
+
+    var progress = arrOrganization[position].employeeCount /
+        (organizationData.totalEmpCount != 0
+            ? organizationData.totalEmpCount
+            : 1);
+
+    print("progress___" + progress.toString());
+
+//    return progress.toDouble();
+    return 0.5;
+  }
+
+  Future<void> showConfirmDialog(int position, int action) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Are you sure want to perform this operation?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () {
+                manageLevel(position, action);
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  manageLevel(int position, int action) {
+    Utils.isInternetConnectedWithAlert().then((_) {
+      ManageOrganizationRequest rq = ManageOrganizationRequest();
+      rq.userId = Injector.userData.userId;
+      rq.action = action;
+      rq.type = arrOrganization[position].type;
+
+      WebApi()
+          .manageOrganizations(context, rq.toJson())
+          .then((getOrganizationData) {
+        if (getOrganizationData != null) {
+          organizationData = getOrganizationData;
+          arrOrganization[position] = organizationData.organization[0];
+
+          setState(() {});
+
+          CustomerValueData customerValueData = Injector.customerValueData;
+          customerValueData.organization = arrOrganization;
+
+          Injector.prefs.setString(PrefKeys.customerValueData,
+              json.encode(customerValueData.toJson()));
+
+          Injector.customerValueData = customerValueData;
+
+          _notifier.notify('changeMode', 'Sending data from notfier!');
+        } else {
+          Utils.getText(context, StringRes.somethingWrong);
+        }
+      });
+    });
   }
 }

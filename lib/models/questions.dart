@@ -56,6 +56,7 @@ class QuestionData {
   String moduleName = "";
   String description = "";
   String correctAnswerId = "";
+  int loyalty = 0;
 //  String loyalty = "";
 //  String resource = "";
 //  String value = "";
@@ -68,6 +69,9 @@ class QuestionData {
   int daysInList = 0;
   String correctAnswerImage = "";
   String inCorrectAnswerImage = "";
+  int attemptTime = 0;
+  bool isAnsweredCorrect = false;
+  bool isSynced = false;
 
   QuestionData();
 

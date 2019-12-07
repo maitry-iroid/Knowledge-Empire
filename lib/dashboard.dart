@@ -203,13 +203,13 @@ class DashboardPageState extends State<DashboardPage> {
   }*/
 
   String getHeaderIcon(int type) {
-    if (type == Const.typeChecked)
+    if (type == Const.typeSalesPersons)
       return "ic_checked_header";
-    else if (type == Const.typePeople)
+    else if (type == Const.typeEmployee)
       return "ic_people";
     else if (type == Const.typeBadge)
       return "ic_badge";
-    else if (type == Const.typeResources)
+    else if (type == Const.typeServicesPerson)
       return "ic_resourses";
     else if (type == Const.typeDollar)
       return "ic_dollar";
@@ -218,26 +218,26 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   getProgress(int type) {
-    if (type == Const.typeChecked) {
+    if (type == Const.typeSalesPersons) {
       return "30/100";
-    } else if (type == Const.typePeople) {
+    } else if (type == Const.typeEmployee) {
       return "50/100";
     } else if (type == Const.typeBadge) {
       return "60/100";
-    } else if (type == Const.typeResources) {
+    } else if (type == Const.typeServicesPerson) {
       return "80/100";
     } else
       return "50/100";
   }
 
   getProgressInt(int type) {
-    if (type == Const.typeChecked) {
+    if (type == Const.typeSalesPersons) {
       return 0.3;
-    } else if (type == Const.typePeople) {
+    } else if (type == Const.typeEmployee) {
       return 0.5;
     } else if (type == Const.typeBadge) {
       return 0.6;
-    } else if (type == Const.typeResources) {
+    } else if (type == Const.typeServicesPerson) {
       return 0.8;
     } else
       return 0.5;

@@ -3,6 +3,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/organization.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -12,6 +13,8 @@ class HeaderView extends StatelessWidget {
   final Function openProfile;
 
   HeaderView({this.scaffoldKey, this.isShowMenu, this.openProfile});
+
+//  List<Organization> arrOrganization = Injector.customerValueData.organization;
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +97,10 @@ class HeaderView extends StatelessWidget {
                 ],
               ),
             ),
-            showHeaderItem(Const.typeChecked, context),
-            showHeaderItem(Const.typePeople, context),
+            showHeaderItem(Const.typeEmployee, context),
+            showHeaderItem(Const.typeSalesPersons, context),
+            showHeaderItem(Const.typeServicesPerson, context),
             showHeaderItem(Const.typeBadge, context),
-            showHeaderItem(Const.typeResources, context),
             showHeaderItem(Const.typeDollar, context),
             showProfile(context)
           ],
@@ -181,7 +184,10 @@ class HeaderView extends StatelessWidget {
                   ],
                 )
               : Text(
-                  ' \$ 120.00',
+                  ' \$ ' +
+                      (Injector.customerValueData != null
+                          ? Injector.customerValueData.totalBalance.toString()
+                          : "00.00"),
                   style: TextStyle(color: ColorRes.white, fontSize: 16),
                 ),
         ],
@@ -218,13 +224,13 @@ class HeaderView extends StatelessWidget {
   }
 
   String getHeaderIcon(int type) {
-    if (type == Const.typeChecked)
-      return "ic_checked_header";
-    else if (type == Const.typePeople)
+    if (type == Const.typeSalesPersons)
+      return "ic_sales_header";
+    else if (type == Const.typeEmployee)
       return "ic_people";
     else if (type == Const.typeBadge)
       return "ic_badge";
-    else if (type == Const.typeResources)
+    else if (type == Const.typeServicesPerson)
       return "ic_resourses";
     else if (type == Const.typeDollar)
       return "ic_dollar";
@@ -233,28 +239,76 @@ class HeaderView extends StatelessWidget {
   }
 
   getProgress(int type) {
-    if (type == Const.typeChecked) {
-      return "30/100";
-    } else if (type == Const.typePeople) {
-      return "50/100";
+//    if()
+
+    if (type == Const.typeSalesPersons) {
+      return getProgressText(Const.typeSales);
+    } else if (type == Const.typeEmployee) {
+      return getProgressText(Const.typeHR);
     } else if (type == Const.typeBadge) {
-      return "97%";
-    } else if (type == Const.typeResources) {
-      return "80/100";
+      return "0%";
+    } else if (type == Const.typeServicesPerson) {
+      return getProgressText(Const.typeServices);
     } else
-      return "50/100";
+      return "0/0";
   }
 
-  getProgressInt(int type) {
-    if (type == Const.typeChecked) {
-      return 0.3;
-    } else if (type == Const.typePeople) {
-      return 0.5;
+  double getProgressInt(int type) {
+    if (type == Const.typeSalesPersons) {
+      return getProgressValue(Const.typeSales);
+    } else if (type == Const.typeEmployee) {
+      return getProgressValue(Const.typeHR);
     } else if (type == Const.typeBadge) {
-      return 0.97;
-    } else if (type == Const.typeResources) {
-      return 0.8;
+      return 0.0;
+    } else if (type == Const.typeServicesPerson) {
+      return getProgressValue(Const.typeServices);
     } else
-      return 0.5;
+      return 0.0;
+  }
+
+  getProgressValue(int organizationType) {
+    if (Injector.customerValueData != null) {
+      List<Organization> arrOrganization =
+          Injector.customerValueData.organization;
+
+      int totalEmployee = Injector.customerValueData.totalEmployeeCapacity;
+      int remainingCapacity = arrOrganization
+          .where((organization) => (organization.type == organizationType))
+          .toList()[0]
+          .employeeCount;
+
+      double value =
+          (remainingCapacity / (totalEmployee != null ? totalEmployee : 1))
+              .toDouble();
+      print(value);
+      return value > 1 ? 1.0 : value;
+    } else {
+      return 0.0;
+    }
+  }
+
+
+
+  getProgressText(int organizationType) {
+
+    if (Injector.customerValueData != null) {
+      List<Organization> arrOrganization =
+          Injector.customerValueData.organization;
+
+      int totalEmployee = Injector.customerValueData.totalEmployeeCapacity;
+      int remainingCapacity = arrOrganization
+          .where((organization) => (organization.type == organizationType))
+          .toList()[0]
+          .employeeCount;
+
+//      double value =
+//      (remainingCapacity / totalEmployee != null ? totalEmployee : 1)
+//          .toDouble();
+//      print(value);
+      return remainingCapacity.toString()+"/"+totalEmployee.toString();
+    } else {
+      return "0/0";
+    }
+
   }
 }

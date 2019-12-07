@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -10,7 +11,10 @@ import 'package:ke_employee/dashboard.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/existing_customers.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/organization.dart';
@@ -19,6 +23,7 @@ import 'package:ke_employee/ranking.dart';
 import 'package:ke_employee/rewards.dart';
 import 'package:ke_employee/team.dart';
 import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 
 import 'P+L.dart';
 import 'business_sector.dart';
@@ -62,8 +67,17 @@ List<DrawerItem> drawerItems = List();
 
 class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  Notifier _notifier;
   int _selectedDrawerIndex = 0;
+
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+        _notifier = NotifierProvider.of(context);
+
+  }
 
   @override
   void initState() {
@@ -99,6 +113,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 12;
     else
       _selectedDrawerIndex = 0;
+
+
+    getCustomerValues();
   }
 
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -106,19 +123,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-
-
       Utils.showToast("resumed");
 
-      _connectivitySubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-
+      _connectivitySubscription = Connectivity()
+          .onConnectivityChanged
+          .listen((ConnectivityResult result) {
         Utils.showToast(result.toString());
 
+        syncData();
       });
-
-
     } else if (state == AppLifecycleState.inactive) {
-
       Utils.showToast("inactive");
 
       _connectivitySubscription.cancel();
@@ -164,7 +178,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   _onSelectItem(int index) {
-
     Utils.playClickSound();
 
     if (mounted) {
@@ -328,5 +341,44 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           questionDataCustomerSituation: widget.questionDataSituation);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
+  }
+
+  void syncData() {
+    List<QuestionData> arrQuestion = Utils.getQuestionsLocally();
+
+    List<QuestionData> unSyncedQuestion =
+        arrQuestion.where((questionData) => isToSync(questionData)).toList();
+
+    callSyncApi();
+  }
+
+  isToSync(QuestionData questionData) {
+    return (questionData.isAnsweredCorrect &&
+        (questionData.attemptTime - DateTime.now().millisecondsSinceEpoch)
+                .abs() <
+            24 * 60 * 60 * 1000 &&
+        !questionData.isSynced);
+  }
+
+  void callSyncApi() {
+    getCustomerValues();
+  }
+
+  void getCustomerValues() {
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi()
+        .getCustomerValue(context, rq.toJson())
+        .then((customerValueData) async {
+      if (customerValueData != null) {
+        await Injector.prefs.setString(PrefKeys.customerValueData,
+            json.encode(customerValueData.toJson()));
+
+        Injector.customerValueData = customerValueData;
+
+        _notifier.notify('changeMode', 'Sending data from notfier!');
+      }
+    });
   }
 }

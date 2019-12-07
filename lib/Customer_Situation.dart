@@ -419,6 +419,19 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     });
 
     controller.forward();
+
+    if(questionData.isAnsweredCorrect){
+
+      questionData.counter = questionData.counter++;
+      questionData.attemptTime = DateTime.now().millisecondsSinceEpoch;
+
+
+      saveQuestion(questionData);
+
+      //decrease sales person
+
+    }
+
   }
 
   @override
@@ -670,6 +683,10 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
         ));
+  }
+
+  void saveQuestion(QuestionData questionData) {
+
   }
 }
 

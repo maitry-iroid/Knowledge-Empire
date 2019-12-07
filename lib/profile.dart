@@ -302,14 +302,17 @@ class _ProfilePageState extends State<ProfilePage> {
         if (data.flag == "true") {
           await Injector.prefs.clear();
 
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-              ModalRoute.withName("/home"));
+
         } else {
           Utils.showToast(data.msg);
         }
+
       }
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+          ModalRoute.withName("/home"));
     });
   }
 

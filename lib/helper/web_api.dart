@@ -3,11 +3,17 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
@@ -35,39 +41,16 @@ class WebApi {
 
   Dio dio = Dio();
 
-
-
-  Future<QuestionsResponse> getQuestions(Map<String, dynamic> jsonMap) async {
-    initDio();
-
-    print("questions_request__" + json.encode(jsonMap));
-    try {
-      final response =
-      await dio.post("", data: json.encode(getRequest('getQuestions', json.encode(jsonMap))));
-      if (response.statusCode == 200) {
-        print(response.data);
-        QuestionsResponse questionRequest =
-        QuestionsResponse.fromJson(jsonDecode(response.data));
-        return questionRequest;
-      }
-      print(response.data);
-      return null;
-    } catch (e) {
-      print(e);
-      return null;
-    }
-  }
-
   Future<LoginResponse> logout(Map<String, dynamic> jsonMap) async {
     initDio();
     print("logout_request__" + json.encode(jsonMap));
     try {
-      final response =
-      await dio.post("", data: json.encode(getRequest('logout', json.encode(jsonMap))));
+      final response = await dio.post("",
+          data: json.encode(getRequest('logout', json.encode(jsonMap))));
       if (response.statusCode == 200) {
         print(response.data);
         LoginResponse loginRequest =
-        LoginResponse.fromJson(jsonDecode(response.data));
+            LoginResponse.fromJson(jsonDecode(response.data));
         return loginRequest;
       }
       print(response.data);
@@ -78,15 +61,14 @@ class WebApi {
     }
   }
 
-
   Future<LoginResponse> login(Map<String, dynamic> jsonMap) async {
     initDio();
 
     print("login_request__" + json.encode(jsonMap));
 
     try {
-      final response =
-          await dio.post("", data: json.encode(getRequest('login', json.encode(jsonMap))));
+      final response = await dio.post("",
+          data: json.encode(getRequest('login', json.encode(jsonMap))));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -109,8 +91,7 @@ class WebApi {
     try {
       final response = await dio.post("",
           data:
-              json.encode(getRequest('forgot_password', json.encode(jsonMap)))
-      );
+              json.encode(getRequest('forgot_password', json.encode(jsonMap))));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -182,29 +163,7 @@ class WebApi {
     }
   }
 
-
-//  Future<LearningModuleResponse> getLearningModule(Map<String, dynamic> jsonMap) async {
-//    initDio();
-//
-//    print("questions_request__" + json.encode(jsonMap));
-//    try {
-//      final response =
-//      await dio.post("", data: json.encode(getRequest('getLearningModule', json.encode(jsonMap))));
-//      if (response.statusCode == 200) {
-//        print(response.data);
-//        LearningModuleResponse learningModuleResponse =
-//        LearningModuleResponse.fromJson(jsonDecode(response.data));
-//        return learningModuleResponse;
-//      }
-//      print(response.data);
-//      return null;
-//    } catch (e) {
-//      print(e);
-//      return null;
-//    }
-//  }
-
- Future<LearningModuleResponse> getLearningModule() async {
+  Future<LearningModuleResponse> getLearningModule() async {
     initDio();
 
     var req = json.encode({'userId': Injector.userData.userId});
@@ -234,14 +193,15 @@ class WebApi {
     }
   }
 
-  Future<LoginResponse> assignUserToModule(String moduleId, String type, String companyId) async {
+  Future<LoginResponse> assignUserToModule(
+      String moduleId, String type, String companyId) async {
     initDio();
 
     var req = json.encode({
       'userId': Injector.userData.userId,
       'companyId': companyId,
       'moduleId': moduleId,
-      'type':type
+      'type': type
     });
 
     print("assignUserToModule" + " - " + req);
@@ -289,5 +249,182 @@ class WebApi {
         headers: headers);
 
     dio.options = options;
+  }
+
+  Future<QuestionsResponse> getQuestions(Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("questions_request__" + json.encode(jsonMap));
+    try {
+      final response = await dio.post("",
+          data: json.encode(getRequest('getQuestions', json.encode(jsonMap))));
+      if (response.statusCode == 200) {
+        print(response.data);
+        QuestionsResponse questionRequest =
+            QuestionsResponse.fromJson(jsonDecode(response.data));
+        return questionRequest;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<OrganizationData> getOrganizations(
+      BuildContext context, Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("getOrganizations_" + json.encode(jsonMap));
+
+//    Utils.showLoader(context);
+
+    try {
+      final response = await dio.post("",
+          data:
+              json.encode(getRequest('getOrganization', json.encode(jsonMap))));
+
+//      Utils.closeLoader(context);
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetOrganizationResponse getOrganizationResponse =
+            GetOrganizationResponse.fromJson(jsonDecode(response.data));
+
+        if (getOrganizationResponse != null) {
+          if (getOrganizationResponse.flag == "true") {
+            return getOrganizationResponse.data;
+          } else {
+            Utils.showToast(getOrganizationResponse.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
+  }
+
+  Future<OrganizationData> manageOrganizations(
+      BuildContext context, Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("manageOrganization__" + json.encode(jsonMap));
+
+//    Utils.showLoader(context);
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('manageOrganization', json.encode(jsonMap))));
+
+//      Utils.closeLoader(context);
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetOrganizationResponse getOrganizationResponse =
+            GetOrganizationResponse.fromJson(jsonDecode(response.data));
+
+        if (getOrganizationResponse != null) {
+          if (getOrganizationResponse.flag == "true") {
+            return getOrganizationResponse.data;
+          } else {
+            Utils.showToast(getOrganizationResponse.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
+  }
+
+  Future<CustomerValueData> getCustomerValue(
+      BuildContext context, Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("getCustomerValue__" + json.encode(jsonMap));
+
+//    Utils.showLoader(context);
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('getCustomerValue', json.encode(jsonMap))));
+
+//      Utils.closeLoader(context);
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetCustomerValueResponse responseData =
+            GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+
+        if (responseData != null) {
+          if (responseData.flag == "true") {
+            return responseData.data;
+          } else {
+            Utils.showToast(responseData.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
+  }
+
+  Future<CustomerValueData> submitAnswers(
+      BuildContext context, SubmitAnswerRequest rq) async {
+    initDio();
+
+    print("submitAnswers__" + json.encode(rq.toJson()));
+
+//    Utils.showLoader(context);
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('submitAnswers', json.encode(rq.toJson()))));
+
+//      Utils.closeLoader(context);
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetCustomerValueResponse responseData =
+            GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+
+        if (responseData != null) {
+          if (responseData.flag == "true") {
+            return responseData.data;
+          } else {
+            Utils.showToast(responseData.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
   }
 }

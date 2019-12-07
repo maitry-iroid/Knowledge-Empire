@@ -20,20 +20,20 @@ class Const {
   static var typeName =26;
   static var typeSideMenu=27;
 
-  static var typeChecked =11;
-  static var typePeople =12;
+  static var typeSalesPersons =11;
+  static var typeEmployee =12;
   static var typeBadge =13;
-  static var typeResources =14;
+  static var typeServicesPerson =14;
   static var typeDollar =15;
 
-  static var typeHR =16;
-  static var typeServices =17;
-  static var typeMarketing =18;
-  static var typeSales =19;
-  static var typeOperations =20;
-  static var typeLegal=21;
-  static var typeFinance=22;
-  static var typeCRM=23;
+  static var typeHR =1;
+  static var typeMarketing =2;
+  static var typeSales =3;
+  static var typeOperations =4;
+  static var typeLegal=5;
+  static var typeFinance=6;
+  static var typeCRM=7;
+  static var typeServices =8;
 
   static var businessMode=24;
   static var professionalMode=25;
@@ -48,6 +48,9 @@ class Const {
 
   static String subscribe= "1";
   static String unSubscribe= "0";
+
+  static int add= 1;
+  static int subtract= 2;
 
 }
 
