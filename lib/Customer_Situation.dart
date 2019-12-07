@@ -18,12 +18,6 @@ QuestionData questionDataCustSituation = QuestionData();
 List abcdList = List();
 
 class CustomerSituationPage extends StatefulWidget {
-//  final int selectedIndex;
-//  CustomerSituationPage({Key key, this.selectedIndex}) : super(key: key);
-
-//  final  QuestionData questionData;
-//  CustomerSituationPage({Key key, this.questionData}) : super(key: key);
-
   final QuestionData questionDataCustomerSituation;
 
   CustomerSituationPage({Key key, this.questionDataCustomerSituation})
@@ -116,127 +110,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               Expanded(
                   child: Row(
                 children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: <Widget>[
-                        Card(
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          margin: EdgeInsets.only(
-                              top: 20, bottom: 15, right: 15, left: 8),
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(
-                                left: 10, right: 10, top: 15, bottom: 18),
-                            decoration: BoxDecoration(
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.bgDescription
-                                  : null,
-                              borderRadius: BorderRadius.circular(12),
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1),
-                            ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: ClampingScrollPhysics(),
-                              itemCount: arrAnswerSituation.length,
-                              itemBuilder: (BuildContext context, index) {
-//                                return CategoryItem(
-//                                  selectItem,
-//                                  index: index,
-//                                  isSelected:
-//                                      _selectedItem == index ? true : false,
-////                                  title: arrSector[index],
-//                                );
-                                return showItem(index);
-                              },
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 30,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: Utils.getDeviceWidth(context) / 6,
-                                vertical: 5),
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                                borderRadius: Injector.isBusinessMode
-                                    ? null
-                                    : BorderRadius.circular(20),
-                                border: Injector.isBusinessMode
-                                    ? null
-                                    : Border.all(
-                                        width: 1, color: ColorRes.white),
-                                color: Injector.isBusinessMode
-                                    ? null
-                                    : ColorRes.titleBlueProf,
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
-                                        image: AssetImage(Utils.getAssetsImg(
-                                            "eddit_profile")),
-                                        fit: BoxFit.fill)
-                                    : null),
-                            child: Text(
-                              Utils.getText(context, StringRes.answers),
-                              style: TextStyle(
-                                  color: ColorRes.white, fontSize: 18),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: InkResponse(
-                            onTap: () {
-                              Utils.playClickSound();
-                              showDialog(
-                                context: context,
-                                builder: (_) => AlertCheckAnswersCorrect(),
-                              );
-                            },
-                            child: Container(
-                                alignment: Alignment.center,
-                                height: Utils.getDeviceWidth(context) / 20,
-                                width: Utils.getDeviceWidth(context) / 20,
-                                decoration: BoxDecoration(
-                                    image:
-//                                    Injector.isBusinessMode ?
-                                        DecorationImage(
-                                            image: AssetImage(Utils.getAssetsImg(
-                                                "full_expand_question_answers")),
-                                            fit: BoxFit.fill)
-//                                        : null
-                                    )),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: Utils.getDeviceHeight(context) / 2.2,
-                            child: CommonView.image(
-                                context, questionDataCustSituation.mediaLink),
-//                            child: CommonView.image(context,
-//                                correctWrongImage()), //"vector_smart_object1"
-                          ),
-                          Expanded(
-                              child: CommonView.questionAndExplanation(
-                                  context,
-                                  Utils.getText(context, StringRes.question),
-                                  true,
-                                  questionDataCustSituation.question))
-                        ],
-                      )),
+                  showFirstHalf(),
+                  showSecondHalf(),
                 ],
               )),
             ],
@@ -372,6 +247,130 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //          widget.title,
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
+        ));
+  }
+
+  showFirstHalf() {
+    return Expanded(
+      flex: 1,
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            margin: EdgeInsets.only(top: 20, bottom: 15, right: 5, left: 8),
+            child: Container(
+              alignment: Alignment.center,
+              padding:
+                  EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: ColorRes.white, width: 1),
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                itemCount: arrAnswerSituation.length,
+                itemBuilder: (BuildContext context, index) {
+//                                return CategoryItem(
+//                                  selectItem,
+//                                  index: index,
+//                                  isSelected:
+//                                      _selectedItem == index ? true : false,
+////                                  title: arrSector[index],
+//                                );
+                  return showItem(index);
+                },
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              height: 30,
+              margin: EdgeInsets.symmetric(
+                  horizontal: Utils.getDeviceWidth(context) / 6, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode
+                      ? null
+                      : Border.all(width: 1, color: ColorRes.white),
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                Utils.getText(context, StringRes.answers),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: InkResponse(
+              onTap: () {
+                Utils.playClickSound();
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertCheckAnswersCorrect(),
+                );
+              },
+              child: Container(
+                  alignment: Alignment.center,
+                  height: Utils.getDeviceWidth(context) / 20,
+                  width: Utils.getDeviceWidth(context) / 20,
+                  decoration: BoxDecoration(
+                      image:
+//                                    Injector.isBusinessMode ?
+                          DecorationImage(
+                              image: AssetImage(Utils.getAssetsImg(
+                                  "full_expand_question_answers")),
+                              fit: BoxFit.fill)
+//                                        : null
+                      )),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  showSecondHalf() {
+    return Expanded(
+        flex: 1,
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                  top: 18, bottom: 10, left: 12, right: 12),
+              height: Utils.getDeviceHeight(context) / 2.7,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(questionData.mediaLink),
+                      fit: BoxFit.fill),
+                  borderRadius: BorderRadius.circular(10),
+                  border:
+                  Border.all(color: ColorRes.white, width: 1)),
+            ),
+            Expanded(
+                child: CommonView.questionAndExplanation(
+                    context,
+                    Utils.getText(context, StringRes.explanation),
+                    true,
+                    questionDataCustSituation.question))
+          ],
         ));
   }
 }

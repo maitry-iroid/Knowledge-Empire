@@ -65,8 +65,19 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works
 //            signingConfig signingConfigs.release
             minifyEnabled false
+            useProguard true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+
+        debug {
+            minifyEnabled false
+            useProguard false
         }
     }
 }
@@ -79,6 +90,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.multidex:multidex:2.0.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

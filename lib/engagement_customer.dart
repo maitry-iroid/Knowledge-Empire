@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'commonview/background.dart';
 
-//import 'models/questions_response.dart';
 import 'package:video_player/video_player.dart';
 
-import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'home.dart';
 import 'models/questions.dart';
+//import 'models/submit_answer.dart';
 
 List<Answer> arrAnswer = List();
 
@@ -179,33 +177,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         ),
                       ),
                       onTap: () {
-                        Utils.playClickSound();
-
-                        String selectedAnswer = "";
-
-                        arrAnswer.forEach((answer) {
-                          if (answer.isSelected) {
-                            selectedAnswer += answer.answerId + ",";
-                          }
-                        });
-
-                        selectedAnswer = selectedAnswer.substring(
-                            0, selectedAnswer.length - 1);
-                        print("selectedAnswer__" + selectedAnswer);
-
-                        questionData.isAnsweredCorrect =
-                            selectedAnswer == questionData.correctAnswerId;
 
 
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                    initialPageType: Const.typeDebrief,
-                                    questionDataSituation: questionData,
-                                  )),
-                        );
+                        performSubmitAnswer();
                       },
                     )
                   ],
@@ -221,14 +195,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                            height: Utils.getDeviceHeight(context) / 2.3,
-//                                    child: CommonView.image(
-//                                        context, "vector_smart_object1"),
-                            child:
-//                          CommonView.image(
-//                              context, _videoPlay)
-                                CommonView.image(
-                                    context, questionData.mediaLink)),
+                          margin: EdgeInsets.only(
+                              top: 18, bottom: 10, left: 10, right: 12),
+                          height: Utils.getDeviceHeight(context) / 2.7,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(questionData.mediaLink),
+                                  fit: BoxFit.fill),
+                              borderRadius: BorderRadius.circular(10),
+                              border:
+                                  Border.all(color: ColorRes.white, width: 1)),
+                        ),
                         Expanded(
                           child: CommonView.questionAndExplanation(
                               context,
@@ -412,6 +389,50 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
         ));
+  }
+
+  void performSubmitAnswer() {
+
+    Utils.playClickSound();
+
+    String selectedAnswer = "";
+
+    arrAnswer.forEach((answer) {
+      if (answer.isSelected) {
+        selectedAnswer += answer.answerId + ",";
+      }
+    });
+
+    selectedAnswer = selectedAnswer.substring(
+        0, selectedAnswer.length - 1);
+    print("selectedAnswer__" + selectedAnswer);
+
+    questionData.isAnsweredCorrect =
+        selectedAnswer == questionData.correctAnswerId;
+
+    callSubmitAnswerApi();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomePage(
+            initialPageType: Const.typeDebrief,
+            questionDataSituation: questionData,
+          )),
+    );
+
+  }
+
+  void callSubmitAnswerApi() {
+//    SubmitAnswerRequest rq = SubmitAnswerRequest();
+//    rq.userId = Injector.userData.userId;
+//    rq.answer = arrAnswer;
+
+
+
+//    WebApi().submitAnswers(context, rq)
+
+
   }
 }
 

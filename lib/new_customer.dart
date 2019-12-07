@@ -26,7 +26,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   List<QuestionData> arrQuestions = List();
 
-  int questionAnswered = 1;
+  int questionAnswered = 0;
   int loyaltyBonus = 0;
   int resourceBonus = 0;
   int valueBonus = 0;
@@ -36,30 +36,37 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     // TODO: implement initState
     super.initState();
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
-      if (isConnected) {
-        getQuestions();
-      } else {
-        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-          List<String> jsonQuestionData =
-              Injector.prefs.getStringList(PrefKeys.questionData);
+    questionAnswered = Injector.customerValueData.questionAnswered;
+    loyaltyBonus = Injector.customerValueData.loyaltyBonus;
+    resourceBonus = Injector.customerValueData.resourceBonus;
+    valueBonus = Injector.customerValueData.valueBonus;
 
-          jsonQuestionData.forEach((jsonQuestion) {
-            QuestionData questionData =
-                QuestionData.fromJson(json.decode(jsonQuestion));
+    getQuestions();
 
-            if (questionData.attemptTime == 0 ||
-                questionData.attemptTime -
-                        DateTime.now().millisecondsSinceEpoch >
-                    24) arrQuestions.add(questionData);
-          });
-
-          if (arrQuestions != null) {
-            setState(() {});
-          }
-        }
-      }
-    });
+//    Utils.isInternetConnectedWithAlert().then((isConnected) {
+//      if (isConnected) {
+//        getQuestions();
+//      } else {
+//        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+//          List<String> jsonQuestionData =
+//              Injector.prefs.getStringList(PrefKeys.questionData);
+//
+//          jsonQuestionData.forEach((jsonQuestion) {
+//            QuestionData questionData =
+//                QuestionData.fromJson(json.decode(jsonQuestion));
+//
+//            if (questionData.attemptTime == 0 ||
+//                questionData.attemptTime -
+//                        DateTime.now().millisecondsSinceEpoch >
+//                    24) arrQuestions.add(questionData);
+//          });
+//
+//          if (arrQuestions != null) {
+//            setState(() {});
+//          }
+//        }
+//      }
+//    });
   }
 
   getQuestions() {
@@ -69,6 +76,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
+    rq.type =Const.getNewQueType;
 
     WebApi().getQuestions(rq.toJson()).then((data) {
       setState(() {

@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
+import 'helper/constant.dart';
 import 'helper/prefkeys.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
+import 'helper/web_api.dart';
 import 'injection/dependency_injection.dart';
 import 'models/questions.dart';
 
@@ -18,29 +20,59 @@ class ExistingCustomerPage extends StatefulWidget {
 
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
-
+  bool isLoading = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-      List<String> jsonQuestionData =
-          Injector.prefs.getStringList(PrefKeys.questionData);
 
-      jsonQuestionData.forEach((jsonQuestion) {
-        QuestionData questionData =
-            QuestionData.fromJson(json.decode(jsonQuestion));
+    getQuestions();
 
-        if (questionData.isAnsweredCorrect &&
-            questionData.attemptTime - DateTime.now().millisecondsSinceEpoch <
-                24*60*60*1000) arrQuestions.add(questionData);
+//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+//      List<String> jsonQuestionData =
+//          Injector.prefs.getStringList(PrefKeys.questionData);
+//
+//      jsonQuestionData.forEach((jsonQuestion) {
+//        QuestionData questionData =
+//            QuestionData.fromJson(json.decode(jsonQuestion));
+//
+//        if (questionData.isAnsweredCorrect &&
+//            questionData.attemptTime - DateTime.now().millisecondsSinceEpoch <
+//                24*60*60*1000) arrQuestions.add(questionData);
+//      });
+//
+//      if (arrQuestions != null) {
+//        setState(() {});
+//      }
+//    }
+
+  }
+
+  getQuestions() {
+    setState(() {
+      isLoading = true;
+    });
+
+    QuestionRequest rq = QuestionRequest();
+    rq.userId = Injector.userData.userId;
+    rq.type =  Const.getExistingQueTYpe;
+
+    WebApi().getQuestions(rq.toJson()).then((data) {
+      setState(() {
+        isLoading = false;
       });
 
-      if (arrQuestions != null) {
-        setState(() {});
+      if (data != null) {
+        if (data.flag == "true") {
+          arrQuestions = data.data;
+        } else {
+          Utils.showToast(data.msg);
+        }
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
-    }
+    });
   }
 
   @override
@@ -169,7 +201,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                 children: <Widget>[
                   Expanded(
                     flex: 5,
-                    child: Text(arrQuestions[index].title,
+                    child: Text(
+                      arrQuestions[index].title,
                       style: TextStyle(
                         color: ColorRes.blue,
                         fontSize: 15,
@@ -188,7 +221,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      arrQuestions[index].value.toString()+' \$',
+                      arrQuestions[index].value.toString() + ' \$',
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),
@@ -196,7 +229,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      arrQuestions[index].loyalty.toString()+' d',
+                      arrQuestions[index].loyalty.toString() + ' d',
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
                     ),

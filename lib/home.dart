@@ -70,13 +70,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Notifier _notifier;
   int _selectedDrawerIndex = 0;
 
-
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-        _notifier = NotifierProvider.of(context);
-
+    _notifier = NotifierProvider.of(context);
   }
 
   @override
@@ -114,7 +112,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     else
       _selectedDrawerIndex = 0;
 
-
     getCustomerValues();
   }
 
@@ -123,19 +120,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      Utils.showToast("resumed");
+//      Utils.showToast("resumed");
 
-      _connectivitySubscription = Connectivity()
-          .onConnectivityChanged
-          .listen((ConnectivityResult result) {
-        Utils.showToast(result.toString());
+//      _connectivitySubscription = Connectivity()
+//          .onConnectivityChanged
+//          .listen((ConnectivityResult result) {
+//        Utils.showToast(result.toString());
 
-        syncData();
-      });
+//        syncData();
+//      });
     } else if (state == AppLifecycleState.inactive) {
-      Utils.showToast("inactive");
+//      Utils.showToast("inactive");
 
-      _connectivitySubscription.cancel();
+//      _connectivitySubscription.cancel();
     }
   }
 

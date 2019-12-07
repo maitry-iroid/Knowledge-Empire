@@ -52,6 +52,9 @@ class Const {
   static int add= 1;
   static int subtract= 2;
 
+  static int getNewQueType= 1;
+  static int getExistingQueTYpe= 2;
+
 }
 
 
