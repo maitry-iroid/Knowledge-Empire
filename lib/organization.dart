@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/injection/dependency_injection.dart' as prefix0;
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
+import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
@@ -21,6 +28,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   OrganizationData organizationData;
+  Notifier _notifier;
 
   List<Organization> arrOrganization = List();
 
@@ -34,6 +42,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
@@ -62,7 +72,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
     Organization organization = arrOrganization[position];
 
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,9 +94,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               image: AssetImage(
                 Utils.getAssetsImg('info'),
               ),
-              color: Injector.isBusinessMode
-                  ? ColorRes.white
-                  : ColorRes.hintColor,
+              color:
+                  Injector.isBusinessMode ? ColorRes.white : ColorRes.hintColor,
               fit: BoxFit.fill,
               width: 15,
             )
@@ -128,8 +136,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                   width: 15,
                 ),
               ),
-              onTap: (){
-                manageLevel(position, Const.subtract);
+              onTap: () {
+                showConfirmDialog(position, Const.subtract);
               },
             ),
             Stack(
@@ -143,7 +151,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image:
-                          AssetImage(Utils.getAssetsImg('bg_progress_2')),
+                              AssetImage(Utils.getAssetsImg('bg_progress_2')),
                           fit: BoxFit.fill)),
 //                padding: EdgeInsets.symmetric(vertical: 2),
                 ),
@@ -160,26 +168,18 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: Image(
-                  image: AssetImage(Utils.getAssetsImg('add')),
+                  image: AssetImage(Utils.getAssetsImg('plus')),
                   fit: BoxFit.fill,
                   width: 15,
                 ),
               ),
-              onTap: (){
-                manageLevel(position, Const.add);
+              onTap: () {
+                showConfirmDialog(position, Const.add);
               },
             ),
           ],
         ),
       ],
-    );
-
-    return InkResponse(
-
-      onTap: () {
-        Utils.playClickSound();
-        Utils.showOrgInfoDialog(_scaffoldKey, type);
-      },
     );
   }
 
@@ -268,8 +268,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     });
   }
 
-  getProgress(int type) {
-    var progress = arrOrganization[type].employeeCount /
+  getProgress(int position) {
+    if (arrOrganization[position].employeeCount == null) return 0.0;
+
+    var progress = arrOrganization[position].employeeCount /
         (organizationData.totalEmpCount != 0
             ? organizationData.totalEmpCount
             : 1);
@@ -278,6 +280,33 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
 //    return progress.toDouble();
     return 0.5;
+  }
+
+  Future<void> showConfirmDialog(int position, int action) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Are you sure want to perform this operation?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Yes'),
+              onPressed: () {
+                manageLevel(position, action);
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   manageLevel(int position, int action) {
@@ -295,6 +324,18 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           arrOrganization[position] = organizationData.organization[0];
 
           setState(() {});
+
+          CustomerValueData customerValueData = Injector.customerValueData;
+          customerValueData.organization = arrOrganization;
+
+          Injector.prefs.setString(PrefKeys.customerValueData,
+              json.encode(customerValueData.toJson()));
+
+          Injector.customerValueData = customerValueData;
+
+          _notifier.notify('changeMode', 'Sending data from notfier!');
+        } else {
+          Utils.getText(context, StringRes.somethingWrong);
         }
       });
     });

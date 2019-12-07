@@ -15,7 +15,7 @@ class Injector {
   static String deviceId = "";
   static int notificationID = 0;
   static LoginResponseData userData;
-  static CustomerValueData customerValueData;
+  static CustomerValueData  customerValueData;
   static int mode;
   static bool isBusinessMode = true;
   static AudioPlayer audioPlayer;

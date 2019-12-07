@@ -240,22 +240,22 @@ class HeaderView extends StatelessWidget {
 //    if()
 
     if (type == Const.typeSalesPersons) {
-      return "50/100";
+      return getProgressText(Const.typeSales);
     } else if (type == Const.typeEmployee) {
-      return "50/100";
+      return getProgressText(Const.typeHR);
     } else if (type == Const.typeBadge) {
-      return "97%";
+      return "0%";
     } else if (type == Const.typeServicesPerson) {
-      return "80/100";
+      return getProgressText(Const.typeServices);
     } else
-      return "50/100";
+      return "0/0";
   }
 
   double getProgressInt(int type) {
     if (type == Const.typeSalesPersons) {
       return getProgressValue(Const.typeSales);
     } else if (type == Const.typeEmployee) {
-      return getProgressValue(Const.typeSales);
+      return getProgressValue(Const.typeHR);
     } else if (type == Const.typeBadge) {
       return 0.0;
     } else if (type == Const.typeServicesPerson) {
@@ -271,12 +271,12 @@ class HeaderView extends StatelessWidget {
 
       int totalEmployee = Injector.customerValueData.totalEmployeeCapacity;
       int remainingCapacity = arrOrganization
-          .where((organization) => (organization.type == Const.typeSales))
+          .where((organization) => (organization.type == organizationType))
           .toList()[0]
           .employeeCount;
 
       double value =
-          (remainingCapacity / totalEmployee != null ? totalEmployee : 1)
+          (remainingCapacity / (totalEmployee != null ? totalEmployee : 1))
               .toDouble();
       print(value);
       return value > 1 ? 1.0 : value;
@@ -285,9 +285,28 @@ class HeaderView extends StatelessWidget {
     }
   }
 
-  getEmployee(int typeSales) {
 
 
+  getProgressText(int organizationType) {
+
+    if (Injector.customerValueData != null) {
+      List<Organization> arrOrganization =
+          Injector.customerValueData.organization;
+
+      int totalEmployee = Injector.customerValueData.totalEmployeeCapacity;
+      int remainingCapacity = arrOrganization
+          .where((organization) => (organization.type == organizationType))
+          .toList()[0]
+          .employeeCount;
+
+//      double value =
+//      (remainingCapacity / totalEmployee != null ? totalEmployee : 1)
+//          .toDouble();
+//      print(value);
+      return remainingCapacity.toString()+"/"+totalEmployee.toString();
+    } else {
+      return "0/0";
+    }
 
   }
 }

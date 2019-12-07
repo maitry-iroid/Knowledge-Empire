@@ -13,6 +13,7 @@ import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
@@ -281,7 +282,8 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('getOrganization', json.encode(jsonMap))));
+          data:
+              json.encode(getRequest('getOrganization', json.encode(jsonMap))));
 
 //      Utils.closeLoader(context);
 
@@ -319,7 +321,8 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('manageOrganization', json.encode(jsonMap))));
+          data: json
+              .encode(getRequest('manageOrganization', json.encode(jsonMap))));
 
 //      Utils.closeLoader(context);
 
@@ -357,14 +360,15 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('getCustomerValue', json.encode(jsonMap))));
+          data: json
+              .encode(getRequest('getCustomerValue', json.encode(jsonMap))));
 
 //      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
         GetCustomerValueResponse responseData =
-        GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+            GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         if (responseData != null) {
           if (responseData.flag == "true") {
@@ -385,4 +389,42 @@ class WebApi {
     }
   }
 
+  Future<CustomerValueData> submitAnswers(
+      BuildContext context, SubmitAnswerRequest rq) async {
+    initDio();
+
+    print("submitAnswers__" + json.encode(rq.toJson()));
+
+//    Utils.showLoader(context);
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('submitAnswers', json.encode(rq.toJson()))));
+
+//      Utils.closeLoader(context);
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetCustomerValueResponse responseData =
+            GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+
+        if (responseData != null) {
+          if (responseData.flag == "true") {
+            return responseData.data;
+          } else {
+            Utils.showToast(responseData.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
+  }
 }
