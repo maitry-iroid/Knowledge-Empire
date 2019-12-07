@@ -62,21 +62,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     abcdList = abcdIndex;
 
     super.initState();
-    checkAudio(index);
-//    audioCheckAnswer();
-//    correctWrongImage();
+    checkAudio();
+    correctWrongImage();
   }
 
-
   correctWrongImage() {
-//    if (arrAnswerSituation[index].isSelected == true) {
-//      if (questionDataCustSituation.correctAnswerId ==
-//          arrAnswerSituation[index].answerId) {
-//        return questionDataCustSituation.correctAnswerImage;
-//      } else {
-//        return questionDataCustSituation.inCorrectAnswerImage;
-//      }
-//    }
+    if (questionData.isAnsweredCorrect == true) {
+      return questionDataCustSituation.correctAnswerImage;
+    } else {
+      return questionDataCustSituation.inCorrectAnswerImage;
+    }
   }
 
 //  int _selectedDrawerIndex = 0;
@@ -87,24 +82,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //      print(selectItem.toString());
 //    });
 //  }
-  checkAudio(int index) {
-//    Widget child;
-    if (arrAnswerSituation[index].isSelected == true) {
-      if (questionDataCustSituation.correctAnswerId ==
-          arrAnswerSituation[index].answerId) {
-        return  Utils.correctAnswerSound();
-      } else {
-        return Utils.incorrectAnswerSound();
-      }
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return  Utils.incorrectAnswerSound();
-    } else {
-      return  Utils.incorrectAnswerSound();
-    }
-//    return Utils.getAssetsImg("rounded_rectangle_8371");
 
-//  questionData.isAnsweredCorrect
+  checkAudio() {
+    if (questionData.isAnsweredCorrect == true) {
+      return Utils.correctAnswerSound();
+    } else {
+      return Utils.incorrectAnswerSound();
+    }
   }
 
   @override
@@ -422,18 +406,15 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 
     controller.forward();
 
-    if(questionData.isAnsweredCorrect){
-
+    if (questionData.isAnsweredCorrect) {
       questionData.counter = questionData.counter++;
       questionData.attemptTime = DateTime.now().millisecondsSinceEpoch;
-
 
       saveQuestion(questionData);
 
       //decrease sales person
 
     }
-
   }
 
   @override
@@ -687,9 +668,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
         ));
   }
 
-  void saveQuestion(QuestionData questionData) {
-
-  }
+  void saveQuestion(QuestionData questionData) {}
 }
 
 /*class CategoryItem extends StatefulWidget {
