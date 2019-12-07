@@ -4,13 +4,16 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'commonview/background.dart';
+
 //import 'models/questions_response.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'helper/constant.dart';
 import 'helper/res.dart';
+import 'home.dart';
 import 'models/questions.dart';
 
 List<Answer> arrAnswer = List();
@@ -40,7 +43,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   List abcdIndex = ['A', 'B', 'C', 'D'];
   int _selectedDrawerIndex = 0;
 
-
   VideoPlayerController _videoPlay;
 
   selectItem(index) {
@@ -57,8 +59,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -66,7 +66,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     questionData = widget.questionDataEngCustomer;
     arrAnswer = widget.questionDataEngCustomer.answer;
     abcdList = abcdIndex;
-
 
     _videoPlay = VideoPlayerController.network(
         'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
@@ -105,8 +104,90 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           children: <Widget>[
             Container(
                 margin: EdgeInsets.only(top: 10),
-                child: CommonView.topThreeButton(context, StringRes.engagement,
-                    StringRes.next, _selectedItem, questionData)
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      child: InkResponse(
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg(
+                              Injector.isBusinessMode ? "back" : 'back_prof')),
+                          width: DimenRes.titleBarHeight,
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Utils.performBack(context);
+                        },
+                      ),
+
+                      alignment: Alignment.center,
+                      height: 30,
+                      width: 40,
+//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 30,
+//                          margin: EdgeInsets.only(left: 50.0, right: 50.0),
+//                      color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          Injector.isBusinessMode ? null : BorderRadius.circular(15),
+//                          border: Injector.isBusinessMode
+//                              ? null
+//                              : Border.all(
+//                              width: 1,
+//                              color: ColorRes.blueMenuSelected),
+                          color: Injector.isBusinessMode
+                              ? null : ColorRes.blueMenuSelected,
+                          image: Injector.isBusinessMode
+                              ? (DecorationImage(
+                              image: AssetImage(Utils.getAssetsImg("eddit_profile")),
+                              fit: BoxFit.fill))
+                              : null),
+
+                      child: Text(
+                        Utils.getText(context, Injector.isBusinessMode ? StringRes.engagement : StringRes.engagement),
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    InkResponse(
+                      onTap: () {
+                        Utils.playClickSound();
+//            questionData.answer = arrAnswerr;
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePage(
+                                    initialPageType: Const.typeDebrief,
+                                    questionDataSituation: questionData,
+                                  )),
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 30,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("bg_engage_now")),
+                                fit: BoxFit.fill)),
+                        child: Text(
+                          Utils.getText(context, StringRes.next),
+                          style: TextStyle(color: ColorRes.white, fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  ],
+                )
 //                  CommonView.showTitle(
 //                      context, Utils.getText(context, StringRes.engagement))
                 ),
@@ -118,17 +199,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          height: Utils.getDeviceHeight(context) / 2.3,
+                            height: Utils.getDeviceHeight(context) / 2.3,
 //                                    child: CommonView.image(
 //                                        context, "vector_smart_object1"),
-                          child:
-
+                            child:
 //                          CommonView.image(
 //                              context, _videoPlay)
-
-                          CommonView.image(
-                                context, questionData.mediaLink)
-                        ),
+                                CommonView.image(
+                                    context, questionData.mediaLink)),
                         Expanded(
                           child: CommonView.questionAndExplanation(
                               context,
@@ -266,7 +344,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               color: Injector.isBusinessMode
                   ? null
                   : (arrAnswer[index].isSelected
-                      ? ColorRes.textRecordBlue
+                      ? ColorRes.blueMenuSelected
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
@@ -498,7 +576,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
               color: Injector.isBusinessMode
                   ? null
                   : (arrAnswer[index].isSelected
-                      ? ColorRes.textRecordBlue
+                      ? ColorRes.blueMenuSelected
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(

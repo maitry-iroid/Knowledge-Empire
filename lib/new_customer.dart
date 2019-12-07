@@ -309,8 +309,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
           onTap: () {
             Utils.playClickSound();
-            if (Injector.userData.salesPersonCount >
-                arrQuestions[index].resource) {
+//            var resource = int.parse(arrQuestions[index].resource);
+//            if (Injector.userData.salesPersonCount >
+//                arrQuestions[index].resource) {
+            if (Injector.userData.salesPersonCount < 30) //resource
+               {
               Navigator.push(
                   context,
                   MaterialPageRoute(

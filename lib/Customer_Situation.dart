@@ -5,16 +5,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'engagement_customer.dart';
 import 'helper/res.dart';
-import 'commonview/header.dart';
 
-import 'package:flutter/material.dart';
-import 'package:ke_employee/Debrief.dart' as prefix0;
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/home.dart';
-import 'commonview/header.dart';
-import 'helper/constant.dart';
-import 'helper/res.dart';
-import 'Customer_Situation.dart';
 import 'commonview/background.dart';
 import 'models/questions.dart';
 
@@ -47,6 +38,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
 //  int _selectedItem = 0;
 
+  int index = 1;
+
   List abcdIndex = ['A', 'B', 'C', 'D'];
 
   openProfile() {
@@ -69,6 +62,21 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     abcdList = abcdIndex;
 
     super.initState();
+    checkAudio(index);
+//    audioCheckAnswer();
+//    correctWrongImage();
+  }
+
+
+  correctWrongImage() {
+//    if (arrAnswerSituation[index].isSelected == true) {
+//      if (questionDataCustSituation.correctAnswerId ==
+//          arrAnswerSituation[index].answerId) {
+//        return questionDataCustSituation.correctAnswerImage;
+//      } else {
+//        return questionDataCustSituation.inCorrectAnswerImage;
+//      }
+//    }
   }
 
 //  int _selectedDrawerIndex = 0;
@@ -79,6 +87,23 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //      print(selectItem.toString());
 //    });
 //  }
+  checkAudio(int index) {
+//    Widget child;
+    if (arrAnswerSituation[index].isSelected == true) {
+      if (questionDataCustSituation.correctAnswerId ==
+          arrAnswerSituation[index].answerId) {
+        return  Utils.correctAnswerSound();
+      } else {
+        return Utils.incorrectAnswerSound();
+      }
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
+      return  Utils.incorrectAnswerSound();
+    } else {
+      return  Utils.incorrectAnswerSound();
+    }
+//    return Utils.getAssetsImg("rounded_rectangle_8371");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +157,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                               shrinkWrap: true,
                               physics: ClampingScrollPhysics(),
                               itemCount: arrAnswerSituation.length,
-                              itemBuilder: (BuildContext context, int index) {
+                              itemBuilder: (BuildContext context, index) {
 //                                return CategoryItem(
 //                                  selectItem,
 //                                  index: index,
@@ -196,14 +221,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                                 decoration: BoxDecoration(
                                     image:
 //                                    Injector.isBusinessMode ?
-                                    DecorationImage(
+                                        DecorationImage(
                                             image: AssetImage(Utils.getAssetsImg(
                                                 "full_expand_question_answers")),
-                                            fit: BoxFit.fill
-                                    )
+                                            fit: BoxFit.fill)
 //                                        : null
-                                )
-                            ),
+                                    )),
                           ),
                         )
                       ],
@@ -215,10 +238,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         children: <Widget>[
                           Container(
                             height: Utils.getDeviceHeight(context) / 2.2,
-//                            child: CommonView.image(
-//                                context,
-//                                questionDataCustSituation
-//                                    .mediaLink), //"vector_smart_object1"
+                            child: CommonView.image(
+                                context, questionDataCustSituation.mediaLink),
+//                            child: CommonView.image(context,
+//                                correctWrongImage()), //"vector_smart_object1"
                           ),
                           Expanded(
                               child: CommonView.questionAndExplanation(
@@ -239,7 +262,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   checkAnswer(int index) {
 //    Widget child;
-
     if (arrAnswerSituation[index].isSelected == true) {
       if (questionDataCustSituation.correctAnswerId ==
           arrAnswerSituation[index].answerId) {
@@ -253,7 +275,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     } else {
       return Utils.getAssetsImg("rounded_rectangle_8371");
     }
-    return Utils.getAssetsImg("bg_green");
+//    return Utils.getAssetsImg("rounded_rectangle_8371");
   }
 
   checkAnswerBusinessMode(int index) {
@@ -262,13 +284,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     if (arrAnswerSituation[index].isSelected == true) {
       if (questionDataCustSituation.correctAnswerId ==
           arrAnswerSituation[index].answerId) {
-        return ColorRes.greenDot;
+        return ColorRes.answerCorrect;
       } else {
         return ColorRes.greyText;
       }
     } else if (questionDataCustSituation.correctAnswerId ==
         arrAnswerSituation[index].answerId) {
-      return ColorRes.greenDot;
+      return ColorRes.answerCorrect;
     } else {
       return ColorRes.white;
     }
@@ -277,8 +299,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   checkTextColor(int index) {
     if (arrAnswerSituation[index].isSelected == true) {
-        return ColorRes.white;
-    } else if (questionDataCustSituation.correctAnswerId == arrAnswerSituation[index].answerId) {
+      return ColorRes.white;
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
       return ColorRes.white;
     } else {
       return ColorRes.textProf;
@@ -288,7 +311,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
-
 //          setState(() {
 //            arrAnswerSituation[index].isSelected = !arrAnswerSituation[index].isSelected;
 //          });
@@ -314,9 +336,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //              (arrAnswerSituation[index].isSelected
 //                      ? ColorRes.greenDot
 //                      : ColorRes.white),
-              image:
-              Injector.isBusinessMode ? (
-                  DecorationImage(
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
                       image: AssetImage(
                         checkAnswer(index),
 //                          Utils.getAssetsImg(
@@ -325,9 +346,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                              : "rounded_rectangle_8371"
 //                      )
                       ),
-                      fit: BoxFit.fill)
-          ): null
-        ),
+                      fit: BoxFit.fill))
+                  : null),
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -336,12 +356,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
-                      color: (
-                          checkTextColor(index)
+                      color: (checkTextColor(index)
 //                          arrAnswerSituation[index].isSelected
 //                          ? ColorRes.white
 //                          : ColorRes.textProf
-                      ),
+                          ),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -351,12 +370,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     arrAnswerSituation[index].answer,
                     style: TextStyle(
                         fontSize: 12,
-                        color: (
-                          checkTextColor(index)
+                        color: (checkTextColor(index)
 //                            arrAnswerSituation[index].isSelected
 //                            ? ColorRes.white
 //                            : ColorRes.textProf
-                        )),
+                            )),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -552,13 +570,13 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     if (arrAnswerSituation[index].isSelected == true) {
       if (questionDataCustSituation.correctAnswerId ==
           arrAnswerSituation[index].answerId) {
-        return ColorRes.greenDot;
+        return ColorRes.answerCorrect;
       } else {
         return ColorRes.greyText;
       }
     } else if (questionDataCustSituation.correctAnswerId ==
         arrAnswerSituation[index].answerId) {
-      return ColorRes.greenDot;
+      return ColorRes.answerCorrect;
     } else {
       return ColorRes.white;
     }
@@ -568,7 +586,8 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   checkTextColor(int index) {
     if (arrAnswerSituation[index].isSelected == true) {
       return ColorRes.white;
-    } else if (questionDataCustSituation.correctAnswerId == arrAnswerSituation[index].answerId) {
+    } else if (questionDataCustSituation.correctAnswerId ==
+        arrAnswerSituation[index].answerId) {
       return ColorRes.white;
     } else {
       return ColorRes.textProf;
@@ -603,18 +622,16 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //              (arrAnswerSituation[index].isSelected
 //                      ? ColorRes.greenDot
 //                      : ColorRes.white),
-              image:
-              Injector.isBusinessMode ? (
-                  DecorationImage(
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
                       image: AssetImage(checkAnswer(index)
 //                          Utils.getAssetsImg(
 //                          arrAnswerSituation[index].isSelected
 //                              ? "rounded_rectangle_837_blue"
 //                              : "rounded_rectangle_8371")
                           ),
-                      fit: BoxFit.fill)
-              ): null
-          ),
+                      fit: BoxFit.fill))
+                  : null),
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -623,12 +640,11 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
-                      color: (
-                      checkTextColor(index)
+                      color: (checkTextColor(index)
 //                          arrAnswerSituation[index].isSelected
 //                          ? ColorRes.white
 //                          : ColorRes.textProf
-                      ),
+                          ),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -637,12 +653,11 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   child: new Text(
                     arrAnswerSituation[index].answer,
                     style: TextStyle(
-                        color: (
-                        checkTextColor(index)
+                        color: (checkTextColor(index)
 //                            arrAnswerSituation[index].isSelected
 //                            ? ColorRes.white
 //                            : ColorRes.textProf
-                        )),
+                            )),
                     maxLines: 3,
                     overflow: TextOverflow.fade,
                   ),

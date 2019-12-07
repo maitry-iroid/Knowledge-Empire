@@ -8,6 +8,11 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
+import 'helper/web_api.dart';
+import 'models/getorganization.dart';
+
+
+OrganizationResponsedata arrOrganization = OrganizationResponsedata();
 
 class OrganizationsPage extends StatefulWidget {
   @override
@@ -16,6 +21,38 @@ class OrganizationsPage extends StatefulWidget {
 
 class _OrganizationsPageState extends State<OrganizationsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    downloadAllQuestions();
+  }
+
+  void downloadAllQuestions() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    OrganizationRequest rq = OrganizationRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi().getOrganization(rq.toJson()).then((organationResponse) async {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (organationResponse != null) {
+        if (organationResponse.flagstr == "true") {
+//          List<OrganizationResponsedata> arrOrganization = organationResponse.;
+          arrOrganization = organationResponse.data;
+        }
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {

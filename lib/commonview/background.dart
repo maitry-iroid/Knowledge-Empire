@@ -42,6 +42,7 @@ class CommonView {
             width: 30,
           ),
           onTap: () {
+            Utils.playClickSound();
             Utils.performBack(context);
           },
         ),
@@ -80,6 +81,8 @@ class CommonView {
     );
   }
 
+
+
   //http://www.pdf995.com/samples/pdf.pdf
   //https://www.radiantmediaplayer.com/media/bbb-360p.mp4
   static image(BuildContext context, String image) {
@@ -90,7 +93,10 @@ class CommonView {
         color: ColorRes.white,
 
           image: DecorationImage(
-            image: image != null ? new NetworkImage(image) : null,
+            image: image != null ?
+
+            new NetworkImage(image) :
+            null,
               fit: BoxFit.fill),
 
 
@@ -191,6 +197,7 @@ class CommonView {
 //          Alignment.bottomRight,
           child: InkResponse(
               onTap: () {
+                Utils.playClickSound();
                 (checkimg == true
                     ? showDialog(
                         context: context,
@@ -313,6 +320,7 @@ class CommonView {
               width: DimenRes.titleBarHeight,
             ),
             onTap: () {
+              Utils.playClickSound();
               Utils.performBack(context);
             },
           ),
@@ -349,6 +357,7 @@ class CommonView {
         ),
         InkResponse(
           onTap: () {
+            Utils.playClickSound();
 //            questionData.answer = arrAnswerr;
 //            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
 
@@ -358,6 +367,7 @@ class CommonView {
                   builder: (context) => HomePage(
                         initialPageType: Const.typeDebrief,
                         questionDataSituation: questionData,
+
                       )),
             );
           },
@@ -413,6 +423,7 @@ class CommonView {
                     width: Utils.getDeviceWidth(context) / 4.5,
                   ),
                   onTap: () {
+                    Utils.playClickSound();
                     performItemClick(context, Const.typeOrg);
                   },
                 ),
@@ -422,6 +433,7 @@ class CommonView {
                     width: Utils.getDeviceWidth(context) / 4.5,
                   ),
                   onTap: () {
+                    Utils.playClickSound();
                     performItemClick(context, Const.typePL);
                   },
                 ),
@@ -431,6 +443,7 @@ class CommonView {
                     width: Utils.getDeviceWidth(context) / 4.5,
                   ),
                   onTap: () {
+                    Utils.playClickSound();
                     performItemClick(context, Const.typeRanking);
                   },
                 ),
@@ -463,6 +476,7 @@ class CommonView {
                         width: Utils.getDeviceHeight(context) / 3.0,
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         performItemClick(context, Const.typeReward);
                       },
                     )),
@@ -475,6 +489,7 @@ class CommonView {
                         width: Utils.getDeviceHeight(context) / 3.0,
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         performItemClick(context, Const.typeTeam);
                       },
                     )),
@@ -488,6 +503,7 @@ class CommonView {
                         width: Utils.getDeviceHeight(context) / 2.6,
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         performItemClick(context, Const.typeChallenges);
                       }),
                 ),
@@ -514,6 +530,7 @@ class CommonView {
                         width: Utils.getDeviceWidth(context) / 3.5,
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         performItemClick(context, Const.typeBusinessSector);
                       }),
                   InkResponse(
@@ -522,6 +539,7 @@ class CommonView {
                         width: Utils.getDeviceWidth(context) / 4.2,
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         performItemClick(context, Const.typeNewCustomer);
                       }),
 //                SizedBox(
@@ -534,6 +552,7 @@ class CommonView {
                         width: Utils.getDeviceWidth(context) / 4.6,
                       ),
                       onTap: () {
+                        Utils.playClickSound();
                         performItemClick(context, Const.typeExistingCustomer);
                       }),
                 ],

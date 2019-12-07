@@ -271,6 +271,15 @@ class Utils {
     Injector.audioCache.play("sounds/all_button_clicks.wav");
   }
 
+  static correctAnswerSound() {
+    Injector.audioCache.play("sounds/right_answer.wav");
+  }
+
+  static incorrectAnswerSound() {
+    Injector.audioCache.play("sounds/wrong_answer.wav");
+  }
+
+
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
     List<String> jsonQuestionData = List();
     List<QuestionData> questionData_ = List();

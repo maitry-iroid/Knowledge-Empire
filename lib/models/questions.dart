@@ -56,13 +56,18 @@ class QuestionData {
   String moduleName = "";
   String description = "";
   String correctAnswerId = "";
-  String loyalty = "";
+//  String loyalty = "";
+//  String resource = "";
+//  String value = "";
+  int loyalty = 0;
   int resource = 0;
-  String value = "";
+  int value = 0;
   String mediaLink = "";
   List<Answer> answer = List();
   int counter = 0;
   int daysInList = 0;
+  String correctAnswerImage = "";
+  String inCorrectAnswerImage = "";
 
   QuestionData();
 
@@ -77,6 +82,8 @@ class QuestionData {
     resource = json['resource'];
     value = json['value'];
     mediaLink = json['mediaLink'];
+    correctAnswerImage = json['correctAnswerImage'];
+    inCorrectAnswerImage = json['inCorrectAnswerImage'];
     if (json['answer'] != null) {
       answer = new List<Answer>();
       json['answer'].forEach((v) {
@@ -97,6 +104,8 @@ class QuestionData {
     data['resource'] = this.resource;
     data['value'] = this.value;
     data['mediaLink'] = this.mediaLink;
+    data['correctAnswerImage'] = this.correctAnswerImage;
+    data['inCorrectAnswerImage'] = this.inCorrectAnswerImage;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();
     }

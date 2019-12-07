@@ -31,6 +31,7 @@ class ColorRes {
   static Color hintColor = const Color(0xFF606060);
   static Color bgTextBox = const Color(0xFF333333);
   static Color greenDot = const Color(0xFF3bd30c);
+  static Color answerCorrect = const Color(0xFF7ed321);
   static Color lightBg = const Color(0xFF5b5b5b);
   static Color whiteDarkBg = const Color(0xFF737373);
   static Color bgDescription = const Color(0xFF4f4f4f);

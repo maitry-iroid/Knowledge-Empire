@@ -38,6 +38,7 @@ class HeaderView extends StatelessWidget {
                       fit: BoxFit.fill,
                     ),
                     onTap: () {
+                      Utils.playClickSound();
                       scaffoldKey.currentState.openDrawer();
                     },
                   )
@@ -203,16 +204,17 @@ class HeaderView extends StatelessWidget {
                   fit: BoxFit.fill),
               border: Border.all(color: ColorRes.textLightBlue)),
         ),
-        onTap:
-            openProfile /*() {
-        openProfile
+        onTap: () {
+//            openProfile /*() {
+          Utils.playClickSound();
+          openProfile();
 //        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
 //        print(route1.isCurrent);
 //        if (!route1.isCurrent) {
 //          Navigator.push(context, route1);
 //        }
-      },*/
-        );
+//      },*/
+        });
   }
 
   String getHeaderIcon(int type) {
