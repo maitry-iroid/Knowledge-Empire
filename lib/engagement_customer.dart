@@ -180,19 +180,21 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-//            questionData.answer = arrAnswerr;
-//            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
 
-//                        List<String> arrCorrectAnswer = questionData.correctAnswerId.split(',').toList();
-                        String selectedAnswer ="";
+                        String selectedAnswer = "";
 
-                        arrAnswer.forEach((answer)=>{
-                          if(answer.isSelected){
-                          selectedAnswer += answer.answerId+","}
-
+                        arrAnswer.forEach((answer) {
+                          if (answer.isSelected) {
+                            selectedAnswer += answer.answerId + ",";
+                          }
                         });
 
-                        questionData.isAnsweredCorrect = true;
+                        selectedAnswer = selectedAnswer.substring(
+                            0, selectedAnswer.length - 1);
+                        print("selectedAnswer__" + selectedAnswer);
+
+                        questionData.isAnsweredCorrect =
+                            selectedAnswer == questionData.correctAnswerId;
 
 
 
