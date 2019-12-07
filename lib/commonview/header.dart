@@ -277,20 +277,19 @@ class HeaderView extends StatelessWidget {
           .toList()[0]
           .employeeCount;
 
-      double value =
-          (remainingCapacity / (totalEmployee != null ? totalEmployee : 1))
-              .toDouble();
-      print(value);
-      return value > 1 ? 1.0 : value;
+      if (remainingCapacity != null && totalEmployee != null) {
+        double value = (remainingCapacity / (totalEmployee==0?1:totalEmployee)).toDouble();
+        print("progress___" + value.toString());
+        return value > 1 ? 1.0 : value;
+      } else {
+        return 0.0;
+      }
     } else {
       return 0.0;
     }
   }
 
-
-
   getProgressText(int organizationType) {
-
     if (Injector.customerValueData != null) {
       List<Organization> arrOrganization =
           Injector.customerValueData.organization;
@@ -301,14 +300,13 @@ class HeaderView extends StatelessWidget {
           .toList()[0]
           .employeeCount;
 
-//      double value =
-//      (remainingCapacity / totalEmployee != null ? totalEmployee : 1)
-//          .toDouble();
-//      print(value);
-      return remainingCapacity.toString()+"/"+totalEmployee.toString();
+      if (remainingCapacity != null && totalEmployee != null) {
+        return remainingCapacity.toString() + "/" + totalEmployee.toString();
+      } else {
+        return "0/0";
+      }
     } else {
       return "0/0";
     }
-
   }
 }

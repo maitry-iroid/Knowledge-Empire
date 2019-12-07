@@ -275,7 +275,7 @@ class IntroPageState extends State<IntroPage> {
                     ],
                   )
                 : Text(
-                    ' \$ 120.00',
+                    ' \$ '+Injector.customerValueData.totalBalance.toString(),
                     style: TextStyle(color: ColorRes.white, fontSize: 16),
                   ),
           ],
