@@ -19,6 +19,7 @@ import 'helper/res.dart';
 import 'home.dart';
 import 'models/questions.dart';
 import 'models/submit_answer.dart';
+
 //import 'models/submit_answer.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -210,21 +211,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void performSubmitAnswer(BuildContext context) {
     Utils.playClickSound();
 
-    String selectedAnswer = "";
+    List<Answer> selectedAnswer =
+        arrAnswer.where((answer) => answer.isSelected).toList();
 
-    arrAnswer.forEach((answer) {
-      if (answer.isSelected) {
-//        selectedAnswer += answer.answerId + ",";
-        selectedAnswer += answer.answer + ",";
+    if (selectedAnswer.length == 0) {
+      Utils.showToast("Please select at least one option");
+      return;
+    }
 
-      }
-    });
-
-    selectedAnswer = selectedAnswer.substring(0, selectedAnswer.length - 1);
-    print("selectedAnswer__" + selectedAnswer);
-
-    questionData.isAnsweredCorrect =
-        selectedAnswer == questionData.correctAnswerId;
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
 
     callSubmitAnswerApi(context);
   }
@@ -513,6 +508,21 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ),
       ],
     ));
+  }
+
+  bool isAnswerCorrect(List<Answer> selectedAnswer) {
+    bool isAnswerCorrect = true;
+
+    var arr = questionData.correctAnswerId.split(',');
+
+    for (var ans in selectedAnswer) {
+      if (!arr.contains(ans.option.toString())) {
+        isAnswerCorrect = false;
+        return false;
+      }
+    }
+
+    return isAnswerCorrect;
   }
 }
 

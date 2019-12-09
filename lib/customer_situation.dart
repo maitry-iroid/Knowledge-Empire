@@ -189,7 +189,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+//                Navigator.popUntil(context,ModalRoute.withName('/engage'));
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
@@ -199,24 +199,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                  CommonView.showTitle(
 //                      context, Utils.getText(context, StringRes.engagement))
         );
-  }
-
-  checkAnswer(int index) {
-//    Widget child;
-    if (arrAnswerSituation[index].isSelected == true) {
-      if (questionDataCustSituation.correctAnswerId ==
-          arrAnswerSituation[index].answerId) {
-        return Utils.getAssetsImg("bg_green");
-      } else {
-        return Utils.getAssetsImg("rounded_rectangle_837gray");
-      }
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return Utils.getAssetsImg("bg_green");
-    } else {
-      return Utils.getAssetsImg("rounded_rectangle_8371");
-    }
-//    return Utils.getAssetsImg("rounded_rectangle_8371");
   }
 
   checkAnswerBusinessMode(int index) {
@@ -236,17 +218,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       return ColorRes.white;
     }
     return Utils.getAssetsImg("bg_green");
-  }
-
-  checkTextColor(int index) {
-    if (arrAnswerSituation[index].isSelected == true) {
-      return ColorRes.white;
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return ColorRes.white;
-    } else {
-      return ColorRes.textProf;
-    }
   }
 
   Widget showItem(int index) {
@@ -610,23 +581,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //    });
 //  }
 
-  checkAnswer(int index) {
-//    Widget child;
-    if (arrAnswerSituation[index].isSelected == true) {
-      if (questionDataCustSituation.correctAnswerId ==
-          arrAnswerSituation[index].answerId) {
-        return Utils.getAssetsImg("bg_green");
-      } else {
-        return Utils.getAssetsImg("rounded_rectangle_837gray");
-      }
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return Utils.getAssetsImg("bg_green");
-    } else {
-      return Utils.getAssetsImg("rounded_rectangle_8371");
-    }
-  }
-
   checkAnswerBusinessMode(int index) {
 //    Widget child;
 
@@ -644,17 +598,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
       return ColorRes.white;
     }
     return Utils.getAssetsImg("bg_green");
-  }
-
-  checkTextColor(int index) {
-    if (arrAnswerSituation[index].isSelected == true) {
-      return ColorRes.white;
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return ColorRes.white;
-    } else {
-      return ColorRes.textProf;
-    }
   }
 
   Widget showItemsFullScreen(int index) {
@@ -733,6 +676,41 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
         ));
+  }
+}
+
+checkTextColor(int index) {
+  var arrCorrectAns = questionDataCustSituation.correctAnswerId.split(",");
+
+  if (arrAnswerSituation[index].isSelected == true) {
+    if (arrCorrectAns.contains(arrAnswerSituation[index].option.toString())) {
+      return ColorRes.white;
+    } else {
+      return ColorRes.white;
+    }
+  } else if (arrCorrectAns
+      .contains(arrAnswerSituation[index].option.toString())) {
+    return ColorRes.white;
+  } else {
+    return ColorRes.textProf;
+  }
+}
+
+checkAnswer(int index) {
+  var arrCorrectAns = questionDataCustSituation.correctAnswerId.split(",");
+
+//    Widget child;
+  if (arrAnswerSituation[index].isSelected == true) {
+    if (arrCorrectAns.contains(arrAnswerSituation[index].option.toString())) {
+      return Utils.getAssetsImg("bg_green");
+    } else {
+      return Utils.getAssetsImg("rounded_rectangle_837gray");
+    }
+  } else if (arrCorrectAns
+      .contains(arrAnswerSituation[index].option.toString())) {
+    return Utils.getAssetsImg("bg_green");
+  } else {
+    return Utils.getAssetsImg("rounded_rectangle_8371");
   }
 }
 
