@@ -36,6 +36,10 @@ dependencies:
   video_player:
   flutter_full_pdf_viewer: ^1.0.6
 
+  flutter_pdfview:
+  path_provider:
+  http:
+
 #  chewie: ^0.9.7
 #  custom_chewie: ^0.7.0
   connectivity: ^0.4.5+7

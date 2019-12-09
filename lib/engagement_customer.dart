@@ -1,20 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-
 import 'commonview/background.dart';
-
-//import 'models/questions_response.dart';
 import 'package:video_player/video_player.dart';
-
-import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'home.dart';
 import 'models/questions.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:http/http.dart' as http;
 
 List<Answer> arrAnswer = List();
 
@@ -44,6 +43,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   int _selectedDrawerIndex = 0;
 
   VideoPlayerController _videoPlay;
+
+  String urlPDFPath = "";
+
+  int _totalPages = 0;
+  int _currentPage = 0;
+  bool pdfReady = false;
+  PDFViewController _pdfViewController;
 
   selectItem(index) {
     setState(() {
@@ -76,6 +82,29 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         });
       });
     _videoPlay.play();
+
+    getFileFromUrl(
+            "https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf")
+        .then((f) {
+      setState(() {
+        urlPDFPath = f.path;
+        print(urlPDFPath);
+      });
+    });
+  }
+
+  Future<File> getFileFromUrl(String url) async {
+    try {
+      var data = await http.get(url);
+      var bytes = data.bodyBytes;
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/mypdfonline.pdf");
+
+      File urlFile = await file.writeAsBytes(bytes);
+      return urlFile;
+    } catch (e) {
+      throw Exception("Error opening url file");
+    }
   }
 
   @override
@@ -119,11 +148,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           Utils.performBack(context);
                         },
                       ),
-
                       alignment: Alignment.center,
                       height: 30,
                       width: 40,
-//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -196,8 +223,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         questionData.isAnsweredCorrect =
                             selectedAnswer == questionData.correctAnswerId;
 
-
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -224,11 +249,44 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             height: Utils.getDeviceHeight(context) / 2.3,
 //                                    child: CommonView.image(
 //                                        context, "vector_smart_object1"),
-                            child:
+                            child: Stack(
+                              children: <Widget>[
+                                PDFView(
+                                  filePath: urlPDFPath,
+                                  autoSpacing: true,
+                                  enableSwipe: true,
+                                  pageSnap: true,
+                                  swipeHorizontal: false,
+                                  nightMode: false,
+                                  onError: (e) {
+                                    print(e);
+                                  },
+                                  onRender: (_pages) {
+                                    setState(() {
+                                      _totalPages = _pages;
+                                      pdfReady = true;
+                                    });
+                                  },
+                                  onViewCreated: (PDFViewController vc) {
+                                    _pdfViewController = vc;
+                                  },
+                                  onPageChanged: (int page, int total) {
+                                    setState(() {});
+                                  },
+                                  onPageError: (page, e) {},
+                                ),
+                                !pdfReady
+                                    ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                                    : Offstage()
+                              ],
+                            )),
 //                          CommonView.image(
 //                              context, _videoPlay)
-                                CommonView.image(
-                                    context, questionData.mediaLink)),
+//                                CommonView.image(
+//                                    context, urlPDFPath)),
+//                        questionData.mediaLink
                         Expanded(
                           child: CommonView.questionAndExplanation(
                               context,

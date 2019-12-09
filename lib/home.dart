@@ -25,6 +25,7 @@ import 'package:ke_employee/team.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
+import 'Debrief.dart';
 import 'P+L.dart';
 import 'business_sector.dart';
 import 'commonview/header.dart';
@@ -339,6 +340,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     else if (_selectedDrawerIndex == 12)
       return CustomerSituationPage(
           questionDataCustomerSituation: widget.questionDataSituation);
+
+//    return DebriefPage(questionDataCustomerSituation: widget.questionDataSituation);
+//      (
+//        questionDataCustomerSituation: widget.questionDataSituation);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }
