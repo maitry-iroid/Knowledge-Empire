@@ -103,10 +103,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 ),
           Column(
             children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: CommonView.showTitle(
-                      context, Utils.getText(context, StringRes.debrief))),
+              showSubHeader(context),
               Expanded(
                   child: Row(
                 children: <Widget>[
@@ -119,6 +116,89 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         ],
       ),
     ));
+  }
+
+  showSubHeader(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(top: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: InkResponse(
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg(
+                      Injector.isBusinessMode ? "back" : 'back_prof')),
+                  width: DimenRes.titleBarHeight,
+                ),
+                onTap: () {
+                  Utils.playClickSound();
+                  Utils.performBack(context);
+                },
+              ),
+
+              alignment: Alignment.center,
+              height: 30,
+              width: 40,
+//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
+            ),
+            Container(
+              alignment: Alignment.center,
+              height: 30,
+//                          margin: EdgeInsets.only(left: 50.0, right: 50.0),
+//                      color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(15),
+//                          border: Injector.isBusinessMode
+//                              ? null
+//                              : Border.all(
+//                              width: 1,
+//                              color: ColorRes.blueMenuSelected),
+                  color: Injector.isBusinessMode
+                      ? null
+                      : ColorRes.blueMenuSelected,
+                  image: Injector.isBusinessMode
+                      ? (DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill))
+                      : null),
+
+              child: Text(
+                Utils.getText(context, StringRes.debrief),
+                style: TextStyle(color: ColorRes.white, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                        fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.next),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            )
+          ],
+        )
+//                  CommonView.showTitle(
+//                      context, Utils.getText(context, StringRes.engagement))
+        );
   }
 
   checkAnswer(int index) {
@@ -353,16 +433,14 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(
-                  top: 18, bottom: 10, left: 12, right: 12),
+              margin: EdgeInsets.only(top: 18, bottom: 10, left: 12, right: 12),
               height: Utils.getDeviceHeight(context) / 2.7,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: NetworkImage(questionData.mediaLink),
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(10),
-                  border:
-                  Border.all(color: ColorRes.white, width: 1)),
+                  border: Border.all(color: ColorRes.white, width: 1)),
             ),
             Expanded(
                 child: CommonView.questionAndExplanation(
@@ -404,16 +482,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     });
 
     controller.forward();
-
-    if (questionData.isAnsweredCorrect) {
-      questionData.counter = questionData.counter++;
-      questionData.attemptTime = DateTime.now().millisecondsSinceEpoch;
-
-      saveQuestion(questionData);
-
-      //decrease sales person
-
-    }
   }
 
   @override
@@ -666,8 +734,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //        ),
         ));
   }
-
-  void saveQuestion(QuestionData questionData) {}
 }
 
 /*class CategoryItem extends StatefulWidget {

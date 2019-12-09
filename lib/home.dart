@@ -350,11 +350,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   isToSync(QuestionData questionData) {
-    return (questionData.isAnsweredCorrect &&
-        (questionData.attemptTime - DateTime.now().millisecondsSinceEpoch)
-                .abs() <
-            24 * 60 * 60 * 1000 &&
-        !questionData.isSynced);
+//    return (questionData.isAnsweredCorrect &&
+//        (questionData.attemptTime - DateTime.now().millisecondsSinceEpoch)
+//                .abs() <
+//            24 * 60 * 60 * 1000 &&
+//        !questionData.isSynced);
   }
 
   void callSyncApi() {

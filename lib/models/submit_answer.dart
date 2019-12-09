@@ -36,6 +36,7 @@ class SubmitAnswerRequest {
 
 class SubmitAnswer {
   int questionId;
+  int moduleId;
   int counter;
   int resource;
   int value;
@@ -45,6 +46,7 @@ class SubmitAnswer {
 
   SubmitAnswer(
       {this.questionId,
+        this.moduleId,
         this.counter,
         this.resource,
         this.value,
@@ -54,6 +56,7 @@ class SubmitAnswer {
 
   SubmitAnswer.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
+    moduleId = json['moduleId'];
     counter = json['counter'];
     resource = json['resource'];
     value = json['value'];
@@ -65,6 +68,7 @@ class SubmitAnswer {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['questionId'] = this.questionId;
+    data['moduleId'] = this.moduleId;
     data['counter'] = this.counter;
     data['resource'] = this.resource;
     data['value'] = this.value;

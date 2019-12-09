@@ -279,7 +279,6 @@ class HeaderView extends StatelessWidget {
 
       if (remainingCapacity != null && totalEmployee != null) {
         double value = (remainingCapacity / (totalEmployee==0?1:totalEmployee)).toDouble();
-        print("progress___" + value.toString());
         return value > 1 ? 1.0 : value;
       } else {
         return 0.0;

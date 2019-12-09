@@ -144,7 +144,7 @@ class Utils {
 
   static getFormattedDate(String datetime) {
     DateTime startDate = DateTime.parse(datetime);
-    return DateFormat("HH:mm a, dd MMMM, yyyy").format(startDate);
+    return DateFormat('yyyy-MM-dd HH:mm:ss').format(startDate);
   }
 
 //  static showToast(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
@@ -289,7 +289,6 @@ class Utils {
     Injector.audioCache.play("sounds/wrong_answer.wav");
   }
 
-
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
     List<String> jsonQuestionData = List();
     List<QuestionData> questionData_ = List();
@@ -330,12 +329,22 @@ class Utils {
   static getSalesPersonCount() {
     return Injector.customerValueData.organization
         .where((data) => data.type == Const.typeSales)
-        .toList()[0].employeeCount;
+        .toList()[0]
+        .employeeCount;
   }
 
   static getServicesPersonCount() {
     return Injector.customerValueData.organization
         .where((data) => data.type == Const.typeServices)
-        .toList()[0].employeeCount;
+        .toList()[0]
+        .employeeCount;
+  }
+
+ static getCurrentFormattedDate() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
+    String formatted = formatter.format(now);
+    print(formatted);
+    return formatted;// something like 2013-04-20
   }
 }

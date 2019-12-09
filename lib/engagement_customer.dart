@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -44,6 +46,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   int _selectedDrawerIndex = 0;
 
   VideoPlayerController _controller;
+  bool isLoading = false;
 
   selectItem(index) {
     setState(() {
@@ -88,245 +91,30 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        Injector.isBusinessMode
-            ? Image(
-                image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-//                  image: AssetImage(Utils.getAssetsImg(arrQuestions.question)),
-                fit: BoxFit.fill,
-              )
-            : Container(
-                color: ColorRes.bgProf,
-              ),
-        Column(
+      body: SafeArea(
+        child: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
-            Container(
-                margin: EdgeInsets.only(top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      child: InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg(
-                              Injector.isBusinessMode ? "back" : 'back_prof')),
-                          width: DimenRes.titleBarHeight,
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          Utils.performBack(context);
-                        },
-                      ),
-
-                      alignment: Alignment.center,
-                      height: 30,
-                      width: 40,
-//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 30,
-//                          margin: EdgeInsets.only(left: 50.0, right: 50.0),
-//                      color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: Injector.isBusinessMode
-                              ? null
-                              : BorderRadius.circular(15),
-//                          border: Injector.isBusinessMode
-//                              ? null
-//                              : Border.all(
-//                              width: 1,
-//                              color: ColorRes.blueMenuSelected),
-                          color: Injector.isBusinessMode
-                              ? null
-                              : ColorRes.blueMenuSelected,
-                          image: Injector.isBusinessMode
-                              ? (DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("eddit_profile")),
-                                  fit: BoxFit.fill))
-                              : null),
-
-                      child: Text(
-                        Utils.getText(
-                            context,
-                            Injector.isBusinessMode
-                                ? StringRes.engagement
-                                : StringRes.engagement),
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    InkResponse(
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 30,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("bg_engage_now")),
-                                fit: BoxFit.fill)),
-                        child: Text(
-                          Utils.getText(context, StringRes.next),
-                          style: TextStyle(color: ColorRes.white, fontSize: 16),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      onTap: () {
-                        performSubmitAnswer(context);
-                      },
-                    )
-                  ],
-                )
-//                  CommonView.showTitle(
-//                      context, Utils.getText(context, StringRes.engagement))
-                ),
-            Expanded(
-                child: Row(
-              children: <Widget>[
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: 18, bottom: 10, left: 10, right: 12),
-                          height: Utils.getDeviceHeight(context) / 2.7,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            image: isImage(questionData.mediaLink)
-                                ? DecorationImage(
-                                    image: NetworkImage(questionData.mediaLink),
-                                    fit: BoxFit.fill)
-                                : null,
-                            borderRadius: BorderRadius.circular(10),
-                            /* border:
-                                Border.all(color: ColorRes.white, width: 1)*/
-                          ),
-                          child: isVideo(questionData.mediaLink) &&
-                                  _controller.value.initialized
-                              ? AspectRatio(
-                                  aspectRatio: _controller.value.aspectRatio,
-                                  child: VideoPlayer(_controller),
-                                )
-                              : Container(),
-                        ),
-                        Expanded(
-                          child: CommonView.questionAndExplanation(
-                              context,
-                              Utils.getText(context, StringRes.question),
-                              true,
-                              questionData.question),
-                        ),
-                      ],
-                    )),
-                Expanded(
-                  flex: 1,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        margin: EdgeInsets.only(
-                            top: 20, bottom: 15, right: 15, left: 8),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 15, bottom: 18),
-                          decoration: BoxDecoration(
-                            color: Injector.isBusinessMode
-                                ? ColorRes.bgDescription
-                                : null,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: ColorRes.white, width: 1),
-                          ),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemCount: arrAnswer.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return showItem(index);
-                            },
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: 30,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: Utils.getDeviceWidth(context) / 6,
-                              vertical: 5),
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: Injector.isBusinessMode
-                                  ? null
-                                  : BorderRadius.circular(20),
-                              border: Injector.isBusinessMode
-                                  ? null
-                                  : Border.all(width: 1, color: ColorRes.white),
-                              color: Injector.isBusinessMode
-                                  ? null
-                                  : ColorRes.titleBlueProf,
-                              image: Injector.isBusinessMode
-                                  ? DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("eddit_profile")),
-                                      fit: BoxFit.fill)
-                                  : null),
-                          child: Text(
-                            Utils.getText(context, StringRes.answers),
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 18),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      //Full Screen Alert Show Question : -
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: InkResponse(
-                          onTap: () {
-                            Utils.playClickSound();
-                            showDialog(
-                              context: context,
-                              builder: (_) => FunkyOverlayAnswers(),
-                            );
-                          },
-                          child: Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 20,
-                              width: Utils.getDeviceWidth(context) / 20,
-                              decoration: BoxDecoration(
-                                  image:
-//                                  Injector.isBusinessMode ?
-                                      DecorationImage(
-                                          image: AssetImage(Utils.getAssetsImg(
-                                              "full_expand_question_answers")),
-                                          fit: BoxFit.fill)
-//                                  : null
-                                  )),
-                        ),
-                      )
-                    ],
+            Injector.isBusinessMode
+                ? Image(
+                    image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+//                  image: AssetImage(Utils.getAssetsImg(arrQuestions.question)),
+                    fit: BoxFit.fill,
+                  )
+                : Container(
+                    color: ColorRes.bgProf,
                   ),
-                ),
+            Column(
+              children: <Widget>[
+                showSubHeader(context),
+                showMainBody(context),
               ],
-            )),
+            ),
+            CommonView.showCircularProgress(isLoading)
           ],
-        )
-      ],
-    )));
+        ),
+      ),
+    );
   }
 
   Widget showItem(int index) {
@@ -421,15 +209,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         selectedAnswer == questionData.correctAnswerId;
 
     callSubmitAnswerApi(context);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => HomePage(
-                initialPageType: Const.typeDebrief,
-                questionDataSituation: questionData,
-              )),
-    );
   }
 
   void callSubmitAnswerApi(BuildContext context) {
@@ -439,19 +218,48 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitAnswer submitAnswer = SubmitAnswer();
 
     submitAnswer.questionId = questionData.questionId;
-    submitAnswer.counter = questionData.isAnsweredCorrect
-        ? (questionData.counter + 1)
-        : (questionData.counter / 2);
+    submitAnswer.moduleId = questionData.moduleId;
+    submitAnswer.counter = max(
+        questionData.isAnsweredCorrect
+            ? (questionData.counter + 1)
+            : (questionData.counter ~/ 2).round(),
+        0);
     submitAnswer.loyalty = questionData.loyalty;
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
     submitAnswer.value = questionData.value;
     submitAnswer.resource = questionData.resource;
+    submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     List<SubmitAnswer> arrAnswer = List();
-
+    arrAnswer.add(submitAnswer);
     rq.answer = arrAnswer;
 
-    WebApi().submitAnswers(context, rq);
+    rq.totalQuestionAnswered = arrAnswer.length;
+    rq.remainingSalesPerson = Injector.customerValueData.totalEmployeeCapacity -
+        questionData.resource;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    WebApi().submitAnswers(context, rq).then((data) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        Injector.customerValueData = data;
+      }
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  initialPageType: Const.typeDebrief,
+                  questionDataSituation: questionData,
+                )),
+      );
+    });
   }
 
   isImage(String path) {
@@ -466,6 +274,227 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   isPdf(String path) {
     return extension(path) == ".pdf";
+  }
+
+  showSubHeader(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(top: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: InkResponse(
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg(
+                      Injector.isBusinessMode ? "back" : 'back_prof')),
+                  width: DimenRes.titleBarHeight,
+                ),
+                onTap: () {
+                  Utils.playClickSound();
+                  Utils.performBack(context);
+                },
+              ),
+
+              alignment: Alignment.center,
+              height: 30,
+              width: 40,
+//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
+            ),
+            Container(
+              alignment: Alignment.center,
+              height: 30,
+//                          margin: EdgeInsets.only(left: 50.0, right: 50.0),
+//                      color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(15),
+//                          border: Injector.isBusinessMode
+//                              ? null
+//                              : Border.all(
+//                              width: 1,
+//                              color: ColorRes.blueMenuSelected),
+                  color: Injector.isBusinessMode
+                      ? null
+                      : ColorRes.blueMenuSelected,
+                  image: Injector.isBusinessMode
+                      ? (DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill))
+                      : null),
+
+              child: Text(
+                Utils.getText(
+                    context,
+                    Injector.isBusinessMode
+                        ? StringRes.engagement
+                        : StringRes.engagement),
+                style: TextStyle(color: ColorRes.white, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                        fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.next),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () {
+                performSubmitAnswer(context);
+              },
+            )
+          ],
+        )
+//                  CommonView.showTitle(
+//                      context, Utils.getText(context, StringRes.engagement))
+        );
+  }
+
+  showMainBody(BuildContext context) {
+    return Expanded(
+        child: Row(
+      children: <Widget>[
+        Expanded(
+            flex: 1,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 18, bottom: 10, left: 10, right: 12),
+                  height: Utils.getDeviceHeight(context) / 2.7,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    image: isImage(questionData.mediaLink)
+                        ? DecorationImage(
+                            image: NetworkImage(questionData.mediaLink),
+                            fit: BoxFit.fill)
+                        : null,
+                    borderRadius: BorderRadius.circular(10),
+                    /* border:
+                                Border.all(color: ColorRes.white, width: 1)*/
+                  ),
+                  child: isVideo(questionData.mediaLink) &&
+                          _controller.value.initialized
+                      ? AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        )
+                      : Container(),
+                ),
+                Expanded(
+                  child: CommonView.questionAndExplanation(
+                      context,
+                      Utils.getText(context, StringRes.question),
+                      true,
+                      questionData.question),
+                ),
+              ],
+            )),
+        Expanded(
+          flex: 1,
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                margin:
+                    EdgeInsets.only(top: 20, bottom: 15, right: 15, left: 8),
+                child: Container(
+                  alignment: Alignment.center,
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+                  decoration: BoxDecoration(
+                    color:
+                        Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: ColorRes.white, width: 1),
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: arrAnswer.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return showItem(index);
+                    },
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 30,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: Utils.getDeviceWidth(context) / 6,
+                      vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      borderRadius: Injector.isBusinessMode
+                          ? null
+                          : BorderRadius.circular(20),
+                      border: Injector.isBusinessMode
+                          ? null
+                          : Border.all(width: 1, color: ColorRes.white),
+                      color: Injector.isBusinessMode
+                          ? null
+                          : ColorRes.titleBlueProf,
+                      image: Injector.isBusinessMode
+                          ? DecorationImage(
+                              image: AssetImage(
+                                  Utils.getAssetsImg("eddit_profile")),
+                              fit: BoxFit.fill)
+                          : null),
+                  child: Text(
+                    Utils.getText(context, StringRes.answers),
+                    style: TextStyle(color: ColorRes.white, fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              //Full Screen Alert Show Question : -
+              Align(
+                alignment: Alignment.bottomRight,
+                child: InkResponse(
+                  onTap: () {
+                    Utils.playClickSound();
+                    showDialog(
+                      context: context,
+                      builder: (_) => FunkyOverlayAnswers(),
+                    );
+                  },
+                  child: Container(
+                      alignment: Alignment.center,
+                      height: Utils.getDeviceWidth(context) / 20,
+                      width: Utils.getDeviceWidth(context) / 20,
+                      decoration: BoxDecoration(
+                          image:
+//                                  Injector.isBusinessMode ?
+                              DecorationImage(
+                                  image: AssetImage(Utils.getAssetsImg(
+                                      "full_expand_question_answers")),
+                                  fit: BoxFit.fill)
+//                                  : null
+                          )),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 

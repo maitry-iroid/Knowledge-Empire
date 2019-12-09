@@ -20,11 +20,12 @@ class QuestionRequest {
   }
 }
 
+
 class QuestionsResponse {
-  String flag = "";
-  String result = "";
-  String msg = "";
-  List<QuestionData> data = List();
+  String flag;
+  String result;
+  String msg;
+  List<QuestionData> data;
 
   QuestionsResponse({this.flag, this.result, this.msg, this.data});
 
@@ -53,46 +54,65 @@ class QuestionsResponse {
 }
 
 class QuestionData {
-  int questionId = 0;
-  String title = "";
-  String question = "";
-  String moduleName = "";
-  String description = "";
-  String correctAnswerId = "";
-  int loyalty = 0;
-  int resource = 0;
-  int value = 0;
-  String mediaLink = "";
-  List<Answer> answer = List();
-  int counter = 0;
-  int daysInList = 0;
-  String correctAnswerImage = "";
-  String inCorrectAnswerImage = "";
-  int attemptTime = 0;
-  bool isAnsweredCorrect = false;
-  bool isSynced = false;
+  int questionId;
+  String title;
+  String question;
+  String moduleName;
+  int moduleId;
+  int companyId;
+  int daysInList;
+  int counter;
+  String description;
+  String correctAnswerId;
+  int loyalty;
+  int value;
+  String mediaLink;
+  List<Answer> answer;
+  String correctAnswerImage;
+  String inCorrectAnswerImage;
+  bool isAnsweredCorrect;
+  int resource;
 
-  QuestionData();
+  QuestionData(
+      {this.questionId,
+        this.title,
+        this.question,
+        this.moduleName,
+        this.moduleId,
+        this.companyId,
+        this.daysInList,
+        this.counter,
+        this.description,
+        this.correctAnswerId,
+        this.loyalty,
+        this.value,
+        this.mediaLink,
+        this.answer,
+        this.correctAnswerImage,
+        this.inCorrectAnswerImage});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
     title = json['title'];
     question = json['question'];
     moduleName = json['moduleName'];
+    moduleId = json['moduleId'];
+    companyId = json['companyId'];
+    daysInList = json['daysInlist'];
+    counter = json['counter'];
     description = json['description'];
     correctAnswerId = json['correctAnswerId'];
     loyalty = json['loyalty'];
-    resource = json['resource'];
     value = json['value'];
     mediaLink = json['mediaLink'];
-    correctAnswerImage = json['correctAnswerImage'];
-    inCorrectAnswerImage = json['inCorrectAnswerImage'];
     if (json['answer'] != null) {
       answer = new List<Answer>();
       json['answer'].forEach((v) {
         answer.add(new Answer.fromJson(v));
       });
     }
+    correctAnswerImage = json['correctAnswerImage'];
+    inCorrectAnswerImage = json['inCorrectAnswerImage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -101,25 +121,29 @@ class QuestionData {
     data['title'] = this.title;
     data['question'] = this.question;
     data['moduleName'] = this.moduleName;
+    data['moduleId'] = this.moduleId;
+    data['companyId'] = this.companyId;
+    data['daysInlist'] = this.daysInList;
+    data['counter'] = this.counter;
     data['description'] = this.description;
     data['correctAnswerId'] = this.correctAnswerId;
     data['loyalty'] = this.loyalty;
-    data['resource'] = this.resource;
     data['value'] = this.value;
     data['mediaLink'] = this.mediaLink;
-    data['correctAnswerImage'] = this.correctAnswerImage;
-    data['inCorrectAnswerImage'] = this.inCorrectAnswerImage;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();
     }
+    data['correctAnswerImage'] = this.correctAnswerImage;
+    data['inCorrectAnswerImage'] = this.inCorrectAnswerImage;
     return data;
   }
 }
 
 class Answer {
-  String answerId = "";
-  String answer = "";
+  String answerId;
+  String answer;
   bool isSelected = false;
+
 
   Answer({this.answerId, this.answer});
 
@@ -135,3 +159,6 @@ class Answer {
     return data;
   }
 }
+
+
+

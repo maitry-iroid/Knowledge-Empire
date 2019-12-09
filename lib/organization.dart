@@ -288,7 +288,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             ? organizationData.totalEmpCount
             : 1);
 
-    print("progress___" + progress.toString());
 
     return progress.toDouble();
   }
