@@ -32,6 +32,8 @@ int _selectedItem = 0;
 QuestionData questionData = QuestionData();
 
 List abcdList = List();
+VideoPlayerController _controller;
+
 
 class EngagementCustomer extends StatefulWidget {
 //  List<QuestionData> arrQuestions = List();
@@ -52,7 +54,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   List abcdIndex = ['A', 'B', 'C', 'D'];
   int _selectedDrawerIndex = 0;
 
-  VideoPlayerController _controller;
+//  VideoPlayerController _controller;
   bool isLoading = false;
 
   String urlPDFPath = "";
@@ -142,7 +144,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         },
         child: Container(
 //          height: Utils.getDeviceWidth(context) / 5,
-          height: 45,
+          height: 50,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -387,28 +389,37 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             flex: 1,
             child: Column(
               children: <Widget>[
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 18, bottom: 10, left: 10, right: 12),
-                  height: Utils.getDeviceHeight(context) / 2.7,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    image: isImage(questionData.mediaLink)
-                        ? DecorationImage(
-                            image: NetworkImage(questionData.mediaLink),
-                            fit: BoxFit.fill)
-                        : null,
-                    borderRadius: BorderRadius.circular(10),
-                    /* border:
+                InkResponse(
+                  onTap: () {
+                    Utils.playClickSound();
+                    showDialog(
+                      context: context,
+                      builder: (_) => ImageShowAlert(),
+                    );
+                  },
+                  child: Container(
+                    margin:
+                    EdgeInsets.only(top: 18, bottom: 10, left: 10, right: 12),
+                    height: Utils.getDeviceHeight(context) / 2.7,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      image: isImage(questionData.mediaLink)
+                          ? DecorationImage(
+                          image: NetworkImage(questionData.mediaLink),
+                          fit: BoxFit.fill)
+                          : null,
+                      borderRadius: BorderRadius.circular(10),
+                      /* border:
                                 Border.all(color: ColorRes.white, width: 1)*/
+                    ),
+                    child: isVideo(questionData.mediaLink) &&
+                        _controller.value.initialized
+                        ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                        : Container(),
                   ),
-                  child: isVideo(questionData.mediaLink) &&
-                          _controller.value.initialized
-                      ? AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        )
-                      : Container(),
                 ),
                 Expanded(
                   child: CommonView.questionAndExplanation(
@@ -572,7 +583,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
-                          top: 15, bottom: 15, right: 15, left: 15),
+                          top: 25, bottom: 15, right: 25, left: 25),
                       child: Container(
                         height: Utils.getDeviceHeight(context) / 1.6,
                         width: Utils.getDeviceWidth(context) / 1.2,
@@ -601,7 +612,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                      alignment: Alignment.topCenter,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 30,
+                        height: 35,
                         margin: EdgeInsets.symmetric(
                             horizontal: Utils.getDeviceWidth(context) / 3,
                             vertical: 5),
@@ -641,8 +652,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 50,
-                            width: Utils.getDeviceWidth(context) / 50,
+                            height: Utils.getDeviceWidth(context) / 40,
+                            width: Utils.getDeviceWidth(context) / 40,
                             decoration: BoxDecoration(
                                 image: Injector.isBusinessMode
                                     ? DecorationImage(
@@ -682,7 +693,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           });
         },
         child: Container(
-          height: 45,
+          height: 48,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -802,7 +813,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
-                          top: 15, bottom: 15, right: 15, left: 15),
+                          top: 25, bottom: 15, right: 25, left: 25),
                       child: Container(
                         height: Utils.getDeviceHeight(context) / 2,
                         width: Utils.getDeviceWidth(context) / 1.5,
@@ -831,13 +842,13 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       top: 0,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 30,
+                        height: 40,
                         margin: (checkimg == true
                             ? EdgeInsets.symmetric(
                                 horizontal: Utils.getDeviceWidth(context) / 6)
                             : EdgeInsets.symmetric(
                                 horizontal: Utils.getDeviceWidth(context) / 3)),
-                        padding: EdgeInsets.symmetric(horizontal: 27),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
                                 ? null
@@ -881,8 +892,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           child: (checkimg == true
                               ? Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 50,
-                                  width: Utils.getDeviceWidth(context) / 50,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
                                       image: Injector.isBusinessMode
                                           ? DecorationImage(
@@ -893,8 +904,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                           : null))
                               : Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 50,
-                                  width: Utils.getDeviceWidth(context) / 50,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
                                       image: Injector.isBusinessMode
                                           ? DecorationImage(
@@ -909,6 +920,160 @@ class FunkyOverlayState extends State<FunkyOverlay>
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
                 ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+//======================================
+//image show  in alert
+
+class ImageShowAlert extends StatefulWidget {
+//  bool CheckQuestion;
+
+  @override
+  State<StatefulWidget> createState() => ImageShowAlertState();
+}
+
+class ImageShowAlertState extends State<ImageShowAlert>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  bool checkimg = true;
+
+  isImage(String path) {
+    return extension(path) == ".png" ||
+        extension(path) == ".jpeg" ||
+        extension(path) == ".jpg";
+  }
+
+  isVideo(String path) {
+    return extension(path) == ".mp4";
+  }
+
+  isPdf(String path) {
+    return extension(path) == ".pdf";
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+//                color: Colors.transparent.withOpacity(0.8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 35, bottom: 15, right: 25, left: 25),
+                      child: Container(
+                        margin:
+                        EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
+                        height: Utils.getDeviceHeight(context) / 1.5,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: isImage(questionData.mediaLink)
+                              ? DecorationImage(
+                              image: NetworkImage(questionData.mediaLink),
+                              fit: BoxFit.fill)
+                              : null,
+                          borderRadius: BorderRadius.circular(10),
+                          /* border:
+                                Border.all(color: ColorRes.white, width: 1)*/
+                        ),
+                        child: isVideo(questionData.mediaLink) &&
+                            _controller.value.initialized
+                            ? AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        )
+                            : Container(),
+                      ),
+                    ),
+
+                    //Full Screen Alert Show
+                    Positioned(
+                      top: 0,
+                      right: 0,
+//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
+//                        .topRight),
+//          Alignment.bottomRight,
+                      child: InkResponse(
+                          onTap: () {
+                            Utils.playClickSound();
+                            Navigator.pop(context);
+
+//                          (checkimg == true ? showDialog(
+//                            context: context,
+//                            builder: (_) => FunkyOverlay(),
+//                          ) : null );
+                          },
+                          child: (checkimg == true
+                              ? Container(
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 40,
+                              width: Utils.getDeviceWidth(context) / 40,
+                              decoration: BoxDecoration(
+                                  image: Injector.isBusinessMode
+                                      ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
+                                      : null))
+                              : Container(
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 40,
+                              width: Utils.getDeviceWidth(context) / 40,
+                              decoration: BoxDecoration(
+                                  image: Injector.isBusinessMode
+                                      ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
+                                      : null)))),
+                    )
+                  ],
+                )
+//              child: CommonView.questionAndExplanationFullAlert(
+//                context, "Question"),
+            ),
           ),
         ),
       ),

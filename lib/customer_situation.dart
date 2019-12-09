@@ -3,6 +3,9 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:path/path.dart';
+import 'package:path/path.dart' as prefix0;
+import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
 import 'helper/res.dart';
 
@@ -14,6 +17,8 @@ List<Answer> arrAnswerSituation = List();
 int _selectedItem = 0;
 
 QuestionData questionDataCustSituation = QuestionData();
+
+VideoPlayerController _controller;
 
 List abcdList = List();
 
@@ -107,8 +112,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               Expanded(
                   child: Row(
                 children: <Widget>[
-                  showFirstHalf(),
-                  showSecondHalf(),
+                  showFirstHalf(context),
+                  showSecondHalf(context),
                 ],
               )),
             ],
@@ -257,7 +262,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //          });
         },
         child: Container(
-          height: 45,
+          height: 47,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -330,7 +335,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         ));
   }
 
-  showFirstHalf() {
+  showFirstHalf(BuildContext context) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -427,7 +432,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     );
   }
 
-  showSecondHalf() {
+  showSecondHalf(BuildContext context) {
     return Expanded(
         flex: 1,
         child: Column(
@@ -509,7 +514,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
-                          top: 15, bottom: 15, right: 15, left: 15),
+                          top: 25, bottom: 15, right: 25, left: 25),
                       child: Container(
                         height: Utils.getDeviceHeight(context) / 1.6,
                         width: Utils.getDeviceWidth(context) / 1.2,
@@ -538,7 +543,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                      alignment: Alignment.topCenter,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 25,
+                        height: 35,
                         margin: EdgeInsets.symmetric(
                             horizontal: Utils.getDeviceWidth(context) / 3,
                             vertical: 5),
@@ -578,8 +583,8 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 50,
-                            width: Utils.getDeviceWidth(context) / 50,
+                            height: Utils.getDeviceWidth(context) / 40,
+                            width: Utils.getDeviceWidth(context) / 40,
                             decoration: BoxDecoration(
                                 image: Injector.isBusinessMode
                                     ? DecorationImage(
@@ -665,7 +670,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          });
         },
         child: Container(
-          height: 45,
+          height: 48,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -733,6 +738,137 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
         ));
+  }
+}
+
+//======================================
+//image show  in alert
+
+class ImageCorrectIncorrectAlert extends StatefulWidget {
+//  bool CheckQuestion;
+
+  @override
+  State<StatefulWidget> createState() => ImageCorrectIncorrectAlertState();
+}
+
+class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  bool checkimg = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+//                color: Colors.transparent.withOpacity(0.8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 25, bottom: 15, right: 25, left: 25),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: 0, bottom: 0, left: 0, right: 0),
+                        height: Utils.getDeviceHeight(context) / 2.7,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                              image: NetworkImage(questionData.isAnsweredCorrect
+                                  ? questionData.correctAnswerImage
+                                  : questionData.inCorrectAnswerImage),
+                              fit: BoxFit.fill),
+                          borderRadius: BorderRadius.circular(10),
+                          /* border:
+                                Border.all(color: ColorRes.white, width: 1)*/
+                        ),
+                      ),
+                    ),
+
+                    //Full Screen Alert Show
+                    Positioned(
+                      top: 0,
+                      right: 0,
+//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
+//                        .topRight),
+//          Alignment.bottomRight,
+                      child: InkResponse(
+                          onTap: () {
+                            Utils.playClickSound();
+                            Navigator.pop(context);
+
+//                          (checkimg == true ? showDialog(
+//                            context: context,
+//                            builder: (_) => FunkyOverlay(),
+//                          ) : null );
+                          },
+                          child: (checkimg == true
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: Injector.isBusinessMode
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
+                                          : null))
+                              : Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: Injector.isBusinessMode
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
+                                          : null)))),
+                    )
+                  ],
+                )
+//              child: CommonView.questionAndExplanationFullAlert(
+//                context, "Question"),
+                ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
