@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/customer_situation.dart';
 import 'package:ke_employee/customer_situation.dart';
 import 'package:ke_employee/customer_situation.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/Customer_Situation.dart';
 
 //import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
@@ -86,7 +90,7 @@ class CommonView {
   //https://www.radiantmediaplayer.com/media/bbb-360p.mp4
   static image(BuildContext context, String image) {
     //VideoPlayerController _videoPlay
-    return Container(
+   /* return Container(
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 20),
       decoration: BoxDecoration(
         color: ColorRes.white,
@@ -106,7 +110,7 @@ class CommonView {
 
         borderRadius: BorderRadius.circular(10),
       ),
-    );
+    );*/
 
     //video show code: -
 
@@ -121,6 +125,10 @@ class CommonView {
 //          : Container(),
 //
 //    );
+
+   //pdf show codeing.
+
+
   }
 
   static questionAndExplanation(

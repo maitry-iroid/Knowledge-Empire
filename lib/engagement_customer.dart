@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -17,6 +19,11 @@ import 'helper/res.dart';
 import 'home.dart';
 import 'models/questions.dart';
 import 'models/submit_answer.dart';
+//import 'models/submit_answer.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:http/http.dart' as http;
 
 List<Answer> arrAnswer = List();
 
@@ -47,6 +54,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   VideoPlayerController _controller;
   bool isLoading = false;
+
+  String urlPDFPath = "";
+
+  int _totalPages = 0;
+  int _currentPage = 0;
+  bool pdfReady = false;
+  PDFViewController _pdfViewController;
 
   selectItem(index) {
     setState(() {
