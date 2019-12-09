@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/PDFPage.dart';
 import 'package:ke_employee/dashboard_new.dart';
+import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/intro_screen.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         '/login': (BuildContext context) => LoginPage(),
 //        '/splash': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => HomePage(),
+        '/engage': (BuildContext ext) => EngagementCustomer(),
         '/dashboard': (BuildContext context) => DashboardNewPage(),
         '/intro': (BuildContext context) => IntroPage(),
 //        '/contacts': (BuildContext context) => ContactsScreen(),

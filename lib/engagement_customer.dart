@@ -19,6 +19,7 @@ import 'helper/res.dart';
 import 'home.dart';
 import 'models/questions.dart';
 import 'models/submit_answer.dart';
+
 //import 'models/submit_answer.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -165,11 +166,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(
-                          arrAnswer[index].isSelected
-                              ? "rounded_rectangle_837_blue"
-                              : "rounded_rectangle_8371")),
-                      fit: BoxFit.fill))
+                      image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
                   : null),
           //bg_blue
           child: Row(
@@ -212,21 +209,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void performSubmitAnswer(BuildContext context) {
     Utils.playClickSound();
 
-    String selectedAnswer = "";
+    List<Answer> selectedAnswer =
+        arrAnswer.where((answer) => answer.isSelected).toList();
 
-    arrAnswer.forEach((answer) {
-      if (answer.isSelected) {
-//        selectedAnswer += answer.answerId + ",";
-        selectedAnswer += answer.answer + ",";
+    if (selectedAnswer.length == 0) {
+      Utils.showToast("Please select at least one option");
+      return;
+    }
 
-      }
-    });
-
-    selectedAnswer = selectedAnswer.substring(0, selectedAnswer.length - 1);
-    print("selectedAnswer__" + selectedAnswer);
-
-    questionData.isAnsweredCorrect =
-        selectedAnswer == questionData.correctAnswerId;
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
 
     callSubmitAnswerApi(context);
   }
@@ -525,6 +516,25 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       ],
     ));
   }
+
+  bool isAnswerCorrect(List<Answer> selectedAnswer) {
+    bool isAnswerCorrect = true;
+
+    var arr = questionData.correctAnswerId.split(',');
+
+    if (arr.length != selectedAnswer.length) {
+      return false;
+    }
+
+    for (var ans in selectedAnswer) {
+      if (!arr.contains(ans.option.toString())) {
+        isAnswerCorrect = false;
+        return false;
+      }
+    }
+
+    return isAnswerCorrect;
+  }
 }
 
 //------------------------------------------------------------
@@ -714,11 +724,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(
-                          arrAnswer[index].isSelected
-                              ? "rounded_rectangle_837_blue"
-                              : "rounded_rectangle_8371")),
-                      fit: BoxFit.fill))
+                      image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -754,6 +760,14 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
 //        ),
         ));
+  }
+}
+
+checkAnswer(int index) {
+  if (arrAnswer[index].isSelected == true) {
+    return Utils.getAssetsImg("rounded_rectangle_837_blue");
+  } else {
+    return Utils.getAssetsImg("rounded_rectangle_8371");
   }
 }
 

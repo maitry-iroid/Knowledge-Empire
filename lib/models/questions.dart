@@ -141,6 +141,7 @@ class QuestionData {
 class Answer {
   String answerId;
   String answer;
+  int option;
   bool isSelected = false;
 
 
@@ -149,12 +150,14 @@ class Answer {
   Answer.fromJson(Map<String, dynamic> json) {
     answerId = json['answerId'];
     answer = json['answer'];
+    option = json['option'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['answerId'] = this.answerId;
     data['answer'] = this.answer;
+    data['option'] = this.option;
     return data;
   }
 }
