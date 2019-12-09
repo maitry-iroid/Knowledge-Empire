@@ -5,7 +5,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/customer_situation.dart';
 import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/dashboard.dart';
 import 'package:ke_employee/dashboard_new.dart';

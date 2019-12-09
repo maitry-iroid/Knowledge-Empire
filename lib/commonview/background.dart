@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/Customer_Situation.dart';
-import 'package:ke_employee/Customer_Situation.dart';
-import 'package:ke_employee/Customer_Situation.dart';
+import 'package:ke_employee/customer_situation.dart';
+import 'package:ke_employee/customer_situation.dart';
+import 'package:ke_employee/customer_situation.dart';
 
 //import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';

@@ -3,6 +3,8 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:path/path.dart';
+import 'package:path/path.dart' as prefix0;
 
 import 'commonview/background.dart';
 
@@ -12,7 +14,7 @@ import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'home.dart';
 import 'models/questions.dart';
-//import 'models/submit_answer.dart';
+import 'models/submit_answer.dart';
 
 List<Answer> arrAnswer = List();
 
@@ -41,7 +43,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   List abcdIndex = ['A', 'B', 'C', 'D'];
   int _selectedDrawerIndex = 0;
 
-  VideoPlayerController _videoPlay;
+  VideoPlayerController _controller;
 
   selectItem(index) {
     setState(() {
@@ -65,21 +67,22 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     arrAnswer = widget.questionDataEngCustomer.answer;
     abcdList = abcdIndex;
 
-    _videoPlay = VideoPlayerController.network(
-        'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {
-          _videoPlay.play();
+    if (isVideo(questionData.mediaLink)) {
+      _controller = VideoPlayerController.network(questionData.mediaLink)
+        ..initialize().then((_) {
+          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+          setState(() {
+            _controller.play();
+          });
         });
-      });
-    _videoPlay.play();
+      _controller.play();
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    _videoPlay.dispose();
+    _controller?.dispose();
   }
 
   @override
@@ -177,9 +180,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         ),
                       ),
                       onTap: () {
-
-
-                        performSubmitAnswer();
+                        performSubmitAnswer(context);
                       },
                     )
                   ],
@@ -199,12 +200,23 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               top: 18, bottom: 10, left: 10, right: 12),
                           height: Utils.getDeviceHeight(context) / 2.7,
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(questionData.mediaLink),
-                                  fit: BoxFit.fill),
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1)),
+                            color: Colors.transparent,
+                            image: isImage(questionData.mediaLink)
+                                ? DecorationImage(
+                                    image: NetworkImage(questionData.mediaLink),
+                                    fit: BoxFit.fill)
+                                : null,
+                            borderRadius: BorderRadius.circular(10),
+                            /* border:
+                                Border.all(color: ColorRes.white, width: 1)*/
+                          ),
+                          child: isVideo(questionData.mediaLink) &&
+                                  _controller.value.initialized
+                              ? AspectRatio(
+                                  aspectRatio: _controller.value.aspectRatio,
+                                  child: VideoPlayer(_controller),
+                                )
+                              : Container(),
                         ),
                         Expanded(
                           child: CommonView.questionAndExplanation(
@@ -391,8 +403,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ));
   }
 
-  void performSubmitAnswer() {
-
+  void performSubmitAnswer(BuildContext context) {
     Utils.playClickSound();
 
     String selectedAnswer = "";
@@ -403,36 +414,58 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       }
     });
 
-    selectedAnswer = selectedAnswer.substring(
-        0, selectedAnswer.length - 1);
+    selectedAnswer = selectedAnswer.substring(0, selectedAnswer.length - 1);
     print("selectedAnswer__" + selectedAnswer);
 
     questionData.isAnsweredCorrect =
         selectedAnswer == questionData.correctAnswerId;
 
-    callSubmitAnswerApi();
+    callSubmitAnswerApi(context);
 
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => HomePage(
-            initialPageType: Const.typeDebrief,
-            questionDataSituation: questionData,
-          )),
+                initialPageType: Const.typeDebrief,
+                questionDataSituation: questionData,
+              )),
     );
-
   }
 
-  void callSubmitAnswerApi() {
-//    SubmitAnswerRequest rq = SubmitAnswerRequest();
-//    rq.userId = Injector.userData.userId;
-//    rq.answer = arrAnswer;
+  void callSubmitAnswerApi(BuildContext context) {
+    SubmitAnswerRequest rq = SubmitAnswerRequest();
+    rq.userId = Injector.userData.userId;
 
+    SubmitAnswer submitAnswer = SubmitAnswer();
 
+    submitAnswer.questionId = questionData.questionId;
+    submitAnswer.counter = questionData.isAnsweredCorrect
+        ? (questionData.counter + 1)
+        : (questionData.counter / 2);
+    submitAnswer.loyalty = questionData.loyalty;
+    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
+    submitAnswer.value = questionData.value;
+    submitAnswer.resource = questionData.resource;
 
-//    WebApi().submitAnswers(context, rq)
+    List<SubmitAnswer> arrAnswer = List();
 
+    rq.answer = arrAnswer;
 
+    WebApi().submitAnswers(context, rq);
+  }
+
+  isImage(String path) {
+    return extension(path) == ".png" ||
+        extension(path) == ".jpeg" ||
+        extension(path) == ".jpg";
+  }
+
+  isVideo(String path) {
+    return extension(path) == ".mp4";
+  }
+
+  isPdf(String path) {
+    return extension(path) == ".pdf";
   }
 }
 
