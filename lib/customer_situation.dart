@@ -257,7 +257,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //          });
         },
         child: Container(
-//          height: 60,
+          height: 45,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -511,7 +511,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                       margin: EdgeInsets.only(
                           top: 15, bottom: 15, right: 15, left: 15),
                       child: Container(
-                        height: Utils.getDeviceHeight(context) / 1.8,
+                        height: Utils.getDeviceHeight(context) / 1.6,
                         width: Utils.getDeviceWidth(context) / 1.2,
                         margin: EdgeInsets.only(top: 0),
                         padding: EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -542,7 +542,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                         margin: EdgeInsets.symmetric(
                             horizontal: Utils.getDeviceWidth(context) / 3,
                             vertical: 5),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 25),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
                                 ? null
@@ -578,8 +578,8 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 40,
-                            width: Utils.getDeviceWidth(context) / 40,
+                            height: Utils.getDeviceWidth(context) / 50,
+                            width: Utils.getDeviceWidth(context) / 50,
                             decoration: BoxDecoration(
                                 image: Injector.isBusinessMode
                                     ? DecorationImage(
@@ -665,7 +665,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          });
         },
         child: Container(
-//          height: 60,
+          height: 45,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,

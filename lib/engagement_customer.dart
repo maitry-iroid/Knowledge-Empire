@@ -141,7 +141,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           });
         },
         child: Container(
-//          height: 60,
+//          height: Utils.getDeviceWidth(context) / 5,
+          height: 45,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -213,7 +214,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     arrAnswer.forEach((answer) {
       if (answer.isSelected) {
-        selectedAnswer += answer.answerId + ",";
+//        selectedAnswer += answer.answerId + ",";
+        selectedAnswer += answer.answer + ",";
+
       }
     });
 
@@ -571,10 +574,10 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       margin: EdgeInsets.only(
                           top: 15, bottom: 15, right: 15, left: 15),
                       child: Container(
-                        height: Utils.getDeviceHeight(context) / 1.8,
+                        height: Utils.getDeviceHeight(context) / 1.6,
                         width: Utils.getDeviceWidth(context) / 1.2,
                         margin: EdgeInsets.only(top: 0),
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 25),
                         decoration: BoxDecoration(
                           color: Injector.isBusinessMode
                               ? ColorRes.bgDescription
@@ -638,8 +641,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 40,
-                            width: Utils.getDeviceWidth(context) / 40,
+                            height: Utils.getDeviceWidth(context) / 50,
+                            width: Utils.getDeviceWidth(context) / 50,
                             decoration: BoxDecoration(
                                 image: Injector.isBusinessMode
                                     ? DecorationImage(
@@ -679,7 +682,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           });
         },
         child: Container(
-//          height: 60,
+          height: 45,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
           alignment: Alignment.center,
@@ -804,7 +807,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         height: Utils.getDeviceHeight(context) / 2,
                         width: Utils.getDeviceWidth(context) / 1.5,
                         margin: EdgeInsets.only(top: 0),
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                        padding: EdgeInsets.only(left: 25, right: 10, top: 25),
                         decoration: BoxDecoration(
                           color: Injector.isBusinessMode
                               ? ColorRes.bgDescription
@@ -878,27 +881,27 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           child: (checkimg == true
                               ? Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 50,
+                                  width: Utils.getDeviceWidth(context) / 50,
                                   decoration: BoxDecoration(
                                       image: Injector.isBusinessMode
                                           ? DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
-                                              fit: BoxFit.fill)
+                                              fit: BoxFit.contain)
                                           : null))
                               : Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 50,
+                                  width: Utils.getDeviceWidth(context) / 50,
                                   decoration: BoxDecoration(
                                       image: Injector.isBusinessMode
                                           ? DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
-                                              fit: BoxFit.fill)
+                                              fit: BoxFit.contain)
                                           : null)))),
                     )
                   ],
