@@ -36,7 +36,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     // TODO: implement initState
     super.initState();
 
-    questionAnswered = Injector.customerValueData.questionAnswered;
+    questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
     loyaltyBonus = Injector.customerValueData.loyaltyBonus;
     resourceBonus = Injector.customerValueData.resourceBonus;
     valueBonus = Injector.customerValueData.valueBonus;
