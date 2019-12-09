@@ -53,7 +53,7 @@ class QuestionsResponse {
 }
 
 class QuestionData {
-  String questionId = "";
+  int questionId = 0;
   String title = "";
   String question = "";
   String moduleName = "";

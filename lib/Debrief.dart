@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'helper/res.dart';
+import 'models/questions.dart';
 
 class DebriefPage extends StatefulWidget {
 
 
-  final DebriefPage questionDataCustomerSituation;
+  final QuestionData questionDataCustomerSituation;
 
   DebriefPage({Key key, this.questionDataCustomerSituation})
       : super(key: key);

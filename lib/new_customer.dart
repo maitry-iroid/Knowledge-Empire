@@ -76,6 +76,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
+
     rq.type =Const.getNewQueType;
 
     WebApi().getQuestions(rq.toJson()).then((data) {

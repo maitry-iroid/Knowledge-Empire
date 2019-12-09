@@ -49,6 +49,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   VideoPlayerController _videoPlay;
 
   String urlPDFPath = "";
+  String assetPDFPath = "";
 
   int _totalPages = 0;
   int _currentPage = 0;
@@ -87,19 +88,42 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       });
     _videoPlay.play();
 
+
+    getFileFromAsset("assets/sounds/demo.pdf").then((f) {
+      setState(() {
+        assetPDFPath = f.path;
+        print(assetPDFPath);
+      });
+    });
+
     getFileFromUrl(
             "https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf")
         .then((f) {
       setState(() {
         urlPDFPath = f.path;
-        print(urlPDFPath);
+        print("==========================================================>"+urlPDFPath);
       });
     });
+  }
+
+  Future<File> getFileFromAsset(String asset) async {
+    try {
+      var data = await rootBundle.load(asset);
+      var bytes = data.buffer.asUint8List();
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/mypdf.pdf");
+
+      File assetFile = await file.writeAsBytes(bytes);
+      return assetFile;
+    } catch (e) {
+      throw Exception("Error opening asset file");
+    }
   }
 
   Future<File> getFileFromUrl(String url) async {
     try {
       var data = await http.get(url);
+      print(data);
       var bytes = data.bodyBytes;
       var dir = await getApplicationDocumentsDirectory();
       File file = File("${dir.path}/mypdfonline.pdf");
@@ -213,21 +237,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
 
                         performSubmitAnswer();
-                        selectedAnswer = selectedAnswer.substring(
-                            0, selectedAnswer.length - 1);
-                        print("selectedAnswer__" + selectedAnswer);
-
-                        questionData.isAnsweredCorrect =
-                            selectedAnswer == questionData.correctAnswerId;
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                    initialPageType: Const.typeDebrief,
-                                    questionDataSituation: questionData,
-                                  )),
-                        );
                       },
                     )
                   ],
@@ -244,57 +253,73 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(
-                              top: 18, bottom: 10, left: 10, right: 12),
+                              top: 18, bottom: 10, left: 12, right: 12),
                           height: Utils.getDeviceHeight(context) / 2.7,
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(questionData.mediaLink),
-                                  fit: BoxFit.fill),
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1)),
-                        ),
-                            height: Utils.getDeviceHeight(context) / 2.3,
+//                            image: DecorationImage(
+//                                image: NetworkImage(questionData.mediaLink),
+//                              fit: BoxFit.fill
+//                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: ColorRes.white, width: 1)
+                          ),
 //                                    child: CommonView.image(
 //                                        context, "vector_smart_object1"),
-                            child: Stack(
-                              children: <Widget>[
-                                PDFView(
-                                  filePath: urlPDFPath,
-                                  autoSpacing: true,
-                                  enableSwipe: true,
-                                  pageSnap: true,
-                                  swipeHorizontal: false,
-                                  nightMode: false,
-                                  onError: (e) {
-                                    print(e);
-                                  },
-                                  onRender: (_pages) {
-                                    setState(() {
-                                      _totalPages = _pages;
-                                      pdfReady = true;
-                                    });
-                                  },
-                                  onViewCreated: (PDFViewController vc) {
-                                    _pdfViewController = vc;
-                                  },
-                                  onPageChanged: (int page, int total) {
-                                    setState(() {});
-                                  },
-                                  onPageError: (page, e) {},
-                                ),
-                                !pdfReady
-                                    ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                                    : Offstage()
-                              ],
-                            )),
+//                        child: RaisedButton(
+//                          color: Colors.amber,
+//                          child: Text("Open from URL"),
+//                          onPressed: () {
+//                            if (urlPDFPath != null) {
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(
+//                                      builder: (context) =>
+//                                          PdfViewPage(path: urlPDFPath)));
+//                            }
+//                          },
+//                        ),
+//                          child:  Stack(
+//                            children: <Widget>[
+//                              PDFView(
+//                                  filePath: assetPDFPath,
+//                                autoSpacing: true,
+//                                enableSwipe: true,
+//                                pageSnap: true,
+//                                swipeHorizontal: false,
+//                                nightMode: false,
+//                                onError: (e) {
+//                                  print(e);
+//                                },
+//                                onRender: (_pages) {
+//                                  setState(() {
+//                                    _totalPages = _pages;
+//                                    pdfReady = true;
+//                                  });
+//                                },
+//                                onViewCreated: (PDFViewController vc) {
+//                                  _pdfViewController = vc;
+//                                },
+//                                onPageChanged: (int page, int total) {
+//                                  setState(() {});
+//                                },
+//                                onPageError: (page, e) {},
+//
+//                              ),
+//                              !pdfReady
+//                                  ? Center(
+//                                child: CircularProgressIndicator(),
+//                              )
+//                                  : Offstage()
+//                            ],
+//                          ),
+
 //                          CommonView.image(
 //                              context, _videoPlay)
-//                                CommonView.image(
-//                                    context, urlPDFPath)),
-//                        questionData.mediaLink
+
+//                          CommonView.image(
+//                                context, questionData.mediaLink)
+
+                        ),
                         Expanded(
                           child: CommonView.questionAndExplanation(
                               context,
@@ -610,11 +635,11 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                      alignment: Alignment.topCenter,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 25,
+                        height: 30,
                         margin: EdgeInsets.symmetric(
                             horizontal: Utils.getDeviceWidth(context) / 3,
                             vertical: 5),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 27),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
                                 ? null
@@ -846,7 +871,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 horizontal: Utils.getDeviceWidth(context) / 6)
                             : EdgeInsets.symmetric(
                                 horizontal: Utils.getDeviceWidth(context) / 3)),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 27),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
                                 ? null
@@ -1023,3 +1048,87 @@ class FunkyOverlayState extends State<FunkyOverlay>
 //    );
 //  }
 //}
+
+
+
+class PdfViewPage extends StatefulWidget {
+  final String path;
+
+  const PdfViewPage({Key key, this.path}) : super(key: key);
+  @override
+  _PdfViewPageState createState() => _PdfViewPageState();
+}
+
+class _PdfViewPageState extends State<PdfViewPage> {
+  int _totalPages = 0;
+  int _currentPage = 0;
+  bool pdfReady = false;
+  PDFViewController _pdfViewController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("My Document"),
+      ),
+      body: Stack(
+        children: <Widget>[
+          PDFView(
+            filePath: widget.path,
+            autoSpacing: false,
+            enableSwipe: true,
+            pageSnap: true,
+            swipeHorizontal: false,
+            nightMode: false,
+            onError: (e) {
+              print(e);
+            },
+            onRender: (_pages) {
+              setState(() {
+                _totalPages = _pages;
+                pdfReady = true;
+              });
+            },
+            onViewCreated: (PDFViewController vc) {
+              _pdfViewController = vc;
+            },
+            onPageChanged: (int page, int total) {
+              setState(() {});
+            },
+            onPageError: (page, e) {},
+          ),
+          !pdfReady
+              ? Center(
+            child: CircularProgressIndicator(),
+          )
+              : Offstage()
+        ],
+      ),
+//      floatingActionButton: Row(
+//        mainAxisAlignment: MainAxisAlignment.end,
+//        children: <Widget>[
+//          _currentPage > 0
+//              ? FloatingActionButton.extended(
+//            backgroundColor: Colors.red,
+//            label: Text("Go to ${_currentPage - 1}"),
+//            onPressed: () {
+//              _currentPage -= 1;
+//              _pdfViewController.setPage(_currentPage);
+//            },
+//          )
+//              : Offstage(),
+//          _currentPage+1 < _totalPages
+//              ? FloatingActionButton.extended(
+//            backgroundColor: Colors.green,
+//            label: Text("Go to ${_currentPage + 1}"),
+//            onPressed: () {
+//              _currentPage += 1;
+//              _pdfViewController.setPage(_currentPage);
+//            },
+//          )
+//              : Offstage(),
+//        ],
+//      ),
+    );
+  }
+}
