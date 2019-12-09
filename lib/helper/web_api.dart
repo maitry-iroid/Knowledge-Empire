@@ -231,13 +231,9 @@ class WebApi {
   void initDio() {
     var headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader:
-          Injector.prefs.getString(PrefKeys.user) != null
-              ? "pig " +
-                  LoginResponseData.fromJson(
-                          json.decode(Injector.prefs.getString(PrefKeys.user)))
-                      .accessToken
-              : "",
+      HttpHeaders.authorizationHeader: Injector.userData != null
+          ? "pig " + Injector.userData.accessToken
+          : "",
       'devicetype': 'android',
       'deviceid': Injector.deviceId
     };

@@ -31,6 +31,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   Notifier _notifier;
 
   List<Organization> arrOrganization = List();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -47,23 +48,28 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        decoration: CommonView.getBGDecoration(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            CommonView.showTitle(context, StringRes.organizations),
-            Expanded(
-              child: arrOrganization.length > 0 ? showItems() : Container(),
-            )
-          ],
-        ),
-      ),
+          width: double.infinity,
+          height: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          decoration: CommonView.getBGDecoration(),
+          child: Stack(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CommonView.showTitle(context, StringRes.organizations),
+                  Expanded(
+                    child:
+                        arrOrganization.length > 0 ? showItems() : Container(),
+                  )
+                ],
+              ),
+              CommonView.showCircularProgress(isLoading)
+            ],
+          )),
     );
   }
 
@@ -255,6 +261,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
 
+      setState(() {
+        isLoading = true;
+      });
+
       WebApi()
           .getOrganizations(context, rq.toJson())
           .then((getOrganizationData) {
@@ -262,7 +272,9 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           organizationData = getOrganizationData;
           arrOrganization = getOrganizationData.organization;
 
-          setState(() {});
+          setState(() {
+            isLoading = false;
+          });
         }
       });
     });
@@ -315,9 +327,17 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       rq.action = action;
       rq.type = arrOrganization[position].type;
 
+      setState(() {
+        isLoading = true;
+      });
+
       WebApi()
           .manageOrganizations(context, rq.toJson())
           .then((getOrganizationData) {
+        setState(() {
+          isLoading = false;
+        });
+
         if (getOrganizationData != null) {
           organizationData = getOrganizationData;
           arrOrganization[position] = organizationData.organization[0];
@@ -326,7 +346,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
           CustomerValueData customerValueData = Injector.customerValueData;
           customerValueData.organization = arrOrganization;
-          customerValueData.totalEmployeeCapacity = organizationData.totalEmpCount;
+          customerValueData.totalEmployeeCapacity =
+              organizationData.totalEmpCount;
           customerValueData.totalBalance = organizationData.totalBalance;
 
           Injector.prefs.setString(PrefKeys.customerValueData,
