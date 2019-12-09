@@ -56,6 +56,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   bool isLoading = false;
 
   String urlPDFPath = "";
+  String assetPDFPath = "";
 
   int _totalPages = 0;
   int _currentPage = 0;
@@ -597,11 +598,11 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                      alignment: Alignment.topCenter,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 25,
+                        height: 30,
                         margin: EdgeInsets.symmetric(
                             horizontal: Utils.getDeviceWidth(context) / 3,
                             vertical: 5),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 27),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
                                 ? null
@@ -833,7 +834,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 horizontal: Utils.getDeviceWidth(context) / 6)
                             : EdgeInsets.symmetric(
                                 horizontal: Utils.getDeviceWidth(context) / 3)),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 27),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
                                 ? null

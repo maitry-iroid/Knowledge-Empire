@@ -20,12 +20,11 @@ class QuestionRequest {
   }
 }
 
-
 class QuestionsResponse {
-  String flag;
-  String result;
-  String msg;
-  List<QuestionData> data;
+  String flag = "";
+  String result = "";
+  String msg = "";
+  List<QuestionData> data = List();
 
   QuestionsResponse({this.flag, this.result, this.msg, this.data});
 

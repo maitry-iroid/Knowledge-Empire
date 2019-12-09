@@ -334,13 +334,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (_selectedDrawerIndex == 11)
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr);
-    else if (_selectedDrawerIndex == 12)
-      return CustomerSituationPage(
-          questionDataCustomerSituation: widget.questionDataSituation);
+//    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
-//    return DebriefPage(questionDataCustomerSituation: widget.questionDataSituation);
-//      (
-//        questionDataCustomerSituation: widget.questionDataSituation);
+    else if (_selectedDrawerIndex == 12)
+      return CustomerSituationPage(questionDataCustomerSituation: widget.questionDataSituation);
+
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }
