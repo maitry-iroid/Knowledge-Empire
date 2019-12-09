@@ -34,6 +34,8 @@ class Injector {
     audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
     audioCache = AudioCache();
 
+    deviceId = await FlutterUdid.udid;
+
     if (prefs.getString(PrefKeys.user) != null &&
         prefs
             .getString(PrefKeys.user)
@@ -48,8 +50,6 @@ class Injector {
 
       mode = prefs.getInt(PrefKeys.mode);
       isBusinessMode = mode == Const.businessMode;
-
-      deviceId = await FlutterUdid.udid;
 
     }
   }

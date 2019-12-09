@@ -301,7 +301,8 @@ class _ProfilePageState extends State<ProfilePage> {
       if (data != null) {
         if (data.flag == "true") {
           await Injector.prefs.clear();
-
+          Injector.userData = null;
+          Injector.customerValueData = null;
 
         } else {
           Utils.showToast(data.msg);

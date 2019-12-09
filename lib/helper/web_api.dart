@@ -229,13 +229,22 @@ class WebApi {
   }
 
   void initDio() {
+    String contentTypeHeader = 'application/json';
+    String authorizationHeader =
+        Injector.userData != null ? "pig " + Injector.userData.accessToken : "";
+    String deviceType = 'android';
+    String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
+
+    print("contentTypeHeader " + contentTypeHeader);
+    print("accessToken " + authorizationHeader);
+    print("devicetype " + deviceType);
+    print("deviceid " + deviceId);
+
     var headers = {
-      HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: Injector.userData != null
-          ? "pig " + Injector.userData.accessToken
-          : "",
-      'devicetype': 'android',
-      'deviceid': Injector.deviceId
+      HttpHeaders.contentTypeHeader: contentTypeHeader,
+      HttpHeaders.authorizationHeader: authorizationHeader,
+      'devicetype': deviceType,
+      'deviceid': deviceId
     };
 
     BaseOptions options = new BaseOptions(
