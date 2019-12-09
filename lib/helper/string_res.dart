@@ -66,6 +66,7 @@ class StringRes {
   static var next = "next";
   static var answers = "answers";
   static var question = "question";
+  static var explanation = "explanation";
   static var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
 
   //business sectors
@@ -146,6 +147,7 @@ class StringRes {
       'next': 'Next',
       'answers': 'Answers',
       'question': 'Question',
+      'explanation': 'Explanation',
       'sendChallenge': 'Send Challenge'
     },
     'es': {

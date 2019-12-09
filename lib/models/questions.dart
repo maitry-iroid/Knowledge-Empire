@@ -1,18 +1,21 @@
 class QuestionRequest {
   String userId = "";
   String moduleId = "";
+  int type = 1;
 
   QuestionRequest({this.userId, this.moduleId});
 
   QuestionRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     moduleId = json['moduleId'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['moduleId'] = this.moduleId;
+    data['type'] = this.type;
     return data;
   }
 }
@@ -57,9 +60,6 @@ class QuestionData {
   String description = "";
   String correctAnswerId = "";
   int loyalty = 0;
-//  String loyalty = "";
-//  String resource = "";
-//  String value = "";
   int resource = 0;
   int value = 0;
   String mediaLink = "";

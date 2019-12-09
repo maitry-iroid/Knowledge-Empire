@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ke_employee/PDFPage.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -62,7 +63,8 @@ class MyApp extends StatelessWidget {
                     ? ColorRes.white
                     : ColorRes.colorBgDark),
           )),
-      home: Injector.prefs.getString(PrefKeys.userId)!=null?(Injector.prefs.getBool(PrefKeys.isLoginFirstTime)==null||Injector.prefs.getBool(PrefKeys.isLoginFirstTime)?IntroPage():HomePage()):LoginPage(),
+//      home: Injector.prefs.getString(PrefKeys.userId)!=null?(Injector.prefs.getBool(PrefKeys.isLoginFirstTime)==null||Injector.prefs.getBool(PrefKeys.isLoginFirstTime)?IntroPage():HomePage()):LoginPage(),
+    home: PdfPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
 //        '/splash': (BuildContext context) => SplashScreen(),

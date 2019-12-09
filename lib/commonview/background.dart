@@ -137,7 +137,7 @@ class CommonView {
           elevation: 10,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 15),
+          margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 10),
           child: Container(
             margin: EdgeInsets.only(top: 0),
             padding: EdgeInsets.only(left: 10, right: 10, top: 20),

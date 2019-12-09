@@ -53,6 +53,7 @@ class CustomerValueData {
   int valueBonus;
   int resourceBonus;
   int totalAttemptedQuestion;
+  int questionAnswered;
   List<Organization> organization  = List();
 
   CustomerValueData(
@@ -62,6 +63,7 @@ class CustomerValueData {
       this.valueBonus,
       this.resourceBonus,
       this.totalAttemptedQuestion,
+      this.questionAnswered,
       this.organization});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
@@ -72,6 +74,7 @@ class CustomerValueData {
     valueBonus = json['valueBonus'];
     resourceBonus = json['resourceBonus'];
     totalAttemptedQuestion = json['totalAttemptedQuestion'];
+    questionAnswered = json['questionAnswered'];
     if (json['organization'] != null) {
       organization = new List<Organization>();
       json['organization'].forEach((v) {
@@ -89,6 +92,7 @@ class CustomerValueData {
     data['valueBonus'] = this.valueBonus;
     data['resourceBonus'] = this.resourceBonus;
     data['totalAttemptedQuestion'] = this.totalAttemptedQuestion;
+    data['questionAnswered'] = this.questionAnswered;
     if (this.organization != null) {
       data['organization'] = this.organization.map((v) => v.toJson()).toList();
     }

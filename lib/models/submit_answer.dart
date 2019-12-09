@@ -2,7 +2,7 @@ class SubmitAnswerRequest {
   String userId;
   int totalQuestionAnswered;
   int remainingSalesPerson;
-  List<Answer> answer;
+  List<SubmitAnswer> answer;
 
   SubmitAnswerRequest(
       {this.userId,
@@ -15,9 +15,9 @@ class SubmitAnswerRequest {
     totalQuestionAnswered = json['totalQuestionAnswered'];
     remainingSalesPerson = json['remainingSalesPerson'];
     if (json['answer'] != null) {
-      answer = new List<Answer>();
+      answer = new List<SubmitAnswer>();
       json['answer'].forEach((v) {
-        answer.add(new Answer.fromJson(v));
+        answer.add(new SubmitAnswer.fromJson(v));
       });
     }
   }
@@ -34,30 +34,30 @@ class SubmitAnswerRequest {
   }
 }
 
-class Answer {
+class SubmitAnswer {
   int questionId;
   int counter;
-  int resourceBonus;
-  int valueBonus;
-  int loyaltyBonus;
+  int resource;
+  int value;
+  int loyalty;
   bool isAnsweredCorrect;
   String attemptTime;
 
-  Answer(
+  SubmitAnswer(
       {this.questionId,
         this.counter,
-        this.resourceBonus,
-        this.valueBonus,
-        this.loyaltyBonus,
+        this.resource,
+        this.value,
+        this.loyalty,
         this.isAnsweredCorrect,
         this.attemptTime});
 
-  Answer.fromJson(Map<String, dynamic> json) {
+  SubmitAnswer.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
     counter = json['counter'];
-    resourceBonus = json['resourceBonus'];
-    valueBonus = json['valueBonus'];
-    loyaltyBonus = json['loyaltyBonus'];
+    resource = json['resource'];
+    value = json['value'];
+    loyalty = json['loyalty'];
     isAnsweredCorrect = json['isAnsweredCorrect'];
     attemptTime = json['attemptTime'];
   }
@@ -66,9 +66,9 @@ class Answer {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['questionId'] = this.questionId;
     data['counter'] = this.counter;
-    data['resourceBonus'] = this.resourceBonus;
-    data['valueBonus'] = this.valueBonus;
-    data['loyaltyBonus'] = this.loyaltyBonus;
+    data['resource'] = this.resource;
+    data['value'] = this.value;
+    data['loyalty'] = this.loyalty;
     data['isAnsweredCorrect'] = this.isAnsweredCorrect;
     data['attemptTime'] = this.attemptTime;
     return data;

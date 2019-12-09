@@ -278,8 +278,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
     print("progress___" + progress.toString());
 
-//    return progress.toDouble();
-    return 0.5;
+    return progress.toDouble();
   }
 
   Future<void> showConfirmDialog(int position, int action) async {
@@ -327,6 +326,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
           CustomerValueData customerValueData = Injector.customerValueData;
           customerValueData.organization = arrOrganization;
+          customerValueData.totalEmployeeCapacity = organizationData.totalEmpCount;
+          customerValueData.totalBalance = organizationData.totalBalance;
 
           Injector.prefs.setString(PrefKeys.customerValueData,
               json.encode(customerValueData.toJson()));
