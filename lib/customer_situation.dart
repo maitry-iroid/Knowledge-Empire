@@ -7,9 +7,11 @@ import 'package:path/path.dart';
 import 'package:path/path.dart' as prefix0;
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
+import 'helper/constant.dart';
 import 'helper/res.dart';
 
 import 'commonview/background.dart';
+import 'home.dart';
 import 'models/questions.dart';
 
 List<Answer> arrAnswerSituation = List();
@@ -138,7 +140,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 ),
                 onTap: () {
                   Utils.playClickSound();
-                  Utils.performBack(context);
+                  gotoMainScreen(context);
                 },
               ),
 
@@ -194,9 +196,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 ),
               ),
               onTap: () {
-//                Navigator.popUntil(context,ModalRoute.withName('/engage'));
-                Navigator.pop(context);
-                Navigator.pop(context);
+                Utils.playClickSound();
+                gotoMainScreen(context);
               },
             )
           ],
@@ -426,6 +427,26 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     questionDataCustSituation.question))
           ],
         ));
+  }
+
+  void gotoMainScreen(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  initialPageType: Const.typeHome,
+                  questionDataSituation: null,
+                )),
+        ModalRoute.withName('home'));
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomePage(
+                initialPageType: Const.typeNewCustomer,
+                questionDataSituation: null,
+              )),
+    );
   }
 }
 
