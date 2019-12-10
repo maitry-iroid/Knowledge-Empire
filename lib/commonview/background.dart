@@ -83,7 +83,7 @@ class CommonView {
   //https://www.radiantmediaplayer.com/media/bbb-360p.mp4
   static image(BuildContext context, String image) {
     //VideoPlayerController _videoPlay
-   /* return Container(
+    /* return Container(
       margin: EdgeInsets.only(left: 15, right: 15, bottom: 10, top: 20),
       decoration: BoxDecoration(
         color: ColorRes.white,
@@ -119,9 +119,7 @@ class CommonView {
 //
 //    );
 
-   //pdf show codeing.
-
-
+    //pdf show codeing.
   }
 
   static questionAndExplanation(
@@ -192,12 +190,12 @@ class CommonView {
           child: InkResponse(
               onTap: () {
                 Utils.playClickSound();
-                (checkimg == true
-                    ? showDialog(
-                        context: context,
-                        builder: (_) => FunkyOverlay(),
-                      )
-                    : null);
+
+                if (checkimg)
+                  showDialog(
+                    context: context,
+                    builder: (_) => FunkyOverlay(),
+                  );
               },
               child: (checkimg == true
                   ? Container(
@@ -230,7 +228,6 @@ class CommonView {
       ],
     );
   }
-
 
 /*
   static answers(BuildContext context, String title){

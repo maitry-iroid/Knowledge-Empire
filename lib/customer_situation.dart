@@ -613,9 +613,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          });
         },
         child: Container(
-          height: 48,
+          height: 50,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
@@ -846,7 +846,7 @@ checkAnswer(int index) {
       .contains(arrAnswerSituation[index].option.toString())) {
     return Utils.getAssetsImg("bg_green");
   } else {
-    return Utils.getAssetsImg("rounded_rectangle_8371");
+    return Utils.getAssetsImg("Answer_Alert_Background_White");
   }
 }
 
