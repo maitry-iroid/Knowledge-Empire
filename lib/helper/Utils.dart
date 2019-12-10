@@ -357,12 +357,13 @@ class Utils {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
         json.decode(Injector.prefs.getString(PrefKeys.answerData)));
 
-    WebApi().submitAnswers(context, rq).then((data) {
+    WebApi().submitAnswers(context, rq).then((data) async{
       if (data != null) {
         Injector.customerValueData = data;
 
-        Injector.prefs.remove(PrefKeys.answerData);
+
       }
+      await Injector.prefs.remove(PrefKeys.answerData);
     });
   }
 

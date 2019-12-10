@@ -26,7 +26,6 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 import 'package:notifier/main_notifier.dart';
 
-
 List<Answer> arrAnswer = List();
 
 int _selectedItem = 0;
@@ -38,13 +37,13 @@ VideoPlayerController _controller;
 
 Notifier _notifier;
 
-
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
 
   final Notifier notifier;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier}) : super(key: key);
+  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
+      : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -105,15 +104,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   void dispose() {
-    super.dispose();
     _controller?.dispose();
+    _notifier.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
     _notifier = NotifierProvider.of(context);
-
 
     return Scaffold(
       key: _scaffoldKey,
@@ -255,16 +253,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       isLoading = true;
     });
 
-    WebApi().submitAnswers(context, rq).then((data) {
+    WebApi().submitAnswers(context, rq).then((data) async {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
         Injector.customerValueData = data;
-        Injector.prefs.remove(PrefKeys.answerData);
       }
-
+      await Injector.prefs.remove(PrefKeys.answerData);
       navigateToSituation(context);
     });
   }
@@ -383,7 +380,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                             questionData.mediaLink) !=
                                         null
                                     ? FileImage(Utils.getCacheFile(
-                                        questionData.mediaLink).file)
+                                            questionData.mediaLink)
+                                        .file)
                                     : NetworkImage(questionData.mediaLink),
                                 fit: BoxFit.fill)
                             : null,
@@ -438,7 +436,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                    },
 //                  ),
 
-                child: Notifier.of(context).register<String>('updateArray', (data) {
+                  child: Notifier.of(context).register<String>('updateArray',
+                      (data) {
 //                    print(data.data);
 //                    return Text('${data.data}');
                     return ListView.builder(
@@ -446,8 +445,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       physics: ClampingScrollPhysics(),
                       itemCount: arrAnswer.length,
                       itemBuilder: (BuildContext context, int index) {
-                      return showItem(index);
-    },                    );
+                        return showItem(index);
+                      },
+                    );
                   }),
                 ),
               ),
@@ -536,7 +536,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   SubmitAnswerRequest getSubmitAnswerRequest(SubmitAnswerRequest rq) {
-
     rq.userId = Injector.userData.userId;
 
     SubmitAnswer submitAnswer = SubmitAnswer();
@@ -649,8 +648,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                        Notifier.of(context).register<String>('action', (data) {
 //                          return Text('${data.data}');
 //                        }),
-                        child: Notifier.of(context).register<String>('action', (data){
-                          return  ListView.builder(
+                        child: Notifier.of(context).register<String>('action',
+                            (data) {
+                          return ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemCount: arrAnswer.length,
@@ -659,7 +659,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             },
                           );
                         }),
-
                       ),
                     ),
 
@@ -705,7 +704,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         onTap: () {
                           Utils.playClickSound();
                           Navigator.pop(context);
-
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -749,7 +747,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
-
         },
         child: Container(
           height: 50,
@@ -821,7 +818,6 @@ checkAnswer(int index) {
 }
 //rounded_rectangle_837_blue,rounded_rectangle_8371
 
-
 //----------------------------------------
 //Question full screen show Alertdialog
 
@@ -892,7 +888,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           border: Border.all(color: ColorRes.white, width: 1),
                         ),
                         child: SingleChildScrollView(
-                          child: Text(questionData.question,
+                          child: Text(
+                            questionData.question,
                             style: TextStyle(
                                 color: Injector.isBusinessMode
                                     ? ColorRes.white
