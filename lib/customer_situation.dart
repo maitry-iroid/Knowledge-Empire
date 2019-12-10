@@ -414,7 +414,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               height: Utils.getDeviceHeight(context) / 2.7,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(questionData.mediaLink),
+//                        image: correctWrongImage(),
+//                      image: NetworkImage(questionData.mediaLink),
+                      image: NetworkImage(correctWrongImage()),
+
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: ColorRes.white, width: 1)),

@@ -10,7 +10,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:notifier/notifier_provider.dart';
 import 'package:path/path.dart';
-import 'package:path/path.dart' as prefix0;
+import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'commonview/background.dart';
 
@@ -23,13 +23,10 @@ import 'models/questions.dart';
 import 'models/submit_answer.dart';
 
 //import 'models/submit_answer.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:notifier/main_notifier.dart';
-
 
 List<Answer> arrAnswer = List();
 
@@ -42,7 +39,6 @@ VideoPlayerController _controller;
 
 Notifier _notifier;
 
-
 class EngagementCustomer extends StatefulWidget {
 //  List<QuestionData> arrQuestions = List();
 
@@ -52,7 +48,8 @@ class EngagementCustomer extends StatefulWidget {
 
   final Notifier notifier;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier}) : super(key: key);
+  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
+      : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -66,9 +63,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
 //  VideoPlayerController _controller;
   bool isLoading = false;
-
-  String urlPDFPath = "";
-  String assetPDFPath = "";
 
   int _totalPages = 0;
   int _currentPage = 0;
@@ -85,15 +79,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   openProfile() {
     if (mounted) {
       setState(() => _selectedDrawerIndex = 10);
-//      setState(() => _selectedItem = 10);
     }
   }
-
-//  selectUnselect() {
-//    setState(() {
-//      arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-//    });
-//  }
 
   @override
   void initState() {
@@ -115,21 +102,24 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
+  pdfShow() {
+    return SimplePdfViewerWidget(
+      completeCallback: (bool result) {
+        print("completeCallback,result:${result}");
+      },
+      initialUrl: "https://www.orimi.com/pdf-test.pdf",
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
     _controller?.dispose();
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
     _notifier = NotifierProvider.of(context);
-
 
     return Scaffold(
       body: SafeArea(
@@ -412,27 +402,28 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     );
                   },
                   child: Container(
-                    margin:
-                    EdgeInsets.only(top: 18, bottom: 10, left: 10, right: 12),
+                    margin: EdgeInsets.only(
+                        top: 18, bottom: 10, left: 10, right: 12),
                     height: Utils.getDeviceHeight(context) / 2.7,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       image: isImage(questionData.mediaLink)
                           ? DecorationImage(
-                          image: NetworkImage(questionData.mediaLink),
-                          fit: BoxFit.fill)
+                              image: NetworkImage(questionData.mediaLink),
+                              fit: BoxFit.fill)
                           : null,
                       borderRadius: BorderRadius.circular(10),
                       /* border:
                                 Border.all(color: ColorRes.white, width: 1)*/
                     ),
+//                    child: pdfShow(),
                     child: isVideo(questionData.mediaLink) &&
-                        _controller.value.initialized
+                            _controller.value.initialized
                         ? AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    )
-                        : Container(),
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          )
+                        : pdfShow(),
                   ),
                 ),
                 Expanded(
@@ -475,7 +466,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                    },
 //                  ),
 
-                child: Notifier.of(context).register<String>('updateArray', (data) {
+                  child: Notifier.of(context).register<String>('updateArray',
+                      (data) {
 //                    print(data.data);
 //                    return Text('${data.data}');
                     return ListView.builder(
@@ -483,8 +475,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       physics: ClampingScrollPhysics(),
                       itemCount: arrAnswer.length,
                       itemBuilder: (BuildContext context, int index) {
-                      return showItem(index);
-    },                    );
+                        return showItem(index);
+                      },
+                    );
                   }),
                 ),
               ),
@@ -648,8 +641,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                        Notifier.of(context).register<String>('action', (data) {
 //                          return Text('${data.data}');
 //                        }),
-                        child: Notifier.of(context).register<String>('action', (data){
-                          return  ListView.builder(
+                        child: Notifier.of(context).register<String>('action',
+                            (data) {
+                          return ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemCount: arrAnswer.length,
@@ -658,7 +652,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             },
                           );
                         }),
-
                       ),
                     ),
 
@@ -704,7 +697,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         onTap: () {
                           Utils.playClickSound();
                           Navigator.pop(context);
-
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -748,7 +740,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
-
         },
         child: Container(
           height: 50,
@@ -820,7 +811,6 @@ checkAnswer(int index) {
 }
 //rounded_rectangle_837_blue,rounded_rectangle_8371
 
-
 //----------------------------------------
 //Question full screen show Alertdialog
 
@@ -891,7 +881,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           border: Border.all(color: ColorRes.white, width: 1),
                         ),
                         child: SingleChildScrollView(
-                          child: Text(questionData.question,
+                          child: Text(
+                            questionData.question,
                             style: TextStyle(
                                 color: Injector.isBusinessMode
                                     ? ColorRes.white
@@ -990,7 +981,6 @@ class FunkyOverlayState extends State<FunkyOverlay>
   }
 }
 
-
 //======================================
 //image show  in alert
 
@@ -1038,7 +1028,6 @@ class ImageShowAlertState extends State<ImageShowAlert>
     return extension(path) == ".pdf";
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -1065,26 +1054,26 @@ class ImageShowAlertState extends State<ImageShowAlert>
                       margin: EdgeInsets.only(
                           top: 35, bottom: 15, right: 25, left: 25),
                       child: Container(
-                        margin:
-                        EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
+                        margin: EdgeInsets.only(
+                            top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           image: isImage(questionData.mediaLink)
                               ? DecorationImage(
-                              image: NetworkImage(questionData.mediaLink),
-                              fit: BoxFit.fill)
+                                  image: NetworkImage(questionData.mediaLink),
+                                  fit: BoxFit.fill)
                               : null,
                           borderRadius: BorderRadius.circular(10),
                           /* border:
                                 Border.all(color: ColorRes.white, width: 1)*/
                         ),
                         child: isVideo(questionData.mediaLink) &&
-                            _controller.value.initialized
+                                _controller.value.initialized
                             ? AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        )
+                                aspectRatio: _controller.value.aspectRatio,
+                                child: VideoPlayer(_controller),
+                              )
                             : Container(),
                       ),
                     ),
@@ -1108,35 +1097,35 @@ class ImageShowAlertState extends State<ImageShowAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image: Injector.isBusinessMode
-                                      ? DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
-                                      : null))
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: Injector.isBusinessMode
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
+                                          : null))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image: Injector.isBusinessMode
-                                      ? DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
-                                      : null)))),
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: Injector.isBusinessMode
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
+                                          : null)))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
