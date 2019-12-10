@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'dart:math';
+
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:notifier/notifier_provider.dart';
 import 'package:path/path.dart';
 
 import 'commonview/background.dart';
@@ -19,6 +24,9 @@ import 'models/questions.dart';
 import 'models/submit_answer.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
+import 'package:notifier/main_notifier.dart';
+
+
 List<Answer> arrAnswer = List();
 
 int _selectedItem = 0;
@@ -28,10 +36,15 @@ QuestionData questionData = QuestionData();
 List abcdList = List();
 VideoPlayerController _controller;
 
+Notifier _notifier;
+
+
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer}) : super(key: key);
+  final Notifier notifier;
+
+  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier}) : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -98,6 +111,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   Widget build(BuildContext context) {
+
+    _notifier = NotifierProvider.of(context);
+
+
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(
@@ -411,14 +428,27 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: ColorRes.white, width: 1),
                   ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: arrAnswer.length,
-                    itemBuilder: (BuildContext context, int index) {
+
+//                  child: ListView.builder(
+//                    shrinkWrap: true,
+//                    physics: ClampingScrollPhysics(),
+//                    itemCount: arrAnswer.length,
+//                    itemBuilder: (BuildContext context, int index) {
+//                      return showItem(index);
+//                    },
+//                  ),
+
+                child: Notifier.of(context).register<String>('updateArray', (data) {
+//                    print(data.data);
+//                    return Text('${data.data}');
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: arrAnswer.length,
+                      itemBuilder: (BuildContext context, int index) {
                       return showItem(index);
-                    },
-                  ),
+    },                    );
+                  }),
                 ),
               ),
               Align(
@@ -577,6 +607,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -613,14 +645,21 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: ColorRes.white, width: 1),
                         ),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: arrAnswer.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return showItemFullScree(index);
-                          },
-                        ),
+
+//                        Notifier.of(context).register<String>('action', (data) {
+//                          return Text('${data.data}');
+//                        }),
+                        child: Notifier.of(context).register<String>('action', (data){
+                          return  ListView.builder(
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: arrAnswer.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return showItemFullScree(index);
+                            },
+                          );
+                        }),
+
                       ),
                     ),
 
@@ -666,6 +705,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         onTap: () {
                           Utils.playClickSound();
                           Navigator.pop(context);
+
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -705,14 +745,16 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     return GestureDetector(
         onTap: () {
           Utils.playClickSound();
+          _notifier.notify('updateArray', "");
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
+
         },
         child: Container(
-          height: 48,
+          height: 50,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
@@ -772,11 +814,13 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 
 checkAnswer(int index) {
   if (arrAnswer[index].isSelected == true) {
-    return Utils.getAssetsImg("rounded_rectangle_837_blue");
+    return Utils.getAssetsImg("Answer_Alert_Background_Blue");
   } else {
-    return Utils.getAssetsImg("rounded_rectangle_8371");
+    return Utils.getAssetsImg("Answer_Alert_Background_White");
   }
 }
+//rounded_rectangle_837_blue,rounded_rectangle_8371
+
 
 //----------------------------------------
 //Question full screen show Alertdialog
@@ -848,8 +892,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           border: Border.all(color: ColorRes.white, width: 1),
                         ),
                         child: SingleChildScrollView(
-                          child: Text(
-                            "qwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar riddhi govindbhaoqwywer shankar ",
+                          child: Text(questionData.question,
                             style: TextStyle(
                                 color: Injector.isBusinessMode
                                     ? ColorRes.white
