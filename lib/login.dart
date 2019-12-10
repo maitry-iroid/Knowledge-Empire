@@ -15,6 +15,8 @@ import 'package:ke_employee/home.dart';
 import 'package:ke_employee/intro_screen.dart';
 import 'package:ke_employee/models/login.dart';
 
+import 'models/get_customer_value.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
@@ -173,10 +175,10 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    WebApi().login(loginRequest.toJson()).then((data) async {
-      if (data != null) {
-        if (data.flag == "true") {
-          LoginResponseData loginResponseData = data.data;
+    WebApi().login(loginRequest.toJson()).then((loginData) async {
+      if (loginData != null) {
+        if (loginData.flag == "true") {
+          LoginResponseData loginResponseData = loginData.data;
 
           await Injector.prefs
               .setString(PrefKeys.userId, loginResponseData.userId);
@@ -185,24 +187,45 @@ class _LoginPageState extends State<LoginPage> {
 
           Injector.userData = loginResponseData;
 
-          setState(() {
-            isLoading = false;
-          });
+         getCustomerValues(loginData);
 
-          if (data.data.isPasswordChanged == "0") {
-            Utils.showChangePasswordDialog(_scaffoldKey, false);
-          } else {
-            navigateToDashboard();
-          }
-
-//          navigateToDashboard();
         } else {
           setState(() {
             isLoading = false;
           });
 
-          Utils.showToast(data.msg);
+          Utils.showToast(loginData.msg);
         }
+      }
+    });
+  }
+
+
+  void getCustomerValues(LoginResponse loginData) {
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi()
+        .getCustomerValue(context, rq.toJson())
+        .then((customerValueData) async {
+
+          setState(() {
+            isLoading = false;
+          });
+
+      if (customerValueData != null) {
+        await Injector.prefs.setString(PrefKeys.customerValueData,
+            json.encode(customerValueData.toJson()));
+
+        Injector.customerValueData = customerValueData;
+
+        if (loginData.data.isPasswordChanged == "0") {
+          Utils.showChangePasswordDialog(_scaffoldKey, false);
+        } else {
+          navigateToDashboard();
+        }
+
+
       }
     });
   }

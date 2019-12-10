@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_introduction_tooltip/flutter_introduction_tooltip.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/header_utild.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -45,21 +46,6 @@ class IntroPageState extends State<IntroPage> {
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
   }
 
-  void getCustomerValues() {
-    CustomerValueRequest rq = CustomerValueRequest();
-    rq.userId = Injector.userData.userId;
-
-    WebApi()
-        .getCustomerValue(context, rq.toJson())
-        .then((customerValueData) async {
-      if (customerValueData != null) {
-        await Injector.prefs.setString(PrefKeys.customerValueData,
-            json.encode(customerValueData.toJson()));
-
-        Injector.customerValueData = customerValueData;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,10 +164,10 @@ class IntroPageState extends State<IntroPage> {
               visible: selectedType == Const.typeName ? true : false,
             ),
           ),
-          showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeEmployee, context),
-          showHeaderItem(Const.typeBadge, context),
+          showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeServicesPerson, context),
+          showHeaderItem(Const.typeBadge, context),
           showHeaderItem(Const.typeDollar, context),
           Visibility(
             child: showProfile(context),
@@ -227,7 +213,7 @@ class IntroPageState extends State<IntroPage> {
                             borderRadius: BorderRadius.circular(12.5)),
                       ),
                 Image(
-                  image: AssetImage(Utils.getAssetsImg(getHeaderIcon(type))),
+                  image: AssetImage(Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
                   height: 26,
                 ),
               ],
@@ -260,7 +246,7 @@ class IntroPageState extends State<IntroPage> {
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 19.0,
-                          percent: getProgressInt(type),
+                          percent: HeaderUtils.getProgressInt(type),
                           backgroundColor: Colors.transparent,
                           progressColor: Colors.blue,
                         ),
@@ -268,7 +254,7 @@ class IntroPageState extends State<IntroPage> {
                       Positioned(
                         left: 4,
                         child: Text(
-                          getProgress(type),
+                          HeaderUtils.getProgress(type),
                           style: TextStyle(color: ColorRes.white, fontSize: 14),
                         ),
                       )
@@ -309,47 +295,6 @@ class IntroPageState extends State<IntroPage> {
 //        }
       },*/
         );
-  }
-
-  String getHeaderIcon(int type) {
-    if (type == Const.typeSalesPersons)
-      return "ic_checked_header";
-    else if (type == Const.typeEmployee)
-      return "ic_people";
-    else if (type == Const.typeBadge)
-      return "ic_badge";
-    else if (type == Const.typeServicesPerson)
-      return "ic_resourses";
-    else if (type == Const.typeDollar)
-      return "ic_dollar";
-    else
-      return "";
-  }
-
-  getProgress(int type) {
-    if (type == Const.typeSalesPersons) {
-      return "30/100";
-    } else if (type == Const.typeEmployee) {
-      return "50/100";
-    } else if (type == Const.typeBadge) {
-      return "97%";
-    } else if (type == Const.typeServicesPerson) {
-      return "80/100";
-    } else
-      return "50/100";
-  }
-
-  getProgressInt(int type) {
-    if (type == Const.typeSalesPersons) {
-      return 0.3;
-    } else if (type == Const.typeEmployee) {
-      return 0.5;
-    } else if (type == Const.typeBadge) {
-      return 0.97;
-    } else if (type == Const.typeServicesPerson) {
-      return 0.8;
-    } else
-      return 0.5;
   }
 
   showSelectedMainView() {
@@ -751,15 +696,15 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeDollar;
                         } else if (selectedType == Const.typeDollar) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeServicesPerson) {
                           selectedType = Const.typeBadge;
-                        } else if (selectedType == Const.typeBadge) {
-                          selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeEmployee) {
+                        } else if (selectedType == Const.typeServicesPerson) {
                           selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeSalesPersons) {
+                        } else if (selectedType == Const.typeBadge) {
+                          selectedType = Const.typeServicesPerson;
+                        } else if (selectedType == Const.typeEmployee) {
                           selectedType = Const.typeName;
+                        } else if (selectedType == Const.typeSalesPersons) {
+                          selectedType = Const.typeEmployee;
                         }
                       });
                     },
@@ -806,15 +751,15 @@ class IntroPageState extends State<IntroPage> {
 
                       setState(() {
                         if (selectedType == Const.typeName) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeSalesPersons) {
                           selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeBadge;
-                        } else if (selectedType == Const.typeBadge) {
+                        } else if (selectedType == Const.typeSalesPersons) {
                           selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeServicesPerson) {
+                        } else if (selectedType == Const.typeEmployee) {
+                          selectedType = Const.typeSalesPersons;
+                        } else if (selectedType == Const.typeBadge) {
                           selectedType = Const.typeDollar;
+                        } else if (selectedType == Const.typeServicesPerson) {
+                          selectedType = Const.typeBadge;
                         } else if (selectedType == Const.typeDollar) {
                           selectedType = Const.typeProfile;
                         } else if (selectedType == Const.typeProfile) {
