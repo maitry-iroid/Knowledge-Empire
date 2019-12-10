@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -35,7 +37,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     // TODO: implement initState
     super.initState();
 
-    fetchLearningModules();
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) fetchLearningModules();
+    });
   }
 
   @override
@@ -124,7 +128,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Expanded(
               flex: 9,
               child: Container(
-                height: 28,
+                height: 32,
+                margin: EdgeInsets.only(top: 2),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
@@ -134,7 +139,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     image: Injector.isBusinessMode
                         ? DecorationImage(
                             image: AssetImage(
-                                Utils.getAssetsImg("bg_new_customer_item")),
+                                Utils.getAssetsImg("bg_bus_sector_item")),
                             fit: BoxFit.fill)
                         : null),
                 child: Text(
@@ -496,9 +501,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       if (questionResponse != null) {
         if (questionResponse.flag == "true") {
-          List<QuestionData> arrQuestions = questionResponse.data;
+          await Injector.prefs.setString(
+              PrefKeys.questionData, json.encode(questionResponse.toJson()));
 
-          Utils.saveQuestionLocally(arrQuestions);
+          questionResponse.data.forEach((questionData) async {
+            if (questionData.mediaLink.isNotEmpty)
+              await DefaultCacheManager().downloadFile(questionData.mediaLink);
+          });
+
+
+          Utils.showToast("Downloaded successfully");
         }
       }
     });

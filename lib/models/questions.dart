@@ -1,9 +1,9 @@
 class QuestionRequest {
   String userId = "";
   String moduleId = "";
-  int type = 1;
+  int type = 0;
 
-  QuestionRequest({this.userId, this.moduleId});
+  QuestionRequest();
 
   QuestionRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -71,6 +71,7 @@ class QuestionData {
   String inCorrectAnswerImage;
   bool isAnsweredCorrect;
   int resource;
+  String attemptTime;
 
   QuestionData(
       {this.questionId,

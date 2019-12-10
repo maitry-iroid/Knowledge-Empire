@@ -21,11 +21,11 @@ class ExistingCustomerPage extends StatefulWidget {
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
   bool isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
 
     getQuestions();
 
@@ -46,7 +46,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //        setState(() {});
 //      }
 //    }
-
   }
 
   getQuestions() {
@@ -56,7 +55,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
-    rq.type =  Const.getExistingQueTYpe;
+    rq.type = Const.getExistingQueTYpe;
 
     WebApi().getQuestions(rq.toJson()).then((data) {
       setState(() {
@@ -208,6 +207,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         fontSize: 15,
                       ),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
@@ -216,14 +216,19 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       arrQuestions[index].moduleName,
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
                     flex: 3,
                     child: Text(
                       arrQuestions[index].value.toString() + ' \$',
-                      style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                      style: TextStyle(
+                        color: ColorRes.blue,
+                        fontSize: 15,
+                      ),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Expanded(
@@ -232,6 +237,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       arrQuestions[index].loyalty.toString() + ' d',
                       style: TextStyle(color: ColorRes.blue, fontSize: 15),
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                 ],

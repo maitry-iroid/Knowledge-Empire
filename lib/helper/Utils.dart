@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 //import 'package:fluttertoast/fluttertoast.dart';
@@ -12,9 +13,11 @@ import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/submit_answer.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -340,11 +343,30 @@ class Utils {
         .employeeCount;
   }
 
- static getCurrentFormattedDate() {
+  static getCurrentFormattedDate() {
     var now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     String formatted = formatter.format(now);
     print(formatted);
-    return formatted;// something like 2013-04-20
+    return formatted; // something like 2013-04-20
+  }
+
+  static void callSubmitAnswerApi(BuildContext context) {
+    if (Injector.prefs.getString(PrefKeys.answerData) == null) return;
+
+    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
+        json.decode(Injector.prefs.getString(PrefKeys.answerData)));
+
+    WebApi().submitAnswers(context, rq).then((data) {
+      if (data != null) {
+        Injector.customerValueData = data;
+
+        Injector.prefs.remove(PrefKeys.answerData);
+      }
+    });
+  }
+
+  static FileInfo getCacheFile(String url) {
+    return DefaultCacheManager().getFileFromMemory(url);
   }
 }
