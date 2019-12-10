@@ -70,6 +70,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Notifier _notifier;
   int _selectedDrawerIndex = 0;
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   @override
   void didChangeDependencies() {
@@ -83,6 +84,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    _connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result != ConnectivityResult.none) {
+        Utils.showToast(result.toString());
+
+        Utils.callSubmitAnswerApi(context);
+      }
+    });
 
     if (widget.initialPageType == Const.typeHome)
       _selectedDrawerIndex = 0;
@@ -116,25 +127,22 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     getCustomerValues();
   }
 
-  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _connectivitySubscription?.cancel();
+    super.dispose();
+  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-//      Utils.showToast("resumed");
-
-//      _connectivitySubscription = Connectivity()
-//          .onConnectivityChanged
-//          .listen((ConnectivityResult result) {
-//        Utils.showToast(result.toString());
-
-//        syncData();
-//      });
-    } else if (state == AppLifecycleState.inactive) {
-//      Utils.showToast("inactive");
-
-//      _connectivitySubscription.cancel();
-    }
+//    if (state == AppLifecycleState.resumed) {
+////
+//    } else if (state == AppLifecycleState.inactive) {
+////      Utils.showToast("inactive");
+//
+//
+//    }
   }
 
   _getDrawerItemWidget(int pos) {
@@ -329,39 +337,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
-    print("selectedIndex");
-    print(_selectedDrawerIndex);
     if (_selectedDrawerIndex == 11)
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr);
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
     else if (_selectedDrawerIndex == 12)
-      return CustomerSituationPage(questionDataCustomerSituation: widget.questionDataSituation);
-
+      return CustomerSituationPage(
+          questionDataCustomerSituation: widget.questionDataSituation);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
-  }
-
-  void syncData() {
-    List<QuestionData> arrQuestion = Utils.getQuestionsLocally();
-
-    List<QuestionData> unSyncedQuestion =
-        arrQuestion.where((questionData) => isToSync(questionData)).toList();
-
-    callSyncApi();
-  }
-
-  isToSync(QuestionData questionData) {
-//    return (questionData.isAnsweredCorrect &&
-//        (questionData.attemptTime - DateTime.now().millisecondsSinceEpoch)
-//                .abs() <
-//            24 * 60 * 60 * 1000 &&
-//        !questionData.isSynced);
-  }
-
-  void callSyncApi() {
-    getCustomerValues();
   }
 
   void getCustomerValues() {

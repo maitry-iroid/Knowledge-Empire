@@ -1,19 +1,16 @@
 class SubmitAnswerRequest {
   String userId;
   int totalQuestionAnswered;
-  int remainingSalesPerson;
   List<SubmitAnswer> answer;
 
   SubmitAnswerRequest(
       {this.userId,
         this.totalQuestionAnswered,
-        this.remainingSalesPerson,
         this.answer});
 
   SubmitAnswerRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     totalQuestionAnswered = json['totalQuestionAnswered'];
-    remainingSalesPerson = json['remainingSalesPerson'];
     if (json['answer'] != null) {
       answer = new List<SubmitAnswer>();
       json['answer'].forEach((v) {
@@ -26,7 +23,6 @@ class SubmitAnswerRequest {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['totalQuestionAnswered'] = this.totalQuestionAnswered;
-    data['remainingSalesPerson'] = this.remainingSalesPerson;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();
     }

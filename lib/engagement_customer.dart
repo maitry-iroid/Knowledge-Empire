@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'dart:io';
@@ -5,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -40,10 +42,6 @@ VideoPlayerController _controller;
 Notifier _notifier;
 
 class EngagementCustomer extends StatefulWidget {
-//  List<QuestionData> arrQuestions = List();
-
-//  EngagementCustomer({Key key, this.arrQuestions}) : super(key: key);
-
   final QuestionData questionDataEngCustomer;
 
   final Notifier notifier;
@@ -91,9 +89,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     abcdList = abcdIndex;
 
     if (isVideo(questionData.mediaLink)) {
-      _controller = VideoPlayerController.network(questionData.mediaLink)
+      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+          ? VideoPlayerController.file(
+              Utils.getCacheFile(questionData.mediaLink).file)
+          : VideoPlayerController.network(questionData.mediaLink)
         ..initialize().then((_) {
-          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
           setState(() {
             _controller.play();
           });
@@ -113,8 +113,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   void dispose() {
-    super.dispose();
     _controller?.dispose();
+    _notifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -122,6 +123,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     _notifier = NotifierProvider.of(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
           fit: StackFit.expand,
@@ -219,7 +221,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ));
   }
 
-  void performSubmitAnswer(BuildContext context) {
+  void performSubmitAnswer(BuildContext context) async {
     Utils.playClickSound();
 
     List<Answer> selectedAnswer =
@@ -232,41 +234,35 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
 
-    callSubmitAnswerApi(context);
+    SubmitAnswerRequest rq =
+        Injector.prefs.getString(PrefKeys.answerData) != null
+            ? SubmitAnswerRequest.fromJson(
+                json.decode(Injector.prefs.getString(PrefKeys.answerData)))
+            : SubmitAnswerRequest();
+
+    SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
+
+    await Injector.prefs
+        .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        callSubmitAnswerApi(context);
+      } else {
+        navigateToSituation(context);
+      }
+    });
   }
 
   void callSubmitAnswerApi(BuildContext context) {
-    SubmitAnswerRequest rq = SubmitAnswerRequest();
-    rq.userId = Injector.userData.userId;
-
-    SubmitAnswer submitAnswer = SubmitAnswer();
-
-    submitAnswer.questionId = questionData.questionId;
-    submitAnswer.moduleId = questionData.moduleId;
-    submitAnswer.counter = max(
-        questionData.isAnsweredCorrect
-            ? (questionData.counter + 1)
-            : (questionData.counter ~/ 2).round(),
-        0);
-    submitAnswer.loyalty = questionData.loyalty;
-    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
-    submitAnswer.value = questionData.value;
-    submitAnswer.resource = questionData.resource;
-    submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
-
-    List<SubmitAnswer> arrAnswer = List();
-    arrAnswer.add(submitAnswer);
-    rq.answer = arrAnswer;
-
-    rq.totalQuestionAnswered = arrAnswer.length;
-    rq.remainingSalesPerson = Injector.customerValueData.totalEmployeeCapacity -
-        questionData.resource;
+    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
+        json.decode(Injector.prefs.getString(PrefKeys.answerData)));
 
     setState(() {
       isLoading = true;
     });
 
-    WebApi().submitAnswers(context, rq).then((data) {
+    WebApi().submitAnswers(context, rq).then((data) async {
       setState(() {
         isLoading = false;
       });
@@ -274,15 +270,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (data != null) {
         Injector.customerValueData = data;
       }
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(
-                  initialPageType: Const.typeDebrief,
-                  questionDataSituation: questionData,
-                )),
-      );
+      await Injector.prefs.remove(PrefKeys.answerData);
+      navigateToSituation(context);
     });
   }
 
@@ -318,27 +307,18 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   Utils.performBack(context);
                 },
               ),
-
               alignment: Alignment.center,
               height: 30,
               width: 40,
-//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
             ),
             Container(
               alignment: Alignment.center,
               height: 30,
-//                          margin: EdgeInsets.only(left: 50.0, right: 50.0),
-//                      color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
                   borderRadius: Injector.isBusinessMode
                       ? null
                       : BorderRadius.circular(15),
-//                          border: Injector.isBusinessMode
-//                              ? null
-//                              : Border.all(
-//                              width: 1,
-//                              color: ColorRes.blueMenuSelected),
                   color: Injector.isBusinessMode
                       ? null
                       : ColorRes.blueMenuSelected,
@@ -348,7 +328,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               AssetImage(Utils.getAssetsImg("eddit_profile")),
                           fit: BoxFit.fill))
                       : null),
-
               child: Text(
                 Utils.getText(
                     context,
@@ -379,10 +358,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               },
             )
           ],
-        )
-//                  CommonView.showTitle(
-//                      context, Utils.getText(context, StringRes.engagement))
-        );
+        ));
   }
 
   showMainBody(BuildContext context) {
@@ -406,6 +382,20 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         top: 18, bottom: 10, left: 10, right: 12),
                     height: Utils.getDeviceHeight(context) / 2.7,
                     decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        image: isImage(questionData.mediaLink)
+                            ? DecorationImage(
+                                image: Utils.getCacheFile(
+                                            questionData.mediaLink) !=
+                                        null
+                                    ? FileImage(Utils.getCacheFile(
+                                            questionData.mediaLink)
+                                        .file)
+                                    : NetworkImage(questionData.mediaLink),
+                                fit: BoxFit.fill)
+                            : null,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: ColorRes.white, width: 1)),
                       color: Colors.transparent,
                       image: isImage(questionData.mediaLink)
                           ? DecorationImage(
@@ -424,6 +414,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             child: VideoPlayer(_controller),
                           )
                         : pdfShow(),
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          )
+                        : Container(),
                   ),
                 ),
                 Expanded(
@@ -563,6 +557,43 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
 
     return isAnswerCorrect;
+  }
+
+  SubmitAnswerRequest getSubmitAnswerRequest(SubmitAnswerRequest rq) {
+    rq.userId = Injector.userData.userId;
+
+    SubmitAnswer submitAnswer = SubmitAnswer();
+
+    submitAnswer.questionId = questionData.questionId;
+    submitAnswer.moduleId = questionData.moduleId;
+    submitAnswer.counter = max(
+        questionData.isAnsweredCorrect
+            ? (questionData.counter + 1)
+            : (questionData.counter ~/ 2).round(),
+        0);
+    submitAnswer.loyalty = questionData.loyalty;
+    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
+    submitAnswer.value = questionData.value;
+    submitAnswer.resource = questionData.resource;
+    submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
+
+    if (rq.answer == null) rq.answer = List<SubmitAnswer>();
+    rq.answer.add(submitAnswer);
+
+    rq.totalQuestionAnswered = rq.answer.length;
+
+    return rq;
+  }
+
+  void navigateToSituation(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HomePage(
+                  initialPageType: Const.typeDebrief,
+                  questionDataSituation: questionData,
+                )),
+        ModalRoute.withName('/home'));
   }
 }
 
@@ -1132,102 +1163,3 @@ class ImageShowAlertState extends State<ImageShowAlert>
     );
   }
 }
-
-// class CategoryItem extends StatefulWidget {
-//  final String title;
-//  final int index;
-//  final bool isSelected;
-//  Function(int) selectItem;
-//
-//  CategoryItem(
-//    this.selectItem, {
-//    Key key,
-//    this.title,
-//    this.index,
-//    this.isSelected,
-//  }) : super(key: key);
-//
-//  _CategoryItemState createState() => _CategoryItemState();
-//}
-//
-//class _CategoryItemState extends State<CategoryItem> {
-//
-//
-//
-//
-//
-////  var arrAnswers = ["A", "B", "C", "D"];
-//
-//
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return GestureDetector(
-//      onTap: () {
-//        widget.selectItem(widget.index);
-//
-//        setState(() {
-//          arrAnswer[widget.index].isSelected = true;
-//        });
-//
-//      },
-//      child: Container(
-////          height: 60,
-//        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-//        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
-//        alignment: Alignment.center,
-//        decoration: BoxDecoration(
-//            borderRadius:
-//                Injector.isBusinessMode ? null : BorderRadius.circular(15),
-//            border: Injector.isBusinessMode
-//                ? null
-//                : Border.all(
-//                    width: 1,
-//                    color:
-//                        widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
-//            color: Injector.isBusinessMode
-//                ? null
-//                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
-//            image: Injector.isBusinessMode
-//                ? (DecorationImage(
-//                    image: AssetImage(Utils.getAssetsImg ("rounded_rectangle_8371")
-////                      (widget.isSelected
-////                        ? "rounded_rectangle_837_blue"
-////                        : "rounded_rectangle_8371")
-//                    ),
-//                    fit: BoxFit.fill))
-//                : null),
-//        child: Row(
-//          children: <Widget>[
-//            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-//            Title(
-//                color: ColorRes.greenDot,
-//                child: new Text(arrAnswer[widget.index].text,
-//                    style: TextStyle(
-////                        color: (widget.isSelected
-////                            ? ColorRes.white
-////                            : ColorRes.textProf)
-//                    ))),
-//            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-//            Expanded(
-//              child: SingleChildScrollView(
-//                child: new Text(
-//                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
-//                  style: TextStyle(
-//                      color: (widget.isSelected
-//                          ? ColorRes.white
-//                          : ColorRes.textProf)),
-//                ),
-//              ),
-//            )
-//          ],
-//        ),
-////        Text(
-////          widget.title,
-////          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-////        ),
-//      )
-//
-//    );
-//  }
-//}

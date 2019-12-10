@@ -41,32 +41,31 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     resourceBonus = Injector.customerValueData.resourceBonus;
     valueBonus = Injector.customerValueData.valueBonus;
 
-    getQuestions();
+//    getQuestions();
 
-//    Utils.isInternetConnectedWithAlert().then((isConnected) {
-//      if (isConnected) {
-//        getQuestions();
-//      } else {
-//        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-//          List<String> jsonQuestionData =
-//              Injector.prefs.getStringList(PrefKeys.questionData);
-//
-//          jsonQuestionData.forEach((jsonQuestion) {
-//            QuestionData questionData =
-//                QuestionData.fromJson(json.decode(jsonQuestion));
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        getQuestions();
+      } else {
+        if (Injector.prefs.getString(PrefKeys.questionData) != null) {
+          arrQuestions = QuestionsResponse.fromJson(
+                  json.decode(Injector.prefs.getString(PrefKeys.questionData)))
+              .data;
+
+//          arrQuestions.forEach((question) {
 //
 //            if (questionData.attemptTime == 0 ||
 //                questionData.attemptTime -
 //                        DateTime.now().millisecondsSinceEpoch >
 //                    24) arrQuestions.add(questionData);
 //          });
-//
-//          if (arrQuestions != null) {
-//            setState(() {});
-//          }
-//        }
-//      }
-//    });
+
+          if (arrQuestions != null && arrQuestions.length > 0) {
+            setState(() {});
+          }
+        }
+      }
+    });
   }
 
   getQuestions() {
@@ -76,18 +75,21 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
+
+    rq.type = Const.getNewQueType;
     rq.type =Const.getNewQueType;
 
-    WebApi().getQuestions(rq.toJson()).then((data) {
+    WebApi().getQuestions(rq.toJson()).then((questionResponse) {
       setState(() {
         isLoading = false;
       });
 
-      if (data != null) {
-        if (data.flag == "true") {
-          arrQuestions = data.data;
+      if (questionResponse != null) {
+        if (questionResponse.flag == "true") {
+          arrQuestions = questionResponse.data;
+
         } else {
-          Utils.showToast(data.msg);
+          Utils.showToast(questionResponse.msg);
         }
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
@@ -352,10 +354,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     var b = (1 + (0.01 * min(questionAnswered, 900)));
     var c = (1 + valueBonus);
 
-    int finalValue = int.parse((a * b * c).toStringAsFixed(0));
-
-    print("finalValue");
-    print(finalValue);
+    int finalValue = (a * b * c).round();
 
     questionData.value = finalValue;
 
@@ -373,12 +372,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     var b = questionData.counter * random;
     var c = (1 + loyaltyBonus);
 
-    var finalValue = int.parse((a + b * c).toStringAsFixed(0));
+    int finalValue = (a + b * c).round();
 
-    print("finalValue");
-    print(finalValue);
-
-    questionData.value = finalValue;
+    questionData.loyalty = finalValue;
 
     arrQuestions[index] = questionData;
 
@@ -397,10 +393,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     var b = (1 + (0.01 * min(questionAnswered, 900)));
     var c = (2 - resourceBonus);
 
-    var finalValue = int.parse((a * b * c).toStringAsFixed(0));
-
-    print("finalValue");
-    print(finalValue);
+    int finalValue = (a * b * c).round();
 
     questionData.resource = finalValue;
 

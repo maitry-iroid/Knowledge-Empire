@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -15,11 +16,12 @@ class Injector {
   static String deviceId = "";
   static int notificationID = 0;
   static LoginResponseData userData;
-  static CustomerValueData  customerValueData;
+  static CustomerValueData customerValueData;
   static int mode;
   static bool isBusinessMode = true;
   static AudioPlayer audioPlayer;
   static AudioCache audioCache;
+  static var cacheManager;
 
 //  factory Injector {
 //    return _singleton;
@@ -30,27 +32,24 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
 
-
     audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
     audioCache = AudioCache();
 
     deviceId = await FlutterUdid.udid;
 
     if (prefs.getString(PrefKeys.user) != null &&
-        prefs
-            .getString(PrefKeys.user)
-            .isNotEmpty) {
+        prefs.getString(PrefKeys.user).isNotEmpty) {
       userData = LoginResponseData.fromJson(
           json.decode(prefs.getString(PrefKeys.user)));
 
+      if (prefs.getString(PrefKeys.customerValueData) != null)
+        customerValueData = CustomerValueData.fromJson(
+            json.decode(prefs.getString(PrefKeys.customerValueData)));
 
-      if(prefs.getString(PrefKeys.customerValueData)!=null)
-      customerValueData = CustomerValueData.fromJson(
-          json.decode(prefs.getString(PrefKeys.customerValueData)));
+      cacheManager = DefaultCacheManager();
 
       mode = prefs.getInt(PrefKeys.mode);
       isBusinessMode = mode == Const.businessMode;
-
     }
   }
 }
