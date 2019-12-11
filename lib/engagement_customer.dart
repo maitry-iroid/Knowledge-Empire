@@ -26,6 +26,9 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 import 'package:notifier/main_notifier.dart';
 
+import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
+
+
 List<Answer> arrAnswer = List();
 
 int _selectedItem = 0;
@@ -78,6 +81,16 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       setState(() => _selectedDrawerIndex = 10);
 //      setState(() => _selectedItem = 10);
     }
+  }
+
+  pdfShow() {
+        return isPdf(questionData.mediaLink) ?
+        SimplePdfViewerWidget(
+          completeCallback: (bool result) {
+            print("completeCallback,result:${result}");
+          },
+          initialUrl: questionData.mediaLink,
+        ) : Container();
   }
 
   @override
@@ -393,7 +406,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           aspectRatio: _controller.value.aspectRatio,
                           child: VideoPlayer(_controller),
                         )
-                            : Container(),
+                            : pdfShow(),
                       ),
                     ),
                     Expanded(
