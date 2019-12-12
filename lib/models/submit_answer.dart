@@ -34,7 +34,7 @@ class SubmitAnswer {
   int questionId;
   int moduleId;
   int counter;
-  int resource;
+  int resources;
   int value;
   int loyalty;
   bool isAnsweredCorrect;
@@ -44,7 +44,7 @@ class SubmitAnswer {
       {this.questionId,
         this.moduleId,
         this.counter,
-        this.resource,
+        this.resources,
         this.value,
         this.loyalty,
         this.isAnsweredCorrect,
@@ -54,7 +54,7 @@ class SubmitAnswer {
     questionId = json['questionId'];
     moduleId = json['moduleId'];
     counter = json['counter'];
-    resource = json['resource'];
+    resources = json['resources'];
     value = json['value'];
     loyalty = json['loyalty'];
     isAnsweredCorrect = json['isAnsweredCorrect'];
@@ -66,7 +66,7 @@ class SubmitAnswer {
     data['questionId'] = this.questionId;
     data['moduleId'] = this.moduleId;
     data['counter'] = this.counter;
-    data['resource'] = this.resource;
+    data['resources'] = this.resources;
     data['value'] = this.value;
     data['loyalty'] = this.loyalty;
     data['isAnsweredCorrect'] = this.isAnsweredCorrect;

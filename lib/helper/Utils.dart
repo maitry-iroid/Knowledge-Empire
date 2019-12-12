@@ -344,7 +344,9 @@ class Utils {
   }
 
   static getCurrentFormattedDate() {
-    var now = new DateTime.now();
+    var now = new DateTime.fromMillisecondsSinceEpoch(
+        DateTime.now().millisecondsSinceEpoch,
+        isUtc: true);
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     String formatted = formatter.format(now);
     print(formatted);
@@ -357,11 +359,9 @@ class Utils {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
         json.decode(Injector.prefs.getString(PrefKeys.answerData)));
 
-    WebApi().submitAnswers(context, rq).then((data) async{
+    WebApi().submitAnswers(context, rq).then((data) async {
       if (data != null) {
         Injector.customerValueData = data;
-
-
       }
       await Injector.prefs.remove(PrefKeys.answerData);
     });

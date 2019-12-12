@@ -563,7 +563,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.loyalty = questionData.loyalty;
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
     submitAnswer.value = questionData.value;
-    submitAnswer.resource = questionData.resource;
+    submitAnswer.resources = questionData.resource;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
