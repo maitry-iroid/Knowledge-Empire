@@ -251,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.only(left: 8),
+                margin: EdgeInsets.only(left: 5),
                 child: Center(
                   child: TextField(
                     controller: emailController,
@@ -298,7 +298,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontSize: 17, color: ColorRes.white),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 10),
+                            vertical: 5.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.password)
                             .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
