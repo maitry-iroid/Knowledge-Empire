@@ -13,7 +13,10 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
-  int _selectedItem = 0;
+
+  List<String> arrFriends = ["hello","world","good","morning","hello","world","good","morning","hello","world","good","morning"];
+  List<String> arrRewards = ["hello","world","good","morning","hello"];
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: arrFriends.length,
 //                  var isSelected = true;
                   itemBuilder: (BuildContext context, int index) {
                     return showFriendItem(index);
@@ -192,7 +195,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: 5,
+                  itemCount: arrRewards.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showFriendItem(index);
                   },
@@ -219,19 +222,19 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-  showFriendItem(int index) {
-    int _selectedIndex = 0;
+  int selectedIndex  = -1;
 
-    _onSelected(int indexs) {
-      setState(() => _selectedIndex = indexs);
-    }
+  _onSelected(int index) {
+    setState(() => selectedIndex = index);
+  }
+
+  showFriendItem(int index) {
 
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
         _onSelected(index);
-//          selectItem(index);
-//        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
+        //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
       },
       child: Container(
         alignment: Alignment.center,
@@ -240,18 +243,16 @@ class _ChallengesPageState extends State<ChallengesPage> {
             borderRadius: BorderRadius.circular(20),
             image: Injector.isBusinessMode
                 ? DecorationImage(
-                    image: AssetImage(
-                      Utils.getAssetsImg(
-                          _selectedIndex != null && _selectedIndex == index
-                              ? 'bg_blue'
-                              : 'rounded_rect_challenges'),
+                    image: AssetImage( selectedIndex != null && selectedIndex == index
+                        ? Utils.getAssetsImg('bg_blue')
+                              : Utils.getAssetsImg('rounded_rect_challenges'),
                     ),
                     fit: BoxFit.fill)
                 : null),
         margin: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
         padding: EdgeInsets.symmetric(vertical: 2),
         child: Text(
-          'text',
+          arrFriends[index],
           style: TextStyle(
               color:
                   Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
@@ -261,19 +262,36 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
+  var selectItem = -1;
+
+  _onSelectedSector(int index) {
+    setState(() => selectItem = index);
+  }
+
   showSectorItem(int index) {
-    var selectItem;
 
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
-        selectItem(index);
+        _onSelectedSector(index);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+            color: Injector.isBusinessMode ? null : ColorRes.white,
+            borderRadius: BorderRadius.circular(5),
+            image: Injector.isBusinessMode
+                ? DecorationImage(
+                image: AssetImage( selectItem != null && selectItem == index
+                    ? Utils.getAssetsImg('challenges_bg_sector')
+                    : Utils.getAssetsImg(''),
+                ),
+                fit: BoxFit.fill)
+                : null),
+        margin: EdgeInsets.symmetric(vertical: 3),
+        padding: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           children: <Widget>[
+            Padding(padding: EdgeInsets.only(bottom: 5)),
             Row(
               children: <Widget>[
                 Expanded(
@@ -296,11 +314,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ],
             ),
             SizedBox(
-              height: 3,
+              height: 0,
             ),
+//            Padding(padding: EdgeInsets.only(bottom: 0.0,top: 10)),
             Stack(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               children: <Widget>[
+                Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 3.6,
                   lineHeight: 20.0,
@@ -324,6 +344,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       ),
     );
   }
+
 
   showRewardItem(int index) {
     return Container(

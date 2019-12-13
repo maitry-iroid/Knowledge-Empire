@@ -177,7 +177,7 @@ class CommonView {
                     : null),
             child: Text(
               title,
-              style: TextStyle(color: ColorRes.white, fontSize: 18),
+              style: TextStyle(color: ColorRes.white, fontSize: 16),
               textAlign: TextAlign.center,
             ),
           ),

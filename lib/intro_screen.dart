@@ -32,6 +32,9 @@ class IntroPageState extends State<IntroPage> {
   Notifier _notifier;
   int selectedType = Const.typeName;
 
+  AnimationController controller;
+  Animation<double> animation;
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -44,8 +47,22 @@ class IntroPageState extends State<IntroPage> {
     super.initState();
 
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
-  }
 
+//    controller = AnimationController(
+//      duration: const Duration(milliseconds: 1000),
+//    );
+//    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+
+    /*animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });*/
+
+//    controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +230,8 @@ class IntroPageState extends State<IntroPage> {
                             borderRadius: BorderRadius.circular(12.5)),
                       ),
                 Image(
-                  image: AssetImage(Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                  image: AssetImage(
+                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
                   height: 26,
                 ),
               ],
@@ -261,7 +279,10 @@ class IntroPageState extends State<IntroPage> {
                     ],
                   )
                 : Text(
-                    ' \$ '+(Injector.customerValueData!=null?Injector.customerValueData.totalBalance.toString():"50000"),
+                    ' \$ ' +
+                        (Injector.customerValueData != null
+                            ? Injector.customerValueData.totalBalance.toString()
+                            : "50000"),
                     style: TextStyle(color: ColorRes.white, fontSize: 16),
                   ),
           ],
@@ -543,11 +564,15 @@ class IntroPageState extends State<IntroPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
+//                    child: FadeTransition(
+//                      opacity: animation,
+                      child: Image(
+                        image:
+                            AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                      width: Utils.getDeviceWidth(context) / 3.4,
-                    ),
+                        width: Utils.getDeviceWidth(context) / 3.4,
+                      ),
+//                    ),
                   ),
                   InkResponse(
                     child: Image(
@@ -791,7 +816,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeName
               ? Positioned(
                   top: 65,
-                  right: Utils.getDeviceWidth(context) / 1.9,
+                  right: Utils.getDeviceWidth(context) / 1.7,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -806,7 +831,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeSalesPersons
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 3.40,
+                  left: Utils.getDeviceWidth(context) / 2.40,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -821,7 +846,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeEmployee
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.35,
+                  left: Utils.getDeviceWidth(context) / 3.50,
                   child: InkResponse(
                     child: Image(
                       image:
@@ -836,12 +861,12 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeBadge
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.00,
+                  left: Utils.getDeviceWidth(context) / 2.20,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_customer_stat")),
+                          Utils.getAssetsImg("intro_bub_brand_value")),
                       height: Utils.getDeviceHeight(context) / 1.9,
                     ),
                     onTap: () {},
@@ -852,12 +877,12 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeServicesPerson
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.35,
+                  left: Utils.getDeviceWidth(context) / 1.9,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_brand_value")),
+                          Utils.getAssetsImg("intro_bub_customer_stat")),
                       height: Utils.getDeviceHeight(context) / 1.90,
                     ),
                     onTap: () {},
@@ -914,7 +939,7 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeNewCustomer
               ? Positioned(
-                  bottom: 70,
+                  bottom: 90,
                   left: Utils.getDeviceWidth(context) / 3.2,
                   child: InkResponse(
                       child: Image(

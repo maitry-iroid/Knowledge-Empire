@@ -12,6 +12,7 @@ import 'helper/string_res.dart';
 import 'helper/web_api.dart';
 import 'injection/dependency_injection.dart';
 import 'models/questions.dart';
+import 'models/releaseResource.dart';
 
 class ExistingCustomerPage extends StatefulWidget {
   @override
@@ -46,6 +47,33 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //        setState(() {});
 //      }
 //    }
+  }
+
+  ReleaseResourceData  releaseResourceData;
+
+  void releaseResource() {
+    Utils.isInternetConnectedWithAlert().then((_) {
+      ReleaseResourceRequest rq = ReleaseResourceRequest();
+      rq.userId = Injector.userData.userId;
+
+      
+      setState(() {
+        isLoading = true;
+      });
+
+      WebApi()
+          .releaseresource(context, rq.toJson())
+          .then((getReleaseResourceData) {
+        if (getReleaseResourceData != null) {
+          releaseResourceData = getReleaseResourceData;
+//          arrOrganization = getreleaseresourceData.organization;
+
+          setState(() {
+            isLoading = false;
+          });
+        }
+      });
+    });
   }
 
   getQuestions() {
