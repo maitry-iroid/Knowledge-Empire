@@ -131,6 +131,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void dispose() {
     // TODO: implement dispose
     _connectivitySubscription?.cancel();
+    _notifier.dispose();
     super.dispose();
   }
 
