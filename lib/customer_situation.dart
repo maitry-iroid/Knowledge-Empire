@@ -207,10 +207,52 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         );
   }
 
+  bool isAnswerCorrect(int index) {
+//    List<Answer> selectedAnswer =
+//        questionData.answer.where((answer) => answer.isSelected).toList();
+//
+    bool isAnswerCorrect = true;
+
+    var arr = questionData.correctAnswerId.split(',');
+//
+//    if (arr.length != selectedAnswer.length) {
+//      return false;
+//    }
+
+    if (!arr.contains(arrAnswerSituation[index].option.toString())) {
+      isAnswerCorrect = false;
+      return false;
+    }
+
+    return isAnswerCorrect;
+  }
+
   checkAnswerBusinessMode(int index) {
 //    Widget child;
+    var correctAnserId;
+//    = int.parse(questionDataCustSituation.correctAnswerId);
 
-    if (arrAnswerSituation[index].isSelected == true) {
+//    foreach(var s in str.Split(',')) {
+////    int num;
+//    if (int.TryParse(s, out correctAnserId))
+//    return correctAnserId;
+//    }
+
+    if (isAnswerCorrect(index) == true) {
+      return ColorRes.answerCorrect;
+//       if (questionData.isAnsweredCorrect == true) {
+//         return ColorRes.answerCorrect;
+//       } else {
+//         return ColorRes.greyText;
+//       }
+    } else if (!isAnswerCorrect(index) &&
+        arrAnswerSituation[index].isSelected) {
+      return ColorRes.greyText;
+    } else {
+      return ColorRes.white;
+    }
+
+    /* if (arrAnswerSituation[index].isSelected == true) {
       if (questionDataCustSituation.correctAnswerId ==
           arrAnswerSituation[index].answerId) {
         return ColorRes.answerCorrect;
@@ -222,11 +264,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       return ColorRes.answerCorrect;
     } else {
       return ColorRes.white;
-    }
+    }*/
     return Utils.getAssetsImg("bg_green");
   }
 
-  Widget showItem(int index) {
+  Widget showItemC(int index) {
     return GestureDetector(
         onTap: () {
 //          setState(() {
@@ -245,7 +287,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   ? null
                   : Border.all(
                       width: 1,
-                      color: arrAnswerSituation[index].isSelected
+                      color: isAnswerCorrect(index)||arrAnswerSituation[index].isSelected
                           ? ColorRes.white
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
@@ -287,7 +329,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   child: new Text(
                     arrAnswerSituation[index].answer,
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: (checkTextColor(index)
 //                            arrAnswerSituation[index].isSelected
 //                            ? ColorRes.white
@@ -314,10 +356,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         fit: StackFit.expand,
         children: <Widget>[
           Card(
+            color: ColorRes.bgProf,
             elevation: 10,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(top: 20, bottom: 15, right: 5, left: 8),
+            margin: EdgeInsets.only(top: 20, bottom: 15, right: 15, left: 8),
             child: Container(
               alignment: Alignment.center,
               padding:
@@ -325,7 +368,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: ColorRes.white, width: 1),
+                border: Injector.isBusinessMode?Border.all(color: ColorRes.white, width: 1):null,
               ),
               child: ListView.builder(
                 shrinkWrap: true,
@@ -339,7 +382,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                                      _selectedItem == index ? true : false,
 ////                                  title: arrSector[index],
 //                                );
-                  return showItem(index);
+                  return showItemC(index);
                 },
               ),
             ),
@@ -410,14 +453,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 18, bottom: 10, left: 12, right: 12),
+              margin: EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
               height: Utils.getDeviceHeight(context) / 2.7,
               decoration: BoxDecoration(
                   image: DecorationImage(
 //                        image: correctWrongImage(),
 //                      image: NetworkImage(questionData.mediaLink),
                       image: NetworkImage(correctWrongImage()),
-
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: ColorRes.white, width: 1)),
@@ -581,12 +623,14 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                             height: Utils.getDeviceWidth(context) / 40,
                             width: Utils.getDeviceWidth(context) / 40,
                             decoration: BoxDecoration(
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
+                                image:
+//                                Injector.isBusinessMode ?
+                                DecorationImage(
                                         image: AssetImage(
                                             Utils.getAssetsImg("close_dialog")),
                                         fit: BoxFit.fill)
-                                    : null)),
+//                                    : null
+                            )),
                       ),
                     )
                   ],
@@ -610,10 +654,52 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //    });
 //  }
 
+  bool isAnswerCorrect(int index) {
+//    List<Answer> selectedAnswer =
+//        questionData.answer.where((answer) => answer.isSelected).toList();
+//
+    bool isAnswerCorrect = true;
+
+    var arr = questionData.correctAnswerId.split(',');
+//
+//    if (arr.length != selectedAnswer.length) {
+//      return false;
+//    }
+
+    if (!arr.contains(arrAnswerSituation[index].option.toString())) {
+      isAnswerCorrect = false;
+      return false;
+    }
+
+    return isAnswerCorrect;
+  }
+
   checkAnswerBusinessMode(int index) {
 //    Widget child;
+    var correctAnserId;
+//    = int.parse(questionDataCustSituation.correctAnswerId);
 
-    if (arrAnswerSituation[index].isSelected == true) {
+//    foreach(var s in str.Split(',')) {
+////    int num;
+//    if (int.TryParse(s, out correctAnserId))
+//    return correctAnserId;
+//    }
+
+    if (isAnswerCorrect(index) == true) {
+      return ColorRes.answerCorrect;
+//       if (questionData.isAnsweredCorrect == true) {
+//         return ColorRes.answerCorrect;
+//       } else {
+//         return ColorRes.greyText;
+//       }
+    } else if (!isAnswerCorrect(index) &&
+        arrAnswerSituation[index].isSelected) {
+      return ColorRes.greyText;
+    } else {
+      return ColorRes.white;
+    }
+
+    /* if (arrAnswerSituation[index].isSelected == true) {
       if (questionDataCustSituation.correctAnswerId ==
           arrAnswerSituation[index].answerId) {
         return ColorRes.answerCorrect;
@@ -625,9 +711,29 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
       return ColorRes.answerCorrect;
     } else {
       return ColorRes.white;
-    }
+    }*/
     return Utils.getAssetsImg("bg_green");
   }
+
+
+//  checkAnswerBusinessMode(int index) {
+////    Widget child;
+//
+//    if (arrAnswerSituation[index].isSelected == true) {
+//      if (questionDataCustSituation.correctAnswerId ==
+//          arrAnswerSituation[index].answerId) {
+//        return ColorRes.answerCorrect;
+//      } else {
+//        return ColorRes.greyText;
+//      }
+//    } else if (questionDataCustSituation.correctAnswerId ==
+//        arrAnswerSituation[index].answerId) {
+//      return ColorRes.answerCorrect;
+//    } else {
+//      return ColorRes.white;
+//    }
+//    return Utils.getAssetsImg("bg_green");
+//  }
 
   Widget showItemsFullScreen(int index) {
     return GestureDetector(
@@ -641,7 +747,35 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration:  BoxDecoration(
+              borderRadius:
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(
+                  width: 1,
+                  color: isAnswerCorrect(index)||arrAnswerSituation[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
+              color: Injector.isBusinessMode
+                  ? null
+                  : checkAnswerBusinessMode(index),
+//              (arrAnswerSituation[index].isSelected
+//                      ? ColorRes.greenDot
+//                      : ColorRes.white),
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
+                  image: AssetImage(
+                    checkAnswer(index),
+//                          Utils.getAssetsImg(
+//                          arrAnswerSituation[index].isSelected
+//                              ? "rounded_rectangle_837_blue"
+//                              : "rounded_rectangle_8371"
+//                      )
+                  ),
+                  fit: BoxFit.fill))
+                  : null),
+         /* BoxDecoration(
               borderRadius:
                   Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
@@ -666,7 +800,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                              : "rounded_rectangle_8371")
                           ),
                       fit: BoxFit.fill))
-                  : null),
+                  : null),*/
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -807,25 +941,29 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image: Injector.isBusinessMode
-                                          ? DecorationImage(
+                                      image:
+//                                      Injector.isBusinessMode  ?
+                                      DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
-                                          : null))
+//                                          : null
+                                  ))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image: Injector.isBusinessMode
-                                          ? DecorationImage(
+                                      image:
+//                                      Injector.isBusinessMode  ?
+                                      DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
-                                          : null)))),
+//                                          : null
+                                  )))),
                     )
                   ],
                 )

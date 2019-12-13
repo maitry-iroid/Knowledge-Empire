@@ -118,7 +118,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   @override
   void dispose() {
     _controller?.dispose();
-    _notifier.dispose();
     super.dispose();
   }
 
@@ -164,9 +163,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         },
         child: Container(
 //          height: Utils.getDeviceWidth(context) / 5,
-          height: 50,
+          height: 48,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
@@ -207,7 +206,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
@@ -406,7 +405,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             aspectRatio: _controller.value.aspectRatio,
                             child: VideoPlayer(_controller),
                           )
-                        : pdfShow(),
+                        : Container(),
                   ),
                 ),
                 Expanded(
@@ -562,7 +561,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.loyalty = questionData.loyalty;
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
     submitAnswer.value = questionData.value;
-    submitAnswer.resources = questionData.resource;
+    submitAnswer.resources = questionData.resources;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
@@ -649,7 +648,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                           width: Utils.getDeviceWidth(context) / 1.2,
                           margin: EdgeInsets.only(top: 0),
                           padding:
-                              EdgeInsets.only(left: 10, right: 10, top: 25),
+                              EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 20),
                           decoration: BoxDecoration(
                             color: Injector.isBusinessMode
                                 ? ColorRes.bgDescription
@@ -718,12 +717,14 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             height: Utils.getDeviceWidth(context) / 40,
                             width: Utils.getDeviceWidth(context) / 40,
                             decoration: BoxDecoration(
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
+                                image:
+//                                Injector.isBusinessMode ?
+                                DecorationImage(
                                         image: AssetImage(
                                             Utils.getAssetsImg("close_dialog")),
                                         fit: BoxFit.fill)
-                                    : null)),
+//                                    : null
+                            )),
                       ),
                     )
                   ],
@@ -757,9 +758,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           });
         },
         child: Container(
-          height: 50,
+          height: 45,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
@@ -882,7 +883,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
-                          top: 25, bottom: 15, right: 25, left: 25),
+                          top: 20, bottom: 15, right: 25, left: 25),
                       child: Container(
                         height: Utils.getDeviceHeight(context) / 2,
                         width: Utils.getDeviceWidth(context) / 1.5,
@@ -911,7 +912,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       top: 0,
                       child: Container(
                         alignment: Alignment.center,
-                        height: 40,
+                        height: 35,
                         margin: (checkimg == true
                             ? EdgeInsets.symmetric(
                                 horizontal: Utils.getDeviceWidth(context) / 6)
@@ -964,25 +965,29 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image: Injector.isBusinessMode
-                                          ? DecorationImage(
+                                      image:
+//                                      Injector.isBusinessMode ?
+                                      DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
-                                          : null))
+//                                          : null
+                                  ))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image: Injector.isBusinessMode
-                                          ? DecorationImage(
+                                      image:
+//                                      Injector.isBusinessMode ?
+                                      DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
-                                          : null)))),
+//                                          : null
+                                  )))),
                     )
                   ],
                 )
@@ -1033,7 +1038,7 @@ class ImageShowAlertState extends State<ImageShowAlert>
     return isPdf(questionData.mediaLink)
         ? SimplePdfViewerWidget(
             completeCallback: (bool result) {
-              print("completeCallback,result:${result}");
+              print("completeCallback,result:$result");
             },
             initialUrl: questionData.mediaLink,
           )
@@ -1127,25 +1132,29 @@ class ImageShowAlertState extends State<ImageShowAlert>
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image: Injector.isBusinessMode
-                                          ? DecorationImage(
+                                      image:
+//                                      Injector.isBusinessMode ?
+                                      DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
-                                          : null))
+//                                          : null
+                                  ))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image: Injector.isBusinessMode
-                                          ? DecorationImage(
+                                      image:
+//                                      Injector.isBusinessMode ?
+                                      DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
-                                          : null)))),
+//                                          : null
+                                  )))),
                     )
                   ],
                 )

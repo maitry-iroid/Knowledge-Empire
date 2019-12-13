@@ -1,7 +1,7 @@
 class QuestionRequest {
   String userId = "";
   String moduleId = "";
-  int type = 0;
+  int type = 1;
 
   QuestionRequest();
 
@@ -70,7 +70,7 @@ class QuestionData {
   String correctAnswerImage;
   String inCorrectAnswerImage;
   bool isAnsweredCorrect;
-  int resource;
+  int resources;
   String attemptTime;
 
   QuestionData(
@@ -104,6 +104,7 @@ class QuestionData {
     correctAnswerId = json['correctAnswerId'];
     loyalty = json['loyalty'];
     value = json['value'];
+    resources = json['resources'];
     mediaLink = json['mediaLink'];
     if (json['answer'] != null) {
       answer = new List<Answer>();
@@ -129,6 +130,7 @@ class QuestionData {
     data['correctAnswerId'] = this.correctAnswerId;
     data['loyalty'] = this.loyalty;
     data['value'] = this.value;
+    data['resources'] = this.resources;
     data['mediaLink'] = this.mediaLink;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();

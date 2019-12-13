@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 
 import 'commonview/background.dart';
+
+Notifier _notifier;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -12,6 +16,8 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -26,7 +32,6 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showFirstColumn() {
-
 //   return ListView.builder(
 //      scrollDirection: Axis.vertical,
 ////      shrinkWrap: true,
@@ -42,39 +47,76 @@ class _RankingPageState extends State<RankingPage> {
 //      },
 //    );
 
+
+    var selecteded = 0;
+    bool selected = true;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
           flex: 1,
           child: InkResponse(
-            child: Image(
-                image: AssetImage(Utils.getAssetsImg('ranking_profit')),
-                width: 80),
+            onTap: () {
+              selecteded = 0;
+              _notifier.notify('rankingAction', "0");
+//              Image(image: AssetImage(Utils.getAssetsImg('ranking_deselect_profit')),
+//                  width: 80);
+            },
+            child: Notifier.of(context).register<String>('rankingAction', (data) {
+              return Image(
+                  image: AssetImage(data.data == "0"
+                      ? Utils.getAssetsImg('ranking_select_revenue')
+                      : Utils.getAssetsImg('ranking_deselect_profit')),
+                  width: 80);
+            }),
           ),
         ),
         Expanded(
           flex: 1,
           child: InkResponse(
-            child: Image(
-                image: AssetImage(Utils.getAssetsImg('ranking_profit')),
-                width: 80),
+            onTap: () {
+              selecteded = 1;
+              _notifier.notify('rankingAction', '1');
+            },
+            child: Notifier.of(context).register<String>('rankingAction', (data) {
+              return Image(
+                  image: AssetImage(data.data != "1"
+                      ? Utils.getAssetsImg('ranking_deselect_profit')
+                      : Utils.getAssetsImg('ranking_select_revenue')),
+                  width: 80);
+            }),
           ),
         ),
         Expanded(
-          flex: 1,
-          child: InkResponse(
-            child: Image(
-                image: AssetImage(Utils.getAssetsImg('ranking_profit')),
-                width: 80),
-          ),
-        ),
+            flex: 1,
+            child: InkResponse(
+              onTap: () {
+                selecteded = 2;
+                _notifier.notify('rankingAction', '2');
+              },
+              child: Notifier.of(context).register<String>('rankingAction', (data) {
+                return Image(
+                    image: AssetImage(data.data != "2"
+                        ? Utils.getAssetsImg('ranking_deselect_customers')
+                        : Utils.getAssetsImg('ranking_select_revenue')),
+                    width: 80);
+              }),
+            )),
         Expanded(
           flex: 1,
           child: InkResponse(
-            child: Image(
-                image: AssetImage(Utils.getAssetsImg('ranking_profit')),
-                width: 80),
+            onTap: () {
+              selecteded = 3;
+              _notifier.notify('rankingAction', '3');
+            },
+            child: Notifier.of(context).register<String>('rankingAction', (data) {
+              return Image(
+                  image: AssetImage(data.data != "3"
+                      ? Utils.getAssetsImg('ranking_deselect_brand')
+                      : Utils.getAssetsImg('ranking_select_revenue')),
+                  width: 80);
+            }),
           ),
         )
       ],
@@ -89,8 +131,6 @@ class _RankingPageState extends State<RankingPage> {
   var arrTime = ['Day', 'Month', 'Year'];
 
   showSecondColumn() {
-
-
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,8 +208,9 @@ class _RankingPageState extends State<RankingPage> {
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
                               'Name',
-                              style:
-                              TextStyle(color: ColorRes.white, fontSize: 15),maxLines: 1,
+                              style: TextStyle(
+                                  color: ColorRes.white, fontSize: 15),
+                              maxLines: 1,
                             ),
                           ),
                         ),
@@ -177,7 +218,8 @@ class _RankingPageState extends State<RankingPage> {
                           flex: 2,
                           child: Text('Company Name gggggggggggggg',
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),maxLines: 1,
+                                  color: ColorRes.white, fontSize: 15),
+                              maxLines: 1,
                               textAlign: TextAlign.center),
                         ),
                         Padding(
@@ -195,7 +237,7 @@ class _RankingPageState extends State<RankingPage> {
                   flex: 3,
                   child: Container(
                     height: 30,
-                    margin: EdgeInsets.only( left: 0),
+                    margin: EdgeInsets.only(left: 0),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -214,7 +256,7 @@ class _RankingPageState extends State<RankingPage> {
                   child: Container(
                     width: 45,
                     height: 30,
-                    margin: EdgeInsets.only( left: 2,right:5),
+                    margin: EdgeInsets.only(left: 2, right: 5),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -328,7 +370,11 @@ class _RankingPageState extends State<RankingPage> {
                       ],
                     ),
                   ),
-                  Container(color:ColorRes.greyText,width: 1,margin: EdgeInsets.symmetric(vertical: 5),),
+                  Container(
+                    color: ColorRes.greyText,
+                    width: 1,
+                    margin: EdgeInsets.symmetric(vertical: 5),
+                  ),
                   Expanded(
                     flex: 3,
                     child: Text('Company Name',
@@ -367,14 +413,43 @@ class _RankingPageState extends State<RankingPage> {
           Expanded(
             flex: 3,
             child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('add_emplyee')),
-              ),
+              onTap: () {
+                print("hello$index");
+//                index ? :
+                _isSelected(index);
+              },
+              child:  Image(
+                  image: AssetImage( selectedIndex != null && selectedIndex == index ? Utils.getAssetsImg('add_emplyee') : Utils.getAssetsImg('add_emp_check')),
+                )
+
+
+         /*      onTap: () {
+                print("hello$index");
+//                selctedIndex = index;
+                _notifier.notify('addemp', "");
+                 showIndex();
+              },
+              child: Notifier.of(context).register<String>('addemp', (data) {
+                return Image(
+                  image: AssetImage(Utils.getAssetsImg('add_emplyee') ),
+//                  image: AssetImage(showIndex()),
+                );
+              }),  */
+
             ),
           ),
         ],
       ),
     );
+  }
+
+  int selectedIndex  = -1;
+
+  _isSelected(int index) {
+    //pass the selected index to here and set to 'isSelected'
+    setState(() {
+      selectedIndex = index;
+    });
   }
 }
 //------------------  option item --------
@@ -459,7 +534,7 @@ class _CustomItemState extends State<CustomItem> {
 
 //-----------------------
 
- class TimeItem extends StatefulWidget {
+class TimeItem extends StatefulWidget {
   final String title;
   final int index;
   final bool isSelected;
@@ -505,7 +580,7 @@ class _TimeItemState extends State<TimeItem> {
 }
 //-----------------------
 
- class ProfitItem extends StatefulWidget {
+class ProfitItem extends StatefulWidget {
   final String title;
   final int index;
   final bool isSelected;
