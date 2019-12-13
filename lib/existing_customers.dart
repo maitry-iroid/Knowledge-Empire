@@ -142,10 +142,13 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       CommonView.showTitle(
                           context, StringRes.existingCustomers),
                       showSubHeader(),
-                      showItems()
+                      showItems(),
+                      CommonView.showCircularProgress(isLoading)
                     ],
                   ),
-                ))));
+                )
+            )
+        ));
   }
 
   Expanded showItems() {
