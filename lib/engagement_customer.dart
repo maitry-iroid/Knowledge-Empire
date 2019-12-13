@@ -118,7 +118,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   @override
   void dispose() {
     _controller?.dispose();
-    _notifier.dispose();
     super.dispose();
   }
 
@@ -562,7 +561,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.loyalty = questionData.loyalty;
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
     submitAnswer.value = questionData.value;
-    submitAnswer.resources = questionData.resource;
+    submitAnswer.resources = questionData.resources;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();

@@ -326,7 +326,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
           onTap: () {
             Utils.playClickSound();
-            if (Utils.getSalesPersonCount() > arrQuestions[index].resource) {
+            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -336,7 +336,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           )));
             } else {
               Utils.showToast("You need atleast " +
-                  arrQuestions[index].resource.toString() +
+                  arrQuestions[index].resources.toString() +
                   " Sales persons to attempt this Question. You can add more Sales persons from the Organization.");
             }
           },
@@ -395,7 +395,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     int finalValue = (a * b * c).round();
 
-    questionData.resource = finalValue;
+    questionData.resources = finalValue;
 
     arrQuestions[index] = questionData;
 

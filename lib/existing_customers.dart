@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:notifier/main_notifier.dart';
+import 'package:notifier/notifier_provider.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
@@ -22,6 +24,7 @@ class ExistingCustomerPage extends StatefulWidget {
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
   bool isLoading = false;
+  Notifier _notifier;
 
   @override
   void initState() {
@@ -49,14 +52,25 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //    }
   }
 
-  ReleaseResourceData  releaseResourceData;
+  @override
+  void dispose() {
+    // TODO: implement dispose
 
-  void releaseResource() {
+//    _notifier.dispose();
+    super.dispose();
+  }
+
+  void releaseResource(int index) {
     Utils.isInternetConnectedWithAlert().then((_) {
+      QuestionData questionData = arrQuestions[index];
+
       ReleaseResourceRequest rq = ReleaseResourceRequest();
       rq.userId = Injector.userData.userId;
+      rq.questionId = questionData.questionId;
+      rq.moduleId = questionData.moduleId;
+      rq.resources = questionData.resources;
+      rq.value = questionData.value;
 
-      
       setState(() {
         isLoading = true;
       });
@@ -65,12 +79,17 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           .releaseresource(context, rq.toJson())
           .then((getReleaseResourceData) {
         if (getReleaseResourceData != null) {
-          releaseResourceData = getReleaseResourceData;
+          Injector.customerValueData = getReleaseResourceData.data;
 //          arrOrganization = getreleaseresourceData.organization;
 
+          _notifier.notify('changeMode', 'Sending data from notfier!');
           setState(() {
+            arrQuestions.removeAt(index);
+
             isLoading = false;
           });
+
+
         }
       });
     });
@@ -104,6 +123,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
+    _notifier = NotifierProvider.of(context);
+
     return Scaffold(
         backgroundColor: ColorRes.colorBgDark,
         body: SafeArea(
@@ -271,16 +292,21 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                 ],
               )),
         ),
-        Container(
-          height: 35,
-          width: 35,
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 15, right: 20),
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("close")),
-                  fit: BoxFit.fill)),
+        InkResponse(
+          child: Container(
+            height: 35,
+            width: 35,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(left: 15, right: 20),
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("close")),
+                    fit: BoxFit.fill)),
+          ),
+          onTap: () {
+            releaseResource(index);
+          },
         )
       ],
     );

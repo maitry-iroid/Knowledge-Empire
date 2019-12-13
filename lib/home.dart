@@ -363,7 +363,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
         Injector.customerValueData = customerValueData;
 
-        _notifier.notify('changeMode', 'Sending data from notfier!');
+        try {
+            _notifier.notify('changeMode', 'Sending data from notfier!');
+        } catch (e) {
+          print(e);
+        }
       }
     });
   }

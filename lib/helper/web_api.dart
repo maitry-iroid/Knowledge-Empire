@@ -319,7 +319,7 @@ class WebApi {
 
 
 
-  Future<ReleaseResourceData> releaseresource(
+  Future<GetCustomerValueResponse> releaseresource(
       BuildContext context, Map<String, dynamic> jsonMap) async {
     initDio();
 
@@ -336,12 +336,12 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        ReleaseResourceResponse releaseResourceResponse =
-        ReleaseResourceResponse.fromJson(jsonDecode(response.data));
+        GetCustomerValueResponse releaseResourceResponse =
+        GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         if (releaseResourceResponse != null) {
           if (releaseResourceResponse.flag == "true") {
-            return releaseResourceResponse.data;
+            return releaseResourceResponse;
           } else {
             Utils.showToast(releaseResourceResponse.msg);
           }
