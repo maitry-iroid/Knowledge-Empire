@@ -326,7 +326,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
           onTap: () {
             Utils.playClickSound();
-            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources) {
+            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources && Utils.getServicesPersonCount()>0) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -337,7 +337,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             } else {
               Utils.showToast("You need atleast " +
                   arrQuestions[index].resources.toString() +
-                  " Sales persons to attempt this Question. You can add more Sales persons from the Organization.");
+                  " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
             }
           },
         ),

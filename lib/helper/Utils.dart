@@ -18,6 +18,7 @@ import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
+import 'package:notifier/main_notifier.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -353,7 +354,7 @@ class Utils {
     return formatted; // something like 2013-04-20
   }
 
-  static void callSubmitAnswerApi(BuildContext context) {
+  static void callSubmitAnswerApi(BuildContext context, Notifier notifier) {
     if (Injector.prefs.getString(PrefKeys.answerData) == null) return;
 
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
@@ -364,6 +365,7 @@ class Utils {
         Injector.customerValueData = data;
       }
       await Injector.prefs.remove(PrefKeys.answerData);
+      notifier.notify('changeMode', 'Sending data from notfier!');
     });
   }
 

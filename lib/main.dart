@@ -20,8 +20,8 @@ import 'home.dart';
 void main() => setupLocator();
 
 Future setupLocator() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Injector.getInstance();
-
   runApp(
     NotifierProvider(
       child: MyApp(),

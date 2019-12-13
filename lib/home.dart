@@ -91,7 +91,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       if (result != ConnectivityResult.none) {
         Utils.showToast(result.toString());
 
-        Utils.callSubmitAnswerApi(context);
+        Utils.callSubmitAnswerApi(context,_notifier);
       }
     });
 
@@ -197,6 +197,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Notifier.of(context).register<String>('changeMode', (data) {
       drawerItems = [
         DrawerItem(Utils.getText(context, StringRes.home),
