@@ -27,55 +27,55 @@ class CommonView {
   }
 
   static showTitle(BuildContext context, String title) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: Container(),
-        ),
-        InkResponse(
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg(
-                Injector.isBusinessMode ? "back" : 'back_prof')),
-            width: 30,
-          ),
-          onTap: () {
-            Utils.playClickSound();
-            Utils.performBack(context);
-          },
-        ),
-        Container(
-          alignment: Alignment.center,
-          height: 30,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(20),
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(width: 1, color: ColorRes.white),
-              color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-              image: Injector.isBusinessMode
-                  ? DecorationImage(
-                      image: AssetImage(
-                        Utils.getAssetsImg("bg_blue"),
-                      ),
-                      fit: BoxFit.fill)
-                  : null),
-          child: Text(
-            Utils.getText(context, Utils.getText(context, title)),
-            style: TextStyle(
-              color: ColorRes.white,
-              fontSize: DimenRes.titleTextSize,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg(
+                  Injector.isBusinessMode ? "back" : 'back_prof')),
+              width: 30,
             ),
-            textAlign: TextAlign.center,
+            onTap: () {
+              Utils.playClickSound();
+              Utils.performBack(context);
+            },
           ),
-        ),
-        Expanded(
-          child: Container(),
-        ),
-      ],
+          Container(
+            alignment: Alignment.center,
+            height: 30,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                borderRadius:
+                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                border: Injector.isBusinessMode
+                    ? null
+                    : Border.all(width: 1, color: ColorRes.white),
+                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                    image: AssetImage(
+                      Utils.getAssetsImg("bg_blue"),
+                    ),
+                    fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(context, Utils.getText(context, title)),
+              style: TextStyle(
+                color: ColorRes.white,
+                fontSize: DimenRes.titleTextSize,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Container(width: 30,)
+
+        ],
+      ),
     );
   }
 

@@ -132,22 +132,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              child: InkResponse(
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg(
-                      Injector.isBusinessMode ? "back" : 'back_prof')),
-                  width: DimenRes.titleBarHeight,
-                ),
-                onTap: () {
-                  Utils.playClickSound();
-                  gotoMainScreen(context);
-                },
-              ),
-
-              alignment: Alignment.center,
-              height: 30,
-              width: 40,
-//                        child: Icon(Icons.chevron_left, color: ColorRes.white,),
+              width: 70,
             ),
             Container(
               alignment: Alignment.center,
@@ -183,7 +168,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             InkResponse(
               child: Container(
                 alignment: Alignment.center,
-                height: 30,
+                width: 70,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -287,7 +272,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   ? null
                   : Border.all(
                       width: 1,
-                      color: isAnswerCorrect(index)||arrAnswerSituation[index].isSelected
+                      color: isAnswerCorrect(index) ||
+                              arrAnswerSituation[index].isSelected
                           ? ColorRes.white
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
@@ -368,7 +354,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
-                border: Injector.isBusinessMode?Border.all(color: ColorRes.white, width: 1):null,
+                border: Injector.isBusinessMode
+                    ? Border.all(color: ColorRes.white, width: 1)
+                    : null,
               ),
               child: ListView.builder(
                 shrinkWrap: true,
@@ -625,12 +613,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                DecorationImage(
+                                    DecorationImage(
                                         image: AssetImage(
                                             Utils.getAssetsImg("close_dialog")),
                                         fit: BoxFit.fill)
 //                                    : null
-                            )),
+                                )),
                       ),
                     )
                   ],
@@ -715,7 +703,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     return Utils.getAssetsImg("bg_green");
   }
 
-
 //  checkAnswerBusinessMode(int index) {
 ////    Widget child;
 //
@@ -747,16 +734,17 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index)||arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+                      width: 1,
+                      color: isAnswerCorrect(index) ||
+                              arrAnswerSituation[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : checkAnswerBusinessMode(index),
@@ -765,17 +753,17 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                      : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
+                      image: AssetImage(
+                        checkAnswer(index),
 //                          Utils.getAssetsImg(
 //                          arrAnswerSituation[index].isSelected
 //                              ? "rounded_rectangle_837_blue"
 //                              : "rounded_rectangle_8371"
 //                      )
-                  ),
-                  fit: BoxFit.fill))
+                      ),
+                      fit: BoxFit.fill))
                   : null),
-         /* BoxDecoration(
+          /* BoxDecoration(
               borderRadius:
                   Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
@@ -943,13 +931,13 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode  ?
-                                      DecorationImage(
+                                          DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
 //                                          : null
-                                  ))
+                                      ))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
@@ -957,13 +945,13 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode  ?
-                                      DecorationImage(
+                                          DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
 //                                          : null
-                                  )))),
+                                      )))),
                     )
                   ],
                 )

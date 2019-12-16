@@ -130,6 +130,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               child: Container(
                 height: 32,
                 margin: EdgeInsets.only(top: 2),
+                padding: EdgeInsets.symmetric(horizontal: 8),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
@@ -148,7 +149,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       color: Injector.isBusinessMode
                           ? ColorRes.blue
                           : ColorRes.textProf,
-                      fontSize: 15),
+                      fontSize: 15,),maxLines: 1,overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -172,7 +173,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
-                  style: TextStyle(color: ColorRes.white, fontSize: 22),
+                  style: TextStyle(color: ColorRes.white, fontSize: 22,),maxLines: 1,
                 ),
               ),
             ),

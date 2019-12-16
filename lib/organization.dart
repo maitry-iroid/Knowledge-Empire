@@ -55,7 +55,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           child: Stack(
             children: <Widget>[
               Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SizedBox(
                     height: 10,
@@ -96,14 +96,20 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             SizedBox(
               width: 5,
             ),
-            Image(
-              image: AssetImage(
-                Utils.getAssetsImg('info'),
+            InkResponse(
+              child: Image(
+                image: AssetImage(
+                  Utils.getAssetsImg('info'),
+                ),
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.hintColor,
+                fit: BoxFit.fill,
+                width: 15,
               ),
-              color:
-                  Injector.isBusinessMode ? ColorRes.white : ColorRes.hintColor,
-              fit: BoxFit.fill,
-              width: 15,
+              onTap: () {
+                Utils.showOrgInfoDialog(_scaffoldKey, type);
+              },
             )
           ],
         ),
@@ -287,7 +293,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         (organizationData.totalEmpCount != 0
             ? organizationData.totalEmpCount
             : 1);
-
 
     return progress.toDouble();
   }
