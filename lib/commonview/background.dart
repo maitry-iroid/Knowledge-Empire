@@ -194,7 +194,7 @@ class CommonView {
                 if (checkimg)
                   showDialog(
                     context: context,
-                    builder: (_) => FunkyOverlay(),
+                    builder: (_) => FunkyOverlay(title: title),
                   );
               },
               child: (checkimg == true

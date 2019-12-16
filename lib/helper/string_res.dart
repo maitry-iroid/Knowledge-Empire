@@ -175,7 +175,7 @@ class StringRes {
       'loyalty': 'Repeat in ...',
       'endRel': 'Release',
       'resources': 'Study Points (SP)',
-      
+
     },
     'es': {
       'title': 'Hola Mundo',

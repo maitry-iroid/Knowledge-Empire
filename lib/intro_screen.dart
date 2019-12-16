@@ -931,13 +931,13 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeBusinessSector
               ? Positioned(
-                  bottom: 70,
-                  left: Utils.getDeviceWidth(context) / 3.0,
+                  bottom: 50,
+                  left: Utils.getDeviceWidth(context) / 3.2,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg("intro_bub_business_sectors")),
-                        height: Utils.getDeviceHeight(context) / 1.6,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -945,13 +945,13 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeNewCustomer
               ? Positioned(
-                  bottom: 90,
-                  left: Utils.getDeviceWidth(context) / 3.2,
+                  bottom: 70,
+                  left: Utils.getDeviceWidth(context) / 3.5,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg("intro_bub_new_customer")),
-                        height: Utils.getDeviceHeight(context) / 1.8,
+                        height: Utils.getDeviceHeight(context) / 1.4,
                       ),
                       onTap: () {}),
                 )
@@ -959,13 +959,13 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeExistingCustomer
               ? Positioned(
-                  bottom: 50,
-                  left: Utils.getDeviceWidth(context) / 3.4,
+                  bottom: 40,
+                  left: Utils.getDeviceWidth(context) / 3.7,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg("intro_bub_existing_customer")),
-                        height: Utils.getDeviceHeight(context) / 1.6,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -973,13 +973,13 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeReward
               ? Positioned(
-                  bottom: Utils.getDeviceHeight(context) / 2.8,
+                  bottom: Utils.getDeviceHeight(context) / 3.0,
                   left: Utils.getDeviceWidth(context) / 3.5,
                   child: InkResponse(
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg("intro_bub_rewards")),
-                      height: Utils.getDeviceHeight(context) / 2.8,
+                      height: Utils.getDeviceHeight(context) / 2.0,
                     ),
                     onTap: () {},
                   ),
@@ -993,7 +993,7 @@ class IntroPageState extends State<IntroPage> {
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("intro_bub_team")),
-                      height: Utils.getDeviceHeight(context) / 2.6,
+                      height: Utils.getDeviceHeight(context) / 2.4,
                     ),
                     onTap: () {},
                   ),
@@ -1002,14 +1002,14 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeChallenges
               ? Positioned(
-                  top: 60,
-                  left: Utils.getDeviceWidth(context) / 4,
+                  top: 40,
+//                  left: Utils.getDeviceWidth(context) / 4,
                   right: Utils.getDeviceWidth(context) / 3.0,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg("intro_bub_challenges")),
-                      height: Utils.getDeviceHeight(context) / 1.9,
+                      height: Utils.getDeviceHeight(context) / 1.8,
                     ),
                     onTap: () {},
                   ),
@@ -1018,13 +1018,13 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeOrg
               ? Positioned(
-                  top: 100,
+                  top: 80,
                   left: Utils.getDeviceWidth(context) / 2.6,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg("intro_bub_organization")),
-                        height: Utils.getDeviceHeight(context) / 1.8,
+                        height: Utils.getDeviceHeight(context) / 1.45,
                       ),
                       onTap: () {}),
                 )
@@ -1032,12 +1032,12 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typePL
               ? Positioned(
-                  bottom: 30,
-                  left: Utils.getDeviceWidth(context) / 4.1,
+                  bottom: 10,
+                  left: Utils.getDeviceWidth(context) / 4.2,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("intro_bub_pl")),
-                        height: Utils.getDeviceHeight(context) / 1.8,
+                        height: Utils.getDeviceHeight(context) / 1.45,
                       ),
                       onTap: () {}),
                 )
@@ -1045,14 +1045,14 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeRanking
               ? Positioned(
-                  bottom: 80,
+                  bottom: 30,
 //            left: Utils.getDeviceWidth(context) / 1.9,
                   right: Utils.getDeviceWidth(context) / 2.6,
                   child: InkResponse(
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg("intro_bub_ranking")),
-                      height: Utils.getDeviceHeight(context) / 2.3,
+                      height: Utils.getDeviceHeight(context) / 1.6,
                     ),
                     onTap: () {},
                   ),
