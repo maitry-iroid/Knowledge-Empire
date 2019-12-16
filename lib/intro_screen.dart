@@ -156,7 +156,7 @@ class IntroPageState extends State<IntroPage> {
                         color: Injector.isBusinessMode
                             ? ColorRes.textLightBlue
                             : ColorRes.white,
-                        fontSize: 15),
+                        fontSize: 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -169,7 +169,7 @@ class IntroPageState extends State<IntroPage> {
                         color: Injector.isBusinessMode
                             ? ColorRes.white
                             : ColorRes.textLightBlue,
-                        fontSize: 15),
+                        fontSize: 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   )
@@ -816,32 +816,19 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeName
               ? Positioned(
                   top: 65,
-                  right: Utils.getDeviceWidth(context) / 1.7,
+                  right: Utils.getDeviceWidth(context) / 2.0,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg("intro_bub_companyname")),
-                      height: Utils.getDeviceHeight(context) / 2.4,
+                      height: Utils.getDeviceHeight(context) / 1.8,
                     ),
                     onTap: () {},
                   ),
                 )
               : Container(),
 
-          selectedType == Const.typeSalesPersons
-              ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.40,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_sales_stat")),
-                      height: Utils.getDeviceHeight(context) / 1.60,
-                    ),
-                    onTap: () {},
-                  ),
-                )
-              : Container(),
+
 
           selectedType == Const.typeEmployee
               ? Positioned(
@@ -851,54 +838,73 @@ class IntroPageState extends State<IntroPage> {
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg("intro_bub_emp_stat")),
-                      height: Utils.getDeviceHeight(context) / 1.55,
+                      height: Utils.getDeviceHeight(context) / 1.4,
                     ),
                     onTap: () {},
+                  ),
+                )
+              : Container(),
+
+          selectedType == Const.typeSalesPersons
+              ? Positioned(
+            top: 65,
+            left: Utils.getDeviceWidth(context) / 2.5,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg("intro_bub_sales_stat")),
+                height: Utils.getDeviceHeight(context) / 1.35,
+              ),
+              onTap: () {},
+            ),
+          )
+              : Container(),
+
+
+
+          selectedType == Const.typeServicesPerson
+              ? Positioned(
+                  top: 70,
+                  left: Utils.getDeviceWidth(context) / 2.2,
+//            right: Utils.getDeviceWidth(context) / 2.9,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(
+                          Utils.getAssetsImg("intro_bub_customer_stat")),
+                      height: Utils.getDeviceHeight(context) / 1.4,
+                    ),
+                    onTap: () {
+
+                    },
                   ),
                 )
               : Container(),
 
           selectedType == Const.typeBadge
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.20,
+            top: 65,
+            left: Utils.getDeviceWidth(context) / 2.8,
 //            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_brand_value")),
-                      height: Utils.getDeviceHeight(context) / 1.9,
-                    ),
-                    onTap: () {},
-                  ),
-                )
-              : Container(),
-
-          selectedType == Const.typeServicesPerson
-              ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 1.9,
-//            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_customer_stat")),
-                      height: Utils.getDeviceHeight(context) / 1.90,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg("intro_bub_brand_value")),
+                height: Utils.getDeviceHeight(context) / 1.5,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeDollar
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.10,
+                  left: Utils.getDeviceWidth(context) / 2.6,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("intro_bub_cash")),
-                      height: Utils.getDeviceHeight(context) / 1.6,
+                      height: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -908,13 +914,13 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeProfile
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 1.8,
+                  left: Utils.getDeviceWidth(context) / 2.1,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg("intro_bub_profile")),
-                      height: Utils.getDeviceHeight(context) / 2.3,
+                      height: Utils.getDeviceHeight(context) / 1.9,
                     ),
                     onTap: () {},
                   ),

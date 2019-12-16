@@ -392,7 +392,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             aspectRatio: _controller.value.aspectRatio,
                             child: VideoPlayer(_controller),
                           )
-                        : Container(),
+                        : pdfShow(),
                   ),
                 ),
                 Expanded(

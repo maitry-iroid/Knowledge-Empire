@@ -170,7 +170,12 @@ class StringRes {
       'sector': 'Module',
       'size': 'Q&A',
       'engagement': 'Customer Situation',
-      'debrief': 'Customer Situation'
+      'debrief': 'Customer Situation',
+      'value': 'Knowledge Points (KP)',
+      'loyalty': 'Repeat in ...',
+      'endRel': 'Release',
+      'resources': 'Study Points (SP)',
+      
     },
     'es': {
       'title': 'Hola Mundo',
