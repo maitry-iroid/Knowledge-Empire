@@ -299,20 +299,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              child: InkResponse(
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg(
-                      Injector.isBusinessMode ? "back" : 'back_prof')),
-                  width: DimenRes.titleBarHeight,
-                ),
-                onTap: () {
-                  Utils.playClickSound();
-                  Utils.performBack(context);
-                },
-              ),
-              alignment: Alignment.center,
-              height: 30,
-              width: 40,
+              width: 80,
             ),
             Container(
               alignment: Alignment.center,
@@ -344,7 +331,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             InkResponse(
               child: Container(
                 alignment: Alignment.center,
-                height: 30,
+                width: 80,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -382,7 +369,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   },
                   child: Container(
                     margin: EdgeInsets.only(
-                        top: 18, bottom: 10, left: 10, right: 12),
+                        top: 10, bottom: 10, left: 10, right: 12),
                     height: Utils.getDeviceHeight(context) / 2.7,
                     decoration: BoxDecoration(
                         color: Colors.transparent,
@@ -427,7 +414,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
                 margin:
-                    EdgeInsets.only(top: 20, bottom: 15, right: 15, left: 8),
+                    EdgeInsets.only(top: 12, bottom: 15, right: 15, left: 8),
                 child: Container(
                   alignment: Alignment.center,
                   padding:
@@ -469,7 +456,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   height: 30,
                   margin: EdgeInsets.symmetric(
                       horizontal: Utils.getDeviceWidth(context) / 6,
-                      vertical: 5),
+                      vertical: 0),
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                       borderRadius: Injector.isBusinessMode
@@ -758,13 +745,13 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           });
         },
         child: Container(
-          height: 45,
+//          height: 45,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+//              borderRadius:
+//                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
@@ -803,7 +790,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
-                    maxLines: 3,
+//                    maxLines: 3,
                     overflow: TextOverflow.fade,
                   ),
                 ),
