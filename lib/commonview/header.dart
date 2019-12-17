@@ -35,17 +35,17 @@ class HeaderView extends StatelessWidget {
           children: <Widget>[
             isShowMenu
                 ? InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                        Utils.getAssetsImg("menu"),
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                    onTap: () {
-                      Utils.playClickSound();
-                      scaffoldKey.currentState.openDrawer();
-                    },
-                  )
+              child: Image(
+                image: AssetImage(
+                  Utils.getAssetsImg("menu"),
+                ),
+                fit: BoxFit.fill,
+              ),
+              onTap: () {
+                Utils.playClickSound();
+                scaffoldKey.currentState.openDrawer();
+              },
+            )
                 : Container(),
             SizedBox(
               width: 8,
@@ -114,13 +114,13 @@ class HeaderView extends StatelessWidget {
     return Container(
       height: 40,
       padding:
-          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       margin: EdgeInsets.symmetric(horizontal: 1),
       decoration: BoxDecoration(
           image: Injector.isBusinessMode
               ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-                  fit: BoxFit.fill)
+              image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+              fit: BoxFit.fill)
               : null),
       child: Row(
         children: <Widget>[
@@ -130,15 +130,23 @@ class HeaderView extends StatelessWidget {
               Injector.isBusinessMode
                   ? Container()
                   : Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: ColorRes.white, width: 1),
-                          borderRadius: BorderRadius.circular(12.5)),
-                    ),
-              Image(
-                image: AssetImage(Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                alignment: Alignment.center,
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                    color: ColorRes.titleBlueProf,
+                    border: Border.all(color: ColorRes.white, width: 1),
+                    borderRadius: BorderRadius.circular(12.5)),
+              ),
+              Injector.isBusinessMode
+                  ? Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
                 height: 26,
+              )
+                  : Text(
+                getHeadText(type),
+                style: TextStyle(fontSize: 15, color: ColorRes.white),
               ),
             ],
           ),
@@ -147,50 +155,52 @@ class HeaderView extends StatelessWidget {
           ),
           type != Const.typeDollar
               ? Stack(
-                  alignment: Alignment.centerLeft,
-                  children: <Widget>[
-                    Container(
-                      height: Injector.isBusinessMode ? 19 : 21,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: ColorRes.greyText,
+            alignment: Alignment.centerLeft,
+            children: <Widget>[
+              Container(
+                height: Injector.isBusinessMode ? 19 : 21,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: ColorRes.greyText,
 //                          image: Injector.isBusinessMode
 //                              ? DecorationImage(
 //                                  image: AssetImage(
 //                                      Utils.getAssetsImg('bg_progress')),
 //                                  fit: BoxFit.fill)
 //                              : null,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Injector.isBusinessMode
-                              ? null
-                              : Border.all(color: ColorRes.white, width: 1)),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 0,
-                          horizontal: Injector.isBusinessMode ? 0 : 1),
-                      child: LinearPercentIndicator(
-                        width: Utils.getDeviceWidth(context) / 12,
-                        lineHeight: 19.0,
-                        percent: HeaderUtils.getProgressInt(type),
-                        backgroundColor: Colors.transparent,
-                        progressColor: Colors.blue,
-                      ),
-                    ),
-                    Positioned(
-                      left: 4,
-                      child: Text(
-                        HeaderUtils.getProgress(type),
-                        style: TextStyle(color: ColorRes.white, fontSize: 14),
-                      ),
-                    )
-                  ],
-                )
-              : Text(
-                  ' \$ ' +
-                      (Injector.customerValueData != null
-                          ? Injector.customerValueData.totalBalance.toString()
-                          : "00.00"),
-                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Injector.isBusinessMode
+                        ? null
+                        : Border.all(color: ColorRes.white, width: 1)),
+                padding: EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: Injector.isBusinessMode ? 0 : 1),
+                child: LinearPercentIndicator(
+                  width: Utils.getDeviceWidth(context) / 12,
+                  lineHeight: 19.0,
+                  percent: HeaderUtils.getProgressInt(type),
+                  backgroundColor: Colors.transparent,
+                  progressColor: Injector.isBusinessMode
+                      ? Colors.blue
+                      : ColorRes.titleBlueProf,
                 ),
+              ),
+              Positioned(
+                left: 4,
+                child: Text(
+                  HeaderUtils.getProgress(type),
+                  style: TextStyle(color: ColorRes.white, fontSize: 14),
+                ),
+              )
+            ],
+          )
+              : Text(
+            ' \$ ' +
+                (Injector.customerValueData != null
+                    ? Injector.customerValueData.totalBalance.toString()
+                    : "00.00"),
+            style: TextStyle(color: ColorRes.white, fontSize: 16),
+          ),
         ],
       ),
     );
@@ -224,5 +234,17 @@ class HeaderView extends StatelessWidget {
         });
   }
 
-
+  String getHeadText(int type) {
+    if (type == Const.typeEmployee)
+      return "PU";
+    else if (type == Const.typeSalesPersons)
+      return "SP";
+    else if (type == Const.typeServicesPerson)
+      return "Q";
+    else if (type == Const.typeBadge)
+      return "%";
+    else if (type == Const.typeDollar)
+      return "LP"; else
+      return "";
+  }
 }

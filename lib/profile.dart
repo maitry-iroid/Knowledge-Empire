@@ -171,14 +171,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           InkResponse(
                             onTap: () {
-//                      HelpPage();
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) => HelpPage()));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage(
-                                            initialPageType: Const.typeHelp,
-                                          )));
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(
+//                                      builder: (context) => HomePage(
+//                                            initialPageType: Const.typeHelp,
+//                                          )));
                             },
                             child: Container(
                               height: 25,

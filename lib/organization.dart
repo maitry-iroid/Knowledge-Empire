@@ -38,7 +38,9 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     // TODO: implement initState
     super.initState();
 
-    getOrganization();
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) getOrganization();
+    });
   }
 
   @override
@@ -108,7 +110,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 width: 15,
               ),
               onTap: () {
-                Utils.showOrgInfoDialog(_scaffoldKey, type);
+                Utils.showOrgInfoDialog(
+                    _scaffoldKey, arrOrganization[position].description);
               },
             )
           ],
@@ -266,6 +269,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     Utils.isInternetConnectedWithAlert().then((_) {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
+      rq.mode = Injector.isBusinessMode ? 1 : 2;
 
       setState(() {
         isLoading = true;

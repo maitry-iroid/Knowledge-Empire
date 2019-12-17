@@ -254,6 +254,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
 
 
+      Injector.customerValueData.totalBalance = questionData.value;
+//      _notifier.notify(action, data);
+
       if (isConnected) {
         callSubmitAnswerApi(context);
       } else {

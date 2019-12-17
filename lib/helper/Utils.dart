@@ -236,11 +236,11 @@ class Utils {
   }
 
   static showOrgInfoDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey, int orgType) async {
+      GlobalKey<ScaffoldState> _scaffoldKey, String description) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => OrgInfoDialog(
-              text: getOrgText(orgType),
+              text: description,
             ));
   }
 
