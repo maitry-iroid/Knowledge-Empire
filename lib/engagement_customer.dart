@@ -98,7 +98,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     // TODO: implement initState
     super.initState();
     questionData = widget.questionDataEngCustomer;
+    widget.questionDataEngCustomer.answer.shuffle();
     arrAnswer = widget.questionDataEngCustomer.answer;
+
     abcdList = abcdIndex;
 
     if (isVideo(questionData.mediaLink)) {
@@ -388,7 +390,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                 fit: BoxFit.fill)
                             : null,
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: ColorRes.white, width: 1)),
+                        border: isImage(questionData.mediaLink) ? Border.all(color: ColorRes.white, width: 1) : null),
                     child: isVideo(questionData.mediaLink) &&
                             _controller.value.initialized
                         ? AspectRatio(
@@ -634,11 +636,11 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       margin: EdgeInsets.only(
                           top: 25, bottom: 15, right: 25, left: 25),
                       child: Container(
-                          height: Utils.getDeviceHeight(context) / 1.6,
+                          height: Utils.getDeviceHeight(context) / 1.4,
                           width: Utils.getDeviceWidth(context) / 1.2,
                           margin: EdgeInsets.only(top: 0),
                           padding:
-                              EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 20),
+                              EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 13),
                           decoration: BoxDecoration(
                             color: Injector.isBusinessMode
                                 ? ColorRes.bgDescription
@@ -755,6 +757,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           decoration: BoxDecoration(
 //              borderRadius:
 //                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(18),
+
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
@@ -769,7 +773,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
+                      image: AssetImage(checkAnswerAlert(index)), fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -808,13 +812,22 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
   }
 }
 
-checkAnswer(int index) {
+checkAnswerAlert(int index) {
   if (arrAnswer[index].isSelected == true) {
     return Utils.getAssetsImg("Answer_Alert_Background_Blue");
   } else {
     return Utils.getAssetsImg("Answer_Alert_Background_White");
   }
 }
+
+checkAnswer(int index) {
+  if (arrAnswer[index].isSelected == true) {
+    return Utils.getAssetsImg("rounded_rectangle_837_blue");
+  } else {
+    return Utils.getAssetsImg("Answer_Alert_Background_White");
+  }
+}
+
 //rounded_rectangle_837_blue,rounded_rectangle_8371
 
 //----------------------------------------
@@ -882,7 +895,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       margin: EdgeInsets.only(
                           top: 20, bottom: 15, right: 25, left: 25),
                       child: Container(
-                        height: Utils.getDeviceHeight(context) / 2,
+                        height: Utils.getDeviceHeight(context) / 1.6,
                         width: Utils.getDeviceWidth(context) / 1.5,
                         margin: EdgeInsets.only(top: 0),
                         padding: EdgeInsets.only(left: 25, right: 10, top: 25),

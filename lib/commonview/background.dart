@@ -372,7 +372,8 @@ class CommonView {
                     fit: BoxFit.fill)),
             child: Text(
               secondTitle,
-              style: TextStyle(color: ColorRes.white, fontSize: 16),
+              maxLines: 1,
+              style: TextStyle(color: ColorRes.white, fontSize: 5),
               textAlign: TextAlign.center,
             ),
           ),

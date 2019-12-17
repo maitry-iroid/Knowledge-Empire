@@ -128,6 +128,63 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Expanded(
               flex: 9,
               child: Container(
+                height: 35,
+                margin: EdgeInsets.only(top: 2),
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.white,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image: AssetImage(
+                                Utils.getAssetsImg("bg_bus_sector_item")),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(left:5,top: 5,right:5,child: Text(
+                      arrFinalLearningModules[index].moduleName,
+                      style: TextStyle(
+                        color: Injector.isBusinessMode
+                            ? ColorRes.blue
+                            : ColorRes.textProf,
+                        fontSize: 15,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),),
+                   arrFinalLearningModules[index].isAssign=="1"?Positioned(
+                     right: 5,
+                     bottom: 5,
+                     child:  Text(
+                       Utils.getText(context, StringRes.subscribed),
+                       style: TextStyle(
+                         color: Injector.isBusinessMode
+                             ? ColorRes.bgHeader
+                             : ColorRes.bgHeader,
+                         fontSize: 10,
+                       ),
+                       maxLines: 1,
+                       overflow: TextOverflow.ellipsis,
+                     ),
+                   ):Container()
+                  ],
+                )
+                child: Text(
+                  arrFinalLearningModules[index].moduleName,
+                  style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.blue
+                        : ColorRes.textProf,
+                    fontSize: 15,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
                   height: 35,
                   margin: EdgeInsets.only(top: 2),
                   padding: EdgeInsets.symmetric(horizontal: 8),
@@ -238,13 +295,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               children: <Widget>[
                 Expanded(
                     child: Container(
+                        height: 30,
+//                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
+                        padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
                         ),
-                        alignment: Alignment.topLeft,
+//                        alignment: Alignment.center,
                         child: TextField(
                           onChanged: (text) {
                             arrFinalLearningModules.clear();
@@ -260,15 +320,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                               }
                             });
                           },
-                          textAlignVertical: TextAlignVertical.center,
+//                          textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
                           maxLines: 1,
                           controller: searchController,
                           style: TextStyle(
-                              fontSize: 14, color: ColorRes.hintColor),
+                            fontSize: 14,
+                            color: ColorRes.hintColor,
+                          ),
                           decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 10),
+//                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
                               hintText: Utils.getText(
                                   context, StringRes.searchForKeywords),
                               hintStyle: TextStyle(color: ColorRes.hintColor),

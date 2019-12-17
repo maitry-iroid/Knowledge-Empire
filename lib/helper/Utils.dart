@@ -19,6 +19,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:notifier/main_notifier.dart';
+import 'package:volume/volume.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -281,14 +282,32 @@ class Utils {
       return "";
   }
 
-  static playClickSound() async{
-//    var dig = await FlutterVolume.volume;
 
-//    print("---------------------------------${(dig * 100)}%");
+  int maxVol, currentVol;
 
-//    if((dig * 100) != 0) {
-      Injector.audioCache.play("sounds/all_button_clicks.wav");
-//    }
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+  }
+
+  updateVolumes() async {
+    // get Max Volume
+    maxVol = await Volume.getMaxVol;
+    // get Current Volume
+    currentVol = await Volume.getVol;
+  }
+
+  setVol(int i) async {
+    await Volume.setVol(i);
+  }
+
+
+  static playClickSound() {
+//    updateVolumes();
+
+
+
+    Injector.audioCache.play("sounds/all_button_clicks.wav");
   }
 
   static correctAnswerSound() {

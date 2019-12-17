@@ -14,8 +14,9 @@ class Const {
   static var typeTeam =8;
   static var typeHome =9;
   static var typeProfile =10;
-  static var typeEngagement =31;
-  static var typeDebrief =32;
+  static var typeEngagement = 31;
+  static var typeDebrief = 32;
+  static var typeHelp = 33;
 
   static var typeName =26;
   static var typeSideMenu=27;
