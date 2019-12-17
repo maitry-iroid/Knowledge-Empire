@@ -684,136 +684,6 @@ class IntroPageState extends State<IntroPage> {
           //-----------
 
           selectedType == Const.typeName
-              ? Container()
-              : Positioned(
-                  top: Utils.getDeviceHeight(context) / 2.35,
-                  left: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("intro_bub_back")),
-                      height: Utils.getDeviceHeight(context) / 10,
-                    ),
-                    onTap: () {
-                      Utils.playClickSound();
-
-                      setState(() {
-                        if (selectedType == Const.typeName) {
-                          selectedType = Const.typeRanking;
-                        } else if (selectedType == Const.typeRanking) {
-                          selectedType = Const.typePL;
-                        } else if (selectedType == Const.typePL) {
-                          selectedType = Const.typeOrg;
-                        } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeChallenges) {
-                          selectedType = Const.typeTeam;
-                        } else if (selectedType == Const.typeTeam) {
-                          selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeReward) {
-                          selectedType = Const.typeExistingCustomer;
-                        } else if (selectedType == Const.typeExistingCustomer) {
-                          selectedType = Const.typeNewCustomer;
-                        } else if (selectedType == Const.typeNewCustomer) {
-                          selectedType = Const.typeBusinessSector;
-                        } else if (selectedType == Const.typeBusinessSector) {
-                          selectedType = Const.typeProfile;
-                        } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeDollar;
-                        } else if (selectedType == Const.typeDollar) {
-                          selectedType = Const.typeBadge;
-                        } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBadge) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeName;
-                        } else if (selectedType == Const.typeSalesPersons) {
-                          selectedType = Const.typeEmployee;
-                        }
-                      });
-                    },
-                  ),
-                ),
-
-          selectedType == Const.typeRanking
-              ? Container(
-                  child: Positioned(
-                      top: Utils.getDeviceHeight(context) / 2.35,
-                      right: 10,
-                      child: InkResponse(
-                        child: Image(
-                          image:
-                              AssetImage(Utils.getAssetsImg("intro_bub_enter")),
-                          height: Utils.getDeviceHeight(context) / 10,
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          setState(() {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()),
-                                ModalRoute.withName("/home"));
-//                            Navigator.push(
-//                                context,
-//                                MaterialPageRoute(
-//                                    builder: (context) => HomePage()));
-                          });
-                        },
-                      )))
-              : Positioned(
-                  top: Utils.getDeviceHeight(context) / 2.35,
-                  right: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("intro_bub_next")),
-                      height: Utils.getDeviceHeight(context) / 10,
-                    ),
-                    onTap: () {
-                      Utils.playClickSound();
-
-                      setState(() {
-                        if (selectedType == Const.typeName) {
-                          selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeSalesPersons) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBadge) {
-                          selectedType = Const.typeDollar;
-                        } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeBadge;
-                        } else if (selectedType == Const.typeDollar) {
-                          selectedType = Const.typeProfile;
-                        } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeBusinessSector;
-                        } else if (selectedType == Const.typeBusinessSector) {
-                          selectedType = Const.typeNewCustomer;
-                        } else if (selectedType == Const.typeNewCustomer) {
-                          selectedType = Const.typeExistingCustomer;
-                        } else if (selectedType == Const.typeExistingCustomer) {
-                          selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeReward) {
-                          selectedType = Const.typeTeam;
-                        } else if (selectedType == Const.typeTeam) {
-                          selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeChallenges) {
-                          selectedType = Const.typeOrg;
-                        } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typePL;
-                        } else if (selectedType == Const.typePL) {
-                          selectedType = Const.typeRanking;
-                        } else if (selectedType == Const.typeRanking) {
-                          DashboardNewPage();
-                        }
-                      });
-                    },
-                  ),
-                ),
-
-          selectedType == Const.typeName
               ? Positioned(
                   top: 65,
                   right: Utils.getDeviceWidth(context) / 2.0,
@@ -833,7 +703,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeEmployee
               ? Positioned(
                   top: 65,
-                  left: Utils.getDeviceWidth(context) / 3.50,
+                  left: Utils.getDeviceWidth(context) / 3.9,
                   child: InkResponse(
                     child: Image(
                       image:
@@ -848,7 +718,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeSalesPersons
               ? Positioned(
             top: 65,
-            left: Utils.getDeviceWidth(context) / 2.5,
+            left: Utils.getDeviceWidth(context) / 2.8,
             child: InkResponse(
               child: Image(
                 image: AssetImage(
@@ -864,8 +734,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeServicesPerson
               ? Positioned(
-                  top: 70,
-                  left: Utils.getDeviceWidth(context) / 2.2,
+                  top: 60,
+                  left: Utils.getDeviceWidth(context) / 2.1,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
@@ -898,7 +768,7 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeDollar
               ? Positioned(
-                  top: 65,
+                  top: 60,
                   left: Utils.getDeviceWidth(context) / 2.6,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
@@ -913,8 +783,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeProfile
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.1,
+                  top: 60,
+                  left: Utils.getDeviceWidth(context) / 1.9,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
@@ -946,7 +816,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeNewCustomer
               ? Positioned(
                   bottom: 70,
-                  left: Utils.getDeviceWidth(context) / 3.5,
+                  left: Utils.getDeviceWidth(context) / 3.8,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
@@ -960,7 +830,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeExistingCustomer
               ? Positioned(
                   bottom: 40,
-                  left: Utils.getDeviceWidth(context) / 3.7,
+                  left: Utils.getDeviceWidth(context) / 4.0,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
@@ -988,7 +858,8 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeTeam
               ? Positioned(
-                  top: Utils.getDeviceHeight(context) / 6.4,
+                  top: 50,
+//                  top: Utils.getDeviceHeight(context) / 6.4,
                   left: Utils.getDeviceWidth(context) / 1.7,
                   child: InkResponse(
                     child: Image(
@@ -1033,7 +904,7 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typePL
               ? Positioned(
                   bottom: 10,
-                  left: Utils.getDeviceWidth(context) / 4.2,
+                  left: Utils.getDeviceWidth(context) / 4.9,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("intro_bub_pl")),
@@ -1059,6 +930,137 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 //-------------------------------------------------------------------------------------------------------
+
+          selectedType == Const.typeName
+              ? Container()
+              : Positioned(
+            top: Utils.getDeviceHeight(context) / 2.35,
+            left: 10,
+//            right: Utils.getDeviceWidth(context) / 1.62,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg("intro_bub_back")),
+                height: Utils.getDeviceHeight(context) / 10,
+              ),
+              onTap: () {
+                Utils.playClickSound();
+
+                setState(() {
+                  if (selectedType == Const.typeName) {
+                    selectedType = Const.typeRanking;
+                  } else if (selectedType == Const.typeRanking) {
+                    selectedType = Const.typePL;
+                  } else if (selectedType == Const.typePL) {
+                    selectedType = Const.typeOrg;
+                  } else if (selectedType == Const.typeOrg) {
+                    selectedType = Const.typeChallenges;
+                  } else if (selectedType == Const.typeChallenges) {
+                    selectedType = Const.typeTeam;
+                  } else if (selectedType == Const.typeTeam) {
+                    selectedType = Const.typeReward;
+                  } else if (selectedType == Const.typeReward) {
+                    selectedType = Const.typeExistingCustomer;
+                  } else if (selectedType == Const.typeExistingCustomer) {
+                    selectedType = Const.typeNewCustomer;
+                  } else if (selectedType == Const.typeNewCustomer) {
+                    selectedType = Const.typeBusinessSector;
+                  } else if (selectedType == Const.typeBusinessSector) {
+                    selectedType = Const.typeProfile;
+                  } else if (selectedType == Const.typeProfile) {
+                    selectedType = Const.typeDollar;
+                  } else if (selectedType == Const.typeDollar) {
+                    selectedType = Const.typeBadge;
+                  } else if (selectedType == Const.typeServicesPerson) {
+                    selectedType = Const.typeSalesPersons;
+                  } else if (selectedType == Const.typeBadge) {
+                    selectedType = Const.typeServicesPerson;
+                  } else if (selectedType == Const.typeEmployee) {
+                    selectedType = Const.typeName;
+                  } else if (selectedType == Const.typeSalesPersons) {
+                    selectedType = Const.typeEmployee;
+                  }
+                });
+              },
+            ),
+          ),
+
+          selectedType == Const.typeRanking
+              ? Container(
+              child: Positioned(
+                  top: Utils.getDeviceHeight(context) / 2.35,
+                  right: 10,
+                  child: InkResponse(
+                    child: Image(
+                      image:
+                      AssetImage(Utils.getAssetsImg("intro_bub_enter")),
+                      height: Utils.getDeviceHeight(context) / 10,
+                    ),
+                    onTap: () {
+                      Utils.playClickSound();
+                      setState(() {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()),
+                            ModalRoute.withName("/home"));
+//                            Navigator.push(
+//                                context,
+//                                MaterialPageRoute(
+//                                    builder: (context) => HomePage()));
+                      });
+                    },
+                  )))
+              : Positioned(
+            top: Utils.getDeviceHeight(context) / 2.35,
+            right: 10,
+//            right: Utils.getDeviceWidth(context) / 1.62,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg("intro_bub_next")),
+                height: Utils.getDeviceHeight(context) / 10,
+              ),
+              onTap: () {
+                Utils.playClickSound();
+
+                setState(() {
+                  if (selectedType == Const.typeName) {
+                    selectedType = Const.typeEmployee;
+                  } else if (selectedType == Const.typeSalesPersons) {
+                    selectedType = Const.typeServicesPerson;
+                  } else if (selectedType == Const.typeEmployee) {
+                    selectedType = Const.typeSalesPersons;
+                  } else if (selectedType == Const.typeBadge) {
+                    selectedType = Const.typeDollar;
+                  } else if (selectedType == Const.typeServicesPerson) {
+                    selectedType = Const.typeBadge;
+                  } else if (selectedType == Const.typeDollar) {
+                    selectedType = Const.typeProfile;
+                  } else if (selectedType == Const.typeProfile) {
+                    selectedType = Const.typeBusinessSector;
+                  } else if (selectedType == Const.typeBusinessSector) {
+                    selectedType = Const.typeNewCustomer;
+                  } else if (selectedType == Const.typeNewCustomer) {
+                    selectedType = Const.typeExistingCustomer;
+                  } else if (selectedType == Const.typeExistingCustomer) {
+                    selectedType = Const.typeReward;
+                  } else if (selectedType == Const.typeReward) {
+                    selectedType = Const.typeTeam;
+                  } else if (selectedType == Const.typeTeam) {
+                    selectedType = Const.typeChallenges;
+                  } else if (selectedType == Const.typeChallenges) {
+                    selectedType = Const.typeOrg;
+                  } else if (selectedType == Const.typeOrg) {
+                    selectedType = Const.typePL;
+                  } else if (selectedType == Const.typePL) {
+                    selectedType = Const.typeRanking;
+                  } else if (selectedType == Const.typeRanking) {
+                    DashboardNewPage();
+                  }
+                });
+              },
+            ),
+          ),
+
         ],
       ),
     );
