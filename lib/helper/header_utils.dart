@@ -25,7 +25,7 @@ class HeaderUtils {
     if (type == Const.typeSalesPersons) {
       return getProgressText(Const.typeSales);
     } else if (type == Const.typeEmployee) {
-      return getProgressText(Const.typeHR);
+      return getTotalEmployee();
     } else if (type == Const.typeBadge) {
       return "0%";
     } else if (type == Const.typeServicesPerson) {
@@ -90,5 +90,18 @@ class HeaderUtils {
     } else {
       return "0/0";
     }
+  }
+
+  static getTotalEmployee() {
+
+//    return "";
+
+    if (Injector.customerValueData != null) {
+      return (Injector.customerValueData.totalEmployeeCapacity -
+                  Injector.customerValueData.employeeCount)
+              .toString() +
+          "/" +
+          Injector.customerValueData.totalEmployeeCapacity.toString();
+    }else return "";
   }
 }

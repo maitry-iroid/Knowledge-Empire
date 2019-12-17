@@ -47,6 +47,7 @@ class GetCustomerValueResponse {
 
 class CustomerValueData {
   int totalEmployeeCapacity;
+  int employeeCount;
   int remainingEmployeeCapacity;
   int totalBalance;
   int loyaltyBonus;
@@ -58,6 +59,7 @@ class CustomerValueData {
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
+      this.employeeCount,
       this.totalBalance,
       this.loyaltyBonus,
       this.valueBonus,
@@ -68,6 +70,7 @@ class CustomerValueData {
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
+    employeeCount = json['employeeCount'];
     remainingEmployeeCapacity = json['remainingEmployeeCapacity'];
     totalBalance = json['totalBalance'];
     loyaltyBonus = json['loyaltyBonus'];
@@ -86,6 +89,7 @@ class CustomerValueData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['totalEmployeeCapacity'] = this.totalEmployeeCapacity;
+    data['employeeCount'] = this.employeeCount;
     data['remainingEmployeeCapacity'] = this.remainingEmployeeCapacity;
     data['totalBalance'] = this.totalBalance;
     data['loyaltyBonus'] = this.loyaltyBonus;

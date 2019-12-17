@@ -6,4 +6,5 @@ class PrefKeys {
   static var questionData = "questionData";
   static var answerData = "answerData";
   static var customerValueData = "customerValueData";
+  static var learningModles = "learningModles";
 }

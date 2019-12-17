@@ -249,6 +249,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
 
     Utils.isInternetConnected().then((isConnected) {
+
+
+
       if (isConnected) {
         callSubmitAnswerApi(context);
       } else {
