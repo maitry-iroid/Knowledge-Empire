@@ -50,18 +50,18 @@ class HeaderView extends StatelessWidget {
             SizedBox(
               width: 8,
             ),
-            InkResponse(
-              child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg("ic_menu"),
-                ),
-                color: Injector.isBusinessMode
-                    ? ColorRes.textLightBlue
-                    : ColorRes.white,
-                width: 25,
-              ),
-              onTap: () {},
-            ),
+//            InkResponse(
+//              child: Image(
+//                image: AssetImage(
+//                  Utils.getAssetsImg("ic_menu"),
+//                ),
+//                color: Injector.isBusinessMode
+//                    ? ColorRes.textLightBlue
+//                    : ColorRes.white,
+//                width: 25,
+//              ),
+//              onTap: () {},
+//            ),
             SizedBox(
               width: 10,
             ),
