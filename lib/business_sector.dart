@@ -128,7 +128,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Expanded(
               flex: 9,
               child: Container(
-                height: 32,
+                height: 35,
                 margin: EdgeInsets.only(top: 2),
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 alignment: Alignment.center,
@@ -143,6 +143,36 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                 Utils.getAssetsImg("bg_bus_sector_item")),
                             fit: BoxFit.fill)
                         : null),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(left:5,top: 5,right:5,child: Text(
+                      arrFinalLearningModules[index].moduleName,
+                      style: TextStyle(
+                        color: Injector.isBusinessMode
+                            ? ColorRes.blue
+                            : ColorRes.textProf,
+                        fontSize: 15,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),),
+                   arrFinalLearningModules[index].isAssign=="1"?Positioned(
+                     right: 5,
+                     bottom: 5,
+                     child:  Text(
+                       Utils.getText(context, StringRes.subscribed),
+                       style: TextStyle(
+                         color: Injector.isBusinessMode
+                             ? ColorRes.bgHeader
+                             : ColorRes.bgHeader,
+                         fontSize: 10,
+                       ),
+                       maxLines: 1,
+                       overflow: TextOverflow.ellipsis,
+                     ),
+                   ):Container()
+                  ],
+                )
                 child: Text(
                   arrFinalLearningModules[index].moduleName,
                   style: TextStyle(
@@ -391,20 +421,26 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                       Utils.getAssetsImg("bg_subscribe")),
                                   fit: BoxFit.fill)
                               : null),
-                      child: Text(
-                        Utils.getText(
-                            context,
-                            selectedModule.isAssign == "0"
-                                ? StringRes.subscribe
-                                : StringRes.subscribed),
-                        style: TextStyle(color: ColorRes.white, fontSize: 17),
-                        textAlign: TextAlign.center,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            Utils.getText(
+                                context,
+                                selectedModule.isAssign == "0"
+                                    ? StringRes.subscribe
+                                    : StringRes.subscribed),
+                            style: TextStyle(color: ColorRes.white, fontSize: 17),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
                       ),
                     ),
                     onTap: () {
                       Utils.playClickSound();
                       if (selectedModule.isAssign == "0") {
                         assignUserToModule(Const.subscribe);
+                      } else {
+                        assignUserToModule(Const.unSubscribe);
                       }
                     })
               ],
