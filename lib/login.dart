@@ -247,6 +247,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         Expanded(
             child: Container(
+                height: 45,
                 decoration: BoxDecoration(
                     color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
@@ -261,8 +262,9 @@ class _LoginPageState extends State<LoginPage> {
                     maxLines: 1,
                     style: TextStyle(fontSize: 17, color: ColorRes.white),
                     decoration: InputDecoration(
+//                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 10),
+                            vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.emailId)
                             .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),
@@ -283,6 +285,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         Expanded(
             child: Container(
+                height: 45,
                 decoration: BoxDecoration(
                     color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
@@ -298,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontSize: 17, color: ColorRes.white),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10),
+                            vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.password)
                             .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.hintColor),

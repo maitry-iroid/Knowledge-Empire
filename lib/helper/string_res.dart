@@ -10,6 +10,7 @@ class StringRes {
   static var ranking = "ranking";
   static var team = "team";
   static var profile = "profile";
+  static var help = "help";
   static var emailId = "emailId";
   static var editProfile = "editProfile";
   static var yourName = "yourName";
@@ -84,6 +85,7 @@ class StringRes {
       'ranking': "Ranking",
       'team': "Team",
       'profile': "Profile",
+      'help': "Help",
       'emailId': 'Email Id',
       'editProfile': 'Edit Profile',
       'yourName': 'Your Name',

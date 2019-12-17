@@ -146,10 +146,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 child: Text(
                   arrFinalLearningModules[index].moduleName,
                   style: TextStyle(
-                      color: Injector.isBusinessMode
-                          ? ColorRes.blue
-                          : ColorRes.textProf,
-                      fontSize: 15,),maxLines: 1,overflow: TextOverflow.ellipsis,
+                    color: Injector.isBusinessMode
+                        ? ColorRes.blue
+                        : ColorRes.textProf,
+                    fontSize: 15,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -173,7 +176,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
-                  style: TextStyle(color: ColorRes.white, fontSize: 22,),maxLines: 1,
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 22,
+                  ),
+                  maxLines: 1,
                 ),
               ),
             ),
@@ -206,13 +213,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               children: <Widget>[
                 Expanded(
                     child: Container(
+                        height: 30,
+//                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
+                        padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
                         ),
-                        alignment: Alignment.topLeft,
+//                        alignment: Alignment.center,
                         child: TextField(
                           onChanged: (text) {
                             arrFinalLearningModules.clear();
@@ -228,15 +238,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                               }
                             });
                           },
-                          textAlignVertical: TextAlignVertical.center,
+//                          textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
                           maxLines: 1,
                           controller: searchController,
                           style: TextStyle(
-                              fontSize: 14, color: ColorRes.hintColor),
+                            fontSize: 14,
+                            color: ColorRes.hintColor,
+                          ),
                           decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 10),
+//                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
                               hintText: Utils.getText(
                                   context, StringRes.searchForKeywords),
                               hintStyle: TextStyle(color: ColorRes.hintColor),
@@ -509,7 +520,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             if (questionData.mediaLink.isNotEmpty)
               await DefaultCacheManager().downloadFile(questionData.mediaLink);
           });
-
 
           Utils.showToast("Downloaded successfully");
         }

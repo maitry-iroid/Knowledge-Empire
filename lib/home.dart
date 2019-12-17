@@ -11,6 +11,7 @@ import 'package:ke_employee/dashboard.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/existing_customers.dart';
+import 'package:ke_employee/help.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -121,6 +122,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 11;
     else if (widget.initialPageType == Const.typeDebrief)
       _selectedDrawerIndex = 12;
+    else if (widget.initialPageType == Const.typeHelp)
+      _selectedDrawerIndex = 13;
     else
       _selectedDrawerIndex = 0;
 
@@ -170,6 +173,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return RankingPage();
       case 10:
         return ProfilePage();
+      case 11:
+        return HelpPage();
       default:
         return Text("Error");
     }
@@ -226,6 +231,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
         DrawerItem(Utils.getText(context, StringRes.profile),
             Injector.isBusinessMode ? "profile_icon" : "ic_profile_prof"),
+        DrawerItem(Utils.getText(context, StringRes.help),
+            Injector.isBusinessMode ? "help_icon" : "help_icon"),
       ];
 
       var drawerOptions = <Widget>[];
