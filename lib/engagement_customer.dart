@@ -820,6 +820,13 @@ checkAnswer(int index) {
 class FunkyOverlay extends StatefulWidget {
 //  bool CheckQuestion;
 
+  final String title;
+
+  FunkyOverlay({Key key, this.title}) : super(key: key);
+
+//  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
+//      : super(key: key);
+
   @override
   State<StatefulWidget> createState() => FunkyOverlayState();
 }
@@ -890,7 +897,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 color: Injector.isBusinessMode
                                     ? ColorRes.white
                                     : ColorRes.textProf,
-                                fontSize: 14),
+                                fontSize: 16),
                           ),
                         ),
                       ),
@@ -923,8 +930,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                     fit: BoxFit.fill)
                                 : null),
                         child: Text(
-                          Utils.getText(context, StringRes.question),
-                          style: TextStyle(color: ColorRes.white, fontSize: 18),
+                          Utils.getText(context, widget.title),
+                          style: TextStyle(color: ColorRes.white, fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                       ),

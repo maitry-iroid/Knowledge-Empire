@@ -281,8 +281,14 @@ class Utils {
       return "";
   }
 
-  static playClickSound() {
-    Injector.audioCache.play("sounds/all_button_clicks.wav");
+  static playClickSound() async{
+//    var dig = await FlutterVolume.volume;
+
+//    print("---------------------------------${(dig * 100)}%");
+
+//    if((dig * 100) != 0) {
+      Injector.audioCache.play("sounds/all_button_clicks.wav");
+//    }
   }
 
   static correctAnswerSound() {
@@ -292,6 +298,13 @@ class Utils {
   static incorrectAnswerSound() {
     Injector.audioCache.play("sounds/wrong_answer.wav");
   }
+
+//  Future<void> initPlatformState() async {
+//    var dig = await FlutterVolume.volume;
+//
+//    print("${(dig * 100)}%");
+//  }
+
 
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
     List<String> jsonQuestionData = List();

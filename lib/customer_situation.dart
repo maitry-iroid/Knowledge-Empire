@@ -440,7 +440,30 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         flex: 1,
         child: Column(
           children: <Widget>[
-            Container(
+
+            InkResponse(
+              onTap: () {
+                Utils.playClickSound();
+                showDialog(
+                  context: context,
+                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
+                height: Utils.getDeviceHeight(context) / 2.7,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+//                        image: correctWrongImage(),
+//                      image: NetworkImage(questionData.mediaLink),
+                        image: NetworkImage(correctWrongImage()),
+                        fit: BoxFit.fill),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: ColorRes.white, width: 1)),
+              ),
+            ),
+
+           /* Container(
               margin: EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
               height: Utils.getDeviceHeight(context) / 2.7,
               decoration: BoxDecoration(
@@ -451,7 +474,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: ColorRes.white, width: 1)),
-            ),
+            ),*/
             Expanded(
                 child: CommonView.questionAndExplanation(
                     context,
@@ -1000,6 +1023,166 @@ checkAnswer(int index) {
   }
 }
 
+
+//---------------------------------------------------------
+//image show  in alert
+
+class CorrectWrongImageAlert extends StatefulWidget {
+//  bool CheckQuestion;
+
+  final String img;
+  CorrectWrongImageAlert({Key key, this.img}) : super(key : key);
+
+
+  @override
+  State<StatefulWidget> createState() => CorrectWrongImageAlertState();
+}
+
+class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+
+  correctWrongImage() {
+    if (questionData.isAnsweredCorrect == true) {
+      return questionDataCustSituation.correctAnswerImage;
+    } else {
+      return questionDataCustSituation.inCorrectAnswerImage;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  bool checkimg = true;
+
+
+
+  isImage(String path) {
+    return extension(path) == ".png" ||
+        extension(path) == ".jpeg" ||
+        extension(path) == ".jpg";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+//                color: Colors.transparent.withOpacity(0.8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 35, bottom: 15, right: 25, left: 25),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: 0, bottom: 0, left: 0, right: 0),
+                        height: Utils.getDeviceHeight(context) / 1.5,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                              image: NetworkImage(widget.img),
+                              fit: BoxFit.fill),
+
+//                          image: isImage(questionData.mediaLink)
+//                              ? DecorationImage(
+//                              image: NetworkImage(widget.img),
+//                              fit: BoxFit.fill)
+//                              : null,
+                          borderRadius: BorderRadius.circular(10),
+                          /* border:
+                                Border.all(color: ColorRes.white, width: 1)*/
+                        ),
+
+                      ),
+                    ),
+
+                    //Full Screen Alert Show
+                    Positioned(
+                      top: 0,
+                      right: 0,
+//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
+//                        .topRight),
+//          Alignment.bottomRight,
+                      child: InkResponse(
+                          onTap: () {
+                            Utils.playClickSound();
+                            Navigator.pop(context);
+
+//                          (checkimg == true ? showDialog(
+//                            context: context,
+//                            builder: (_) => FunkyOverlay(),
+//                          ) : null );
+                          },
+                          child: (checkimg == true
+                              ? Container(
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 40,
+                              width: Utils.getDeviceWidth(context) / 40,
+                              decoration: BoxDecoration(
+                                  image:
+//                                      Injector.isBusinessMode ?
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
+//                                          : null
+                              ))
+                              : Container(
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 40,
+                              width: Utils.getDeviceWidth(context) / 40,
+                              decoration: BoxDecoration(
+                                  image:
+//                                      Injector.isBusinessMode ?
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
+//                                          : null
+                              )))),
+                    )
+                  ],
+                )
+//              child: CommonView.questionAndExplanationFullAlert(
+//                context, "Question"),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 /*class CategoryItem extends StatefulWidget {
   final String title;
   final int index;

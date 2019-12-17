@@ -41,6 +41,7 @@ dependencies:
 
   flutter_pdfview:
   http:
+#  flutter_volume: ^0.0.2
 
 #  chewie: ^0.9.7
 #  custom_chewie: ^0.7.0
