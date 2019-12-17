@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/intro_screen.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
@@ -138,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: ListView(
                     children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
                             width: 150,
@@ -172,20 +173,18 @@ class _ProfilePageState extends State<ProfilePage> {
                           InkResponse(
                             onTap: () {
 //                      HelpPage();
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) => HelpPage()));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage(
-                                            initialPageType: Const.typeHelp,
-                                          )));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(
+//                                      builder: (context) => HomePage(
+//                                            initialPageType: Const.typeHelp,
+//                                          )));
                             },
                             child: Container(
                               height: 25,
                               width: 25,
-                              margin: EdgeInsets.only(
-                                top: 15,
-                              ),
+                              margin: EdgeInsets.only(top: 15),
 //                    child: Image(image: AssetImage(Utils.getAssetsImg("ic_profile_help"))),
                               decoration: BoxDecoration(
                                   image: DecorationImage(

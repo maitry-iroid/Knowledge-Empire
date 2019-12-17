@@ -172,8 +172,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                      ),
                    ):Container()
                   ],
-                )
-                child: Text(
+                ),
+                /*child: Text(
                   arrFinalLearningModules[index].moduleName,
                   style: TextStyle(
                     color: Injector.isBusinessMode
@@ -183,7 +183,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                ),
+                ),*/
               ),
             ),
             Expanded(

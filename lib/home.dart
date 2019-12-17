@@ -15,6 +15,7 @@ import 'package:ke_employee/help.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/intro_screen.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/new_customer.dart';
@@ -122,8 +123,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 11;
     else if (widget.initialPageType == Const.typeDebrief)
       _selectedDrawerIndex = 12;
-    else if (widget.initialPageType == Const.typeHelp)
-      _selectedDrawerIndex = 13;
+//    else if (widget.initialPageType == Const.typeHelp)
+//      _selectedDrawerIndex = 13;
     else
       _selectedDrawerIndex = 0;
 
@@ -173,8 +174,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return RankingPage();
       case 10:
         return ProfilePage();
-      case 11:
-        return HelpPage();
+//      case 13:
+//        return IntroPage();
       default:
         return Text("Error");
     }
