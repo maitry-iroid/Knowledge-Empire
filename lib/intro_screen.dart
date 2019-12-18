@@ -39,7 +39,7 @@ class IntroPageState extends State<IntroPage> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-//    _notifier.notify('changeMode', 'Sending data from notfier!');
+//    _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
   }
 
   @override

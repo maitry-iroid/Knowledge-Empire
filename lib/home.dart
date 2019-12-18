@@ -205,7 +205,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
 
 
-    return Notifier.of(context).register<String>('changeMode', (data) {
+    return Notifier.of(context).register<String>('updateHeaderValue', (data) {
       drawerItems = [
         DrawerItem(Utils.getText(context, StringRes.home),
             Injector.isBusinessMode ? "main_screen_icon" : "ic_home_prof"),
@@ -252,7 +252,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           width: Utils.getDeviceWidth(context) / 2.5,
           child: Drawer(
               child:
-                  Notifier.of(context).register<String>('changeMode', (data) {
+                  Notifier.of(context).register<String>('updateHeaderValue', (data) {
             return Container(
               color: Injector.isBusinessMode
                   ? ColorRes.bgMenu
@@ -291,7 +291,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   showMainItem(DrawerItem item, int i) {
-    return Notifier.of(context).register<String>('changeMode', (data) {
+    return Notifier.of(context).register<String>('updateHeaderValue', (data) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         margin: EdgeInsets.symmetric(horizontal: 5),
@@ -372,9 +372,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             json.encode(customerValueData.toJson()));
 
         Injector.customerValueData = customerValueData;
+//        Injector.customerValueData.manager = customerValueData.manager;
+        print("------------------>" + Injector.customerValueData.manager);
 
         try {
-            _notifier.notify('changeMode', 'Sending data from notfier!');
+            _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
         } catch (e) {
           print(e);
         }

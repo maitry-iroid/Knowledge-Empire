@@ -397,7 +397,7 @@ class Utils {
         Injector.customerValueData = data;
       }
       await Injector.prefs.remove(PrefKeys.answerData);
-      notifier.notify('changeMode', 'Sending data from notfier!');
+      notifier.notify('updateHeaderValue', 'Sending data from notfier!');
     });
   }
 

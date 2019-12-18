@@ -437,7 +437,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                    },
 //                  ),
                   child:
-                      Notifier.of(context).register<String>('action', (data) {
+                      Notifier.of(context).register<String>('selectQuestionAction', (data) {
 //                    print(data.data);
 //                    return Text('${data.data}');
                     return ListView.builder(
@@ -645,7 +645,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: ColorRes.white, width: 1),
                           ),
-                          child: Notifier.of(context).register<String>('action',
+                          child: Notifier.of(context).register<String>('selectQuestionAction',
                               (data) {
                             return ListView.builder(
                               shrinkWrap: true,
@@ -741,7 +741,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     return GestureDetector(
         onTap: () {
           Utils.playClickSound();
-          _notifier.notify('action', '');
+          _notifier.notify('selectQuestionAction', '');
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });

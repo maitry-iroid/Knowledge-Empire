@@ -46,7 +46,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
-                height: Utils.getDeviceHeight(context) / 2.3,
+                height: Utils.getDeviceHeight(context) / 1.8,
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
@@ -169,7 +169,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 //                          ),
 //                        ),
                     Positioned(
-                      top: Utils.getDeviceHeight(context) / 11,
+                      top: Utils.getDeviceHeight(context) / 6,
                       right: 0,
                       child: Column(
                         children: <Widget>[

@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
@@ -416,10 +417,53 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        GetCustomerValueResponse responseData =
+        GetCustomerValueResponse getCustomerValueResponse =
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
-        if (responseData != null) {
+        if (getCustomerValueResponse != null) {
+          if (getCustomerValueResponse.flag == "true") {
+            return getCustomerValueResponse.data;
+          } else {
+            Utils.showToast(getCustomerValueResponse.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
+  }
+
+
+  Future<GetCustomerValueResponse> bailOut(
+      BuildContext context, Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("bailOut__" + json.encode(jsonMap));
+
+
+//    Utils.showLoader(context);
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('bailOut', json.encode(jsonMap))));
+
+//      Utils.closeLoader(context);
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetCustomerValueResponse getCustomerValueResponse =
+        GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+
+
+        return getCustomerValueResponse;
+       /* if (responseData != null) {
           if (responseData.flag == "true") {
             return responseData.data;
           } else {
@@ -427,7 +471,7 @@ class WebApi {
           }
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
+        }*/
       }
       print(response.data);
       return null;

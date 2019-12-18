@@ -359,7 +359,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
           Injector.customerValueData = customerValueData;
 
-          _notifier.notify('changeMode', 'Sending data from notfier!');
+          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
