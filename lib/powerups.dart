@@ -69,6 +69,12 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
             isLoading = false;
           });
         }
+      }).catchError((e) {
+        print(e);
+        setState(() {
+          isLoading = false;
+        });
+        Utils.showToast(e.toString());
       });
     });
   }

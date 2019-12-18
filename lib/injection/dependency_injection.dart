@@ -7,7 +7,9 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:volume/volume.dart';
 
 class Injector {
 //  static final Injector _singleton = new Injector._internal();
@@ -22,6 +24,7 @@ class Injector {
   static AudioPlayer audioPlayer;
   static AudioCache audioCache;
   static var cacheManager;
+  static AudioManager audioManager;
 
 //  factory Injector {
 //    return _singleton;
@@ -33,6 +36,7 @@ class Injector {
     prefs = await SharedPreferences.getInstance();
 
     audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+
     audioCache = AudioCache();
 
     deviceId = await FlutterUdid.udid;
@@ -50,6 +54,8 @@ class Injector {
 
       mode = prefs.getInt(PrefKeys.mode);
       isBusinessMode = mode == Const.businessMode;
+
+
     }
   }
 }

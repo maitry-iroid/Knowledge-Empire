@@ -19,6 +19,8 @@ import 'package:ke_employee/models/submit_answer.dart';
 class WebApi {
   static const baseUrl = "http://13.127.186.25:7000/api";
 
+  static String apiRequestLogin = "login";
+
   static getRequest(String req, String data) {
     return {
       'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
@@ -67,21 +69,15 @@ class WebApi {
 
     print("login_request__" + json.encode(jsonMap));
 
-    try {
-      final response = await dio.post("",
-          data: json.encode(getRequest('login', json.encode(jsonMap))));
+    final response = await dio.post("",
+        data: json.encode(getRequest('login', json.encode(jsonMap))));
 
-      if (response.statusCode == 200) {
-        print(response.data);
-        LoginResponse loginRequest =
-            LoginResponse.fromJson(jsonDecode(response.data));
-        return loginRequest;
-      }
-
+    if (response.statusCode == 200) {
       print(response.data);
-      return null;
-    } catch (e) {
-      print(e);
+      LoginResponse loginRequest =
+          LoginResponse.fromJson(jsonDecode(response.data));
+      return loginRequest;
+    } else {
       return null;
     }
   }
@@ -229,7 +225,7 @@ class WebApi {
     }
   }
 
-  void initDio() {
+  initDio() {
     String contentTypeHeader = 'application/json';
     String authorizationHeader =
         Injector.userData != null ? "pig " + Injector.userData.accessToken : "";
@@ -255,6 +251,8 @@ class WebApi {
         headers: headers);
 
     dio.options = options;
+
+    return dio;
   }
 
   Future<QuestionsResponse> getQuestions(Map<String, dynamic> jsonMap) async {
@@ -317,8 +315,6 @@ class WebApi {
     }
   }
 
-
-
   Future<GetCustomerValueResponse> releaseresource(
       BuildContext context, Map<String, dynamic> jsonMap) async {
     initDio();
@@ -330,14 +326,14 @@ class WebApi {
     try {
       final response = await dio.post("",
           data:
-          json.encode(getRequest('releaseResource', json.encode(jsonMap))));
+              json.encode(getRequest('releaseResource', json.encode(jsonMap))));
 
 //      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
         GetCustomerValueResponse releaseResourceResponse =
-        GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+            GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         if (releaseResourceResponse != null) {
           if (releaseResourceResponse.flag == "true") {
@@ -357,8 +353,6 @@ class WebApi {
       return null;
     }
   }
-
-
 
   Future<OrganizationData> manageOrganizations(
       BuildContext context, Map<String, dynamic> jsonMap) async {

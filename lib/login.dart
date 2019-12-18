@@ -137,7 +137,12 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: ColorRes.white, fontSize: 15),
                         ),
                       ),
-                      onTap: validateForm,
+                      onTap: () {
+                        Utils.isInternetConnectedWithAlert()
+                            .then((isConnected) {
+                          if (isConnected) validateForm();
+                        });
+                      },
                     ),
                   )
                 ],
@@ -148,7 +153,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   validateForm() async {
-
     Utils.playClickSound();
 
     if (emailController.text.isEmpty) {
@@ -187,8 +191,7 @@ class _LoginPageState extends State<LoginPage> {
 
           Injector.userData = loginResponseData;
 
-         getCustomerValues(loginData);
-
+          getCustomerValues(loginData);
         } else {
           setState(() {
             isLoading = false;
@@ -197,9 +200,14 @@ class _LoginPageState extends State<LoginPage> {
           Utils.showToast(loginData.msg);
         }
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
-
 
   void getCustomerValues(LoginResponse loginData) {
     CustomerValueRequest rq = CustomerValueRequest();
@@ -208,10 +216,9 @@ class _LoginPageState extends State<LoginPage> {
     WebApi()
         .getCustomerValue(context, rq.toJson())
         .then((customerValueData) async {
-
-          setState(() {
-            isLoading = false;
-          });
+      setState(() {
+        isLoading = false;
+      });
 
       if (customerValueData != null) {
         await Injector.prefs.setString(PrefKeys.customerValueData,
@@ -222,18 +229,33 @@ class _LoginPageState extends State<LoginPage> {
         if (loginData.data.isPasswordChanged == "0") {
           Utils.showChangePasswordDialog(_scaffoldKey, false);
         } else {
-          navigateToDashboard();
+          if (loginData.data.isFirstTimeLogin)
+            navigateToIntro();
+          else {
+            navigateToDashboard();
+          }
         }
-
-
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
+  }
+
+  void navigateToIntro() {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => IntroPage()),
+        ModalRoute.withName("/login"));
   }
 
   void navigateToDashboard() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => IntroPage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
         ModalRoute.withName("/login"));
   }
 

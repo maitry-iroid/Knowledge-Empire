@@ -128,8 +128,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Expanded(
               flex: 9,
               child: Container(
-                  height: Injector.isBusinessMode?33:35,
-                  margin: EdgeInsets.only(top: Injector.isBusinessMode?2:0),
+                  height: Injector.isBusinessMode ? 33 : 35,
+                  margin: EdgeInsets.only(top: Injector.isBusinessMode ? 2 : 0),
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -164,7 +164,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       arrFinalLearningModules[index].isAssign == "1"
                           ? Positioned(
                               right: 5,
-                              bottom: Injector.isBusinessMode?5:2,
+                              bottom: Injector.isBusinessMode ? 5 : 2,
                               child: Text(
                                 Utils.getText(context, StringRes.subscribed),
                                 style: TextStyle(
@@ -478,6 +478,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       } else
         Utils.showToast("Something went wrong");
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -519,6 +525,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         fetchLearningModules();
       } else
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -560,6 +572,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           Utils.showToast("Downloaded successfully");
         }
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 }

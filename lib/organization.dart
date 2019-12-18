@@ -287,6 +287,12 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           });
         }
       });
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -367,6 +373,12 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
+      }).catchError((e) {
+        print(e);
+        setState(() {
+          isLoading = false;
+        });
+        Utils.showToast(e.toString());
       });
     });
   }

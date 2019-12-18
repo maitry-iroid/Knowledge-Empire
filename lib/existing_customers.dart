@@ -88,9 +88,13 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
             isLoading = false;
           });
-
-
         }
+      }).catchError((e) {
+        print(e);
+        setState(() {
+          isLoading = false;
+        });
+        Utils.showToast(e.toString());
       });
     });
   }
@@ -118,6 +122,12 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -146,9 +156,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       CommonView.showCircularProgress(isLoading)
                     ],
                   ),
-                )
-            )
-        ));
+                ))));
   }
 
   Expanded showItems() {

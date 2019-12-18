@@ -378,6 +378,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           print(e);
         }
       }
+    }).catchError((e) {
+      print(e);
+//      setState(() {
+//        isLoading = false;
+//      });
+      Utils.showToast(e.toString());
     });
   }
 }

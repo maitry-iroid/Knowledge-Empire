@@ -64,6 +64,7 @@ class LoginResponseData {
   String manager;
   String activeCompany;
   int salesPersonCount = 0;
+  bool isFirstTimeLogin = false;
 
   LoginResponseData();
 
@@ -81,6 +82,7 @@ class LoginResponseData {
     companyName = json['companyName'];
     manager = json['manager'];
     activeCompany = json['activeCompany'];
+    isFirstTimeLogin = json['isFirstTimeLogin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +100,7 @@ class LoginResponseData {
     data['companyName'] = this.companyName;
     data['manager'] = this.manager;
     data['activeCompany'] = this.activeCompany;
+    data['isFirstTimeLogin'] = this.isFirstTimeLogin;
     return data;
   }
 }

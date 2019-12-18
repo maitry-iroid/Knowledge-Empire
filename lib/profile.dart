@@ -6,19 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/intro_screen.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
 import 'commonview/background.dart';
-import 'help.dart';
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/prefkeys.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'login.dart';
-import 'home.dart';
 import 'models/logout.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -392,6 +389,12 @@ class _ProfilePageState extends State<ProfilePage> {
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
           ModalRoute.withName("/home"));
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -795,6 +798,12 @@ class _ProfilePageState extends State<ProfilePage> {
       } else {
         Utils.showToast("Something went wrong.");
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 }

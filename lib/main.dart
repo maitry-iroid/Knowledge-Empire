@@ -22,6 +22,7 @@ void main() => setupLocator();
 Future setupLocator() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Injector.getInstance();
+
   runApp(
     NotifierProvider(
       child: MyApp(),
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+
 
     return MaterialApp(
       title: 'Flutter Demo',

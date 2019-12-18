@@ -398,6 +398,12 @@ class Utils {
       }
       await Injector.prefs.remove(PrefKeys.answerData);
       notifier.notify('changeMode', 'Sending data from notfier!');
+    }).catchError((e) {
+      print(e);
+//      setState(() {
+//        isLoading = false;
+//      });
+      Utils.showToast(e.toString());
     });
   }
 

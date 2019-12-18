@@ -77,7 +77,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     rq.userId = Injector.userData.userId;
 
     rq.type = Const.getNewQueType;
-    rq.type =Const.getNewQueType;
+    rq.type = Const.getNewQueType;
 
     WebApi().getQuestions(rq.toJson()).then((questionResponse) {
       setState(() {
@@ -87,13 +87,18 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       if (questionResponse != null) {
         if (questionResponse.flag == "true") {
           arrQuestions = questionResponse.data;
-
         } else {
           Utils.showToast(questionResponse.msg);
         }
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -326,7 +331,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
           onTap: () {
             Utils.playClickSound();
-            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources && Utils.getServicesPersonCount()>0) {
+            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
+                Utils.getServicesPersonCount() > 0) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -346,19 +352,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   getValue(int index) {
-    QuestionData questionData = arrQuestions[index];
-
     var random = ((Random().nextInt(10))) / 10;
 
-    var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
+    var a = 500 + min(50 * arrQuestions[index].daysInList, 350) + random * 150;
     var b = (1 + (0.01 * min(questionAnswered, 900)));
-    var c = (1 + valueBonus);
+    var c = (1 + (valueBonus / 100));
 
     int finalValue = (a * b * c).round();
 
-    questionData.value = finalValue;
-
-    arrQuestions[index] = questionData;
+    arrQuestions[index].value = finalValue;
 
     return finalValue;
   }
@@ -370,13 +372,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     var a = max(pow(questionData.counter, 2), 1);
     var b = questionData.counter * random;
-    var c = (1 + loyaltyBonus);
+    var c = (1 + (loyaltyBonus / 100));
 
     int finalValue = (a + b * c).round();
 
-    questionData.loyalty = finalValue;
-
-    arrQuestions[index] = questionData;
+    arrQuestions[index].loyalty = finalValue;
 
     return finalValue;
   }
@@ -391,13 +391,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
         min(questionData.counter, 10) * random;
     var b = (1 + (0.01 * min(questionAnswered, 900)));
-    var c = (2 - resourceBonus);
+    var c = (2 - (resourceBonus / 100));
 
     int finalValue = (a * b * c).round();
 
-    questionData.resources = finalValue;
-
-    arrQuestions[index] = questionData;
+    arrQuestions[index].resources = finalValue;
 
     return finalValue;
   }

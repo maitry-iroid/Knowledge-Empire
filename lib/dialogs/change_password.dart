@@ -23,7 +23,6 @@ class ChangePasswordDialog extends StatefulWidget {
 }
 
 class ChangePasswordDialogState extends State<ChangePasswordDialog> {
-  final pass1Controller = TextEditingController();
   final pass2Controller = TextEditingController();
   final pass3Controller = TextEditingController();
   bool isLoading = false;
@@ -46,7 +45,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
-                height: Utils.getDeviceHeight(context) / 2.3,
+                height: Utils.getDeviceHeight(context) / 2.1,
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
@@ -60,7 +59,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                           right: Utils.getDeviceWidth(context) / 5.5,
                           bottom: 0),
                       padding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -72,84 +71,56 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
+
                           Container(
-                              decoration: BoxDecoration(
-                                  color: ColorRes.bgTextBox,
-                                  border: Border.all(
-                                      width: 1, color: ColorRes.white),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Center(
-                                child: TextField(
-                                  controller: pass1Controller,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  textAlign: TextAlign.left,
-                                  maxLines: 1,
-                                  obscureText: true,
-                                  style: TextStyle(
-                                      fontSize: 14, color: ColorRes.white),
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                      const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 10),
-                                      hintText: Utils.getText(context,
-                                          StringRes.currentPassword),
-                                      hintStyle:
-                                      TextStyle(color: ColorRes.hintColor),
-                                      border: InputBorder.none),
-                                ),
-                              )),
-                          Container(
+                              height: 35,
+                              alignment: Alignment.centerLeft,
                               margin: EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
                                   border: Border.all(
                                       width: 1, color: ColorRes.white),
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Center(
-                                child: TextField(
-                                  controller: pass2Controller,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  textAlign: TextAlign.left,
-                                  maxLines: 1,
-                                  obscureText: true,
-                                  style: TextStyle(
-                                      fontSize: 14, color: ColorRes.white),
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                      const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 10),
-                                      hintText: Utils.getText(context,
-                                          StringRes.newPassword),
-                                      hintStyle:
-                                      TextStyle(color: ColorRes.hintColor),
-                                      border: InputBorder.none),
-                                ),
+                              child: TextField(
+                                controller: pass2Controller,
+//                                  textAlignVertical: TextAlignVertical.center,
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                obscureText: true,
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorRes.white),
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(
+                                        context, StringRes.newPassword),
+                                    hintStyle:
+                                        TextStyle(color: ColorRes.hintColor),
+                                    border: InputBorder.none),
                               )),
                           Container(
+                              height: 35,
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
                                   border: Border.all(
                                       width: 1, color: ColorRes.white),
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Center(
-                                child: TextField(
-                                  obscureText: true,
-                                  controller: pass3Controller,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  textAlign: TextAlign.left,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 14, color: ColorRes.white),
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                      const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 10),
-                                      hintText: Utils.getText(context,
-                                          StringRes.reEnterPassword),
-                                      hintStyle:
-                                      TextStyle(color: ColorRes.hintColor),
-                                      border: InputBorder.none),
-                                ),
+                              child: TextField(
+                                obscureText: true,
+                                controller: pass3Controller,
+                                textAlignVertical: TextAlignVertical.center,
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorRes.white),
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(
+                                        context, StringRes.reEnterPassword),
+                                    hintStyle:
+                                        TextStyle(color: ColorRes.hintColor),
+                                    border: InputBorder.none),
                               )),
                         ],
                       ),
@@ -184,8 +155,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                               Utils.getAssetsImg("bg_save")),
                                           fit: BoxFit.fill)),
                                   child: Text(
-                                    Utils.getText(
-                                        context, StringRes.save),
+                                    Utils.getText(context, StringRes.save),
                                     style: TextStyle(
                                         fontSize: 17, color: ColorRes.white),
                                   )),
@@ -209,8 +179,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                               Utils.getAssetsImg("bg_save")),
                                           fit: BoxFit.fill)),
                                   child: Text(
-                                    Utils.getText(
-                                        context, StringRes.cancel),
+                                    Utils.getText(context, StringRes.cancel),
                                     style: TextStyle(
                                         fontSize: 17, color: ColorRes.white),
                                   )),
@@ -243,21 +212,12 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 
   void validateData() async {
-    if (pass1Controller.text
-        .trim()
-        .isEmpty) {
-      Utils.showToast("Please enter old Password.");
-      return;
-    }
-    if (pass2Controller.text
-        .trim()
-        .isEmpty) {
+
+    if (pass2Controller.text.trim().isEmpty) {
       Utils.showToast("Please enter new Password.");
       return;
     }
-    if (pass3Controller.text
-        .trim()
-        .isEmpty) {
+    if (pass3Controller.text.trim().isEmpty) {
       Utils.showToast("Please re-eneter new Password.");
       return;
     }
@@ -273,7 +233,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
     ChangePasswordRequest rq = ChangePasswordRequest();
     rq.userId = Injector.userData.userId;
-    rq.oldPassword = Utils.generateMd5(pass1Controller.text.trim());
     rq.password = Utils.generateMd5(pass2Controller.text.trim());
 
     WebApi().changePassword(rq.toJson()).then((data) {
@@ -299,6 +258,12 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       } else {
         Utils.showToast("Something went wrong.");
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 

@@ -251,9 +251,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
 
     Utils.isInternetConnected().then((isConnected) {
-
-
-
       Injector.customerValueData.totalBalance = questionData.value;
 //      _notifier.notify(action, data);
 
@@ -283,6 +280,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       }
       await Injector.prefs.remove(PrefKeys.answerData);
       navigateToSituation(context);
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -393,7 +396,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                 fit: BoxFit.fill)
                             : null,
                         borderRadius: BorderRadius.circular(10),
-                        border: isImage(questionData.mediaLink) ? Border.all(color: ColorRes.white, width: 1) : null),
+                        border: isImage(questionData.mediaLink)
+                            ? Border.all(color: ColorRes.white, width: 1)
+                            : null),
                     child: isVideo(questionData.mediaLink) &&
                             _controller.value.initialized
                         ? AspectRatio(
@@ -642,8 +647,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                           height: Utils.getDeviceHeight(context) / 1.4,
                           width: Utils.getDeviceWidth(context) / 1.2,
                           margin: EdgeInsets.only(top: 0),
-                          padding:
-                              EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 13),
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10, top: 25, bottom: 13),
                           decoration: BoxDecoration(
                             color: Injector.isBusinessMode
                                 ? ColorRes.bgDescription
@@ -714,12 +719,12 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                DecorationImage(
+                                    DecorationImage(
                                         image: AssetImage(
                                             Utils.getAssetsImg("close_dialog")),
                                         fit: BoxFit.fill)
 //                                    : null
-                            )),
+                                )),
                       ),
                     )
                   ],
@@ -760,8 +765,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           decoration: BoxDecoration(
 //              borderRadius:
 //                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
-              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(18),
-
+              borderRadius:
+                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
@@ -776,7 +781,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(checkAnswerAlert(index)), fit: BoxFit.fill))
+                      image: AssetImage(checkAnswerAlert(index)),
+                      fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -980,13 +986,13 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
-                                      DecorationImage(
+                                          DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
 //                                          : null
-                                  ))
+                                      ))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
@@ -994,13 +1000,13 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
-                                      DecorationImage(
+                                          DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
 //                                          : null
-                                  )))),
+                                      )))),
                     )
                   ],
                 )
@@ -1147,13 +1153,13 @@ class ImageShowAlertState extends State<ImageShowAlert>
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
-                                      DecorationImage(
+                                          DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
 //                                          : null
-                                  ))
+                                      ))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
@@ -1161,13 +1167,13 @@ class ImageShowAlertState extends State<ImageShowAlert>
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
-                                      DecorationImage(
+                                          DecorationImage(
                                               image: AssetImage(
                                                   Utils.getAssetsImg(
                                                       "close_dialog")),
                                               fit: BoxFit.contain)
 //                                          : null
-                                  )))),
+                                      )))),
                     )
                   ],
                 )
