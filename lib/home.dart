@@ -20,6 +20,7 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/organization.dart';
+import 'package:ke_employee/powerups.dart';
 import 'package:ke_employee/profile.dart';
 import 'package:ke_employee/ranking.dart';
 import 'package:ke_employee/rewards.dart';
@@ -93,7 +94,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       if (result != ConnectivityResult.none) {
         Utils.showToast(result.toString());
 
-        Utils.callSubmitAnswerApi(context,_notifier);
+        Utils.callSubmitAnswerApi(context, _notifier);
       }
     });
 
@@ -119,12 +120,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 9;
     else if (widget.initialPageType == Const.typeProfile)
       _selectedDrawerIndex = 10;
-    else if (widget.initialPageType == Const.typeEngagement)
+    else if (widget.initialPageType == Const.typeHelp)
       _selectedDrawerIndex = 11;
-    else if (widget.initialPageType == Const.typeDebrief)
+    else if (widget.initialPageType == Const.typeEngagement)
       _selectedDrawerIndex = 12;
-//    else if (widget.initialPageType == Const.typeHelp)
-//      _selectedDrawerIndex = 13;
+    else if (widget.initialPageType == Const.typeDebrief)
+      _selectedDrawerIndex = 13;
     else
       _selectedDrawerIndex = 0;
 
@@ -167,17 +168,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 6:
         return ChallengesPage();
       case 7:
-        return OrganizationsPage();
+        return Injector.isBusinessMode?OrganizationsPage():PowerUpsPage();
       case 8:
         return PLPage();
       case 9:
         return RankingPage();
       case 10:
         return ProfilePage();
-//      case 13:
+//      case 11:
 //        return IntroPage();
       default:
-        return Text("Error");
+        return Text("");
     }
   }
 
@@ -203,9 +204,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-
-
-    return Notifier.of(context).register<String>('updateHeaderValue', (data) {
+    return Notifier.of(context).register<String>('changeMode', (data) {
       drawerItems = [
         DrawerItem(Utils.getText(context, StringRes.home),
             Injector.isBusinessMode ? "main_screen_icon" : "ic_home_prof"),
@@ -348,12 +347,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
-    if (_selectedDrawerIndex == 11)
+    if (_selectedDrawerIndex == 12)
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr);
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
-    else if (_selectedDrawerIndex == 12)
+    else if (_selectedDrawerIndex == 13)
       return CustomerSituationPage(
           questionDataCustomerSituation: widget.questionDataSituation);
     else
@@ -372,8 +371,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             json.encode(customerValueData.toJson()));
 
         Injector.customerValueData = customerValueData;
-//        Injector.customerValueData.manager = customerValueData.manager;
-        print("------------------>" + Injector.customerValueData.manager);
 
         try {
             _notifier.notify('updateHeaderValue', 'Sending data from notfier!');

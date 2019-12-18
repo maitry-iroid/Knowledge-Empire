@@ -1,15 +1,18 @@
 class GetOrganizationRequest {
   String userId;
+  int mode;
 
   GetOrganizationRequest({this.userId});
 
   GetOrganizationRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
+    mode = json['mode'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
+    data['mode'] = this.mode;
     return data;
   }
 }
@@ -76,6 +79,7 @@ class Organization {
   String name;
   int level;
   int employeeCount;
+  String description;
 
   Organization({this.type, this.name, this.level, this.employeeCount});
 
@@ -84,6 +88,7 @@ class Organization {
     name = json['name'];
     level = json['level'];
     employeeCount = json['employeeCount'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +97,7 @@ class Organization {
     data['name'] = this.name;
     data['level'] = this.level;
     data['employeeCount'] = this.employeeCount;
+    data['description'] = this.description;
     return data;
   }
 }

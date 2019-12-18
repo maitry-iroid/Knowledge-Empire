@@ -251,6 +251,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
 
     Utils.isInternetConnected().then((isConnected) {
+
+
+
+      Injector.customerValueData.totalBalance = questionData.value;
+//      _notifier.notify(action, data);
+
       if (isConnected) {
         callSubmitAnswerApi(context);
       } else {

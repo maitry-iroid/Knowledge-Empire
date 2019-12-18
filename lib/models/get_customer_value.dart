@@ -48,6 +48,7 @@ class GetCustomerValueResponse {
 class CustomerValueData {
   int totalEmployeeCapacity;
   String manager;
+  int employeeCount;
   int remainingEmployeeCapacity;
   int totalBalance;
   int loyaltyBonus;
@@ -55,21 +56,25 @@ class CustomerValueData {
   int resourceBonus;
   int totalAttemptedQuestion;
   int questionAnswered;
+  int totalCorrectAnswer;
   List<Organization> organization  = List();
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
+      this.employeeCount,
       this.totalBalance,
       this.loyaltyBonus,
       this.valueBonus,
       this.resourceBonus,
       this.totalAttemptedQuestion,
       this.questionAnswered,
+      this.totalCorrectAnswer,
       this.organization});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
     manager = json['manager'];
+    employeeCount = json['employeeCount'];
     remainingEmployeeCapacity = json['remainingEmployeeCapacity'];
     totalBalance = json['totalBalance'];
     loyaltyBonus = json['loyaltyBonus'];
@@ -77,6 +82,7 @@ class CustomerValueData {
     resourceBonus = json['resourceBonus'];
     totalAttemptedQuestion = json['totalAttemptedQuestion'];
     questionAnswered = json['questionAnswered'];
+    totalCorrectAnswer = json['totalCorrectAnswer'];
     if (json['organization'] != null) {
       organization = new List<Organization>();
       json['organization'].forEach((v) {
@@ -89,6 +95,7 @@ class CustomerValueData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['totalEmployeeCapacity'] = this.totalEmployeeCapacity;
     data['manager'] = this.manager;
+    data['employeeCount'] = this.employeeCount;
     data['remainingEmployeeCapacity'] = this.remainingEmployeeCapacity;
     data['totalBalance'] = this.totalBalance;
     data['loyaltyBonus'] = this.loyaltyBonus;
@@ -96,6 +103,7 @@ class CustomerValueData {
     data['resourceBonus'] = this.resourceBonus;
     data['totalAttemptedQuestion'] = this.totalAttemptedQuestion;
     data['questionAnswered'] = this.questionAnswered;
+    data['totalCorrectAnswer'] = this.totalCorrectAnswer;
     if (this.organization != null) {
       data['organization'] = this.organization.map((v) => v.toJson()).toList();
     }
