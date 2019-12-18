@@ -53,7 +53,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           width: double.infinity,
           height: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 30),
-          decoration: CommonView.getBGDecoration(),
+          decoration: CommonView.getBGDecoration(context),
           child: Stack(
             children: <Widget>[
               Column(

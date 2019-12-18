@@ -17,9 +17,11 @@ import 'package:video_player/video_player.dart';
 import '../home.dart';
 
 class CommonView {
-  static getBGDecoration() {
+  static getBGDecoration(BuildContext context) {
     return Injector.isBusinessMode
-        ? BoxDecoration(
+        ?
+//    CommonView.showDashboardView(context)
+          BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
                 fit: BoxFit.fill))
@@ -353,14 +355,16 @@ class CommonView {
 //            questionData.answer = arrAnswerr;
 //            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomePage(
-                        initialPageType: Const.typeDebrief,
-                        questionDataSituation: questionData,
-                      )),
-            );
+            Navigator.push(context, FadeRouteHome(initialPageType: Const.typeDebrief,questionDataSituation: questionData));
+
+//            Navigator.push(
+//              context,
+//              MaterialPageRoute(
+//                  builder: (context) => HomePage(
+//                        initialPageType: Const.typeDebrief,
+//                        questionDataSituation: questionData,
+//                      )),
+//            );
           },
           child: Container(
             alignment: Alignment.center,
@@ -389,6 +393,17 @@ class CommonView {
     return Container(
       height: 0.0,
       width: 0.0,
+    );
+  }
+
+  static Widget showBGDashboardView(BuildContext context) {
+//    CommonView.showDashboardView(context);
+    return Container(
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage(
+    Utils.getAssetsImg("intro_bub_background")),
+    fit: BoxFit.fill))
     );
   }
 
@@ -589,11 +604,13 @@ class CommonView {
   }
 
   static performItemClick(BuildContext context, int type) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(
-                  initialPageType: type,
-                )));
+    Navigator.push(context, FadeRouteHome(initialPageType: type));
+
+//    Navigator.push(
+//        context,
+//        MaterialPageRoute(
+//            builder: (context) => HomePage(
+//                  initialPageType: type,
+//                )));
   }
 }

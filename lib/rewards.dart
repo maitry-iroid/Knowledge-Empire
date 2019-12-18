@@ -20,7 +20,7 @@ class _RewardsPageState extends State<RewardsPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+      decoration: CommonView.getBGDecoration(context),
       child: Row(
         children: <Widget>[showFirstHalf(), showSecondHalf()],
       ),

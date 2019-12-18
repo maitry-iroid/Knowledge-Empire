@@ -303,7 +303,10 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 
   void navigateToDashboard() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+
+    Navigator.push(context, FadeRouteHome());
+
+//    Navigator.push(
+//        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }

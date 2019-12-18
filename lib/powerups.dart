@@ -78,7 +78,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+      decoration: CommonView.getBGDecoration(context),
       child: Stack(
         children: <Widget>[
           Row(

@@ -23,7 +23,7 @@ class _RankingPageState extends State<RankingPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: CommonView.getBGDecoration(),
+        decoration: CommonView.getBGDecoration(context),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[showFirstColumn(), showSecondColumn()],

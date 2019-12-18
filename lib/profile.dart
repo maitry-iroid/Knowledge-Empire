@@ -68,11 +68,15 @@ class _ProfilePageState extends State<ProfilePage> {
           Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
       body: SafeArea(
         child: Stack(
+
           children: <Widget>[
+            CommonView.showDashboardView(context),
+            CommonView.showBGDashboardView(context),
             Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: CommonView.getBGDecoration(),
+
+//              decoration: CommonView.getBGDecoration(context),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -134,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Container(
                   color: Colors.transparent,
                   margin: EdgeInsets.symmetric(
-                      horizontal: Utils.getDeviceWidth(context) / 15),
+                      horizontal: Utils.getDeviceWidth(context) / 20),
                   child: ListView(
                     children: <Widget>[
                       Row(
@@ -172,10 +176,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           InkResponse(
                             onTap: () {
 //                      HelpPage();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => IntroPage()));
+                              Navigator.push(context, FadeRouteIntro());
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(
+//                                      builder: (context) => IntroPage()));
 //                              Navigator.push(
 //                                  context,
 //                                  MaterialPageRoute(
@@ -317,6 +322,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       InkResponse(
                         child: Container(
                           height: 35,
+
                           margin: EdgeInsets.only(top: 15),
                           padding: EdgeInsets.only(left: 8, right: 8),
                           alignment: Alignment.center,

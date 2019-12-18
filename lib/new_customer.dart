@@ -119,7 +119,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: CommonView.getBGDecoration(),
+              decoration:  CommonView.getBGDecoration(context),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -327,13 +327,18 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           onTap: () {
             Utils.playClickSound();
             if (Utils.getSalesPersonCount() >= arrQuestions[index].resources && Utils.getServicesPersonCount()>0) {
-              Navigator.push(
+
+              Navigator.push(context, FadeRouteHome(page: Screen2(),initialPageType: Const.typeEngagement,questionDataHomeScr: arrQuestions[index]));
+
+/*              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => HomePage(
+
                             initialPageType: Const.typeEngagement,
                             questionDataHomeScr: arrQuestions[index],
-                          )));
+                          )));*/
+
             } else {
               Utils.showToast("You need atleast " +
                   arrQuestions[index].resources.toString() +
@@ -400,5 +405,20 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     arrQuestions[index] = questionData;
 
     return finalValue;
+  }
+}
+
+class Screen2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.green,
+      body: Center(
+        child: RaisedButton(
+          child: Text('Go Back!'),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+    );
   }
 }

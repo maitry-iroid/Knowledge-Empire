@@ -495,14 +495,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 )),
         ModalRoute.withName('home'));
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => HomePage(
-                initialPageType: Const.typeNewCustomer,
-                questionDataSituation: null,
-              )),
-    );
+    Navigator.push(context, FadeRouteHome(initialPageType: Const.typeNewCustomer,questionDataSituation: null));
+
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(
+//          builder: (context) => HomePage(
+//                initialPageType: Const.typeNewCustomer,
+//                questionDataSituation: null,
+//              )),
+//    );
   }
 }
 

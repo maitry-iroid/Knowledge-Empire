@@ -23,9 +23,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
     return Container(
       height: double.infinity,
       width: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+      decoration: CommonView.getBGDecoration(context),
       child: Stack(
+
         children: <Widget>[
+//          CommonView.showDashboardView(context),
+//          CommonView.showBGDashboardView(context),
           Column(
             children: <Widget>[
               SizedBox(

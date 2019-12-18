@@ -109,10 +109,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPasswordPage()));
+                        Navigator.push(context, FadeRouteForgotPassword());
+//                        Navigator.push(
+//                            context,
+//                            MaterialPageRoute(
+//                                builder: (context) => ForgotPasswordPage()));
                       },
                     ),
                   ),

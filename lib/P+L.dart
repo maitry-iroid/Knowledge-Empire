@@ -19,7 +19,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+      decoration: CommonView.getBGDecoration(context),
       child: Column(
         children: <Widget>[CommonView.showTitle(context, StringRes.pl)],
       ),
