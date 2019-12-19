@@ -1026,15 +1026,14 @@ class IntroPageState extends State<IntroPage> {
                     onTap: () {
                       Utils.playClickSound();
                       setState(() {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()),
-                            ModalRoute.withName("/home"));
-//                            Navigator.push(
-//                                context,
-//                                MaterialPageRoute(
-//                                    builder: (context) => HomePage()));
+//                        Navigator.pushAndRemoveUntil(
+//                            context,
+//                            MaterialPageRoute(
+//                                builder: (context) => HomePage()),
+//                            ModalRoute.withName("/home"));
+
+                        Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/home"));
+
                       });
                     },
                   )))
