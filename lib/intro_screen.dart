@@ -21,29 +21,28 @@ import 'helper/web_api.dart';
 import 'login.dart';
 import 'models/get_customer_value.dart';
 
-
-
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
+
   FadeRouteIntro({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: IntroPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: IntroPage(),
+          ),
+        );
 }
 
 class IntroPage extends StatefulWidget {
@@ -131,44 +130,20 @@ class IntroPageState extends State<IntroPage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Visibility(
+          Opacity(
             child: Image(
               image: AssetImage(
                 Utils.getAssetsImg("menu"),
               ),
               fit: BoxFit.fill,
             ),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: false,
+            opacity: 1,
           ),
           SizedBox(
-            width: 8,
-          ),
-          Visibility(
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg("ic_menu"),
-                ),
-                color: Injector.isBusinessMode
-                    ? ColorRes.textLightBlue
-                    : ColorRes.white,
-                width: 25,
-              ),
-              onTap: () {},
-            ),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typeSideMenu ? true : false,
-          ),
-          SizedBox(
-            width: 10,
+            width: 12,
           ),
           Expanded(
-            child: Visibility(
+            child: Opacity(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -200,10 +175,7 @@ class IntroPageState extends State<IntroPage> {
                   )
                 ],
               ),
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              visible: selectedType == Const.typeName ? true : false,
+              opacity: selectedType == Const.typeName ? 1 : 0,
             ),
           ),
           showHeaderItem(Const.typeEmployee, context),
@@ -211,12 +183,9 @@ class IntroPageState extends State<IntroPage> {
           showHeaderItem(Const.typeServicesPerson, context),
           showHeaderItem(Const.typeBadge, context),
           showHeaderItem(Const.typeDollar, context),
-          Visibility(
+          Opacity(
             child: showProfile(context),
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            visible: selectedType == Const.typeProfile ? true : false,
+            opacity: selectedType == Const.typeProfile ? 1 : 0,
           ),
         ],
       ),
@@ -224,11 +193,8 @@ class IntroPageState extends State<IntroPage> {
   }
 
   showHeaderItem(int type, BuildContext context) {
-    return Visibility(
-      maintainSize: true,
-      maintainAnimation: true,
-      maintainState: true,
-      visible: selectedType == type ? true : false,
+    return Opacity(
+      opacity: selectedType == type ? 1 : 0,
       child: Container(
         height: 40,
         padding:
@@ -591,12 +557,11 @@ class IntroPageState extends State<IntroPage> {
                   InkResponse(
 //                    child: FadeTransition(
 //                      opacity: animation,
-                      child: Image(
-                        image:
-                            AssetImage(Utils.getAssetsImg("business_sectors")),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                        width: Utils.getDeviceWidth(context) / 3.4,
-                      ),
+                      width: Utils.getDeviceWidth(context) / 3.4,
+                    ),
 //                    ),
                   ),
                   InkResponse(
@@ -657,7 +622,6 @@ class IntroPageState extends State<IntroPage> {
   }
 
   performItemClick(int type) {
-
     Navigator.push(context, FadeRouteHome(initialPageType: type));
 
 //    Navigator.push(
@@ -726,8 +690,6 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-
-
           selectedType == Const.typeEmployee
               ? Positioned(
                   top: 65,
@@ -745,20 +707,18 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeSalesPersons
               ? Positioned(
-            top: 65,
-            left: Utils.getDeviceWidth(context) / 2.8,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(
-                    Utils.getAssetsImg("intro_bub_sales_stat")),
-                height: Utils.getDeviceHeight(context) / 1.35,
-              ),
-              onTap: () {},
-            ),
-          )
+                  top: 65,
+                  left: Utils.getDeviceWidth(context) / 2.8,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(
+                          Utils.getAssetsImg("intro_bub_sales_stat")),
+                      height: Utils.getDeviceHeight(context) / 1.35,
+                    ),
+                    onTap: () {},
+                  ),
+                )
               : Container(),
-
-
 
           selectedType == Const.typeServicesPerson
               ? Positioned(
@@ -771,27 +731,25 @@ class IntroPageState extends State<IntroPage> {
                           Utils.getAssetsImg("intro_bub_customer_stat")),
                       height: Utils.getDeviceHeight(context) / 1.4,
                     ),
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                   ),
                 )
               : Container(),
 
           selectedType == Const.typeBadge
               ? Positioned(
-            top: 65,
-            left: Utils.getDeviceWidth(context) / 2.8,
+                  top: 65,
+                  left: Utils.getDeviceWidth(context) / 2.8,
 //            right: Utils.getDeviceWidth(context) / 2.9,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(
-                    Utils.getAssetsImg("intro_bub_brand_value")),
-                height: Utils.getDeviceHeight(context) / 1.5,
-              ),
-              onTap: () {},
-            ),
-          )
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(
+                          Utils.getAssetsImg("intro_bub_brand_value")),
+                      height: Utils.getDeviceHeight(context) / 1.5,
+                    ),
+                    onTap: () {},
+                  ),
+                )
               : Container(),
 
           selectedType == Const.typeDollar
@@ -962,133 +920,132 @@ class IntroPageState extends State<IntroPage> {
           selectedType == Const.typeName
               ? Container()
               : Positioned(
-            top: Utils.getDeviceHeight(context) / 2.35,
-            left: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("intro_bub_back")),
-                height: Utils.getDeviceHeight(context) / 10,
-              ),
-              onTap: () {
-                Utils.playClickSound();
-
-                setState(() {
-                  if (selectedType == Const.typeName) {
-                    selectedType = Const.typeRanking;
-                  } else if (selectedType == Const.typeRanking) {
-                    selectedType = Const.typePL;
-                  } else if (selectedType == Const.typePL) {
-                    selectedType = Const.typeOrg;
-                  } else if (selectedType == Const.typeOrg) {
-                    selectedType = Const.typeChallenges;
-                  } else if (selectedType == Const.typeChallenges) {
-                    selectedType = Const.typeTeam;
-                  } else if (selectedType == Const.typeTeam) {
-                    selectedType = Const.typeReward;
-                  } else if (selectedType == Const.typeReward) {
-                    selectedType = Const.typeExistingCustomer;
-                  } else if (selectedType == Const.typeExistingCustomer) {
-                    selectedType = Const.typeNewCustomer;
-                  } else if (selectedType == Const.typeNewCustomer) {
-                    selectedType = Const.typeBusinessSector;
-                  } else if (selectedType == Const.typeBusinessSector) {
-                    selectedType = Const.typeProfile;
-                  } else if (selectedType == Const.typeProfile) {
-                    selectedType = Const.typeDollar;
-                  } else if (selectedType == Const.typeDollar) {
-                    selectedType = Const.typeBadge;
-                  } else if (selectedType == Const.typeServicesPerson) {
-                    selectedType = Const.typeSalesPersons;
-                  } else if (selectedType == Const.typeBadge) {
-                    selectedType = Const.typeServicesPerson;
-                  } else if (selectedType == Const.typeEmployee) {
-                    selectedType = Const.typeName;
-                  } else if (selectedType == Const.typeSalesPersons) {
-                    selectedType = Const.typeEmployee;
-                  }
-                });
-              },
-            ),
-          ),
-
-          selectedType == Const.typeRanking
-              ? Container(
-              child: Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
-                  right: 10,
+                  left: 10,
+//            right: Utils.getDeviceWidth(context) / 1.62,
                   child: InkResponse(
                     child: Image(
-                      image:
-                      AssetImage(Utils.getAssetsImg("intro_bub_enter")),
+                      image: AssetImage(Utils.getAssetsImg("intro_bub_back")),
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
                       Utils.playClickSound();
+
                       setState(() {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()),
-                            ModalRoute.withName("/home"));
+                        if (selectedType == Const.typeName) {
+                          selectedType = Const.typeRanking;
+                        } else if (selectedType == Const.typeRanking) {
+                          selectedType = Const.typePL;
+                        } else if (selectedType == Const.typePL) {
+                          selectedType = Const.typeOrg;
+                        } else if (selectedType == Const.typeOrg) {
+                          selectedType = Const.typeChallenges;
+                        } else if (selectedType == Const.typeChallenges) {
+                          selectedType = Const.typeTeam;
+                        } else if (selectedType == Const.typeTeam) {
+                          selectedType = Const.typeReward;
+                        } else if (selectedType == Const.typeReward) {
+                          selectedType = Const.typeExistingCustomer;
+                        } else if (selectedType == Const.typeExistingCustomer) {
+                          selectedType = Const.typeNewCustomer;
+                        } else if (selectedType == Const.typeNewCustomer) {
+                          selectedType = Const.typeBusinessSector;
+                        } else if (selectedType == Const.typeBusinessSector) {
+                          selectedType = Const.typeProfile;
+                        } else if (selectedType == Const.typeProfile) {
+                          selectedType = Const.typeDollar;
+                        } else if (selectedType == Const.typeDollar) {
+                          selectedType = Const.typeBadge;
+                        } else if (selectedType == Const.typeServicesPerson) {
+                          selectedType = Const.typeSalesPersons;
+                        } else if (selectedType == Const.typeBadge) {
+                          selectedType = Const.typeServicesPerson;
+                        } else if (selectedType == Const.typeEmployee) {
+                          selectedType = Const.typeName;
+                        } else if (selectedType == Const.typeSalesPersons) {
+                          selectedType = Const.typeEmployee;
+                        }
+                      });
+                    },
+                  ),
+                ),
+
+          selectedType == Const.typeRanking
+              ? Container(
+                  child: Positioned(
+                      top: Utils.getDeviceHeight(context) / 2.35,
+                      right: 10,
+                      child: InkResponse(
+                        child: Image(
+                          image:
+                              AssetImage(Utils.getAssetsImg("intro_bub_enter")),
+                          height: Utils.getDeviceHeight(context) / 10,
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          setState(() {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                                ModalRoute.withName("/home"));
 //                            Navigator.push(
 //                                context,
 //                                MaterialPageRoute(
 //                                    builder: (context) => HomePage()));
+                          });
+                        },
+                      )))
+              : Positioned(
+                  top: Utils.getDeviceHeight(context) / 2.35,
+                  right: 10,
+//            right: Utils.getDeviceWidth(context) / 1.62,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("intro_bub_next")),
+                      height: Utils.getDeviceHeight(context) / 10,
+                    ),
+                    onTap: () {
+                      Utils.playClickSound();
+
+                      setState(() {
+                        if (selectedType == Const.typeName) {
+                          selectedType = Const.typeEmployee;
+                        } else if (selectedType == Const.typeSalesPersons) {
+                          selectedType = Const.typeServicesPerson;
+                        } else if (selectedType == Const.typeEmployee) {
+                          selectedType = Const.typeSalesPersons;
+                        } else if (selectedType == Const.typeBadge) {
+                          selectedType = Const.typeDollar;
+                        } else if (selectedType == Const.typeServicesPerson) {
+                          selectedType = Const.typeBadge;
+                        } else if (selectedType == Const.typeDollar) {
+                          selectedType = Const.typeProfile;
+                        } else if (selectedType == Const.typeProfile) {
+                          selectedType = Const.typeBusinessSector;
+                        } else if (selectedType == Const.typeBusinessSector) {
+                          selectedType = Const.typeNewCustomer;
+                        } else if (selectedType == Const.typeNewCustomer) {
+                          selectedType = Const.typeExistingCustomer;
+                        } else if (selectedType == Const.typeExistingCustomer) {
+                          selectedType = Const.typeReward;
+                        } else if (selectedType == Const.typeReward) {
+                          selectedType = Const.typeTeam;
+                        } else if (selectedType == Const.typeTeam) {
+                          selectedType = Const.typeChallenges;
+                        } else if (selectedType == Const.typeChallenges) {
+                          selectedType = Const.typeOrg;
+                        } else if (selectedType == Const.typeOrg) {
+                          selectedType = Const.typePL;
+                        } else if (selectedType == Const.typePL) {
+                          selectedType = Const.typeRanking;
+                        } else if (selectedType == Const.typeRanking) {
+                          DashboardNewPage();
+                        }
                       });
                     },
-                  )))
-              : Positioned(
-            top: Utils.getDeviceHeight(context) / 2.35,
-            right: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg("intro_bub_next")),
-                height: Utils.getDeviceHeight(context) / 10,
-              ),
-              onTap: () {
-                Utils.playClickSound();
-
-                setState(() {
-                  if (selectedType == Const.typeName) {
-                    selectedType = Const.typeEmployee;
-                  } else if (selectedType == Const.typeSalesPersons) {
-                    selectedType = Const.typeServicesPerson;
-                  } else if (selectedType == Const.typeEmployee) {
-                    selectedType = Const.typeSalesPersons;
-                  } else if (selectedType == Const.typeBadge) {
-                    selectedType = Const.typeDollar;
-                  } else if (selectedType == Const.typeServicesPerson) {
-                    selectedType = Const.typeBadge;
-                  } else if (selectedType == Const.typeDollar) {
-                    selectedType = Const.typeProfile;
-                  } else if (selectedType == Const.typeProfile) {
-                    selectedType = Const.typeBusinessSector;
-                  } else if (selectedType == Const.typeBusinessSector) {
-                    selectedType = Const.typeNewCustomer;
-                  } else if (selectedType == Const.typeNewCustomer) {
-                    selectedType = Const.typeExistingCustomer;
-                  } else if (selectedType == Const.typeExistingCustomer) {
-                    selectedType = Const.typeReward;
-                  } else if (selectedType == Const.typeReward) {
-                    selectedType = Const.typeTeam;
-                  } else if (selectedType == Const.typeTeam) {
-                    selectedType = Const.typeChallenges;
-                  } else if (selectedType == Const.typeChallenges) {
-                    selectedType = Const.typeOrg;
-                  } else if (selectedType == Const.typeOrg) {
-                    selectedType = Const.typePL;
-                  } else if (selectedType == Const.typePL) {
-                    selectedType = Const.typeRanking;
-                  } else if (selectedType == Const.typeRanking) {
-                    DashboardNewPage();
-                  }
-                });
-              },
-            ),
-          ),
-
+                  ),
+                ),
         ],
       ),
     );

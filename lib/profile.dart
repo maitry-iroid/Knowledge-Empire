@@ -772,7 +772,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     onTap: () {
                       Utils.playClickSound();
-                      Utils.showChangePasswordDialog(_scaffoldKey, true);
+                      Utils.showChangePasswordDialog(_scaffoldKey, true, true);
                     },
                   ),
                 ),

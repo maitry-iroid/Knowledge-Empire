@@ -37,7 +37,6 @@ import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 
-
 class FadeRouteHome extends PageRouteBuilder {
   final Widget page;
   final int initialPageType;
@@ -47,33 +46,35 @@ class FadeRouteHome extends PageRouteBuilder {
 
   final int value;
 
-  FadeRouteHome({this.page,this.initialPageType,
-    this.questionDataHomeScr,
-    this.questionDataSituation,
-    this.value
-  })
+  FadeRouteHome(
+      {this.page,
+      this.initialPageType,
+      this.questionDataHomeScr,
+      this.questionDataSituation,
+      this.value})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: HomePage(initialPageType: initialPageType,
-            questionDataHomeScr: questionDataHomeScr,
-            questionDataSituation: questionDataSituation,
-            value: value,
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: HomePage(
+              initialPageType: initialPageType,
+              questionDataHomeScr: questionDataHomeScr,
+              questionDataSituation: questionDataSituation,
+              value: value,
+            ),
           ),
-        ),
-  );
+        );
 }
 
 /*
@@ -118,7 +119,6 @@ class RotationRoute extends PageRouteBuilder {
   );
 }*/
 
-
 class HomePage extends StatefulWidget {
   final int initialPageType;
 
@@ -132,8 +132,7 @@ class HomePage extends StatefulWidget {
       this.initialPageType,
       this.questionDataHomeScr,
       this.questionDataSituation,
-      this.value
-      })
+      this.value})
       : super(key: key);
 
 //  final  QuestionData questionData;
@@ -255,7 +254,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 6:
         return ChallengesPage();
       case 7:
-        return Injector.isBusinessMode?OrganizationsPage():PowerUpsPage();
+        return Injector.isBusinessMode ? OrganizationsPage() : PowerUpsPage();
       case 8:
         return PLPage();
       case 9:
@@ -337,8 +336,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         drawer: new SizedBox(
           width: Utils.getDeviceWidth(context) / 2.5,
           child: Drawer(
-              child:
-                  Notifier.of(context).register<String>('updateHeaderValue', (data) {
+              child: Notifier.of(context).register<String>('updateHeaderValue',
+                  (data) {
             return Container(
               color: Injector.isBusinessMode
                   ? ColorRes.bgMenu
@@ -436,7 +435,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == 12)
       return EngagementCustomer(
-          questionDataEngCustomer: widget.questionDataHomeScr, value: widget.value,);
+          questionDataEngCustomer: widget.questionDataHomeScr);
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
     else if (_selectedDrawerIndex == 13)
@@ -460,7 +459,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Injector.customerValueData = customerValueData;
 
         try {
-            _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
+          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
         } catch (e) {
           print(e);
         }

@@ -227,11 +227,12 @@ class Utils {
   }
 
   static showChangePasswordDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) async {
+      GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog(
               isFromProfile: isFromProfile,
+            isOldPasswordRequired:isOldPasswordRequired
             ));
   }
 

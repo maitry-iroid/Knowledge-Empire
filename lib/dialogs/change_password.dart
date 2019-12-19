@@ -14,15 +14,18 @@ class ChangePasswordDialog extends StatefulWidget {
   ChangePasswordDialog({
     Key key,
     this.isFromProfile,
+    this.isOldPasswordRequired,
   }) : super(key: key);
 
   final bool isFromProfile;
+  final bool isOldPasswordRequired;
 
   @override
   ChangePasswordDialogState createState() => new ChangePasswordDialogState();
 }
 
 class ChangePasswordDialogState extends State<ChangePasswordDialog> {
+  final pass1Controller = TextEditingController();
   final pass2Controller = TextEditingController();
   final pass3Controller = TextEditingController();
   bool isLoading = false;
@@ -59,7 +62,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                           right: Utils.getDeviceWidth(context) / 5.5,
                           bottom: 0),
                       padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -71,10 +74,31 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
-
                           Container(
-                              height: 35,
-                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                  color: ColorRes.bgTextBox,
+                                  border: Border.all(
+                                      width: 1, color: ColorRes.white),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: TextField(
+                                controller: pass1Controller,
+//                                  textAlignVertical: TextAlignVertical.center,
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                obscureText: true,
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorRes.white),
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(
+                                        context, StringRes.currentPassword),
+                                    hintStyle:
+                                    TextStyle(color: ColorRes.hintColor),
+                                    border: InputBorder.none),
+                              )),
+                          Container(
                               margin: EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
@@ -212,8 +236,15 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 
   void validateData() async {
-
-    if (pass2Controller.text.trim().isEmpty) {
+    if (pass1Controller.text
+        .trim()
+        .isEmpty) {
+      Utils.showToast("Please enter old Password.");
+      return;
+    }
+    if (pass2Controller.text
+        .trim()
+        .isEmpty) {
       Utils.showToast("Please enter new Password.");
       return;
     }
@@ -233,7 +264,9 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
     ChangePasswordRequest rq = ChangePasswordRequest();
     rq.userId = Injector.userData.userId;
+    rq.oldPassword = Utils.generateMd5(pass1Controller.text.trim());
     rq.password = Utils.generateMd5(pass2Controller.text.trim());
+    rq.isOldPasswordRequired = widget.isOldPasswordRequired;
 
     WebApi().changePassword(rq.toJson()).then((data) {
       setState(() {
@@ -268,7 +301,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 
   void navigateToDashboard() {
-
     Navigator.push(context, FadeRouteHome());
 
 //    Navigator.push(

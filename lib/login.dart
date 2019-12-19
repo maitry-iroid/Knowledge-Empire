@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
         Injector.customerValueData = customerValueData;
 
         if (loginData.data.isPasswordChanged == "0") {
-          Utils.showChangePasswordDialog(_scaffoldKey, false);
+          Utils.showChangePasswordDialog(_scaffoldKey, false,false);
         } else {
           if (loginData.data.isFirstTimeLogin)
             navigateToIntro();
