@@ -17,6 +17,33 @@ import 'package:ke_employee/models/login.dart';
 
 import 'models/get_customer_value.dart';
 
+
+
+class FadeRouteLogin extends PageRouteBuilder {
+  final Widget page;
+
+
+  FadeRouteLogin({this.page})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: LoginPage(),
+        ),
+  );
+}
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
@@ -247,17 +274,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToIntro() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => IntroPage()),
-        ModalRoute.withName("/login"));
+//    Navigator.pushAndRemoveUntil(
+//        context,
+//        MaterialPageRoute(builder: (context) => IntroPage()),
+//        ModalRoute.withName("/login"));
+
+    Navigator.pushAndRemoveUntil(context, FadeRouteIntro(), ModalRoute.withName("/login"));
   }
 
   void navigateToDashboard() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-        ModalRoute.withName("/login"));
+//    Navigator.pushAndRemoveUntil(
+//        context,
+//        MaterialPageRoute(builder: (context) => HomePage()),
+//        ModalRoute.withName("/login"));
+
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
+
   }
 
   showEmailView() {

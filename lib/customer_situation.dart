@@ -486,14 +486,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(
-                  initialPageType: Const.typeHome,
-                  questionDataSituation: null,
-                )),
-        ModalRoute.withName('home'));
+//    Navigator.pushAndRemoveUntil(
+//        context,
+//        MaterialPageRoute(
+//            builder: (context) => HomePage(
+//                  initialPageType: Const.typeHome,
+//                  questionDataSituation: null,
+//                )),
+//        ModalRoute.withName('home'));
+
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("home"));
 
     Navigator.push(context, FadeRouteHome(initialPageType: Const.typeNewCustomer,questionDataSituation: null));
 

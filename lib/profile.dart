@@ -69,13 +69,13 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            CommonView.showDashboardView(context),
-            CommonView.showBGDashboardView(context),
+//            CommonView.showDashboardView(context),
+//            CommonView.showBGDashboardView(context),
             Container(
               width: double.infinity,
               height: double.infinity,
 
-//              decoration: CommonView.getBGDecoration(context),
+              decoration: CommonView.getBGDecoration(context),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -491,10 +491,13 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       }
 
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => LoginPage()),
-          ModalRoute.withName("/home"));
+//      Navigator.pushAndRemoveUntil(
+//          context,
+//          MaterialPageRoute(builder: (context) => LoginPage()),
+//          ModalRoute.withName("/home"));
+
+      Navigator.pushAndRemoveUntil(context, FadeRouteLogin(), ModalRoute.withName("/home"));
+
     }).catchError((e) {
       print(e);
       setState(() {

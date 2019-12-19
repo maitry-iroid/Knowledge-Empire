@@ -972,30 +972,29 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeRanking
               ? Container(
-                  child: Positioned(
-                      top: Utils.getDeviceHeight(context) / 2.35,
-                      right: 10,
-                      child: InkResponse(
-                        child: Image(
-                          image:
-                              AssetImage(Utils.getAssetsImg("intro_bub_enter")),
-                          height: Utils.getDeviceHeight(context) / 10,
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          setState(() {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()),
-                                ModalRoute.withName("/home"));
-//                            Navigator.push(
-//                                context,
-//                                MaterialPageRoute(
-//                                    builder: (context) => HomePage()));
-                          });
-                        },
-                      )))
+              child: Positioned(
+                  top: Utils.getDeviceHeight(context) / 2.35,
+                  right: 10,
+                  child: InkResponse(
+                    child: Image(
+                      image:
+                      AssetImage(Utils.getAssetsImg("intro_bub_enter")),
+                      height: Utils.getDeviceHeight(context) / 10,
+                    ),
+                    onTap: () {
+                      Utils.playClickSound();
+                      setState(() {
+//                        Navigator.pushAndRemoveUntil(
+//                            context,
+//                            MaterialPageRoute(
+//                                builder: (context) => HomePage()),
+//                            ModalRoute.withName("/home"));
+
+                        Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/home"));
+
+                      });
+                    },
+                  )))
               : Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
                   right: 10,

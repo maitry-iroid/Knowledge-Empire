@@ -66,6 +66,24 @@ class _RankingPageState extends State<RankingPage> {
 //              Image(image: AssetImage(Utils.getAssetsImg('ranking_deselect_profit')),
 //                  width: 80);
             },
+
+//            child: ClipRect(
+//              clipBehavior: Clip.hardEdge,
+//              child: OverflowBox(
+//                maxHeight: 250,
+//                maxWidth: 250,
+//                child: Center(
+//                  child: Container(
+//                    decoration: BoxDecoration(
+//                      color: Colors.white,
+//                      shape: BoxShape.circle,
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ),
+
+
             child: Notifier.of(context).register<String>('rankingAction', (data) {
               return Image(
                   image: AssetImage(data.data == "0"

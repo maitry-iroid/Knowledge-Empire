@@ -579,14 +579,16 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void navigateToSituation(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(
-                  initialPageType: Const.typeDebrief,
-                  questionDataSituation: questionData,
-                )),
-        ModalRoute.withName('/home'));
+//    Navigator.pushAndRemoveUntil(
+//        context,
+//        MaterialPageRoute(
+//            builder: (context) => HomePage(
+//                  initialPageType: Const.typeDebrief,
+//                  questionDataSituation: questionData,
+//                )),
+//        ModalRoute.withName('/home'));
+
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/home"));
   }
 }
 
