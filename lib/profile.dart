@@ -68,7 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
           Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
       body: SafeArea(
         child: Stack(
-
           children: <Widget>[
             CommonView.showDashboardView(context),
             CommonView.showBGDashboardView(context),
@@ -322,14 +321,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       InkResponse(
                         child: Container(
                           height: 35,
-
                           margin: EdgeInsets.only(top: 15),
                           padding: EdgeInsets.only(left: 8, right: 8),
                           alignment: Alignment.center,
                           child: Text(
                             Utils.getText(
                                 context,
-                                Injector.customerValueData.manager == null  || Injector.customerValueData.manager.isEmpty
+                                Injector.customerValueData.manager == null ||
+                                        Injector
+                                            .customerValueData.manager.isEmpty
                                     ? StringRes.bailout
                                     : StringRes.requestbailout
 //
@@ -352,7 +352,6 @@ class _ProfilePageState extends State<ProfilePage> {
 //                          Injector.customerValueData.manager != null || Injector.customerValueData.manager.isNotEmpty ?
 
                           _asyncConfirmDialog(context);
-
                         },
                       ),
                       InkResponse(
@@ -406,7 +405,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-
   _asyncConfirmDialog(BuildContext context) async {
     return showDialog(
       context: context,
@@ -414,8 +412,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Alert', style: TextStyle(color: ColorRes.black)),
-          content: const Text(
-              'Are you conform Request Bail Out.'),
+          content: const Text('Are you conform Request Bail Out.'),
           actions: <Widget>[
             FlatButton(
               child: const Text('Yes'),
@@ -442,27 +439,31 @@ class _ProfilePageState extends State<ProfilePage> {
 //    re.mode =  ;
     WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
       if (customerValueResponse != null) {
-//        if(customerValueResponse.flag == "true") {
+        if (customerValueResponse.flag == "true") {
           if (customerValueResponse.data != null) {
             await Injector.prefs.setString(PrefKeys.customerValueData,
                 json.encode(customerValueResponse.data.toJson()));
 
             Injector.customerValueData = customerValueResponse.data;
           }
-//        } else {
-//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-//        }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
 
         try {
           _notifier.notify('updateHeaderValue', '');
         } catch (e) {
           print(e);
         }
-
       }
+    }).catchError((e) {
+      print(e.toString());
+      Utils.showToast(e.toString());
+      setState(() {
+        isLoading = false;
+      });
     });
   }
-
 
   logout() async {
     Utils.playClickSound();
