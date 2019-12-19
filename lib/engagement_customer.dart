@@ -44,7 +44,9 @@ class EngagementCustomer extends StatefulWidget {
 
   final Notifier notifier;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
+  final int value;
+
+  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier, this.value})
       : super(key: key);
 
   @override
@@ -97,11 +99,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    print("hello *************----------------- $questionData");
+    print(questionData.value);
+    print(widget.value);
+
     questionData = widget.questionDataEngCustomer;
     widget.questionDataEngCustomer.answer.shuffle();
     arrAnswer = widget.questionDataEngCustomer.answer;
 
     abcdList = abcdIndex;
+
 
     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null

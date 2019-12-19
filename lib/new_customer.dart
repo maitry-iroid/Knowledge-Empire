@@ -87,6 +87,18 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       if (questionResponse != null) {
         if (questionResponse.flag == "true") {
           arrQuestions = questionResponse.data;
+
+          for (int i = 0; i < arrQuestions.length; i++) {
+            arrQuestions[i].value = getValue(i);
+            arrQuestions[i].loyalty = getLoyalty(i);
+            arrQuestions[i].resources = getResource(i);
+
+            print("   ====================================  >");
+
+            print(arrQuestions[i].value);
+          }
+
+          setState(() {});
         } else {
           Utils.showToast(questionResponse.msg);
         }
@@ -124,7 +136,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              decoration:  CommonView.getBGDecoration(context),
+              decoration: CommonView.getBGDecoration(context),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -151,6 +163,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       child: ListView.builder(
         itemCount: arrQuestions.length,
         itemBuilder: (BuildContext context, int index) {
+//          print(("${getValue(index).toString()} \$"));
           return showItem(index);
         },
       ),
@@ -278,7 +291,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      ("${getValue(index).toString()} \$"),
+                      ("${arrQuestions[index].value.toString()} \$"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -288,7 +301,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      ("${getLoyalty(index).toString()} d"),
+                      ("${arrQuestions[index].loyalty.toString()} d"),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -298,7 +311,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      getResource(index).toString(),
+                      arrQuestions[index].resources.toString(),
                       style: TextStyle(
                           color: ColorRes.textRecordBlue, fontSize: 15),
                       textAlign: TextAlign.center,
@@ -331,9 +344,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
           onTap: () {
             Utils.playClickSound();
-            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources && Utils.getServicesPersonCount()>0) {
-
-              Navigator.push(context, FadeRouteHome(page: Screen2(),initialPageType: Const.typeEngagement,questionDataHomeScr: arrQuestions[index]));
+            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
+                Utils.getServicesPersonCount() > 0) {
+              Navigator.push(
+                  context,
+                  FadeRouteHome(
+                      initialPageType: Const.typeEngagement,
+                      questionDataHomeScr: arrQuestions[index],
+                      value: arrQuestions[index].value
+                  ));
 
 /*              Navigator.push(
             if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
@@ -408,7 +427,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 }
 
-class Screen2 extends StatelessWidget {
+/*class Screen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -421,4 +440,4 @@ class Screen2 extends StatelessWidget {
       ),
     );
   }
-}
+}*/

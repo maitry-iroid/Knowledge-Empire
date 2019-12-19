@@ -126,7 +126,7 @@ class DashboardPageState extends State<DashboardPage> {
 
   performItemClick(int type) {
 
-    Navigator.push(context, FadeRouteHome(page: Screen2(),initialPageType: type));
+    Navigator.push(context, FadeRouteHome(initialPageType: type));
 
 //    Navigator.push(
 //        context,

@@ -45,9 +45,13 @@ class FadeRouteHome extends PageRouteBuilder {
   final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
 
+  final int value;
+
   FadeRouteHome({this.page,this.initialPageType,
     this.questionDataHomeScr,
-    this.questionDataSituation})
+    this.questionDataSituation,
+    this.value
+  })
       : super(
     pageBuilder: (
         BuildContext context,
@@ -65,7 +69,9 @@ class FadeRouteHome extends PageRouteBuilder {
           opacity: animation,
           child: HomePage(initialPageType: initialPageType,
             questionDataHomeScr: questionDataHomeScr,
-            questionDataSituation: questionDataSituation,),
+            questionDataSituation: questionDataSituation,
+            value: value,
+          ),
         ),
   );
 }
@@ -119,11 +125,15 @@ class HomePage extends StatefulWidget {
   final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
 
+  final int value;
+
   HomePage(
       {Key key,
       this.initialPageType,
       this.questionDataHomeScr,
-      this.questionDataSituation})
+      this.questionDataSituation,
+      this.value
+      })
       : super(key: key);
 
 //  final  QuestionData questionData;
@@ -162,6 +172,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
 
     _connectivitySubscription = Connectivity()
@@ -425,7 +436,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == 12)
       return EngagementCustomer(
-          questionDataEngCustomer: widget.questionDataHomeScr);
+          questionDataEngCustomer: widget.questionDataHomeScr, value: widget.value,);
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
     else if (_selectedDrawerIndex == 13)
