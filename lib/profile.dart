@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/intro_screen.dart';
+import 'package:ke_employee/models/bailout.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
@@ -66,11 +68,15 @@ class _ProfilePageState extends State<ProfilePage> {
           Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
       body: SafeArea(
         child: Stack(
+
           children: <Widget>[
+            CommonView.showDashboardView(context),
+            CommonView.showBGDashboardView(context),
             Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: CommonView.getBGDecoration(),
+
+//              decoration: CommonView.getBGDecoration(context),
               child: Column(
                 children: <Widget>[
                   Expanded(
@@ -132,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Container(
                   color: Colors.transparent,
                   margin: EdgeInsets.symmetric(
-                      horizontal: Utils.getDeviceWidth(context) / 15),
+                      horizontal: Utils.getDeviceWidth(context) / 20),
                   child: ListView(
                     children: <Widget>[
                       Row(
@@ -169,7 +175,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           InkResponse(
                             onTap: () {
-//
+//                      HelpPage();
+                              Navigator.push(context, FadeRouteIntro());
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(
+//                                      builder: (context) => IntroPage()));
 //                              Navigator.push(
 //                                  context,
 //                                  MaterialPageRoute(
@@ -300,12 +311,48 @@ class _ProfilePageState extends State<ProfilePage> {
                             Injector.isBusinessMode = !Injector.isBusinessMode;
                           });
 
-                          _notifier.notify(
-                              'changeMode', 'Sending data from notfier!');
+                          _notifier.notify('updateHeaderValue',
+                              'Sending data from notfier!');
 //                  Navigator.pushReplacement(
 //                    context,
 //                    MaterialPageRoute(builder: (context) => HomePage()),
 //                  );
+                        },
+                      ),
+                      InkResponse(
+                        child: Container(
+                          height: 35,
+
+                          margin: EdgeInsets.only(top: 15),
+                          padding: EdgeInsets.only(left: 8, right: 8),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(
+                                context,
+                                Injector.customerValueData.manager == null  || Injector.customerValueData.manager.isEmpty
+                                    ? StringRes.bailout
+                                    : StringRes.requestbailout
+//
+                                ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: ColorRes.white,
+                                fontSize: 15,
+                                letterSpacing: 0.7),
+                          ),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(Utils.getAssetsImg(
+                                      'bg_switch_to_prfsnl')),
+                                  fit: BoxFit.fill)),
+                        ),
+                        onTap: () async {
+                          Utils.playClickSound();
+//                          Injector.customerValueData.manager != null || Injector.customerValueData.manager.isNotEmpty ?
+
+                          _asyncConfirmDialog(context);
+
                         },
                       ),
                       InkResponse(
@@ -358,6 +405,64 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+
+  _asyncConfirmDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alert', style: TextStyle(color: ColorRes.black)),
+          content: const Text(
+              'Are you conform Request Bail Out.'),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                performBailOut();
+              },
+            ),
+            FlatButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void performBailOut() {
+    BailOutRequest rq = BailOutRequest();
+    rq.userId = Injector.userData.userId;
+//    re.mode =  ;
+    WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
+      if (customerValueResponse != null) {
+//        if(customerValueResponse.flag == "true") {
+          if (customerValueResponse.data != null) {
+            await Injector.prefs.setString(PrefKeys.customerValueData,
+                json.encode(customerValueResponse.data.toJson()));
+
+            Injector.customerValueData = customerValueResponse.data;
+          }
+//        } else {
+//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+//        }
+
+        try {
+          _notifier.notify('updateHeaderValue', '');
+        } catch (e) {
+          print(e);
+        }
+
+      }
+    });
+  }
+
 
   logout() async {
     Utils.playClickSound();
@@ -792,7 +897,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Utils.showToast("Profile updated successfully!");
 
           if (_image != null) {
-            _notifier.notify('changeMode', 'Sending data from notfier!');
+            _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
           }
         }
       } else {

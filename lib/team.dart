@@ -19,7 +19,7 @@ class _TeamPageState extends State<TeamPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+      decoration: CommonView.getBGDecoration(context),
       child: Column(
         children: <Widget>[CommonView.showTitle(context,StringRes.team)],
       ),

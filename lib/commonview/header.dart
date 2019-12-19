@@ -23,7 +23,7 @@ class HeaderView extends StatelessWidget {
   }
 
   showHeaderView(BuildContext context) {
-    return Notifier.of(context).register<String>('changeMode', (data) {
+    return Notifier.of(context).register<String>('updateHeaderValue', (data) {
       return Container(
         height: Utils.getDeviceHeight(context) / 7.5,
 //      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),

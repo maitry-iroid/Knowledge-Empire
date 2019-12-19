@@ -21,6 +21,31 @@ import 'helper/web_api.dart';
 import 'login.dart';
 import 'models/get_customer_value.dart';
 
+
+
+class FadeRouteIntro extends PageRouteBuilder {
+  final Widget page;
+  FadeRouteIntro({this.page})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: IntroPage(),
+        ),
+  );
+}
+
 class IntroPage extends StatefulWidget {
   IntroPage({Key key}) : super(key: key);
 
@@ -39,7 +64,7 @@ class IntroPageState extends State<IntroPage> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-//    _notifier.notify('changeMode', 'Sending data from notfier!');
+//    _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
   }
 
   @override
@@ -632,12 +657,15 @@ class IntroPageState extends State<IntroPage> {
   }
 
   performItemClick(int type) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(
-                  initialPageType: type,
-                )));
+
+    Navigator.push(context, FadeRouteHome(initialPageType: type));
+
+//    Navigator.push(
+//        context,
+//        MaterialPageRoute(
+//            builder: (context) => HomePage(
+//                  initialPageType: type,
+//                )));
   }
 
   bool isShowing = false;

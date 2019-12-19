@@ -82,7 +82,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Injector.customerValueData = getReleaseResourceData.data;
 //          arrOrganization = getreleaseresourceData.organization;
 
-          _notifier.notify('changeMode', 'Sending data from notfier!');
+          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
           setState(() {
             arrQuestions.removeAt(index);
 
@@ -141,10 +141,13 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: CommonView.getBGDecoration(),
+                decoration: CommonView.getBGDecoration(context),
+
                 child: Container(
+
                   margin: EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
+
                     children: <Widget>[
                       SizedBox(
                         height: 10,

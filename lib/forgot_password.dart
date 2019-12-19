@@ -6,6 +6,30 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/forgot_password.dart';
 
+
+class FadeRouteForgotPassword extends PageRouteBuilder {
+  final Widget page;
+  FadeRouteForgotPassword({this.page})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: ForgotPasswordPage(),
+        ),
+  );
+}
+
 class ForgotPasswordPage extends StatefulWidget {
   ForgotPasswordPage({Key key}) : super(key: key);
 

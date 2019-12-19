@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
@@ -22,7 +23,7 @@ class _RankingPageState extends State<RankingPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: CommonView.getBGDecoration(),
+        decoration: CommonView.getBGDecoration(context),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[showFirstColumn(), showSecondColumn()],
@@ -50,6 +51,8 @@ class _RankingPageState extends State<RankingPage> {
 
     var selecteded = 0;
     bool selected = true;
+
+
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

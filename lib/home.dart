@@ -37,6 +37,82 @@ import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 
+
+class FadeRouteHome extends PageRouteBuilder {
+  final Widget page;
+  final int initialPageType;
+
+  final QuestionData questionDataHomeScr;
+  final QuestionData questionDataSituation;
+
+  FadeRouteHome({this.page,this.initialPageType,
+    this.questionDataHomeScr,
+    this.questionDataSituation})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: HomePage(initialPageType: initialPageType,
+            questionDataHomeScr: questionDataHomeScr,
+            questionDataSituation: questionDataSituation,),
+        ),
+  );
+}
+
+/*
+class RotationRoute extends PageRouteBuilder {
+  final Widget page;
+  final int initialPageType;
+
+  final QuestionData questionDataHomeScr;
+  final QuestionData questionDataSituation;
+
+  RotationRoute({this.page,this.initialPageType,
+    this.questionDataHomeScr,
+    this.questionDataSituation})
+      : super(
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionDuration: Duration(seconds: 1),
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        RotationTransition(
+          turns: Tween<double>(
+            begin: 0.0,
+            end: 1.0,
+          ).animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: Curves.linear,
+            ),
+          ),
+          child: HomePage(initialPageType: initialPageType,
+            questionDataHomeScr: questionDataHomeScr,
+            questionDataSituation: questionDataSituation,),
+        ),
+  );
+}*/
+
+
 class HomePage extends StatefulWidget {
   final int initialPageType;
 
@@ -251,7 +327,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           width: Utils.getDeviceWidth(context) / 2.5,
           child: Drawer(
               child:
-                  Notifier.of(context).register<String>('changeMode', (data) {
+                  Notifier.of(context).register<String>('updateHeaderValue', (data) {
             return Container(
               color: Injector.isBusinessMode
                   ? ColorRes.bgMenu
@@ -290,7 +366,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   showMainItem(DrawerItem item, int i) {
-    return Notifier.of(context).register<String>('changeMode', (data) {
+    return Notifier.of(context).register<String>('updateHeaderValue', (data) {
       return Container(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         margin: EdgeInsets.symmetric(horizontal: 5),
@@ -373,7 +449,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Injector.customerValueData = customerValueData;
 
         try {
-          _notifier.notify('changeMode', 'Sending data from notfier!');
+            _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
         } catch (e) {
           print(e);
         }

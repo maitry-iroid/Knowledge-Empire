@@ -19,7 +19,7 @@ class _HelpPageState extends State<HelpPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+      decoration: CommonView.getBGDecoration(context),
       child: Column(
         children: <Widget>[CommonView.showTitle(context, StringRes.help)],
       ),

@@ -47,6 +47,7 @@ class GetCustomerValueResponse {
 
 class CustomerValueData {
   int totalEmployeeCapacity;
+  String manager;
   int employeeCount;
   int remainingEmployeeCapacity;
   int totalBalance;
@@ -72,6 +73,7 @@ class CustomerValueData {
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
+    manager = json['manager'];
     employeeCount = json['employeeCount'];
     remainingEmployeeCapacity = json['remainingEmployeeCapacity'];
     totalBalance = json['totalBalance'];
@@ -92,6 +94,7 @@ class CustomerValueData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['totalEmployeeCapacity'] = this.totalEmployeeCapacity;
+    data['manager'] = this.manager;
     data['employeeCount'] = this.employeeCount;
     data['remainingEmployeeCapacity'] = this.remainingEmployeeCapacity;
     data['totalBalance'] = this.totalBalance;

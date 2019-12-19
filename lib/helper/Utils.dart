@@ -404,6 +404,7 @@ class Utils {
 //        isLoading = false;
 //      });
       Utils.showToast(e.toString());
+      notifier.notify('updateHeaderValue', 'Sending data from notfier!');
     });
   }
 

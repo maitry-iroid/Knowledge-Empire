@@ -47,9 +47,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: CommonView.getBGDecoration(),
+
+//      decoration: CommonView.getBGDecoration(context),
+
       child: Stack(
         children: <Widget>[
+          CommonView.showDashboardView(context),
+          CommonView.showBGDashboardView(context),
+
           Row(
             children: <Widget>[
               showFirstHalf(),
