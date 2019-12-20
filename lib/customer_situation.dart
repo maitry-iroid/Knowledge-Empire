@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:path/path.dart';
 import 'package:path/path.dart' as prefix0;
+import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
 import 'helper/constant.dart';
@@ -90,6 +91,31 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     } else {
       return Utils.incorrectAnswerSound();
     }
+  }
+
+  isImage(String path) {
+    return extension(path) == ".png" ||
+        extension(path) == ".jpeg" ||
+        extension(path) == ".jpg";
+  }
+
+  isVideo(String path) {
+    return extension(path) == ".mp4";
+  }
+
+  isPdf(String path) {
+    return extension(path) == ".pdf";
+  }
+
+  pdfShow() {
+    return isPdf(correctWrongImage())
+        ? SimplePdfViewerWidget(
+            completeCallback: (bool result) {
+              print("completeCallback,result:${result}");
+            },
+            initialUrl: correctWrongImage(),
+          )
+        : Container();
   }
 
   @override
@@ -440,30 +466,51 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         flex: 1,
         child: Column(
           children: <Widget>[
-
             InkResponse(
               onTap: () {
                 Utils.playClickSound();
                 showDialog(
                   context: context,
-                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
+                  builder: (_) => CorrectWrongImageAlert(),
+//                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
                 );
               },
               child: Container(
-                margin: EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
+                margin:
+                    EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
                 height: Utils.getDeviceHeight(context) / 2.7,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-//                        image: correctWrongImage(),
-//                      image: NetworkImage(questionData.mediaLink),
-                        image: NetworkImage(correctWrongImage()),
-                        fit: BoxFit.fill),
+                    image: isImage(correctWrongImage())
+                        ? DecorationImage(
+                            image:
+                                Utils.getCacheFile(correctWrongImage()) != null
+                                    ? FileImage(
+                                        Utils.getCacheFile(correctWrongImage())
+                                            .file)
+                                    : NetworkImage(correctWrongImage()),
+                            fit: BoxFit.fill)
+                        : null,
+
+//                    DecorationImage(
+////                        image: correctWrongImage(),
+////                      image: NetworkImage(questionData.mediaLink),
+//                        image: NetworkImage(correctWrongImage()),
+//                        fit: BoxFit.fill),
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: ColorRes.white, width: 1)),
+                    border: isImage(questionData.mediaLink)
+                        ? Border.all(color: ColorRes.white, width: 1)
+                        : null),
+                child: isVideo(questionData.mediaLink) &&
+                        _controller.value.initialized
+                    ? AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      )
+                    : pdfShow(),
               ),
             ),
 
-           /* Container(
+            /* Container(
               margin: EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
               height: Utils.getDeviceHeight(context) / 2.7,
               decoration: BoxDecoration(
@@ -495,9 +542,14 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                )),
 //        ModalRoute.withName('home'));
 
-    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("home"));
+    Navigator.pushAndRemoveUntil(
+        context, FadeRouteHome(), ModalRoute.withName("home"));
 
-    Navigator.push(context, FadeRouteHome(initialPageType: Const.typeNewCustomer,questionDataSituation: null));
+    Navigator.push(
+        context,
+        FadeRouteHome(
+            initialPageType: Const.typeNewCustomer,
+            questionDataSituation: null));
 
 //    Navigator.push(
 //      context,
@@ -1027,7 +1079,6 @@ checkAnswer(int index) {
   }
 }
 
-
 //---------------------------------------------------------
 //image show  in alert
 
@@ -1035,8 +1086,8 @@ class CorrectWrongImageAlert extends StatefulWidget {
 //  bool CheckQuestion;
 
   final String img;
-  CorrectWrongImageAlert({Key key, this.img}) : super(key : key);
 
+  CorrectWrongImageAlert({Key key, this.img}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CorrectWrongImageAlertState();
@@ -1046,14 +1097,6 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
-
-  correctWrongImage() {
-    if (questionData.isAnsweredCorrect == true) {
-      return questionDataCustSituation.correctAnswerImage;
-    } else {
-      return questionDataCustSituation.inCorrectAnswerImage;
-    }
-  }
 
   @override
   void initState() {
@@ -1073,12 +1116,37 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
 
   bool checkimg = true;
 
-
-
   isImage(String path) {
     return extension(path) == ".png" ||
         extension(path) == ".jpeg" ||
         extension(path) == ".jpg";
+  }
+
+  isVideo(String path) {
+    return extension(path) == ".mp4";
+  }
+
+  isPdf(String path) {
+    return extension(path) == ".pdf";
+  }
+
+  pdfShow() {
+    return isPdf(correctWrongImage())
+        ? SimplePdfViewerWidget(
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: correctWrongImage(),
+          )
+        : Container();
+  }
+
+  correctWrongImage() {
+    if (questionData.isAnsweredCorrect == true) {
+      return questionDataCustSituation.correctAnswerImage;
+    } else {
+      return questionDataCustSituation.inCorrectAnswerImage;
+    }
   }
 
   @override
@@ -1111,6 +1179,31 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
                             top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
                         decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            image: isImage(correctWrongImage())
+                                ? DecorationImage(
+                                    image: Utils.getCacheFile(
+                                                correctWrongImage()) !=
+                                            null
+                                        ? FileImage(Utils.getCacheFile(
+                                                correctWrongImage())
+                                            .file)
+                                        : NetworkImage(correctWrongImage()),
+                                    fit: BoxFit.fill)
+                                : null,
+                            borderRadius: BorderRadius.circular(10),
+                            border: isImage(questionData.mediaLink)
+                                ? Border.all(color: ColorRes.white, width: 1)
+                                : null),
+                        child: isVideo(questionData.mediaLink) &&
+                                _controller.value.initialized
+                            ? AspectRatio(
+                                aspectRatio: _controller.value.aspectRatio,
+                                child: VideoPlayer(_controller),
+                              )
+                            : pdfShow(),
+
+                        /* BoxDecoration(
                           color: Colors.transparent,
                           image: DecorationImage(
                               image: NetworkImage(widget.img),
@@ -1124,8 +1217,7 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
                           borderRadius: BorderRadius.circular(10),
                           /* border:
                                 Border.all(color: ColorRes.white, width: 1)*/
-                        ),
-
+                        ),*/
                       ),
                     ),
 
@@ -1148,39 +1240,39 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
