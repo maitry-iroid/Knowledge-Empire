@@ -360,7 +360,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                     child: Padding(
                       padding: EdgeInsets.all(5),
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg('minus')),
+                        image: AssetImage(Utils.getAssetsImg('minus_pro')),
                         width: 30,
                       ),
                     ),
@@ -403,7 +403,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                     child: Padding(
                       padding: EdgeInsets.all(5),
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg('plus')),
+                        image: AssetImage(Utils.getAssetsImg('plus_pro')),
                         width: 30,
                       ),
                     ),

@@ -349,7 +349,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               child: Container(
                 alignment: Alignment.center,
                 width: 80,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
@@ -650,9 +650,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
-                          top: 25, bottom: 15, right: 25, left: 25),
+                          top: 25, bottom: 0, right: 25, left: 25),
                       child: Container(
-                          height: Utils.getDeviceHeight(context) / 1.4,
+                          height: Utils.getDeviceHeight(context) / 1.2,
                           width: Utils.getDeviceWidth(context) / 1.2,
                           margin: EdgeInsets.only(top: 0),
                           padding: EdgeInsets.only(
@@ -767,8 +767,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
         },
         child: Container(
 //          height: 45,
-          margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+          margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
           decoration: BoxDecoration(
 //              borderRadius:

@@ -86,10 +86,18 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //  }
 
   checkAudio() {
-    if (questionData.isAnsweredCorrect == true) {
-      return Utils.correctAnswerSound();
+    if(Injector.isBusinessMode) {
+      if (questionData.isAnsweredCorrect == true) {
+        return Utils.correctAnswerSound();
+      } else {
+        return Utils.incorrectAnswerSound();
+      }
     } else {
-      return Utils.incorrectAnswerSound();
+      if (questionData.isAnsweredCorrect == true) {
+        return Utils.procorrectAnswerSound();
+      } else {
+        return Utils.proincorrectAnswerSound();
+      }
     }
   }
 
@@ -194,17 +202,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             InkResponse(
               child: Container(
                 alignment: Alignment.center,
-                width: 70,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                width: 80,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
                         fit: BoxFit.fill)),
-                child: Text(
-                  Utils.getText(context, StringRes.next),
-                  style: TextStyle(color: ColorRes.white, fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
+                child: Center(
+                  child: Text(
+                    Utils.getText(context, StringRes.next),
+                    style: TextStyle(color: ColorRes.white, fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                )
               ),
               onTap: () {
                 Utils.playClickSound();
@@ -618,12 +628,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
-                          top: 25, bottom: 15, right: 25, left: 25),
+                          top: 25, bottom: 0, right: 25, left: 25),
                       child: Container(
-                        height: Utils.getDeviceHeight(context) / 1.6,
+                        height: Utils.getDeviceHeight(context) / 1.2,
                         width: Utils.getDeviceWidth(context) / 1.2,
                         margin: EdgeInsets.only(top: 0),
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                        padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 13),
                         decoration: BoxDecoration(
                           color: Injector.isBusinessMode
                               ? ColorRes.bgDescription
@@ -810,12 +820,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
         },
         child: Container(
           height: 50,
-          margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+          margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(

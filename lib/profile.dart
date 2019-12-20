@@ -197,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       image: AssetImage(Injector.isBusinessMode
                                           ? Utils.getAssetsImg(
                                               "ic_profile_help")
-                                          : Utils.getAssetsImg("null")))),
+                                          : Utils.getAssetsImg("pro_help")))),
                             ),
                           )
                         ],

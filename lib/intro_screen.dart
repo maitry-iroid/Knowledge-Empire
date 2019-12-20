@@ -24,6 +24,7 @@ import 'models/get_customer_value.dart';
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
 
+
   FadeRouteIntro({this.page})
       : super(
           pageBuilder: (
@@ -46,6 +47,7 @@ class FadeRouteIntro extends PageRouteBuilder {
 }
 
 class IntroPage extends StatefulWidget {
+
   IntroPage({Key key}) : super(key: key);
 
   IntroPageState createState() => IntroPageState();
@@ -137,7 +139,7 @@ class IntroPageState extends State<IntroPage> {
               ),
               fit: BoxFit.fill,
             ),
-            opacity: 1,
+            opacity: 0.1,
           ),
           SizedBox(
             width: 12,
@@ -972,29 +974,29 @@ class IntroPageState extends State<IntroPage> {
 
           selectedType == Const.typeRanking
               ? Container(
-              child: Positioned(
-                  top: Utils.getDeviceHeight(context) / 2.35,
-                  right: 10,
-                  child: InkResponse(
-                    child: Image(
-                      image:
-                      AssetImage(Utils.getAssetsImg("intro_bub_enter")),
-                      height: Utils.getDeviceHeight(context) / 10,
-                    ),
-                    onTap: () {
-                      Utils.playClickSound();
-                      setState(() {
+                  child: Positioned(
+                      top: Utils.getDeviceHeight(context) / 2.35,
+                      right: 10,
+                      child: InkResponse(
+                        child: Image(
+                          image:
+                              AssetImage(Utils.getAssetsImg("intro_bub_enter")),
+                          height: Utils.getDeviceHeight(context) / 10,
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          setState(() {
 //                        Navigator.pushAndRemoveUntil(
 //                            context,
 //                            MaterialPageRoute(
 //                                builder: (context) => HomePage()),
 //                            ModalRoute.withName("/home"));
 
-                        Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/home"));
-
-                      });
-                    },
-                  )))
+                            Navigator.pushAndRemoveUntil(context,
+                                FadeRouteHome(), ModalRoute.withName("/home"));
+                          });
+                        },
+                      )))
               : Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
                   right: 10,
