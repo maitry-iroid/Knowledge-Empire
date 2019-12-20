@@ -38,7 +38,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     super.initState();
 
     Utils.isInternetConnectedWithAlert().then((isConnected) {
-      if (isConnected) fetchLearningModules();
+      if (isConnected) {
+        fetchLearningModules();
+      } else {
+
+      }
     });
   }
 
@@ -54,7 +58,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         children: <Widget>[
           CommonView.showDashboardView(context),
           CommonView.showBGDashboardView(context),
-
           Row(
             children: <Widget>[
               showFirstHalf(),

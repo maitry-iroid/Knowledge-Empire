@@ -192,6 +192,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                   width: 25,
                                   margin: EdgeInsets.only(top: 15),
 //                    child: Image(image: AssetImage(Utils.getAssetsImg("ic_profile_help"))),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(Injector.isBusinessMode
+                                          ? Utils.getAssetsImg(
+                                              "ic_profile_help")
+                                          : Utils.getAssetsImg("pro_help")))),
+                            ),
+                          )
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(Utils.getAssetsImg(

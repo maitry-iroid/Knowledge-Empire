@@ -305,9 +305,6 @@ class Utils {
 
   static playClickSound() {
 //    updateVolumes();
-
-
-
     Injector.audioCache.play("sounds/all_button_clicks.wav");
   }
 
@@ -318,6 +315,16 @@ class Utils {
   static incorrectAnswerSound() {
     Injector.audioCache.play("sounds/wrong_answer.wav");
   }
+
+
+  static procorrectAnswerSound() {
+    Injector.audioCache.play("sounds/pro_right_answer.mp3");
+  }
+
+  static proincorrectAnswerSound() {
+    Injector.audioCache.play("sounds/pro_wrong_answer.mp3");
+  }
+
 
 //  Future<void> initPlatformState() async {
 //    var dig = await FlutterVolume.volume;
