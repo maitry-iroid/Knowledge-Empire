@@ -588,7 +588,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                )),
 //        ModalRoute.withName('/home'));
 
-    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/home"));
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(initialPageType: Const.typeDebrief,questionDataSituation: questionData), ModalRoute.withName("/home"));
   }
 }
 
