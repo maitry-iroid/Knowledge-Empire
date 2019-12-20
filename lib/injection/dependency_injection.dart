@@ -52,10 +52,10 @@ class Injector {
 
       cacheManager = DefaultCacheManager();
 
-      mode = prefs.getInt(PrefKeys.mode);
+      mode = prefs.getInt(PrefKeys.mode) != null
+          ? prefs.getInt(PrefKeys.mode)
+          : Const.businessMode;
       isBusinessMode = mode == Const.businessMode;
-
-
     }
   }
 }

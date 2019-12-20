@@ -346,7 +346,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       });
 
       WebApi()
-          .manageOrganizations(context, rq.toJson())
+          .manageOrganizations(context, rq)
           .then((getOrganizationData) {
         setState(() {
           isLoading = false;

@@ -12,6 +12,7 @@ import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/releaseResource.dart';
@@ -356,17 +357,17 @@ class WebApi {
   }
 
   Future<OrganizationData> manageOrganizations(
-      BuildContext context, Map<String, dynamic> jsonMap) async {
+      BuildContext context, ManageOrganizationRequest rq) async {
     initDio();
 
-    print("manageOrganization__" + json.encode(jsonMap));
+    print("manageOrganization__" + json.encode(rq.toJson()));
 
 //    Utils.showLoader(context);
 
     try {
       final response = await dio.post("",
           data: json
-              .encode(getRequest('manageOrganization', json.encode(jsonMap))));
+              .encode(getRequest('manageOrganization', json.encode(rq.toJson()))));
 
 //      Utils.closeLoader(context);
 

@@ -54,6 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void dispose() {
+    _notifier.dispose();
     myFocusNode.dispose();
     super.dispose();
   }
@@ -74,7 +75,6 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               width: double.infinity,
               height: double.infinity,
-
               decoration: CommonView.getBGDecoration(context),
               child: Column(
                 children: <Widget>[
@@ -436,8 +436,18 @@ class _ProfilePageState extends State<ProfilePage> {
   void performBailOut() {
     BailOutRequest rq = BailOutRequest();
     rq.userId = Injector.userData.userId;
-//    re.mode =  ;
+    rq.mode = Injector.mode;
+
+    setState(() {
+      isLoading = true;
+    });
+
     WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
+
+      setState(() {
+        isLoading = false;
+      });
+
       if (customerValueResponse != null) {
         if (customerValueResponse.flag == "true") {
           if (customerValueResponse.data != null) {
@@ -445,15 +455,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 json.encode(customerValueResponse.data.toJson()));
 
             Injector.customerValueData = customerValueResponse.data;
+            _notifier.notify('updateHeaderValue', '');
+            Utils.showToast(
+                Utils.getText(context, "Action performed successfully!"));
           }
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
-
-        try {
-          _notifier.notify('updateHeaderValue', '');
-        } catch (e) {
-          print(e);
         }
       }
     }).catchError((e) {
@@ -496,8 +503,8 @@ class _ProfilePageState extends State<ProfilePage> {
 //          MaterialPageRoute(builder: (context) => LoginPage()),
 //          ModalRoute.withName("/home"));
 
-      Navigator.pushAndRemoveUntil(context, FadeRouteLogin(), ModalRoute.withName("/home"));
-
+      Navigator.pushAndRemoveUntil(
+          context, FadeRouteLogin(), ModalRoute.withName("/home"));
     }).catchError((e) {
       print(e);
       setState(() {

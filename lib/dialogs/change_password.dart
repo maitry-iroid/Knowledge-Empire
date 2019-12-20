@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -75,7 +74,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                         shrinkWrap: true,
                         children: <Widget>[
                           Container(
-                              margin: EdgeInsets.symmetric(vertical: 10),
+                              height: 35,
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
                                   border: Border.all(
@@ -99,6 +98,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                     border: InputBorder.none),
                               )),
                           Container(
+                              height: 35,
                               margin: EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,

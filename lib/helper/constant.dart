@@ -36,8 +36,8 @@ class Const {
   static var typeCRM=7;
   static var typeServices =8;
 
-  static var businessMode=24;
-  static var professionalMode=25;
+  static var businessMode=1;
+  static var professionalMode=2;
 
 
   static var typeCamera = 101;
