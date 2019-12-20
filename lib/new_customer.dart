@@ -107,9 +107,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       }
     }).catchError((e) {
       print(e);
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
       Utils.showToast(e.toString());
     });
   }
@@ -351,8 +353,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   FadeRouteHome(
                       initialPageType: Const.typeEngagement,
                       questionDataHomeScr: arrQuestions[index],
-                      value: arrQuestions[index].value
-                  ));
+                      value: arrQuestions[index].value));
 
 /*              Navigator.push(
             if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&

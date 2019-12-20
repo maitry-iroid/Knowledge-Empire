@@ -173,9 +173,9 @@ class _ProfilePageState extends State<ProfilePage> {
 //                          Padding(padding: EdgeInsets.only(top: 30)),
 
                           InkResponse(
-                            onTap: () {
+                              onTap: () {
 //                      HelpPage();
-                              Navigator.push(context, FadeRouteIntro());
+                                Navigator.push(context, FadeRouteIntro());
 //                              Navigator.push(
 //                                  context,
 //                                  MaterialPageRoute(
@@ -186,20 +186,17 @@ class _ProfilePageState extends State<ProfilePage> {
 //                                      builder: (context) => HomePage(
 //                                            initialPageType: Const.typeHelp,
 //                                          )));
-                            },
-                            child: Container(
-                              height: 25,
-                              width: 25,
-                              margin: EdgeInsets.only(top: 15),
+                              },
+                              child: Container(
+                                  height: 25,
+                                  width: 25,
+                                  margin: EdgeInsets.only(top: 15),
 //                    child: Image(image: AssetImage(Utils.getAssetsImg("ic_profile_help"))),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(Injector.isBusinessMode
-                                          ? Utils.getAssetsImg(
-                                              "ic_profile_help")
-                                          : Utils.getAssetsImg("null")))),
-                            ),
-                          )
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            "ic_profile_help"))),
+                                  )))
                         ],
                       ),
                       Container(
@@ -443,7 +440,6 @@ class _ProfilePageState extends State<ProfilePage> {
     });
 
     WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
-
       setState(() {
         isLoading = false;
       });
