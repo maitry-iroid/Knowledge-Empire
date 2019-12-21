@@ -350,7 +350,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         ),
         backgroundColor: ColorRes.colorBgDark,
         body: SafeArea(
-            child: _selectedDrawerIndex != 0
+            child: /*_selectedDrawerIndex != 0
                 ? Column(
               children: <Widget>[
                 HeaderView(
@@ -363,7 +363,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ),
               ],
             )
-                : Stack(
+                :*/ Stack(
               children: <Widget>[
                 getPage(),
                 HeaderView(

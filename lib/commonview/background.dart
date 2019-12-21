@@ -21,7 +21,7 @@ class CommonView {
     return Injector.isBusinessMode
         ?
 //    CommonView.showDashboardView(context)
-          BoxDecoration(
+        BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
                 fit: BoxFit.fill))
@@ -30,7 +30,7 @@ class CommonView {
 
   static showTitle(BuildContext context, String title) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,17 +53,17 @@ class CommonView {
             margin: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 border: Injector.isBusinessMode
                     ? null
                     : Border.all(width: 1, color: ColorRes.white),
                 color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                    image: AssetImage(
-                      Utils.getAssetsImg("bg_blue"),
-                    ),
-                    fit: BoxFit.fill)
+                        image: AssetImage(
+                          Utils.getAssetsImg("bg_blue"),
+                        ),
+                        fit: BoxFit.fill)
                     : null),
             child: Text(
               Utils.getText(context, Utils.getText(context, title)),
@@ -74,8 +74,9 @@ class CommonView {
               textAlign: TextAlign.center,
             ),
           ),
-          Container(width: 30,)
-
+          Container(
+            width: 30,
+          )
         ],
       ),
     );
@@ -355,7 +356,11 @@ class CommonView {
 //            questionData.answer = arrAnswerr;
 //            Navigator.push(context, MaterialPageRoute(builder: (context) => CustomerSituationPage(questionData: questionData)));
 
-            Navigator.push(context, FadeRouteHome(initialPageType: Const.typeDebrief,questionDataSituation: questionData));
+            Navigator.push(
+                context,
+                FadeRouteHome(
+                    initialPageType: Const.typeDebrief,
+                    questionDataSituation: questionData));
 
 //            Navigator.push(
 //              context,
@@ -388,7 +393,7 @@ class CommonView {
 
   static Widget showCircularProgress(bool isLoading) {
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator(backgroundColor: ColorRes.white,));
     }
     return Container(
       height: 0.0,
@@ -396,15 +401,28 @@ class CommonView {
     );
   }
 
+  static showBackground(BuildContext context) {
+    return Injector.isBusinessMode
+        ? Stack(
+            children: <Widget>[
+              showDashboardView(context),
+              Container(
+                color: ColorRes.black.withOpacity(0.75),
+              )
+            ],
+          )
+        : Container(
+            color: ColorRes.bgProf,
+          );
+  }
+
   static Widget showBGDashboardView(BuildContext context) {
 //    CommonView.showDashboardView(context);
     return Container(
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image: AssetImage(
-    Utils.getAssetsImg("intro_bub_background")),
-    fit: BoxFit.fill))
-    );
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("intro_bub_background")),
+                fit: BoxFit.fill)));
   }
 
   static Widget showDashboardView(BuildContext context) {
@@ -519,7 +537,7 @@ class CommonView {
           ),
           Positioned(
             bottom: 0,
-            left: 10,
+            left: 5,
             right: 10,
             child: Container(
               width: Utils.getDeviceWidth(context),
@@ -543,7 +561,7 @@ class CommonView {
                   InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("new-customer")),
-                        width: Utils.getDeviceWidth(context) / 4.2,
+                        width: Utils.getDeviceWidth(context) / 3.8,
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -583,8 +601,8 @@ class CommonView {
             ),
           ),
           Positioned(
-            bottom: Utils.getDeviceHeight(context) / 12,
-            left: Utils.getDeviceWidth(context) / 4,
+            bottom: Utils.getDeviceHeight(context) / 15,
+            left: Utils.getDeviceWidth(context) / 3.6,
             child: Image(
               image: AssetImage(Utils.getAssetsImg("glasses")),
               height: Utils.getDeviceHeight(context) / 15,

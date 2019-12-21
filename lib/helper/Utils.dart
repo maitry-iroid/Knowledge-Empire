@@ -419,4 +419,8 @@ class Utils {
   static FileInfo getCacheFile(String url) {
     return DefaultCacheManager().getFileFromMemory(url);
   }
+
+  static getHeaderHeight(BuildContext context){
+    return Utils.getDeviceHeight(context) / 7.5;
+  }
 }

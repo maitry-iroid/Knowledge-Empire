@@ -44,7 +44,6 @@ class EngagementCustomer extends StatefulWidget {
 
   final Notifier notifier;
 
-
   EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
       : super(key: key);
 
@@ -105,9 +104,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     abcdList = abcdIndex;
 
-
     print(questionData.value);
-
 
     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
@@ -133,31 +130,18 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   Widget build(BuildContext context) {
     _notifier = NotifierProvider.of(context);
 
-    return Scaffold(
-      key: _scaffoldKey,
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        CommonView.showBackground(context),
+        Column(
           children: <Widget>[
-            Injector.isBusinessMode
-                ? Image(
-                    image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-//                  image: AssetImage(Utils.getAssetsImg(arrQuestions.question)),
-                    fit: BoxFit.fill,
-                  )
-                : Container(
-                    color: ColorRes.bgProf,
-                  ),
-            Column(
-              children: <Widget>[
-                showSubHeader(context),
-                showMainBody(context),
-              ],
-            ),
-            CommonView.showCircularProgress(isLoading)
+            showSubHeader(context),
+            showMainBody(context),
           ],
         ),
-      ),
+        CommonView.showCircularProgress(isLoading)
+      ],
     );
   }
 
@@ -170,7 +154,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           });
         },
         child: Container(
-//          height: Utils.getDeviceWidth(context) / 5,
           height: 48,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
@@ -194,7 +177,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   ? (DecorationImage(
                       image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
                   : null),
-          //bg_blue
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -311,7 +293,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: EdgeInsets.only(top: Utils.getHeaderHeight(context) + 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -453,8 +435,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                      return showItem(index);
 //                    },
 //                  ),
-                  child:
-                      Notifier.of(context).register<String>('selectQuestionAction', (data) {
+                  child: Notifier.of(context)
+                      .register<String>('selectQuestionAction', (data) {
 //                    print(data.data);
 //                    return Text('${data.data}');
                     return ListView.builder(
@@ -588,7 +570,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                )),
 //        ModalRoute.withName('/home'));
 
-    Navigator.pushAndRemoveUntil(context, FadeRouteHome(initialPageType: Const.typeDebrief,questionDataSituation: questionData), ModalRoute.withName("/home"));
+    Navigator.pushAndRemoveUntil(
+        context,
+        FadeRouteHome(
+            initialPageType: Const.typeDebrief,
+            questionDataSituation: questionData),
+        ModalRoute.withName("/home"));
   }
 }
 
@@ -664,8 +651,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: ColorRes.white, width: 1),
                           ),
-                          child: Notifier.of(context).register<String>('selectQuestionAction',
-                              (data) {
+                          child: Notifier.of(context)
+                              .register<String>('selectQuestionAction', (data) {
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: ClampingScrollPhysics(),
@@ -742,8 +729,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
       ),
     );
   }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
 //  int _selectedItem = 0;
 //

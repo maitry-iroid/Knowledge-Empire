@@ -86,7 +86,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //  }
 
   checkAudio() {
-    if(Injector.isBusinessMode) {
+    if (Injector.isBusinessMode) {
       if (questionData.isAnsweredCorrect == true) {
         return Utils.correctAnswerSound();
       } else {
@@ -128,35 +128,31 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-//        backgroundColor: ColorRes.colorBgDark,
-        body: SafeArea(
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Injector.isBusinessMode
-              ? Image(
-                  image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                  fit: BoxFit.fill,
-                )
-              : Container(
-                  color: ColorRes.bgProf,
-                ),
-          Column(
-            children: <Widget>[
-              showSubHeader(context),
-              Expanded(
-                  child: Row(
-                children: <Widget>[
-                  showFirstHalf(context),
-                  showSecondHalf(context),
-                ],
-              )),
-            ],
-          )
-        ],
-      ),
-    ));
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        Injector.isBusinessMode
+            ? Image(
+          image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
+          fit: BoxFit.fill,
+        )
+            : Container(
+          color: ColorRes.bgProf,
+        ),
+        Column(
+          children: <Widget>[
+            showSubHeader(context),
+            Expanded(
+                child: Row(
+                  children: <Widget>[
+                    showFirstHalf(context),
+                    showSecondHalf(context),
+                  ],
+                )),
+          ],
+        )
+      ],
+    );
   }
 
   showSubHeader(BuildContext context) {
@@ -201,21 +197,21 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             ),
             InkResponse(
               child: Container(
-                alignment: Alignment.center,
-                width: 80,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                        fit: BoxFit.fill)),
-                child: Center(
-                  child: Text(
-                    Utils.getText(context, StringRes.next),
-                    style: TextStyle(color: ColorRes.white, fontSize: 16),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ),
+                  alignment: Alignment.center,
+                  width: 80,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                          fit: BoxFit.fill)),
+                  child: Center(
+                    child: Text(
+                      Utils.getText(context, StringRes.next),
+                      style: TextStyle(color: ColorRes.white, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
               onTap: () {
                 Utils.playClickSound();
                 gotoMainScreen(context);
@@ -501,16 +497,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                             fit: BoxFit.fill)
                         : null,
 
-//                    DecorationImage(
-////                        image: correctWrongImage(),
-////                      image: NetworkImage(questionData.mediaLink),
-//                        image: NetworkImage(correctWrongImage()),
-//                        fit: BoxFit.fill),
                     borderRadius: BorderRadius.circular(10),
                     border: isImage(questionData.mediaLink)
                         ? Border.all(color: ColorRes.white, width: 1)
                         : null),
                 child: isVideo(questionData.mediaLink) &&
+                        _controller != null &&
                         _controller.value.initialized
                     ? AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
@@ -520,18 +512,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
             ),
 
-            /* Container(
-              margin: EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
-              height: Utils.getDeviceHeight(context) / 2.7,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-//                        image: correctWrongImage(),
-//                      image: NetworkImage(questionData.mediaLink),
-                      image: NetworkImage(correctWrongImage()),
-                      fit: BoxFit.fill),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: ColorRes.white, width: 1)),
-            ),*/
             Expanded(
                 child: CommonView.questionAndExplanation(
                     context,
@@ -633,7 +613,8 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                         height: Utils.getDeviceHeight(context) / 1.2,
                         width: Utils.getDeviceWidth(context) / 1.2,
                         margin: EdgeInsets.only(top: 0),
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 13),
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 20, bottom: 13),
                         decoration: BoxDecoration(
                           color: Injector.isBusinessMode
                               ? ColorRes.bgDescription
