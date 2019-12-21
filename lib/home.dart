@@ -210,6 +210,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 0;
 
     getCustomerValues();
+
+
   }
 
   @override

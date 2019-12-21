@@ -32,6 +32,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   String searchText = "";
   LearningModuleData selectedModule = LearningModuleData();
 
+  int maxVol, currentVol;
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -50,6 +53,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     });
+
   }
 
   @override
@@ -227,10 +231,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         ),
       ),
       onTap: () {
+
         Utils.playClickSound();
         setState(() {
           selectedModule = arrFinalLearningModules[index];
         });
+
+
       },
     );
   }

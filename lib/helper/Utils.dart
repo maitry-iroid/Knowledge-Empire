@@ -303,7 +303,7 @@ class Utils {
   }
 
 
-  static playClickSound() {
+    static playClickSound() {
 //    updateVolumes();
     Injector.audioCache.play("sounds/all_button_clicks.wav");
   }
