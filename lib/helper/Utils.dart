@@ -174,8 +174,8 @@ class Utils {
   static performBack(BuildContext context) {
     if (!Navigator.canPop(context)) {
       Navigator.pop(context);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+
+      Navigator.pushReplacement(context, FadeRouteHome());
 
       /*showDialog(
           context: context,

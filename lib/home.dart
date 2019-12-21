@@ -282,7 +282,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       setState(() => _selectedDrawerIndex = index);
       Navigator.of(context).pop(); // close the drawer
       if(_selectedDrawerIndex == 11) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => IntroPage()));
+        Navigator.push(context, FadeRouteIntro());
       }
     }
   }

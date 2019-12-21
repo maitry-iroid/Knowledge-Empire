@@ -626,12 +626,6 @@ class IntroPageState extends State<IntroPage> {
   performItemClick(int type) {
     Navigator.push(context, FadeRouteHome(initialPageType: type));
 
-//    Navigator.push(
-//        context,
-//        MaterialPageRoute(
-//            builder: (context) => HomePage(
-//                  initialPageType: type,
-//                )));
   }
 
   bool isShowing = false;
@@ -986,11 +980,6 @@ class IntroPageState extends State<IntroPage> {
                         onTap: () {
                           Utils.playClickSound();
                           setState(() {
-//                        Navigator.pushAndRemoveUntil(
-//                            context,
-//                            MaterialPageRoute(
-//                                builder: (context) => HomePage()),
-//                            ModalRoute.withName("/home"));
 
                             Navigator.pushAndRemoveUntil(context,
                                 FadeRouteHome(), ModalRoute.withName("/home"));

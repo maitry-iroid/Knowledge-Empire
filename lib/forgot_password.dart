@@ -196,6 +196,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       if (data != null) {
         if (data.flag == "true") {
           Utils.showToast("Mail sent Successfully.");
+          //alert pop
           Navigator.pop(context);
         } else {
           Utils.showToast(data.msg);

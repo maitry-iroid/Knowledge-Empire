@@ -174,12 +174,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           InkResponse(
                               onTap: () {
-//                      HelpPage();
                               Navigator.push(context, FadeRouteIntro());
-//                              Navigator.push(
-//                                  context,
-//                                  MaterialPageRoute(
-//                                      builder: (context) => IntroPage()));
+
 //                              Navigator.push(
 //                                  context,
 //                                  MaterialPageRoute(
@@ -417,6 +413,7 @@ class _ProfilePageState extends State<ProfilePage> {
             FlatButton(
               child: const Text('Yes'),
               onPressed: () {
+                //alert pop
                 Navigator.of(context).pop();
                 performBailOut();
               },
@@ -424,6 +421,7 @@ class _ProfilePageState extends State<ProfilePage> {
             FlatButton(
               child: const Text('No'),
               onPressed: () {
+                //alert pop
                 Navigator.of(context).pop();
               },
             )
@@ -497,11 +495,6 @@ class _ProfilePageState extends State<ProfilePage> {
           Utils.showToast(data.msg);
         }
       }
-
-//      Navigator.pushAndRemoveUntil(
-//          context,
-//          MaterialPageRoute(builder: (context) => LoginPage()),
-//          ModalRoute.withName("/home"));
 
       Navigator.pushAndRemoveUntil(
           context, FadeRouteLogin(), ModalRoute.withName("/home"));
@@ -852,6 +845,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 onTap: () {
                   Utils.playClickSound();
+                  //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeGallery);
                 },
@@ -868,6 +862,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 onTap: () async {
                   Utils.playClickSound();
+                  //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeCamera);
                 },

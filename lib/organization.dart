@@ -319,12 +319,14 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               child: Text('Yes'),
               onPressed: () {
                 manageLevel(position, action);
+                //alert pop
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
               child: Text('No'),
               onPressed: () {
+                //alert pop
                 Navigator.of(context).pop();
               },
             ),

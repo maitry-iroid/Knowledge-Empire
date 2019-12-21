@@ -127,13 +127,6 @@ class DashboardPageState extends State<DashboardPage> {
   performItemClick(int type) {
 
     Navigator.push(context, FadeRouteHome(initialPageType: type));
-
-//    Navigator.push(
-//        context,
-//        MaterialPageRoute(
-//            builder: (context) => HomePage(
-//                  initialPageType: type,
-//                )));
   }
 
   getTitle(int type) {

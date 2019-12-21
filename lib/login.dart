@@ -137,10 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Utils.playClickSound();
                         Navigator.push(context, FadeRouteForgotPassword());
-//                        Navigator.push(
-//                            context,
-//                            MaterialPageRoute(
-//                                builder: (context) => ForgotPasswordPage()));
+
                       },
                     ),
                   ),
@@ -274,19 +271,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToIntro() {
-//    Navigator.pushAndRemoveUntil(
-//        context,
-//        MaterialPageRoute(builder: (context) => IntroPage()),
-//        ModalRoute.withName("/login"));
 
     Navigator.pushAndRemoveUntil(context, FadeRouteIntro(), ModalRoute.withName("/login"));
   }
 
   void navigateToDashboard() {
-//    Navigator.pushAndRemoveUntil(
-//        context,
-//        MaterialPageRoute(builder: (context) => HomePage()),
-//        ModalRoute.withName("/login"));
 
     Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
 

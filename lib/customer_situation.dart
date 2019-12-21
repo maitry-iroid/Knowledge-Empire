@@ -543,14 +543,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-//    Navigator.pushAndRemoveUntil(
-//        context,
-//        MaterialPageRoute(
-//            builder: (context) => HomePage(
-//                  initialPageType: Const.typeHome,
-//                  questionDataSituation: null,
-//                )),
-//        ModalRoute.withName('home'));
 
     Navigator.pushAndRemoveUntil(
         context, FadeRouteHome(), ModalRoute.withName("home"));
@@ -561,14 +553,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             initialPageType: Const.typeNewCustomer,
             questionDataSituation: null));
 
-//    Navigator.push(
-//      context,
-//      MaterialPageRoute(
-//          builder: (context) => HomePage(
-//                initialPageType: Const.typeNewCustomer,
-//                questionDataSituation: null,
-//              )),
-//    );
   }
 }
 
@@ -693,6 +677,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                       child: InkResponse(
                         onTap: () {
                           Utils.playClickSound();
+                          //alert pop
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -1005,6 +990,7 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                       child: InkResponse(
                           onTap: () {
                             Utils.playClickSound();
+                            //alert pop
                             Navigator.pop(context);
 
 //                          (checkimg == true ? showDialog(
@@ -1241,6 +1227,7 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
                       child: InkResponse(
                           onTap: () {
                             Utils.playClickSound();
+                            //alert pop
                             Navigator.pop(context);
 
 //                          (checkimg == true ? showDialog(

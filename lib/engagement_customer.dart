@@ -579,14 +579,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void navigateToSituation(BuildContext context) {
-//    Navigator.pushAndRemoveUntil(
-//        context,
-//        MaterialPageRoute(
-//            builder: (context) => HomePage(
-//                  initialPageType: Const.typeDebrief,
-//                  questionDataSituation: questionData,
-//                )),
-//        ModalRoute.withName('/home'));
+
 
     Navigator.pushAndRemoveUntil(context, FadeRouteHome(initialPageType: Const.typeDebrief,questionDataSituation: questionData), ModalRoute.withName("/home"));
   }
@@ -718,6 +711,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       child: InkResponse(
                         onTap: () {
                           Utils.playClickSound();
+                          //alert pop
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -979,6 +973,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       child: InkResponse(
                           onTap: () {
                             Utils.playClickSound();
+                            //alert pop
                             Navigator.pop(context);
 
 //                          (checkimg == true ? showDialog(
@@ -1146,6 +1141,7 @@ class ImageShowAlertState extends State<ImageShowAlert>
                       child: InkResponse(
                           onTap: () {
                             Utils.playClickSound();
+                            //alert pop
                             Navigator.pop(context);
 
 //                          (checkimg == true ? showDialog(
