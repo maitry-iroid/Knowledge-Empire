@@ -13,41 +13,45 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
-
-  List<String> arrFriends = ["hello","world","good","morning","hello","world","good","morning","hello","world","good","morning"];
-  List<String> arrRewards = ["hello","world","good","morning","hello"];
-
+  List<String> arrFriends = [
+    "hello",
+    "world",
+    "good",
+    "morning",
+    "hello",
+    "world",
+    "good",
+    "morning",
+    "hello",
+    "world",
+    "good",
+    "morning"
+  ];
+  List<String> arrRewards = ["hello", "world", "good", "morning", "hello"];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: CommonView.getBGDecoration(context),
-      child: Stack(
-
-        children: <Widget>[
-//          CommonView.showDashboardView(context),
-//          CommonView.showBGDashboardView(context),
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: 10,
-              ),
-              CommonView.showTitle(context, StringRes.challenges),
-              showMainBody(),
-            ],
-          ),
-          Card(
-            margin: EdgeInsets.all(0),
-            elevation: 10,
-            child: Container(
-              color: ColorRes.colorBgDark,
-              height: 1,
+    return Stack(
+      children: <Widget>[
+        CommonView.showBackground(context),
+        Column(
+          children: <Widget>[
+            SizedBox(
+              height:Utils.getHeaderHeight(context)+ 10,
             ),
+            CommonView.showTitle(context, StringRes.challenges),
+            showMainBody(),
+          ],
+        ),
+        Card(
+          margin: EdgeInsets.all(0),
+          elevation: 10,
+          child: Container(
+            color: ColorRes.colorBgDark,
+            height: 1,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -225,14 +229,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-  int selectedIndex  = -1;
+  int selectedIndex = -1;
 
   _onSelected(int index) {
     setState(() => selectedIndex = index);
   }
 
   showFriendItem(int index) {
-
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
@@ -246,9 +249,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
             borderRadius: BorderRadius.circular(20),
             image: Injector.isBusinessMode
                 ? DecorationImage(
-                    image: AssetImage( selectedIndex != null && selectedIndex == index
-                        ? Utils.getAssetsImg('bg_blue')
-                              : Utils.getAssetsImg('rounded_rect_challenges'),
+                    image: AssetImage(
+                      selectedIndex != null && selectedIndex == index
+                          ? Utils.getAssetsImg('bg_blue')
+                          : Utils.getAssetsImg('rounded_rect_challenges'),
                     ),
                     fit: BoxFit.fill)
                 : null),
@@ -272,7 +276,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   showSectorItem(int index) {
-
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
@@ -284,11 +287,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
             borderRadius: BorderRadius.circular(5),
             image: Injector.isBusinessMode
                 ? DecorationImage(
-                image: AssetImage( selectItem != null && selectItem == index
-                    ? Utils.getAssetsImg('challenges_bg_sector')
-                    : Utils.getAssetsImg(''),
-                ),
-                fit: BoxFit.fill)
+                    image: AssetImage(
+                      selectItem != null && selectItem == index
+                          ? Utils.getAssetsImg('challenges_bg_sector')
+                          : Utils.getAssetsImg(''),
+                    ),
+                    fit: BoxFit.fill)
                 : null),
         margin: EdgeInsets.symmetric(vertical: 3),
         padding: EdgeInsets.symmetric(horizontal: 15),
@@ -347,7 +351,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
       ),
     );
   }
-
 
   showRewardItem(int index) {
     return Container(

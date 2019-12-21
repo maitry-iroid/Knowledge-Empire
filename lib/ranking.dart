@@ -20,14 +20,19 @@ class _RankingPageState extends State<RankingPage> {
     _notifier = NotifierProvider.of(context);
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: CommonView.getBGDecoration(context),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[showFirstColumn(), showSecondColumn()],
-        ),
+      body: Stack(
+        children: <Widget>[
+          CommonView.showBackground(context),
+          Padding(
+            padding: EdgeInsets.only(
+              top: Utils.getHeaderHeight(context),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[showFirstColumn(), showSecondColumn()],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -48,11 +53,8 @@ class _RankingPageState extends State<RankingPage> {
 //      },
 //    );
 
-
     var selecteded = 0;
     bool selected = true;
-
-
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,8 +85,8 @@ class _RankingPageState extends State<RankingPage> {
 //              ),
 //            ),
 
-
-            child: Notifier.of(context).register<String>('rankingAction', (data) {
+            child:
+                Notifier.of(context).register<String>('rankingAction', (data) {
               return Image(
                   image: AssetImage(data.data == "0"
                       ? Utils.getAssetsImg('ranking_select_revenue')
@@ -100,7 +102,8 @@ class _RankingPageState extends State<RankingPage> {
               selecteded = 1;
               _notifier.notify('rankingAction', '1');
             },
-            child: Notifier.of(context).register<String>('rankingAction', (data) {
+            child:
+                Notifier.of(context).register<String>('rankingAction', (data) {
               return Image(
                   image: AssetImage(data.data != "1"
                       ? Utils.getAssetsImg('ranking_deselect_profit')
@@ -116,7 +119,8 @@ class _RankingPageState extends State<RankingPage> {
                 selecteded = 2;
                 _notifier.notify('rankingAction', '2');
               },
-              child: Notifier.of(context).register<String>('rankingAction', (data) {
+              child: Notifier.of(context).register<String>('rankingAction',
+                  (data) {
                 return Image(
                     image: AssetImage(data.data != "2"
                         ? Utils.getAssetsImg('ranking_deselect_customers')
@@ -131,7 +135,8 @@ class _RankingPageState extends State<RankingPage> {
               selecteded = 3;
               _notifier.notify('rankingAction', '3');
             },
-            child: Notifier.of(context).register<String>('rankingAction', (data) {
+            child:
+                Notifier.of(context).register<String>('rankingAction', (data) {
               return Image(
                   image: AssetImage(data.data != "3"
                       ? Utils.getAssetsImg('ranking_deselect_brand')
@@ -434,17 +439,19 @@ class _RankingPageState extends State<RankingPage> {
           Expanded(
             flex: 3,
             child: InkResponse(
-              onTap: () {
-                print("hello$index");
+                onTap: () {
+                  print("hello$index");
 //                index ? :
-                _isSelected(index);
-              },
-              child:  Image(
-                  image: AssetImage( selectedIndex != null && selectedIndex == index ? Utils.getAssetsImg('add_emplyee') : Utils.getAssetsImg('add_emp_check')),
+                  _isSelected(index);
+                },
+                child: Image(
+                  image: AssetImage(
+                      selectedIndex != null && selectedIndex == index
+                          ? Utils.getAssetsImg('add_emplyee')
+                          : Utils.getAssetsImg('add_emp_check')),
                 )
 
-
-         /*      onTap: () {
+                /*      onTap: () {
                 print("hello$index");
 //                selctedIndex = index;
                 _notifier.notify('addemp', "");
@@ -457,14 +464,14 @@ class _RankingPageState extends State<RankingPage> {
                 );
               }),  */
 
-            ),
+                ),
           ),
         ],
       ),
     );
   }
 
-  int selectedIndex  = -1;
+  int selectedIndex = -1;
 
   _isSelected(int index) {
     //pass the selected index to here and set to 'isSelected'

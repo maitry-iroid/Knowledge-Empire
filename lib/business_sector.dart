@@ -56,8 +56,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       child: Stack(
         children: <Widget>[
-          CommonView.showDashboardView(context),
-          CommonView.showBGDashboardView(context),
+          CommonView.showBackground(context),
           Row(
             children: <Widget>[
               showFirstHalf(),
@@ -67,7 +66,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     ? Card(
                         color: Colors.transparent,
                         elevation: 20,
-                        margin: EdgeInsets.all(0),
+                        margin: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
                         child: showSecondHalf(),
                       )
                     : showSecondHalf(),
@@ -235,7 +234,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: 10,
+            height: Utils.getHeaderHeight(context)+10,
           ),
           CommonView.showTitle(context, StringRes.businessSector),
           Container(

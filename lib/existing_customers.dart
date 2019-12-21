@@ -137,29 +137,25 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
     return Scaffold(
         backgroundColor: ColorRes.colorBgDark,
-        body: SafeArea(
-            child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: CommonView.getBGDecoration(context),
-
-                child: Container(
-
-                  margin: EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      CommonView.showTitle(
-                          context, StringRes.existingCustomers),
-                      showSubHeader(),
-                      showItems(),
-                      CommonView.showCircularProgress(isLoading)
-                    ],
+        body: Stack(
+          children: <Widget>[
+            CommonView.showBackground(context),
+            Container(
+              margin: EdgeInsets.only(left: 30,right: 30,top: Utils.getHeaderHeight(context)),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
                   ),
-                ))));
+                  CommonView.showTitle(context, StringRes.existingCustomers),
+                  showSubHeader(),
+                  showItems(),
+                ],
+              ),
+            ),
+            CommonView.showCircularProgress(isLoading)
+          ],
+        ));
   }
 
   Expanded showItems() {

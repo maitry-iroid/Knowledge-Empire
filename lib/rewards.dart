@@ -17,13 +17,16 @@ class _RewardsPageState extends State<RewardsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: CommonView.getBGDecoration(context),
-      child: Row(
-        children: <Widget>[showFirstHalf(), showSecondHalf()],
-      ),
+    return Stack(
+      children: <Widget>[
+        CommonView.showBackground(context),
+        Padding(
+          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+          child: Row(
+            children: <Widget>[showFirstHalf(), showSecondHalf()],
+          ),
+        )
+      ],
     );
   }
 

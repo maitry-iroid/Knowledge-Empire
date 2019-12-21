@@ -25,7 +25,7 @@ class HeaderView extends StatelessWidget {
   showHeaderView(BuildContext context) {
     return Notifier.of(context).register<String>('updateHeaderValue', (data) {
       return Container(
-        height: Utils.getDeviceHeight(context) / 7.5,
+        height: Utils.getHeaderHeight(context) ,
 //      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         color: Injector.isBusinessMode
             ? ColorRes.headerDashboard

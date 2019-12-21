@@ -67,37 +67,23 @@ class _ProfilePageState extends State<ProfilePage> {
       key: _scaffoldKey,
       backgroundColor:
           Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-//            CommonView.showDashboardView(context),
-//            CommonView.showBGDashboardView(context),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: CommonView.getBGDecoration(context),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        showFirstHalf(),
-//                    Container(
-//                      margin: EdgeInsets.only( left: 25),
-//                      height: double.infinity,
-//                      width: 1,
-//                      color: ColorRes.greyText.withOpacity(0.5),
-//                    ),
-                        showSecondHalf()
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            CommonView.showCircularProgress(isLoading)
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          CommonView.showBackground(context),
+          Padding(padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Row(
+                  children: <Widget>[
+                    showFirstHalf(),
+                    showSecondHalf()
+                  ],
+                ),
+              )
+            ],
+          ),),
+          CommonView.showCircularProgress(isLoading)
+        ],
       ),
     );
   }
@@ -441,7 +427,6 @@ class _ProfilePageState extends State<ProfilePage> {
     });
 
     WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
-
       setState(() {
         isLoading = false;
       });

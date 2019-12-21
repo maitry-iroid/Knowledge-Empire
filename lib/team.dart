@@ -16,14 +16,17 @@ class _TeamPageState extends State<TeamPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: CommonView.getBGDecoration(context),
-      child: Column(
-        children: <Widget>[CommonView.showTitle(context,StringRes.team)],
-      ),
-    );
+    return  Stack(
+      children: <Widget>[
+        CommonView.showBackground(context),
+        Padding(
+          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+          child: Column(
+            children: <Widget>[CommonView.showTitle(context, StringRes.team)],
+          ),
+        ),
+      ],
+    );;
   }
 
   Row showTitle() {

@@ -49,29 +49,25 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          decoration: CommonView.getBGDecoration(context),
-          child: Stack(
+      body: Stack(
+        children: <Widget>[
+          CommonView.showBackground(context),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CommonView.showTitle(context, StringRes.organizations),
-                  Expanded(
-                    child:
-                        arrOrganization.length > 0 ? showItems() : Container(),
-                  )
-                ],
+              SizedBox(
+                height: Utils.getHeaderHeight(context)+10,
               ),
-              CommonView.showCircularProgress(isLoading)
+              CommonView.showTitle(context, StringRes.organizations),
+              Expanded(
+                child:
+                arrOrganization.length > 0 ? showItems() : Container(),
+              )
             ],
-          )),
+          ),
+          CommonView.showCircularProgress(isLoading)
+        ],
+      ),
     );
   }
 

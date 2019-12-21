@@ -134,24 +134,19 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         body: SafeArea(
       child: Stack(
         children: <Widget>[
-          Align(
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: CommonView.getBGDecoration(context),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CommonView.showTitle(context, StringRes.newCustomers),
-                    showSubHeader(),
-                    showItems()
-                  ],
+          CommonView.showBackground(context),
+          Container(
+            margin: EdgeInsets.only(
+                left: 20, right: 20, top: Utils.getHeaderHeight(context)),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
                 ),
-              ),
+                CommonView.showTitle(context, StringRes.newCustomers),
+                showSubHeader(),
+                showItems()
+              ],
             ),
           ),
           Container(child: showCircularProgress()),
