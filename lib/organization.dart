@@ -56,12 +56,11 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               SizedBox(
-                height: Utils.getHeaderHeight(context)+10,
+                height: Utils.getHeaderHeight(context) + 10,
               ),
               CommonView.showTitle(context, StringRes.organizations),
               Expanded(
-                child:
-                arrOrganization.length > 0 ? showItems() : Container(),
+                child: arrOrganization.length > 0 ? showItems() : Container(),
               )
             ],
           ),
@@ -309,7 +308,9 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Text('Are you sure want to perform this operation?'),
+          content: Text(action == Const.add
+              ? arrOrganization[position].addLevelConfirmMessage
+              : arrOrganization[position].subtractLevelConfirmMessage),
           actions: <Widget>[
             FlatButton(
               child: Text('Yes'),
@@ -343,9 +344,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         isLoading = true;
       });
 
-      WebApi()
-          .manageOrganizations(context, rq)
-          .then((getOrganizationData) {
+      WebApi().manageOrganizations(context, rq).then((getOrganizationData) {
         setState(() {
           isLoading = false;
         });
