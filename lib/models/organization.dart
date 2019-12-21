@@ -17,7 +17,6 @@ class GetOrganizationRequest {
   }
 }
 
-
 class GetOrganizationResponse {
   String flag;
   String result;
@@ -30,7 +29,9 @@ class GetOrganizationResponse {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
-    data = json['data'] != null ? new OrganizationData.fromJson(json['data']) : null;
+    data = json['data'] != null
+        ? new OrganizationData.fromJson(json['data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -73,22 +74,35 @@ class OrganizationData {
     return data;
   }
 }
-
 class Organization {
   int type;
   String name;
   int level;
-  int employeeCount;
   String description;
+  int bonus;
+  String subtractLevelConfirmMessage;
+  String addLevelConfirmMessage;
+  int employeeCount;
 
-  Organization({this.type, this.name, this.level, this.employeeCount});
+  Organization(
+      {this.type,
+        this.name,
+        this.level,
+        this.description,
+        this.bonus,
+        this.subtractLevelConfirmMessage,
+        this.addLevelConfirmMessage,
+        this.employeeCount});
 
   Organization.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     name = json['name'];
     level = json['level'];
-    employeeCount = json['employeeCount'];
     description = json['description'];
+    bonus = json['bonus'];
+    subtractLevelConfirmMessage = json['subtractLevelConfirmMessage'];
+    addLevelConfirmMessage = json['addLevelConfirmMessage'];
+    employeeCount = json['employeeCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -96,8 +110,11 @@ class Organization {
     data['type'] = this.type;
     data['name'] = this.name;
     data['level'] = this.level;
-    data['employeeCount'] = this.employeeCount;
     data['description'] = this.description;
+    data['bonus'] = this.bonus;
+    data['subtractLevelConfirmMessage'] = this.subtractLevelConfirmMessage;
+    data['addLevelConfirmMessage'] = this.addLevelConfirmMessage;
+    data['employeeCount'] = this.employeeCount;
     return data;
   }
 }

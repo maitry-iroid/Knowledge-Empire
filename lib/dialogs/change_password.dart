@@ -76,7 +76,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                           widget.isFromProfile
                               ? Container(
                                   height: 35,
-                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  margin: EdgeInsets.symmetric(vertical: 3),
                                   decoration: BoxDecoration(
                                       color: ColorRes.bgTextBox,
                                       border: Border.all(
@@ -103,7 +103,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               : Container(),
                           Container(
                               height: 35,
-                              margin: EdgeInsets.symmetric(vertical: 5),
+                              margin: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
                                   border: Border.all(
@@ -128,7 +128,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               )),
                           Container(
                               height: 35,
-                              margin: EdgeInsets.symmetric(vertical: 5),
+                              margin: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
                                   border: Border.all(

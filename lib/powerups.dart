@@ -97,31 +97,29 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   @override
   Widget build(BuildContext context) {
     _notifier = NotifierProvider.of(context);
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: CommonView.getBGDecoration(context),
-      child: Stack(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              showFirstHalf(),
-              Expanded(
-                flex: 1,
-                child: Injector.isBusinessMode
-                    ? Card(
-                        color: Colors.transparent,
-                        elevation: 20,
-                        margin: EdgeInsets.all(0),
-                        child: showSecondHalf(),
-                      )
-                    : showSecondHalf(),
+    return Stack(
+      children: <Widget>[
+        CommonView.showBackground(context),
+        Padding(
+          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),child:  Row(
+          children: <Widget>[
+            showFirstHalf(),
+            Expanded(
+              flex: 1,
+              child: Injector.isBusinessMode
+                  ? Card(
+                color: Colors.transparent,
+                elevation: 20,
+                margin: EdgeInsets.all(0),
+                child: showSecondHalf(),
               )
-            ],
-          ),
-          CommonView.showCircularProgress(isLoading)
-        ],
-      ),
+                  : showSecondHalf(),
+            )
+          ],
+        ),
+        ),
+        CommonView.showCircularProgress(isLoading)
+      ],
     );
   }
 
