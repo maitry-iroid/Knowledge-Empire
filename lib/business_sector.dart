@@ -41,7 +41,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       if (isConnected) {
         fetchLearningModules();
       } else {
-
+        if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
+            Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
+          arrFinalLearningModules = LearningModuleResponse.fromJson(json
+                  .decode(Injector.prefs.getString(PrefKeys.learningModles)))
+              .data;
+          print(arrFinalLearningModules);
+        }
       }
     });
   }
@@ -66,7 +72,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     ? Card(
                         color: Colors.transparent,
                         elevation: 20,
-                        margin: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+                        margin: EdgeInsets.only(
+                            top: Utils.getHeaderHeight(context)),
                         child: showSecondHalf(),
                       )
                     : showSecondHalf(),
@@ -234,7 +241,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: Utils.getHeaderHeight(context)+10,
+            height: Utils.getHeaderHeight(context) + 10,
           ),
           CommonView.showTitle(context, StringRes.businessSector),
           Container(
