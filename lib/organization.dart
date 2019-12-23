@@ -344,7 +344,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         isLoading = true;
       });
 
-      WebApi().manageOrganizations(context, rq).then((getOrganizationData) {
+      WebApi().manageOrganizations(context, rq).then((getOrganizationData) async{
         setState(() {
           isLoading = false;
         });
@@ -361,7 +361,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               organizationData.totalEmpCount;
           customerValueData.totalBalance = organizationData.totalBalance;
 
-          Injector.prefs.setString(PrefKeys.customerValueData,
+        await  Injector.prefs.setString(PrefKeys.customerValueData,
               json.encode(customerValueData.toJson()));
 
           Injector.customerValueData = customerValueData;

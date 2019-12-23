@@ -106,6 +106,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     print(questionData.value);
 
+
+
     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(

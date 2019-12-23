@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/engagement_customer.dart' as prefix0;
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -79,11 +79,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     rq.type = Const.getNewQueType;
     rq.type = Const.getNewQueType;
 
-    WebApi().getQuestions(rq.toJson()).then((questionResponse) {
-      setState(() {
-        isLoading = false;
-      });
-
+    WebApi().getQuestions(rq.toJson()).then((questionResponse) async {
       if (questionResponse != null) {
         if (questionResponse.flag == "true") {
           arrQuestions = questionResponse.data;
@@ -96,14 +92,34 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             print("   ====================================  >");
 
             print(arrQuestions[i].value);
+
+            BackgroundFetch.start().then((int status) async {
+              await Injector.cacheManager.emptyCache();
+              await Injector.cacheManager
+                  .downloadFile(arrQuestions[i].mediaLink);
+              await Injector.cacheManager
+                  .downloadFile(arrQuestions[i].correctAnswerImage);
+              await Injector.cacheManager
+                  .downloadFile(arrQuestions[i].inCorrectAnswerImage);
+            }).catchError((e) {
+              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+            });
           }
 
-          setState(() {});
+          setState(() {
+            isLoading = false;
+          });
         } else {
           Utils.showToast(questionResponse.msg);
+          setState(() {
+            isLoading = false;
+          });
         }
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        setState(() {
+          isLoading = false;
+        });
       }
     }).catchError((e) {
       print(e);

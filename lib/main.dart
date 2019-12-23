@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ke_employee/PDFPage.dart';
 import 'package:ke_employee/dashboard_new.dart';
 import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -30,15 +30,28 @@ Future setupLocator() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  List<DateTime> _events = [];
+  int _status = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -66,10 +79,12 @@ class MyApp extends StatelessWidget {
                     ? ColorRes.white
                     : ColorRes.colorBgDark),
           )),
-//      home: Injector.prefs.getString(PrefKeys.userId)!=null?(Injector.prefs.getBool(PrefKeys.isLoginFirstTime)==null||Injector.prefs.getBool(PrefKeys.isLoginFirstTime)?IntroPage():HomePage()):LoginPage(),
-
-      home: Injector.prefs.getString(PrefKeys.userId)!=null?(Injector.prefs.getBool(PrefKeys.isLoginFirstTime)==null||Injector.prefs.getBool(PrefKeys.isLoginFirstTime)?IntroPage():HomePage()):LoginPage(),
-
+      home: Injector.prefs.getString(PrefKeys.userId) != null
+          ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
+                  Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
+              ? IntroPage()
+              : HomePage())
+          : LoginPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
 //        '/splash': (BuildContext context) => SplashScreen(),
@@ -92,39 +107,50 @@ class MyApp extends StatelessWidget {
       ],
     );
   }
-}
 
-//class MyHomePage extends StatefulWidget {
-//  MyHomePage({Key key}) : super(key: key);
-//
-//  @override
-//  _MyHomePageState createState() => _MyHomePageState();
-//}
-//
-//class _MyHomePageState extends State<MyHomePage> {
-//  @override
-//  void initState() {
-//    super.initState();
-//
-//    Future.delayed(Duration(milliseconds: 5000), () {
-//      String userId = Injector.prefs.getString(PrefKeys.userId);
-//
-//      if (userId == null || userId.isEmpty) {
-//        Navigator.pushReplacement(
-//          context,
-//          MaterialPageRoute(builder: (context) => LoginPage()),
-//        );
-//      } else {
-//        Navigator.pushReplacement(
-//          context,
-//          MaterialPageRoute(builder: (context) => HomePage()),
-//        );
-//      }
-//    });
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Container();
-//  }
-//}
+
+  Future<void> initPlatformState() async {
+    // Configure BackgroundFetch.
+    BackgroundFetch.configure(
+        BackgroundFetchConfig(
+            minimumFetchInterval: 15,
+            stopOnTerminate: false,
+            enableHeadless: false,
+            requiresBatteryNotLow: false,
+            requiresCharging: false,
+            requiresStorageNotLow: false,
+            requiresDeviceIdle: false,
+            requiredNetworkType: BackgroundFetchConfig.NETWORK_TYPE_NONE),
+            () async {
+          // This is the fetch-event callback.
+          print('[BackgroundFetch] Event received');
+          setState(() {
+            _events.insert(0, new DateTime.now());
+          });
+          // IMPORTANT:  You must signal completion of your fetch task or the OS can punish your app
+          // for taking too long in the background.
+          BackgroundFetch.finish();
+        }).then((int status) {
+      print('[BackgroundFetch] configure success: $status');
+      setState(() {
+        _status = status;
+      });
+    }).catchError((e) {
+      print('[BackgroundFetch] configure ERROR: $e');
+      setState(() {
+        _status = e;
+      });
+    });
+
+    // Optionally query the current BackgroundFetch status.
+    int status = await BackgroundFetch.status;
+    setState(() {
+      _status = status;
+    });
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+  }
+}
