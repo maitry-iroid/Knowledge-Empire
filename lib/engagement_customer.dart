@@ -452,8 +452,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                   decoration: BoxDecoration(
                                       image: isPdf(questionData.mediaLink)
                                           ? DecorationImage(
-                                              image: AssetImage(Utils.getAssetsImg(
-                                                  "full_expand_question_answers")),
+                                              image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
+                                                  "full_expand_question_answers") : Utils.getAssetsImg(
+                                                  "expand_pro")
+                                              ),
                                               fit: BoxFit.fill)
                                           : null)),
                             ),
@@ -566,8 +568,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           image:
 //                                  Injector.isBusinessMode ?
                               DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      "full_expand_question_answers")),
+                                  image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
+                                      "full_expand_question_answers") : Utils.getAssetsImg(
+                                      "expand_pro")
+                                  ),
                                   fit: BoxFit.fill)
 //                                  : null
                           )),

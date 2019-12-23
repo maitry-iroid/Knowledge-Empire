@@ -162,7 +162,7 @@ class CommonView {
             height: 30,
             margin: (checkimg == true
                 ? EdgeInsets.symmetric(
-                    horizontal: Utils.getDeviceWidth(context) / 6)
+                    horizontal: Utils.getDeviceWidth(context) / 7)
                 : EdgeInsets.symmetric(
                     horizontal: Utils.getDeviceWidth(context) / 3)),
             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -209,8 +209,10 @@ class CommonView {
                           image:
 //                          Injector.isBusinessMode ?
                               DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      "full_expand_question_answers")),
+                                  image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
+                                      "full_expand_question_answers") : Utils.getAssetsImg(
+                                      "expand_pro")
+                                  ),
                                   fit: BoxFit.fill)
 //                              : null
                           ))

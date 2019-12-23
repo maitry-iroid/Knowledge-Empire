@@ -455,8 +455,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       image:
 //                                    Injector.isBusinessMode ?
                           DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg(
-                                  "full_expand_question_answers")),
+                              image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
+                                  "full_expand_question_answers") : Utils.getAssetsImg(
+                                  "expand_pro")
+                              ),
                               fit: BoxFit.fill)
 //                                        : null
                       )),
@@ -785,7 +787,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //          });
         },
         child: Container(
-          height: 50,
+//          height: 50,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
           padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
           alignment: Alignment.center,
@@ -870,7 +872,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                            ? ColorRes.white
 //                            : ColorRes.textProf
                             )),
-                    maxLines: 3,
+//                    maxLines: 3,
                     overflow: TextOverflow.fade,
                   ),
                 ),
