@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -93,17 +92,17 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
             print(arrQuestions[i].value);
 
-            BackgroundFetch.start().then((int status) async {
-              await Injector.cacheManager.emptyCache();
-              await Injector.cacheManager
-                  .downloadFile(arrQuestions[i].mediaLink);
-              await Injector.cacheManager
-                  .downloadFile(arrQuestions[i].correctAnswerImage);
-              await Injector.cacheManager
-                  .downloadFile(arrQuestions[i].inCorrectAnswerImage);
-            }).catchError((e) {
-              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
-            });
+//            BackgroundFetch.start().then((int status) async {
+//              await Injector.cacheManager.emptyCache();
+//              await Injector.cacheManager
+//                  .downloadFile(arrQuestions[i].mediaLink);
+//              await Injector.cacheManager
+//                  .downloadFile(arrQuestions[i].correctAnswerImage);
+//              await Injector.cacheManager
+//                  .downloadFile(arrQuestions[i].inCorrectAnswerImage);
+//            }).catchError((e) {
+//              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+//            });
           }
 
           setState(() {

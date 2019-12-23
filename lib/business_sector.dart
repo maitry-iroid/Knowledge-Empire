@@ -34,7 +34,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   int maxVol, currentVol;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -53,7 +52,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     });
-
   }
 
   @override
@@ -67,22 +65,25 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       child: Stack(
         children: <Widget>[
           CommonView.showBackground(context),
-          Row(
-            children: <Widget>[
-              showFirstHalf(),
-              Expanded(
-                flex: 1,
-                child: Injector.isBusinessMode
-                    ? Card(
-                        color: Colors.transparent,
-                        elevation: 20,
-                        margin: EdgeInsets.only(
-                            top: Utils.getHeaderHeight(context)),
-                        child: showSecondHalf(),
-                      )
-                    : showSecondHalf(),
-              )
-            ],
+          Padding(
+            padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+            child: Row(
+              children: <Widget>[
+                showFirstHalf(),
+                Expanded(
+                  flex: 1,
+                  child: Injector.isBusinessMode
+                      ? Card(
+                          color: Colors.transparent,
+                          elevation: 20,
+                          margin: EdgeInsets.only(
+                              top: Utils.getHeaderHeight(context)),
+                          child: showSecondHalf(),
+                        )
+                      : showSecondHalf(),
+                )
+              ],
+            ),
           ),
           CommonView.showCircularProgress(isLoading)
         ],
@@ -231,13 +232,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         ),
       ),
       onTap: () {
-
         Utils.playClickSound();
         setState(() {
           selectedModule = arrFinalLearningModules[index];
         });
-
-
       },
     );
   }
@@ -248,7 +246,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: Utils.getHeaderHeight(context) + 10,
+            height: 10,
           ),
           CommonView.showTitle(context, StringRes.businessSector),
           Container(
