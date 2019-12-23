@@ -363,40 +363,105 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 InkResponse(
                   onTap: () {
                     Utils.playClickSound();
-                    showDialog(
-                      context: context,
-                      builder: (_) => ImageShowAlert(),
+                    isImage(questionData.mediaLink)
+                        ? showDialog(
+                            context: context,
+                            builder: (_) => ImageShowAlert(),
+                          )
+                        : Center(
+                      child: RaisedButton(
+                        color: Colors.yellow,
+                        onPressed: () {
+                          setState(() {
+                            _controller.value.isPlaying
+                                ? _controller.pause()
+                                : _controller.play();
+                          });
+                        },
+                        child: Text("play"),
+                      ),
                     );
                   },
                   child: Container(
-                    margin: EdgeInsets.only(
-                        top: 10, bottom: 10, left: 10, right: 12),
-                    height: Utils.getDeviceHeight(context) / 2.7,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        image: isImage(questionData.mediaLink)
-                            ? DecorationImage(
-                                image: Utils.getCacheFile(
-                                            questionData.mediaLink) !=
-                                        null
-                                    ? FileImage(Utils.getCacheFile(
-                                            questionData.mediaLink)
-                                        .file)
-                                    : NetworkImage(questionData.mediaLink),
-                                fit: BoxFit.fill)
-                            : null,
-                        borderRadius: BorderRadius.circular(10),
-                        border: isImage(questionData.mediaLink)
-                            ? Border.all(color: ColorRes.white, width: 1)
-                            : null),
-                    child: isVideo(questionData.mediaLink) &&
-                            _controller.value.initialized
-                        ? AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
+                      margin: EdgeInsets.only(
+                          top: 10, bottom: 5, left: 0, right: 0),
+                      height: Utils.getDeviceHeight(context) / 2.7,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: isImage(questionData.mediaLink)
+                              ? DecorationImage(
+                                  image: Utils.getCacheFile(
+                                              questionData.mediaLink) !=
+                                          null
+                                      ? FileImage(Utils.getCacheFile(
+                                              questionData.mediaLink)
+                                          .file)
+                                      : NetworkImage(questionData.mediaLink),
+                                  fit: BoxFit.fill)
+                              : null,
+                          borderRadius: BorderRadius.circular(10),
+                          border: isImage(questionData.mediaLink)
+                              ? Border.all(color: ColorRes.white, width: 1)
+                              : null),
+                      child: Stack(
+//                      fit: StackFit.expand,
+
+                        children: <Widget>[
+                          Card(
+                            elevation: 10,
+                            color: ColorRes.transparent.withOpacity(0.1),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            margin: EdgeInsets.only(
+                                top: 0, bottom: 0, right: 10, left: 10),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.only(
+                                  left: 5, right: 5, top: 5, bottom: 10),
+//                            decoration: BoxDecoration(
+//                              color:
+//                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
+////                              borderRadius: BorderRadius.circular(12),
+////                              border: Border.all(color: ColorRes.white, width: 1),
+//                            ),
+
+                              child: isVideo(questionData.mediaLink) &&
+                                      _controller.value.initialized
+                                  ? AspectRatio(
+                                      aspectRatio:
+                                          _controller.value.aspectRatio,
+                                      child: VideoPlayer(_controller),
+                                    )
+                                  : pdfShow(),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: InkResponse(
+                              onTap: () {
+                                Utils.playClickSound();
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => isPdf(questionData.mediaLink)
+                                      ? ImageShowAlert()
+                                      : Container(),
+                                );
+                              },
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 20,
+                                  width: Utils.getDeviceWidth(context) / 20,
+                                  decoration: BoxDecoration(
+                                      image: isPdf(questionData.mediaLink)
+                                          ? DecorationImage(
+                                              image: AssetImage(Utils.getAssetsImg(
+                                                  "full_expand_question_answers")),
+                                              fit: BoxFit.fill)
+                                          : null)),
+                            ),
                           )
-                        : pdfShow(),
-                  ),
+                        ],
+                      )),
                 ),
                 Expanded(
                   child: CommonView.questionAndExplanation(
@@ -563,8 +628,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void navigateToSituation(BuildContext context) {
-
-
     Navigator.pushAndRemoveUntil(
         context,
         FadeRouteHome(
