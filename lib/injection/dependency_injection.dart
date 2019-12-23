@@ -23,7 +23,7 @@ class Injector {
   static bool isBusinessMode = true;
   static AudioPlayer audioPlayer;
   static AudioCache audioCache;
-  static var cacheManager;
+  static DefaultCacheManager cacheManager;
   static AudioManager audioManager;
 
 //  factory Injector {

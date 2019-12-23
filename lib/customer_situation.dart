@@ -131,25 +131,21 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
-        Injector.isBusinessMode
-            ? Image(
-          image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-          fit: BoxFit.fill,
-        )
-            : Container(
-          color: ColorRes.bgProf,
-        ),
-        Column(
-          children: <Widget>[
-            showSubHeader(context),
-            Expanded(
-                child: Row(
-                  children: <Widget>[
-                    showFirstHalf(context),
-                    showSecondHalf(context),
-                  ],
-                )),
-          ],
+        CommonView.showBackground(context),
+        Padding(
+          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+          child: Column(
+            children: <Widget>[
+              showSubHeader(context),
+              Expanded(
+                  child: Row(
+                children: <Widget>[
+                  showFirstHalf(context),
+                  showSecondHalf(context),
+                ],
+              )),
+            ],
+          ),
         )
       ],
     );
@@ -498,7 +494,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                                     : NetworkImage(correctWrongImage()),
                             fit: BoxFit.fill)
                         : null,
-
                     borderRadius: BorderRadius.circular(10),
                     border: isImage(questionData.mediaLink)
                         ? Border.all(color: ColorRes.white, width: 1)
@@ -513,7 +508,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     : pdfShow(),
               ),
             ),
-
             Expanded(
                 child: CommonView.questionAndExplanation(
                     context,
@@ -525,7 +519,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-
     Navigator.pushAndRemoveUntil(
         context, FadeRouteHome(), ModalRoute.withName("home"));
 
@@ -534,7 +527,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         FadeRouteHome(
             initialPageType: Const.typeNewCustomer,
             questionDataSituation: null));
-
   }
 }
 
