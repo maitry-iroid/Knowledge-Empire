@@ -1,10 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
@@ -306,6 +303,8 @@ class Utils {
     static playClickSound() {
 //    updateVolumes();
     Injector.audioCache.play("sounds/all_button_clicks.wav");
+
+
   }
 
   static correctAnswerSound() {
@@ -324,6 +323,8 @@ class Utils {
   static proincorrectAnswerSound() {
     Injector.audioCache.play("sounds/pro_wrong_answer.mp3");
   }
+
+
 
 
 //  Future<void> initPlatformState() async {

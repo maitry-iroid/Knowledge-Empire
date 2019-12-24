@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -106,8 +107,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     print(questionData.value);
 
-
-
     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
@@ -115,10 +114,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           : VideoPlayerController.network(questionData.mediaLink)
         ..initialize().then((_) {
           setState(() {
-            _controller.play();
+            _controller.pause();
           });
         });
-      _controller.play();
+
+      questionData.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
+
+      _controller.pause();
     }
   }
 
@@ -293,6 +295,18 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     return extension(path) == ".pdf";
   }
 
+
+//  List <String> photos = ["add_emp_check",""];
+//  int _pos = 0;
+//  Timer _timer;
+//  imageChanges() {
+//    _timer = new Timer(const Duration(seconds: 5), () {
+//      setState(() {
+//        _pos = (_pos + 1) % photos.length;
+//      });
+//    });
+//  }
+
   showSubHeader(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: Utils.getHeaderHeight(context) + 10),
@@ -368,23 +382,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             context: context,
                             builder: (_) => ImageShowAlert(),
                           )
-                        : Center(
-                      child: RaisedButton(
-                        color: Colors.yellow,
-                        onPressed: () {
-                          setState(() {
-                            _controller.value.isPlaying
-                                ? _controller.pause()
-                                : _controller.play();
-                          });
-                        },
-                        child: Text("play"),
-                      ),
-                    );
+                        : Container();
                   },
                   child: Container(
                       margin: EdgeInsets.only(
-                          top: 10, bottom: 5, left: 0, right: 0),
+                          top: 10, bottom: 5, left: 0, right: 5),
                       height: Utils.getDeviceHeight(context) / 2.7,
                       decoration: BoxDecoration(
                           color: Colors.transparent,
@@ -409,29 +411,66 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         children: <Widget>[
                           Card(
                             elevation: 10,
-                            color: ColorRes.transparent.withOpacity(0.1),
+                            color: ColorRes.transparent.withOpacity(0.4),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             margin: EdgeInsets.only(
-                                top: 0, bottom: 0, right: 10, left: 10),
+                                top: 0, bottom: 10, right: 10, left: 10),
                             child: Container(
                               alignment: Alignment.center,
                               padding: EdgeInsets.only(
-                                  left: 5, right: 5, top: 5, bottom: 10),
-//                            decoration: BoxDecoration(
+                                  left: 5, right: 5, top: 5, bottom: 5),
+
+                            decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
-////                              borderRadius: BorderRadius.circular(12),
-////                              border: Border.all(color: ColorRes.white, width: 1),
-//                            ),
+                              borderRadius: BorderRadius.circular(12),
+                              border: isVideo(questionData.mediaLink) ? Border.all(color: ColorRes.white, width: 1) : null ,
+                            ),
 
                               child: isVideo(questionData.mediaLink) &&
                                       _controller.value.initialized
                                   ? AspectRatio(
                                       aspectRatio:
                                           _controller.value.aspectRatio,
-                                      child: VideoPlayer(_controller),
-                                    )
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            child:  VideoPlayer(_controller),
+                                          ),
+                                          Container(
+                                            child: MaterialButton(
+                                            height: 300,
+                                            color: Colors.transparent.withOpacity(0.0),
+                                            onPressed: () {
+
+                                              questionData.videoPlay == 1 ?
+                                              setState(() {
+                                                _controller.value.isPlaying
+                                                    ? _controller.pause()
+                                                    : _controller.play();
+                                              }) : setState(() {
+                                                   _controller.play();
+                                              });
+
+
+
+                                            },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            _controller.value.isPlaying
+                                                                ? Utils.getAssetsImg("")//add_emp_check
+                                                                : Utils.getAssetsImg("play_button")))
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                              )
                                   : pdfShow(),
                             ),
                           ),
@@ -442,9 +481,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                 Utils.playClickSound();
                                 showDialog(
                                   context: context,
-                                  builder: (_) => isPdf(questionData.mediaLink)
-                                      ? ImageShowAlert()
-                                      : Container(),
+                                  builder: (_) =>
+                                      isPdf(questionData.mediaLink) ||
+                                              isVideo(questionData.mediaLink)
+                                          ? ImageShowAlert()
+                                          : Container(),
                                 );
                               },
                               child: Container(
@@ -452,12 +493,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                   height: Utils.getDeviceWidth(context) / 20,
                                   width: Utils.getDeviceWidth(context) / 20,
                                   decoration: BoxDecoration(
-                                      image: isPdf(questionData.mediaLink)
+                                      image: isPdf(questionData.mediaLink) ||
+                                              isVideo(questionData.mediaLink)
                                           ? DecorationImage(
-                                              image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
-                                                  "full_expand_question_answers") : Utils.getAssetsImg(
-                                                  "expand_pro")
-                                              ),
+                                              image: AssetImage(Injector
+                                                      .isBusinessMode
+                                                  ? Utils.getAssetsImg(
+                                                      "full_expand_question_answers")
+                                                  : Utils.getAssetsImg(
+                                                      "expand_pro")),
                                               fit: BoxFit.fill)
                                           : null)),
                             ),
@@ -570,10 +614,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           image:
 //                                  Injector.isBusinessMode ?
                               DecorationImage(
-                                  image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
-                                      "full_expand_question_answers") : Utils.getAssetsImg(
-                                      "expand_pro")
-                                  ),
+                                  image: AssetImage(Injector.isBusinessMode
+                                      ? Utils.getAssetsImg(
+                                          "full_expand_question_answers")
+                                      : Utils.getAssetsImg("expand_pro")),
                                   fit: BoxFit.fill)
 //                                  : null
                           )),
@@ -659,6 +703,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
   @override
   void initState() {
     super.initState();
+
 
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
@@ -809,6 +854,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
         onTap: () {
           Utils.playClickSound();
           _notifier.notify('selectQuestionAction', '');
+
+
+
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });

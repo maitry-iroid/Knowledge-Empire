@@ -72,6 +72,8 @@ class QuestionData {
   bool isAnsweredCorrect;
   int resources;
   String attemptTime;
+  int videoPlay;
+  int videoLoop;
 
   QuestionData(
       {this.questionId,
@@ -89,7 +91,10 @@ class QuestionData {
         this.mediaLink,
         this.answer,
         this.correctAnswerImage,
-        this.inCorrectAnswerImage});
+        this.inCorrectAnswerImage,
+        this.videoPlay,
+        this.videoLoop
+      });
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -114,6 +119,8 @@ class QuestionData {
     }
     correctAnswerImage = json['correctAnswerImage'];
     inCorrectAnswerImage = json['inCorrectAnswerImage'];
+    videoPlay = json['videoPlay'];
+    videoLoop = json['videoLoop'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,6 +138,8 @@ class QuestionData {
     data['loyalty'] = this.loyalty;
     data['value'] = this.value;
     data['resources'] = this.resources;
+    data['videoPlay'] = this.videoPlay;
+    data['videoLoop'] = this.videoLoop;
     data['mediaLink'] = this.mediaLink;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();
