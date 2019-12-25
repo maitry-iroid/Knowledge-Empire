@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -422,5 +424,49 @@ class Utils {
 
   static getHeaderHeight(BuildContext context){
     return Utils.getDeviceHeight(context) / 7.5;
+  }
+
+  static getValue(QuestionData questionData) {
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
+    var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+    var c = (1 + (Injector.customerValueData.valueBonus / 100));
+
+    int finalValue = (a * b * c).round();
+
+
+    return finalValue;
+  }
+
+  static getLoyalty(QuestionData questionData) {
+
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = max(pow(questionData.counter, 2), 1);
+    var b = questionData.counter * random;
+    var c = (1 + (Injector.customerValueData.loyaltyBonus / 100));
+
+    int finalValue = (a + b * c).round();
+
+
+    return finalValue;
+  }
+
+ static getResource(QuestionData questionData) {
+
+//    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
+
+    var random = ((Random().nextInt(10))) / 10;
+
+    var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
+        min(questionData.counter, 10) * random;
+    var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+    var c = (2 - (Injector.customerValueData.resourceBonus / 100));
+
+    int finalValue = (a * b * c).round();
+
+
+    return finalValue;
   }
 }

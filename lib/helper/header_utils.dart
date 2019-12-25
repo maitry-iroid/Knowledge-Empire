@@ -29,7 +29,11 @@ class HeaderUtils {
     } else if (type == Const.typeBadge) {
       return getAnswerRatio();
     } else if (type == Const.typeServicesPerson) {
-      return getProgressText(Const.typeServices);
+      return (Injector.customerValueData.totalCustomerCapicity -
+                  Injector.customerValueData.remainingCustomerCapicity)
+              .toString() +
+          "/" +
+          Injector.customerValueData.totalCustomerCapicity.toString();
     } else
       return "0/0";
   }
@@ -40,9 +44,11 @@ class HeaderUtils {
     } else if (type == Const.typeEmployee) {
       return getProgressValue(Const.typeHR);
     } else if (type == Const.typeBadge) {
-      return 0.0;
+      return Injector.customerValueData.totalAttemptedQuestion/Injector.customerValueData.totalAttemptedQuestion;
     } else if (type == Const.typeServicesPerson) {
-      return getProgressValue(Const.typeServices);
+      return (Injector.customerValueData.totalCustomerCapicity -
+              Injector.customerValueData.remainingCustomerCapicity) /
+          Injector.customerValueData.totalCustomerCapicity;
     } else
       return 0.0;
   }
@@ -53,10 +59,13 @@ class HeaderUtils {
           Injector.customerValueData.organization;
 
       int totalEmployee = Injector.customerValueData.totalEmployeeCapacity;
-      int remainingCapacity = arrOrganization
-          .where((organization) => (organization.type == organizationType))
-          .toList()[0]
-          .employeeCount;
+      int remainingCapacity = organizationType == Const.typeHR
+          ? arrOrganization
+              .where((organization) => (organization.type == organizationType))
+              .toList()[0]
+              .employeeCount
+          : Injector.customerValueData.totalEmployeeCapacity -
+              Injector.customerValueData.remainingEmployeeCapacity;
 
       if (remainingCapacity != null && totalEmployee != null) {
         double value =
@@ -100,7 +109,7 @@ class HeaderUtils {
 //    return "";
 
     if (Injector.customerValueData != null) {
-      return Injector.customerValueData.employeeCount.toString() +
+      return Injector.customerValueData.remainingEmployeeCapacity.toString() +
           "/" +
           Injector.customerValueData.totalEmployeeCapacity.toString();
     } else
@@ -109,10 +118,10 @@ class HeaderUtils {
 
   static getAnswerRatio() {
     if (Injector.customerValueData != null &&
-        Injector.customerValueData.totalCorrectAnswer != null &&
+        Injector.customerValueData.correctAnswerCount != null &&
         Injector.customerValueData.totalAttemptedQuestion != null &&
         Injector.customerValueData.totalAttemptedQuestion != 0) {
-      return ((Injector.customerValueData.totalCorrectAnswer /
+      return ((Injector.customerValueData.correctAnswerCount /
                   Injector.customerValueData.totalAttemptedQuestion) *
               100)
           .toString();

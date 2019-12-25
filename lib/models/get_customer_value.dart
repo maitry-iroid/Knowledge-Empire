@@ -48,67 +48,104 @@ class GetCustomerValueResponse {
 class CustomerValueData {
   int totalEmployeeCapacity;
   String manager;
-  int employeeCount;
   int remainingEmployeeCapacity;
+  int totalCustomerCapicity;
+  int remainingCustomerCapicity;
   int totalBalance;
   int loyaltyBonus;
   int valueBonus;
   int resourceBonus;
   int totalAttemptedQuestion;
-  int questionAnswered;
-  int totalCorrectAnswer;
-  List<Organization> organization  = List();
+  List<Organization> organization;
+  int correctAnswerCount;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
-      this.employeeCount,
-      this.totalBalance,
-      this.loyaltyBonus,
-      this.valueBonus,
-      this.resourceBonus,
-      this.totalAttemptedQuestion,
-      this.questionAnswered,
-      this.totalCorrectAnswer,
-      this.organization});
+        this.manager,
+        this.remainingEmployeeCapacity,
+        this.totalCustomerCapicity,
+        this.remainingCustomerCapicity,
+        this.totalBalance,
+        this.loyaltyBonus,
+        this.valueBonus,
+        this.resourceBonus,
+        this.totalAttemptedQuestion,
+        this.organization,
+        this.correctAnswerCount});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
     manager = json['manager'];
-    employeeCount = json['employeeCount'];
     remainingEmployeeCapacity = json['remainingEmployeeCapacity'];
+    totalCustomerCapicity = json['totalCustomerCapicity'];
+    remainingCustomerCapicity = json['remainingCustomerCapicity'];
     totalBalance = json['totalBalance'];
     loyaltyBonus = json['loyaltyBonus'];
     valueBonus = json['valueBonus'];
     resourceBonus = json['resourceBonus'];
     totalAttemptedQuestion = json['totalAttemptedQuestion'];
-    questionAnswered = json['questionAnswered'];
-    totalCorrectAnswer = json['totalCorrectAnswer'];
     if (json['organization'] != null) {
       organization = new List<Organization>();
       json['organization'].forEach((v) {
         organization.add(new Organization.fromJson(v));
       });
     }
+    correctAnswerCount = json['correctAnswerCount'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['totalEmployeeCapacity'] = this.totalEmployeeCapacity;
     data['manager'] = this.manager;
-    data['employeeCount'] = this.employeeCount;
     data['remainingEmployeeCapacity'] = this.remainingEmployeeCapacity;
+    data['totalCustomerCapicity'] = this.totalCustomerCapicity;
+    data['remainingCustomerCapicity'] = this.remainingCustomerCapicity;
     data['totalBalance'] = this.totalBalance;
     data['loyaltyBonus'] = this.loyaltyBonus;
     data['valueBonus'] = this.valueBonus;
     data['resourceBonus'] = this.resourceBonus;
     data['totalAttemptedQuestion'] = this.totalAttemptedQuestion;
-    data['questionAnswered'] = this.questionAnswered;
-    data['totalCorrectAnswer'] = this.totalCorrectAnswer;
     if (this.organization != null) {
       data['organization'] = this.organization.map((v) => v.toJson()).toList();
     }
+    data['correctAnswerCount'] = this.correctAnswerCount;
     return data;
   }
 }
+
+//class Organization {
+//  int type;
+//  int level;
+//  String description;
+//  int nextLevelCost;
+//  String subtractLevelConfirmMessage;
+//  String addLevelConfirmMessage;
+//  int employeeCount;
+//
+//  Organization(
+//      );
+//
+//  Organization.fromJson(Map<String, dynamic> json) {
+//    type = json['type'];
+//    level = json['level'];
+//    description = json['description'];
+//    nextLevelCost = json['nextLevelCost'];
+//    subtractLevelConfirmMessage = json['subtractLevelConfirmMessage'];
+//    addLevelConfirmMessage = json['addLevelConfirmMessage'];
+//    employeeCount = json['employeeCount'];
+//  }
+//
+//  Map<String, dynamic> toJson() {
+//    final Map<String, dynamic> data = new Map<String, dynamic>();
+//    data['type'] = this.type;
+//    data['level'] = this.level;
+//    data['description'] = this.description;
+//    data['nextLevelCost'] = this.nextLevelCost;
+//    data['subtractLevelConfirmMessage'] = this.subtractLevelConfirmMessage;
+//    data['addLevelConfirmMessage'] = this.addLevelConfirmMessage;
+//    data['employeeCount'] = this.employeeCount;
+//    return data;
+//  }
+//}
 
 

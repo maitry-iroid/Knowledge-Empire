@@ -84,25 +84,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           arrQuestions = questionResponse.data;
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            arrQuestions[i].value = getValue(i);
-            arrQuestions[i].loyalty = getLoyalty(i);
-            arrQuestions[i].resources = getResource(i);
-
-            print("   ====================================  >");
+            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
 
             print(arrQuestions[i].value);
-
-//            BackgroundFetch.start().then((int status) async {
-//              await Injector.cacheManager.emptyCache();
-//              await Injector.cacheManager
-//                  .downloadFile(arrQuestions[i].mediaLink);
-//              await Injector.cacheManager
-//                  .downloadFile(arrQuestions[i].correctAnswerImage);
-//              await Injector.cacheManager
-//                  .downloadFile(arrQuestions[i].inCorrectAnswerImage);
-//            }).catchError((e) {
-//              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
-//            });
           }
 
           setState(() {
@@ -386,55 +372,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         ),
       ],
     );
-  }
-
-  getValue(int index) {
-    var random = ((Random().nextInt(10))) / 10;
-
-    var a = 500 + min(50 * arrQuestions[index].daysInList, 350) + random * 150;
-    var b = (1 + (0.01 * min(questionAnswered, 900)));
-    var c = (1 + (valueBonus / 100));
-
-    int finalValue = (a * b * c).round();
-
-    arrQuestions[index].value = finalValue;
-
-    return finalValue;
-  }
-
-  getLoyalty(int index) {
-    QuestionData questionData = arrQuestions[index];
-
-    var random = ((Random().nextInt(10))) / 10;
-
-    var a = max(pow(questionData.counter, 2), 1);
-    var b = questionData.counter * random;
-    var c = (1 + (loyaltyBonus / 100));
-
-    int finalValue = (a + b * c).round();
-
-    arrQuestions[index].loyalty = finalValue;
-
-    return finalValue;
-  }
-
-  getResource(int index) {
-    QuestionData questionData = arrQuestions[index];
-
-//    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
-
-    var random = ((Random().nextInt(10))) / 10;
-
-    var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
-        min(questionData.counter, 10) * random;
-    var b = (1 + (0.01 * min(questionAnswered, 900)));
-    var c = (2 - (resourceBonus / 100));
-
-    int finalValue = (a * b * c).round();
-
-    arrQuestions[index].resources = finalValue;
-
-    return finalValue;
   }
 }
 

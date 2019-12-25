@@ -101,22 +101,23 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       children: <Widget>[
         CommonView.showBackground(context),
         Padding(
-          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),child:  Row(
-          children: <Widget>[
-            showFirstHalf(),
-            Expanded(
-              flex: 1,
-              child: Injector.isBusinessMode
-                  ? Card(
-                color: Colors.transparent,
-                elevation: 20,
-                margin: EdgeInsets.all(0),
-                child: showSecondHalf(),
+          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+          child: Row(
+            children: <Widget>[
+              showFirstHalf(),
+              Expanded(
+                flex: 1,
+                child: Injector.isBusinessMode
+                    ? Card(
+                        color: Colors.transparent,
+                        elevation: 20,
+                        margin: EdgeInsets.all(0),
+                        child: showSecondHalf(),
+                      )
+                    : showSecondHalf(),
               )
-                  : showSecondHalf(),
-            )
-          ],
-        ),
+            ],
+          ),
         ),
         CommonView.showCircularProgress(isLoading)
       ],
@@ -435,7 +436,9 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Text('Are you sure want to perform this operation?'),
+          content: Text(action == Const.add
+              ? selectedOrg.addLevelConfirmMessage
+              : selectedOrg.subtractLevelConfirmMessage),
           actions: <Widget>[
             FlatButton(
               child: Text('Yes'),
@@ -482,10 +485,10 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           customerValueData.totalEmployeeCapacity =
               organizationData.totalEmpCount;
           customerValueData.totalBalance = organizationData.totalBalance;
-          customerValueData.employeeCount = action == Const.add
-              ? Injector.customerValueData.employeeCount +
+          customerValueData.remainingEmployeeCapacity = action == Const.add
+              ? Injector.customerValueData.remainingEmployeeCapacity -
                   organizationData.organization[0].employeeCount
-              : Injector.customerValueData.employeeCount -
+              : Injector.customerValueData.remainingEmployeeCapacity +
                   organizationData.organization[0].employeeCount;
 
           Injector.prefs.setString(PrefKeys.customerValueData,

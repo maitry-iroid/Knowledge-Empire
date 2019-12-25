@@ -27,6 +27,7 @@ import 'package:ke_employee/rewards.dart';
 import 'package:ke_employee/team.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
+import 'package:volume/volume.dart';
 
 import 'Debrief.dart';
 import 'P+L.dart';
@@ -46,30 +47,35 @@ class FadeRouteHome extends PageRouteBuilder {
 
   final int value;
 
-  FadeRouteHome({this.page,
-    this.initialPageType,
-    this.questionDataHomeScr,
-    this.questionDataSituation,
-    this.value})
+  FadeRouteHome(
+      {this.page,
+      this.initialPageType,
+      this.questionDataHomeScr,
+      this.questionDataSituation,
+      this.value})
       : super(
-    pageBuilder: (BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,) =>
-    page,
-    transitionsBuilder: (BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,) =>
-        FadeTransition(
-          opacity: animation,
-          child: HomePage(
-            initialPageType: initialPageType,
-            questionDataHomeScr: questionDataHomeScr,
-            questionDataSituation: questionDataSituation,
-            value: value,
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: HomePage(
+              initialPageType: initialPageType,
+              questionDataHomeScr: questionDataHomeScr,
+              questionDataSituation: questionDataSituation,
+              value: value,
+            ),
           ),
-        ),
-  );
+        );
 }
 
 /*
@@ -122,11 +128,12 @@ class HomePage extends StatefulWidget {
 
   final int value;
 
-  HomePage({Key key,
-    this.initialPageType,
-    this.questionDataHomeScr,
-    this.questionDataSituation,
-    this.value})
+  HomePage(
+      {Key key,
+      this.initialPageType,
+      this.questionDataHomeScr,
+      this.questionDataSituation,
+      this.value})
       : super(key: key);
 
 //  final  QuestionData questionData;
@@ -210,8 +217,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 0;
 
     getCustomerValues();
-
-
   }
 
   @override
@@ -224,13 +229,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-//    if (state == AppLifecycleState.resumed) {
-////
-//    } else if (state == AppLifecycleState.inactive) {
-////      Utils.showToast("inactive");
-//
-//
-//    }
+    if (state == AppLifecycleState.resumed) {
+      await Volume.getVol.then((value) {
+        print("volume_" + value.toString());
+      });
+    } else if (state == AppLifecycleState.inactive) {
+//      Utils.showToast("inactive");
+
+    }
   }
 
   _getDrawerItemWidget(int pos) {
@@ -283,7 +289,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
       setState(() => _selectedDrawerIndex = index);
       Navigator.of(context).pop(); // close the drawer
-      if(_selectedDrawerIndex == 11) {
+      if (_selectedDrawerIndex == 11) {
         Navigator.push(context, FadeRouteIntro());
       }
     }
@@ -328,11 +334,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
             title: showMainItem(drawerItems[i], i),
             selected: i == _selectedDrawerIndex,
-            onTap: () => _onSelectItem(i)
-
-
-
-        ));
+            onTap: () => _onSelectItem(i)));
       }
 
       return new Scaffold(
@@ -341,18 +343,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           width: Utils.getDeviceWidth(context) / 2.5,
           child: Drawer(
               child: Notifier.of(context).register<String>('updateHeaderValue',
-                      (data) {
-                    return Container(
-                      color: Injector.isBusinessMode
-                          ? ColorRes.bgMenu
-                          : ColorRes.headerBlue,
-                      child: new ListView(children: drawerOptions),
-                    );
-                  })),
+                  (data) {
+            return Container(
+              color: Injector.isBusinessMode
+                  ? ColorRes.bgMenu
+                  : ColorRes.headerBlue,
+              child: new ListView(children: drawerOptions),
+            );
+          })),
         ),
         backgroundColor: ColorRes.colorBgDark,
         body: SafeArea(
-            child: /*_selectedDrawerIndex != 0
+            child:
+                /*_selectedDrawerIndex != 0
                 ? Column(
               children: <Widget>[
                 HeaderView(
@@ -365,16 +368,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ),
               ],
             )
-                :*/ Stack(
-              children: <Widget>[
-                getPage(),
-                HeaderView(
-                  scaffoldKey: _scaffoldKey,
-                  isShowMenu: true,
-                  openProfile: openProfile,
-                ),
-              ],
-            )),
+                :*/
+                Stack(
+          children: <Widget>[
+            getPage(),
+            HeaderView(
+              scaffoldKey: _scaffoldKey,
+              isShowMenu: true,
+              openProfile: openProfile,
+            ),
+          ],
+        )),
       );
     });
   }
@@ -388,22 +392,22 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             color: Injector.isBusinessMode
                 ? null
                 : i == _selectedDrawerIndex
-                ? ColorRes.blueMenuSelected
-                : ColorRes.blueMenuUnSelected,
+                    ? ColorRes.blueMenuSelected
+                    : ColorRes.blueMenuUnSelected,
             border: (!Injector.isBusinessMode && i == _selectedDrawerIndex)
                 ? Border.all(
-              color: ColorRes.white,
-              width: 1,
-            )
+                    color: ColorRes.white,
+                    width: 1,
+                  )
                 : null,
             borderRadius: BorderRadius.circular(10),
             image: Injector.isBusinessMode
                 ? DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(
-                    i == _selectedDrawerIndex
-                        ? "slide_menu_highlight"
-                        : "bg_menu")),
-                fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg(
+                        i == _selectedDrawerIndex
+                            ? "slide_menu_highlight"
+                            : "bg_menu")),
+                    fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
