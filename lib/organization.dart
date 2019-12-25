@@ -299,7 +299,13 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             ? organizationData.totalEmpCount
             : 1);
 
-    return progress.toDouble();
+    if(progress.toDouble()<=1 &&progress.toDouble()>=0){
+      return progress.toDouble();
+    }else if(progress<0){
+      return 0.0;
+    }else if(progress>1)
+      return 1.0;
+    else{return 0.0;}
   }
 
   Future<void> showConfirmDialog(int position, int action) async {
