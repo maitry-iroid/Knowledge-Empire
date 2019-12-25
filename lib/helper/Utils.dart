@@ -18,7 +18,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:notifier/main_notifier.dart';
-import 'package:volume/volume.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -283,7 +282,7 @@ class Utils {
   }
 
 
-  int maxVol, currentVol;
+ /* int maxVol, currentVol;
 
   Future<void> initPlatformState() async {
     // pass any stream as parameter as per requirement
@@ -300,7 +299,7 @@ class Utils {
   setVol(int i) async {
     await Volume.setVol(i);
   }
-
+*/
 
     static playClickSound() {
 //    updateVolumes();

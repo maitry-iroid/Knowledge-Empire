@@ -27,7 +27,6 @@ import 'package:ke_employee/rewards.dart';
 import 'package:ke_employee/team.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
-import 'package:volume/volume.dart';
 
 import 'Debrief.dart';
 import 'P+L.dart';
@@ -230,9 +229,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      await Volume.getVol.then((value) {
-        print("volume_" + value.toString());
-      });
+//      await Volume.getVol.then((value) {
+//        print("volume_" + value.toString());
+//      });
     } else if (state == AppLifecycleState.inactive) {
 //      Utils.showToast("inactive");
 

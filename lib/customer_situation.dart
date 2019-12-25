@@ -14,6 +14,7 @@ import 'helper/res.dart';
 import 'commonview/background.dart';
 import 'home.dart';
 import 'models/questions.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 List<Answer> arrAnswerSituation = List();
 
@@ -65,8 +66,33 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     super.initState();
     checkAudio();
-//    correctWrongImage();
+    correctWrongImage();
+    downloadFile();
   }
+
+  FileInfo fileInfo;
+  String error;
+
+
+  downloadFile() {
+    var cacheVideo =  correctWrongImage();
+
+    print(cacheVideo);
+    DefaultCacheManager().getFile(cacheVideo).listen((f) {
+      setState(() {
+        fileInfo = f;
+        print(fileInfo);
+        error = null;
+      });
+    }).onError((e) {
+      setState(() {
+        fileInfo = null;
+        error = e.toString();
+      });
+    });
+  }
+
+
 
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
@@ -128,6 +154,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   Widget build(BuildContext context) {
+
+//    var path = "N/A";
+//    if (fileInfo?.file != null) {
+//      path = fileInfo.file.path;
+//    }
+//
+//    var from = "N/A";
+//    if (fileInfo != null) {
+//      from = fileInfo.source.toString();
+//    }
+
+//    print("$path =>>>>>  $from");
+
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -483,15 +522,24 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 margin:
                     EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
                 height: Utils.getDeviceHeight(context) / 2.7,
+                
                 decoration: BoxDecoration(
                     image: isImage(correctWrongImage())
                         ? DecorationImage(
-                            image:
-                                Utils.getCacheFile(correctWrongImage()) != null
-                                    ? FileImage(
-                                        Utils.getCacheFile(correctWrongImage())
-                                            .file)
-                                    : NetworkImage(correctWrongImage()),
+                            image: AssetImage(fileInfo.file.path != null ? fileInfo.file.path : NetworkImage(correctWrongImage())),
+
+//                      image: DecorationImage(
+//                  image: NetworkImage(questionData.isAnsweredCorrect
+//                  ? questionData.correctAnswerImage
+//                      : questionData.inCorrectAnswerImage),
+//                  fit: BoxFit.fill),
+
+//                                Utils.getCacheFile(correctWrongImage()) != null
+//                                    ? FileImage(
+//                                        Utils.getCacheFile(correctWrongImage())
+//                                            .file)
+//                                    : NetworkImage(correctWrongImage()),
+                    
                             fit: BoxFit.fill)
                         : null,
                     borderRadius: BorderRadius.circular(10),

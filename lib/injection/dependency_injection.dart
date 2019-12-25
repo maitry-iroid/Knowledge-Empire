@@ -9,7 +9,6 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:volume/volume.dart';
 
 class Injector {
 //  static final Injector _singleton = new Injector._internal();
@@ -24,7 +23,6 @@ class Injector {
   static AudioPlayer audioPlayer;
   static AudioCache audioCache;
   static DefaultCacheManager cacheManager;
-  static AudioManager audioManager;
 
 
 
