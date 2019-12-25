@@ -413,7 +413,8 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        GetCustomerValueResponse getCustomerValueResponse = GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+        GetCustomerValueResponse getCustomerValueResponse =
+            GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         if (getCustomerValueResponse != null) {
           if (getCustomerValueResponse.flag == "true") {

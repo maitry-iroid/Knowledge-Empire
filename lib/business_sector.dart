@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -56,38 +56,29 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-
-//      decoration: CommonView.getBGDecoration(context),
-
-      child: Stack(
-        children: <Widget>[
-          CommonView.showBackground(context),
-          Padding(
-            padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-            child: Row(
-              children: <Widget>[
-                showFirstHalf(),
-                Expanded(
-                  flex: 1,
-                  child: Injector.isBusinessMode
-                      ? Card(
-                          color: Colors.transparent,
-                          elevation: 20,
-                          margin: EdgeInsets.only(
-                              top: Utils.getHeaderHeight(context)),
-                          child: showSecondHalf(),
-                        )
-                      : showSecondHalf(),
-                )
-              ],
-            ),
+    return Stack(
+      children: <Widget>[
+        CommonView.showBackground(context),
+        Padding(
+          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+          child: Row(
+            children: <Widget>[
+              showFirstHalf(),
+              Expanded(
+                flex: 1,
+                child: Injector.isBusinessMode
+                    ? Card(
+                        color: Colors.transparent,
+                        elevation: 20,
+                        child: showSecondHalf(),
+                      )
+                    : showSecondHalf(),
+              )
+            ],
           ),
-          CommonView.showCircularProgress(isLoading)
-        ],
-      ),
+        ),
+        CommonView.showCircularProgress(isLoading)
+      ],
     );
   }
 
@@ -325,6 +316,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     );
   }
 
+  bool isSwitched = false;
+
   showSecondHalf() {
     return Container(
       color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
@@ -413,10 +406,21 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         ),
                         onTap: () {
                           Utils.playClickSound();
+
                           downloadAllQuestions();
                         },
                       )
                     : Container(),
+                Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
+                  activeTrackColor: Colors.lightGreenAccent,
+                  activeColor: Colors.white,
+                ),
                 InkResponse(
                     child: Container(
                       alignment: Alignment.center,
@@ -565,6 +569,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void downloadAllQuestions() async {
+    int dataSize = 0;
+
     setState(() {
       isLoading = true;
     });
@@ -580,13 +586,33 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       if (questionResponse != null) {
         if (questionResponse.flag == "true") {
+          print("length" + questionResponse.toJson().length.toString());
+
+          List<QuestionData> arrQuestions = questionResponse.data;
+
+          for (int i = 0; i < questionResponse.data.length; i++) {
+            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+
+            print(arrQuestions[i].value);
+          }
+
+          questionResponse.data = arrQuestions;
+
           await Injector.prefs.setString(
               PrefKeys.questionData, json.encode(questionResponse.toJson()));
 
           questionResponse.data.forEach((questionData) async {
             if (questionData.mediaLink.isNotEmpty)
-              await DefaultCacheManager().downloadFile(questionData.mediaLink);
+              await DefaultCacheManager()
+                  .downloadFile(questionData.mediaLink)
+                  .then((fileInfo) {
+                dataSize += fileInfo.file.lengthSync();
+              });
           });
+
+          print(dataSize);
 
           Utils.showToast("Downloaded successfully");
         }

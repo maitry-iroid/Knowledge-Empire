@@ -79,30 +79,30 @@ class Organization {
   String name;
   int level;
   String description;
-  int bonus;
   String subtractLevelConfirmMessage;
   String addLevelConfirmMessage;
   int employeeCount;
+  int nextLevelCost;
 
   Organization(
       {this.type,
         this.name,
         this.level,
         this.description,
-        this.bonus,
         this.subtractLevelConfirmMessage,
         this.addLevelConfirmMessage,
-        this.employeeCount});
+        this.employeeCount,
+        this.nextLevelCost});
 
   Organization.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     name = json['name'];
     level = json['level'];
     description = json['description'];
-    bonus = json['bonus'];
     subtractLevelConfirmMessage = json['subtractLevelConfirmMessage'];
     addLevelConfirmMessage = json['addLevelConfirmMessage'];
     employeeCount = json['employeeCount'];
+    nextLevelCost = json['nextLevelCost'];
   }
 
   Map<String, dynamic> toJson() {
@@ -111,10 +111,10 @@ class Organization {
     data['name'] = this.name;
     data['level'] = this.level;
     data['description'] = this.description;
-    data['bonus'] = this.bonus;
     data['subtractLevelConfirmMessage'] = this.subtractLevelConfirmMessage;
     data['addLevelConfirmMessage'] = this.addLevelConfirmMessage;
     data['employeeCount'] = this.employeeCount;
+    data['nextLevelCost'] = this.nextLevelCost;
     return data;
   }
 }
