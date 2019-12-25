@@ -62,7 +62,7 @@ class HeaderUtils {
         double value =
             (remainingCapacity / (totalEmployee == 0 ? 1 : totalEmployee))
                 .toDouble();
-        return value > 1 ? 1.0 : value;
+        return value > 1 ? 1.0 : value.abs().toDouble();
       } else {
         return 0.0;
       }

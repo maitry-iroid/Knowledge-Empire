@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -93,9 +94,29 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       completeCallback: (bool result) {
         print("completeCallback,result:${result}");
       },
-      initialUrl: questionData.mediaLink,
+      initialUrl: questionData.mediaLink ,
     )
         : Container();
+  }
+
+  FileInfo fileInfo;
+  String error;
+  downloadFile() {
+    var cacheVideo =  questionData.mediaLink;
+
+    print(cacheVideo);
+    DefaultCacheManager().getFile(cacheVideo).listen((f) {
+      setState(() {
+        fileInfo = f;
+        print(fileInfo);
+        error = null;
+      });
+    }).onError((e) {
+      setState(() {
+        fileInfo = null;
+        error = e.toString();
+      });
+    });
   }
 
   @override
@@ -111,7 +132,27 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     print(questionData.value);
 
+    downloadFile();
+
     if (isVideo(questionData.mediaLink)) {
+      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+          ? VideoPlayerController.file(
+          fileInfo.file)
+          : VideoPlayerController.network(questionData.mediaLink)
+        ..initialize().then((_) {
+          setState(() {
+            _controller.pause();
+          });
+        });
+
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+
+      _controller.pause();
+    }
+
+    /* if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
           Utils.getCacheFile(questionData.mediaLink).file)
@@ -127,7 +168,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           : _controller.setLooping(false);
 
       _controller.pause();
-    }
+    }*/
+
+
   }
 
   @override
@@ -397,13 +440,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               color: Colors.transparent,
                               image: isImage(questionData.mediaLink)
                                   ? DecorationImage(
-                                  image: Utils.getCacheFile(
+                                  image:  fileInfo.file.path != null ? AssetImage(fileInfo.file.path) : NetworkImage(questionData.mediaLink) ,
+                               /*   Utils.getCacheFile(
                                       questionData.mediaLink) !=
                                       null
                                       ? FileImage(Utils.getCacheFile(
                                       questionData.mediaLink)
                                       .file)
-                                      : NetworkImage(questionData.mediaLink),
+                                      : NetworkImage(questionData.mediaLink) , */
                                   fit: BoxFit.fill)
                                   : null,
                               borderRadius: BorderRadius.circular(10),
@@ -487,7 +531,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                       ],
                                     ),
                                   )
-                                      : pdfShow(),
+                                      : pdfShow() ,
                                 ),
                               ),
                               Align(

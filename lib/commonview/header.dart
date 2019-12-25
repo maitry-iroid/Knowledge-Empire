@@ -178,7 +178,7 @@ class HeaderView extends StatelessWidget {
                 child: LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 12,
                   lineHeight: 19.0,
-                  percent: HeaderUtils.getProgressInt(type),
+                  percent: HeaderUtils.getProgressInt(type)>1?0.0:HeaderUtils.getProgressInt(type),
                   backgroundColor: Colors.transparent,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
