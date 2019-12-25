@@ -44,7 +44,7 @@ class HeaderUtils {
     } else if (type == Const.typeEmployee) {
       return getProgressValue(Const.typeHR);
     } else if (type == Const.typeBadge) {
-      return Injector.customerValueData.totalAttemptedQuestion/Injector.customerValueData.totalAttemptedQuestion;
+      return (Injector.customerValueData.correctAnswerCount/Injector.customerValueData.totalAttemptedQuestion);
     } else if (type == Const.typeServicesPerson) {
       return (Injector.customerValueData.totalCustomerCapicity -
               Injector.customerValueData.remainingCustomerCapicity) /
@@ -124,7 +124,7 @@ class HeaderUtils {
       return ((Injector.customerValueData.correctAnswerCount /
                   Injector.customerValueData.totalAttemptedQuestion) *
               100)
-          .toString();
+          .toStringAsFixed(2);
     } else
       return "0%";
   }
