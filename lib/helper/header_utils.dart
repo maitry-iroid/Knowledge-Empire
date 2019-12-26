@@ -20,8 +20,6 @@ class HeaderUtils {
   }
 
   static getProgress(int type) {
-//    if()
-
     if (type == Const.typeSalesPersons) {
       return getProgressText(Const.typeSales);
     } else if (type == Const.typeEmployee) {
@@ -44,15 +42,7 @@ class HeaderUtils {
     } else if (type == Const.typeEmployee) {
       return getProgressValue(Const.typeHR);
     } else if (type == Const.typeBadge) {
-      return (Injector.customerValueData.correctAnswerCount /
-                      Injector.customerValueData.totalAttemptedQuestion) >
-                  0 ||
-              (Injector.customerValueData.correctAnswerCount /
-                      Injector.customerValueData.totalAttemptedQuestion) <
-                  1
-          ? (Injector.customerValueData.correctAnswerCount /
-              Injector.customerValueData.totalAttemptedQuestion)
-          : 0.0;
+      return getBonusValue();
     } else if (type == Const.typeServicesPerson) {
       return getCustomerCapacityRatio();
     } else
@@ -61,23 +51,14 @@ class HeaderUtils {
 
   static getProgressValue(int organizationType) {
     if (Injector.customerValueData != null) {
-      List<Organization> arrOrganization =
-          Injector.customerValueData.organization;
-
-      int totalEmployee = Injector.customerValueData.totalEmployeeCapacity;
-      int remainingCapacity = organizationType == Const.typeHR
-          ? arrOrganization
-              .where((organization) => (organization.type == organizationType))
-              .toList()[0]
-              .employeeCount
-          : Injector.customerValueData.totalEmployeeCapacity -
-              Injector.customerValueData.remainingEmployeeCapacity;
+      int totalEmployee = getTotalValue(organizationType);
+      int remainingCapacity = getOccupiedValue(organizationType);
 
       if (remainingCapacity != null && totalEmployee != null) {
         double value =
             (remainingCapacity / (totalEmployee == 0 ? 1 : totalEmployee))
                 .toDouble();
-        return value <= 1 ||value>=0? value : 0.0;
+        return value <= 1 || value >= 0 ? value : 0.0;
       } else {
         return 0.0;
       }
@@ -88,21 +69,13 @@ class HeaderUtils {
 
   static getProgressText(int organizationType) {
     if (Injector.customerValueData != null) {
-      List<Organization> arrOrganization =
-          Injector.customerValueData.organization;
-
-      int totalEmployee = arrOrganization
-              .where((organization) => (organization.type == organizationType))
-              .toList()[0]
-              .level *
-          10;
-      int remainingCapacity = arrOrganization
-          .where((organization) => (organization.type == organizationType))
-          .toList()[0]
-          .employeeCount;
+      int totalEmployee = getTotalValue(organizationType) * 10;
+      int remainingCapacity = getOccupiedValue(organizationType);
 
       if (remainingCapacity != null && totalEmployee != null) {
-        return remainingCapacity.toString() + "/" + totalEmployee.toString();
+        return getOccupiedValue(organizationType).toString() +
+            "/" +
+            getTotalValue(organizationType).toString();
       } else {
         return "0/0";
       }
@@ -136,14 +109,54 @@ class HeaderUtils {
   }
 
   static double getCustomerCapacityRatio() {
-    double val = Injector.customerValueData.totalCustomerCapicity!=null &&Injector.customerValueData.totalCustomerCapicity!=0?(Injector.customerValueData.totalCustomerCapicity -
-            Injector.customerValueData.remainingCustomerCapicity) /
-        Injector.customerValueData.totalCustomerCapicity:0;
+    double val = Injector.customerValueData.totalCustomerCapicity != null &&
+            Injector.customerValueData.totalCustomerCapicity != 0
+        ? (Injector.customerValueData.totalCustomerCapicity -
+                Injector.customerValueData.remainingCustomerCapicity) /
+            Injector.customerValueData.totalCustomerCapicity
+        : 0;
 
     if (val >= 0 || val <= 1) {
       return val;
     } else {
       return 0.0;
     }
+  }
+
+  static double getBonusValue() {
+    return (Injector.customerValueData.correctAnswerCount /
+                    Injector.customerValueData.totalAttemptedQuestion) >=
+                0 &&
+            (Injector.customerValueData.correctAnswerCount /
+                    Injector.customerValueData.totalAttemptedQuestion) <=
+                1
+        ? (Injector.customerValueData.correctAnswerCount /
+            Injector.customerValueData.totalAttemptedQuestion)
+        : 0.0;
+  }
+
+  static int getOccupiedValue(int organizationType) {
+    if (organizationType == Const.typeHR) {
+      return Injector.customerValueData.totalEmployeeCapacity -
+          Injector.customerValueData.remainingEmployeeCapacity;
+    } else if (organizationType == Const.typeSales) {
+      return Injector.customerValueData.totalEmployeeCapacity -
+          Injector.customerValueData.remianingSalesPerson;
+    } else if (organizationType == Const.typeServices) {
+      return Injector.customerValueData.totalCustomerCapicity -
+          Injector.customerValueData.remainingCustomerCapicity;
+    } else
+      return 0;
+  }
+
+  static int getTotalValue(int organizationType) {
+    if (organizationType == Const.typeHR) {
+      return Injector.customerValueData.totalEmployeeCapacity;
+    } else if (organizationType == Const.typeSales) {
+      return Injector.customerValueData.totalEmployeeCapacity;
+    } else if (organizationType == Const.typeServices) {
+      return Injector.customerValueData.totalCustomerCapicity;
+    } else
+      return 0;
   }
 }

@@ -372,19 +372,7 @@ class Utils {
     return questionData;
   }
 
-  static getSalesPersonCount() {
-    return Injector.customerValueData.organization
-        .where((data) => data.type == Const.typeSales)
-        .toList()[0]
-        .employeeCount;
-  }
 
-  static getServicesPersonCount() {
-    return Injector.customerValueData.organization
-        .where((data) => data.type == Const.typeServices)
-        .toList()[0]
-        .employeeCount;
-  }
 
   static getCurrentFormattedDate() {
     var now = new DateTime.fromMillisecondsSinceEpoch(

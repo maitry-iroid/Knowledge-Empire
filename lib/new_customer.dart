@@ -342,8 +342,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               )),
           onTap: () {
             Utils.playClickSound();
-            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
-                Utils.getServicesPersonCount() > 0) {
+            if (Injector.customerValueData.remianingSalesPerson >= arrQuestions[index].resources &&
+                Injector.customerValueData.remainingCustomerCapicity  > 0) {
               Navigator.push(
                   context,
                   FadeRouteHome(

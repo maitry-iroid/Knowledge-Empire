@@ -362,7 +362,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           setState(() {});
 
           CustomerValueData customerValueData = Injector.customerValueData;
-          customerValueData.organization = arrOrganization;
           customerValueData.totalEmployeeCapacity =
               organizationData.totalEmpCount;
           customerValueData.totalBalance = organizationData.totalBalance;

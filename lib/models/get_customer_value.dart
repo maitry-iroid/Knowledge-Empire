@@ -1,4 +1,3 @@
-import 'organization.dart';
 
 class CustomerValueRequest {
   String userId;
@@ -56,8 +55,8 @@ class CustomerValueData {
   int valueBonus;
   int resourceBonus;
   int totalAttemptedQuestion;
-  List<Organization> organization;
   int correctAnswerCount;
+  int remianingSalesPerson;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
@@ -70,7 +69,7 @@ class CustomerValueData {
         this.valueBonus,
         this.resourceBonus,
         this.totalAttemptedQuestion,
-        this.organization,
+        this.remianingSalesPerson,
         this.correctAnswerCount});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
@@ -84,13 +83,8 @@ class CustomerValueData {
     valueBonus = json['valueBonus'];
     resourceBonus = json['resourceBonus'];
     totalAttemptedQuestion = json['totalAttemptedQuestion'];
-    if (json['organization'] != null) {
-      organization = new List<Organization>();
-      json['organization'].forEach((v) {
-        organization.add(new Organization.fromJson(v));
-      });
-    }
     correctAnswerCount = json['correctAnswerCount'];
+    remianingSalesPerson = json['remianingSalesPerson'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,47 +99,10 @@ class CustomerValueData {
     data['valueBonus'] = this.valueBonus;
     data['resourceBonus'] = this.resourceBonus;
     data['totalAttemptedQuestion'] = this.totalAttemptedQuestion;
-    if (this.organization != null) {
-      data['organization'] = this.organization.map((v) => v.toJson()).toList();
-    }
     data['correctAnswerCount'] = this.correctAnswerCount;
+    data['remianingSalesPerson'] = this.remianingSalesPerson;
     return data;
   }
 }
-
-//class Organization {
-//  int type;
-//  int level;
-//  String description;
-//  int nextLevelCost;
-//  String subtractLevelConfirmMessage;
-//  String addLevelConfirmMessage;
-//  int employeeCount;
-//
-//  Organization(
-//      );
-//
-//  Organization.fromJson(Map<String, dynamic> json) {
-//    type = json['type'];
-//    level = json['level'];
-//    description = json['description'];
-//    nextLevelCost = json['nextLevelCost'];
-//    subtractLevelConfirmMessage = json['subtractLevelConfirmMessage'];
-//    addLevelConfirmMessage = json['addLevelConfirmMessage'];
-//    employeeCount = json['employeeCount'];
-//  }
-//
-//  Map<String, dynamic> toJson() {
-//    final Map<String, dynamic> data = new Map<String, dynamic>();
-//    data['type'] = this.type;
-//    data['level'] = this.level;
-//    data['description'] = this.description;
-//    data['nextLevelCost'] = this.nextLevelCost;
-//    data['subtractLevelConfirmMessage'] = this.subtractLevelConfirmMessage;
-//    data['addLevelConfirmMessage'] = this.addLevelConfirmMessage;
-//    data['employeeCount'] = this.employeeCount;
-//    return data;
-//  }
-//}
 
 
