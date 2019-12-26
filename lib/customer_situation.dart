@@ -534,7 +534,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 decoration: BoxDecoration(
                     image: isImage(correctWrongImage())
                         ? DecorationImage(
-                            image: AssetImage(fileInfo.file.path != null ? fileInfo.file.path : NetworkImage(correctWrongImage())),
+                            image: AssetImage(fileInfo!=null&&fileInfo.file.path != null ? fileInfo.file.path : NetworkImage(correctWrongImage())),
 
 //                      image: DecorationImage(
 //                  image: NetworkImage(questionData.isAnsweredCorrect

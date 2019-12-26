@@ -21,30 +21,26 @@ class HeaderUtils {
 
   static getProgress(int type) {
     if (type == Const.typeSalesPersons) {
-      return getProgressText(Const.typeSales);
+      return getProgressText(type);
     } else if (type == Const.typeEmployee) {
-      return getTotalEmployee();
-    } else if (type == Const.typeBadge) {
+      return getProgressText(type);
+    }  else if (type == Const.typeServicesPerson) {
+      return getProgressText(type);
+    }else if (type == Const.typeBadge) {
       return getAnswerRatio();
-    } else if (type == Const.typeServicesPerson) {
-      return (Injector.customerValueData.totalCustomerCapicity -
-                  Injector.customerValueData.remainingCustomerCapicity)
-              .toString() +
-          "/" +
-          Injector.customerValueData.totalCustomerCapicity.toString();
     } else
       return "0/0";
   }
 
   static double getProgressInt(int type) {
     if (type == Const.typeSalesPersons) {
-      return getProgressValue(Const.typeSales);
+      return getProgressValue(type);
     } else if (type == Const.typeEmployee) {
-      return getProgressValue(Const.typeHR);
+      return getProgressValue(type);
+    } else if (type == Const.typeServicesPerson) {
+      return getProgressValue(type);
     } else if (type == Const.typeBadge) {
       return getBonusValue();
-    } else if (type == Const.typeServicesPerson) {
-      return getCustomerCapacityRatio();
     } else
       return 0.0;
   }
@@ -108,21 +104,6 @@ class HeaderUtils {
       return "0%";
   }
 
-  static double getCustomerCapacityRatio() {
-    double val = Injector.customerValueData.totalCustomerCapicity != null &&
-            Injector.customerValueData.totalCustomerCapicity != 0
-        ? (Injector.customerValueData.totalCustomerCapicity -
-                Injector.customerValueData.remainingCustomerCapicity) /
-            Injector.customerValueData.totalCustomerCapicity
-        : 0;
-
-    if (val >= 0 || val <= 1) {
-      return val;
-    } else {
-      return 0.0;
-    }
-  }
-
   static double getBonusValue() {
     return (Injector.customerValueData.correctAnswerCount /
                     Injector.customerValueData.totalAttemptedQuestion) >=
@@ -136,26 +117,26 @@ class HeaderUtils {
   }
 
   static int getOccupiedValue(int organizationType) {
-    if (organizationType == Const.typeHR) {
+    if (organizationType == Const.typeEmployee) {
       return Injector.customerValueData.totalEmployeeCapacity -
           Injector.customerValueData.remainingEmployeeCapacity;
-    } else if (organizationType == Const.typeSales) {
-      return Injector.customerValueData.totalEmployeeCapacity -
-          Injector.customerValueData.remianingSalesPerson;
-    } else if (organizationType == Const.typeServices) {
-      return Injector.customerValueData.totalCustomerCapicity -
-          Injector.customerValueData.remainingCustomerCapicity;
+    } else if (organizationType == Const.typeSalesPersons) {
+      return Injector.customerValueData.totalSalesPerson -
+          Injector.customerValueData.remainingSalesPerson;
+    } else if (organizationType == Const.typeServicesPerson) {
+      return Injector.customerValueData.totalCustomerCapacity -
+          Injector.customerValueData.remainingCustomerCapacity;
     } else
       return 0;
   }
 
   static int getTotalValue(int organizationType) {
-    if (organizationType == Const.typeHR) {
+    if (organizationType == Const.typeEmployee) {
       return Injector.customerValueData.totalEmployeeCapacity;
-    } else if (organizationType == Const.typeSales) {
-      return Injector.customerValueData.totalEmployeeCapacity;
-    } else if (organizationType == Const.typeServices) {
-      return Injector.customerValueData.totalCustomerCapicity;
+    } else if (organizationType == Const.typeSalesPersons) {
+      return Injector.customerValueData.totalSalesPerson;
+    } else if (organizationType == Const.typeServicesPerson) {
+      return Injector.customerValueData.totalCustomerCapacity;
     } else
       return 0;
   }
