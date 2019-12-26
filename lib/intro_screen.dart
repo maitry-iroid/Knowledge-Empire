@@ -24,7 +24,6 @@ import 'models/get_customer_value.dart';
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
 
-
   FadeRouteIntro({this.page})
       : super(
           pageBuilder: (
@@ -47,7 +46,6 @@ class FadeRouteIntro extends PageRouteBuilder {
 }
 
 class IntroPage extends StatefulWidget {
-
   IntroPage({Key key}) : super(key: key);
 
   IntroPageState createState() => IntroPageState();
@@ -257,7 +255,10 @@ class IntroPageState extends State<IntroPage> {
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 19.0,
-                          percent: HeaderUtils.getProgressInt(type),
+                          percent: HeaderUtils.getProgressInt(type) >= 0 &&
+                                  HeaderUtils.getProgressInt(type) <= 1
+                              ? HeaderUtils.getProgressInt(type)
+                              : 0.0,
                           backgroundColor: Colors.transparent,
                           progressColor: Colors.blue,
                         ),
@@ -625,7 +626,6 @@ class IntroPageState extends State<IntroPage> {
 
   performItemClick(int type) {
     Navigator.push(context, FadeRouteHome(initialPageType: type));
-
   }
 
   bool isShowing = false;
@@ -980,7 +980,6 @@ class IntroPageState extends State<IntroPage> {
                         onTap: () {
                           Utils.playClickSound();
                           setState(() {
-
                             Navigator.pushAndRemoveUntil(context,
                                 FadeRouteHome(), ModalRoute.withName("/home"));
                           });
