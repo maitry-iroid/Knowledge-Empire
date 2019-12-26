@@ -440,7 +440,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                               color: Colors.transparent,
                               image: isImage(questionData.mediaLink)
                                   ? DecorationImage(
-                                  image:  fileInfo.file.path != null ? AssetImage(fileInfo.file.path) : NetworkImage(questionData.mediaLink) ,
+                                  image: fileInfo!=null&& fileInfo.file.path != null ? AssetImage(fileInfo.file.path) : NetworkImage(questionData.mediaLink) ,
                                /*   Utils.getCacheFile(
                                       questionData.mediaLink) !=
                                       null
