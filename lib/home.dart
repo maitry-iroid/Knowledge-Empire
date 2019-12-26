@@ -20,6 +20,7 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:ke_employee/organization.dart';
+import 'package:ke_employee/organization2.dart';
 import 'package:ke_employee/powerups.dart';
 import 'package:ke_employee/profile.dart';
 import 'package:ke_employee/ranking.dart';
@@ -255,7 +256,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 6:
         return ChallengesPage();
       case 7:
-        return Injector.isBusinessMode ? OrganizationsPage() : PowerUpsPage();
+        return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
         return PLPage();
       case 9:
