@@ -43,48 +43,50 @@ class GetCustomerValueResponse {
     return data;
   }
 }
-
 class CustomerValueData {
   int totalEmployeeCapacity;
   String manager;
   int remainingEmployeeCapacity;
-  int totalCustomerCapicity;
-  int remainingCustomerCapicity;
+  int totalCustomerCapacity;
+  int remainingCustomerCapacity;
+  int remainingSalesPerson;
   int totalBalance;
   int loyaltyBonus;
   int valueBonus;
   int resourceBonus;
   int totalAttemptedQuestion;
   int correctAnswerCount;
-  int remianingSalesPerson;
+  int totalSalesPerson;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
         this.manager,
         this.remainingEmployeeCapacity,
-        this.totalCustomerCapicity,
-        this.remainingCustomerCapicity,
+        this.totalCustomerCapacity,
+        this.remainingCustomerCapacity,
+        this.remainingSalesPerson,
         this.totalBalance,
         this.loyaltyBonus,
         this.valueBonus,
         this.resourceBonus,
         this.totalAttemptedQuestion,
-        this.remianingSalesPerson,
-        this.correctAnswerCount});
+        this.correctAnswerCount,
+        this.totalSalesPerson});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
     manager = json['manager'];
     remainingEmployeeCapacity = json['remainingEmployeeCapacity'];
-    totalCustomerCapicity = json['totalCustomerCapicity'];
-    remainingCustomerCapicity = json['remainingCustomerCapicity'];
+    totalCustomerCapacity = json['totalCustomerCapacity'];
+    remainingCustomerCapacity = json['remainingCustomerCapacity'];
+    remainingSalesPerson = json['remainingSalesPerson'];
     totalBalance = json['totalBalance'];
     loyaltyBonus = json['loyaltyBonus'];
     valueBonus = json['valueBonus'];
     resourceBonus = json['resourceBonus'];
     totalAttemptedQuestion = json['totalAttemptedQuestion'];
     correctAnswerCount = json['correctAnswerCount'];
-    remianingSalesPerson = json['remianingSalesPerson'];
+    totalSalesPerson = json['totalSalesPerson'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,17 +94,17 @@ class CustomerValueData {
     data['totalEmployeeCapacity'] = this.totalEmployeeCapacity;
     data['manager'] = this.manager;
     data['remainingEmployeeCapacity'] = this.remainingEmployeeCapacity;
-    data['totalCustomerCapicity'] = this.totalCustomerCapicity;
-    data['remainingCustomerCapicity'] = this.remainingCustomerCapicity;
+    data['totalCustomerCapacity'] = this.totalCustomerCapacity;
+    data['remainingCustomerCapacity'] = this.remainingCustomerCapacity;
+    data['remainingSalesPerson'] = this.remainingSalesPerson;
     data['totalBalance'] = this.totalBalance;
     data['loyaltyBonus'] = this.loyaltyBonus;
     data['valueBonus'] = this.valueBonus;
     data['resourceBonus'] = this.resourceBonus;
     data['totalAttemptedQuestion'] = this.totalAttemptedQuestion;
     data['correctAnswerCount'] = this.correctAnswerCount;
-    data['remianingSalesPerson'] = this.remianingSalesPerson;
+    data['totalSalesPerson'] = this.totalSalesPerson;
     return data;
   }
 }
-
 
