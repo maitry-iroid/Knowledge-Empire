@@ -26,6 +26,9 @@ VideoPlayerController _controller;
 
 List abcdList = List();
 
+FileInfo fileInfo;
+
+
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
 
@@ -66,13 +69,18 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     super.initState();
     checkAudio();
+
     correctWrongImage();
-    downloadFile();
+    Utils.isInternetConnected().then((isConnected) {
+      if(isConnected == false) {
+        return  downloadFile();
+      }
+    });
   }
 
-  FileInfo fileInfo;
-  String error;
 
+
+  String error;
 
   downloadFile() {
     var cacheVideo =  correctWrongImage();
