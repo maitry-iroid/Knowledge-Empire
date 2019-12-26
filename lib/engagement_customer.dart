@@ -134,25 +134,25 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     downloadFile();
 
-    if (isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
-          ? VideoPlayerController.file(
-          fileInfo.file)
-          : VideoPlayerController.network(questionData.mediaLink)
-        ..initialize().then((_) {
-          setState(() {
-            _controller.pause();
-          });
-        });
+//    if (isVideo(questionData.mediaLink)) {
+//      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+//          ? VideoPlayerController.file(
+//          fileInfo.file)
+//          : VideoPlayerController.network(questionData.mediaLink)
+//        ..initialize().then((_) {
+//          setState(() {
+//            _controller.pause();
+//          });
+//        });
+//
+//      questionData.videoLoop == 1
+//          ? _controller.setLooping(true)
+//          : _controller.setLooping(false);
+//
+//      _controller.pause();
+//    }
 
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
-
-      _controller.pause();
-    }
-
-    /* if (isVideo(questionData.mediaLink)) {
+     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
           Utils.getCacheFile(questionData.mediaLink).file)
@@ -168,7 +168,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           : _controller.setLooping(false);
 
       _controller.pause();
-    }*/
+    }
 
 
   }
@@ -434,7 +434,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       },
                       child: Container(
                           margin: EdgeInsets.only(
-                              top: 10, bottom: 5, left: 0, right: 5),
+                              top: 10, bottom: 5, left: 10, right: 15),
                           height: Utils.getDeviceHeight(context) / 2.7,
                           decoration: BoxDecoration(
                               color: Colors.transparent,
@@ -492,6 +492,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                         Container(
                                           child: MaterialButton(
                                             height: 100,
+                                            minWidth: Utils.getDeviceHeight(context) / 7,
+//                                            height: Utils.getDeviceHeight(context) / 7,
 //                                            color: Colors.transparent.withOpacity(0.0),
                                             onPressed: () {
                                               questionData.videoPlay == 1
