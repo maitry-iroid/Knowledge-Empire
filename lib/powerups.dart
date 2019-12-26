@@ -481,7 +481,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           arrOrganization[selectedIndex] = organizationData.organization[0];
 
           CustomerValueData customerValueData = Injector.customerValueData;
-          customerValueData.organization = arrOrganization;
           customerValueData.totalEmployeeCapacity =
               organizationData.totalEmpCount;
           customerValueData.totalBalance = organizationData.totalBalance;
