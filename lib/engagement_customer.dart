@@ -91,18 +91,19 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   pdfShow() {
     return isPdf(questionData.mediaLink)
         ? SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:${result}");
-      },
-      initialUrl: questionData.mediaLink ,
-    )
+            completeCallback: (bool result) {
+              print("completeCallback,result:${result}");
+            },
+            initialUrl: questionData.mediaLink,
+          )
         : Container();
   }
 
   FileInfo fileInfo;
   String error;
+
   downloadFile() {
-    var cacheVideo =  questionData.mediaLink;
+    var cacheVideo = questionData.mediaLink;
 
     print(cacheVideo);
     DefaultCacheManager().getFile(cacheVideo).listen((f) {
@@ -132,7 +133,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     print(questionData.value);
 
-    downloadFile();
+//    downloadFile();
 
 //    if (isVideo(questionData.mediaLink)) {
 //      _controller = Utils.getCacheFile(questionData.mediaLink) != null
@@ -152,25 +153,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //      _controller.pause();
 //    }
 
-     if (isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
-          ? VideoPlayerController.file(
-          Utils.getCacheFile(questionData.mediaLink).file)
-          : VideoPlayerController.network(questionData.mediaLink)
-        ..initialize().then((_) {
-          setState(() {
-            _controller.pause();
-          });
-        });
-
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
-
-      _controller.pause();
-    }
-
-
+    initVideoController();
   }
 
   @override
@@ -213,22 +196,22 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                  width: 1,
-                  color: arrAnswer[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+                      width: 1,
+                      color: arrAnswer[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : (arrAnswer[index].isSelected
-                  ? ColorRes.blueMenuSelected
-                  : ColorRes.white),
+                      ? ColorRes.blueMenuSelected
+                      : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
+                      image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -271,7 +254,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     Utils.playClickSound();
 
     List<Answer> selectedAnswer =
-    arrAnswer.where((answer) => answer.isSelected).toList();
+        arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
       Utils.showToast("Please select at least one option");
@@ -281,10 +264,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
 
     SubmitAnswerRequest rq =
-    Injector.prefs.getString(PrefKeys.answerData) != null
-        ? SubmitAnswerRequest.fromJson(
-        json.decode(Injector.prefs.getString(PrefKeys.answerData)))
-        : SubmitAnswerRequest();
+        Injector.prefs.getString(PrefKeys.answerData) != null
+            ? SubmitAnswerRequest.fromJson(
+                json.decode(Injector.prefs.getString(PrefKeys.answerData)))
+            : SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
 
@@ -331,6 +314,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   isImage(String path) {
+    print(path);
     return extension(path) == ".png" ||
         extension(path) == ".jpeg" ||
         extension(path) == ".jpg";
@@ -377,9 +361,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("eddit_profile")),
-                      fit: BoxFit.fill))
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill))
                       : null),
               child: Text(
                 Utils.getText(
@@ -417,281 +401,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMainBody(BuildContext context) {
     return Expanded(
         child: Row(
-          children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Column(
-                  children: <Widget>[
-                    InkResponse(
-                      onTap: () {
-                        Utils.playClickSound();
-                        isImage(questionData.mediaLink)
-                            ? showDialog(
-                          context: context,
-                          builder: (_) => ImageShowAlert(),
-                        )
-                            : Container();
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 10, bottom: 5, left: 10, right: 15),
-                          height: Utils.getDeviceHeight(context) / 2.7,
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              image: isImage(questionData.mediaLink)
-                                  ? DecorationImage(
-                                  image: fileInfo!=null&& fileInfo.file.path != null ? AssetImage(fileInfo.file.path) : NetworkImage(questionData.mediaLink) ,
-                               /*   Utils.getCacheFile(
-                                      questionData.mediaLink) !=
-                                      null
-                                      ? FileImage(Utils.getCacheFile(
-                                      questionData.mediaLink)
-                                      .file)
-                                      : NetworkImage(questionData.mediaLink) , */
-                                  fit: BoxFit.fill)
-                                  : null,
-                              borderRadius: BorderRadius.circular(10),
-                              border: isImage(questionData.mediaLink)
-                                  ? Border.all(color: ColorRes.white, width: 1)
-                                  : null),
-                          child: Stack(
-//                      fit: StackFit.expand,
-
-                            children: <Widget>[
-                              Card(
-                                elevation: 10,
-                                color: ColorRes.transparent.withOpacity(0.4),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                margin: EdgeInsets.only(
-                                    top: 0, bottom: 10, right: 10, left: 10),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.only(
-                                      left: 5, right: 5, top: 5, bottom: 5),
-                                  decoration: BoxDecoration(
-//                              color:
-//                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: isVideo(questionData.mediaLink)
-                                        ? Border.all(
-                                        color: ColorRes.white, width: 1)
-                                        : null,
-                                  ),
-                                  child: isVideo(questionData.mediaLink) &&
-                                      _controller.value.initialized
-                                      ? AspectRatio(
-                                    aspectRatio:
-                                    _controller.value.aspectRatio,
-                                    child: Stack(
-                                      alignment: Alignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          child: VideoPlayer(_controller),
-                                        ),
-                                        Container(
-                                          child: MaterialButton(
-                                            height: 100,
-                                            minWidth: Utils.getDeviceHeight(context) / 7,
-//                                            height: Utils.getDeviceHeight(context) / 7,
-//                                            color: Colors.transparent.withOpacity(0.0),
-                                            onPressed: () {
-                                              questionData.videoPlay == 1
-                                                  ? setState(() {
-                                                _controller
-                                                    .value.isPlaying
-                                                    ? _controller
-                                                    .pause()
-                                                    : _controller
-                                                    .play();
-                                              })
-                                                  : setState(() {
-                                                _controller.play();
-                                              });
-                                            },
-                                            child: Container(
-                                              width: Utils.getDeviceHeight(
-                                                  context) /
-                                                  7,
-                                              height: Utils.getDeviceHeight(
-                                                  context) /
-                                                  7,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                        _controller.value
-                                                            .isPlaying
-                                                            ? Utils.getAssetsImg(
-                                                            "") //add_emp_check
-                                                            : Utils.getAssetsImg(
-                                                            "play_button"),
-                                                      ),
-                                                      fit: BoxFit.scaleDown)),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                      : pdfShow() ,
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: InkResponse(
-                                  onTap: () {
-                                    Utils.playClickSound();
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) =>
-                                      isPdf(questionData.mediaLink) ||
-                                          isVideo(questionData.mediaLink)
-                                          ? ImageShowAlert()
-                                          : Container(),
-                                    );
-                                  },
-                                  child: Container(
-                                      alignment: Alignment.center,
-                                      height: Utils.getDeviceWidth(context) / 20,
-                                      width: Utils.getDeviceWidth(context) / 20,
-                                      decoration: BoxDecoration(
-                                          image: isPdf(questionData.mediaLink) ||
-                                              isVideo(questionData.mediaLink)
-                                              ? DecorationImage(
-                                              image: AssetImage(Injector
-                                                  .isBusinessMode
-                                                  ? Utils.getAssetsImg(
-                                                  "full_expand_question_answers")
-                                                  : Utils.getAssetsImg(
-                                                  "expand_pro")),
-                                              fit: BoxFit.fill)
-                                              : null)),
-                                ),
-                              )
-                            ],
-                          )),
-                    ),
-                    Expanded(
-                      child: CommonView.questionAndExplanation(
-                          context,
-                          Utils.getText(context, StringRes.question),
-                          true,
-                          questionData.question),
-                    ),
-                  ],
-                )),
-            Expanded(
-              flex: 1,
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Card(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    margin:
-                    EdgeInsets.only(top: 12, bottom: 15, right: 15, left: 8),
-                    child: Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(
-                            left: 10, right: 10, top: 15, bottom: 18),
-                        decoration: BoxDecoration(
-                          color: Injector.isBusinessMode
-                              ? ColorRes.bgDescription
-                              : null,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: ColorRes.white, width: 1),
-                        ),
-
-//                  child: ListView.builder(
-//                    shrinkWrap: true,
-//                    physics: ClampingScrollPhysics(),
-//                    itemCount: arrAnswer.length,
-//                    itemBuilder: (BuildContext context, int index) {
-//                      return showItem(index);
-//                    },
-//                  ),
-                        child:
-//                  childNotifier.of(context).register<String>('selectQuestionAction', (data) {
-//                    print(data.data);
-//                    return Text('${data.data}');
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: arrAnswer.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return showItem(index);
-                          },
-                        )
-//                  }),
-                    ),
-                  ),
-
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: Utils.getDeviceWidth(context) / 6,
-                          vertical: 0),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: Injector.isBusinessMode
-                              ? null
-                              : BorderRadius.circular(20),
-                          border: Injector.isBusinessMode
-                              ? null
-                              : Border.all(width: 1, color: ColorRes.white),
-                          color: Injector.isBusinessMode
-                              ? null
-                              : ColorRes.titleBlueProf,
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("eddit_profile")),
-                              fit: BoxFit.fill)
-                              : null),
-                      child: Text(
-                        Utils.getText(context, StringRes.answers),
-                        style: TextStyle(color: ColorRes.white, fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  //Full Screen Alert Show Question : -
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: InkResponse(
-                      onTap: () {
-                        Utils.playClickSound();
-                        showDialog(
-                          context: context,
-                          builder: (_) => FunkyOverlayAnswers(engagementCustomerState: this),
-                        );
-                      },
-                      child: Container(
-                          alignment: Alignment.center,
-                          height: Utils.getDeviceWidth(context) / 20,
-                          width: Utils.getDeviceWidth(context) / 20,
-                          decoration: BoxDecoration(
-                              image:
-//                                  Injector.isBusinessMode ?
-                              DecorationImage(
-                                  image: AssetImage(Injector.isBusinessMode
-                                      ? Utils.getAssetsImg(
-                                      "full_expand_question_answers")
-                                      : Utils.getAssetsImg("expand_pro")),
-                                  fit: BoxFit.fill)
-//                                  : null
-                          )),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ));
+      children: <Widget>[
+        showFirstHalf(context),
+        showSecondHalf(context),
+      ],
+    ));
   }
 
   bool isAnswerCorrect(List<Answer> selectedAnswer) {
@@ -747,6 +461,290 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             questionDataSituation: questionData),
         ModalRoute.withName("/home"));
   }
+
+  showFirstHalf(BuildContext context) {
+    return Expanded(
+        flex: 1,
+        child: Column(
+          children: <Widget>[
+            showQueMedia(context),
+            showQueDescription(context)
+          ],
+        ));
+  }
+
+  showSecondHalf(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            margin: EdgeInsets.only(top: 12, bottom: 15, right: 15, left: 8),
+            child: Container(
+                alignment: Alignment.center,
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+                decoration: BoxDecoration(
+                  color:
+                      Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: ColorRes.white, width: 1),
+                ),
+
+//                  child: ListView.builder(
+//                    shrinkWrap: true,
+//                    physics: ClampingScrollPhysics(),
+//                    itemCount: arrAnswer.length,
+//                    itemBuilder: (BuildContext context, int index) {
+//                      return showItem(index);
+//                    },
+//                  ),
+                child:
+//                  childNotifier.of(context).register<String>('selectQuestionAction', (data) {
+//                    print(data.data);
+//                    return Text('${data.data}');
+                    ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: arrAnswer.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return showItem(index);
+                  },
+                )
+//                  }),
+                ),
+          ),
+
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              height: 30,
+              margin: EdgeInsets.symmetric(
+                  horizontal: Utils.getDeviceWidth(context) / 6, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode
+                      ? null
+                      : Border.all(width: 1, color: ColorRes.white),
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                Utils.getText(context, StringRes.answers),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          //Full Screen Alert Show Question : -
+          Align(
+            alignment: Alignment.bottomRight,
+            child: InkResponse(
+              onTap: () {
+                Utils.playClickSound();
+                showDialog(
+                  context: context,
+                  builder: (_) =>
+                      FunkyOverlayAnswers(engagementCustomerState: this),
+                );
+              },
+              child: Container(
+                  alignment: Alignment.center,
+                  height: Utils.getDeviceWidth(context) / 20,
+                  width: Utils.getDeviceWidth(context) / 20,
+                  decoration: BoxDecoration(
+                      image:
+//                                  Injector.isBusinessMode ?
+                          DecorationImage(
+                              image: AssetImage(Injector.isBusinessMode
+                                  ? Utils.getAssetsImg(
+                                      "full_expand_question_answers")
+                                  : Utils.getAssetsImg("expand_pro")),
+                              fit: BoxFit.fill)
+//                                  : null
+                      )),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  showQueDescription(BuildContext context) {
+    return Expanded(
+      child: CommonView.questionAndExplanation(
+          context,
+          Utils.getText(context, StringRes.question),
+          true,
+          questionData.question),
+    );
+  }
+
+  showQueMedia(BuildContext context) {
+    return InkResponse(
+      onTap: () {
+       performImageClick(context);
+      },
+      child:  Stack(
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            color: ColorRes.transparent.withOpacity(0.4),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            margin:
+            EdgeInsets.only(top: 0, bottom: 10, right: 10, left: 10),
+            child: Container(
+                alignment: Alignment.center,
+                padding:
+                EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+                decoration: BoxDecoration(
+//                              color:
+//                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: ColorRes.white, width: 1)
+
+                ),
+                child: showMediaView(context)),
+          ),
+          showExpandIcon(context)
+        ],
+      )
+    );
+  }
+
+  void initVideoController() {
+    if (isVideo(questionData.mediaLink)) {
+      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+          ? VideoPlayerController.file(
+              Utils.getCacheFile(questionData.mediaLink).file)
+          : VideoPlayerController.network(questionData.mediaLink)
+        ..initialize().then((_) {
+          setState(() {
+            _controller.pause();
+          });
+        });
+
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+
+      _controller.pause();
+    }
+  }
+
+  showMediaView(BuildContext context) {
+    if (isImage(questionData.mediaLink)) {
+      return Image(
+        image: isImage(questionData.mediaLink)
+            ? NetworkImage(questionData.mediaLink)
+            : AssetImage(Utils.getAssetsImg('back')),
+      );
+    } else if (isVideo(questionData.mediaLink) &&
+        _controller.value.initialized) {
+      return AspectRatio(
+        aspectRatio: _controller.value.aspectRatio,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              child: VideoPlayer(_controller),
+            ),
+            Container(
+              child: MaterialButton(
+                height: 100,
+//                                            minWidth: Utils.getDeviceHeight(context) / 7,
+//                                            height: Utils.getDeviceHeight(context) / 7,
+//                                            color: Colors.transparent.withOpacity(0.0),
+                onPressed: () {
+                  questionData.videoPlay == 1
+                      ? setState(() {
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
+                      : setState(() {
+                          _controller.play();
+                        });
+                },
+                child: Container(
+                  width: Utils.getDeviceHeight(context) / 7,
+                  height: Utils.getDeviceHeight(context) / 7,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            _controller.value.isPlaying
+                                ? Utils.getAssetsImg("") //add_emp_check
+                                : Utils.getAssetsImg("play_button"),
+                          ),
+                          fit: BoxFit.scaleDown)),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    } else if (isPdf(questionData.mediaLink)) {
+      return SimplePdfViewerWidget(
+        completeCallback: (bool result) {
+          print("completeCallback,result:${result}");
+        },
+        initialUrl: questionData.mediaLink,
+      );
+    }
+  }
+
+  showExpandIcon(BuildContext context) {
+    return  Positioned(
+      bottom: 0,right: 0,
+      child: InkResponse(
+        child: Container(
+            alignment: Alignment.center,
+            height: Utils.getDeviceWidth(context) / 20,
+            width: Utils.getDeviceWidth(context) / 20,
+            decoration: BoxDecoration(
+                image:  DecorationImage(
+                    image: AssetImage(Injector.isBusinessMode
+                        ? Utils.getAssetsImg(
+                        "full_expand_question_answers")
+                        : Utils.getAssetsImg("expand_pro")),
+                    fit: BoxFit.fill)
+            )),
+        onTap: () {
+          Utils.playClickSound();
+          showDialog(
+            context: context,
+            builder: (_) => expandMedia()
+
+          );
+        },
+
+      ),
+    );
+  }
+
+  void performImageClick(BuildContext context) {
+    Utils.playClickSound();
+    isImage(questionData.mediaLink)
+        ? showDialog(
+      context: context,
+      builder: (_) => expandMedia(),
+    )
+        : Container();
+  }
 }
 
 //------------------------------------------------------------
@@ -777,8 +775,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
   @override
   void initState() {
     super.initState();
-
-
 
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
@@ -835,7 +831,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                           ),
                           child:
 //    Notifier.of(context).register<String>('selectQuestionAction', (data) {
-                          ListView.builder(
+                              ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemCount: arrAnswer.length,
@@ -844,7 +840,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             },
                           )
 //                          })
-                      ),
+                          ),
                     ),
 
                     Positioned(
@@ -869,9 +865,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("eddit_profile")),
-                                fit: BoxFit.fill)
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("eddit_profile")),
+                                    fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
@@ -898,12 +894,12 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("close_dialog")),
-                                    fit: BoxFit.fill)
+                                    DecorationImage(
+                                        image: AssetImage(
+                                            Utils.getAssetsImg("close_dialog")),
+                                        fit: BoxFit.fill)
 //                                    : null
-                            )),
+                                )),
                       ),
                     )
                   ],
@@ -946,23 +942,23 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //              borderRadius:
 //                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(18),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                  width: 1,
-                  color: arrAnswer[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+                      width: 1,
+                      color: arrAnswer[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : (arrAnswer[index].isSelected
-                  ? ColorRes.blueMenuSelected
-                  : ColorRes.white),
+                      ? ColorRes.blueMenuSelected
+                      : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(checkAnswerAlert(index)),
-                  fit: BoxFit.fill))
+                      image: AssetImage(checkAnswerAlert(index)),
+                      fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -1114,9 +1110,9 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         height: 35,
                         margin: (checkimg == true
                             ? EdgeInsets.symmetric(
-                            horizontal: Utils.getDeviceWidth(context) / 6)
+                                horizontal: Utils.getDeviceWidth(context) / 6)
                             : EdgeInsets.symmetric(
-                            horizontal: Utils.getDeviceWidth(context) / 3)),
+                                horizontal: Utils.getDeviceWidth(context) / 3)),
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
@@ -1130,9 +1126,9 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("eddit_profile")),
-                                fit: BoxFit.fill)
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("eddit_profile")),
+                                    fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, widget.title),
@@ -1161,39 +1157,39 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
@@ -1204,14 +1200,14 @@ class FunkyOverlayState extends State<FunkyOverlay>
 //======================================
 //image show  in alert
 
-class ImageShowAlert extends StatefulWidget {
+class expandMedia extends StatefulWidget {
 //  bool CheckQuestion;
 
   @override
-  State<StatefulWidget> createState() => ImageShowAlertState();
+  State<StatefulWidget> createState() => expandMediaState();
 }
 
-class ImageShowAlertState extends State<ImageShowAlert>
+class expandMediaState extends State<expandMedia>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
@@ -1237,11 +1233,11 @@ class ImageShowAlertState extends State<ImageShowAlert>
   pdfShow() {
     return isPdf(questionData.mediaLink)
         ? SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:$result");
-      },
-      initialUrl: questionData.mediaLink,
-    )
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: questionData.mediaLink,
+          )
         : Container();
   }
 
@@ -1292,19 +1288,19 @@ class ImageShowAlertState extends State<ImageShowAlert>
                           color: Colors.transparent,
                           image: isImage(questionData.mediaLink)
                               ? DecorationImage(
-                              image: NetworkImage(questionData.mediaLink),
-                              fit: BoxFit.fill)
+                                  image: NetworkImage(questionData.mediaLink),
+                                  fit: BoxFit.fill)
                               : null,
                           borderRadius: BorderRadius.circular(10),
                           /* border:
                                 Border.all(color: ColorRes.white, width: 1)*/
                         ),
                         child: isVideo(questionData.mediaLink) &&
-                            _controller.value.initialized
+                                _controller.value.initialized
                             ? AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        )
+                                aspectRatio: _controller.value.aspectRatio,
+                                child: VideoPlayer(_controller),
+                              )
                             : pdfShow(),
                       ),
                     ),
@@ -1329,43 +1325,42 @@ class ImageShowAlertState extends State<ImageShowAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
     );
   }
 }
-
