@@ -209,10 +209,10 @@ class CommonView {
                           image:
 //                          Injector.isBusinessMode ?
                               DecorationImage(
-                                  image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
-                                      "full_expand_question_answers") : Utils.getAssetsImg(
-                                      "expand_pro")
-                                  ),
+                                  image: AssetImage(Injector.isBusinessMode
+                                      ? Utils.getAssetsImg(
+                                          "full_expand_question_answers")
+                                      : Utils.getAssetsImg("expand_pro")),
                                   fit: BoxFit.fill)
 //                              : null
                           ))
@@ -395,7 +395,10 @@ class CommonView {
 
   static Widget showCircularProgress(bool isLoading) {
     if (isLoading) {
-      return Center(child: CircularProgressIndicator(backgroundColor: ColorRes.white,));
+      return Center(
+          child: CircularProgressIndicator(
+        backgroundColor: ColorRes.white,
+      ));
     }
     return Container(
       height: 0.0,
@@ -413,6 +416,14 @@ class CommonView {
               )
             ],
           )
+        : Container(
+            color: ColorRes.bgProf,
+          );
+  }
+
+  static showBackgroundOrg(BuildContext context) {
+    return Injector.isBusinessMode
+        ? Image(image: AssetImage(Utils.getAssetsImg('organization_bg')),fit: BoxFit.fill,width: double.infinity,height: double.infinity,)
         : Container(
             color: ColorRes.bgProf,
           );
@@ -539,7 +550,7 @@ class CommonView {
           ),
           Positioned(
             bottom: 0,
-            left: 5,
+            left: 10,
             right: 10,
             child: Container(
               width: Utils.getDeviceWidth(context),
@@ -563,7 +574,7 @@ class CommonView {
                   InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("new-customer")),
-                        width: Utils.getDeviceWidth(context) / 3.8,
+                        width: Utils.getDeviceWidth(context) / 4.2,
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -603,8 +614,8 @@ class CommonView {
             ),
           ),
           Positioned(
-            bottom: Utils.getDeviceHeight(context) / 15,
-            left: Utils.getDeviceWidth(context) / 3.6,
+            bottom: Utils.getDeviceHeight(context) / 12,
+            left: Utils.getDeviceWidth(context) / 4,
             child: Image(
               image: AssetImage(Utils.getAssetsImg("glasses")),
               height: Utils.getDeviceHeight(context) / 15,

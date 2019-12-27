@@ -50,17 +50,22 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(
+        fit: StackFit.expand,
         children: <Widget>[
-          CommonView.showBackground(context),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               SizedBox(
-                height: Utils.getHeaderHeight(context) + 10,
+                height: Utils.getHeaderHeight(context),
               ),
-              CommonView.showTitle(context, StringRes.organizations),
+//              CommonView.showTitle(context, StringRes.organizations),
               Expanded(
-                child: arrOrganization.length > 0 ? showItems() : Container(),
+                child: Stack(
+                  children: <Widget>[
+                    CommonView.showBackgroundOrg(context),
+                    arrOrganization.length > 0 ? showItems() : Container()
+                  ],
+                ),
               )
             ],
           ),
@@ -75,25 +80,125 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
     Organization organization = arrOrganization[position];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      fit: StackFit.loose,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              getTitle(position),
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Injector.isBusinessMode
-                      ? ColorRes.white
-                      : ColorRes.hintColor),
+        Container(
+          height: 60,
+          child: Card(
+            margin: EdgeInsets.all(4),
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      width: 18,
+                      height: 18,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          color: ColorRes.headerBlue),
+                      child: Text(
+                        arrOrganization[position].level.toString(),
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Injector.isBusinessMode
+                                ? ColorRes.white
+                                : ColorRes.hintColor),
+                      ),
+                    ),
+                    Text(
+                      getTitle(position),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.textBlue
+                              : ColorRes.hintColor),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    InkResponse(
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg('minus')),
+                          fit: BoxFit.fill,
+                          width: 13,
+                        ),
+                      ),
+                      onTap: () {
+                        showConfirmDialog(position, Const.subtract);
+                      },
+                    ),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 15,
+                          width: Utils.getDeviceWidth(context) / 16.4,
+                          margin: EdgeInsets.symmetric(horizontal: 0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg('bg_progress_2')),
+                                  fit: BoxFit.fill)),
+//                padding: EdgeInsets.symmetric(vertical: 2),
+                        ),
+                        LinearPercentIndicator(
+                          width: Utils.getDeviceWidth(context) / 15,
+                          lineHeight: 15.0,
+                          percent: getProgress(position),
+                          backgroundColor: Colors.transparent,
+                          progressColor: Colors.blue,
+                        )
+                      ],
+                    ),
+                    InkResponse(
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg('plus')),
+                          fit: BoxFit.fill,
+                          width: 13,
+                        ),
+                      ),
+                      onTap: () {
+                        showConfirmDialog(position, Const.add);
+                      },
+                    )
+                  ],
+                ),
+              ],
             ),
-            SizedBox(
-              width: 5,
-            ),
-            InkResponse(
+          ),
+        ),
+        Positioned(
+          right: 2,
+          top: 0,
+          child: Container(
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+                color: ColorRes.headerBlue),
+            child: InkResponse(
               child: Image(
                 image: AssetImage(
                   Utils.getAssetsImg('info'),
@@ -102,93 +207,15 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                     ? ColorRes.white
                     : ColorRes.hintColor,
                 fit: BoxFit.fill,
-                width: 15,
+                width: 14,
               ),
               onTap: () {
                 Utils.showOrgInfoDialog(
                     _scaffoldKey, arrOrganization[position].description);
               },
-            )
-          ],
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Stack(
-          fit: StackFit.loose,
-          children: <Widget>[
-            Image(
-              image: AssetImage(Utils.getAssetsImg('user_org')),
-              fit: BoxFit.fill,
-              width: 30,
             ),
-            Positioned(
-              left: 12,
-              right: 0,
-              bottom: 1,
-              child: Text(
-                organization.level.toString(),
-                style: TextStyle(color: ColorRes.white, fontSize: 15),
-              ),
-            )
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            InkResponse(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg('minus')),
-                  fit: BoxFit.fill,
-                  width: 15,
-                ),
-              ),
-              onTap: () {
-                showConfirmDialog(position, Const.subtract);
-              },
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Container(
-                  height: 15,
-                  width: Utils.getDeviceWidth(context) / 13,
-                  margin: EdgeInsets.symmetric(horizontal: 2),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                          AssetImage(Utils.getAssetsImg('bg_progress_2')),
-                          fit: BoxFit.fill)),
-//                padding: EdgeInsets.symmetric(vertical: 2),
-                ),
-                LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 12,
-                  lineHeight: 15.0,
-                  percent: getProgress(position),
-                  backgroundColor: Colors.transparent,
-                  progressColor: Colors.blue,
-                )
-              ],
-            ),
-            InkResponse(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg('plus')),
-                  fit: BoxFit.fill,
-                  width: 15,
-                ),
-              ),
-              onTap: () {
-                showConfirmDialog(position, Const.add);
-              },
-            ),
-          ],
-        ),
+          ),
+        )
       ],
     );
   }
@@ -198,65 +225,59 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   showItems() {
-    return Stack(
-      children: <Widget>[
-        Container(
-          width: Utils.getDeviceWidth(context),
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(
-              left: Utils.getDeviceWidth(context) / 10,
-              right: Utils.getDeviceWidth(context) / 10,
-              top: Utils.getDeviceHeight(context) / 5),
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg(
-                Injector.isBusinessMode ? 'table_org' : 'org_table_prof')),
+    return Padding(
+      padding: EdgeInsets.only(left: 70, right: 70),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            left: 10,
+            top: 50,
+            child: showItem(Const.typeCRM),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: showItem(Const.typeCRM),
+          Positioned(
+            right: 10,
+            top: 50,
+            child: showItem(Const.typeFinance),
+          ),
+          Positioned(
+            left: Utils.getDeviceWidth(context) / 6.5,
+            top: 20,
+            child: showItem(Const.typeHR),
+          ),
+          Positioned(
+            right: Utils.getDeviceWidth(context) / 6.5,
+            top: 20,
+            child: showItem(Const.typeMarketing),
+          ),
+          Positioned(
+            left: 50,
+            bottom: 15,
+            child: showItem(Const.typeSales),
+          ),
+          Positioned(
+            right: 80,
+            bottom: 15,
+            child: showItem(Const.typeLegal),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: Utils.getDeviceWidth(context) / 7,
+              padding: EdgeInsets.only(top: 5),
+              child: showItem(Const.typeServices),
             ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  showItem(Const.typeHR),
-                  showItem(Const.typeSales)
-                ],
-              ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: Utils.getDeviceWidth(context) / 7,
+              padding: EdgeInsets.only(bottom: 5),
+              child: showItem(Const.typeOperations),
             ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  showItem(Const.typeServices),
-                  showItem(Const.typeOperations)
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  showItem(Const.typeMarketing),
-                  showItem(Const.typeLegal)
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: showItem(Const.typeFinance),
-            ),
-          ],
-        )
-      ],
+          ),
+
+        ],
+      ),
     );
   }
 
@@ -299,13 +320,15 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             ? organizationData.totalEmpCount
             : 1);
 
-    if(progress.toDouble()<=1 &&progress.toDouble()>=0){
+    if (progress.toDouble() <= 1 && progress.toDouble() >= 0) {
       return progress.toDouble();
-    }else if(progress<0){
+    } else if (progress < 0) {
       return 0.0;
-    }else if(progress>1)
+    } else if (progress > 1)
       return 1.0;
-    else{return 0.0;}
+    else {
+      return 0.0;
+    }
   }
 
   Future<void> showConfirmDialog(int position, int action) async {
@@ -350,7 +373,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         isLoading = true;
       });
 
-      WebApi().manageOrganizations(context, rq).then((getOrganizationData) async{
+      WebApi()
+          .manageOrganizations(context, rq)
+          .then((getOrganizationData) async {
         setState(() {
           isLoading = false;
         });
@@ -366,7 +391,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               organizationData.totalEmpCount;
           customerValueData.totalBalance = organizationData.totalBalance;
 
-          await  Injector.prefs.setString(PrefKeys.customerValueData,
+          await Injector.prefs.setString(PrefKeys.customerValueData,
               json.encode(customerValueData.toJson()));
 
           Injector.customerValueData = customerValueData;
