@@ -4,10 +4,12 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
+import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 
 Notifier _notifier;
+int currentVol;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -15,6 +17,30 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPlatformState();
+    updateVolumes();
+  }
+
+  //Sound Is mute
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print(currentVol);
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     _notifier = NotifierProvider.of(context);
@@ -504,7 +530,11 @@ class _OptionItemState extends State<OptionItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Utils.playClickSound();
+
+          if(currentVol != 0) {
+            Utils.playClickSound();
+          }
+
           widget.selectItem(widget.index);
         },
         child: Image(
@@ -537,7 +567,10 @@ class _CustomItemState extends State<CustomItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Utils.playClickSound();
+
+        if(currentVol != 0) {
+          Utils.playClickSound();
+        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -584,7 +617,9 @@ class _TimeItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Utils.playClickSound();
+        if(currentVol != 0) {
+          Utils.playClickSound();
+        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -630,7 +665,9 @@ class _ProfitItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Utils.playClickSound();
+        if(currentVol != 0) {
+          Utils.playClickSound();
+        }
         widget.selectItem(widget.index);
       },
       child: Container(

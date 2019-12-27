@@ -949,7 +949,9 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
-                      Utils.playClickSound();
+                      if(currentVol != 0) {
+                        Utils.playClickSound();
+                      }
 
                       setState(() {
                         if (selectedType == Const.typeName) {
@@ -1002,7 +1004,9 @@ class IntroPageState extends State<IntroPage> {
                           height: Utils.getDeviceHeight(context) / 10,
                         ),
                         onTap: () {
-                          Utils.playClickSound();
+                          if(currentVol != 0) {
+                            Utils.playClickSound();
+                          }
                           setState(() {
                             Navigator.pushAndRemoveUntil(context,
                                 FadeRouteHome(), ModalRoute.withName("/home"));

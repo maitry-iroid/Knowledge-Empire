@@ -3,9 +3,14 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:volume/volume.dart';
 
 import 'helper/Utils.dart';
 import 'helper/string_res.dart';
+
+
+int currentVol;
+
 
 class ChallengesPage extends StatefulWidget {
   @override
@@ -28,6 +33,28 @@ class _ChallengesPageState extends State<ChallengesPage> {
     "morning"
   ];
   List<String> arrRewards = ["hello", "world", "good", "morning", "hello"];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPlatformState();
+    updateVolumes();
+  }
+
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print(currentVol);
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,8 +265,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showFriendItem(int index) {
     return GestureDetector(
       onTap: () {
-        Utils.playClickSound();
-        _onSelected(index);
+        if(currentVol != 0) {
+          _onSelected(index);
+        }
         //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
       },
       child: Container(
@@ -278,7 +306,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showSectorItem(int index) {
     return GestureDetector(
       onTap: () {
-        Utils.playClickSound();
+        if(currentVol != 0) {
+          Utils.playClickSound();
+        }
         _onSelectedSector(index);
       },
       child: Container(

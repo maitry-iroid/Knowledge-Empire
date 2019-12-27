@@ -91,7 +91,6 @@ class Utils {
     } else {
       isConnected = false;
     }
-
     return isConnected;
   }
 
