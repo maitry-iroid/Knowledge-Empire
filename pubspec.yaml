@@ -49,7 +49,6 @@ dependencies:
 
 #  flutter_volume: ^0.0.2
 
-#  chewie: ^0.9.7
 #  custom_chewie: ^0.7.0
   connectivity: ^0.4.5+7
 #  objectdb: 1.0.7+1

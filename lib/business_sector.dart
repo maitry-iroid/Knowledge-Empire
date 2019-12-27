@@ -232,9 +232,29 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showFirstHalf() {
-    return Expanded(
+    return /*Expanded(
       flex: 1,
-      child: ListView(
+      child: StreamBuilder<LearningModuleResponse>(
+        stream: bloc.subject.stream,
+        builder: (context, AsyncSnapshot<LearningModuleResponse> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data.error != null && snapshot.data.error.length > 0){
+              return _buildErrorWidget(snapshot.data.error);
+            }
+            return _buildListWidget(snapshot.data);
+
+          } else if (snapshot.hasError) {
+            return _buildErrorWidget(snapshot.error);
+          } else {
+            return _buildLoadingWidget();
+          }
+        },
+      );*/
+
+
+
+
+      ListView(
         children: <Widget>[
           SizedBox(
             height: 10,
@@ -312,7 +332,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             },
           )
         ],
-      ),
+
     );
   }
 
