@@ -25,6 +25,7 @@ import 'models/get_customer_value.dart';
 
 int currentVol;
 
+
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
 
@@ -1018,6 +1019,9 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
+//                      AudioManager.STREAM_SYSTEM;
+
+
 
                       if(currentVol != 0) {
                         Utils.playClickSound();

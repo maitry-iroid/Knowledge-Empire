@@ -653,7 +653,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   height: MediaQuery.of(context).size.height / 2.5,
 
                   padding:
-                  EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
@@ -669,6 +669,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         )
     );
   }
+
   showExpandIcon(BuildContext context) {
     return  Positioned(
       bottom: 0,right: 0,
@@ -691,11 +692,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
               builder: (_) => CorrectWrongMeidaAlertt()
-
-
           );
         },
-
       ),
     );
   }

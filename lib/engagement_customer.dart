@@ -606,12 +606,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             margin:
-            EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10),
+            EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 10),
             child: Container(
               height: MediaQuery.of(context).size.height / 2.5,
                 alignment: Alignment.center,
                 padding:
-                EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+                EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                 decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
