@@ -82,128 +82,114 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
     return Stack(
       fit: StackFit.loose,
-      alignment: Alignment.center,
       children: <Widget>[
         Container(
-          width: 90,
-          height: 50,
-          margin: EdgeInsets.only(right: 2, bottom: 2),
-          decoration: BoxDecoration(
-              color: ColorRes.black.withOpacity(0.5),
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-        ),
-        Card(
-          elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Container(
-            width: 90,
-            height: 50,
-            decoration: BoxDecoration(
-                color: ColorRes.whiteBg.withOpacity(0.5),
-                borderRadius: BorderRadius.all(Radius.circular(8))),
-          ),
-        ),
-        Column(
-//          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-//              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-//                  padding: EdgeInsets.all(4),
-                  margin: EdgeInsets.only(left: 14,right: 5),
-                  width: 18,
-                  height: 18,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                      color: ColorRes.headerBlue),
-                  child: Text(
-                    (position + 1).toString(),
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Injector.isBusinessMode
-                            ? ColorRes.white
-                            : ColorRes.hintColor),
-                  ),
-                ),
-                Text(
-                  getTitle(position),
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: Injector.isBusinessMode
-                          ? ColorRes.textBlue
-                          : ColorRes.hintColor),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-              ],
-            ),
-
-            Row(
+          height: 60,
+          child: Card(
+            margin: EdgeInsets.all(4),
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                InkResponse(
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg('minus')),
-                      fit: BoxFit.fill,
-                      width: 13,
-                    ),
-                  ),
-                  onTap: () {
-                    showConfirmDialog(position, Const.subtract);
-                  },
-                ),
-                Stack(
-                  alignment: Alignment.center,
+                Row(
                   children: <Widget>[
                     Container(
-                      height: 15,
-                      width: Utils.getDeviceWidth(context) / 16.4,
-                      margin: EdgeInsets.symmetric(horizontal: 0),
+                      margin: EdgeInsets.only(left: 5, right: 5),
+                      width: 18,
+                      height: 18,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  Utils.getAssetsImg('bg_progress_2')),
-                              fit: BoxFit.fill)),
-//                padding: EdgeInsets.symmetric(vertical: 2),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          color: ColorRes.headerBlue),
+                      child: Text(
+                        arrOrganization[position].level.toString(),
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Injector.isBusinessMode
+                                ? ColorRes.white
+                                : ColorRes.hintColor),
+                      ),
                     ),
-                    LinearPercentIndicator(
-                      width: Utils.getDeviceWidth(context) / 15,
-                      lineHeight: 15.0,
-                      percent: getProgress(position),
-                      backgroundColor: Colors.transparent,
-                      progressColor: Colors.blue,
+                    Text(
+                      getTitle(position),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.textBlue
+                              : ColorRes.hintColor),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    InkResponse(
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg('minus')),
+                          fit: BoxFit.fill,
+                          width: 13,
+                        ),
+                      ),
+                      onTap: () {
+                        showConfirmDialog(position, Const.subtract);
+                      },
+                    ),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 15,
+                          width: Utils.getDeviceWidth(context) / 16.4,
+                          margin: EdgeInsets.symmetric(horizontal: 0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg('bg_progress_2')),
+                                  fit: BoxFit.fill)),
+//                padding: EdgeInsets.symmetric(vertical: 2),
+                        ),
+                        LinearPercentIndicator(
+                          width: Utils.getDeviceWidth(context) / 15,
+                          lineHeight: 15.0,
+                          percent: getProgress(position),
+                          backgroundColor: Colors.transparent,
+                          progressColor: Colors.blue,
+                        )
+                      ],
+                    ),
+                    InkResponse(
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg('plus')),
+                          fit: BoxFit.fill,
+                          width: 13,
+                        ),
+                      ),
+                      onTap: () {
+                        showConfirmDialog(position, Const.add);
+                      },
                     )
                   ],
                 ),
-                InkResponse(
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg('plus')),
-                      fit: BoxFit.fill,
-                      width: 13,
-                    ),
-                  ),
-                  onTap: () {
-                    showConfirmDialog(position, Const.add);
-                  },
-                ),
               ],
             ),
-          ],
+          ),
         ),
         Positioned(
-          right: 5,
+          right: 2,
           top: 0,
           child: Container(
             padding: EdgeInsets.all(2),
@@ -240,70 +226,58 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItems() {
     return Padding(
-      padding: EdgeInsets.only(left: 70,right: 70),child:Stack(
-      children: <Widget>[
-
-        Positioned(
-          left: 10,top: 50,child: showItem(Const.typeCRM),
-        ),
-
-        Positioned(
-          right: 10,top: 50,child: showItem(Const.typeFinance),
-        ),
-
-        Row(
-//          mainAxisAlignment: MainAxisAlignment.center,
-//          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-child: Container(),
+      padding: EdgeInsets.only(left: 70, right: 70),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            left: 10,
+            top: 50,
+            child: showItem(Const.typeCRM),
+          ),
+          Positioned(
+            right: 10,
+            top: 50,
+            child: showItem(Const.typeFinance),
+          ),
+          Positioned(
+            left: Utils.getDeviceWidth(context) / 6.5,
+            top: 20,
+            child: showItem(Const.typeHR),
+          ),
+          Positioned(
+            right: Utils.getDeviceWidth(context) / 6.5,
+            top: 20,
+            child: showItem(Const.typeMarketing),
+          ),
+          Positioned(
+            left: 50,
+            bottom: 15,
+            child: showItem(Const.typeSales),
+          ),
+          Positioned(
+            right: 80,
+            bottom: 15,
+            child: showItem(Const.typeLegal),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: Utils.getDeviceWidth(context) / 7,
+              padding: EdgeInsets.only(top: 5),
+              child: showItem(Const.typeServices),
             ),
-            Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 18, bottom: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      showItem(Const.typeHR),
-                      showItem(Const.typeSales)
-                    ],
-                  ),
-                )),
-            Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      showItem(Const.typeServices),
-                      showItem(Const.typeOperations)
-                    ],
-                  ),
-                )),
-            Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 18, bottom: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      showItem(Const.typeMarketing),
-                      showItem(Const.typeLegal)
-                    ],
-                  ),
-                )),
-            Expanded(
-              flex: 1,
-              child: Container(),
-//              child: showItem(Const.typeFinance),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: Utils.getDeviceWidth(context) / 7,
+              padding: EdgeInsets.only(bottom: 5),
+              child: showItem(Const.typeOperations),
             ),
-          ],
-        )
-      ],
-    ) ,
+          ),
+
+        ],
+      ),
     );
   }
 
