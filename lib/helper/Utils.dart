@@ -18,6 +18,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:notifier/main_notifier.dart';
+import 'package:volume/volume.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -224,14 +225,13 @@ class Utils {
     }
   }
 
-  static showChangePasswordDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) async {
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
+      bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog(
-              isFromProfile: isFromProfile,
-            isOldPasswordRequired:isOldPasswordRequired
-            ));
+            isFromProfile: isFromProfile,
+            isOldPasswordRequired: isOldPasswordRequired));
   }
 
   static showOrgInfoDialog(
@@ -281,59 +281,38 @@ class Utils {
       return "";
   }
 
+//  static checkSound() async {
+//    int maxVol, currentVol;
+//    maxVol = await Volume.getMaxVol;
+//    // get Current Volume
+//    currentVol = await Volume.getVol;
+//  }
 
- /* int maxVol, currentVol;
-
-  Future<void> initPlatformState() async {
-    // pass any stream as parameter as per requirement
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-  }
-
-  updateVolumes() async {
-    // get Max Volume
-    maxVol = await Volume.getMaxVol;
-    // get Current Volume
-    currentVol = await Volume.getVol;
-  }
-
-  setVol(int i) async {
-    await Volume.setVol(i);
-  }
-*/
-
-    static playClickSound() {
-//    updateVolumes();
+  static playClickSound() async {
     Injector.audioCache.play("sounds/all_button_clicks.wav");
-
-
   }
 
-  static correctAnswerSound() {
+  static correctAnswerSound() async {
     Injector.audioCache.play("sounds/right_answer.wav");
   }
 
-  static incorrectAnswerSound() {
+  static incorrectAnswerSound() async {
     Injector.audioCache.play("sounds/wrong_answer.wav");
   }
 
-
-  static procorrectAnswerSound() {
+  static procorrectAnswerSound() async {
     Injector.audioCache.play("sounds/pro_right_answer.mp3");
   }
 
-  static proincorrectAnswerSound() {
+  static proincorrectAnswerSound() async {
     Injector.audioCache.play("sounds/pro_wrong_answer.mp3");
   }
-
-
-
 
 //  Future<void> initPlatformState() async {
 //    var dig = await FlutterVolume.volume;
 //
 //    print("${(dig * 100)}%");
 //  }
-
 
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
     List<String> jsonQuestionData = List();
@@ -372,8 +351,6 @@ class Utils {
     return questionData;
   }
 
-
-
   static getCurrentFormattedDate() {
     var now = new DateTime.fromMillisecondsSinceEpoch(
         DateTime.now().millisecondsSinceEpoch,
@@ -410,7 +387,7 @@ class Utils {
     return DefaultCacheManager().getFileFromMemory(url);
   }
 
-  static getHeaderHeight(BuildContext context){
+  static getHeaderHeight(BuildContext context) {
     return Utils.getDeviceHeight(context) / 7.5;
   }
 
@@ -418,17 +395,16 @@ class Utils {
     var random = ((Random().nextInt(10))) / 10;
 
     var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
-    var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+    var b = (1 +
+        (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
     var c = (1 + (Injector.customerValueData.valueBonus / 100));
 
     int finalValue = (a * b * c).round();
-
 
     return finalValue;
   }
 
   static getLoyalty(QuestionData questionData) {
-
     var random = ((Random().nextInt(10))) / 10;
 
     var a = max(pow(questionData.counter, 2), 1);
@@ -437,23 +413,21 @@ class Utils {
 
     int finalValue = (a + b * c).round();
 
-
     return finalValue;
   }
 
- static getResource(QuestionData questionData) {
-
+  static getResource(QuestionData questionData) {
 //    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
 
     var random = ((Random().nextInt(10))) / 10;
 
     var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
         min(questionData.counter, 10) * random;
-    var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+    var b = (1 +
+        (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
     var c = (2 - (Injector.customerValueData.resourceBonus / 100));
 
     int finalValue = (a * b * c).round();
-
 
     return finalValue;
   }

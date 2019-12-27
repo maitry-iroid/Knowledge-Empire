@@ -14,12 +14,16 @@ import 'package:ke_employee/home.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:volume/volume.dart';
 import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
 import 'helper/web_api.dart';
 import 'login.dart';
 import 'models/get_customer_value.dart';
+
+
+int currentVol;
 
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
@@ -86,7 +90,26 @@ class IntroPageState extends State<IntroPage> {
     });*/
 
 //    controller.forward();
+    initPlatformState();
+    updateVolumes();
+
   }
+
+
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print(currentVol);
+
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -995,7 +1018,10 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
-                      Utils.playClickSound();
+
+                      if(currentVol != 0) {
+                        Utils.playClickSound();
+                      }
 
                       setState(() {
                         if (selectedType == Const.typeName) {

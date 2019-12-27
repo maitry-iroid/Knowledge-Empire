@@ -8,10 +8,13 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:volume/volume.dart';
 
 import 'P+L.dart';
 import 'helper/constant.dart';
 import 'home.dart';
+
+int currentVol;
 
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key key}) : super(key: key);
@@ -20,6 +23,28 @@ class DashboardPage extends StatefulWidget {
 }
 
 class DashboardPageState extends State<DashboardPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPlatformState();
+    updateVolumes();
+  }
+
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print(currentVol);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +143,10 @@ class DashboardPageState extends State<DashboardPage> {
         ),
       ),
       onTap: () {
-        Utils.playClickSound();
+        if(currentVol != 0) {
+          Utils.playClickSound();
+        }
+
         performItemClick(type);
       },
     );

@@ -28,7 +28,6 @@ List abcdList = List();
 
 FileInfo fileInfo;
 
-
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
 
@@ -70,20 +69,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     super.initState();
     checkAudio();
 
+    downloadFile();
     correctWrongImage();
-    Utils.isInternetConnected().then((isConnected) {
-      if(isConnected == false) {
-        return  downloadFile();
-      }
-    });
+
+//    Utils.isInternetConnected().then((isConnected) {
+//      if(isConnected == false) {
+//      }
+//    });
   }
-
-
 
   String error;
 
   downloadFile() {
-    var cacheVideo =  correctWrongImage();
+    var cacheVideo = correctWrongImage();
 
     print(cacheVideo);
     DefaultCacheManager().getFile(cacheVideo).listen((f) {
@@ -99,8 +97,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       });
     });
   }
-
-
 
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
@@ -162,7 +158,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   Widget build(BuildContext context) {
-
 //    var path = "N/A";
 //    if (fileInfo?.file != null) {
 //      path = fileInfo.file.path;
@@ -498,10 +493,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       image:
 //                                    Injector.isBusinessMode ?
                           DecorationImage(
-                              image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg(
-                                  "full_expand_question_answers") : Utils.getAssetsImg(
-                                  "expand_pro")
-                              ),
+                              image: AssetImage(Injector.isBusinessMode
+                                  ? Utils.getAssetsImg(
+                                      "full_expand_question_answers")
+                                  : Utils.getAssetsImg("expand_pro")),
                               fit: BoxFit.fill)
 //                                        : null
                       )),
@@ -512,12 +507,77 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     );
   }
 
+  showMediaView(BuildContext context) {
+    if (isImage(correctWrongImage())) {
+//      return BoxDecoration(
+//        image: DecorationImage(image: fileInfo.file.path != null ? NetworkImage(correctWrongImage())  :  AssetImage(fileInfo.file.path))
+//      );
+      return Image(
+        image: NetworkImage(correctWrongImage())
+//        fileInfo.file.path == null ? NetworkImage(correctWrongImage()) : AssetImage(fileInfo.file.path)
+            );
+    } else
+      if (isVideo(correctWrongImage()) &&
+        _controller.value.initialized) {
+      return AspectRatio(
+        aspectRatio: _controller.value.aspectRatio,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              child: VideoPlayer(_controller),
+            ),
+            Container(
+              child: MaterialButton(
+                height: 100,
+//                                            minWidth: Utils.getDeviceHeight(context) / 7,
+//                                            height: Utils.getDeviceHeight(context) / 7,
+//                                            color: Colors.transparent.withOpacity(0.0),
+                onPressed: () {
+                  questionData.videoPlay == 1
+                      ? setState(() {
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
+                  })
+                      : setState(() {
+                    _controller.play();
+                  });
+                },
+                child: Container(
+                  width: Utils.getDeviceHeight(context) / 7,
+                  height: Utils.getDeviceHeight(context) / 7,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            _controller.value.isPlaying
+                                ? Utils.getAssetsImg("") //add_emp_check
+                                : Utils.getAssetsImg("play_button"),
+                          ),
+                          fit: BoxFit.scaleDown)),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    } else if (isPdf(questionData.mediaLink)) {
+      return SimplePdfViewerWidget(
+        completeCallback: (bool result) {
+          print("completeCallback,result:${result}");
+        },
+        initialUrl: questionData.mediaLink,
+      );
+    }
+  }
+
   showSecondHalf(BuildContext context) {
     return Expanded(
         flex: 1,
         child: Column(
           children: <Widget>[
-            InkResponse(
+            showQueMedia(context),
+           /* InkResponse(
               onTap: () {
                 Utils.playClickSound();
                 showDialog(
@@ -528,42 +588,26 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               },
               child: Container(
                 margin:
-                    EdgeInsets.only(top: 18, bottom: 10, left: 5, right: 12),
+                    EdgeInsets.only(top: 18, bottom: 10, left: 0, right: 0),
                 height: Utils.getDeviceHeight(context) / 2.7,
-                
                 decoration: BoxDecoration(
-                    image: isImage(correctWrongImage())
-                        ? DecorationImage(
-                            image: AssetImage(fileInfo!=null&&fileInfo.file.path != null ? fileInfo.file.path : NetworkImage(correctWrongImage())),
 
-//                      image: DecorationImage(
-//                  image: NetworkImage(questionData.isAnsweredCorrect
-//                  ? questionData.correctAnswerImage
-//                      : questionData.inCorrectAnswerImage),
-//                  fit: BoxFit.fill),
-
-//                                Utils.getCacheFile(correctWrongImage()) != null
-//                                    ? FileImage(
-//                                        Utils.getCacheFile(correctWrongImage())
-//                                            .file)
-//                                    : NetworkImage(correctWrongImage()),
-                    
-                            fit: BoxFit.fill)
-                        : null,
+////                                Utils.getCacheFile(correctWrongImage()) != null
+////                                    ? FileImage(
+////                                        Utils.getCacheFile(correctWrongImage())
+////                                            .file)
+////                                    : NetworkImage(correctWrongImage()),
+//
+//                            fit: BoxFit.fill)
+//                        : null,
                     borderRadius: BorderRadius.circular(10),
                     border: isImage(questionData.mediaLink)
                         ? Border.all(color: ColorRes.white, width: 1)
                         : null),
-                child: isVideo(questionData.mediaLink) &&
-                        _controller != null &&
-                        _controller.value.initialized
-                    ? AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
-                      )
-                    : pdfShow(),
+                child: showMediaView(context),
               ),
-            ),
+            ),*/
+
             Expanded(
                 child: CommonView.questionAndExplanation(
                     context,
@@ -583,6 +627,75 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         FadeRouteHome(
             initialPageType: Const.typeNewCustomer,
             questionDataSituation: null));
+  }
+
+  showQueMedia(BuildContext context) {
+    return InkResponse(
+        onTap: () {
+          Utils.playClickSound();
+          showDialog(
+            context: context,
+            builder: (_) => CorrectWrongMeidaAlertt(),
+//                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
+          );
+          },
+        child:  Stack(
+          children: <Widget>[
+            Card(
+              elevation: 10,
+              color: ColorRes.transparent.withOpacity(0.4),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin:
+              EdgeInsets.only(top: 15, bottom: 10, right: 10, left: 10),
+              child: Container(
+                  alignment: Alignment.center,
+                  padding:
+                  EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+                  decoration: BoxDecoration(
+//                              color:
+//                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: ColorRes.white, width: 1)
+
+                  ),
+                  child:
+                  showMediaView(context)),
+            ),
+            showExpandIcon(context)
+          ],
+        )
+    );
+  }
+  showExpandIcon(BuildContext context) {
+    return  Positioned(
+      bottom: 0,right: 0,
+      child: InkResponse(
+        child: Container(
+            alignment: Alignment.center,
+            height: Utils.getDeviceWidth(context) / 20,
+            width: Utils.getDeviceWidth(context) / 20,
+            decoration: BoxDecoration(
+                image:  DecorationImage(
+                    image: AssetImage(Injector.isBusinessMode
+                        ? Utils.getAssetsImg(
+                        "full_expand_question_answers")
+                        : Utils.getAssetsImg("expand_pro")),
+                    fit: BoxFit.fill)
+            )),
+        onTap: () {
+          Utils.playClickSound();
+          showDialog(
+              context: context,
+//              builder: (_) => ImageCorrectIncorrectAlert()
+              builder: (_) => CorrectWrongMeidaAlertt()
+
+
+          );
+        },
+
+      ),
+    );
   }
 }
 
@@ -949,6 +1062,7 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
+  bool checkimg = true;
 
   @override
   void initState() {
@@ -964,9 +1078,17 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
     });
 
     controller.forward();
+
+    correctWrongImage();
   }
 
-  bool checkimg = true;
+  correctWrongImage() {
+    if (questionData.isAnsweredCorrect == true) {
+      return questionDataCustSituation.correctAnswerImage;
+    } else {
+      return questionDataCustSituation.inCorrectAnswerImage;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1000,9 +1122,13 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           image: DecorationImage(
-                              image: NetworkImage(questionData.isAnsweredCorrect
-                                  ? questionData.correctAnswerImage
-                                  : questionData.inCorrectAnswerImage),
+                              image: NetworkImage(correctWrongImage()),
+//                              fileInfo.file.path != null ? AssetImage(fileInfo.file.path) : NetworkImage(correctWrongImage()),
+
+//                              NetworkImage(questionData.isAnsweredCorrect
+//                                  ? questionData.correctAnswerImage
+//                                  : questionData.inCorrectAnswerImage),
+
                               fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(10),
                           /* border:
@@ -1109,18 +1235,18 @@ checkAnswer(int index) {
 //---------------------------------------------------------
 //image show  in alert
 
-class CorrectWrongImageAlert extends StatefulWidget {
+class CorrectWrongMeidaAlertt extends StatefulWidget {
 //  bool CheckQuestion;
 
-  final String img;
+//  final String img;
 
-  CorrectWrongImageAlert({Key key, this.img}) : super(key: key);
+//  CorrectWrongImageAlert({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CorrectWrongImageAlertState();
+  State<StatefulWidget> createState() => CorrectWrongMeidaAlerttState();
 }
 
-class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
+class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
@@ -1176,6 +1302,65 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
     }
   }
 
+  showMediaView(BuildContext context) {
+    if (isImage(correctWrongImage())) {
+      return Image(
+          image:
+          NetworkImage(correctWrongImage())
+//          fileInfo.file.path != null
+//              ? AssetImage(fileInfo.file.path)
+//              : NetworkImage(correctWrongImage())
+              );
+    } else if (isVideo(correctWrongImage()) && _controller.value.initialized) {
+      return AspectRatio(
+        aspectRatio: _controller.value.aspectRatio,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              child: VideoPlayer(_controller),
+            ),
+            Container(
+              child: MaterialButton(
+                height: 100,
+                onPressed: () {
+                  questionData.videoPlay == 1
+                      ? setState(() {
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
+                      : setState(() {
+                          _controller.play();
+                        });
+                },
+                child: Container(
+                  width: Utils.getDeviceHeight(context) / 7,
+                  height: Utils.getDeviceHeight(context) / 7,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            _controller.value.isPlaying
+                                ? Utils.getAssetsImg("") //add_emp_check
+                                : Utils.getAssetsImg("play_button"),
+                          ),
+                          fit: BoxFit.scaleDown)),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    } else if (isPdf(correctWrongImage())) {
+      return SimplePdfViewerWidget(
+        completeCallback: (bool result) {
+          print("completeCallback,result:${result}");
+        },
+        initialUrl: questionData.mediaLink,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -1206,29 +1391,24 @@ class CorrectWrongImageAlertState extends State<CorrectWrongImageAlert>
                             top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
                         decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            image: isImage(correctWrongImage())
-                                ? DecorationImage(
-                                    image: Utils.getCacheFile(
-                                                correctWrongImage()) !=
-                                            null
-                                        ? FileImage(Utils.getCacheFile(
-                                                correctWrongImage())
-                                            .file)
-                                        : NetworkImage(correctWrongImage()),
-                                    fit: BoxFit.fill)
-                                : null,
+//                            color: Colors.transparent,
+//                            image: isImage(correctWrongImage()) correctWrongImage ? DecorationImage(
+//                                    image: Utils.getCacheFile(correctWrongImage()) != null
+//                                        ? FileImage(Utils.getCacheFile( correctWrongImage()).file)
+//                                        : NetworkImage(correctWrongImage()),
+//                                    fit: BoxFit.fill) : null,
                             borderRadius: BorderRadius.circular(10),
                             border: isImage(questionData.mediaLink)
                                 ? Border.all(color: ColorRes.white, width: 1)
                                 : null),
-                        child: isVideo(questionData.mediaLink) &&
-                                _controller.value.initialized
-                            ? AspectRatio(
-                                aspectRatio: _controller.value.aspectRatio,
-                                child: VideoPlayer(_controller),
-                              )
-                            : pdfShow(),
+                        child: showMediaView(context),
+//                        isVideo(questionData.mediaLink) &&
+//                                _controller.value.initialized
+//                            ? AspectRatio(
+//                                aspectRatio: _controller.value.aspectRatio,
+//                                child: VideoPlayer(_controller),
+//                              )
+//                            : pdfShow(),
 
                         /* BoxDecoration(
                           color: Colors.transparent,
