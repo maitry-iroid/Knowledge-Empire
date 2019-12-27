@@ -513,7 +513,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //        image: DecorationImage(image: fileInfo.file.path != null ? NetworkImage(correctWrongImage())  :  AssetImage(fileInfo.file.path))
 //      );
       return Image(
-        image: NetworkImage(correctWrongImage())
+        image: NetworkImage(correctWrongImage()),fit: BoxFit.fill,
 //        fileInfo.file.path == null ? NetworkImage(correctWrongImage()) : AssetImage(fileInfo.file.path)
             );
     } else
@@ -647,9 +647,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               margin:
-              EdgeInsets.only(top: 15, bottom: 10, right: 10, left: 10),
+              EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
               child: Container(
                   alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height / 2.5,
+
                   padding:
                   EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
                   decoration: BoxDecoration(
