@@ -10,6 +10,7 @@ import 'package:ke_employee/intro_screen.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
+import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
@@ -19,6 +20,8 @@ import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'login.dart';
 import 'models/logout.dart';
+
+int currentVol;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -46,6 +49,24 @@ class _ProfilePageState extends State<ProfilePage> {
         : "";
 
     super.initState();
+
+    initPlatformState();
+    updateVolumes();
+  }
+
+  //Sound Is mute
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print(currentVol);
+
+    setState(() {});
   }
 
   Notifier _notifier;
@@ -70,18 +91,18 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Stack(
         children: <Widget>[
           CommonView.showBackground(context),
-          Padding(padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Row(
-                  children: <Widget>[
-                    showFirstHalf(),
-                    showSecondHalf()
-                  ],
-                ),
-              )
-            ],
-          ),),
+          Padding(
+            padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[showFirstHalf(), showSecondHalf()],
+                  ),
+                )
+              ],
+            ),
+          ),
           CommonView.showCircularProgress(isLoading)
         ],
       ),
@@ -159,7 +180,10 @@ class _ProfilePageState extends State<ProfilePage> {
 //                          Padding(padding: EdgeInsets.only(top: 30)),
 
                           InkResponse(
-                              onTap: () {
+                            onTap: () {
+                              if (currentVol != 0) {
+                                Utils.playClickSound();
+                              }
                               Navigator.push(context, FadeRouteIntro());
 
 //                              Navigator.push(
@@ -281,7 +305,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.fill)),
                         ),
                         onTap: () async {
-                          Utils.playClickSound();
+                          if (currentVol != 0) {
+                            Utils.playClickSound();
+                          }
+
                           if (Injector.isBusinessMode)
                             await Injector.prefs
                                 .setInt(PrefKeys.mode, Const.professionalMode);
@@ -330,7 +357,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.fill)),
                         ),
                         onTap: () async {
-                          Utils.playClickSound();
+                          if(currentVol != 0) {
+                            Utils.playClickSound();
+                          }
 //                          Injector.customerValueData.manager != null || Injector.customerValueData.manager.isNotEmpty ?
 
                           _asyncConfirmDialog(context);
@@ -456,7 +485,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   logout() async {
-    Utils.playClickSound();
+    if(currentVol != 0) {
+      Utils.playClickSound();
+    }
     setState(() {
       isLoading = true;
     });
@@ -504,6 +535,10 @@ class _ProfilePageState extends State<ProfilePage> {
               width: 30,
             ),
             onTap: () {
+
+              if(currentVol != 0) {
+                Utils.playClickSound();
+              }
               Utils.performBack(context);
             },
           ),
@@ -812,8 +847,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void showPhotoOptionDialog(BuildContext mainContext) {
     // flutter defined function
-    Utils.playClickSound();
-    showDialog(
+    if(currentVol != 0) {
+      Utils.playClickSound();
+    }    showDialog(
       context: mainContext,
       builder: (BuildContext context) {
         // return object of type Dialog
@@ -829,7 +865,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () {
-                  Utils.playClickSound();
+                  if(currentVol != 0) {
+                    Utils.playClickSound();
+                  }
                   //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeGallery);
@@ -846,7 +884,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () async {
-                  Utils.playClickSound();
+                  if(currentVol != 0) {
+                    Utils.playClickSound();
+                  }
                   //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeCamera);

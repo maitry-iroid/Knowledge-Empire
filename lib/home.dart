@@ -28,6 +28,7 @@ import 'package:ke_employee/rewards.dart';
 import 'package:ke_employee/team.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
+import 'package:volume/volume.dart';
 
 import 'Debrief.dart';
 import 'P+L.dart';
@@ -37,6 +38,9 @@ import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
+
+
+int currentVol;
 
 class FadeRouteHome extends PageRouteBuilder {
   final Widget page;
@@ -217,6 +221,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 0;
 
     getCustomerValues();
+    initPlatformState();
+    updateVolumes();
+
   }
 
   @override
@@ -225,6 +232,20 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _connectivitySubscription?.cancel();
     _notifier.dispose();
     super.dispose();
+  }
+
+  Future<void> initPlatformState() async {
+    // pass any stream as parameter as per requirement
+    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print(currentVol);
+
+    setState(() {});
   }
 
   @override
@@ -282,7 +303,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   _onSelectItem(int index) {
-    Utils.playClickSound();
+    if(currentVol != 0) {
+      Utils.playClickSound();
+    }
 
     if (mounted) {
 //      Injector.audioPlayer.play("assets/sounds/all_button_clicks.wav",isLocal: true);

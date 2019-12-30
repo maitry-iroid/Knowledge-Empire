@@ -28,6 +28,8 @@ List abcdList = List();
 
 FileInfo fileInfo;
 
+int currentVol;
+
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
 
@@ -251,7 +253,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     ),
                   )),
               onTap: () {
-                Utils.playClickSound();
+                if(currentVol != 0) {
+                  Utils.playClickSound();
+                }
                 gotoMainScreen(context);
               },
             )
@@ -479,7 +483,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             alignment: Alignment.bottomRight,
             child: InkResponse(
               onTap: () {
-                Utils.playClickSound();
+                if(currentVol != 0) {
+                  Utils.playClickSound();
+                }
                 showDialog(
                   context: context,
                   builder: (_) => AlertCheckAnswersCorrect(),
@@ -632,7 +638,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   showQueMedia(BuildContext context) {
     return InkResponse(
         onTap: () {
-          Utils.playClickSound();
+          if(currentVol != 0) {
+            Utils.playClickSound();
+          }
           showDialog(
             context: context,
             builder: (_) => CorrectWrongMeidaAlertt(),
@@ -687,7 +695,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     fit: BoxFit.fill)
             )),
         onTap: () {
-          Utils.playClickSound();
+          if(currentVol != 0) {
+            Utils.playClickSound();
+          }
           showDialog(
               context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
@@ -820,7 +830,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
-                          Utils.playClickSound();
+                          if(currentVol != 0) {
+                            Utils.playClickSound();
+                          }
                           //alert pop
                           Navigator.pop(context);
                         },
@@ -1146,7 +1158,9 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
 //          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            Utils.playClickSound();
+                            if(currentVol != 0) {
+                              Utils.playClickSound();
+                            }
                             //alert pop
                             Navigator.pop(context);
 
@@ -1437,7 +1451,9 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
 //          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            Utils.playClickSound();
+                            if(currentVol != 0) {
+                              Utils.playClickSound();
+                            }
                             //alert pop
                             Navigator.pop(context);
 
