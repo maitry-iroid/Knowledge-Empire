@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -12,7 +9,6 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:notifier/notifier_provider.dart';
 import 'package:path/path.dart';
 import 'package:volume/volume.dart';
 
@@ -33,14 +29,11 @@ import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 List<Answer> arrAnswer = List();
 
-int _selectedItem = 0;
-
 QuestionData questionData = QuestionData();
 
 List abcdList = List();
 VideoPlayerController _controller;
 
-Notifier _notifier;
 
 int currentVol;
 
@@ -75,7 +68,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   selectItem(index) {
     setState(() {
-      _selectedItem = index;
+//      _selectedItem = index;
       print(selectItem.toString());
     });
   }
@@ -327,6 +320,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         Injector.customerValueData = data;
       }
       await Injector.prefs.remove(PrefKeys.answerData);
+
+      Injector.streamController.add("submit answer");
+
       navigateToSituation(context);
     }).catchError((e) {
       print(e);

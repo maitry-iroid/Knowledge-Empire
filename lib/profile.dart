@@ -319,8 +319,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             Injector.isBusinessMode = !Injector.isBusinessMode;
                           });
 
-                          _notifier.notify('updateHeaderValue',
-                              'Sending data from notfier!');
+                          Injector.streamController.add("chnage mode");
+
+//                          _notifier.notify('updateHeaderValue',
+//                              'Sending data from notfier!');
 //                  Navigator.pushReplacement(
 //                    context,
 //                    MaterialPageRoute(builder: (context) => HomePage()),
@@ -467,9 +469,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 json.encode(customerValueResponse.data.toJson()));
 
             Injector.customerValueData = customerValueResponse.data;
-            _notifier.notify('updateHeaderValue', '');
             Utils.showToast(
                 Utils.getText(context, "Action performed successfully!"));
+
+            Injector.streamController.add("bail out");
           }
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
@@ -927,9 +930,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
           Utils.showToast("Profile updated successfully!");
 
-          if (_image != null) {
-            _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
-          }
+         Injector.streamController.add("update_profile");
         }
       } else {
         Utils.showToast("Something went wrong.");

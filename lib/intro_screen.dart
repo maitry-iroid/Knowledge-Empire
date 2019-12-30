@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +10,11 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:volume/volume.dart';
 import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
-import 'helper/web_api.dart';
-import 'login.dart';
-import 'models/get_customer_value.dart';
 
 
 int currentVol;
@@ -58,7 +52,6 @@ class IntroPage extends StatefulWidget {
 
 class IntroPageState extends State<IntroPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  Notifier _notifier;
   int selectedType = Const.typeName;
 
   AnimationController controller;
@@ -114,7 +107,6 @@ class IntroPageState extends State<IntroPage> {
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
 
     return Scaffold(
       key: _scaffoldKey,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -27,9 +29,13 @@ class HeaderViewState extends State<HeaderView> {
     // TODO: implement initState
     super.initState();
 
+    if (Injector.streamController == null)
+      Injector.streamController = StreamController.broadcast();
+
     Injector.streamController.stream.listen((data) {
       print("DataReceived1: " + data);
-      setState(() {});
+
+      if (mounted) setState(() {});
     }, onDone: () {
       print("Task Done1");
     }, onError: (error) {
@@ -42,7 +48,7 @@ class HeaderViewState extends State<HeaderView> {
     // TODO: implement dispose
     super.dispose();
 
-    Injector.streamController.close();
+//    if (Injector.streamController != null) Injector.streamController.close();
   }
 
   @override

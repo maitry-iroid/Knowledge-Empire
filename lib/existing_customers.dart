@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
-import 'helper/prefkeys.dart';
+
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 import 'helper/web_api.dart';
@@ -24,7 +20,6 @@ class ExistingCustomerPage extends StatefulWidget {
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
   bool isLoading = false;
-  Notifier _notifier;
 
   @override
   void initState() {
@@ -82,7 +77,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Injector.customerValueData = getReleaseResourceData.data;
 //          arrOrganization = getreleaseresourceData.organization;
 
-          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
+          Injector.streamController.add("release resources");
+
           setState(() {
             arrQuestions.removeAt(index);
 
@@ -133,7 +129,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
 
     return Scaffold(
         backgroundColor: ColorRes.colorBgDark,

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 
-Notifier _notifier;
 int currentVol;
 
 class RankingPage extends StatefulWidget {
@@ -46,7 +42,6 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
 
     return Scaffold(
       body: Stack(

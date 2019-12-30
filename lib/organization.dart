@@ -1,18 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/injection/dependency_injection.dart' as prefix0;
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'helper/Utils.dart';
@@ -28,7 +24,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   OrganizationData organizationData;
-  Notifier _notifier;
 
   List<Organization> arrOrganization = List();
   bool isLoading = false;
@@ -45,7 +40,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -371,7 +365,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
           Injector.customerValueData = customerValueData;
 
-          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
+          Injector.streamController.add("manage level");
+
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
