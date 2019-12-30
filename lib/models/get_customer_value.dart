@@ -1,6 +1,6 @@
 
 class CustomerValueRequest {
-  String userId;
+  int userId;
 
   CustomerValueRequest({this.userId});
 

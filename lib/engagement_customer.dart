@@ -451,7 +451,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   SubmitAnswerRequest getSubmitAnswerRequest(SubmitAnswerRequest rq) {
-    rq.userId = Injector.userData.userId;
+    rq.userId = Injector.userData.userId.toString();
 
     SubmitAnswer submitAnswer = SubmitAnswer();
 

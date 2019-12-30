@@ -50,19 +50,19 @@ class LoginResponse {
 }
 
 class LoginResponseData {
-  String userId;
+  int userId;
   String name;
   String email;
   String phone;
   String address;
   String country;
   String createdAt;
-  String isPasswordChanged;
+  int isPasswordChanged;
   String profileImage;
   String accessToken;
   String companyName;
   String manager;
-  String activeCompany;
+  int activeCompany;
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
 

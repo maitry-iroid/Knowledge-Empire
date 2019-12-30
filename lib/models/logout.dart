@@ -1,5 +1,5 @@
 class LogoutRequest {
-  String userId;
+  int userId;
   String deviceType;
   String deviceToken;
 

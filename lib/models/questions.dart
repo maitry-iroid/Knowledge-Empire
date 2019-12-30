@@ -1,5 +1,5 @@
 class QuestionRequest {
-  String userId = "";
+  int userId ;
   String moduleId = "";
   int type = 1;
 

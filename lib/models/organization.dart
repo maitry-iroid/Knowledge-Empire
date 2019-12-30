@@ -1,5 +1,5 @@
 class GetOrganizationRequest {
-  String userId;
+  int userId;
   int mode;
 
   GetOrganizationRequest({this.userId});

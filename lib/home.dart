@@ -486,7 +486,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
         Injector.customerValueData = customerValueData;
 
-        Injector.streamController.add("This a test data");
+        Injector.streamController?.add("This a test data");
       }
     }).catchError((e) {
       print(e);

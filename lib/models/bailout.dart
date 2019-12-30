@@ -1,5 +1,5 @@
 class BailOutRequest {
-  String userId;
+  int userId;
   int mode;
 
   BailOutRequest({this.userId});

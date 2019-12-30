@@ -1,5 +1,5 @@
 class ChangePasswordRequest {
-  String userId;
+  int userId;
   String password;
   String oldPassword;
   bool isOldPasswordRequired;

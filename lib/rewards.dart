@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_achievement.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
@@ -14,6 +16,18 @@ class RewardsPage extends StatefulWidget {
 
 class _RewardsPageState extends State<RewardsPage> {
   var arrCategories = ["Healthcare", "Industrials", "Technology", "Financials"];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) {
+        getAchievements();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -232,6 +246,34 @@ class _RewardsPageState extends State<RewardsPage> {
         ],
       ),
     );
+  }
+
+  bool isLoading = false;
+
+  List<GetAchievementData> arrAchievementData;
+
+  void getAchievements() {
+    setState(() {
+      isLoading = true;
+    });
+
+    GetAchievementRequest rq = GetAchievementRequest();
+    rq.userId = Injector.userData.userId;
+    rq.categoryId = "1";
+
+    WebApi().getAchievements(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          arrAchievementData = response.data;
+        } else {
+          Utils.showToast(response.msg);
+        }
+      }
+    });
   }
 
 //  -----------------------------

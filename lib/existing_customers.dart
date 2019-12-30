@@ -60,7 +60,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       QuestionData questionData = arrQuestions[index];
 
       ReleaseResourceRequest rq = ReleaseResourceRequest();
-      rq.userId = Injector.userData.userId;
+      rq.userId = Injector.userData.userId.toString();
       rq.questionId = questionData.questionId;
       rq.moduleId = questionData.moduleId;
       rq.resources = questionData.resources;

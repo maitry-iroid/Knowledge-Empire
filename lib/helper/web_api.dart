@@ -7,6 +7,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/change_password.dart';
+import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
@@ -22,9 +23,9 @@ class WebApi {
 
   static getRequest(String req, String data) {
     return {
-      'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
-      'api_secret': '1a42cc080ef2464a60134473276fe42e',
-      'api_request': req,
+      'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef',
+      'apiSecret': '1a42cc080ef2464a60134473276fe42e',
+      'apiRequest': req,
       'data': data
     };
   }
@@ -281,14 +282,10 @@ class WebApi {
 
     print("getOrganizations_" + json.encode(jsonMap));
 
-//    Utils.showLoader(context);
-
     try {
       final response = await dio.post("",
           data:
               json.encode(getRequest('getOrganization', json.encode(jsonMap))));
-
-//      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -308,7 +305,6 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-//      Utils.closeLoader(context);
       print(e);
       return null;
     }
@@ -320,20 +316,15 @@ class WebApi {
 
     print("releaseResource" + json.encode(jsonMap));
 
-//    Utils.showLoader(context);
-
     try {
       final response = await dio.post("",
           data:
               json.encode(getRequest('releaseResource', json.encode(jsonMap))));
 
-//      Utils.closeLoader(context);
-
       if (response.statusCode == 200) {
         print(response.data);
         GetCustomerValueResponse releaseResourceResponse =
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
-
 
         if (releaseResourceResponse != null) {
           if (releaseResourceResponse.flag == "true") {
@@ -348,7 +339,6 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-//      Utils.closeLoader(context);
       print(e);
       return null;
     }
@@ -360,14 +350,10 @@ class WebApi {
 
     print("manageOrganization__" + json.encode(rq.toJson()));
 
-//    Utils.showLoader(context);
-
     try {
       final response = await dio.post("",
           data: json.encode(
               getRequest('manageOrganization', json.encode(rq.toJson()))));
-
-//      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -387,7 +373,6 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-//      Utils.closeLoader(context);
       print(e);
       return null;
     }
@@ -399,14 +384,10 @@ class WebApi {
 
     print("getCustomerValue__" + json.encode(jsonMap));
 
-//    Utils.showLoader(context);
-
     try {
       final response = await dio.post("",
           data: json
               .encode(getRequest('getCustomerValue', json.encode(jsonMap))));
-
-//      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -426,7 +407,6 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-//      Utils.closeLoader(context);
       print(e);
       return null;
     }
@@ -438,13 +418,9 @@ class WebApi {
 
     print("bailOut__" + json.encode(jsonMap));
 
-//    Utils.showLoader(context);
-
     try {
       final response = await dio.post("",
           data: json.encode(getRequest('bailOut', json.encode(jsonMap))));
-
-//      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -452,20 +428,10 @@ class WebApi {
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         return getCustomerValueResponse;
-        /* if (responseData != null) {
-          if (responseData.flag == "true") {
-            return responseData.data;
-          } else {
-            Utils.showToast(responseData.msg);
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }*/
       }
       print(response.data);
       return null;
     } catch (e) {
-//      Utils.closeLoader(context);
       print(e);
       return null;
     }
@@ -477,14 +443,10 @@ class WebApi {
 
     print("submitAnswers__" + json.encode(rq.toJson()));
 
-//    Utils.showLoader(context);
-
     try {
       final response = await dio.post("",
           data: json
               .encode(getRequest('submitAnswers', json.encode(rq.toJson()))));
-
-//      Utils.closeLoader(context);
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -504,7 +466,32 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-//      Utils.closeLoader(context);
+      print(e);
+      return null;
+    }
+  }
+
+  Future<GetAchievementResponse> getAchievements(
+      BuildContext context, GetAchievementRequest rq) async {
+    initDio();
+
+    print("get_achievements" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('getUserAchievement', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetAchievementResponse responseData =
+            GetAchievementResponse.fromJson(jsonDecode(response.data));
+
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
       print(e);
       return null;
     }

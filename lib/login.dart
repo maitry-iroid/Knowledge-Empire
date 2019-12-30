@@ -237,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
           LoginResponseData loginResponseData = loginData.data;
 
           await Injector.prefs
-              .setString(PrefKeys.userId, loginResponseData.userId);
+              .setInt(PrefKeys.userId, loginResponseData.userId);
           await Injector.prefs.setString(
               PrefKeys.user, json.encode(loginResponseData.toJson()));
 

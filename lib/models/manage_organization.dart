@@ -1,5 +1,5 @@
 class ManageOrganizationRequest {
-  String userId;
+  int userId;
   int type;
   int action;
 

@@ -78,7 +78,7 @@ class MyAppState extends State<MyApp> {
                     ? ColorRes.white
                     : ColorRes.colorBgDark),
           )),
-      home: Injector.prefs.getString(PrefKeys.userId) != null
+      home: Injector.prefs.getInt(PrefKeys.userId) != null
           ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
                   Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
               ? IntroPage()
