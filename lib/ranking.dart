@@ -79,97 +79,66 @@ class _RankingPageState extends State<RankingPage> {
 //      },
 //    );
 
-    var selecteded = 0;
-    bool selected = true;
+    var selected = 3;
+
+    String selectedPosition = "0";
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
           flex: 1,
-          child: InkResponse(
+          child: GestureDetector(
             onTap: () {
-              selecteded = 0;
-              _notifier.notify('rankingAction', "0");
-//              Image(image: AssetImage(Utils.getAssetsImg('ranking_deselect_profit')),
-//                  width: 80);
+              selected = 0;
+
+              setState(() {});
             },
-
-//            child: ClipRect(
-//              clipBehavior: Clip.hardEdge,
-//              child: OverflowBox(
-//                maxHeight: 250,
-//                maxWidth: 250,
-//                child: Center(
-//                  child: Container(
-//                    decoration: BoxDecoration(
-//                      color: Colors.white,
-//                      shape: BoxShape.circle,
-//                    ),
-//                  ),
-//                ),
-//              ),
-//            ),
-
-            child:
-                Notifier.of(context).register<String>('rankingAction', (data) {
-              return Image(
-                  image: AssetImage(data.data == "0"
-                      ? Utils.getAssetsImg('ranking_select_revenue')
-                      : Utils.getAssetsImg('ranking_deselect_profit')),
-                  width: 80);
-            }),
+            child: Image(
+                image: AssetImage(selected == 0
+                    ? Utils.getAssetsImg('badge')
+                    : Utils.getAssetsImg('add_emplyee')),
+                width: 80),
           ),
         ),
         Expanded(
           flex: 1,
           child: InkResponse(
-            onTap: () {
-              selecteded = 1;
-              _notifier.notify('rankingAction', '1');
-            },
-            child:
-                Notifier.of(context).register<String>('rankingAction', (data) {
-              return Image(
-                  image: AssetImage(data.data != "1"
-                      ? Utils.getAssetsImg('ranking_deselect_profit')
-                      : Utils.getAssetsImg('ranking_select_revenue')),
-                  width: 80);
-            }),
-          ),
+              onTap: () {
+                selected = 1;
+                setState(() {});
+              },
+              child: Image(
+                  image: AssetImage(selected == 1
+                      ? Utils.getAssetsImg('badge')
+                      : Utils.getAssetsImg('add_emplyee')),
+                  width: 80)),
         ),
         Expanded(
             flex: 1,
             child: InkResponse(
-              onTap: () {
-                selecteded = 2;
-                _notifier.notify('rankingAction', '2');
-              },
-              child: Notifier.of(context).register<String>('rankingAction',
-                  (data) {
-                return Image(
-                    image: AssetImage(data.data != "2"
-                        ? Utils.getAssetsImg('ranking_deselect_customers')
-                        : Utils.getAssetsImg('ranking_select_revenue')),
-                    width: 80);
-              }),
-            )),
+                onTap: () {
+                  selected = 2;
+                  setState(() {});
+                },
+                child: Image(
+                    image: AssetImage(selected == 2
+                        ? Utils.getAssetsImg('badge')
+                        : Utils.getAssetsImg('add_emplyee')),
+                    width: 80))),
         Expanded(
           flex: 1,
           child: InkResponse(
-            onTap: () {
-              selecteded = 3;
-              _notifier.notify('rankingAction', '3');
-            },
-            child:
-                Notifier.of(context).register<String>('rankingAction', (data) {
-              return Image(
-                  image: AssetImage(data.data != "3"
-                      ? Utils.getAssetsImg('ranking_deselect_brand')
-                      : Utils.getAssetsImg('ranking_select_revenue')),
-                  width: 80);
-            }),
-          ),
+              onTap: () {
+                setState(() {
+                  selected = 3;
+                });
+              },
+              child: Image(
+                  image: AssetImage(selected == 3
+                      ? Utils.getAssetsImg('badge')
+                      : Utils.getAssetsImg('add_emplyee')),
+                  width: 80)),
         )
       ],
     );

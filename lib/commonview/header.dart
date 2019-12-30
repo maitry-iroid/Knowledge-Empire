@@ -8,7 +8,7 @@ import 'package:ke_employee/models/organization.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class HeaderView extends StatelessWidget {
+class HeaderView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
   final Function openProfile;
@@ -18,38 +18,65 @@ class HeaderView extends StatelessWidget {
 //  List<Organization> arrOrganization = Injector.customerValueData.organization;
 
   @override
+  HeaderViewState createState() => HeaderViewState();
+}
+
+class HeaderViewState extends State<HeaderView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Injector.streamController.stream.listen((data) {
+      print("DataReceived1: " + data);
+      setState(() {});
+    }, onDone: () {
+      print("Task Done1");
+    }, onError: (error) {
+      print("Some Error1");
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    Injector.streamController.close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return showHeaderView(context);
   }
 
   showHeaderView(BuildContext context) {
-    return Notifier.of(context).register<String>('updateHeaderValue', (data) {
-      return Container(
-        height: Utils.getHeaderHeight(context),
+    return Container(
+      height: Utils.getHeaderHeight(context),
 //      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-        color: Injector.isBusinessMode
-            ? ColorRes.headerDashboard
-            : ColorRes.headerBlue,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            isShowMenu
-                ? InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                        Utils.getAssetsImg("menu"),
-                      ),
-                      fit: BoxFit.fill,
+      color: Injector.isBusinessMode
+          ? ColorRes.headerDashboard
+          : ColorRes.headerBlue,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          widget.isShowMenu
+              ? InkResponse(
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg("menu"),
                     ),
-                    onTap: () {
-                      Utils.playClickSound();
-                      scaffoldKey.currentState.openDrawer();
-                    },
-                  )
-                : Container(),
-            SizedBox(
-              width: 8,
-            ),
+                    fit: BoxFit.fill,
+                  ),
+                  onTap: () {
+                    Utils.playClickSound();
+                    widget.scaffoldKey.currentState.openDrawer();
+                  },
+                )
+              : Container(),
+          SizedBox(
+            width: 8,
+          ),
 //            InkResponse(
 //              child: Image(
 //                image: AssetImage(
@@ -62,52 +89,51 @@ class HeaderView extends StatelessWidget {
 //              ),
 //              onTap: () {},
 //            ),
-            SizedBox(
-              width: 10,
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  Injector.userData != null
+                      ? Injector.userData.companyName
+                      : "",
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.textLightBlue
+                          : ColorRes.white,
+                      fontSize: 15),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  Injector.userData != null ? Injector.userData.name : "",
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.textLightBlue,
+                      fontSize: 15),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    Injector.userData != null
-                        ? Injector.userData.companyName
-                        : "",
-                    style: TextStyle(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.textLightBlue
-                            : ColorRes.white,
-                        fontSize: 15),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    Injector.userData != null ? Injector.userData.name : "",
-                    style: TextStyle(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.white
-                            : ColorRes.textLightBlue,
-                        fontSize: 15),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ],
-              ),
-            ),
-            showHeaderItem(Const.typeEmployee, context),
-            showHeaderItem(Const.typeSalesPersons, context),
-            showHeaderItem(Const.typeServicesPerson, context),
-            showHeaderItem(Const.typeBadge, context),
-            showHeaderItem(Const.typeDollar, context),
-            showProfile(context)
-          ],
-        ),
-      );
-    });
+          ),
+          showHeaderItem(Const.typeEmployee, context),
+          showHeaderItem(Const.typeSalesPersons, context),
+          showHeaderItem(Const.typeServicesPerson, context),
+          showHeaderItem(Const.typeBadge, context),
+          showHeaderItem(Const.typeDollar, context),
+          showProfile(context)
+        ],
+      ),
+    );
   }
 
   showHeaderItem(int type, BuildContext context) {
@@ -228,7 +254,7 @@ class HeaderView extends StatelessWidget {
         onTap: () {
 //            openProfile /*() {
           Utils.playClickSound();
-          openProfile();
+          widget.openProfile();
 //        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
 //        print(route1.isCurrent);
 //        if (!route1.isCurrent) {

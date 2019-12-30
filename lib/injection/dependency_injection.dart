@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -23,6 +24,7 @@ class Injector {
   static AudioPlayer audioPlayer;
   static AudioCache audioCache;
   static DefaultCacheManager cacheManager;
+  static StreamController<String> streamController;
 
 
 
@@ -50,6 +52,8 @@ class Injector {
         customerValueData = CustomerValueData.fromJson(
             json.decode(prefs.getString(PrefKeys.customerValueData)));
 
+
+      streamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
       mode = prefs.getInt(PrefKeys.mode) != null

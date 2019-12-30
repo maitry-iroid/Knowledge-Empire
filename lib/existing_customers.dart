@@ -76,7 +76,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       });
 
       WebApi()
-          .releaseresource(context, rq.toJson())
+          .releaseResource(context, rq.toJson())
           .then((getReleaseResourceData) {
         if (getReleaseResourceData != null) {
           Injector.customerValueData = getReleaseResourceData.data;

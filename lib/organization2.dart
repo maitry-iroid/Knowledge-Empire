@@ -275,7 +275,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               child: showItem(Const.typeOperations),
             ),
           ),
-
         ],
       ),
     );
@@ -396,7 +395,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
           Injector.customerValueData = customerValueData;
 
-          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
+          Injector.streamController.add("manageLevel");
+
+//          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
