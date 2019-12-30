@@ -466,8 +466,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
         Injector.customerValueData = customerValueData;
 
+        Injector.streamController.add("This a test data");
+
         try {
-          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
+//          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
         } catch (e) {
           print(e);
         }

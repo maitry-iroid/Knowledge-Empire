@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/change_password.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
@@ -16,7 +13,6 @@ import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/models/releaseResource.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
@@ -318,7 +314,7 @@ class WebApi {
     }
   }
 
-  Future<GetCustomerValueResponse> releaseresource(
+  Future<GetCustomerValueResponse> releaseResource(
       BuildContext context, Map<String, dynamic> jsonMap) async {
     initDio();
 
@@ -337,6 +333,7 @@ class WebApi {
         print(response.data);
         GetCustomerValueResponse releaseResourceResponse =
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
+
 
         if (releaseResourceResponse != null) {
           if (releaseResourceResponse.flag == "true") {
