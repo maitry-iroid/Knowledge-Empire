@@ -18,6 +18,9 @@ class RankingPage extends StatefulWidget {
 
 class _RankingPageState extends State<RankingPage> {
 
+
+  int selected = 0;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -79,9 +82,7 @@ class _RankingPageState extends State<RankingPage> {
 //      },
 //    );
 
-    var selected = 3;
 
-    String selectedPosition = "0";
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,9 +91,9 @@ class _RankingPageState extends State<RankingPage> {
           flex: 1,
           child: GestureDetector(
             onTap: () {
-              selected = 0;
 
-              setState(() {});
+
+              setState(() {  selected = 0;});
             },
             child: Image(
                 image: AssetImage(selected == 0
@@ -105,8 +106,7 @@ class _RankingPageState extends State<RankingPage> {
           flex: 1,
           child: InkResponse(
               onTap: () {
-                selected = 1;
-                setState(() {});
+                setState(() {  selected = 1;});
               },
               child: Image(
                   image: AssetImage(selected == 1
@@ -118,8 +118,7 @@ class _RankingPageState extends State<RankingPage> {
             flex: 1,
             child: InkResponse(
                 onTap: () {
-                  selected = 2;
-                  setState(() {});
+                  setState(() {  selected = 2;});
                 },
                 child: Image(
                     image: AssetImage(selected == 2
