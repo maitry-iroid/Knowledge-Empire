@@ -342,7 +342,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Injector
                                             .customerValueData.manager.isEmpty
                                     ? StringRes.bailout
-                                    : StringRes.requestbailout
+                                    : StringRes.requestBailOut
 //
                                 ),
                             maxLines: 1,

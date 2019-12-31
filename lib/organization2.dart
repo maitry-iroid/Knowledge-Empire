@@ -262,7 +262,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: Utils.getDeviceWidth(context) / 7,
+              width: Utils.getDeviceWidth(context) / 6.8,
               padding: EdgeInsets.only(top: 5),
               child: showItem(Const.typeServices),
             ),
@@ -270,7 +270,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              width: Utils.getDeviceWidth(context) / 7,
+              width: Utils.getDeviceWidth(context) / 6.8,
               padding: EdgeInsets.only(bottom: 5),
               child: showItem(Const.typeOperations),
             ),
@@ -388,6 +388,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           CustomerValueData customerValueData = Injector.customerValueData;
           customerValueData.totalEmployeeCapacity =
               organizationData.totalEmpCount;
+          customerValueData.remainingEmployeeCapacity = action == Const.add
+              ? customerValueData.remainingEmployeeCapacity + 10
+              : customerValueData.remainingEmployeeCapacity - 10;
           customerValueData.totalBalance = organizationData.totalBalance;
 
           await Injector.prefs.setString(PrefKeys.customerValueData,

@@ -69,7 +69,8 @@ class StringRes {
   static var question = "question";
   static var explanation = "explanation";
   static var bailout = "bailout";
-  static var requestbailout = "requestbailout";
+  static var requestBailOut = "requestbailout";
+  static var downLoad = "downLoad";
   static var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
 
   //business sectors
@@ -154,7 +155,8 @@ class StringRes {
       'explanation': 'Explanation',
       'sendChallenge': 'Send Challenge',
       'bailout': 'Bail Out',
-      'requestbailout': 'Request Bail Out'
+      'requestbailout': 'Request Bail Out',
+      'downLoad': 'DownLoad'
     },
     'es': {
       'title': 'Hola Mundo',

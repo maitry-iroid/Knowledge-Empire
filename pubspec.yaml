@@ -42,6 +42,7 @@ dependencies:
 
   flutter_pdfview:
   volume: ^0.1.0
+  flutter_sound: ^1.0.6
 
   #  http:
 

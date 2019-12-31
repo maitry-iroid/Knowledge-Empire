@@ -286,23 +286,23 @@ class Utils {
 //  }
 
   static playClickSound() async {
-    Injector.audioCache.play("sounds/all_button_clicks.wav");
+    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
   }
 
   static correctAnswerSound() async {
-    Injector.audioCache.play("sounds/right_answer.wav");
+    Injector.audioPlayer.play("sounds/right_answer.wav");
   }
 
   static incorrectAnswerSound() async {
-    Injector.audioCache.play("sounds/wrong_answer.wav");
+    Injector.audioPlayer.play("sounds/wrong_answer.wav");
   }
 
   static procorrectAnswerSound() async {
-    Injector.audioCache.play("sounds/pro_right_answer.mp3");
+    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
   }
 
   static proincorrectAnswerSound() async {
-    Injector.audioCache.play("sounds/pro_wrong_answer.mp3");
+    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
   }
 
 //  Future<void> initPlatformState() async {
