@@ -40,7 +40,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(
@@ -289,17 +288,19 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     if (arrOrganization[position].employeeCount == null) return 0.0;
 
     var progress = arrOrganization[position].employeeCount /
-        (organizationData.totalEmpCount != 0
-            ? organizationData.totalEmpCount
+        (organizationData.totalEmployeeCapacity != 0
+            ? organizationData.totalEmployeeCapacity
             : 1);
 
-    if(progress.toDouble()<=1 &&progress.toDouble()>=0){
+    if (progress.toDouble() <= 1 && progress.toDouble() >= 0) {
       return progress.toDouble();
-    }else if(progress<0){
+    } else if (progress < 0) {
       return 0.0;
-    }else if(progress>1)
+    } else if (progress > 1)
       return 1.0;
-    else{return 0.0;}
+    else {
+      return 0.0;
+    }
   }
 
   Future<void> showConfirmDialog(int position, int action) async {
@@ -344,29 +345,20 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         isLoading = true;
       });
 
-      WebApi().manageOrganizations(context, rq).then((getOrganizationData) async{
+      WebApi()
+          .manageOrganizations(context, rq)
+          .then((getOrganizationData) async {
         setState(() {
           isLoading = false;
         });
 
         if (getOrganizationData != null) {
-          organizationData = getOrganizationData;
-          arrOrganization[position] = organizationData.organization[0];
+          arrOrganization[position] = getOrganizationData.organization[0];
+          organizationData.organization = arrOrganization;
 
           setState(() {});
 
-          CustomerValueData customerValueData = Injector.customerValueData;
-          customerValueData.totalEmployeeCapacity =
-              organizationData.totalEmpCount;
-          customerValueData.totalBalance = organizationData.totalBalance;
-
-        await  Injector.prefs.setString(PrefKeys.customerValueData,
-              json.encode(customerValueData.toJson()));
-
-          Injector.customerValueData = customerValueData;
-
-          Injector.streamController.add("manage level");
-
+          Utils.performManageLevel(organizationData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
@@ -379,4 +371,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       });
     });
   }
+
+
 }

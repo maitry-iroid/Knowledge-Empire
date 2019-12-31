@@ -15,6 +15,8 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
@@ -423,5 +425,28 @@ class Utils {
     int finalValue = (a * b * c).round();
 
     return finalValue;
+  }
+
+ static void performManageLevel(OrganizationData organizationData) async {
+    CustomerValueData customerValueData = Injector.customerValueData;
+    customerValueData.totalBalance = organizationData.totalBalance;
+    customerValueData.totalEmployeeCapacity =
+        organizationData.totalEmployeeCapacity;
+    customerValueData.remainingEmployeeCapacity =
+        organizationData.remainingEmployeeCapacity;
+    customerValueData.totalSalesPerson = organizationData.totalSalesPerson;
+    customerValueData.remainingSalesPerson =
+        organizationData.remianingSalesPerson;
+    customerValueData.totalCustomerCapacity =
+        organizationData.totalCustomerCapicity;
+    customerValueData.remainingCustomerCapacity =
+        organizationData.remainingCustomerCapicity;
+
+    Injector.customerValueData = customerValueData;
+
+    await Injector.prefs.setString(
+        PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
+
+    Injector.streamController.add("manage level");
   }
 }

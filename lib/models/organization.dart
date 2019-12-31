@@ -17,21 +17,19 @@ class GetOrganizationRequest {
   }
 }
 
-class GetOrganizationResponse {
+class OrganizationResponse {
   String flag;
   String result;
   String msg;
   OrganizationData data;
 
-  GetOrganizationResponse({this.flag, this.result, this.msg, this.data});
+  OrganizationResponse({this.flag, this.result, this.msg, this.data});
 
-  GetOrganizationResponse.fromJson(Map<String, dynamic> json) {
+  OrganizationResponse.fromJson(Map<String, dynamic> json) {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
-    data = json['data'] != null
-        ? new OrganizationData.fromJson(json['data'])
-        : null;
+    data = json['data'] != null ? new OrganizationData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -47,14 +45,31 @@ class GetOrganizationResponse {
 }
 
 class OrganizationData {
-  int totalEmpCount;
+  int totalEmployeeCapacity;
+  int remainingEmployeeCapacity;
+  int totalCustomerCapicity;
+  int remainingCustomerCapicity;
+  int remianingSalesPerson;
+  int totalSalesPerson;
   int totalBalance;
   List<Organization> organization;
 
-  OrganizationData({this.totalEmpCount, this.totalBalance, this.organization});
+  OrganizationData(
+      {this.totalEmployeeCapacity,
+        this.remainingEmployeeCapacity,
+        this.totalCustomerCapicity,
+        this.remainingCustomerCapicity,
+        this.remianingSalesPerson,
+        this.totalBalance,
+        this.organization});
 
   OrganizationData.fromJson(Map<String, dynamic> json) {
-    totalEmpCount = json['totalEmpCount'];
+    totalEmployeeCapacity = json['totalEmployeeCapacity'];
+    remainingEmployeeCapacity = json['remainingEmployeeCapacity'];
+    totalCustomerCapicity = json['totalCustomerCapicity'];
+    remainingCustomerCapicity = json['remainingCustomerCapicity'];
+    remianingSalesPerson = json['remianingSalesPerson'];
+    totalSalesPerson= json[' int totalSalesPerson;'];
     totalBalance = json['totalBalance'];
     if (json['organization'] != null) {
       organization = new List<Organization>();
@@ -66,7 +81,12 @@ class OrganizationData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalEmpCount'] = this.totalEmpCount;
+    data['totalEmployeeCapacity'] = this.totalEmployeeCapacity;
+    data['remainingEmployeeCapacity'] = this.remainingEmployeeCapacity;
+    data['totalCustomerCapicity'] = this.totalCustomerCapicity;
+    data['remainingCustomerCapicity'] = this.remainingCustomerCapicity;
+    data['remianingSalesPerson'] = this.remianingSalesPerson;
+    data[' int totalSalesPerson;'] = this.totalSalesPerson;;
     data['totalBalance'] = this.totalBalance;
     if (this.organization != null) {
       data['organization'] = this.organization.map((v) => v.toJson()).toList();
@@ -74,35 +94,36 @@ class OrganizationData {
     return data;
   }
 }
+
 class Organization {
   int type;
   String name;
   int level;
   String description;
+  int nextLevelCost;
   String subtractLevelConfirmMessage;
   String addLevelConfirmMessage;
   int employeeCount;
-  int nextLevelCost;
 
   Organization(
       {this.type,
         this.name,
         this.level,
         this.description,
+        this.nextLevelCost,
         this.subtractLevelConfirmMessage,
         this.addLevelConfirmMessage,
-        this.employeeCount,
-        this.nextLevelCost});
+        this.employeeCount});
 
   Organization.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     name = json['name'];
     level = json['level'];
     description = json['description'];
+    nextLevelCost = json['nextLevelCost'];
     subtractLevelConfirmMessage = json['subtractLevelConfirmMessage'];
     addLevelConfirmMessage = json['addLevelConfirmMessage'];
     employeeCount = json['employeeCount'];
-    nextLevelCost = json['nextLevelCost'];
   }
 
   Map<String, dynamic> toJson() {
@@ -111,10 +132,11 @@ class Organization {
     data['name'] = this.name;
     data['level'] = this.level;
     data['description'] = this.description;
+    data['nextLevelCost'] = this.nextLevelCost;
     data['subtractLevelConfirmMessage'] = this.subtractLevelConfirmMessage;
     data['addLevelConfirmMessage'] = this.addLevelConfirmMessage;
     data['employeeCount'] = this.employeeCount;
-    data['nextLevelCost'] = this.nextLevelCost;
     return data;
   }
 }
+

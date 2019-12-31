@@ -289,8 +289,8 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        GetOrganizationResponse getOrganizationResponse =
-            GetOrganizationResponse.fromJson(jsonDecode(response.data));
+        OrganizationResponse getOrganizationResponse =
+            OrganizationResponse.fromJson(jsonDecode(response.data));
 
         if (getOrganizationResponse != null) {
           if (getOrganizationResponse.flag == "true") {
@@ -344,7 +344,7 @@ class WebApi {
     }
   }
 
-  Future<OrganizationData> manageOrganizations(
+  Future<ManageOrgData> manageOrganizations(
       BuildContext context, ManageOrganizationRequest rq) async {
     initDio();
 
@@ -357,8 +357,8 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        GetOrganizationResponse getOrganizationResponse =
-            GetOrganizationResponse.fromJson(jsonDecode(response.data));
+        ManageOrgResponse getOrganizationResponse =
+        ManageOrgResponse.fromJson(jsonDecode(response.data));
 
         if (getOrganizationResponse != null) {
           if (getOrganizationResponse.flag == "true") {

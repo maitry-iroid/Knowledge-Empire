@@ -312,15 +312,15 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   getProgress(int position) {
-    if (arrOrganization[position].employeeCount == null) return 0.0;
+    int totalEmployeeCount = Injector.customerValueData.totalEmployeeCapacity -
+        Injector.customerValueData.remainingEmployeeCapacity;
 
-    var progress = arrOrganization[position].employeeCount /
-        (organizationData.totalEmpCount != 0
-            ? organizationData.totalEmpCount
-            : 1);
+    if (totalEmployeeCount == null) return 0.0;
 
-    if (progress.toDouble() <= 1 && progress.toDouble() >= 0) {
-      return progress.toDouble();
+    var progress = arrOrganization[position].employeeCount / totalEmployeeCount;
+
+    if (progress <= 1 && progress >= 0) {
+      return progress;
     } else if (progress < 0) {
       return 0.0;
     } else if (progress > 1)
@@ -380,27 +380,13 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         });
 
         if (getOrganizationData != null) {
-          organizationData = getOrganizationData;
+          organizationData.organization[position] =
+              getOrganizationData.organization[0];
           arrOrganization[position] = organizationData.organization[0];
 
           setState(() {});
 
-          CustomerValueData customerValueData = Injector.customerValueData;
-          customerValueData.totalEmployeeCapacity =
-              organizationData.totalEmpCount;
-          customerValueData.remainingEmployeeCapacity = action == Const.add
-              ? customerValueData.remainingEmployeeCapacity + 10
-              : customerValueData.remainingEmployeeCapacity - 10;
-          customerValueData.totalBalance = organizationData.totalBalance;
-
-          await Injector.prefs.setString(PrefKeys.customerValueData,
-              json.encode(customerValueData.toJson()));
-
-          Injector.customerValueData = customerValueData;
-
-          Injector.streamController.add("manageLevel");
-
-//          _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
+          Utils.performManageLevel(organizationData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
