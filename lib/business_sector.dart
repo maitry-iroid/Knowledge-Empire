@@ -393,67 +393,65 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ),
           ),
           Container(
-            height: 35,
+            alignment: Alignment.center,
             margin: EdgeInsets.symmetric(vertical: 20),
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                selectedModule.isAssign == "1"
-                    ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg('ic_download')),
-                          width: 40,
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    selectedModule.isAssign == "1"
+                        ? InkResponse(
+                            child: Text(Utils.getText(context, StringRes.downLoad)),
+                            onTap: () {
+                              Utils.playClickSound();
 
-                          downloadAllQuestions();
-                        },
-                      )
-                    : Container(),
-                Switch(
-                  value: isSwitched,
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitched = value;
-                    });
-                  },
-                  activeTrackColor: Colors.lightGreenAccent,
-                  activeColor: Colors.white,
+                              downloadAllQuestions();
+                            },
+                          )
+                        : Container(),
+                    Switch(
+                      value: isSwitched,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      },
+                      activeTrackColor: ColorRes.white,
+                      inactiveTrackColor: ColorRes.lightGrey,
+                      activeColor: Colors.white,
+                    ),
+                  ],
                 ),
                 InkResponse(
                     child: Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(left: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 30),
-                      decoration: BoxDecoration(
-                          color: Injector.isBusinessMode
-                              ? null
-                              : ColorRes.headerBlue,
-                          borderRadius: Injector.isBusinessMode
-                              ? null
-                              : BorderRadius.circular(20),
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("bg_subscribe")),
-                                  fit: BoxFit.fill)
-                              : null),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            Utils.getText(
-                                context,
-                                selectedModule.isAssign == "0"
-                                    ? StringRes.subscribe
-                                    : StringRes.subscribed),
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 17),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                    ),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                            color: Injector.isBusinessMode
+                                ? null
+                                : ColorRes.headerBlue,
+                            borderRadius: Injector.isBusinessMode
+                                ? null
+                                : BorderRadius.circular(20),
+                            image: Injector.isBusinessMode
+                                ? DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_subscribe")),
+                                    fit: BoxFit.fill)
+                                : null),
+                        child: Text(
+                          Utils.getText(
+                              context,
+                              selectedModule.isAssign == "0"
+                                  ? StringRes.subscribe
+                                  : StringRes.subscribed),
+                          style: TextStyle(color: ColorRes.white, fontSize: 17),
+                          textAlign: TextAlign.center,
+                        )),
                     onTap: () {
                       Utils.playClickSound();
                       if (selectedModule.isAssign == "0") {
