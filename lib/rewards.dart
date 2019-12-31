@@ -15,7 +15,20 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
-  var arrCategories = ["Healthcare", "Industrials", "Technology", "Financials"];
+  var arrCategories = ["Healthcare", "Business Segments", "Customer interactions", "Customer Contracts", "Income", "Organizational Maturity", "Challanges Maturity", "Beeing Challanged", "Others"];
+
+  List<RewardsModel> _rewardslist = [
+    RewardsModel(levelName: "Level 1", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 2", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 3", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 4", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 5", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 6", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 7", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 8", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 9", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 10", image: "back", isSelected: false),
+  ];
 
   @override
   void initState() {
@@ -109,6 +122,58 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   showSecondHalf() {
+    if(_selectedItem == 0) {
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 1) {
+      return showSecondHalfSecondCategory();
+    } else if(_selectedItem == 2){
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 3){
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 4){
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 5){
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 6){
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 7){
+      return showSecondHalfFirstCategory();
+    } else if(_selectedItem == 8){
+      return showSecondHalfFirstCategory();
+    }
+  }
+
+  showSecondHalfFirstCategory() {
+    return Expanded(
+        flex: 3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            CommonView.showTitle(context, StringRes.rewards),
+
+            SizedBox(
+              height: Utils.getDeviceHeight(context) / 6,
+            ),
+            Center(
+
+              child: Text("Please select the category to see the rewards"),
+            )
+//            Container(
+//              child: Row(
+//              children: <Widget>[
+//
+//              child: Text("Please select the category to see the rewards"),
+//              ]
+//              ),
+//            )
+          ],
+        ));
+  }
+
+  showSecondHalfSecondCategory() {
     return Expanded(
       flex: 3,
       child: Column(
@@ -122,9 +187,20 @@ class _RewardsPageState extends State<RewardsPage> {
             color: ColorRes.whiteDarkBg,
             margin: EdgeInsets.all(10),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+                borderRadius: BorderRadius.circular(10.0),
+            ),
             child: Container(
               height: Utils.getDeviceHeight(context) / 3.6,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+//                physics: ClampingScrollPhysics(),
+                itemCount: _rewardslist.length,
+                itemBuilder: (BuildContext context, int index) {
+//                      return showItem(index);
+                  return  rewardsData(index);
+                },
+              ),
             ),
           ),
           Container(
@@ -248,6 +324,7 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
+
   bool isLoading = false;
 
   List<GetAchievementData> arrAchievementData;
@@ -276,8 +353,66 @@ class _RewardsPageState extends State<RewardsPage> {
     });
   }
 
+
+   rewardsData(int index) {
+    return GestureDetector(
+      child: Container(
+//        height: 150,
+//        decoration: BoxDecoration(
+//          borderRadius: BorderRadius.circular(10),
+//          border: Border.all(color: ColorRes.white, width: 1),
+//        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Image(image: AssetImage(_rewardslist[index].image)),
+            ),
+            Container(child: Text(_rewardslist[index].levelName),)
+          ],
+        ),
+      ),
+      onTap: () {
+
+      },
+    );
+
+
+//    rewardsData(int index) {
+//      return GestureDetector(
+//        child: Container(
+//          height: 150,
+//          color: Colors.yellow,
+//          child: Text(_rewardslist[index].levelName),
+//        ),
+//        onTap: () {
+//
+//        },
+//      );
+   
+//      RewardsModel(
+//      isSelected: false,
+//      levelName: _rewardslist[index].levelName,
+//      image: _rewardslist[index].image
+//    );
+
+//      CategoryItem(
+//      selectItem, // callback function, setstate for parent
+//      index: index,
+//      isSelected: _selectedItem == index ? true : false,
+//      title: _rewardslist[index].levelName,
+//    );
+  }
+
 //  -----------------------------
 
+}
+
+class RewardsModel {
+  String levelName = "";
+  String image = "";
+  bool isSelected = false;
+
+  RewardsModel({this.levelName, this.image, this.isSelected});
 }
 
 //-----------------------
