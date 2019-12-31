@@ -423,8 +423,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
     if (arrOrganization[selectedIndex].employeeCount == null) return 0.0;
 
     var progress = arrOrganization[selectedIndex].employeeCount /
-        (organizationData.totalEmpCount != 0
-            ? organizationData.totalEmpCount
+        (organizationData.totalEmployeeCapacity != 0
+            ? organizationData.totalEmployeeCapacity
             : 1);
 
     return progress.toDouble();
@@ -477,25 +477,13 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         });
 
         if (getOrganizationData != null) {
-          organizationData = getOrganizationData;
-          arrOrganization[selectedIndex] = organizationData.organization[0];
 
-          CustomerValueData customerValueData = Injector.customerValueData;
-          customerValueData.totalEmployeeCapacity =
-              organizationData.totalEmpCount;
-          customerValueData.totalBalance = organizationData.totalBalance;
-          customerValueData.remainingEmployeeCapacity = action == Const.add
-              ? Injector.customerValueData.remainingEmployeeCapacity -
-                  organizationData.organization[0].employeeCount
-              : Injector.customerValueData.remainingEmployeeCapacity +
-                  organizationData.organization[0].employeeCount;
+          arrOrganization[selectedIndex] = getOrganizationData.organization[0];
+          organizationData.organization = arrOrganization;
 
-          Injector.prefs.setString(PrefKeys.customerValueData,
-              json.encode(customerValueData.toJson()));
+        Utils.performManageLevel(organizationData);
 
-          Injector.customerValueData = customerValueData;
 
-          _notifier.notify('updateHeaderValue', '');
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
