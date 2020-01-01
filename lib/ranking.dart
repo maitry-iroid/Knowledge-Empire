@@ -77,107 +77,84 @@ class _RankingPageState extends State<RankingPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: GestureDetector(
-            onTap: () {
-              setState(() {
-                selected = 0;
-              });
-            },
-            child: Container(
-              height: 80,
-              width: 80,
-              padding: EdgeInsets.all(25),
-              decoration:
-                  BoxDecoration(image: DecorationImage(image: getBgImage(0))),
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_revenue')),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: InkResponse(
-            onTap: () {
-              setState(() {
-                selected = 1;
-              });
-            },
-            child: Container(
-              height: 80,
-              width: 80,
-              padding: EdgeInsets.all(25),
-              decoration:
-                  BoxDecoration(image: DecorationImage(image: getBgImage(1))),
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_rich')),
-              ),
-            ),
+//        Expanded(
+//          flex: 1,
+//          child: GestureDetector(
+//            onTap: () {
+//              setState(() {
+//                selected = 0;
+//              });
+//            },
+//            child: Container(
+//              height: 80,
+//              width: 80,
+//              padding: EdgeInsets.all(25),
+//              decoration:
+//              BoxDecoration(image: DecorationImage(image: getBgImage(0))),
 //              child: Image(
-//                  height: 40,
-//                  width: 40,
-//                  image: AssetImage(selected == 1
-//                      ? Utils.getAssetsImg('rankinf_bg_blue')
-//                      : Utils.getAssetsImg('ic_bs_rk_rich')),
-//              )
-          ),
-        ),
-        Expanded(
-            flex: 1,
-            child: InkResponse(
-              onTap: () {
-                setState(() {
-                  selected = 2;
-                });
-              },
-              child: Container(
-                height: 80,
-                width: 80,
-                padding: EdgeInsets.all(25),
-                decoration:
-                    BoxDecoration(image: DecorationImage(image: getBgImage(2))),
-                child: Image(
-                  image:
-                      AssetImage(Utils.getAssetsImg('ic_bs_rk_communication')),
-                ),
-              ),
+//                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_revenue')),
+//              ),
+//            ),
+//          ),
+//        ),
+        showLeftItem(1),
+        showLeftItem(2),
+        showLeftItem(3),
+        showLeftItem(4),
+//        Expanded(
+//            flex: 1,
+//            child: InkResponse(
+//              onTap: () {
+//                setState(() {
+//                  selected = 2;
+//                });
+//              },
+//              child: Container(
+//                height: 80,
+//                width: 80,
+//                padding: EdgeInsets.all(25),
+//                decoration:
+//                BoxDecoration(image: DecorationImage(image: getBgImage(2))),
 //                child: Image(
-//                    height: 40,
-//                    width: 40,
-//                    image: AssetImage(selected == 2
-//                        ? Utils.getAssetsImg('add_emplyee')
-//                        : Utils.getAssetsImg('ic_bs_rk_communication')),
-//                )
-            )),
-        Expanded(
-          flex: 1,
-          child: InkResponse(
-            onTap: () {
-              setState(() {
-                selected = 3;
-              });
-            },
-            child: Container(
-              height: 80,
-              width: 80,
-              padding: EdgeInsets.all(25),
-              decoration:
-                  BoxDecoration(image: DecorationImage(image: getBgImage(3))),
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_price_tag')),
-              ),
-            ),
+//                  image:
+//                  AssetImage(Utils.getAssetsImg('ic_bs_rk_communication')),
+//                ),
+//              ),
+////                child: Image(
+////                    height: 40,
+////                    width: 40,
+////                    image: AssetImage(selected == 2
+////                        ? Utils.getAssetsImg('add_emplyee')
+////                        : Utils.getAssetsImg('ic_bs_rk_communication')),
+////                )
+//            )),
+//        Expanded(
+//          flex: 1,
+//          child: InkResponse(
+//            onTap: () {
+//              setState(() {
+//                selected = 3;
+//              });
+//            },
+//            child: Container(
+//              height: 80,
+//              width: 80,
+//              padding: EdgeInsets.all(25),
+//              decoration:
+//              BoxDecoration(image: DecorationImage(image: getBgImage(3))),
 //              child: Image(
-//                  height: 40,
-//                  width: 40,
-//                  image: AssetImage(selected == 3
-//                      ? Utils.getAssetsImg('add_emplyee')
-//                      : Utils.getAssetsImg('ic_bs_rk_price_tag')),
-//                  )
-          ),
-        )
+//                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_price_tag')),
+//              ),
+//            ),
+////              child: Image(
+////                  height: 40,
+////                  width: 40,
+////                  image: AssetImage(selected == 3
+////                      ? Utils.getAssetsImg('add_emplyee')
+////                      : Utils.getAssetsImg('ic_bs_rk_price_tag')),
+////                  )
+//          ),
+//        )
       ],
     );
   }
@@ -439,7 +416,7 @@ class _RankingPageState extends State<RankingPage> {
                     child: Text('Company Name',
                         maxLines: 1,
                         style:
-                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                        TextStyle(color: ColorRes.textBlue, fontSize: 16),
                         textAlign: TextAlign.center),
                   ),
                   Container(
@@ -484,7 +461,7 @@ class _RankingPageState extends State<RankingPage> {
                           : Utils.getAssetsImg('add_emp_check')),
                 )
 
-                /*      onTap: () {
+              /*      onTap: () {
                 print("hello$index");
 //                selctedIndex = index;
                 _notifier.notify('addemp', "");
@@ -497,7 +474,7 @@ class _RankingPageState extends State<RankingPage> {
                 );
               }),  */
 
-                ),
+            ),
           ),
         ],
       ),
@@ -517,6 +494,50 @@ class _RankingPageState extends State<RankingPage> {
     return AssetImage(Utils.getAssetsImg(
         selected != i ? "ranking_bg_gray" : "rankinf_bg_blue"));
   }
+
+  showLeftItem(int type) {
+    return Expanded(
+      flex: 1,
+      child: InkResponse(
+        onTap: () {
+          setState(() {
+            selected = type;
+          });
+        },
+        child: Container(
+          height: 80,
+          width: 80,
+          padding: EdgeInsets.all(20),
+          decoration:
+          BoxDecoration(image: DecorationImage(image: getBgImage(type))),
+          child: Image(
+            image: AssetImage(Utils.getAssetsImg(getInnerImage(type))),
+          ),
+        ),
+//              child: Image(
+//                  height: 40,
+//                  width: 40,
+//                  image: AssetImage(selected == 1
+//                      ? Utils.getAssetsImg('rankinf_bg_blue')
+//                      : Utils.getAssetsImg('ic_bs_rk_rich')),
+//              )
+      ),
+    );
+  }
+
+  String getInnerImage(int type) {
+    if (type == 1) {
+      return "ic_bs_rk_revenue";
+    } else if (type == 2) {
+      return "ic_bs_rk_rich";
+    } if (type == 3) {
+      return "ic_bs_rk_communication";
+    } else if (type == 4) {
+      return "ic_bs_rk_price_tag";
+    }  else {
+      return "ic_bs_rk_revenue";
+    }
+  }
 }
 //------------------  option item --------
 
@@ -526,8 +547,7 @@ class OptionItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  OptionItem(
-    this.selectItem, {
+  OptionItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -562,8 +582,7 @@ class CustomItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  CustomItem(
-    this.selectItem, {
+  CustomItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -611,8 +630,7 @@ class TimeItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  TimeItem(
-    this.selectItem, {
+  TimeItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -659,8 +677,7 @@ class ProfitItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  ProfitItem(
-    this.selectItem, {
+  ProfitItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
