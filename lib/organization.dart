@@ -161,7 +161,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 12,
                   lineHeight: 15.0,
-                  percent: getProgress(position),
+                  percent: Utils.getProgress(arrOrganization[position]),
                   backgroundColor: Colors.transparent,
                   progressColor: Colors.blue,
                 )
@@ -285,12 +285,9 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   getProgress(int position) {
-    if (arrOrganization[position].employeeCount == null) return 0.0;
+//    if (arrOrganization[position].employeeCount == null) return 0.0;
 
-    var progress = arrOrganization[position].employeeCount /
-        (organizationData.totalEmployeeCapacity != 0
-            ? organizationData.totalEmployeeCapacity
-            : 1);
+    var progress = 100 * arrOrganization[position].level / 10;
 
     if (progress.toDouble() <= 1 && progress.toDouble() >= 0) {
       return progress.toDouble();
@@ -371,6 +368,4 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       });
     });
   }
-
-
 }

@@ -390,8 +390,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 7,
                           lineHeight: 25.0,
-                          percent:
-                              arrOrganization.length > 0 ? getProgress() : 0.0,
+                          percent:Utils.getProgress(arrOrganization[selectedIndex]),
                           backgroundColor: Colors.transparent,
                           progressColor: ColorRes.titleBlueProf,
                         ),

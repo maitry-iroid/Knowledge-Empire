@@ -163,7 +163,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                         LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 15,
                           lineHeight: 15.0,
-                          percent: getProgress(position),
+                          percent: Utils.getProgress(arrOrganization[position]),
                           backgroundColor: Colors.transparent,
                           progressColor: Colors.blue,
                         )

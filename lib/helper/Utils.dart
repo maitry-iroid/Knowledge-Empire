@@ -428,7 +428,7 @@ class Utils {
     return finalValue;
   }
 
- static void performManageLevel(ManageOrgData organizationData) async {
+  static void performManageLevel(ManageOrgData organizationData) async {
     CustomerValueData customerValueData = Injector.customerValueData;
     customerValueData.totalBalance = organizationData.totalBalance;
     customerValueData.totalEmployeeCapacity =
@@ -449,5 +449,19 @@ class Utils {
         PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
 
     Injector.streamController.add("manage level");
+  }
+
+ static getProgress(Organization organization) {
+    var progress =  organization.level / 10;
+
+    if (progress <= 1 && progress >= 0) {
+      return progress;
+    } else if (progress < 0) {
+      return 0.0;
+    } else if (progress > 1)
+      return 1.0;
+    else {
+      return 0.0;
+    }
   }
 }
