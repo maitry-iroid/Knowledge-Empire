@@ -386,7 +386,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
           setState(() {});
 
-          Utils.performManageLevel(organizationData);
+          Utils.performManageLevel(getOrganizationData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }

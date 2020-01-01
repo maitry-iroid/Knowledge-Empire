@@ -16,6 +16,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
@@ -427,7 +428,7 @@ class Utils {
     return finalValue;
   }
 
- static void performManageLevel(OrganizationData organizationData) async {
+ static void performManageLevel(ManageOrgData organizationData) async {
     CustomerValueData customerValueData = Injector.customerValueData;
     customerValueData.totalBalance = organizationData.totalBalance;
     customerValueData.totalEmployeeCapacity =
@@ -436,11 +437,11 @@ class Utils {
         organizationData.remainingEmployeeCapacity;
     customerValueData.totalSalesPerson = organizationData.totalSalesPerson;
     customerValueData.remainingSalesPerson =
-        organizationData.remianingSalesPerson;
+        organizationData.remainingSalesPerson;
     customerValueData.totalCustomerCapacity =
-        organizationData.totalCustomerCapicity;
+        organizationData.totalCustomerCapacity;
     customerValueData.remainingCustomerCapacity =
-        organizationData.remainingCustomerCapicity;
+        organizationData.remainingCustomerCapacity;
 
     Injector.customerValueData = customerValueData;
 

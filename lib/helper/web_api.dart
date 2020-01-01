@@ -358,14 +358,14 @@ class WebApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        ManageOrgResponse getOrganizationResponse =
+        ManageOrgResponse manageOrgResponse =
             ManageOrgResponse.fromJson(jsonDecode(response.data));
 
-        if (getOrganizationResponse != null) {
-          if (getOrganizationResponse.flag == "true") {
-            return getOrganizationResponse.data;
+        if (manageOrgResponse != null) {
+          if (manageOrgResponse.flag == "true") {
+            return manageOrgResponse.data;
           } else {
-            Utils.showToast(getOrganizationResponse.msg);
+            Utils.showToast(manageOrgResponse.msg);
           }
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));

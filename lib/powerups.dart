@@ -481,7 +481,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           arrOrganization[selectedIndex] = getOrganizationData.organization[0];
           organizationData.organization = arrOrganization;
 
-        Utils.performManageLevel(organizationData);
+        Utils.performManageLevel(getOrganizationData);
 
 
         } else {
