@@ -15,20 +15,29 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
-
-  var arrCategories = ["Healthcare", "Business Segments", "Customer interactions", "Customer Contracts", "Income", "Organizational Maturity", "Challanges Maturity", "Beeing Challanged", "Others"];
+  var arrCategories = [
+//    "Healthcare",
+    "Business Segments",
+    "Customer interactions",
+    "Customer Contracts",
+    "Income",
+    "Organizational Maturity",
+    "Challanges Maturity",
+    "Beeing Challanged",
+    "Others"
+  ];
 
   List<RewardsModel> _rewardslist = [
-    RewardsModel(levelName: "Level 1", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 2", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 3", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 4", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 5", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 6", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 7", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 8", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 9", image: "back", isSelected: false),
-    RewardsModel(levelName: "Level 10", image: "back", isSelected: false),
+    RewardsModel(levelName: "Level 1", image: "trophy"),
+    RewardsModel(levelName: "Level 2", image: "trophy"),
+    RewardsModel(levelName: "Level 3", image: "trophy"),
+    RewardsModel(levelName: "Level 4", image: "trophy"),
+    RewardsModel(levelName: "Level 5", image: "trophy"),
+    RewardsModel(levelName: "Level 6", image: "trophy"),
+    RewardsModel(levelName: "Level 7", image: "trophy"),
+    RewardsModel(levelName: "Level 8", image: "trophy"),
+    RewardsModel(levelName: "Level 9", image: "trophy"),
+    RewardsModel(levelName: "Level 10", image: "trofi10"),
   ];
 
   @override
@@ -60,9 +69,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
   int _selectedItem = 0;
 
-  int _subSelectedItem = 0;
-  bool isSelectSubCat = false;
-
+  int _subSelectedItem = -1;
 
   selectItem(index) {
     getAchievements();
@@ -75,32 +82,32 @@ class _RewardsPageState extends State<RewardsPage> {
   subCatSelectItem(index) {
     setState(() {
       _subSelectedItem = index;
-      isSelectSubCat = false;
+//      isSelectSubCat = false;
     });
   }
 
   showSecondHalf() {
-      if (_selectedItem == 0) {
-        return showSecondHalfFirstCategory();
-      } else if (_selectedItem == 1) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 2) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 3) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 4) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 5) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 6) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 7) {
-        return showSecondHalfSecondCategory();
-      } else if (_selectedItem == 8) {
-        return showSecondHalfSecondCategory();
-      }
+    if (_selectedItem == 0) {
+//      return showSecondHalfFirstCategory();
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 1) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 2) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 3) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 4) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 5) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 6) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 7) {
+      return showSecondHalfSecondCategory();
+    } else if (_selectedItem == 8) {
+      return showSecondHalfSecondCategory();
+    }
   }
-
 
   showFirstHalf() {
     return Expanded(
@@ -170,8 +177,8 @@ class _RewardsPageState extends State<RewardsPage> {
               height: Utils.getDeviceHeight(context) / 6,
             ),
             Center(
-
-              child: Text("Please select the category to see the rewards"),
+              child: Text("There Was not subcategory"),
+//              child: Text("Please select the category to see the rewards"),
             )
 //            Container(
 //              child: Row(
@@ -199,7 +206,7 @@ class _RewardsPageState extends State<RewardsPage> {
             color: ColorRes.whiteDarkBg,
             margin: EdgeInsets.all(10),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(10.0),
             ),
             child: Container(
               height: Utils.getDeviceHeight(context) / 3.6,
@@ -209,11 +216,11 @@ class _RewardsPageState extends State<RewardsPage> {
                 scrollDirection: Axis.horizontal,
 //                physics: ClampingScrollPhysics(),
 //                itemCount: subCategory.length,
-                itemCount: subCategory.length,
+                itemCount: subCategory.length != 0 ? subCategory.length : 0,
 
                 itemBuilder: (BuildContext context, int index) {
 //                      return showItem(index);
-                  return  rewardsData(index);
+                  return rewardsData(index);
                 },
               ),
             ),
@@ -267,7 +274,7 @@ class _RewardsPageState extends State<RewardsPage> {
     return Expanded(
       flex: 1,
       child: Stack(
-        fit: StackFit.loose,
+        fit: StackFit.expand,
         alignment: Alignment.center,
         children: <Widget>[
           Card(
@@ -289,7 +296,13 @@ class _RewardsPageState extends State<RewardsPage> {
                 border: Border.all(color: ColorRes.white, width: 1),
               ),
               child: SingleChildScrollView(
-                child: Text( Utils.getText(context, type == 1 ? '${subCategory[0].currentLevelText}' : '${subCategory[0].nextLevelText}'  ),
+                child: Text(
+                  Utils.getText(
+                      context,
+                      subCategory.length != 0 ?
+                      type == 1
+                          ? '${subCategory[0].currentLevelText}'
+                          : '${subCategory[0].nextLevelText}' : "null"),
                   style: TextStyle(
                     color: ColorRes.white,
                   ),
@@ -310,7 +323,8 @@ class _RewardsPageState extends State<RewardsPage> {
                       fit: BoxFit.fill)),
               child: Text(
                 Utils.getText(context,
-                    type == 1 ? StringRes.achievement : StringRes.nextLevel),
+                    subCategory.length != 0 ?
+                    type == 1 ? StringRes.achievement : StringRes.nextLevel : "null"),
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
                 textAlign: TextAlign.center,
               ),
@@ -327,7 +341,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg("bg_innovation")),
                       fit: BoxFit.fill)),
-              child: Text(Utils.getText(context, type == 1 ? '${subCategory[0].currentLevelBlonus} Innovation' : '${subCategory[0].nextLevelBlonus} Innovation'),
+              child: Text(Utils.getText(context, subCategory.length != 0 ? type == 1 ? '${subCategory[0].currentLevelBlonus} Innovation' : '${subCategory[0].nextLevelBlonus} Innovation' : "null Innovation"),
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
                 textAlign: TextAlign.center,
               ),
@@ -337,7 +351,6 @@ class _RewardsPageState extends State<RewardsPage> {
       ),
     );
   }
-
 
   bool isLoading = false;
 
@@ -365,10 +378,13 @@ class _RewardsPageState extends State<RewardsPage> {
 
       if (response != null) {
         if (response.flag == "true") {
-          arrAchievementData = response.data;
-          print("hello >>>>>>> $arrAchievementData");
-          subCategory = arrAchievementData[0].subCategory;
-
+          if (response.data != null && response.data.isNotEmpty) {
+            arrAchievementData = response.data;
+            print("hello >>>>>>> $arrAchievementData");
+            subCategory = arrAchievementData[0].subCategory;
+          } else {
+            print("arrAchievementData is null");
+          }
         } else {
           Utils.showToast(response.msg);
         }
@@ -376,95 +392,70 @@ class _RewardsPageState extends State<RewardsPage> {
     });
   }
 
+  rewardsData(int index) {
+//     subCategory = arrAchievementData[0].subCategory;
 
-   rewardsData(int index) {
-     subCategory = arrAchievementData[0].subCategory;
-
-     return GestureDetector(
+    return GestureDetector(
       child: Container(
 //        height: 150,
 //        decoration: BoxDecoration(
 //          borderRadius: BorderRadius.circular(10),
 //          border: Border.all(color: ColorRes.white, width: 1),
 //        ),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 0),
         child: Column(
           children: <Widget>[
+               Container(
+                 width: Utils.getDeviceWidth(context) / 6,
+                 height: Utils.getDeviceHeight(context) / 11,
+                 alignment: Alignment.center,
+                 decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(25),
+                     border: Border.all(color: _subSelectedItem == index ? ColorRes.white :ColorRes.borderRewardsName, width: 1)),
+//                 child: SingleChildScrollView(
+                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+
+                   child: Center(
+                       child: Text(
+                           subCategory[index].achievementName,
+                           style: TextStyle(fontSize: 12),
+                           textAlign: TextAlign.center,
+                           overflow: TextOverflow.ellipsis,
+                           maxLines: 2,
+                       )
+                   ),
+//                 ),
+               ),
+
             Container(
-              width: 100,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: ColorRes.white,
-                  width: 1
-                )
-
-              ),
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
-                child: Text(subCategory[index].achievementName),
-              ),
-            ),
-//            Container(child: Text(_rewardslist[index].levelName)),
-            
-            Container(
-              width: 50,
-              height: 50,
-              child: Image(image: AssetImage(Utils.getAssetsImg(_rewardslist[index].image)))
-            ),
-
-
-
+              padding: EdgeInsets.only(top: 5,bottom: 0),
+                width: Utils.getDeviceWidth(context) / 10,
+                height: Utils.getDeviceHeight(context) / 6,
+                child: Image(
+                    image: AssetImage(
+                        Utils.getAssetsImg(_rewardslist[index].image),
+                    ),
+//                  fit: BoxFit.fill,
+                )),
           ],
         ),
       ),
       onTap: () {
-//        subCatSelectItem(index);
-//        if(_subSelectedItem == 2) {
-//          print("helo ----==============>");
-//        }
+        subCatSelectItem(index);
       },
     );
-
-
-//    rewardsData(int index) {
-//      return GestureDetector(
-//        child: Container(
-//          height: 150,
-//          color: Colors.yellow,
-//          child: Text(_rewardslist[index].levelName),
-//        ),
-//        onTap: () {
-//
-//        },
-//      );
-   
-//      RewardsModel(
-//      isSelected: false,
-//      levelName: _rewardslist[index].levelName,
-//      image: _rewardslist[index].image
-//    );
-
-//      CategoryItem(
-//      selectItem, // callback function, setstate for parent
-//      index: index,
-//      isSelected: _selectedItem == index ? true : false,
-//      title: _rewardslist[index].levelName,
-//    );
   }
 
   catagory(int index) {
-      return Center(
-        child: CategoryItem(
-          selectItem, // callback function, setstate for parent
-          index: index,
-          isSelected: _selectedItem == index ? true : false,
-          title: arrCategories[index],
-        ),
-      );
+    return Center(
+      child: CategoryItem(
+        selectItem, // callback function, setstate for parent
+        index: index,
+        isSelected: _selectedItem == index ? true : false,
+        title: arrCategories[index],
+      ),
+    );
   }
-
-
 
 //  -----------------------------
 
@@ -473,9 +464,9 @@ class _RewardsPageState extends State<RewardsPage> {
 class RewardsModel {
   String levelName = "";
   String image = "";
-  bool isSelected = false;
+//  bool isSelected = false;
 
-  RewardsModel({this.levelName, this.image, this.isSelected});
+  RewardsModel({this.levelName, this.image});
 }
 
 //-----------------------
@@ -506,38 +497,39 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-        height: Injector.isBusinessMode ? 35 : 30,
-        margin: EdgeInsets.only(
-            left: 10, right: 10, top: Injector.isBusinessMode ? 0 : 5),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Injector.isBusinessMode
-                ? null
-                : widget.isSelected ? ColorRes.titleBlueProf : null,
-            border: Injector.isBusinessMode
-                ? null
-                : Border.all(width: 1, color: ColorRes.titleBlueProf),
-            borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(10),
-            image: Injector.isBusinessMode
-                ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                        ? "bg_reward_sub_selected"
-                        : "bg_reward_sub2")),
-                    fit: BoxFit.fill)
-                : null),
-        child: Align(
+          height: Injector.isBusinessMode ? 50 : 40,
+          margin: EdgeInsets.only(
+              left: 5, right: 5, top: Injector.isBusinessMode ? 0 : 5),
           alignment: Alignment.center,
-          child: Text(
-            widget.title,
-            style: TextStyle(
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : widget.isSelected ? ColorRes.white : ColorRes.textBlue,
-                fontSize: 15),
-          ),
-        )
-      ),
+          decoration: BoxDecoration(
+              color: Injector.isBusinessMode
+                  ? null
+                  : widget.isSelected ? ColorRes.titleBlueProf : null,
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(width: 1, color: ColorRes.titleBlueProf),
+              borderRadius:
+                  Injector.isBusinessMode ? null : BorderRadius.circular(10),
+              image: Injector.isBusinessMode
+                  ? DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg(widget.isSelected
+                          ? "bg_reward_sub_selected"
+                          : "bg_reward_sub2")),
+                      fit: BoxFit.fill)
+                  : null),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Center(
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : widget.isSelected ? ColorRes.white : ColorRes.textBlue,
+                  fontSize: 15
+              ),
+              textAlign: TextAlign.center,
+            ),
+          )),
     );
   }
 }
