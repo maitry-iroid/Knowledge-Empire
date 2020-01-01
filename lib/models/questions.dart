@@ -1,6 +1,6 @@
 class QuestionRequest {
   int userId ;
-  String moduleId = "";
+  int moduleId ;
   int type = 1;
 
   QuestionRequest();

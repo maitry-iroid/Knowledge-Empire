@@ -191,7 +191,7 @@ class WebApi {
   }
 
   Future<LoginResponse> assignUserToModule(
-      String moduleId, String type, String companyId) async {
+      int moduleId, String type, int companyId) async {
     initDio();
 
     var req = json.encode({

@@ -491,8 +491,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             arrFinalLearningModules.addAll(data.data);
 
             if (arrLearningModules.length > 0 &&
-                (selectedModule.moduleId == null ||
-                    selectedModule.moduleId.isEmpty)) {
+                (selectedModule.moduleId == null )) {
               selectedModule = arrLearningModules[0];
             }
           });
@@ -526,10 +525,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (data.flag == "true") {
           if (type == Const.subscribe) {
             Utils.showToast("Subscribed successfully!");
-            selectedModule.isAssign = "1";
+            selectedModule.isAssign = 1;
           } else {
             Utils.showToast("Unsubscribed successfully!");
-            selectedModule.isAssign = "0";
+            selectedModule.isAssign = 0;
           }
           setState(() {});
         }
