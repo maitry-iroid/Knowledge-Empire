@@ -22,7 +22,6 @@ import 'package:ke_employee/profile.dart';
 import 'package:ke_employee/ranking.dart';
 import 'package:ke_employee/rewards.dart';
 import 'package:ke_employee/team.dart';
-import 'package:notifier/main_notifier.dart';
 import 'package:volume/volume.dart';
 
 import 'P+L.dart';
@@ -367,14 +366,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       drawer: new SizedBox(
         width: Utils.getDeviceWidth(context) / 2.5,
         child: Drawer(
-            child: Notifier.of(context).register<String>('updateHeaderValue',
-                (data) {
-          return Container(
-            color:
-                Injector.isBusinessMode ? ColorRes.bgMenu : ColorRes.headerBlue,
-            child: new ListView(children: drawerOptions),
-          );
-        })),
+            child: Container(
+          color:
+              Injector.isBusinessMode ? ColorRes.bgMenu : ColorRes.headerBlue,
+          child: new ListView(children: drawerOptions),
+        )),
       ),
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(

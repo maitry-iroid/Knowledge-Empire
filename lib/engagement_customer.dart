@@ -861,7 +861,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             border: Border.all(color: ColorRes.white, width: 1),
                           ),
                           child:
-//    Notifier.of(context).register<String>('selectQuestionAction', (data) {
                               ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
@@ -960,8 +959,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           if(currentVol != 0) {
             Utils.playClickSound();
           }
-//          _notifier.notify('selectQuestionAction', '');
-
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
