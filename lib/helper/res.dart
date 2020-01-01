@@ -47,6 +47,8 @@ class ColorRes {
   static Color bgProf = Color(0xFFe8e8e8);
   static Color textProf = Color(0xFF8c8c8c);
   static Color bgSettings= Color(0xFF959595);
+  static Color borderRewardsName= Color(0xFFf8bb43);
+
 }
 
 class DimenRes {
