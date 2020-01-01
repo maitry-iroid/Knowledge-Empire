@@ -31,13 +31,14 @@ class LearningModuleResponse {
 }
 
 class LearningModuleData {
-  String moduleId="";
+  int moduleId;
   String moduleName="";
   String moduleDescription="";
   String question="";
-  String isAssign="";
-  String companyId="";
+  int isAssign;
+  int companyId;
   String moduleStatus="";
+  int isDownloadEnable;
 
   LearningModuleData();
 
@@ -49,6 +50,7 @@ class LearningModuleData {
     isAssign = json['isAssign'];
     companyId = json['companyId'];
     moduleStatus = json['moduleStatus'];
+    isDownloadEnable = json['isDownloadEnable'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +62,7 @@ class LearningModuleData {
     data['isAssign'] = this.isAssign;
     data['companyId'] = this.companyId;
     data['moduleStatus'] = this.moduleStatus;
+    data['isDownloadEnable'] = this.isDownloadEnable;
     return data;
   }
 }

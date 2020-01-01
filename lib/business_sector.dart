@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -9,6 +8,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
 
 import 'helper/Utils.dart';
@@ -171,7 +171,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      arrFinalLearningModules[index].isAssign == "1"
+                      arrFinalLearningModules[index].isAssign == 1
                           ? Positioned(
                               right: 5,
                               bottom: Injector.isBusinessMode ? 5 : 2,
@@ -402,9 +402,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    selectedModule.isAssign == "1"
+                    selectedModule.isAssign == 1
                         ? InkResponse(
-                            child: Text(Utils.getText(context, StringRes.downLoad)),
+                            child: Text(
+                                Utils.getText(context, StringRes.downLoad)),
                             onTap: () {
                               Utils.playClickSound();
 
@@ -415,9 +416,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     Switch(
                       value: isSwitched,
                       onChanged: (value) {
-                        setState(() {
-                          isSwitched = value;
-                        });
+                        isSwitched = value;
+
+                        updatePermission();
                       },
                       activeTrackColor: ColorRes.white,
                       inactiveTrackColor: ColorRes.lightGrey,
@@ -446,7 +447,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         child: Text(
                           Utils.getText(
                               context,
-                              selectedModule.isAssign == "0"
+                              selectedModule.isAssign == 0
                                   ? StringRes.subscribe
                                   : StringRes.subscribed),
                           style: TextStyle(color: ColorRes.white, fontSize: 17),
@@ -454,7 +455,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         )),
                     onTap: () {
                       Utils.playClickSound();
-                      if (selectedModule.isAssign == "0") {
+                      if (selectedModule.isAssign == 0) {
                         assignUserToModule(Const.subscribe);
                       } else {
                         assignUserToModule(Const.unSubscribe);
@@ -491,8 +492,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             arrFinalLearningModules.addAll(data.data);
 
             if (arrLearningModules.length > 0 &&
-                (selectedModule.moduleId == null ||
-                    selectedModule.moduleId.isEmpty)) {
+                (selectedModule.moduleId == null)) {
               selectedModule = arrLearningModules[0];
             }
           });
@@ -526,10 +526,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (data.flag == "true") {
           if (type == Const.subscribe) {
             Utils.showToast("Subscribed successfully!");
-            selectedModule.isAssign = "1";
+            selectedModule.isAssign = 1;
           } else {
             Utils.showToast("Unsubscribed successfully!");
-            selectedModule.isAssign = "0";
+            selectedModule.isAssign = 0;
           }
           setState(() {});
         }
@@ -621,6 +621,31 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         isLoading = false;
       });
       Utils.showToast(e.toString());
+    });
+  }
+
+  void updatePermission() {
+    setState(() {
+      isLoading = true;
+    });
+
+    ManageModulePermissionRequest rq = ManageModulePermissionRequest();
+    rq.userId = Injector.userData.userId.toString();
+    rq.type = isSwitched ? "1" : "0";
+    rq.moduleId = selectedModule.moduleId.toString();
+
+    WebApi().manageModulePermission(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          Utils.showToast("Permission updated Successfully!");
+        } else {
+          Utils.showToast(response.msg);
+        }
+      }
     });
   }
 }

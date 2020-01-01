@@ -11,6 +11,7 @@ import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
@@ -191,7 +192,7 @@ class WebApi {
   }
 
   Future<LoginResponse> assignUserToModule(
-      String moduleId, String type, String companyId) async {
+      int moduleId, String type, int companyId) async {
     initDio();
 
     var req = json.encode({
@@ -358,7 +359,7 @@ class WebApi {
       if (response.statusCode == 200) {
         print(response.data);
         ManageOrgResponse getOrganizationResponse =
-        ManageOrgResponse.fromJson(jsonDecode(response.data));
+            ManageOrgResponse.fromJson(jsonDecode(response.data));
 
         if (getOrganizationResponse != null) {
           if (getOrganizationResponse.flag == "true") {
@@ -479,13 +480,39 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data: json
-              .encode(getRequest('getUserAchievement', json.encode(rq.toJson()))));
+          data: json.encode(
+              getRequest('getUserAchievement', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         GetAchievementResponse responseData =
             GetAchievementResponse.fromJson(jsonDecode(response.data));
+
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<ManageModulePermissionResponse> manageModulePermission(
+      BuildContext context, ManageModulePermissionRequest rq) async {
+    initDio();
+
+    print("get_achievements" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data: json.encode(
+              getRequest('getUserAchievement', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        ManageModulePermissionResponse responseData =
+            ManageModulePermissionResponse.fromJson(jsonDecode(response.data));
 
         return responseData;
       }
