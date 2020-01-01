@@ -13,8 +13,6 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-
-
   int selected = 0;
 
   @override
@@ -42,7 +40,6 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -77,8 +74,6 @@ class _RankingPageState extends State<RankingPage> {
 //      },
 //    );
 
-
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -86,53 +81,102 @@ class _RankingPageState extends State<RankingPage> {
           flex: 1,
           child: GestureDetector(
             onTap: () {
-
-
-              setState(() {  selected = 0;});
+              setState(() {
+                selected = 0;
+              });
             },
-            child: Image(
-                image: AssetImage(selected == 0
-                    ? Utils.getAssetsImg('badge')
-                    : Utils.getAssetsImg('add_emplyee')),
-                width: 80),
+            child: Container(
+              height: 80,
+              width: 80,
+              padding: EdgeInsets.all(25),
+              decoration:
+                  BoxDecoration(image: DecorationImage(image: getBgImage(0))),
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_revenue')),
+              ),
+            ),
           ),
         ),
         Expanded(
           flex: 1,
           child: InkResponse(
-              onTap: () {
-                setState(() {  selected = 1;});
-              },
+            onTap: () {
+              setState(() {
+                selected = 1;
+              });
+            },
+            child: Container(
+              height: 80,
+              width: 80,
+              padding: EdgeInsets.all(25),
+              decoration:
+                  BoxDecoration(image: DecorationImage(image: getBgImage(1))),
               child: Image(
-                  image: AssetImage(selected == 1
-                      ? Utils.getAssetsImg('badge')
-                      : Utils.getAssetsImg('add_emplyee')),
-                  width: 80)),
+                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_rich')),
+              ),
+            ),
+//              child: Image(
+//                  height: 40,
+//                  width: 40,
+//                  image: AssetImage(selected == 1
+//                      ? Utils.getAssetsImg('rankinf_bg_blue')
+//                      : Utils.getAssetsImg('ic_bs_rk_rich')),
+//              )
+          ),
         ),
         Expanded(
             flex: 1,
             child: InkResponse(
-                onTap: () {
-                  setState(() {  selected = 2;});
-                },
+              onTap: () {
+                setState(() {
+                  selected = 2;
+                });
+              },
+              child: Container(
+                height: 80,
+                width: 80,
+                padding: EdgeInsets.all(25),
+                decoration:
+                    BoxDecoration(image: DecorationImage(image: getBgImage(2))),
                 child: Image(
-                    image: AssetImage(selected == 2
-                        ? Utils.getAssetsImg('badge')
-                        : Utils.getAssetsImg('add_emplyee')),
-                    width: 80))),
+                  image:
+                      AssetImage(Utils.getAssetsImg('ic_bs_rk_communication')),
+                ),
+              ),
+//                child: Image(
+//                    height: 40,
+//                    width: 40,
+//                    image: AssetImage(selected == 2
+//                        ? Utils.getAssetsImg('add_emplyee')
+//                        : Utils.getAssetsImg('ic_bs_rk_communication')),
+//                )
+            )),
         Expanded(
           flex: 1,
           child: InkResponse(
-              onTap: () {
-                setState(() {
-                  selected = 3;
-                });
-              },
+            onTap: () {
+              setState(() {
+                selected = 3;
+              });
+            },
+            child: Container(
+              height: 80,
+              width: 80,
+              padding: EdgeInsets.all(25),
+              decoration:
+                  BoxDecoration(image: DecorationImage(image: getBgImage(3))),
               child: Image(
-                  image: AssetImage(selected == 3
-                      ? Utils.getAssetsImg('badge')
-                      : Utils.getAssetsImg('add_emplyee')),
-                  width: 80)),
+                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_price_tag')),
+              ),
+            ),
+//              child: Image(
+//                  height: 40,
+//                  width: 40,
+//                  image: AssetImage(selected == 3
+//                      ? Utils.getAssetsImg('add_emplyee')
+//                      : Utils.getAssetsImg('ic_bs_rk_price_tag')),
+//                  )
+          ),
         )
       ],
     );
@@ -468,6 +512,11 @@ class _RankingPageState extends State<RankingPage> {
       selectedIndex = index;
     });
   }
+
+  getBgImage(int i) {
+    return AssetImage(Utils.getAssetsImg(
+        selected != i ? "ranking_bg_gray" : "rankinf_bg_blue"));
+  }
 }
 //------------------  option item --------
 
@@ -493,8 +542,7 @@ class _OptionItemState extends State<OptionItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-
-          if(currentVol != 0) {
+          if (currentVol != 0) {
             Utils.playClickSound();
           }
 
@@ -530,8 +578,7 @@ class _CustomItemState extends State<CustomItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
-        if(currentVol != 0) {
+        if (currentVol != 0) {
           Utils.playClickSound();
         }
         widget.selectItem(widget.index);
@@ -580,7 +627,7 @@ class _TimeItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(currentVol != 0) {
+        if (currentVol != 0) {
           Utils.playClickSound();
         }
         widget.selectItem(widget.index);
@@ -628,7 +675,7 @@ class _ProfitItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(currentVol != 0) {
+        if (currentVol != 0) {
           Utils.playClickSound();
         }
         widget.selectItem(widget.index);
