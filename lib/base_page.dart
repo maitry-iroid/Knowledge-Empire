@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/header.dart';
 
-class BasePage extends StatefulWidget {
+abstract class BasePage extends StatefulWidget {
   @override
   _BasePageState createState() => _BasePageState();
+  void test();
 }
 
 class _BasePageState extends State<BasePage> {

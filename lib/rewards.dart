@@ -14,18 +14,11 @@ class RewardsPage extends StatefulWidget {
   _RewardsPageState createState() => _RewardsPageState();
 }
 
+List<GetAchievementData> arrAchievementData = List();
+List<SubCategory> selectedSubCategoryList  = List();
+
 class _RewardsPageState extends State<RewardsPage> {
-  var arrCategories = [
-//    "Healthcare",
-    "Business Segments",
-    "Customer interactions",
-    "Customer Contracts",
-    "Income",
-    "Organizational Maturity",
-    "Challanges Maturity",
-    "Beeing Challanged",
-    "Others"
-  ];
+
 
   List<RewardsModel> _rewardslist = [
     RewardsModel(levelName: "Level 1", image: "trophy"),
@@ -39,6 +32,8 @@ class _RewardsPageState extends State<RewardsPage> {
     RewardsModel(levelName: "Level 9", image: "trophy"),
     RewardsModel(levelName: "Level 10", image: "trofi10"),
   ];
+
+
 
   @override
   void initState() {
@@ -62,7 +57,7 @@ class _RewardsPageState extends State<RewardsPage> {
           child: Row(
             children: <Widget>[showFirstHalf(), showSecondHalf()],
           ),
-        )
+        ),CommonView.showCircularProgress(isLoading)
       ],
     );
   }
@@ -72,7 +67,6 @@ class _RewardsPageState extends State<RewardsPage> {
   int _subSelectedItem = -1;
 
   selectItem(index) {
-    getAchievements();
     setState(() {
       _selectedItem = index;
       print(selectItem.toString());
@@ -148,7 +142,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
-                    itemCount: arrCategories.length,
+                    itemCount: arrAchievementData.length,
                     itemBuilder: (BuildContext context, int index) {
                       return catagory(index);
                     },
@@ -216,7 +210,7 @@ class _RewardsPageState extends State<RewardsPage> {
                 scrollDirection: Axis.horizontal,
 //                physics: ClampingScrollPhysics(),
 //                itemCount: subCategory.length,
-                itemCount: subCategory.length != 0 ? subCategory.length : 0,
+                itemCount: selectedSubCategoryList.length ,
 
                 itemBuilder: (BuildContext context, int index) {
 //                      return showItem(index);
@@ -225,42 +219,15 @@ class _RewardsPageState extends State<RewardsPage> {
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            width: 130,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-            decoration: BoxDecoration(
-                borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                border: Injector.isBusinessMode
-                    ? null
-                    : Border.all(width: 1, color: ColorRes.white),
-                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(
-                          Utils.getAssetsImg("bg_blue"),
-                        ),
-                        fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              Utils.getText(
-                  context, Utils.getText(context, StringRes.description)),
-              style: TextStyle(
-                color: ColorRes.white,
-                fontSize: DimenRes.titleTextSize,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+
           Expanded(
             child: Container(
               height: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 children: <Widget>[
-                  showFirstAchivement(1),
-                  showFirstAchivement(2)
+                  showFirstAchievement(1),
+                  showFirstAchievement(2)
                 ],
               ),
             ),
@@ -270,7 +237,7 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  showFirstAchivement(int type) {
+  showFirstAchievement(int type) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -354,7 +321,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
   bool isLoading = false;
 
-  List<GetAchievementData> arrAchievementData = List();
+
 
 //  GetAchievementResponse getAchievementResponse = GetAchievementResponse();
 
@@ -369,7 +336,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
     GetAchievementRequest rq = GetAchievementRequest();
     rq.userId = Injector.userData.userId;
-    rq.categoryId = oneAsString;
+//    rq.categoryId = oneAsString;
 
     WebApi().getAchievements(context, rq).then((response) {
       setState(() {
@@ -381,7 +348,10 @@ class _RewardsPageState extends State<RewardsPage> {
           if (response.data != null && response.data.isNotEmpty) {
             arrAchievementData = response.data;
             print("hello >>>>>>> $arrAchievementData");
-            subCategory = arrAchievementData[0].subCategory;
+            setState(() {
+              subCategory = arrAchievementData[0].subCategory;
+
+            });
           } else {
             print("arrAchievementData is null");
           }
@@ -417,7 +387,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
                    child: Center(
                        child: Text(
-                           subCategory[index].achievementName,
+                           selectedSubCategoryList[index].achievementName,
                            style: TextStyle(fontSize: 12),
                            textAlign: TextAlign.center,
                            overflow: TextOverflow.ellipsis,
@@ -452,7 +422,7 @@ class _RewardsPageState extends State<RewardsPage> {
         selectItem, // callback function, setstate for parent
         index: index,
         isSelected: _selectedItem == index ? true : false,
-        title: arrCategories[index],
+        title: arrAchievementData[index].achievementCategory,
       ),
     );
   }
@@ -495,6 +465,7 @@ class _CategoryItemState extends State<CategoryItem> {
       onTap: () {
         Utils.playClickSound();
         widget.selectItem(widget.index);
+        selectedSubCategoryList = arrAchievementData[widget.index].subCategory;
       },
       child: Container(
           height: Injector.isBusinessMode ? 50 : 40,
