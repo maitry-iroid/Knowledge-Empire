@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -20,6 +21,7 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
+
 
 import 'constant.dart';
 import 'localization.dart';
@@ -290,29 +292,40 @@ class Utils {
 
   static playClickSound() async {
 //    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
+//    Audio audio = Audio.load('assets/sounds/all_button_clicks.wav');
+//    audio.play();
+    return  audioPlay('assets/sounds/all_button_clicks.wav');
+
   }
 
   static correctAnswerSound() async {
-    Injector.audioPlayer.play("sounds/right_answer.wav");
+//    Injector.audioPlayer.play("sounds/right_answer.wav");
+    return  audioPlay('assets/sounds/right_answer.wav');
+
   }
 
   static incorrectAnswerSound() async {
-    Injector.audioPlayer.play("sounds/wrong_answer.wav");
+//    Injector.audioPlayer.play("sounds/wrong_answer.wav");
+    return  audioPlay('assets/sounds/wrong_answer.wav');
+
   }
 
   static procorrectAnswerSound() async {
-    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
+//    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
+    return  audioPlay('assets/sounds/pro_right_answer.mp3');
+
   }
 
   static proincorrectAnswerSound() async {
-    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
+//    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
+    return  audioPlay('assets/sounds/pro_wrong_answer.mp3');
+
   }
 
-//  Future<void> initPlatformState() async {
-//    var dig = await FlutterVolume.volume;
-//
-//    print("${(dig * 100)}%");
-//  }
+  static audioPlay(String path) async{
+    Audio audio = Audio.load(path);
+    audio.play();
+  }
 
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
     List<String> jsonQuestionData = List();

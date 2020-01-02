@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:volume/volume.dart';
+//import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 
-int currentVol;
+//int currentVol;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -26,16 +26,16 @@ class _RankingPageState extends State<RankingPage> {
   //Sound Is mute
   Future<void> initPlatformState() async {
     // pass any stream as parameter as per requirement
-    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+//    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+//    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
   }
 
   updateVolumes() async {
     // get Current Volume
-    currentVol = await Volume.getVol;
-    print(currentVol);
-
-    setState(() {});
+//    currentVol = await Volume.getVol;
+//    print(currentVol);
+//
+//    setState(() {});
   }
 
   @override
@@ -500,6 +500,8 @@ class _RankingPageState extends State<RankingPage> {
       flex: 1,
       child: InkResponse(
         onTap: () {
+          Utils.playClickSound();
+
           setState(() {
             selected = type;
           });
@@ -562,9 +564,9 @@ class _OptionItemState extends State<OptionItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          if (currentVol != 0) {
+//          if (currentVol != 0) {
             Utils.playClickSound();
-          }
+//          }
 
           widget.selectItem(widget.index);
         },
@@ -597,9 +599,9 @@ class _CustomItemState extends State<CustomItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
+//        if (currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -645,9 +647,9 @@ class _TimeItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
+//        if (currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -692,9 +694,9 @@ class _ProfitItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
+//        if (currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
