@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_achievement.dart';
+import 'package:ke_employee/models/get_friends.dart';
 import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
+import 'models/achievement_category.dart';
 
 int currentVol;
 
@@ -14,28 +19,16 @@ class RankingPage extends StatefulWidget {
 
 class _RankingPageState extends State<RankingPage> {
   int selected = 0;
+  bool isLoading = false;
+  List<GetFriendsData> arrFriends = List();
+  List<AchievementCategoryData> arrCategories = List();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    initPlatformState();
-    updateVolumes();
-  }
 
-  //Sound Is mute
-  Future<void> initPlatformState() async {
-    // pass any stream as parameter as per requirement
-    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print(currentVol);
-
-    setState(() {});
+    getAchievementCategories();
+    getFriends();
   }
 
   @override
@@ -52,118 +45,30 @@ class _RankingPageState extends State<RankingPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[showFirstColumn(), showSecondColumn()],
             ),
-          )
+          ),
+          CommonView.showCircularProgress(isLoading)
         ],
       ),
     );
   }
 
   showFirstColumn() {
-//   return ListView.builder(
-//      scrollDirection: Axis.vertical,
-////      shrinkWrap: true,
-//      physics: ClampingScrollPhysics(),
-//      itemCount: arrTime.length,
-//      itemBuilder: (BuildContext context, int index) {
-//        return TimeItem(
-//          selectTime, // callback function, setstate for parent
-//          index: index,
-//          isSelected: _selectedTime == index ? true : false,
-//          title: arrTime[index],
-//        );
-//      },
-//    );
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-//        Expanded(
-//          flex: 1,
-//          child: GestureDetector(
-//            onTap: () {
-//              setState(() {
-//                selected = 0;
-//              });
-//            },
-//            child: Container(
-//              height: 80,
-//              width: 80,
-//              padding: EdgeInsets.all(25),
-//              decoration:
-//              BoxDecoration(image: DecorationImage(image: getBgImage(0))),
-//              child: Image(
-//                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_revenue')),
-//              ),
-//            ),
-//          ),
-//        ),
         showLeftItem(1),
         showLeftItem(2),
         showLeftItem(3),
         showLeftItem(4),
-//        Expanded(
-//            flex: 1,
-//            child: InkResponse(
-//              onTap: () {
-//                setState(() {
-//                  selected = 2;
-//                });
-//              },
-//              child: Container(
-//                height: 80,
-//                width: 80,
-//                padding: EdgeInsets.all(25),
-//                decoration:
-//                BoxDecoration(image: DecorationImage(image: getBgImage(2))),
-//                child: Image(
-//                  image:
-//                  AssetImage(Utils.getAssetsImg('ic_bs_rk_communication')),
-//                ),
-//              ),
-////                child: Image(
-////                    height: 40,
-////                    width: 40,
-////                    image: AssetImage(selected == 2
-////                        ? Utils.getAssetsImg('add_emplyee')
-////                        : Utils.getAssetsImg('ic_bs_rk_communication')),
-////                )
-//            )),
-//        Expanded(
-//          flex: 1,
-//          child: InkResponse(
-//            onTap: () {
-//              setState(() {
-//                selected = 3;
-//              });
-//            },
-//            child: Container(
-//              height: 80,
-//              width: 80,
-//              padding: EdgeInsets.all(25),
-//              decoration:
-//              BoxDecoration(image: DecorationImage(image: getBgImage(3))),
-//              child: Image(
-//                image: AssetImage(Utils.getAssetsImg('ic_bs_rk_price_tag')),
-//              ),
-//            ),
-////              child: Image(
-////                  height: 40,
-////                  width: 40,
-////                  image: AssetImage(selected == 3
-////                      ? Utils.getAssetsImg('add_emplyee')
-////                      : Utils.getAssetsImg('ic_bs_rk_price_tag')),
-////                  )
-//          ),
-//        )
       ],
     );
   }
 
-  int _selectedItem = 0;
+  int selectedCategory = 0;
   int _selectedTime = 0;
   int _selectedOption = 0;
 
-  var arr = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
+//  var arrCategory = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
   var arrTime = ['Day', 'Month', 'Year'];
 
   showSecondColumn() {
@@ -175,36 +80,36 @@ class _RankingPageState extends State<RankingPage> {
               height: 50,
               child: Row(
                 children: <Widget>[
-                  ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: arr.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CustomItem(
-                        selectItem, // callback function, setstate for parent
-                        index: index,
-                        isSelected: _selectedItem == index ? true : false,
-                        title: arr[index],
-                      );
-                    },
-                  ),
                   Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
-                      itemCount: arrTime.length,
+                      itemCount: arrCategories.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return TimeItem(
-                          selectTime, // callback function, setstate for parent
+                        return CustomItem(
+                          selectItem, // callback function, setstate for parent
                           index: index,
-                          isSelected: _selectedTime == index ? true : false,
-                          title: arrTime[index],
+                          isSelected: selectedCategory == index ? true : false,
+                          title: arrCategories[index].name,
                         );
                       },
                     ),
-                  )
+                  ),
+                  ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: arrTime.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return TimeItem(
+                        selectTime, // callback function, setstate for parent
+                        index: index,
+                        isSelected: _selectedTime == index ? true : false,
+                        title: arrTime[index],
+                      );
+                    },
+                  ),
                 ],
               )),
           Container(
@@ -313,7 +218,7 @@ class _RankingPageState extends State<RankingPage> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              itemCount: 10,
+              itemCount: arrFriends.length,
               itemBuilder: (BuildContext context, int index) {
                 return getItem(index);
               },
@@ -326,7 +231,7 @@ class _RankingPageState extends State<RankingPage> {
 
   selectItem(index) {
     setState(() {
-      _selectedItem = index;
+      selectedCategory = index;
       print(selectItem.toString());
     });
   }
@@ -397,7 +302,7 @@ class _RankingPageState extends State<RankingPage> {
                           ),
                         ),
                         Expanded(
-                          child: Text('Name',
+                          child: Text(arrFriends[index].name,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: ColorRes.textBlue, fontSize: 16),
@@ -413,10 +318,10 @@ class _RankingPageState extends State<RankingPage> {
                   ),
                   Expanded(
                     flex: 3,
-                    child: Text('Company Name',
+                    child: Text(arrFriends[index].name,
                         maxLines: 1,
                         style:
-                        TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
                         textAlign: TextAlign.center),
                   ),
                   Container(
@@ -430,7 +335,7 @@ class _RankingPageState extends State<RankingPage> {
                           fit: BoxFit.fill),
                     ),
                     child: Text(
-                      '90',
+                      arrFriends[index].score.toString(),
                       style: TextStyle(color: ColorRes.white, fontSize: 18),
                     ),
                   ),
@@ -461,7 +366,7 @@ class _RankingPageState extends State<RankingPage> {
                           : Utils.getAssetsImg('add_emp_check')),
                 )
 
-              /*      onTap: () {
+                /*      onTap: () {
                 print("hello$index");
 //                selctedIndex = index;
                 _notifier.notify('addemp', "");
@@ -474,7 +379,7 @@ class _RankingPageState extends State<RankingPage> {
                 );
               }),  */
 
-            ),
+                ),
           ),
         ],
       ),
@@ -509,7 +414,7 @@ class _RankingPageState extends State<RankingPage> {
           width: 80,
           padding: EdgeInsets.all(20),
           decoration:
-          BoxDecoration(image: DecorationImage(image: getBgImage(type))),
+              BoxDecoration(image: DecorationImage(image: getBgImage(type))),
           child: Image(
             image: AssetImage(Utils.getAssetsImg(getInnerImage(type))),
           ),
@@ -530,13 +435,65 @@ class _RankingPageState extends State<RankingPage> {
       return "ic_bs_rk_revenue";
     } else if (type == 2) {
       return "ic_bs_rk_rich";
-    } if (type == 3) {
+    }
+    if (type == 3) {
       return "ic_bs_rk_communication";
     } else if (type == 4) {
       return "ic_bs_rk_price_tag";
-    }  else {
+    } else {
       return "ic_bs_rk_revenue";
     }
+  }
+
+  Future getAchievementCategories() {
+    setState(() {
+      isLoading = true;
+    });
+
+    AchievementCategoryRequest rq = AchievementCategoryRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi().getAchievementCategory(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          if (response.data != null) {
+            arrCategories = response.data;
+            setState(() {});
+          }
+        }
+      }
+    });
+  }
+
+  void getFriends() {
+    setState(() {
+      isLoading = true;
+    });
+
+    GetFriendsRequest rq = GetFriendsRequest();
+    rq.userId = Injector.userData.userId;
+    rq.category = 1;
+    rq.searchBy = 1;
+    rq.filter = 1;
+
+    WebApi().getFriends(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          if (response.data != null) {
+            arrFriends = response.data;
+            setState(() {});
+          }
+        }
+      }
+    });
   }
 }
 //------------------  option item --------
@@ -547,7 +504,8 @@ class OptionItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  OptionItem(this.selectItem, {
+  OptionItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -565,7 +523,6 @@ class _OptionItemState extends State<OptionItem> {
           if (currentVol != 0) {
             Utils.playClickSound();
           }
-
           widget.selectItem(widget.index);
         },
         child: Image(
@@ -582,7 +539,8 @@ class CustomItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  CustomItem(this.selectItem, {
+  CustomItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -630,7 +588,8 @@ class TimeItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  TimeItem(this.selectItem, {
+  TimeItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -677,7 +636,8 @@ class ProfitItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  ProfitItem(this.selectItem, {
+  ProfitItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,

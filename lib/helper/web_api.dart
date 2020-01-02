@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/achievement_category.dart';
 import 'package:ke_employee/models/change_password.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
@@ -247,7 +249,7 @@ class WebApi {
 
     BaseOptions options = new BaseOptions(
         baseUrl: "http://13.127.186.25:7000/api",
-        connectTimeout: 10000,
+        connectTimeout: 20000,
         receiveTimeout: 3000,
         headers: headers);
 
@@ -513,6 +515,58 @@ class WebApi {
         print(response.data);
         ManageModulePermissionResponse responseData =
             ManageModulePermissionResponse.fromJson(jsonDecode(response.data));
+
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<AchievementCategoryResponse> getAchievementCategory(
+      BuildContext context, AchievementCategoryRequest rq) async {
+    initDio();
+
+    print("getAchievementCategory" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data:
+              json.encode(getRequest('getAchievementCategory', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        AchievementCategoryResponse responseData =
+        AchievementCategoryResponse.fromJson(jsonDecode(response.data));
+
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<GetFriendsResponse> getFriends(
+      BuildContext context, GetFriendsRequest rq) async {
+    initDio();
+
+    print("getFriends" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data:
+              json.encode(getRequest('getFriends', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetFriendsResponse responseData =
+            GetFriendsResponse.fromJson(jsonDecode(response.data));
 
         return responseData;
       }
