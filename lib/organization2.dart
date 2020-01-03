@@ -382,7 +382,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         if (getOrganizationData != null) {
           organizationData.organization[position] =
               getOrganizationData.organization[0];
-          arrOrganization[position] = organizationData.organization[0];
+          arrOrganization[position] = getOrganizationData.organization[0];
 
           setState(() {});
 

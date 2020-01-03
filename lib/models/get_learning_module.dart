@@ -37,7 +37,6 @@ class LearningModuleData {
   String question="";
   int isAssign;
   int companyId;
-  String moduleStatus="";
   int isDownloadEnable;
 
   LearningModuleData();
@@ -49,7 +48,6 @@ class LearningModuleData {
     question = json['question'];
     isAssign = json['isAssign'];
     companyId = json['companyId'];
-    moduleStatus = json['moduleStatus'];
     isDownloadEnable = json['isDownloadEnable'];
   }
 
@@ -61,7 +59,6 @@ class LearningModuleData {
     data['question'] = this.question;
     data['isAssign'] = this.isAssign;
     data['companyId'] = this.companyId;
-    data['moduleStatus'] = this.moduleStatus;
     data['isDownloadEnable'] = this.isDownloadEnable;
     return data;
   }

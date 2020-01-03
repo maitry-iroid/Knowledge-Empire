@@ -370,9 +370,10 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 Utils.getText(context, StringRes.engageNow),
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
-          onTap: () {;
+          onTap: () {
+            ;
 //            if (currentVol != 0) {
-              Utils.playClickSound();
+            Utils.playClickSound();
 //            }
 
             if (Injector.customerValueData.remainingSalesPerson >=

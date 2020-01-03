@@ -45,10 +45,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       } else {
         if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
             Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
-          arrFinalLearningModules = LearningModuleResponse.fromJson(json
-                  .decode(Injector.prefs.getString(PrefKeys.learningModles)))
+          arrFinalLearningModules = LearningModuleResponse.fromJson(
+                  jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
+
+          if(arrFinalLearningModules.length>0)
+            setState(() {
+
+            });
         }
       }
     });
@@ -226,6 +231,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         Utils.playClickSound();
         setState(() {
           selectedModule = arrFinalLearningModules[index];
+          isSwitched = selectedModule.isDownloadEnable == 1;
         });
       },
     );
@@ -409,12 +415,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                             onTap: () {
                               Utils.playClickSound();
 
-                              downloadAllQuestions();
+
                             },
                           )
                         : Container(),
                     Switch(
-                      value: isSwitched,
+                      value: selectedModule.isDownloadEnable == 1,
                       onChanged: (value) {
                         isSwitched = value;
 
@@ -642,6 +648,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       if (response != null) {
         if (response.flag == "true") {
           Utils.showToast("Permission updated Successfully!");
+
+          if(isSwitched){
+            downloadAllQuestions();
+          }
+
         } else {
           Utils.showToast(response.msg);
         }
