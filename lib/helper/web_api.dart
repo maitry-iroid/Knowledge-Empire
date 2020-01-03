@@ -12,6 +12,7 @@ import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
+import 'package:ke_employee/models/get_user_group.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/manage_organization.dart';
@@ -541,6 +542,32 @@ class WebApi {
         print(response.data);
         AchievementCategoryResponse responseData =
         AchievementCategoryResponse.fromJson(jsonDecode(response.data));
+
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<GetUserGroupResponse> getUserGroup(
+      BuildContext context, GetUserGroupRequest rq) async {
+    initDio();
+
+    print("getUserGroup" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data:
+              json.encode(getRequest('getUserGroups', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetUserGroupResponse responseData =
+        GetUserGroupResponse.fromJson(jsonDecode(response.data));
 
         return responseData;
       }

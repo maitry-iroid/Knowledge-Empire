@@ -3,6 +3,7 @@ class GetFriendsRequest {
   int category;
   int searchBy;
   int filter;
+  int groupId;
 
   GetFriendsRequest({this.userId, this.category, this.searchBy, this.filter});
 
@@ -11,6 +12,7 @@ class GetFriendsRequest {
     category = json['category'];
     searchBy = json['searchBy'];
     filter = json['filter'];
+    groupId = json['groupId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +21,7 @@ class GetFriendsRequest {
     data['category'] = this.category;
     data['searchBy'] = this.searchBy;
     data['filter'] = this.filter;
+    data['groupId'] = this.groupId;
     return data;
   }
 }

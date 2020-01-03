@@ -3,15 +3,10 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_friends.dart';
-//import 'package:volume/volume.dart';
+import 'package:ke_employee/models/get_user_group.dart';
 
 import 'commonview/background.dart';
-import 'models/achievement_category.dart';
-import 'dart:math' as math;
-
-//int currentVol;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -19,20 +14,25 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  int selected = 0;
+  int selectedLeftCategory = 0;
+  int selectedGroup = 0;
+  int selectedTime = 0;
   bool isLoading = false;
   List<GetFriendsData> arrFriends = List();
-  List<AchievementCategoryData> arrCategories = List();
+  List<GetUserGroupData> arrGroups = List();
 
   List<String> allCategoryList = List();
+
+  int selectedUser = -1;
+
+  bool isCheckFriend = false;
 
   @override
   void initState() {
     super.initState();
 
-    getAchievementCategories();
+    getUserGroups();
     getFriends();
-    jointArray();
   }
 
   @override
@@ -56,58 +56,41 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
+  selectGroup(index) {
+    if (index != selectedGroup) {
+      setState(() {
+        selectedGroup = index;
+        print(selectGroup.toString());
+      });
+      getFriends();
+    }
+  }
+
+  selectTime(index) {
+    if (selectedTime != index) {
+      setState(() {
+        selectedTime = index;
+        print(selectGroup.toString());
+      });
+      getFriends();
+    }
+  }
+
   showFirstColumn() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
+        showLeftItem(0),
         showLeftItem(1),
         showLeftItem(2),
         showLeftItem(3),
-        showLeftItem(4),
       ],
     );
   }
 
-  int selectedCategory = 0;
-  int _selectedTime = 0;
-  int _selectedOption = 0;
-
-//  var arrCategory = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
   var arrCategory = ['World', 'Country', 'Friends'];
 
   var arrTime = ['Day', 'Month', 'Year'];
-
-
-  jointArray() {
-
-    allCategoryList = arrCategory + arrTime;
-    print(allCategoryList);
-
-    for(int i = 0; i < allCategoryList.length + 3 ; i++) {
-      
-    }
-
-  }
-
-//  List<arrsearchByModel> searchDataList = [
-//    arrsearchByModel(name: "world", categoryId: "1"),
-//    arrsearchByModel(name: "country", categoryId: "2"),
-//    arrsearchByModel(name: "friends", categoryId: "3"),
-//  ];
-
-  List searchDataList = [{
-      "name": "world",
-      "categoryId": "1",
-    },
-    {
-      "name": "country",
-      "categoryId": "2",
-    },
-    {
-      "name": "friends",
-      "categoryId": "3",
-    },
-  ];
 
   showSecondColumn() {
     return Expanded(
@@ -123,16 +106,15 @@ class _RankingPageState extends State<RankingPage> {
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
-//                      itemCount: arrCategories.length,
-                      itemCount: allCategoryList.length,
+                      itemCount: arrGroups.length,
                       itemBuilder: (BuildContext context, int index) {
                         return CustomItem(
-                          selectItem,
+                          selectGroup,
                           index: index,
-                          isSelected: selectedCategory == index ? true : false,
-//                          title: searchDataList[index].searchBy + arrCategories[index].name,
-                          title: allCategoryList[index],
-
+                          isSelected: selectedGroup == index ? true : false,
+                          title: arrGroups[index].name != null
+                              ? arrGroups[index].name
+                              : "",
                         );
                       },
                     ),
@@ -146,7 +128,7 @@ class _RankingPageState extends State<RankingPage> {
                       return TimeItem(
                         selectTime,
                         index: index,
-                        isSelected: _selectedTime == index ? true : false,
+                        isSelected: selectedTime == index ? true : false,
                         title: arrTime[index],
                       );
                     },
@@ -270,27 +252,6 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
-  selectItem(index) {
-    setState(() {
-      selectedCategory = index;
-      print(selectItem.toString());
-    });
-  }
-
-  selectTime(index) {
-    setState(() {
-      _selectedTime = index;
-      print(selectItem.toString());
-    });
-  }
-
-  selectOption(index) {
-    setState(() {
-      _selectedOption = index;
-      print(selectItem.toString());
-    });
-  }
-
   getItem(int index) {
     return Container(
       height: 38,
@@ -362,7 +323,7 @@ class _RankingPageState extends State<RankingPage> {
                     child: Text(arrFriends[index].name,
                         maxLines: 1,
                         style:
-                        TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
                         textAlign: TextAlign.center),
                   ),
                   Container(
@@ -387,12 +348,12 @@ class _RankingPageState extends State<RankingPage> {
           Expanded(
             flex: 3,
             child: InkResponse(
-                child:
-                arrFriends[index].isFriend == 0 ?
-                Image(image: AssetImage(
-                    Utils.getAssetsImg('ic_challenge_disable'))) :
-                Image(image: AssetImage(Utils.getAssetsImg('ic_challenge')))
-            ),
+                child: arrFriends[index].isFriend == 0
+                    ? Image(
+                        image: AssetImage(
+                            Utils.getAssetsImg('ic_challenge_disable')))
+                    : Image(
+                        image: AssetImage(Utils.getAssetsImg('ic_challenge')))),
           ),
           Expanded(
             flex: 3,
@@ -415,89 +376,86 @@ class _RankingPageState extends State<RankingPage> {
                 },
                 child: Image(
                   image: AssetImage(
-                      selectedIndex != null && arrFriends[index].isFriend == 0
+                      selectedUser != null && arrFriends[index].isFriend == 0
                           ? Utils.getAssetsImg('add_emplyee')
                           : Utils.getAssetsImg('remove_friend')),
-                )
-            ),
+                )),
           ),
         ],
       ),
     );
   }
 
-  int selectedIndex = -1;
-
-  bool isCheckFreiend = false;
-
-  _isSelected(int index) {
-    //pass the selected index to here and set to 'isSelected'
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
-
-  getBgImage(int i) {
+  getBgImage(int index) {
     return AssetImage(Utils.getAssetsImg(
-        selected != i ? "ranking_bg_gray" : "rankinf_bg_blue"));
+        selectedLeftCategory != index ? "ranking_bg_gray" : "rankinf_bg_blue"));
   }
 
-  showLeftItem(int type) {
+  showLeftItem(int index) {
     return Expanded(
       flex: 1,
       child: InkResponse(
         onTap: () {
-          setState(() {
-            Utils.playClickSound();
-            selected = type;
-          });
+          if (selectedLeftCategory != index) {
+            setState(() {
+              Utils.playClickSound();
+              selectedLeftCategory = index;
+            });
+
+            getFriends();
+          }
         },
         child: Container(
           height: 80,
           width: 80,
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(25),
           decoration:
-          BoxDecoration(image: DecorationImage(image: getBgImage(type))),
+              BoxDecoration(image: DecorationImage(image: getBgImage(index))),
           child: Image(
-            image: AssetImage(Utils.getAssetsImg(getInnerImage(type))),
+            image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
           ),
         ),
-//              child: Image(
-//                  height: 40,
-//                  width: 40,
-//                  image: AssetImage(selected == 1
-//                      ? Utils.getAssetsImg('rankinf_bg_blue')
-//                      : Utils.getAssetsImg('ic_bs_rk_rich')),
-//              )
       ),
     );
   }
 
   String getInnerImage(int type) {
-    if (type == 1) {
+    if (type == 0) {
       return "ic_bs_rk_revenue";
-    } else if (type == 2) {
+    } else if (type == 1) {
       return "ic_bs_rk_rich";
-    }
-    if (type == 3) {
+    } else if (type == 2) {
       return "ic_bs_rk_communication";
-    } else if (type == 4) {
+    } else if (type == 3) {
       return "ic_bs_rk_price_tag";
     } else {
       return "ic_bs_rk_revenue";
     }
   }
 
-  Future getAchievementCategories() {
+  getUserGroups() {
     setState(() {
       isLoading = true;
     });
 
-    AchievementCategoryRequest rq = AchievementCategoryRequest();
+    GetUserGroupData grp1 = GetUserGroupData();
+    grp1.groupId = 1;
+    grp1.name = "World";
+    GetUserGroupData grp2 = GetUserGroupData();
+    grp2.groupId = 2;
+    grp2.name = "Country";
+    GetUserGroupData grp3 = GetUserGroupData();
+    grp3.groupId = 3;
+    grp3.name = "Friends";
+
+    arrGroups.add(grp1);
+    arrGroups.add(grp2);
+    arrGroups.add(grp3);
+
+    GetUserGroupRequest rq = GetUserGroupRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi().getAchievementCategory(context, rq).then((response) {
+    WebApi().getUserGroup(context, rq).then((response) {
       setState(() {
         isLoading = false;
       });
@@ -505,7 +463,8 @@ class _RankingPageState extends State<RankingPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            arrCategories = response.data;
+            arrGroups.addAll(response.data);
+
             setState(() {});
           }
         }
@@ -520,9 +479,11 @@ class _RankingPageState extends State<RankingPage> {
 
     GetFriendsRequest rq = GetFriendsRequest();
     rq.userId = Injector.userData.userId;
-    rq.category = 1;
-    rq.searchBy = 1;
-    rq.filter = 1;
+    rq.category = selectedLeftCategory + 1;
+    rq.searchBy = selectedGroup >= 0 && selectedGroup <= 1
+        ? selectedGroup + 1
+        : arrGroups[selectedGroup].groupId;
+    rq.filter = selectedTime + 1;
 
     WebApi().getFriends(context, rq).then((response) {
       setState(() {
@@ -548,7 +509,8 @@ class OptionItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  OptionItem(this.selectItem, {
+  OptionItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -582,7 +544,8 @@ class CustomItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  CustomItem(this.selectItem, {
+  CustomItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -630,7 +593,8 @@ class TimeItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  TimeItem(this.selectItem, {
+  TimeItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -677,7 +641,8 @@ class ProfitItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  ProfitItem(this.selectItem, {
+  ProfitItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -717,9 +682,4 @@ class _ProfitItemState extends State<TimeItem> {
   }
 }
 
-class arrsearchByModel {
-  String name;
-  String categoryId;
-
-  arrsearchByModel({this.name, this.categoryId});
-}
+//-----------------------
