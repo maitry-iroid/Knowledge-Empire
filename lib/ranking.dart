@@ -5,12 +5,13 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_friends.dart';
-import 'package:volume/volume.dart';
+//import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 import 'models/achievement_category.dart';
+import 'dart:math' as math;
 
-int currentVol;
+//int currentVol;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -23,12 +24,15 @@ class _RankingPageState extends State<RankingPage> {
   List<GetFriendsData> arrFriends = List();
   List<AchievementCategoryData> arrCategories = List();
 
+  List<String> allCategoryList = List();
+
   @override
   void initState() {
     super.initState();
 
     getAchievementCategories();
     getFriends();
+    jointArray();
   }
 
   @override
@@ -69,7 +73,25 @@ class _RankingPageState extends State<RankingPage> {
   int _selectedOption = 0;
 
 //  var arrCategory = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
+    var arrCategory = ['World', 'Country', 'Friends'];
+
   var arrTime = ['Day', 'Month', 'Year'];
+
+
+  jointArray() {
+    allCategoryList =
+    Iterable.generate(math.max(arrCategory.length, arrCategories.length))
+        .expand((i) sync* {
+      if (i < arrCategory.length) yield arrCategory[i];
+      if (i < arrCategories.length) yield arrCategories[i];
+    }).toList();
+  }
+
+//  List<arrsearchByModel> searchDataList = [
+//    arrsearchByModel(searchBy: "world", index: "1"),
+//    arrsearchByModel(searchBy: "country", index: "2"),
+//    arrsearchByModel(searchBy: "friends", index: "3"),
+//  ];
 
   showSecondColumn() {
     return Expanded(
@@ -85,13 +107,16 @@ class _RankingPageState extends State<RankingPage> {
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
-                      itemCount: arrCategories.length,
+//                      itemCount: arrCategories.length,
+                  itemCount: allCategoryList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return CustomItem(
                           selectItem,
                           index: index,
                           isSelected: selectedCategory == index ? true : false,
-                          title: arrCategories[index].name,
+//                          title: searchDataList[index].searchBy + arrCategories[index].name,
+                          title: allCategoryList[index].,
+
                         );
                       },
                     ),
@@ -321,7 +346,7 @@ class _RankingPageState extends State<RankingPage> {
                     child: Text(arrFriends[index].name,
                         maxLines: 1,
                         style:
-                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                        TextStyle(color: ColorRes.textBlue, fontSize: 16),
                         textAlign: TextAlign.center),
                   ),
                   Container(
@@ -346,9 +371,10 @@ class _RankingPageState extends State<RankingPage> {
           Expanded(
             flex: 3,
             child: InkResponse(
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('ic_challenge')),
-              ),
+              child:
+              arrFriends[index].isFriend == 0 ?
+              Image(image: AssetImage(Utils.getAssetsImg('ic_challenge_disable'))) :
+              Image(image: AssetImage(Utils.getAssetsImg('ic_challenge')))
             ),
           ),
           Expanded(
@@ -356,30 +382,27 @@ class _RankingPageState extends State<RankingPage> {
             child: InkResponse(
                 onTap: () {
                   print("hello$index");
+                  Utils.playClickSound();
+
 //                index ? :
-                  _isSelected(index);
+//                  _isSelected(index);
+                  setState(() {
+//                    arrFriends[index].isFriends = !arrFriends[index].isFriends;
+                    if (arrFriends[index].isFriend == 0) {
+                      arrFriends[index].isFriend = 1;
+                    } else {
+                      arrFriends[index].isFriend = 0;
+                    }
+                  });
+//                  selectedIndex == index;  0 arrCategories[index].isFriend == true
                 },
                 child: Image(
                   image: AssetImage(
-                      selectedIndex != null && selectedIndex == index
+                      selectedIndex != null && arrFriends[index].isFriend == 0
                           ? Utils.getAssetsImg('add_emplyee')
-                          : Utils.getAssetsImg('add_emp_check')),
+                          : Utils.getAssetsImg('remove_friend')),
                 )
-
-                /*      onTap: () {
-                print("hello$index");
-//                selctedIndex = index;
-                _notifier.notify('addemp', "");
-                 showIndex();
-              },
-              child: Notifier.of(context).register<String>('addemp', (data) {
-                return Image(
-                  image: AssetImage(Utils.getAssetsImg('add_emplyee') ),
-//                  image: AssetImage(showIndex()),
-                );
-              }),  */
-
-                ),
+            ),
           ),
         ],
       ),
@@ -388,12 +411,15 @@ class _RankingPageState extends State<RankingPage> {
 
   int selectedIndex = -1;
 
+  bool isCheckFreiend = false;
+
   _isSelected(int index) {
     //pass the selected index to here and set to 'isSelected'
     setState(() {
       selectedIndex = index;
     });
   }
+
 
   getBgImage(int i) {
     return AssetImage(Utils.getAssetsImg(
@@ -406,6 +432,7 @@ class _RankingPageState extends State<RankingPage> {
       child: InkResponse(
         onTap: () {
           setState(() {
+            Utils.playClickSound();
             selected = type;
           });
         },
@@ -414,7 +441,7 @@ class _RankingPageState extends State<RankingPage> {
           width: 80,
           padding: EdgeInsets.all(20),
           decoration:
-              BoxDecoration(image: DecorationImage(image: getBgImage(type))),
+          BoxDecoration(image: DecorationImage(image: getBgImage(type))),
           child: Image(
             image: AssetImage(Utils.getAssetsImg(getInnerImage(type))),
           ),
@@ -504,8 +531,7 @@ class OptionItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  OptionItem(
-    this.selectItem, {
+  OptionItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -520,9 +546,9 @@ class _OptionItemState extends State<OptionItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          if (currentVol != 0) {
-            Utils.playClickSound();
-          }
+//          if (currentVol != 0) {
+          Utils.playClickSound();
+//          }
           widget.selectItem(widget.index);
         },
         child: Image(
@@ -539,8 +565,7 @@ class CustomItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  CustomItem(
-    this.selectItem, {
+  CustomItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -555,9 +580,9 @@ class _CustomItemState extends State<CustomItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-          Utils.playClickSound();
-        }
+//        if (currentVol != 0) {
+        Utils.playClickSound();
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -588,8 +613,7 @@ class TimeItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  TimeItem(
-    this.selectItem, {
+  TimeItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -604,9 +628,9 @@ class _TimeItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-          Utils.playClickSound();
-        }
+//        if (currentVol != 0) {
+        Utils.playClickSound();
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -636,8 +660,7 @@ class ProfitItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  ProfitItem(
-    this.selectItem, {
+  ProfitItem(this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -652,9 +675,9 @@ class _ProfitItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-          Utils.playClickSound();
-        }
+//        if (currentVol != 0) {
+        Utils.playClickSound();
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -675,4 +698,11 @@ class _ProfitItemState extends State<TimeItem> {
       ),
     );
   }
+}
+
+class arrsearchByModel {
+  String searchBy;
+  String index;
+
+  arrsearchByModel({this.searchBy, this.index});
 }

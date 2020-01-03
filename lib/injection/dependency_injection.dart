@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
+//import 'package:audioplayers/audio_cache.dart';
+//import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -21,8 +21,8 @@ class Injector {
   static CustomerValueData customerValueData;
   static int mode;
   static bool isBusinessMode = true;
-  static AudioPlayer audioPlayer;
-  static AudioCache audioCache;
+//  static AudioPlayer audioPlayer;
+//  static AudioCache audioCache;
   static DefaultCacheManager cacheManager;
   static StreamController<String> streamController;
 
@@ -37,9 +37,9 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
 
-    audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
-
-    audioCache = AudioCache();
+//    audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+//
+//    audioCache = AudioCache();
 
     deviceId = await FlutterUdid.udid;
 

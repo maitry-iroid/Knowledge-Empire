@@ -55,6 +55,7 @@ class AchievementCategoryData {
   AchievementCategoryData.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     categoryId = json['categoryId'];
+
   }
 
   Map<String, dynamic> toJson() {
