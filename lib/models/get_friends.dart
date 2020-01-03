@@ -60,6 +60,7 @@ class GetFriendsData {
   String name;
   int score;
   int isFriend;
+//  bool isFriends = false;
 
   GetFriendsData({this.userId, this.name, this.score, this.isFriend});
 
@@ -68,6 +69,7 @@ class GetFriendsData {
     name = json['name'];
     score = json['score'];
     isFriend = json['isFriend'];
+//    isFriends = json['isFriends'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +78,7 @@ class GetFriendsData {
     data['name'] = this.name;
     data['score'] = this.score;
     data['isFriend'] = this.isFriend;
+//    data['isFriends'] = this.isFriends;
     return data;
   }
 }
