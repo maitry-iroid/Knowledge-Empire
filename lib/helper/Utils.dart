@@ -289,7 +289,7 @@ class Utils {
 //  }
 
   static playClickSound() async {
-//    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
+    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
   }
 
   static correctAnswerSound() async {

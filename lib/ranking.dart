@@ -88,7 +88,7 @@ class _RankingPageState extends State<RankingPage> {
                       itemCount: arrCategories.length,
                       itemBuilder: (BuildContext context, int index) {
                         return CustomItem(
-                          selectItem, // callback function, setstate for parent
+                          selectItem,
                           index: index,
                           isSelected: selectedCategory == index ? true : false,
                           title: arrCategories[index].name,
@@ -103,7 +103,7 @@ class _RankingPageState extends State<RankingPage> {
                     itemCount: arrTime.length,
                     itemBuilder: (BuildContext context, int index) {
                       return TimeItem(
-                        selectTime, // callback function, setstate for parent
+                        selectTime,
                         index: index,
                         isSelected: _selectedTime == index ? true : false,
                         title: arrTime[index],
