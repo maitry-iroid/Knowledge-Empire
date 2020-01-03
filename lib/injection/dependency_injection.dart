@@ -46,11 +46,11 @@ class Injector {
     if (prefs.getString(PrefKeys.user) != null &&
         prefs.getString(PrefKeys.user).isNotEmpty) {
       userData = LoginResponseData.fromJson(
-          json.decode(prefs.getString(PrefKeys.user)));
+          jsonDecode(prefs.getString(PrefKeys.user)));
 
       if (prefs.getString(PrefKeys.customerValueData) != null)
         customerValueData = CustomerValueData.fromJson(
-            json.decode(prefs.getString(PrefKeys.customerValueData)));
+            jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
 
       streamController = StreamController.broadcast();

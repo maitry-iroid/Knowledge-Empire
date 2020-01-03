@@ -336,7 +336,7 @@ class Utils {
           Injector.prefs.getStringList(PrefKeys.questionData);
 
       jsonQuestionData.forEach((jsonQuestion) {
-        questionData_.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+        questionData_.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
       });
     }
 
@@ -357,7 +357,7 @@ class Utils {
           Injector.prefs.getStringList(PrefKeys.questionData);
 
       jsonQuestionData.forEach((jsonQuestion) {
-        questionData.add(QuestionData.fromJson(json.decode(jsonQuestion)));
+        questionData.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
       });
     }
 
@@ -378,7 +378,7 @@ class Utils {
     if (Injector.prefs.getString(PrefKeys.answerData) == null) return;
 
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
-        json.decode(Injector.prefs.getString(PrefKeys.answerData)));
+        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
     WebApi().submitAnswers(context, rq).then((data) async {
       if (data != null) {

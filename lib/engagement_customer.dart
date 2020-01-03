@@ -283,7 +283,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitAnswerRequest rq =
         Injector.prefs.getString(PrefKeys.answerData) != null
             ? SubmitAnswerRequest.fromJson(
-                json.decode(Injector.prefs.getString(PrefKeys.answerData)))
+            jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
             : SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
@@ -305,7 +305,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void callSubmitAnswerApi(BuildContext context) {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
-        json.decode(Injector.prefs.getString(PrefKeys.answerData)));
+        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
     setState(() {
       isLoading = true;

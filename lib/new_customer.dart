@@ -51,7 +51,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       } else {
         if (Injector.prefs.getString(PrefKeys.questionData) != null) {
           arrQuestions = QuestionsResponse.fromJson(
-                  json.decode(Injector.prefs.getString(PrefKeys.questionData)))
+              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
               .data;
 
 //          arrQuestions.forEach((question) {
