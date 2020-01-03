@@ -3,6 +3,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
 
@@ -368,8 +369,10 @@ class _RankingPageState extends State<RankingPage> {
 //                    arrFriends[index].isFriends = !arrFriends[index].isFriends;
                     if (arrFriends[index].isFriend == 0) {
                       arrFriends[index].isFriend = 1;
+                      getFriendsUnfriend(index, 1);
                     } else {
                       arrFriends[index].isFriend = 0;
+                      getFriendsUnfriend(index, 2);
                     }
                   });
 //                  selectedIndex == index;  0 arrCategories[index].isFriend == true
@@ -496,6 +499,38 @@ class _RankingPageState extends State<RankingPage> {
             arrFriends = response.data;
             setState(() {});
           }
+        }
+      }
+    });
+  }
+
+  void getFriendsUnfriend(int index, int i) {
+    setState(() {
+      isLoading = true;
+    });
+
+    GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
+    rq.userId = Injector.userData.userId;
+    rq.requestedTo = arrFriends[index].userId;
+    rq.action = i;
+
+    WebApi().getFriendUnfriendUser(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+            if(i == 1) {
+              Utils.showToast("friend request send successfully");
+            } else {
+              Utils.showToast("unfriend successfully");
+            }
+//          if (response.data != null) {
+//            arrFriends = response.data;
+//            setState(() {});
+//          }
+
         }
       }
     });

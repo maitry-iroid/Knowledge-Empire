@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/achievement_category.dart';
 import 'package:ke_employee/models/change_password.dart';
+import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_friends.dart';
@@ -604,4 +605,30 @@ class WebApi {
       return null;
     }
   }
+
+  Future<GetFriendsUnFriendResponse> getFriendUnfriendUser(
+      BuildContext context, GetFriendsUnfriendReuest rq) async {
+    initDio();
+
+    print("FriendUnfriendUser" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data:
+          json.encode(getRequest('FriendUnfriendUser', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetFriendsUnFriendResponse responseData =
+        GetFriendsUnFriendResponse.fromJson(jsonDecode(response.data));
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
 }

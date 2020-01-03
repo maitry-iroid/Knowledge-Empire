@@ -27,7 +27,6 @@ class OrganizationsPage2 extends StatefulWidget {
 class _OrganizationsPage2State extends State<OrganizationsPage2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  OrganizationData organizationData;
   Notifier _notifier;
 
   List<Organization> arrOrganization = List();
@@ -294,7 +293,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           .getOrganizations(context, rq.toJson())
           .then((getOrganizationData) {
         if (getOrganizationData != null) {
-          organizationData = getOrganizationData;
           arrOrganization = getOrganizationData.organization;
 
           setState(() {
@@ -380,12 +378,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         });
 
         if (getOrganizationData != null) {
-          organizationData.organization[position] =
-              getOrganizationData.organization[0];
           arrOrganization[position] = getOrganizationData.organization[0];
-
           setState(() {});
-
           Utils.performManageLevel(getOrganizationData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
