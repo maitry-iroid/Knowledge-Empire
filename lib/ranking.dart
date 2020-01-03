@@ -73,25 +73,41 @@ class _RankingPageState extends State<RankingPage> {
   int _selectedOption = 0;
 
 //  var arrCategory = ['World', 'Country', 'Friends', 'Group A', 'Group B'];
-    var arrCategory = ['World', 'Country', 'Friends'];
+  var arrCategory = ['World', 'Country', 'Friends'];
 
   var arrTime = ['Day', 'Month', 'Year'];
 
 
   jointArray() {
-    allCategoryList =
-    Iterable.generate(math.max(arrCategory.length, arrCategories.length))
-        .expand((i) sync* {
-      if (i < arrCategory.length) yield arrCategory[i];
-      if (i < arrCategories.length) yield arrCategories[i];
-    }).toList();
+
+    allCategoryList = arrCategory + arrTime;
+    print(allCategoryList);
+
+    for(int i = 0; i < allCategoryList.length + 3 ; i++) {
+      
+    }
+
   }
 
 //  List<arrsearchByModel> searchDataList = [
-//    arrsearchByModel(searchBy: "world", index: "1"),
-//    arrsearchByModel(searchBy: "country", index: "2"),
-//    arrsearchByModel(searchBy: "friends", index: "3"),
+//    arrsearchByModel(name: "world", categoryId: "1"),
+//    arrsearchByModel(name: "country", categoryId: "2"),
+//    arrsearchByModel(name: "friends", categoryId: "3"),
 //  ];
+
+  List searchDataList = [{
+      "name": "world",
+      "categoryId": "1",
+    },
+    {
+      "name": "country",
+      "categoryId": "2",
+    },
+    {
+      "name": "friends",
+      "categoryId": "3",
+    },
+  ];
 
   showSecondColumn() {
     return Expanded(
@@ -108,14 +124,14 @@ class _RankingPageState extends State<RankingPage> {
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
 //                      itemCount: arrCategories.length,
-                  itemCount: allCategoryList.length,
+                      itemCount: allCategoryList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return CustomItem(
                           selectItem, // callback function, setstate for parent
                           index: index,
                           isSelected: selectedCategory == index ? true : false,
 //                          title: searchDataList[index].searchBy + arrCategories[index].name,
-                          title: allCategoryList[index].,
+                          title: allCategoryList[index],
 
                         );
                       },
@@ -371,10 +387,11 @@ class _RankingPageState extends State<RankingPage> {
           Expanded(
             flex: 3,
             child: InkResponse(
-              child:
-              arrFriends[index].isFriend == 0 ?
-              Image(image: AssetImage(Utils.getAssetsImg('ic_challenge_disable'))) :
-              Image(image: AssetImage(Utils.getAssetsImg('ic_challenge')))
+                child:
+                arrFriends[index].isFriend == 0 ?
+                Image(image: AssetImage(
+                    Utils.getAssetsImg('ic_challenge_disable'))) :
+                Image(image: AssetImage(Utils.getAssetsImg('ic_challenge')))
             ),
           ),
           Expanded(
@@ -701,8 +718,8 @@ class _ProfitItemState extends State<TimeItem> {
 }
 
 class arrsearchByModel {
-  String searchBy;
-  String index;
+  String name;
+  String categoryId;
 
-  arrsearchByModel({this.searchBy, this.index});
+  arrsearchByModel({this.name, this.categoryId});
 }
