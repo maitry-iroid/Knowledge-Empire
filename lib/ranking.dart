@@ -115,7 +115,7 @@ class _RankingPageState extends State<RankingPage> {
                           index: index,
                           isSelected: selectedCategory == index ? true : false,
 //                          title: searchDataList[index].searchBy + arrCategories[index].name,
-                          title: allCategoryList[index].,
+                          title: allCategoryList[index],
 
                         );
                       },

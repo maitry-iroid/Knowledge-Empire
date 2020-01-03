@@ -14,23 +14,27 @@ class RewardsPage extends StatefulWidget {
   _RewardsPageState createState() => _RewardsPageState();
 }
 
+
 List<GetAchievementData> arrAchievementData = List();
 GetAchievementData selectedAchievement;
-
-List<SubCategory> selectedSubCategoryList = List();
+SubCategory selectedSubCategory;
 
 class _RewardsPageState extends State<RewardsPage> {
+
+
+
   List<RewardsModel> rewardsList = [
-    RewardsModel(levelName: "Level 1", image: "troffy"),
-    RewardsModel(levelName: "Level 2", image: "troffy"),
-    RewardsModel(levelName: "Level 3", image: "troffy"),
-    RewardsModel(levelName: "Level 4", image: "troffy"),
-    RewardsModel(levelName: "Level 5", image: "troffy"),
-    RewardsModel(levelName: "Level 6", image: "troffy"),
-    RewardsModel(levelName: "Level 7", image: "troffy"),
-    RewardsModel(levelName: "Level 8", image: "troffy"),
-    RewardsModel(levelName: "Level 9", image: "troffy"),
-    RewardsModel(levelName: "Level 10", image: "troffy"),
+    RewardsModel(levelName: "Level 0", image: "trophy0"),
+    RewardsModel(levelName: "Level 1", image: "trophy1"),
+    RewardsModel(levelName: "Level 2", image: "trophy2"),
+    RewardsModel(levelName: "Level 3", image: "trophy3"),
+    RewardsModel(levelName: "Level 4", image: "trophy4"),
+    RewardsModel(levelName: "Level 5", image: "trophy5"),
+    RewardsModel(levelName: "Level 6", image: "trophy6"),
+    RewardsModel(levelName: "Level 7", image: "trophy7"),
+    RewardsModel(levelName: "Level 8", image: "trophy8"),
+    RewardsModel(levelName: "Level 9", image: "trophy9"),
+    RewardsModel(levelName: "Level 10", image: "trophy10"),
   ];
 
   @override
@@ -68,17 +72,18 @@ class _RewardsPageState extends State<RewardsPage> {
     setState(() {
       _selectedItem = index;
       print(selectItem.toString());
+      selectedAchievement = arrAchievementData[index];
     });
   }
 
   subCatSelectItem(index) {
     setState(() {
       _subSelectedItem = index;
+      selectedSubCategory = selectedAchievement.subCategory[index];
 //      isSelectSubCat = false;
     });
   }
 
-  SubCategory selectedSubCategory;
 
   showSecondHalf() {
     return Expanded(
@@ -105,9 +110,8 @@ class _RewardsPageState extends State<RewardsPage> {
                 child: ListView.builder(
 //                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: selectedSubCategoryList.length,
+                  itemCount: selectedAchievement!=null?selectedAchievement.subCategory.length:0,
                   itemBuilder: (BuildContext context, int index) {
-                    selectedSubCategory = selectedSubCategoryList[index];
                     return showRewardItem(index);
                   },
                 ),
@@ -151,12 +155,12 @@ class _RewardsPageState extends State<RewardsPage> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color:
-                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                        image:
-                        AssetImage(Utils.getAssetsImg('bg_reward_sub')),
-                        fit: BoxFit.fill)
+                            image:
+                                AssetImage(Utils.getAssetsImg('bg_reward_sub')),
+                            fit: BoxFit.fill)
                         : null),
                 child: Text(
                   Utils.getText(context, StringRes.category),
@@ -173,9 +177,7 @@ class _RewardsPageState extends State<RewardsPage> {
                     physics: ClampingScrollPhysics(),
                     itemCount: arrAchievementData.length,
                     itemBuilder: (BuildContext context, int index) {
-                      selectedAchievement = arrAchievementData[index];
-
-                      return showCatagoryItem(index);
+                      return showCategoryItem(index);
                     },
                   ),
                 ),
@@ -186,33 +188,6 @@ class _RewardsPageState extends State<RewardsPage> {
       ),
     );
   }
-
-//  showSecondHalfFirstCategory() {
-//    return Expanded(
-//        flex: 3,
-//        child: Column(
-//          crossAxisAlignment: CrossAxisAlignment.center,
-//          children: <Widget>[
-//            SizedBox(
-//              height: 10,
-//            ),
-////            CommonView.showTitle(context, StringRes.rewards),
-//
-//            Center(
-//              child: Text("There are no subcategory"),
-////              child: Text("Please select the category to see the rewards"),
-//            )
-////            Container(
-////              child: Row(
-////              children: <Widget>[
-////
-////              child: Text("Please select the category to see the rewards"),
-////              ]
-////              ),
-////            )
-//          ],
-//        ));
-//  }
 
   showSecondHalfSecondCategory() {
     return Expanded(
@@ -234,7 +209,7 @@ class _RewardsPageState extends State<RewardsPage> {
                 scrollDirection: Axis.horizontal,
 //                physics: ClampingScrollPhysics(),
 //                itemCount: subCategory.length,
-                itemCount: selectedSubCategoryList.length,
+                itemCount: selectedAchievement.subCategory.length,
 
                 itemBuilder: (BuildContext context, int index) {
 //                      return showItem(index);
@@ -280,7 +255,7 @@ class _RewardsPageState extends State<RewardsPage> {
             child: Container(
               width: Utils.getDeviceWidth(context) / 3,
               padding:
-              EdgeInsets.only(left: 10, right: 10, top: 18, bottom: 18),
+                  EdgeInsets.only(left: 10, right: 10, top: 18, bottom: 18),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: ColorRes.white, width: 1),
@@ -289,8 +264,8 @@ class _RewardsPageState extends State<RewardsPage> {
                 child: Text(
                   selectedSubCategory != null
                       ? type == 1
-                      ? selectedSubCategory.currentLevelText
-                      : selectedSubCategory.nextLevelText
+                          ? selectedSubCategory.currentLevelText
+                          : selectedSubCategory.nextLevelText
                       : "",
                   style: TextStyle(
                     color: ColorRes.white,
@@ -335,8 +310,8 @@ class _RewardsPageState extends State<RewardsPage> {
                     context,
                     selectedSubCategory != null
                         ? type == 1
-                        ? selectedSubCategory.currentLevelBlonus.toString()
-                        : selectedSubCategory.nextLevelBlonus.toString()
+                            ? selectedSubCategory.currentLevelBlonus.toString()
+                            : selectedSubCategory.nextLevelBlonus.toString()
                         : "null Innovation"),
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
                 textAlign: TextAlign.center,
@@ -351,8 +326,6 @@ class _RewardsPageState extends State<RewardsPage> {
   bool isLoading = false;
 
 //  GetAchievementResponse getAchievementResponse = GetAchievementResponse();
-
-  List<SubCategory> subCategory = List();
 
   void getAchievements() {
     setState(() {
@@ -374,12 +347,9 @@ class _RewardsPageState extends State<RewardsPage> {
         if (response.flag == "true") {
           if (response.data != null && response.data.isNotEmpty) {
             arrAchievementData = response.data;
-            print("hello >>>>>>> $arrAchievementData");
-            setState(() {
-              subCategory = arrAchievementData[0].subCategory;
-            });
-          } else {
-            print("arrAchievementData is null");
+            selectedAchievement = arrAchievementData[0];
+            selectedSubCategory = selectedAchievement.subCategory[0];
+            setState(() {});
           }
         } else {
           Utils.showToast(response.msg);
@@ -411,27 +381,29 @@ class _RewardsPageState extends State<RewardsPage> {
 
                 child: Center(
                     child: Text(
-                      selectedSubCategoryList[index].achievementName,
-                      style: TextStyle(fontSize: 12),
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    )),
+                      selectedAchievement.subCategory[index].achievementName,
+                  style: TextStyle(fontSize: 12),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                )),
 //                 ),
               ),
             ),
             Expanded(
-                flex: 7,
-                child: Container(
-                    padding: EdgeInsets.only(bottom: 0),
+              flex: 7,
+              child: Container(
+                  padding: EdgeInsets.only(bottom: 0),
 //                    width: Utils.getDeviceWidth(context) / 10,
 //                height: Utils.getDeviceHeight(context) / 4,
-                    child: Image(
-                      image: AssetImage(
-                        Utils.getAssetsImg("troffy"),
-                      ),
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg(rewardsList[selectedAchievement
+                              .subCategory[index].currentLevel]
+                          .image),
+                    ),
 //                  fit: BoxFit.fill,
-                    )),
+                  )),
             )
           ],
         ),
@@ -442,13 +414,13 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  showCatagoryItem(int index) {
+  showCategoryItem(int index) {
     return Center(
       child: CategoryItem(
         selectItem, // callback function, setstate for parent
         index: index,
         isSelected: _selectedItem == index ? true : false,
-        title: selectedAchievement.achievementCategory,
+        title: arrAchievementData[index].achievementCategory,
       ),
     );
   }
@@ -474,7 +446,8 @@ class CategoryItem extends StatefulWidget {
   final bool isSelected;
   Function(int) selectItem;
 
-  CategoryItem(this.selectItem, {
+  CategoryItem(
+    this.selectItem, {
     Key key,
     this.title,
     this.index,
@@ -491,7 +464,6 @@ class _CategoryItemState extends State<CategoryItem> {
       onTap: () {
         Utils.playClickSound();
         widget.selectItem(widget.index);
-        selectedSubCategoryList = arrAchievementData[widget.index].subCategory;
       },
       child: Container(
           height: Injector.isBusinessMode ? 50 : 40,
@@ -506,13 +478,13 @@ class _CategoryItemState extends State<CategoryItem> {
                   ? null
                   : Border.all(width: 1, color: ColorRes.titleBlueProf),
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(10),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(10),
               image: Injector.isBusinessMode
                   ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                      ? "bg_reward_sub_selected"
-                      : "bg_reward_sub2")),
-                  fit: BoxFit.fill)
+                      image: AssetImage(Utils.getAssetsImg(widget.isSelected
+                          ? "bg_reward_sub_selected"
+                          : "bg_reward_sub2")),
+                      fit: BoxFit.fill)
                   : null),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Center(
