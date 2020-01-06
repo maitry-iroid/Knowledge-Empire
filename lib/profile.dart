@@ -10,6 +10,7 @@ import 'package:ke_employee/intro_screen.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
+import 'package:volume/volume.dart';
 //import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
@@ -21,7 +22,8 @@ import 'helper/string_res.dart';
 import 'login.dart';
 import 'models/logout.dart';
 
-//int currentVol;
+AudioManager audioManager;
+int currentVol;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -50,23 +52,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
     super.initState();
 
+    audioManager = AudioManager.STREAM_SYSTEM;
     initPlatformState();
     updateVolumes();
   }
 
   //Sound Is mute
   Future<void> initPlatformState() async {
-    // pass any stream as parameter as per requirement
-//    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
 
   updateVolumes() async {
     // get Current Volume
-//    currentVol = await Volume.getVol;
-//    print(currentVol);
-//
-//    setState(() {});
+    currentVol = await Volume.getVol;
+    print("helloooo =======>>>  $currentVol");
+    setState(() {});
   }
 
   Notifier _notifier;
@@ -181,9 +182,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           InkResponse(
                             onTap: () {
-//                              if (currentVol != 0) {
+                              if (currentVol != 0) {
                                 Utils.playClickSound();
-//                              }
+                              }
                               Navigator.push(context, FadeRouteIntro());
 
 //                              Navigator.push(
@@ -305,9 +306,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.fill)),
                         ),
                         onTap: () async {
-//                          if (currentVol != 0) {
+                          if (currentVol != 0) {
                             Utils.playClickSound();
-//                          }
+                          }
 
                           if (Injector.isBusinessMode)
                             await Injector.prefs
@@ -359,9 +360,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.fill)),
                         ),
                         onTap: () async {
-//                          if(currentVol != 0) {
+                          if(currentVol != 0) {
                             Utils.playClickSound();
-//                          }
+                          }
 //                          Injector.customerValueData.manager != null || Injector.customerValueData.manager.isNotEmpty ?
 
                           _asyncConfirmDialog(context);
@@ -488,9 +489,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   logout() async {
-//    if(currentVol != 0) {
+    if(currentVol != 0) {
       Utils.playClickSound();
-//    }
+    }
     setState(() {
       isLoading = true;
     });
@@ -539,9 +540,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             onTap: () {
 
-//              if(currentVol != 0) {
+              if(currentVol != 0) {
                 Utils.playClickSound();
-//              }
+              }
               Utils.performBack(context);
             },
           ),
@@ -697,7 +698,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 40,
                   ),
                   onTap: () {
-                    Utils.playClickSound();
+                    if(currentVol != 0) {
+                      Utils.playClickSound();
+                    }
                     FocusScope.of(context).requestFocus(myFocusNode);
                   },
                 )
@@ -797,7 +800,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               )),
                     ),
                     onTap: () {
-                      Utils.playClickSound();
+                      if(currentVol != 0) {
+                        Utils.playClickSound();
+                      }
                       Utils.showChangePasswordDialog(_scaffoldKey, true, true);
                     },
                   ),
@@ -850,9 +855,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void showPhotoOptionDialog(BuildContext mainContext) {
     // flutter defined function
-//    if(currentVol != 0) {
+    if(currentVol != 0) {
       Utils.playClickSound();
-//    }
+    }
     showDialog(
       context: mainContext,
       builder: (BuildContext context) {
@@ -869,9 +874,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () {
-//                  if(currentVol != 0) {
+                  if(currentVol != 0) {
                     Utils.playClickSound();
-//                  }
+                  }
                   //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeGallery);
@@ -888,9 +893,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () async {
-//                  if(currentVol != 0) {
+                  if(currentVol != 0) {
                     Utils.playClickSound();
-//                  }
+                  }
                   //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeCamera);
@@ -904,7 +909,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   updateProfile() {
-    Utils.playClickSound();
+    if(currentVol != 0) {
+      Utils.playClickSound();
+    }
     var req = {
       'userId': Injector.userData.userId,
       'name': nameController.text.trim(),

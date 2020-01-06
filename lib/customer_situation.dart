@@ -118,17 +118,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //  }
 
   checkAudio() {
-    if (Injector.isBusinessMode) {
-      if (questionData.isAnsweredCorrect == true) {
-        return Utils.correctAnswerSound();
+    if(currentVol != 0) {
+      if (Injector.isBusinessMode) {
+        if (questionData.isAnsweredCorrect == true) {
+          return Utils.correctAnswerSound();
+        } else {
+          return Utils.incorrectAnswerSound();
+        }
       } else {
-        return Utils.incorrectAnswerSound();
-      }
-    } else {
-      if (questionData.isAnsweredCorrect == true) {
-        return Utils.procorrectAnswerSound();
-      } else {
-        return Utils.proincorrectAnswerSound();
+        if (questionData.isAnsweredCorrect == true) {
+          return Utils.procorrectAnswerSound();
+        } else {
+          return Utils.proincorrectAnswerSound();
+        }
       }
     }
   }

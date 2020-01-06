@@ -43,7 +43,7 @@ dependencies:
   background_fetch: ^0.4.0
 
   flutter_pdfview:
-#  volume: ^0.1.0
+  volume: ^0.1.0
   #  http:
 
 #  volume: ^0.1.0

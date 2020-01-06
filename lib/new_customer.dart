@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:volume/volume.dart';
 //import 'package:volume/volume.dart';
 
 import 'helper/constant.dart';
@@ -16,7 +17,8 @@ import 'helper/string_res.dart';
 import 'helper/web_api.dart';
 import 'models/questions.dart';
 
-//int currentVol;
+AudioManager audioManager;
+int currentVol;
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -69,6 +71,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       }
     });
 
+    audioManager = AudioManager.STREAM_SYSTEM;
     initPlatformState();
     updateVolumes();
 
@@ -76,20 +79,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> initPlatformState() async {
-    // pass any stream as parameter as per requirement
-//    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
 
   updateVolumes() async {
-    // get Max Volume
-//    maxVol = await Volume.getMaxVol;
-//    print(maxVol);
     // get Current Volume
-//    currentVol = await Volume.getVol;
-//    print(currentVol);
-//
-//    setState(() {});
+    currentVol = await Volume.getVol;
+    print("helloooo =======>>>  $currentVol");
+    setState(() {});
   }
 
 //  checkVolum() async {
@@ -371,10 +369,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
-            ;
-//            if (currentVol != 0) {
+            if (currentVol != 0) {
             Utils.playClickSound();
-//            }
+            }
 
             if (Injector.customerValueData.remainingSalesPerson >=
                     arrQuestions[index].resources &&

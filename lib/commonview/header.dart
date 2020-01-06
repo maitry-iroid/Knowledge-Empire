@@ -9,6 +9,10 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:volume/volume.dart';
+
+AudioManager audioManager;
+int currentVol;
 
 class HeaderView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -41,7 +45,11 @@ class HeaderViewState extends State<HeaderView> {
     }, onError: (error) {
       print("Some Error1");
     });
+    audioManager = AudioManager.STREAM_SYSTEM;
+    initPlatformState();
+    updateVolumes();
   }
+
 
   @override
   void dispose() {
@@ -49,6 +57,18 @@ class HeaderViewState extends State<HeaderView> {
     super.dispose();
 
 //    if (Injector.streamController != null) Injector.streamController.close();
+  }
+
+  Future<void> initPlatformState() async {
+    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print("helloooo =======>>>  $currentVol");
+    setState(() {});
   }
 
   @override
@@ -75,7 +95,9 @@ class HeaderViewState extends State<HeaderView> {
                     fit: BoxFit.fill,
                   ),
                   onTap: () {
-                    Utils.playClickSound();
+                    if(currentVol != 0) {
+                      Utils.playClickSound();
+                    }
                     widget.scaffoldKey.currentState.openDrawer();
                   },
                 )
@@ -259,7 +281,10 @@ class HeaderViewState extends State<HeaderView> {
         ),
         onTap: () {
 //            openProfile /*() {
-          Utils.playClickSound();
+
+          if(currentVol != 0) {
+            Utils.playClickSound();
+          }
           widget.openProfile();
 //        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
 //        print(route1.isCurrent);

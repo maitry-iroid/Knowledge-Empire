@@ -10,10 +10,14 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:volume/volume.dart';
 
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
+
+AudioManager audioManager;
+int currentVol;
 
 class OrganizationsPage extends StatefulWidget {
   @override
@@ -36,6 +40,22 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) getOrganization();
     });
+
+    audioManager = AudioManager.STREAM_SYSTEM;
+    initPlatformState();
+    updateVolumes();
+  }
+
+  Future<void> initPlatformState() async {
+    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
+  }
+
+  updateVolumes() async {
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    print("helloooo =======>>>  $currentVol");
+    setState(() {});
   }
 
   @override
@@ -98,6 +118,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 width: 15,
               ),
               onTap: () {
+                if(currentVol != 0) {
+                  Utils.playClickSound();
+                }
+
                 Utils.showOrgInfoDialog(
                     _scaffoldKey, arrOrganization[position].description);
               },
@@ -140,6 +164,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 ),
               ),
               onTap: () {
+                if(currentVol != 0) {
+                  Utils.playClickSound();
+                }
+
                 showConfirmDialog(position, Const.subtract);
               },
             ),
@@ -177,6 +205,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                 ),
               ),
               onTap: () {
+                if(currentVol != 0) {
+                  Utils.playClickSound();
+                }
+
                 showConfirmDialog(position, Const.add);
               },
             ),
