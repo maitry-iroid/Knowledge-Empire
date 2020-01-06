@@ -261,7 +261,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: Utils.getDeviceWidth(context) / 6.8,
+              width: Utils.getDeviceWidth(context) / 6.4,
               padding: EdgeInsets.only(top: 5),
               child: showItem(Const.typeServices),
             ),
@@ -269,7 +269,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              width: Utils.getDeviceWidth(context) / 6.8,
+              width: Utils.getDeviceWidth(context) / 6.4,
               padding: EdgeInsets.only(bottom: 5),
               child: showItem(Const.typeOperations),
             ),

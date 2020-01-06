@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'helper/res.dart';
@@ -172,7 +173,9 @@ class _CategoryItemState extends State<CategoryItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.selectItem(widget.index);
+        if(currentVol != 0) {
+          widget.selectItem(widget.index);
+        }
       },
       child: Container(
 //          height: 50,

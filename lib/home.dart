@@ -25,6 +25,7 @@ import 'package:ke_employee/profile.dart';
 import 'package:ke_employee/ranking.dart';
 import 'package:ke_employee/rewards.dart';
 import 'package:ke_employee/team.dart';
+import 'package:volume/volume.dart';
 //import 'package:volume/volume.dart';
 
 import 'P+L.dart';
@@ -35,7 +36,8 @@ import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 
-//int currentVol;
+AudioManager audioManager;
+int currentVol;
 
 class FadeRouteHome extends PageRouteBuilder {
   final Widget page;
@@ -228,6 +230,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 0;
 
     getCustomerValues();
+    audioManager = AudioManager.STREAM_SYSTEM;
     initPlatformState();
     updateVolumes();
   }
@@ -240,17 +243,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   Future<void> initPlatformState() async {
-    // pass any stream as parameter as per requirement
-//    var hello = await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + hello);
+    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
 
   updateVolumes() async {
     // get Current Volume
-//    currentVol = await Volume.getVol;
-//    print(currentVol);
-//
-//    setState(() {});
+    currentVol = await Volume.getVol;
+    print("helloooo =======>>>  $currentVol");
+    setState(() {});
   }
 
   @override
@@ -383,9 +384,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   _onSelectItem(int index) {
-//    if (currentVol != 0) {
-    Utils.playClickSound();
-//    }
+    if (currentVol != 0) {
+      Utils.playClickSound();
+    }
 
     if (mounted) {
 //      Injector.audioPlayer.play("assets/sounds/all_button_clicks.wav",isLocal: true);
@@ -436,7 +437,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
           title: showMainItem(drawerItems[i], i),
           selected: i == _selectedDrawerIndex,
-          onTap: () => _onSelectItem(i)));
+          onTap: () => _onSelectItem(i)
+//          if(currentVol != 0) {
+//            _onSelectItem(i);
+//          }
+//          }
+      ));
     }
 
     return Scaffold(
