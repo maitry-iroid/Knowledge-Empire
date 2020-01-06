@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 //import 'package:audioplayers/audio_cache.dart';
 //import 'package:audioplayers/audioplayers.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -25,8 +27,8 @@ class Injector {
 //  static AudioCache audioCache;
   static DefaultCacheManager cacheManager;
   static StreamController<String> streamController;
-
-
+  static FirebaseMessaging firebaseMessaging ;
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 //  factory Injector {
 //    return _singleton;

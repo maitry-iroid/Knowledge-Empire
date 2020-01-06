@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/customer_situation.dart';
 import 'package:ke_employee/challenges.dart';
 import 'package:ke_employee/dashboard.dart';
@@ -262,6 +265,81 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
+  void initPush() async {
+    firebaseCloudMessagingListeners();
+
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('@drawable/icon');
+    var initializationSettingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    await Injector.flutterLocalNotificationsPlugin.initialize(
+        initializationSettings,
+        onSelectNotification: onSelectNotification);
+
+    Injector.firebaseMessaging.requestNotificationPermissions();
+
+    Injector.firebaseMessaging.getToken().then((token) {
+      print("token : " + token);
+    });
+  }
+
+  Future<void> onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+  }
+
+  Future<void> onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    print("onDidReceiveLocalNotification");
+    // display a dialog with the notification details, tap ok to go to another page
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text('Ok'),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+//              await Navigator.push(
+//                context,
+//                MaterialPageRoute(
+//                  builder: (context) => SecondScreen(payload),
+//                ),
+//              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  void firebaseCloudMessagingListeners() async {
+    Injector.firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+
+        Utils.showNotification(message);
+      },
+//      onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+
+        Utils.showNotification(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+
+        Utils.showNotification(message);
+      },
+    );
+  }
+
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
@@ -306,7 +384,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   _onSelectItem(int index) {
 //    if (currentVol != 0) {
-      Utils.playClickSound();
+    Utils.playClickSound();
 //    }
 
     if (mounted) {

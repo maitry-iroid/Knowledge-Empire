@@ -606,7 +606,7 @@ class WebApi {
     }
   }
 
-  Future<GetFriendsUnFriendResponse> getFriendUnfriendUser(
+  Future<GetFriendsUnFriendResponse> friendUnFriendUser(
       BuildContext context, GetFriendsUnfriendReuest rq) async {
     initDio();
 
