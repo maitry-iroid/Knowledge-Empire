@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
@@ -476,5 +478,38 @@ class Utils {
     else {
       return 0.0;
     }
+  }
+
+  static Future<void> showNotification(Map<String, dynamic> message) async {
+    Injector.notificationID++;
+
+    String title = "";
+    String body = "";
+
+//    addBadge();
+
+    if (Platform.isIOS) {
+      title = message['title'];
+      body = message['body'];
+    } else {
+      message.values.forEach((value) {
+        if (Map.from(value)['title'] != null) title = Map.from(value)['title'];
+
+        if (Map.from(value)['body'] != null) body = Map.from(value)['body'];
+      });
+    }
+
+    print(title);
+    print(body);
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await Injector.flutterLocalNotificationsPlugin.show(
+        Injector.notificationID, title, body, platformChannelSpecifics,
+        payload: 'item x');
   }
 }

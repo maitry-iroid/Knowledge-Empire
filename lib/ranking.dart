@@ -539,7 +539,7 @@ class _RankingPageState extends State<RankingPage> {
     rq.requestedTo = arrFriends[index].userId;
     rq.action = i;
 
-    WebApi().getFriendUnfriendUser(context, rq).then((response) {
+    WebApi().friendUnFriendUser(context, rq).then((response) {
       setState(() {
         isLoading = false;
       });

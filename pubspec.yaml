@@ -41,9 +41,12 @@ dependencies:
   flutter_cache_manager:
 #  rxdart: 0.23.0
   background_fetch: ^0.4.0
-
+  firebase_messaging: 6.0.9
+  firebase_core: 0.4.3+1
   flutter_pdfview:
-#  volume: ^0.1.0
+  flutter_local_notifications: ^0.8.4+3
+
+
   #  http:
 
 #  volume: ^0.1.0
