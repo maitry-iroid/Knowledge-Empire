@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
+import 'package:ke_employee/models/send_challenge.dart';
 import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
@@ -231,7 +233,7 @@ class _RankingPageState extends State<RankingPage> {
                                 Utils.getAssetsImg("bg_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
-                      'Challenge',
+                      Utils.getText(context, StringRes.challenges),
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
@@ -250,7 +252,7 @@ class _RankingPageState extends State<RankingPage> {
                                 Utils.getAssetsImg("bg_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
-                      'Friend',
+                      Utils.getText(context, StringRes.friends),
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
@@ -374,13 +376,15 @@ class _RankingPageState extends State<RankingPage> {
                         image: AssetImage(
                             Utils.getAssetsImg('ic_challenge_disable')))
                     : Image(
-                        image: AssetImage(Utils.getAssetsImg('ic_challenge')))),
+                        image: AssetImage(Utils.getAssetsImg('ic_challenge'))),onTap: (){
+                  performSendChallenges(index);
+
+            },),
           ),
           Expanded(
             flex: 3,
             child: InkResponse(
                 onTap: () {
-                  print("hello$index");
 
                   if(currentVol != 0) {
 //                    audioManager = AudioManager.STREAM_SYSTEM;
@@ -562,6 +566,26 @@ class _RankingPageState extends State<RankingPage> {
         }
       }
     });
+  }
+
+  void performSendChallenges(int index) {
+
+    Utils.isInternetConnectedWithAlert().then((isConnected){
+
+      if(isConnected){
+
+
+        SendChallengesRequest rq = SendChallengesRequest();
+        rq.userId = Injector.userData.userId;
+        rq.moduleId = 0;
+        rq.rewards = 0;
+        rq.friendId = 0;
+
+
+      }
+
+    });
+
   }
 }
 //------------------  option item --------

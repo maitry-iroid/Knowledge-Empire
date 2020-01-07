@@ -8,11 +8,11 @@ import 'package:volume/volume.dart';
 
 import 'helper/Utils.dart';
 import 'helper/string_res.dart';
-
+import 'helper/web_api.dart';
+import 'models/get_friends.dart';
 
 AudioManager audioManager;
 int currentVol;
-
 
 class ChallengesPage extends StatefulWidget {
   @override
@@ -20,21 +20,24 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
-  List<String> arrFriends = [
-    "hello",
-    "world",
-    "good",
-    "morning",
-    "hello",
-    "world",
-    "good",
-    "morning",
-    "hello",
-    "world",
-    "good",
-    "morning"
-  ];
-  List<String> arrRewards = ["hello", "world", "good", "morning", "hello"];
+  bool isLoading = false;
+  List<GetFriendsData> arrFriends = List();
+
+//  List<String> arrFriends = [
+//    "hello",
+//    "world",
+//    "good",
+//    "morning",
+//    "hello",
+//    "world",
+//    "good",
+//    "morning",
+//    "hello",
+//    "world",
+//    "good",
+//    "morning"
+//  ];
+  List<String> arrRewards = ["2%", "4%", "6%", "8%", "10%"];
 
   @override
   void initState() {
@@ -42,6 +45,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     super.initState();
     initPlatformState();
     updateVolumes();
+
+    getFriends();
   }
 
   Future<void> initPlatformState() async {
@@ -64,7 +69,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         Column(
           children: <Widget>[
             SizedBox(
-              height:Utils.getHeaderHeight(context)+ 10,
+              height: Utils.getHeaderHeight(context) + 10,
             ),
             CommonView.showTitle(context, StringRes.challenges),
             showMainBody(),
@@ -265,7 +270,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showFriendItem(int index) {
     return GestureDetector(
       onTap: () {
-        if(currentVol != 0) {
+        if (currentVol != 0) {
           _onSelected(index);
         }
         //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
@@ -287,7 +292,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         margin: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
         padding: EdgeInsets.symmetric(vertical: 2),
         child: Text(
-          arrFriends[index],
+          arrFriends[index].name,
           style: TextStyle(
               color:
                   Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
@@ -306,7 +311,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showSectorItem(int index) {
     return GestureDetector(
       onTap: () {
-        if(currentVol != 0) {
+        if (currentVol != 0) {
           Utils.playClickSound();
         }
         _onSelectedSector(index);
@@ -442,5 +447,34 @@ class _ChallengesPageState extends State<ChallengesPage> {
             topRight: Radius.circular(15),
             bottomLeft: Radius.circular(8),
             bottomRight: Radius.circular(8)));
+  }
+
+  void getFriends() {
+    setState(() {
+      isLoading = true;
+    });
+
+    GetFriendsRequest rq = GetFriendsRequest();
+    rq.userId = Injector.userData.userId;
+    rq.groupId = 0 ;
+    rq.category = 0 ;
+    rq.searchBy = 0 ;
+    rq.filter = 0 ;
+
+
+    WebApi().getFriends(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          if (response.data != null) {
+            arrFriends = response.data;
+            setState(() {});
+          }
+        }
+      }
+    });
   }
 }

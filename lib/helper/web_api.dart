@@ -10,6 +10,7 @@ import 'package:ke_employee/models/achievement_category.dart';
 import 'package:ke_employee/models/change_password.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_achievement.dart';
+import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
@@ -19,6 +20,7 @@ import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
@@ -536,13 +538,13 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data:
-              json.encode(getRequest('getAchievementCategory', json.encode(rq.toJson()))));
+          data: json.encode(
+              getRequest('getAchievementCategory', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         AchievementCategoryResponse responseData =
-        AchievementCategoryResponse.fromJson(jsonDecode(response.data));
+            AchievementCategoryResponse.fromJson(jsonDecode(response.data));
 
         return responseData;
       }
@@ -562,13 +564,13 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data:
-              json.encode(getRequest('getUserGroups', json.encode(rq.toJson()))));
+          data: json
+              .encode(getRequest('getUserGroups', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         GetUserGroupResponse responseData =
-        GetUserGroupResponse.fromJson(jsonDecode(response.data));
+            GetUserGroupResponse.fromJson(jsonDecode(response.data));
 
         return responseData;
       }
@@ -614,13 +616,13 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data:
-          json.encode(getRequest('FriendUnfriendUser', json.encode(rq.toJson()))));
+          data: json.encode(
+              getRequest('FriendUnfriendUser', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         GetFriendsUnFriendResponse responseData =
-        GetFriendsUnFriendResponse.fromJson(jsonDecode(response.data));
+            GetFriendsUnFriendResponse.fromJson(jsonDecode(response.data));
         return responseData;
       }
       print(response.data);
@@ -631,4 +633,53 @@ class WebApi {
     }
   }
 
+  Future<SendChallengesResponse> sendChallenges(
+      BuildContext context, SendChallengesRequest rq) async {
+    initDio();
+
+    print("getChallenges" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('sendChallenge', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        SendChallengesResponse responseData =
+            SendChallengesResponse.fromJson(jsonDecode(response.data));
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<GetChallengesResponse> getChallenges(
+      BuildContext context, GetChallengesRequest rq) async {
+    initDio();
+
+    print("getChallenges" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('getChallenge', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetChallengesResponse responseData =
+            GetChallengesResponse.fromJson(jsonDecode(response.data));
+        return responseData;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }
