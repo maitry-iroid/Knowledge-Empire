@@ -42,6 +42,8 @@ class Injector {
 //    audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 //
 //    audioCache = AudioCache();
+    firebaseMessaging = FirebaseMessaging();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     deviceId = await FlutterUdid.udid;
 

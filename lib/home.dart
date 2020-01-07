@@ -167,6 +167,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
 
+    initPush();
+
     if (Injector.streamController == null)
       Injector.streamController = StreamController.broadcast();
 
