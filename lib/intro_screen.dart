@@ -11,15 +11,13 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:volume/volume.dart';
-//import 'package:volume/volume.dart';
+
 import 'commonview/header.dart';
 import 'dashboard_new.dart';
 import 'helper/constant.dart';
 
 
-AudioManager audioManager;
-int currentVol;
+
 
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
@@ -85,23 +83,7 @@ class IntroPageState extends State<IntroPage> {
     });*/
 
 //    controller.forward();
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
 
-  }
-
-
-  Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
   }
 
 
@@ -941,9 +923,9 @@ class IntroPageState extends State<IntroPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
-                      if(currentVol != 0) {
+//                      if(currentVol != 0) {
                         Utils.playClickSound();
-                      }
+//                      }
 
                       setState(() {
                         if (selectedType == Const.typeName) {
@@ -996,9 +978,9 @@ class IntroPageState extends State<IntroPage> {
                           height: Utils.getDeviceHeight(context) / 10,
                         ),
                         onTap: () {
-                          if(currentVol != 0) {
+//                          if(currentVol != 0) {
                             Utils.playClickSound();
-                          }
+//                          }
                           setState(() {
                             Navigator.pushAndRemoveUntil(context,
                                 FadeRouteHome(), ModalRoute.withName("/home"));
@@ -1019,9 +1001,9 @@ class IntroPageState extends State<IntroPage> {
 
 
 
-                      if(currentVol != 0) {
+//                      if(currentVol != 0) {
                         Utils.playClickSound();
-                      }
+//                      }
 
                       setState(() {
                         if (selectedType == Const.typeName) {

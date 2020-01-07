@@ -9,16 +9,12 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:volume/volume.dart';
-//import 'package:volume/volume.dart';
 
 import 'helper/constant.dart';
 import 'helper/string_res.dart';
 import 'helper/web_api.dart';
 import 'models/questions.dart';
 
-AudioManager audioManager;
-int currentVol;
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -71,29 +67,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       }
     });
 
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
 
-//    checkVolum();
   }
 
-  Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }
-
-//  checkVolum() async {
-//    var soumnd = await Volume.getVol;
-//    print(soumnd);
-//  }
 
   getQuestions() {
     setState(() {
@@ -369,9 +345,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 style: TextStyle(color: ColorRes.white, fontSize: 14),
               )),
           onTap: () {
-            if (currentVol != 0) {
+//            if (currentVol != 0) {
             Utils.playClickSound();
-            }
+//            }
 
             if (Injector.customerValueData.remainingSalesPerson >=
                     arrQuestions[index].resources &&

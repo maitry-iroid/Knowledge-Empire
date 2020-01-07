@@ -6,13 +6,13 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
-import 'package:volume/volume.dart';
+//import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 
 
-AudioManager audioManager;
-int currentVol;
+//AudioManager audioManager;
+//int currentVol;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -37,24 +37,25 @@ class _RankingPageState extends State<RankingPage> {
   void initState() {
     super.initState();
 
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
+//    audioManager = AudioManager.STREAM_SYSTEM;
+//    initPlatformState();
+//    updateVolumes();
+
     getUserGroups();
     getFriends();
   }
 
-  Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }
+//  Future<void> initPlatformState() async {
+//    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
+////    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
+//  }
+//
+//  updateVolumes() async {
+//    // get Current Volume
+//    currentVol = await Volume.getVol;
+//    print("helloooo =======>>>  $currentVol");
+//    setState(() {});
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -382,11 +383,9 @@ class _RankingPageState extends State<RankingPage> {
                 onTap: () {
                   print("hello$index");
 
-                  if(currentVol != 0) {
-//                    audioManager = AudioManager.STREAM_SYSTEM;
-
+//                  if(currentVol != 0) {
                     Utils.playClickSound();
-                  }
+//                  }
 //                index ? :
 //                  _isSelected(index);
                   setState(() {
@@ -425,11 +424,9 @@ class _RankingPageState extends State<RankingPage> {
         onTap: () {
           if (selectedLeftCategory != index) {
             setState(() {
-              if(currentVol != 0) {
-                audioManager = AudioManager.STREAM_SYSTEM;
-
+//              if(currentVol != 0) {
                 Utils.playClickSound();
-              }
+//              }
               selectedLeftCategory = index;
             });
 
@@ -588,11 +585,9 @@ class _OptionItemState extends State<OptionItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          if(currentVol != 0) {
-//            audioManager = AudioManager.STREAM_SYSTEM;
-
+//          if(currentVol != 0) {
             Utils.playClickSound();
-          }
+//          }
           widget.selectItem(widget.index);
         },
         child: Image(
@@ -625,11 +620,11 @@ class _CustomItemState extends State<CustomItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-          audioManager = AudioManager.STREAM_SYSTEM;
+//        if (currentVol != 0) {
+//          audioManager = AudioManager.STREAM_SYSTEM;
 
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -676,11 +671,9 @@ class _TimeItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-          audioManager = AudioManager.STREAM_SYSTEM;
-
+//        if (currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(
@@ -726,11 +719,9 @@ class _ProfitItemState extends State<TimeItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-          audioManager = AudioManager.STREAM_SYSTEM;
-
+//        if (currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(

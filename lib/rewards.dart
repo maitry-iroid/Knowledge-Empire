@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
-import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 import 'helper/Utils.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
 
-AudioManager audioManager;
-int currentVol;
 
 class RewardsPage extends StatefulWidget {
   @override
@@ -51,23 +48,8 @@ class _RewardsPageState extends State<RewardsPage> {
       }
     });
 
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
-
   }
 
-  Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -430,9 +412,9 @@ class _RewardsPageState extends State<RewardsPage> {
         ),
       ),
       onTap: () {
-        if(currentVol != 0) {
+//        if(currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         subCatSelectItem(index);
       },
     );
@@ -486,9 +468,9 @@ class _CategoryItemState extends State<CategoryItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(currentVol != 0) {
+//        if(currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
         widget.selectItem(widget.index);
       },
       child: Container(

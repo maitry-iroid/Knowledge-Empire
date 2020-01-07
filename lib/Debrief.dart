@@ -173,9 +173,9 @@ class _CategoryItemState extends State<CategoryItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(currentVol != 0) {
+//        if(currentVol != 0) {
           widget.selectItem(widget.index);
-        }
+//        }
       },
       child: Container(
 //          height: 50,

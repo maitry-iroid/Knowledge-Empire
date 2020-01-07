@@ -8,15 +8,13 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/new_customer.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:volume/volume.dart';
-//import 'package:volume/volume.dart';
 
 import 'P+L.dart';
 import 'helper/constant.dart';
 import 'home.dart';
 
-AudioManager audioManager;
-int currentVol;
+//AudioManager audioManager;
+//int currentVol;
 
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key key}) : super(key: key);
@@ -30,12 +28,12 @@ class DashboardPageState extends State<DashboardPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
+//    audioManager = AudioManager.STREAM_SYSTEM;
+//    initPlatformState();
+//    updateVolumes();
   }
 
-  Future<void> initPlatformState() async {
+ /* Future<void> initPlatformState() async {
     await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
 //    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
@@ -45,7 +43,7 @@ class DashboardPageState extends State<DashboardPage> {
     currentVol = await Volume.getVol;
     print("helloooo =======>>>  $currentVol");
     setState(() {});
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -145,9 +143,9 @@ class DashboardPageState extends State<DashboardPage> {
         ),
       ),
       onTap: () {
-        if(currentVol != 0) {
+//        if(currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
 
         performItemClick(type);
       },
