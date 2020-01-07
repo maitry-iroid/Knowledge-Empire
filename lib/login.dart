@@ -14,13 +14,8 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/home.dart';
 import 'package:ke_employee/intro_screen.dart';
 import 'package:ke_employee/models/login.dart';
-import 'package:volume/volume.dart';
-//import 'package:volume/volume.dart';
-
 import 'models/get_customer_value.dart';
 
-AudioManager audioManager;
-int currentVol;
 
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
@@ -64,23 +59,10 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
+
   }
 
   //Sound Is mute
-  Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,9 +142,9 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: ColorRes.white),
                       ),
                       onTap: () {
-                        if(currentVol != 0) {
+//                        if(currentVol != 0) {
                           Utils.playClickSound();
-                        }
+//                        }
 
                         Navigator.push(context, FadeRouteForgotPassword());
 

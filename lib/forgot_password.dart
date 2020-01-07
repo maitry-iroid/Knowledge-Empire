@@ -5,12 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/forgot_password.dart';
-import 'package:volume/volume.dart';
-//import 'package:volume/volume.dart';
 
-
-AudioManager audioManager;
-int currentVol;
 
 class FadeRouteForgotPassword extends PageRouteBuilder {
   final Widget page;
@@ -49,12 +44,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
+//    audioManager = AudioManager.STREAM_SYSTEM;
+//    initPlatformState();
+//    updateVolumes();
   }
 
-  Future<void> initPlatformState() async {
+  /*Future<void> initPlatformState() async {
     await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
 //    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
@@ -64,7 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     currentVol = await Volume.getVol;
     print("helloooo =======>>>  $currentVol");
     setState(() {});
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -201,9 +196,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   validateForm() {
 
-    if(currentVol != 0) {
+//    if(currentVol != 0) {
       Utils.playClickSound();
-    }
+//    }
     if (emailController.text.isEmpty) {
       Utils.showToast("Email can't be empty.");
       return;

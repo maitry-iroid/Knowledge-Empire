@@ -10,8 +10,6 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:path/path.dart';
-import 'package:volume/volume.dart';
-//import 'package:volume/volume.dart';
 
 import 'commonview/background.dart';
 
@@ -35,8 +33,8 @@ QuestionData questionData = QuestionData();
 List abcdList = List();
 VideoPlayerController _controller;
 
-AudioManager audioManager;
-int currentVol;
+//AudioManager audioManager;
+//int currentVol;
 
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
@@ -152,9 +150,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     initVideoController();
 
-    audioManager = AudioManager.STREAM_SYSTEM;
-    initPlatformState();
-    updateVolumes();
+//    audioManager = AudioManager.STREAM_SYSTEM;
+//    initPlatformState();
+//    updateVolumes();
 
   }
 
@@ -165,7 +163,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   //Sound Is mute
-  Future<void> initPlatformState() async {
+/*  Future<void> initPlatformState() async {
     await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
 //    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
@@ -175,7 +173,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     currentVol = await Volume.getVol;
     print("helloooo =======>>>  $currentVol");
     setState(() {});
-  }
+  }*/
 
 
 
@@ -201,9 +199,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
-          if(currentVol != 0) {
+//          if(currentVol != 0) {
             Utils.playClickSound();
-          }
+//          }
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
@@ -413,9 +411,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 ),
               ),
               onTap: () {
-                if(currentVol != 0) {
+//                if(currentVol != 0) {
                   Utils.playClickSound();
-                }
+//                }
                 performSubmitAnswer(context);
               },
             )
@@ -579,9 +577,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             alignment: Alignment.bottomRight,
             child: InkResponse(
               onTap: () {
-                if(currentVol != 0) {
+//                if(currentVol != 0) {
                   Utils.playClickSound();
-                }
+//                }
                 showDialog(
                   context: context,
                   builder: (_) =>
@@ -623,9 +621,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showQueMedia(BuildContext context) {
     return InkResponse(
       onTap: () {
-        if(currentVol != 0) {
+//        if(currentVol != 0) {
           Utils.playClickSound();
-        }
+//        }
        performImageClick(context);
       },
       child:  Stack(
@@ -756,9 +754,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     fit: BoxFit.fill)
             )),
         onTap: () {
-          if(currentVol != 0) {
+//          if(currentVol != 0) {
             Utils.playClickSound();
-          }
+//          }
           showDialog(
             context: context,
             builder: (_) => expandMedia()
@@ -916,9 +914,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
-                          if(currentVol != 0) {
+//                          if(currentVol != 0) {
                             Utils.playClickSound();
-                          }
+//                          }
                           //alert pop
                           Navigator.pop(context);
                         },
@@ -959,9 +957,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
   Widget showItemFullScree(int index) {
     return GestureDetector(
         onTap: () {
-          if(currentVol != 0) {
+//          if(currentVol != 0) {
             Utils.playClickSound();
-          }
+//          }
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
@@ -1181,9 +1179,9 @@ class FunkyOverlayState extends State<FunkyOverlay>
 //          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            if(currentVol != 0) {
+//                            if(currentVol != 0) {
                               Utils.playClickSound();
-                            }
+//                            }
                             //alert pop
                             Navigator.pop(context);
 
@@ -1351,9 +1349,9 @@ class expandMediaState extends State<expandMedia>
 //          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            if(currentVol != 0) {
+//                            if(currentVol != 0) {
                               Utils.playClickSound();
-                            }
+//                            }
                             //alert pop
                             Navigator.pop(context);
 
