@@ -41,9 +41,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    initPlatformState();
-    updateVolumes();
-
     getFriends();
 //    initPlatformState();
 //    updateVolumes();
@@ -270,11 +267,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showFriendItem(int index) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-//        if(currentVol != 0) {
+        Utils.playClickSound();
           _onSelected(index);
-//        }
-        //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
       },
       child: Container(
         alignment: Alignment.center,
@@ -312,10 +306,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showSectorItem(int index) {
     return GestureDetector(
       onTap: () {
-        if (currentVol != 0) {
-//        if(currentVol != 0) {
-          Utils.playClickSound();
-//        }
+        Utils.playClickSound();
         _onSelectedSector(index);
       },
       child: Container(
