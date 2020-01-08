@@ -7,7 +7,7 @@ class Const {
   static var typeNewCustomer =1;
   static var typeExistingCustomer =2;
   static var typeOrg =3;
-  static var typeChallenges =4;
+  static var typeChallenges = 4;
   static var typePL =5;
   static var typeReward =6;
   static var typeRanking =7;

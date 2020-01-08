@@ -32,6 +32,7 @@ import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
 import 'helper/string_res.dart';
+import 'models/get_friends.dart';
 
 
 class FadeRouteHome extends PageRouteBuilder {
@@ -43,12 +44,18 @@ class FadeRouteHome extends PageRouteBuilder {
 
   final int value;
 
+//  final GetFriendsData friendsData;
+  List<GetFriendsData> arrFriends = List();
+
+
   FadeRouteHome(
       {this.page,
       this.initialPageType,
       this.questionDataHomeScr,
       this.questionDataSituation,
-      this.value})
+      this.value,
+      this.arrFriends
+      })
       : super(
           pageBuilder: (
             BuildContext context,
@@ -69,6 +76,7 @@ class FadeRouteHome extends PageRouteBuilder {
               questionDataHomeScr: questionDataHomeScr,
               questionDataSituation: questionDataSituation,
               value: value,
+              arrFriends: arrFriends,
             ),
           ),
         );
@@ -124,12 +132,19 @@ class HomePage extends StatefulWidget {
 
   final int value;
 
+//  final GetFriendsData friendsData;
+
+  List<GetFriendsData> arrFriends = List();
+
+
   HomePage(
       {Key key,
       this.initialPageType,
       this.questionDataHomeScr,
       this.questionDataSituation,
-      this.value})
+      this.value,
+      this.arrFriends
+      })
       : super(key: key);
 
 //  final  QuestionData questionData;
@@ -533,6 +548,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     else if (_selectedDrawerIndex == 13)
       return CustomerSituationPage(
           questionDataCustomerSituation: widget.questionDataSituation);
+    else if (_selectedDrawerIndex == 6)
+      return ChallengesPage(arrFriends: widget.arrFriends);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }

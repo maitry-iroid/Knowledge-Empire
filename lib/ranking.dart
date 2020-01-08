@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
 //import 'package:volume/volume.dart';
-import 'package:ke_employee/models/send_challenge.dart';
 
 import 'commonview/background.dart';
+import 'helper/constant.dart';
 
 
 //AudioManager audioManager;
@@ -234,7 +234,7 @@ class _RankingPageState extends State<RankingPage> {
                                 Utils.getAssetsImg("bg_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
-                      Utils.getText(context, StringRes.challenges),
+                      'Challenge',
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
@@ -253,7 +253,7 @@ class _RankingPageState extends State<RankingPage> {
                                 Utils.getAssetsImg("bg_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
-                      Utils.getText(context, StringRes.friends),
+                      'Friend',
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
@@ -377,15 +377,18 @@ class _RankingPageState extends State<RankingPage> {
                         image: AssetImage(
                             Utils.getAssetsImg('ic_challenge_disable')))
                     : Image(
-                        image: AssetImage(Utils.getAssetsImg('ic_challenge'))),onTap: (){
-                  performSendChallenges(index);
-
-            },),
+                        image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
+              onTap: () {
+//                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.push(context, FadeRouteHome(arrFriends: arrFriends, initialPageType: Const.typeChallenges));
+              },
+            ),
           ),
           Expanded(
             flex: 3,
             child: InkResponse(
                 onTap: () {
+                  print("hello$index");
 
 //                  if(currentVol != 0) {
                     Utils.playClickSound();
@@ -563,26 +566,6 @@ class _RankingPageState extends State<RankingPage> {
         }
       }
     });
-  }
-
-  void performSendChallenges(int index) {
-
-    Utils.isInternetConnectedWithAlert().then((isConnected){
-
-      if(isConnected){
-
-
-        SendChallengesRequest rq = SendChallengesRequest();
-        rq.userId = Injector.userData.userId;
-        rq.moduleId = 0;
-        rq.rewards = 0;
-        rq.friendId = 0;
-
-
-      }
-
-    });
-
   }
 }
 //------------------  option item --------
