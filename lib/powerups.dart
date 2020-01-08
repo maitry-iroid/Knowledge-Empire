@@ -81,6 +81,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         if (getOrganizationData != null) {
           organizationData = getOrganizationData;
           arrOrganization = getOrganizationData.organization;
+          selectedOrg = arrOrganization[0];
 
           setState(() {});
         }
@@ -367,7 +368,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                       showConfirmDialog(Const.subtract);
                     },
                   ),
-                  Stack(
+    arrOrganization.length>0? Stack(
                     alignment: Alignment.centerLeft,
                     children: <Widget>[
                       Container(
@@ -387,7 +388,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                                 : Border.all(color: ColorRes.white, width: 1)),
                         padding: EdgeInsets.symmetric(
                             horizontal: Injector.isBusinessMode ? 0 : 3),
-                        child: LinearPercentIndicator(
+                        child:LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 7,
                           lineHeight: 25.0,
                           percent:Utils.getProgress(arrOrganization[selectedIndex]),
@@ -396,7 +397,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                         ),
                       ),
                     ],
-                  ),
+                  ):Container(),
                   InkResponse(
                     child: Padding(
                       padding: EdgeInsets.all(5),
@@ -436,8 +437,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           content: Text(action == Const.add
-              ? selectedOrg.addLevelConfirmMessage
-              : selectedOrg.subtractLevelConfirmMessage),
+              ? selectedOrg.addLevelConfirmMessage!=null?selectedOrg.addLevelConfirmMessage:""
+              : selectedOrg.subtractLevelConfirmMessage!=null?selectedOrg.subtractLevelConfirmMessage:""),
           actions: <Widget>[
             FlatButton(
               child: Text('Yes'),
@@ -479,6 +480,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
           arrOrganization[selectedIndex] = getOrganizationData.organization[0];
           organizationData.organization = arrOrganization;
+
 
         Utils.performManageLevel(getOrganizationData);
 

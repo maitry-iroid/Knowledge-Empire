@@ -269,7 +269,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     firebaseCloudMessagingListeners();
 
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@drawable/icon');
+        AndroidInitializationSettings('ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings(
         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var initializationSettings = InitializationSettings(
