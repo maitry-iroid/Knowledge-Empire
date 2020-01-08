@@ -9,6 +9,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/achievement_category.dart';
 import 'package:ke_employee/models/change_password.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
+import 'package:ke_employee/models/getDownloadQuestions.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -682,4 +683,52 @@ class WebApi {
       return null;
     }
   }
+
+//  Future<QuestionsResponse> getDownloadQuestions(Map<String, dynamic> jsonMap) async {
+
+//    Future<QuestionsResponse> getDownloadQuestions(
+//      BuildContext context, DownloadQuestionsRequest rq) async {
+//    initDio();
+////    print("questions_request__" + json.encode(jsonMap));
+//        print("getDownloadQuestions" + json.encode(rq.toJson()));
+//    try {
+//      final response = await dio.post("",
+//          data: json
+//              .encode(getRequest('getDownloadQuestions', json.encode(rq.toJson()))));
+//
+//      if (response.statusCode == 200) {
+//        print(response.data);
+//        QuestionsResponse questionsResponse =
+//        QuestionsResponse.fromJson(jsonDecode(response.data));
+//        return questionsResponse;
+//      }
+//      print(response.data);
+//      return null;
+//    } catch (e) {
+//      print(e);
+//      return null;
+//    }
+//  }
+
+  Future<QuestionsResponse> getDownloadQuestions(Map<String, dynamic> jsonMap) async {
+    initDio();
+
+    print("questions_request__" + json.encode(jsonMap));
+    try {
+      final response = await dio.post("",
+          data: json.encode(getRequest('getDownloadQuestions', json.encode(jsonMap))));
+      if (response.statusCode == 200) {
+        print(response.data);
+        QuestionsResponse questionsResponse =
+        QuestionsResponse.fromJson(jsonDecode(response.data));
+        return questionsResponse;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
 }

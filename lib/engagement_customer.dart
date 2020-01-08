@@ -54,7 +54,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   List abcdIndex = ['A', 'B', 'C', 'D'];
   int _selectedDrawerIndex = 0;
 
-//  VideoPlayerController _controller;
   bool isLoading = false;
 
   String urlPDFPath = "";
@@ -94,6 +93,46 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         : Container();
   }
 
+  void initVideoController() {
+
+    if (isVideo(questionData.mediaLink)) {
+      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+          ? VideoPlayerController.file(
+          Utils.getCacheFile(questionData.mediaLink).file)
+          : VideoPlayerController.network(questionData.mediaLink)
+        ..initialize().then((_) {
+          setState(() {
+            _controller.pause();
+          });
+        });
+
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+
+      _controller.pause();
+    }
+
+//        if (isVideo(questionData.mediaLink)) {
+//          _controller = Utils.getCacheFile(questionData.mediaLink) != null
+//              ? VideoPlayerController.file(
+//              fileInfo.file)
+//              : VideoPlayerController.network(questionData.mediaLink)
+//            ..initialize().then((_) {
+//              setState(() {
+//                _controller.pause();
+//              });
+//            });
+//
+//          questionData.videoLoop == 1
+//              ? _controller.setLooping(true)
+//              : _controller.setLooping(false);
+//
+//          _controller.pause();
+//        }
+
+  }
+
   FileInfo fileInfo;
   String error;
 
@@ -129,24 +168,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     print(questionData.value);
 
 //    downloadFile();
-
-//    if (isVideo(questionData.mediaLink)) {
-//      _controller = Utils.getCacheFile(questionData.mediaLink) != null
-//          ? VideoPlayerController.file(
-//          fileInfo.file)
-//          : VideoPlayerController.network(questionData.mediaLink)
-//        ..initialize().then((_) {
-//          setState(() {
-//            _controller.pause();
-//          });
-//        });
-//
-//      questionData.videoLoop == 1
-//          ? _controller.setLooping(true)
-//          : _controller.setLooping(false);
-//
-//      _controller.pause();
-//    }
 
     initVideoController();
 
@@ -655,26 +676,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     );
   }
 
-  void initVideoController() {
-
-    if (isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
-          ? VideoPlayerController.file(
-              Utils.getCacheFile(questionData.mediaLink).file)
-          : VideoPlayerController.network(questionData.mediaLink)
-        ..initialize().then((_) {
-          setState(() {
-            _controller.pause();
-          });
-        });
-
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
-
-      _controller.pause();
-    }
-  }
 
   showMediaView(BuildContext context) {
     if (isImage(questionData.mediaLink)) {

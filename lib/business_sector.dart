@@ -14,6 +14,7 @@ import 'package:ke_employee/models/questions.dart';
 import 'helper/Utils.dart';
 import 'helper/constant.dart';
 import 'helper/res.dart';
+import 'models/getDownloadQuestions.dart';
 import 'models/get_learning_module.dart';
 
 class BusinessSectorPage extends StatefulWidget {
@@ -34,6 +35,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   int maxVol, currentVol;
 
+  bool isSwitched;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -44,19 +47,24 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         fetchLearningModules();
       } else {
         if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
-            Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
-          arrFinalLearningModules = LearningModuleResponse.fromJson(
-                  jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
+            Injector.prefs
+                .getString(PrefKeys.learningModles)
+                .isNotEmpty) {
+          arrFinalLearningModules = LearningModuleResponse
+              .fromJson(
+              jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
 
-          if(arrFinalLearningModules.length>0)
+          if (arrFinalLearningModules.length > 0)
             setState(() {
 
             });
         }
       }
     });
+
+    isSwitched = Global.shared.isInstructionView;
   }
 
   @override
@@ -73,10 +81,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 flex: 1,
                 child: Injector.isBusinessMode
                     ? Card(
-                        color: Colors.transparent,
-                        elevation: 20,
-                        child: showSecondHalf(),
-                      )
+                  color: Colors.transparent,
+                  elevation: 20,
+                  child: showSecondHalf(),
+                )
                     : showSecondHalf(),
               )
             ],
@@ -94,11 +102,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          Injector.isBusinessMode ? null : BorderRadius.circular(20),
           image: Injector.isBusinessMode
               ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("business_sec_header")),
-                  fit: BoxFit.fill)
+              image: AssetImage(Utils.getAssetsImg("business_sec_header")),
+              fit: BoxFit.fill)
               : null),
       child: Row(
         children: <Widget>[
@@ -131,11 +139,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.moduleId ==
-                    arrFinalLearningModules[index].moduleId)
+                arrFinalLearningModules[index].moduleId)
                 ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
-                    fit: BoxFit.fill)
+                image: AssetImage(Utils.getAssetsImg(
+                    Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
+                fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -154,9 +162,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           : BorderRadius.circular(20),
                       image: Injector.isBusinessMode
                           ? DecorationImage(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("bg_bus_sector_item")),
-                              fit: BoxFit.fill)
+                          image: AssetImage(
+                              Utils.getAssetsImg("bg_bus_sector_item")),
+                          fit: BoxFit.fill)
                           : null),
                   child: Stack(
                     alignment: Alignment.center,
@@ -178,20 +186,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       ),
                       arrFinalLearningModules[index].isAssign == 1
                           ? Positioned(
-                              right: 5,
-                              bottom: Injector.isBusinessMode ? 5 : 2,
-                              child: Text(
-                                Utils.getText(context, StringRes.subscribed),
-                                style: TextStyle(
-                                  color: Injector.isBusinessMode
-                                      ? ColorRes.bgHeader
-                                      : ColorRes.blue,
-                                  fontSize: 10,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
+                        right: 5,
+                        bottom: Injector.isBusinessMode ? 5 : 2,
+                        child: Text(
+                          Utils.getText(context, StringRes.subscribed),
+                          style: TextStyle(
+                            color: Injector.isBusinessMode
+                                ? ColorRes.bgHeader
+                                : ColorRes.blue,
+                            fontSize: 10,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
                           : Container()
                     ],
                   )),
@@ -205,14 +213,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
                     color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     borderRadius: Injector.isBusinessMode
                         ? null
                         : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg("value")),
-                            fit: BoxFit.fill)
+                        image: AssetImage(Utils.getAssetsImg("value")),
+                        fit: BoxFit.fill)
                         : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
@@ -231,6 +239,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         Utils.playClickSound();
         setState(() {
           selectedModule = arrFinalLearningModules[index];
+//          isSwitched = ;
           isSwitched = selectedModule.isDownloadEnable == 1;
         });
       },
@@ -258,7 +267,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
@@ -322,7 +331,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     );
   }
 
-  bool isSwitched = false;
 
   showSecondHalf() {
     return Container(
@@ -384,9 +392,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         borderRadius: BorderRadius.circular(20),
                         image: Injector.isBusinessMode
                             ? DecorationImage(
-                                image:
-                                    AssetImage(Utils.getAssetsImg("bg_blue")),
-                                fit: BoxFit.fill)
+                            image:
+                            AssetImage(Utils.getAssetsImg("bg_blue")),
+                            fit: BoxFit.fill)
                             : null),
                     child: Text(
                       Utils.getText(context, StringRes.description),
@@ -410,22 +418,30 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   children: <Widget>[
                     selectedModule.isAssign == 1
                         ? InkResponse(
-                            child: Text(
-                                Utils.getText(context, StringRes.downLoad)),
-                            onTap: () {
-                              Utils.playClickSound();
-
-
-                            },
-                          )
+                      child: Text(
+                          Utils.getText(context, StringRes.downLoad)),
+                      onTap: () {
+                        Utils.playClickSound();
+                      },
+                    )
                         : Container(),
                     Switch(
-                      value: selectedModule.isDownloadEnable == 1,
-                      onChanged: (value) {
-                        isSwitched = value;
-
+                      value: isSwitched,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isSwitched = value;
+                          Global.shared.isInstructionView = value;
+                          value = !value;
+                        });
                         updatePermission();
                       },
+//                      value: selectedModule.isDownloadEnable == 1,
+//                      onChanged: (value) {
+//                        setState(() {
+//                          isSwitched = value;
+//                        });
+//                        updatePermission();
+//                      },
                       activeTrackColor: ColorRes.white,
                       inactiveTrackColor: ColorRes.lightGrey,
                       activeColor: Colors.white,
@@ -446,9 +462,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                 : BorderRadius.circular(20),
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("bg_subscribe")),
-                                    fit: BoxFit.fill)
+                                image: AssetImage(
+                                    Utils.getAssetsImg("bg_subscribe")),
+                                fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(
@@ -522,7 +538,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
     WebApi()
         .assignUserToModule(
-            selectedModule.moduleId, type, selectedModule.companyId)
+        selectedModule.moduleId, type, selectedModule.companyId)
         .then((data) {
       setState(() {
         isLoading = false;
@@ -564,7 +580,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void searchData() {
     var data = arrLearningModules
         .where((module) =>
-            module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
+        module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
 
     print("search_data___" + data.length.toString());
@@ -590,7 +606,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       if (questionResponse != null) {
         if (questionResponse.flag == "true") {
-          print("length" + questionResponse.toJson().length.toString());
+          print("length" + questionResponse
+              .toJson()
+              .length
+              .toString());
 
           List<QuestionData> arrQuestions = questionResponse.data;
 
@@ -603,9 +622,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           }
 
           questionResponse.data = arrQuestions;
+          print("arraquestionsss =============>>>>>>>  $questionResponse.data");
 
-          await Injector.prefs.setString(
-              PrefKeys.questionData, json.encode(questionResponse.toJson()));
+
+          if (isSwitched) {
+            await Injector.prefs.setString(
+                PrefKeys.questionData, json.encode(questionResponse.toJson()));
+          } else {
+            await Injector.prefs.clear();
+          }
+
 
           questionResponse.data.forEach((questionData) async {
             if (questionData.mediaLink.isNotEmpty)
@@ -613,8 +639,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   .downloadFile(questionData.mediaLink)
                   .then((fileInfo) {
                 dataSize += fileInfo.file.lengthSync();
+                print("hello $dataSize");
               });
           });
+
+//          if(isSwitched == false) {
+//            questionResponse.data.forEach((questionData) async {
+//              await DefaultCacheManager().emptyCache();
+//            });
+//          }
+
 
           print(dataSize);
 
@@ -649,14 +683,65 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (response.flag == "true") {
           Utils.showToast("Permission updated Successfully!");
 
-          if(isSwitched){
-            downloadAllQuestions();
+          if (isSwitched) {
+//            downloadAllQuestions();
+            getQuestions();
           }
-
         } else {
           Utils.showToast(response.msg);
         }
       }
     });
   }
+
+  List<QuestionData> arrQuestions = List();
+
+
+  getQuestions() {
+    setState(() {
+      isLoading = true;
+    });
+
+    DownloadQuestionsRequest rq = DownloadQuestionsRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi().getDownloadQuestions(rq.toJson()).then((data) async {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (data != null) {
+        if (data.flag == "true") {
+
+
+//          arrQuestions = data.data;
+          if (isSwitched) {
+            await Injector.prefs.setString(
+                PrefKeys.questionData, json.encode(data.toJson()));
+          } else {
+            await Injector.prefs.clear();
+          }
+
+          Utils.showToast("Downloaded successfully");
+
+        } else {
+          Utils.showToast(data.msg);
+        }
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
+    });
+  }
+
+}
+
+class Global {
+  static final shared = Global();
+  bool isInstructionView = false;
 }

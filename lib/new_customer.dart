@@ -48,9 +48,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         getQuestions();
       } else {
         if (Injector.prefs.getString(PrefKeys.questionData) != null) {
+
           arrQuestions = QuestionsResponse.fromJson(
               jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
               .data;
+
 
 //          arrQuestions.forEach((question) {
 //
@@ -66,8 +68,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         }
       }
     });
-
-
   }
 
 
@@ -93,6 +93,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
 
             print(arrQuestions[i].value);
+            print(arrQuestions[i].mediaLink);
           }
 
           setState(() {

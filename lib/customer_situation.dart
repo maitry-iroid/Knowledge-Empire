@@ -672,10 +672,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: ColorRes.white, width: 1)
-
                   ),
-                  child:
-                  showMediaView(context)),
+                  child: showMediaView(context)),
             ),
             showExpandIcon(context)
           ],
@@ -1284,6 +1282,8 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
     });
 
     controller.forward();
+    initVideoController1();
+
   }
 
   bool checkimg = true;
@@ -1318,6 +1318,27 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;
+    }
+  }
+
+  void initVideoController1() {
+
+    if (isVideo(questionData.mediaLink)) {
+      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+          ? VideoPlayerController.file(
+          Utils.getCacheFile(questionData.mediaLink).file)
+          : VideoPlayerController.network(questionData.mediaLink)
+        ..initialize().then((_) {
+          setState(() {
+            _controller.pause();
+          });
+        });
+
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+
+      _controller.pause();
     }
   }
 
