@@ -486,18 +486,20 @@ class Utils {
     String title = "";
     String body = "";
 
+    print(message);
+
 //    addBadge();
 
-    if (Platform.isIOS) {
-      title = message['title'];
-      body = message['body'];
-    } else {
+//    if (Platform.isIOS) {
+//      title = message['title'];
+//      body = message['body'];
+//    } else {
       message.values.forEach((value) {
         if (Map.from(value)['title'] != null) title = Map.from(value)['title'];
 
         if (Map.from(value)['body'] != null) body = Map.from(value)['body'];
       });
-    }
+//    }
 
     print(title);
     print(body);
