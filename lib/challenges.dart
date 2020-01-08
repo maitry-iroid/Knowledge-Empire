@@ -11,8 +11,14 @@ import 'helper/web_api.dart';
 import 'models/get_friends.dart';
 
 //int currentVol;
+GetFriendsData getFriendsData = GetFriendsData();
 
 class ChallengesPage extends StatefulWidget {
+//  final GetFriendsData friendsData;
+  List<GetFriendsData> arrFriends = List();
+
+  ChallengesPage(
+      { Key key,this.arrFriends }) : super(key: key);
   @override
   _ChallengesPageState createState() => _ChallengesPageState();
 }
@@ -44,19 +50,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
     getFriends();
 //    initPlatformState();
 //    updateVolumes();
+//    getFriendsData = widget.friendsData;
+    arrFriends = widget.arrFriends;
   }
 
-  /*Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
 
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +130,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: arrFriends.length,
+//                  itemCount: 1,
+                  itemCount: arrFriends != null ? arrFriends.length : 0,
 //                  var isSelected = true;
                   itemBuilder: (BuildContext context, int index) {
-                    return showFriendItem(index);
+                    return showFriendItem(index, 1);
                   },
                 ),
               ),
@@ -230,10 +229,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: arrRewards.length,
+                  itemCount: arrRewards.length ,
                   itemBuilder: (BuildContext context, int index) {
-                    return showFriendItem(index);
+                    return showFriendItem(index,2);
                   },
                 ),
               ),
@@ -260,37 +260,64 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   int selectedIndex = -1;
 
-  _onSelected(int index) {
+  _onSelectedFriend(int index) {
     setState(() => selectedIndex = index);
   }
 
-  showFriendItem(int index) {
+  int selectedRewardsIndex = -1;
+
+  _onSelectedRewards(int index) {
+    setState(() => selectedRewardsIndex = index);
+  }
+
+  selectedItem(int type, int index) {
+    if(type == 1) {
+      if(selectedIndex == index) {
+        return ColorRes.blue;
+      } else {
+        return ColorRes.greyText;
+      }
+    } else {
+      if(selectedRewardsIndex == index) {
+        return ColorRes.blue;
+      } else {
+        return ColorRes.greyText;
+      }
+    }
+  }
+
+  showFriendItem(int index, int type) {
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
-          _onSelected(index);
+        type == 1 ? _onSelectedFriend(index) : _onSelectedRewards(index);
+
+        //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
       },
       child: Container(
         alignment: Alignment.center,
+        width: Utils.getDeviceWidth(context) / 18,
         decoration: BoxDecoration(
-            color: Injector.isBusinessMode ? null : ColorRes.white,
-            borderRadius: BorderRadius.circular(20),
-            image: Injector.isBusinessMode
-                ? DecorationImage(
-                    image: AssetImage(
-                      selectedIndex != null && selectedIndex == index
-                          ? Utils.getAssetsImg('bg_blue')
-                          : Utils.getAssetsImg('rounded_rect_challenges'),
-                    ),
-                    fit: BoxFit.fill)
-                : null),
-        margin: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-        padding: EdgeInsets.symmetric(vertical: 2),
-        child: Text(
-          arrFriends[index].name,
+            color: Injector.isBusinessMode ? selectedItem(type, index)
+//            selectedIndex != null && selectedIndex == index ? ColorRes.blue : ColorRes.greyText
+                : ColorRes.white,
+          borderRadius: BorderRadius.circular(20),
+//            image: Injector.isBusinessMode
+//                ? DecorationImage(
+//                    image: AssetImage(
+//                      selectedIndex != null && selectedIndex == index
+//                          ? Utils.getAssetsImg('bg_blue')
+//                          : Utils.getAssetsImg('rounded_rect_challenges'),
+//                    ),
+//                    fit: BoxFit.fill)
+//                : null
+        ),
+        margin: EdgeInsets.symmetric(vertical: type == 1 ? 5 : Utils.getDeviceHeight(context) / 7, horizontal: type == 1 ? 8 : 8),
+//        padding: EdgeInsets.symmetric(vertical: 2),
+        child: Text( type != 2 ?
+          arrFriends[index].name : arrRewards[index],
           style: TextStyle(
-              color:
-                  Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
+              color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
               fontSize: 17),
         ),
       ),
@@ -306,7 +333,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   showSectorItem(int index) {
     return GestureDetector(
       onTap: () {
-        Utils.playClickSound();
+//        if(currentVol != 0) {
+          Utils.playClickSound();
+//        }
         _onSelectedSector(index);
       },
       child: Container(
