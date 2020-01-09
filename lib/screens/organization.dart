@@ -11,9 +11,9 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
-import 'helper/string_res.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
+import '../helper/string_res.dart';
 
 
 

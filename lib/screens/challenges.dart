@@ -5,10 +5,10 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 //import 'package:volume/volume.dart';
 
-import 'helper/Utils.dart';
-import 'helper/string_res.dart';
-import 'helper/web_api.dart';
-import 'models/get_friends.dart';
+import '../helper/Utils.dart';
+import '../helper/string_res.dart';
+import '../helper/web_api.dart';
+import '../models/get_friends.dart';
 
 //int currentVol;
 GetFriendsData getFriendsData = GetFriendsData();

@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/business_sector.dart';
-import 'package:ke_employee/challenges.dart';
-import 'package:ke_employee/existing_customers.dart';
+import 'package:ke_employee/screens/business_sector.dart';
+import 'package:ke_employee/screens/challenges.dart';
+import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/new_customer.dart';
+import 'package:ke_employee/screens/new_customer.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'P+L.dart';
-import 'helper/constant.dart';
+import '../helper/constant.dart';
 import 'home.dart';
 
 //AudioManager audioManager;

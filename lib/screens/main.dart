@@ -4,17 +4,17 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ke_employee/dashboard_new.dart';
-import 'package:ke_employee/engagement_customer.dart';
+import 'package:ke_employee/screens/dashboard_new.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/intro_screen.dart';
-import 'package:ke_employee/login.dart';
+import 'package:ke_employee/screens/intro_screen.dart';
+import 'package:ke_employee/screens/login.dart';
 import 'package:notifier/notifier_provider.dart';
 
-import 'helper/constant.dart';
-import 'helper/localization.dart';
-import 'injection/dependency_injection.dart';
+import '../helper/constant.dart';
+import '../helper/localization.dart';
+import '../injection/dependency_injection.dart';
 import 'home.dart';
 
 void main() => setupLocator();

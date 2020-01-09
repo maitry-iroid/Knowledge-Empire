@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/intro_screen.dart';
+import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 
-import 'commonview/background.dart';
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
-import 'helper/prefkeys.dart';
-import 'helper/res.dart';
-import 'helper/string_res.dart';
+import '../commonview/background.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
+import '../helper/prefkeys.dart';
+import '../helper/res.dart';
+import '../helper/string_res.dart';
 import 'login.dart';
-import 'models/logout.dart';
+import '../models/logout.dart';
 
 
 class ProfilePage extends StatefulWidget {

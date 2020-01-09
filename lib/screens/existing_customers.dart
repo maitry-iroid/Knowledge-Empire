@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'commonview/background.dart';
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
+import '../commonview/background.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
 
-import 'helper/res.dart';
-import 'helper/string_res.dart';
-import 'helper/web_api.dart';
-import 'injection/dependency_injection.dart';
-import 'models/questions.dart';
-import 'models/releaseResource.dart';
+import '../helper/res.dart';
+import '../helper/string_res.dart';
+import '../helper/web_api.dart';
+import '../injection/dependency_injection.dart';
+import '../models/questions.dart';
+import '../models/releaseResource.dart';
 
 class ExistingCustomerPage extends StatefulWidget {
   @override

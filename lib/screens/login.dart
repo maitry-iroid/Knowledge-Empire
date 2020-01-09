@@ -5,16 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/forgot_password.dart';
+import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/home.dart';
-import 'package:ke_employee/intro_screen.dart';
+import 'package:ke_employee/screens/home.dart';
+import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/login.dart';
-import 'models/get_customer_value.dart';
+import '../models/get_customer_value.dart';
 
 
 class FadeRouteLogin extends PageRouteBuilder {

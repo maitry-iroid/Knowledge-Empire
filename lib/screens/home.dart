@@ -1,39 +1,39 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:ke_employee/customer_situation.dart';
-import 'package:ke_employee/challenges.dart';
-import 'package:ke_employee/dashboard.dart';
-import 'package:ke_employee/dashboard_new.dart';
-import 'package:ke_employee/engagement_customer.dart';
-import 'package:ke_employee/existing_customers.dart';
+import 'package:ke_employee/screens/customer_situation.dart';
+import 'package:ke_employee/screens/challenges.dart';
+import 'package:ke_employee/screens/dashboard.dart';
+import 'package:ke_employee/screens/dashboard_new.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
+import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/intro_screen.dart';
+import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/new_customer.dart';
-import 'package:ke_employee/organization2.dart';
-import 'package:ke_employee/powerups.dart';
-import 'package:ke_employee/profile.dart';
-import 'package:ke_employee/ranking.dart';
-import 'package:ke_employee/rewards.dart';
-import 'package:ke_employee/team.dart';
+import 'package:ke_employee/screens/new_customer.dart';
+import 'package:ke_employee/screens/organization2.dart';
+import 'package:ke_employee/screens/powerups.dart';
+import 'package:ke_employee/screens/profile.dart';
+import 'package:ke_employee/screens/ranking.dart';
+import 'package:ke_employee/screens/rewards.dart';
+import 'package:ke_employee/screens/team.dart';
 
 import 'P+L.dart';
 import 'business_sector.dart';
-import 'commonview/header.dart';
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
-import 'helper/res.dart';
-import 'helper/string_res.dart';
-import 'models/get_friends.dart';
-
+import '../commonview/header.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
+import '../helper/res.dart';
+import '../helper/string_res.dart';
+import '../models/get_friends.dart';
 
 class FadeRouteHome extends PageRouteBuilder {
   final Widget page;
@@ -47,15 +47,13 @@ class FadeRouteHome extends PageRouteBuilder {
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
 
-
   FadeRouteHome(
       {this.page,
       this.initialPageType,
       this.questionDataHomeScr,
       this.questionDataSituation,
       this.value,
-      this.arrFriends
-      })
+      this.arrFriends})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -136,15 +134,13 @@ class HomePage extends StatefulWidget {
 
   List<GetFriendsData> arrFriends = List();
 
-
   HomePage(
       {Key key,
       this.initialPageType,
       this.questionDataHomeScr,
       this.questionDataSituation,
       this.value,
-      this.arrFriends
-      })
+      this.arrFriends})
       : super(key: key);
 
 //  final  QuestionData questionData;
@@ -176,6 +172,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
+
 
   @override
   void initState() {
@@ -242,7 +239,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _selectedDrawerIndex = 0;
 
     getCustomerValues();
-
   }
 
   @override
@@ -251,7 +247,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _connectivitySubscription?.cancel();
     super.dispose();
   }
-
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
@@ -384,7 +379,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   _onSelectItem(int index) {
 //    if (currentVol != 0) {
-      Utils.playClickSound();
+    Utils.playClickSound();
 //    }
 
     if (mounted) {
@@ -441,7 +436,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //            _onSelectItem(i);
 //          }
 //          }
-      ));
+          ));
     }
 
     return Scaffold(
@@ -480,6 +475,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             isShowMenu: true,
             openProfile: openProfile,
           ),
+
         ],
       )),
     );

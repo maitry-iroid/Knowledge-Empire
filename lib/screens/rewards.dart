@@ -4,10 +4,10 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 
-import 'commonview/background.dart';
-import 'helper/Utils.dart';
-import 'helper/res.dart';
-import 'helper/string_res.dart';
+import '../commonview/background.dart';
+import '../helper/Utils.dart';
+import '../helper/res.dart';
+import '../helper/string_res.dart';
 
 
 class RewardsPage extends StatefulWidget {
@@ -21,8 +21,6 @@ GetAchievementData selectedAchievement;
 SubCategory selectedSubCategory;
 
 class _RewardsPageState extends State<RewardsPage> {
-
-
 
   List<RewardsModel> rewardsList = [
     RewardsModel(levelName: "Level 0", image: "trophy0"),
@@ -128,8 +126,8 @@ class _RewardsPageState extends State<RewardsPage> {
               margin: EdgeInsets.only(left: 5, right: 5, top: 5),
               child: Row(
                 children: <Widget>[
-                  showFirstAchievement(1),
-                  showFirstAchievement(2)
+                  showAchievementBox(1),
+                  showAchievementBox(2)
                 ],
               ),
             ),
@@ -210,12 +208,8 @@ class _RewardsPageState extends State<RewardsPage> {
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-//                physics: ClampingScrollPhysics(),
-//                itemCount: subCategory.length,
                 itemCount: selectedAchievement.subCategory.length,
-
                 itemBuilder: (BuildContext context, int index) {
-//                      return showItem(index);
                   return showRewardItem(index);
                 },
               ),
@@ -227,8 +221,8 @@ class _RewardsPageState extends State<RewardsPage> {
               margin: EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 children: <Widget>[
-                  showFirstAchievement(1),
-                  showFirstAchievement(2)
+                  showAchievementBox(1),
+                  showAchievementBox(2)
                 ],
               ),
             ),
@@ -238,7 +232,7 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  showFirstAchievement(int type) {
+  showAchievementBox(int type) {
     return Expanded(
       flex: 1,
       child: Stack(

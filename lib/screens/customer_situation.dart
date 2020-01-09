@@ -8,12 +8,12 @@ import 'package:path/path.dart' as prefix0;
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
-import 'helper/constant.dart';
-import 'helper/res.dart';
+import '../helper/constant.dart';
+import '../helper/res.dart';
 
-import 'commonview/background.dart';
+import '../commonview/background.dart';
 import 'home.dart';
-import 'models/questions.dart';
+import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 List<Answer> arrAnswerSituation = List();
