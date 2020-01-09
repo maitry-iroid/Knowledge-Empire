@@ -6,6 +6,6 @@ class UserRepository{
   WebApi _apiProvider = WebApi();
 
   Future<LearningModuleResponse> getUser(){
-    return _apiProvider.getLearningModule();
+    return _apiProvider.getLearningModule(0);
   }
 }

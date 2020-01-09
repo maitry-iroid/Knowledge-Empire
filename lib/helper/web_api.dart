@@ -169,10 +169,10 @@ class WebApi {
     }
   }
 
-  Future<LearningModuleResponse> getLearningModule() async {
+  Future<LearningModuleResponse> getLearningModule(int isChallenge) async {
     initDio();
 
-    var req = json.encode({'userId': Injector.userData.userId});
+    var req = json.encode({'userId': Injector.userData.userId,'isChallenge': isChallenge.toString()});
 
     print("getLearningModule" + " - " + req);
     print(dio.options.headers);

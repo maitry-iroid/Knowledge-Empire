@@ -118,11 +118,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void initVideoController() {
-  if (isVideo(questionData.mediaLink)) {
+    if (isVideo(questionData.mediaLink)) {
 //    if (isVideo(arrAnswer)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
-          Utils.getCacheFile(questionData.mediaLink).file)
+              Utils.getCacheFile(questionData.mediaLink).file)
           : VideoPlayerController.network(questionData.mediaLink)
         ..initialize().then((_) {
           setState(() {
@@ -136,67 +136,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
       _controller.pause();
     }
-
-//        if (isVideo(questionData.mediaLink)) {
-//          _controller = Utils.getCacheFile(questionData.mediaLink) != null
-//              ? VideoPlayerController.file(
-//              fileInfo.file)
-//              : VideoPlayerController.network(questionData.mediaLink)
-//            ..initialize().then((_) {
-//              setState(() {
-//                _controller.pause();
-//              });
-//            });
-//
-//          questionData.videoLoop == 1
-//              ? _controller.setLooping(true)
-//              : _controller.setLooping(false);
-//
-//          _controller.pause();
-//        }
-
   }
 
   FileInfo fileInfo;
   String error;
 
-  downloadFile() {
-    var cacheVideo = questionData.mediaLink;
-
-    print(cacheVideo);
-    DefaultCacheManager().getFile(cacheVideo).listen((f) {
-      setState(() {
-        fileInfo = f;
-        print(fileInfo);
-        error = null;
-      });
-    }).onError((e) {
-      setState(() {
-        fileInfo = null;
-        error = e.toString();
-      });
-    });
-  }
-
-  //Sound Is mute
-/*  Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }*/
-
-
-
   @override
   Widget build(BuildContext context) {
-//    _notifier = NotifierProvider.of(context);
-
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -216,7 +162,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     return GestureDetector(
         onTap: () {
 //          if(currentVol != 0) {
-            Utils.playClickSound();
+          Utils.playClickSound();
 //          }
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
@@ -299,7 +245,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitAnswerRequest rq =
         Injector.prefs.getString(PrefKeys.answerData) != null
             ? SubmitAnswerRequest.fromJson(
-            jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
+                jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
             : SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
@@ -309,7 +255,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     Utils.isInternetConnected().then((isConnected) {
       Injector.customerValueData.totalBalance = questionData.value;
-//      _notifier.notify(action, data);
 
       if (isConnected) {
         callSubmitAnswerApi(context);
@@ -428,7 +373,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               ),
               onTap: () {
 //                if(currentVol != 0) {
-                  Utils.playClickSound();
+                Utils.playClickSound();
 //                }
                 performSubmitAnswer(context);
               },
@@ -594,7 +539,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             child: InkResponse(
               onTap: () {
 //                if(currentVol != 0) {
-                  Utils.playClickSound();
+                Utils.playClickSound();
 //                }
                 showDialog(
                   context: context,
@@ -636,41 +581,36 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   showQueMedia(BuildContext context) {
     return InkResponse(
-      onTap: () {
+        onTap: () {
 //        if(currentVol != 0) {
           Utils.playClickSound();
 //        }
-       performImageClick(context);
-      },
-      child:  Stack(
-        children: <Widget>[
-          Card(
-            elevation: 10,
-            color: ColorRes.transparent.withOpacity(0.4),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            margin:
-            EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 10),
-            child: Container(
-              height: MediaQuery.of(context).size.height / 2.5,
-                alignment: Alignment.center,
-                padding:
-                EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                decoration: BoxDecoration(
+          performImageClick(context);
+        },
+        child: Stack(
+          children: <Widget>[
+            Card(
+              elevation: 10,
+              color: ColorRes.transparent.withOpacity(0.4),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin: EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 10),
+              child: Container(
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  alignment: Alignment.center,
+                  padding:
+                      EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                  decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: ColorRes.white, width: 1)
-
-                ),
-                child: showMediaView(context)),
-          ),
-          showExpandIcon(context)
-        ],
-      )
-    );
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: ColorRes.white, width: 1)),
+                  child: showMediaView(context)),
+            ),
+            showExpandIcon(context)
+          ],
+        ));
   }
-
 
   showMediaView(BuildContext context) {
     if (isImage(questionData.mediaLink)) {
@@ -735,32 +675,26 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showExpandIcon(BuildContext context) {
-    return  Positioned(
-      bottom: 0,right: 0,
+    return Positioned(
+      bottom: 0,
+      right: 0,
       child: InkResponse(
         child: Container(
             alignment: Alignment.center,
             height: Utils.getDeviceWidth(context) / 20,
             width: Utils.getDeviceWidth(context) / 20,
             decoration: BoxDecoration(
-                image:  DecorationImage(
+                image: DecorationImage(
                     image: AssetImage(Injector.isBusinessMode
-                        ? Utils.getAssetsImg(
-                        "full_expand_question_answers")
+                        ? Utils.getAssetsImg("full_expand_question_answers")
                         : Utils.getAssetsImg("expand_pro")),
-                    fit: BoxFit.fill)
-            )),
+                    fit: BoxFit.fill))),
         onTap: () {
 //          if(currentVol != 0) {
-            Utils.playClickSound();
+          Utils.playClickSound();
 //          }
-          showDialog(
-            context: context,
-            builder: (_) => expandMedia()
-
-          );
+          showDialog(context: context, builder: (_) => expandMedia());
         },
-
       ),
     );
   }
@@ -769,9 +703,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     Utils.playClickSound();
     isImage(questionData.mediaLink)
         ? showDialog(
-      context: context,
-      builder: (_) => expandMedia(),
-    )
+            context: context,
+            builder: (_) => expandMedia(),
+          )
         : Container();
   }
 }
@@ -858,8 +792,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: ColorRes.white, width: 1),
                           ),
-                          child:
-                              ListView.builder(
+                          child: ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemCount: arrAnswer.length,
@@ -912,7 +845,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                       child: InkResponse(
                         onTap: () {
 //                          if(currentVol != 0) {
-                            Utils.playClickSound();
+                          Utils.playClickSound();
 //                          }
                           //alert pop
                           Navigator.pop(context);
@@ -955,7 +888,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     return GestureDetector(
         onTap: () {
 //          if(currentVol != 0) {
-            Utils.playClickSound();
+          Utils.playClickSound();
 //          }
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
@@ -1177,7 +1110,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                       child: InkResponse(
                           onTap: () {
 //                            if(currentVol != 0) {
-                              Utils.playClickSound();
+                            Utils.playClickSound();
 //                            }
                             //alert pop
                             Navigator.pop(context);
@@ -1347,7 +1280,7 @@ class expandMediaState extends State<expandMedia>
                       child: InkResponse(
                           onTap: () {
 //                            if(currentVol != 0) {
-                              Utils.playClickSound();
+                            Utils.playClickSound();
 //                            }
                             //alert pop
                             Navigator.pop(context);
