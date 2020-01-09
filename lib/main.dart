@@ -13,10 +13,10 @@ import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/screens/login.dart';
 import 'package:notifier/notifier_provider.dart';
 
-import '../helper/constant.dart';
-import '../helper/localization.dart';
-import '../injection/dependency_injection.dart';
-import 'home.dart';
+import 'helper/constant.dart';
+import 'helper/localization.dart';
+import 'injection/dependency_injection.dart';
+import 'screens/home.dart';
 
 void main() => setupLocator();
 

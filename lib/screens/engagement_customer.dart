@@ -112,7 +112,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             completeCallback: (bool result) {
               print("completeCallback,result:${result}");
             },
-            initialUrl: questionData.mediaLink,
+            initialUrl: Utils.getCacheFile(questionData.mediaLink) != null
+                ? Utils.getCacheFile(questionData.mediaLink)
+                : questionData.mediaLink,
           )
         : Container();
   }
@@ -615,10 +617,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaView(BuildContext context) {
     if (isImage(questionData.mediaLink)) {
       return Image(
-        image: NetworkImage(questionData.mediaLink),
-//        image: isImage(questionData.mediaLink) ? NetworkImage(questionData.mediaLink)
-////        Utils.getCacheFile(questionData.mediaLink) != null ? Utils.getCacheFile(questionData.mediaLink).file : NetworkImage(questionData.mediaLink)
-//            : AssetImage(Utils.getAssetsImg('back')),
+        image: isImage(questionData.mediaLink) ?
+        Utils.getCacheFile(questionData.mediaLink) != null ? FileImage(Utils.getCacheFile(questionData.mediaLink).file ): NetworkImage(questionData.mediaLink)
+            : AssetImage(Utils.getAssetsImg('back')),
       );
     } else if (isVideo(questionData.mediaLink) &&
         _controller.value.initialized) {

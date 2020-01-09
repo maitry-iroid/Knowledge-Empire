@@ -27,15 +27,15 @@ class DashboardNewPageState extends State<DashboardNewPage>
   void initState() {
     super.initState();
 
-    rotationController = AnimationController(
-        vsync: this, duration: Duration(seconds: 5), upperBound: pi * 2);
-    rotationController.forward(from: 0.0);
+//    rotationController = AnimationController(
+//        vsync: this, duration: Duration(seconds: 5), upperBound: pi * 2);
+//    rotationController.forward(from: 0.0);
 
     if (Injector.prefs.getInt(PrefKeys.mode) == null) {
       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
     }
 
-    _getListings();
+//    _getListings();
   }
 
   List<Widget> _getListings() {
@@ -67,12 +67,12 @@ class DashboardNewPageState extends State<DashboardNewPage>
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
               ),
-              RotationTransition(
-                  turns:
-                      Tween(begin: 0.0, end: 1.0).animate(rotationController),
-                  child: Image(
-                    image: AssetImage(Utils.getAssetsImg('back')),
-                  ))
+//              RotationTransition(
+//                  turns:
+//                      Tween(begin: 0.0, end: 1.0).animate(rotationController),
+//                  child: Image(
+//                    image: AssetImage(Utils.getAssetsImg('back')),
+//                  ))
             ],
           ),
         ),

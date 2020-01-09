@@ -420,22 +420,22 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           )
                         : Container(),
                     Switch(
-                      value: isSwitched,
-                      onChanged: (bool value) {
-                        setState(() {
-                          isSwitched = value;
-                          Global.shared.isInstructionView = value;
-                          value = !value;
-                        });
-                        updatePermission();
-                      },
-//                      value: selectedModule.isDownloadEnable == 1,
-//                      onChanged: (value) {
+//                      value: isSwitched,
+//                      onChanged: (bool value) {
 //                        setState(() {
 //                          isSwitched = value;
+//                          Global.shared.isInstructionView = value;
+//                          value = !value;
 //                        });
 //                        updatePermission();
 //                      },
+                      value: selectedModule.isDownloadEnable == 1,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitched = value;
+                        });
+                        updatePermission();
+                      },
                       activeTrackColor: ColorRes.white,
                       inactiveTrackColor: ColorRes.lightGrey,
                       activeColor: Colors.white,
@@ -713,16 +713,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       if (data != null) {
         if (data.flag == "true") {
-//          arrQuestions = data.data;
           List<QuestionData> arrQuestions = data.data;
 
-//          if (isSwitched) {
           await Injector.prefs
               .setString(PrefKeys.questionData, json.encode(data.toJson()));
 
-//          BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 
-          Injector.cacheManager.emptyCache();
+//          Injector.cacheManager.emptyCache();
 
           await BackgroundFetch.start().then((int status) async {
             for (int i = 0; i < arrQuestions.length; i++) {
