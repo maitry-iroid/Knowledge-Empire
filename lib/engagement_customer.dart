@@ -64,6 +64,30 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   bool pdfReady = false;
   PDFViewController _pdfViewController;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    questionData = widget.questionDataEngCustomer;
+    widget.questionDataEngCustomer.answer.shuffle();
+    arrAnswer = widget.questionDataEngCustomer.answer;
+    abcdList = abcdIndex;
+    print(questionData.value);
+//    downloadFile();
+    initVideoController();
+
+//    audioManager = AudioManager.STREAM_SYSTEM;
+//    initPlatformState();
+//    updateVolumes();
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   selectItem(index) {
     setState(() {
 //      _selectedItem = index;
@@ -94,8 +118,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void initVideoController() {
-
-    if (isVideo(questionData.mediaLink)) {
+  if (isVideo(questionData.mediaLink)) {
+//    if (isVideo(arrAnswer)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
           Utils.getCacheFile(questionData.mediaLink).file)
@@ -152,35 +176,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         error = e.toString();
       });
     });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    questionData = widget.questionDataEngCustomer;
-    widget.questionDataEngCustomer.answer.shuffle();
-    arrAnswer = widget.questionDataEngCustomer.answer;
-
-    abcdList = abcdIndex;
-
-    print(questionData.value);
-
-//    downloadFile();
-
-    initVideoController();
-
-//    audioManager = AudioManager.STREAM_SYSTEM;
-//    initPlatformState();
-//    updateVolumes();
-
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 
   //Sound Is mute
@@ -680,9 +675,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaView(BuildContext context) {
     if (isImage(questionData.mediaLink)) {
       return Image(
-        image: isImage(questionData.mediaLink)
-            ? NetworkImage(questionData.mediaLink)
-            : AssetImage(Utils.getAssetsImg('back')),
+        image: NetworkImage(questionData.mediaLink),
+//        image: isImage(questionData.mediaLink) ? NetworkImage(questionData.mediaLink)
+////        Utils.getCacheFile(questionData.mediaLink) != null ? Utils.getCacheFile(questionData.mediaLink).file : NetworkImage(questionData.mediaLink)
+//            : AssetImage(Utils.getAssetsImg('back')),
       );
     } else if (isVideo(questionData.mediaLink) &&
         _controller.value.initialized) {

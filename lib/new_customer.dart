@@ -49,10 +49,13 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       } else {
         if (Injector.prefs.getString(PrefKeys.questionData) != null) {
 
+          print(" hello   ===>>>   ${arrQuestions.length} ===  ");
+
           arrQuestions = QuestionsResponse.fromJson(
               jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
               .data;
 
+          print(" hello   ===>>>   ${arrQuestions.length} ===  ");
 
 //          arrQuestions.forEach((question) {
 //
@@ -93,7 +96,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
 
             print(arrQuestions[i].value);
-            print(arrQuestions[i].mediaLink);
+//            print(arrQuestions[i].mediaLink);
           }
 
           setState(() {

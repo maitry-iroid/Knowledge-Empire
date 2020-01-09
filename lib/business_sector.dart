@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -629,7 +631,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             await Injector.prefs.setString(
                 PrefKeys.questionData, json.encode(questionResponse.toJson()));
           } else {
-            await Injector.prefs.clear();
+            await Injector.prefs.remove(PrefKeys.questionData);
           }
 
 
@@ -664,7 +666,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     });
   }
 
-  void updatePermission() {
+  Future<void> updatePermission() async {
     setState(() {
       isLoading = true;
     });
@@ -686,16 +688,28 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           if (isSwitched) {
 //            downloadAllQuestions();
             getQuestions();
+          } else {
+//            Injector.cacheManager.emptyCache();
           }
         } else {
           Utils.showToast(response.msg);
         }
       }
     });
+
+    if(isSwitched == false) {
+      return await Injector.prefs.remove(PrefKeys.questionData);
+//      return  Injector.cacheManager.emptyCache();
+    }
+
   }
 
   List<QuestionData> arrQuestions = List();
 
+  Future<FileInfo> downloadFile(String url) async {
+//    print("123 =>> $url");
+    return await Injector.cacheManager.downloadFile(url);
+  }
 
   getQuestions() {
     setState(() {
@@ -715,13 +729,29 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
 
 //          arrQuestions = data.data;
-          if (isSwitched) {
+          List<QuestionData> arrQuestions = data.data;
+
+//          if (isSwitched) {
             await Injector.prefs.setString(
                 PrefKeys.questionData, json.encode(data.toJson()));
-          } else {
-            await Injector.prefs.clear();
+
+          BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+
+
+//          }
+//          else {
+//            await Injector.prefs.remove(PrefKeys.questionData);
+//          }
+          
+//          for()
+//          Injector.cacheManager.downloadFile(url)
+          for(int i = 0; i < arrQuestions.length ; i++) {
+            Injector.cacheManager.emptyCache();
+            downloadFile(arrQuestions[i].mediaLink);
           }
 
+
+          
           Utils.showToast("Downloaded successfully");
 
         } else {
@@ -738,8 +768,29 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       Utils.showToast(e.toString());
     });
   }
-
 }
+
+
+/// This "Headless Task" is run when app is terminated.
+void backgroundFetchHeadlessTask() async {
+  print('[BackgroundFetch] Headless event received.');
+  print("Hey Pawan Background headless fetch is successful");
+
+  // Read fetch_events from SharedPreferences
+  List<String> events = [];
+  String json = Injector.prefs.getString(PrefKeys.download);
+  if (json != null) {
+    events = jsonDecode(json).cast<String>();
+  }
+  // Add new event.
+  events.insert(0, new DateTime.now().toString() + ' [Headless]');
+  // Persist fetch events in SharedPreferences
+  Injector.prefs.setString(PrefKeys.download, jsonEncode(events));
+
+  BackgroundFetch.finish();
+}
+
+
 
 class Global {
   static final shared = Global();
