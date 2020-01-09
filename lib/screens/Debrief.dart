@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/challenges.dart';
+import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'helper/res.dart';
-import 'models/questions.dart';
+import '../helper/res.dart';
+import '../models/questions.dart';
 
 class DebriefPage extends StatefulWidget {
 

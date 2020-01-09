@@ -11,15 +11,15 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:path/path.dart';
 
-import 'commonview/background.dart';
+import '../commonview/background.dart';
 
 import 'package:video_player/video_player.dart';
 
-import 'helper/constant.dart';
-import 'helper/res.dart';
+import '../helper/constant.dart';
+import '../helper/res.dart';
 import 'home.dart';
-import 'models/questions.dart';
-import 'models/submit_answer.dart';
+import '../models/questions.dart';
+import '../models/submit_answer.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 import 'package:notifier/main_notifier.dart';

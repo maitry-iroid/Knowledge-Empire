@@ -7,13 +7,13 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/home.dart';
+import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
-import 'helper/constant.dart';
-import 'helper/string_res.dart';
-import 'helper/web_api.dart';
-import 'models/questions.dart';
+import '../helper/constant.dart';
+import '../helper/string_res.dart';
+import '../helper/web_api.dart';
+import '../models/questions.dart';
 
 
 class NewCustomerPage extends StatefulWidget {

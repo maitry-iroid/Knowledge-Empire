@@ -15,9 +15,9 @@ import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
-import 'helper/string_res.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
+import '../helper/string_res.dart';
 
 class OrganizationsPage2 extends StatefulWidget {
   @override

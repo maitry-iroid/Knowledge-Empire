@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/home.dart';
+import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
 //import 'package:volume/volume.dart';
 
-import 'commonview/background.dart';
-import 'helper/constant.dart';
+import '../commonview/background.dart';
+import '../helper/constant.dart';
 
 
 //AudioManager audioManager;

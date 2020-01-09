@@ -8,13 +8,13 @@ import 'package:ke_employee/helper/res.dart';
 
 //import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/engagement_customer.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/models/questions.dart';
 
 //import 'package:ke_employee/models/questions_response.dart';
 import 'package:video_player/video_player.dart';
 
-import '../home.dart';
+import '../screens/home.dart';
 
 class CommonView {
   static getBGDecoration(BuildContext context) {

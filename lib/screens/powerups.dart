@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/engagement_customer.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -14,14 +14,14 @@ import 'package:notifier/main_notifier.dart';
 import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
-import 'helper/header_utils.dart';
-import 'helper/res.dart';
-import 'models/get_customer_value.dart';
-import 'models/get_learning_module.dart';
-import 'models/manage_organization.dart';
-import 'models/organization.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
+import '../helper/header_utils.dart';
+import '../helper/res.dart';
+import '../models/get_customer_value.dart';
+import '../models/get_learning_module.dart';
+import '../models/manage_organization.dart';
+import '../models/organization.dart';
 
 class PowerUpsPage extends StatefulWidget {
   @override

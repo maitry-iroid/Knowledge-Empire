@@ -10,7 +10,6 @@ import 'package:ke_employee/models/organization.dart';
 import 'package:notifier/main_notifier.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-
 class HeaderView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
@@ -43,7 +42,6 @@ class HeaderViewState extends State<HeaderView> {
       print("Some Error1");
     });
   }
-
 
   @override
   void dispose() {
@@ -78,7 +76,7 @@ class HeaderViewState extends State<HeaderView> {
                   ),
                   onTap: () {
 //                    if(currentVol != 0) {
-                      Utils.playClickSound();
+                    Utils.playClickSound();
 //                    }
                     widget.scaffoldKey.currentState.openDrawer();
                   },
@@ -265,7 +263,7 @@ class HeaderViewState extends State<HeaderView> {
 //            openProfile /*() {
 
 //          if(currentVol != 0) {
-            Utils.playClickSound();
+          Utils.playClickSound();
 //          }
           widget.openProfile();
 //        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());

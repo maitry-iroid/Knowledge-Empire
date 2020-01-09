@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'commonview/background.dart';
-import 'helper/Utils.dart';
-import 'helper/res.dart';
-import 'helper/string_res.dart';
+import '../commonview/background.dart';
+import '../helper/Utils.dart';
+import '../helper/res.dart';
+import '../helper/string_res.dart';
 
 class PLPage extends StatefulWidget {
   @override

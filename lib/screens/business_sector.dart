@@ -13,11 +13,11 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
 
-import 'helper/Utils.dart';
-import 'helper/constant.dart';
-import 'helper/res.dart';
-import 'models/getDownloadQuestions.dart';
-import 'models/get_learning_module.dart';
+import '../helper/Utils.dart';
+import '../helper/constant.dart';
+import '../helper/res.dart';
+import '../models/getDownloadQuestions.dart';
+import '../models/get_learning_module.dart';
 
 class BusinessSectorPage extends StatefulWidget {
   @override
