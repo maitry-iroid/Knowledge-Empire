@@ -380,7 +380,11 @@ class _RankingPageState extends State<RankingPage> {
                         image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
               onTap: () {
 //                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                  Navigator.push(context, FadeRouteHome(arrFriends: arrFriends, initialPageType: Const.typeChallenges));
+              if(arrFriends[index].isFriend == 1) {
+                Navigator.push(context, FadeRouteHome(arrFriends: arrFriends,
+                    initialPageType: Const.typeChallenges, userId: arrFriends[index].userId));
+                print(arrFriends[index].isFriend);
+                }
               },
             ),
           ),

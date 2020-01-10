@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/send_challenge.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 //import 'package:volume/volume.dart';
 
@@ -16,9 +17,10 @@ GetFriendsData getFriendsData = GetFriendsData();
 class ChallengesPage extends StatefulWidget {
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
+  final int userId;
 
   ChallengesPage(
-      { Key key,this.arrFriends }) : super(key: key);
+      { Key key,this.arrFriends, this.userId}) : super(key: key);
   @override
   _ChallengesPageState createState() => _ChallengesPageState();
 }
@@ -41,6 +43,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //    "good",
 //    "morning"
 //  ];
+
   List<String> arrRewards = ["2%", "4%", "6%", "8%", "10%"];
 
   @override
@@ -272,11 +275,16 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   selectedItem(int type, int index) {
     if(type == 1) {
-      if(selectedIndex == index) {
-        return ColorRes.blue;
+      if(arrFriends[index].userId == widget.userId) {
+        return Colors.blue;
       } else {
         return ColorRes.greyText;
       }
+      /*if(selectedIndex == index) {
+        return ColorRes.blue;
+      } else {
+        return ColorRes.greyText;
+      }*/
     } else {
       if(selectedRewardsIndex == index) {
         return ColorRes.blue;
@@ -493,6 +501,33 @@ class _ChallengesPageState extends State<ChallengesPage> {
         if (response.flag == "true") {
           if (response.data != null) {
             arrFriends = response.data;
+            setState(() {});
+          }
+        }
+      }
+    });
+  }
+
+  void sendChallenges() {
+    setState(() {
+      isLoading = true;
+    });
+
+    SendChallengesRequest rq = SendChallengesRequest();
+    rq.userId = Injector.userData.userId;
+    rq.friendId = widget.userId;
+    rq.moduleId = 0;
+    rq.rewards = 0;
+
+    WebApi().sendChallenges(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          if (response.data != null) {
+//            arrFriends = response.data;
             setState(() {});
           }
         }

@@ -59,7 +59,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     });
 
-    isSwitched = Global.shared.isInstructionView;
+//    isSwitched = Global.shared.isInstructionView;
   }
 
   @override
@@ -234,7 +234,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         Utils.playClickSound();
         setState(() {
           selectedModule = arrFinalLearningModules[index];
-//          isSwitched = ;
           isSwitched = selectedModule.isDownloadEnable == 1;
         });
       },
@@ -420,15 +419,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           )
                         : Container(),
                     Switch(
-//                      value: isSwitched,
-//                      onChanged: (bool value) {
-//                        setState(() {
-//                          isSwitched = value;
-//                          Global.shared.isInstructionView = value;
-//                          value = !value;
-//                        });
-//                        updatePermission();
-//                      },
                       value: selectedModule.isDownloadEnable == 1,
                       onChanged: (value) {
                         setState(() {
@@ -514,6 +504,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           });
 
           getQuestions();
+//          downloadAllQuestions();
         }
       } else
         Utils.showToast("Something went wrong");
@@ -617,12 +608,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           questionResponse.data = arrQuestions;
           print("arraquestionsss =============>>>>>>>  $questionResponse.data");
 
-          if (isSwitched) {
+          /*if (isSwitched) {
             await Injector.prefs.setString(
                 PrefKeys.questionData, json.encode(questionResponse.toJson()));
-          } else {
+          } */
+          /*else {
             await Injector.prefs.remove(PrefKeys.questionData);
-          }
+          }*/
 
           questionResponse.data.forEach((questionData) async {
             if (questionData.mediaLink.isNotEmpty)
@@ -642,6 +634,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
           print(dataSize);
 
+          getQuestions();
+
           Utils.showToast("Downloaded successfully");
         }
       }
@@ -652,6 +646,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       });
       Utils.showToast(e.toString());
     });
+
+
+
+
+
   }
 
   Future<void> updatePermission() async {
@@ -685,18 +684,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     });
 
-    if (isSwitched == false) {
+  /*  if (isSwitched == false) {
       return await Injector.prefs.remove(PrefKeys.questionData);
 //      return  Injector.cacheManager.emptyCache();
-    }
+    }*/
   }
 
   List<QuestionData> arrQuestions = List();
-
-  Future<FileInfo> downloadFile(String url) async {
-//    print("123 =>> $url");
-    return await Injector.cacheManager.downloadFile(url);
-  }
 
   getQuestions() {
     setState(() {
@@ -715,9 +709,19 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (data.flag == "true") {
           List<QuestionData> arrQuestions = data.data;
 
+
+
+          for (int i = 0; i < arrQuestions.length; i++) {
+            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+
+            print(arrQuestions[i].value);
+          }
+
+
           await Injector.prefs
               .setString(PrefKeys.questionData, json.encode(data.toJson()));
-
 
 //          Injector.cacheManager.emptyCache();
 
@@ -745,28 +749,4 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       Utils.showToast(e.toString());
     });
   }
-}
-
-/// This "Headless Task" is run when app is terminated.
-void backgroundFetchHeadlessTask() async {
-  print('[BackgroundFetch] Headless event received.');
-  print("Hey Pawan Background headless fetch is successful");
-
-  // Read fetch_events from SharedPreferences
-  List<String> events = [];
-  String json = Injector.prefs.getString(PrefKeys.download);
-  if (json != null) {
-    events = jsonDecode(json).cast<String>();
-  }
-  // Add new event.
-  events.insert(0, new DateTime.now().toString() + ' [Headless]');
-  // Persist fetch events in SharedPreferences
-  Injector.prefs.setString(PrefKeys.download, jsonEncode(events));
-
-  BackgroundFetch.finish();
-}
-
-class Global {
-  static final shared = Global();
-  bool isInstructionView = false;
 }
