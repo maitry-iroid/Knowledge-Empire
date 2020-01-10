@@ -33,7 +33,7 @@ class HeaderViewState extends State<HeaderView> {
       Injector.streamController = StreamController.broadcast();
 
     Injector.streamController.stream.listen((data) {
-      print("DataReceived1: " + data);
+//      print("DataReceived1: " + data);
 
       if (mounted) setState(() {});
     }, onDone: () {

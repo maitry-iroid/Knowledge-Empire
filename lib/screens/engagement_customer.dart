@@ -297,7 +297,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   isImage(String path) {
-    print(path);
     return extension(path) == ".png" ||
         extension(path) == ".jpeg" ||
         extension(path) == ".jpg";
@@ -415,6 +414,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   SubmitAnswerRequest getSubmitAnswerRequest(SubmitAnswerRequest rq) {
     rq.userId = Injector.userData.userId.toString();
+    rq.challengeId = 0;
+    rq.isChallenge = 0;
 
     SubmitAnswer submitAnswer = SubmitAnswer();
 
@@ -617,8 +618,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaView(BuildContext context) {
     if (isImage(questionData.mediaLink)) {
       return Image(
-        image: isImage(questionData.mediaLink) ?
-        Utils.getCacheFile(questionData.mediaLink) != null ? FileImage(Utils.getCacheFile(questionData.mediaLink).file ): NetworkImage(questionData.mediaLink)
+        image: isImage(questionData.mediaLink)
+            ? Utils.getCacheFile(questionData.mediaLink) != null
+                ? FileImage(Utils.getCacheFile(questionData.mediaLink).file)
+                : NetworkImage(questionData.mediaLink)
             : AssetImage(Utils.getAssetsImg('back')),
       );
     } else if (isVideo(questionData.mediaLink) &&

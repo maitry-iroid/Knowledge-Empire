@@ -24,7 +24,6 @@ import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
-
 import 'constant.dart';
 import 'localization.dart';
 
@@ -296,35 +295,30 @@ class Utils {
 //    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
 //    Audio audio = Audio.load('assets/sounds/all_button_clicks.wav');
 //    audio.play();
-    return  audioPlay('assets/sounds/all_button_clicks.wav');
-
+    return audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/right_answer.wav");
-    return  audioPlay('assets/sounds/right_answer.wav');
-
+    return audioPlay('assets/sounds/right_answer.wav');
   }
 
   static incorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/wrong_answer.wav");
-    return  audioPlay('assets/sounds/wrong_answer.wav');
-
+    return audioPlay('assets/sounds/wrong_answer.wav');
   }
 
   static procorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
-    return  audioPlay('assets/sounds/pro_right_answer.mp3');
-
+    return audioPlay('assets/sounds/pro_right_answer.mp3');
   }
 
   static proincorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
-    return  audioPlay('assets/sounds/pro_wrong_answer.mp3');
-
+    return audioPlay('assets/sounds/pro_wrong_answer.mp3');
   }
 
-  static audioPlay(String path) async{
+  static audioPlay(String path) async {
     Audio audio = Audio.load(path);
     audio.play();
   }
@@ -404,25 +398,33 @@ class Utils {
 
   static getValue(QuestionData questionData) {
     var random = ((Random().nextInt(10))) / 10;
+    int finalValue = 0;
+    try {
+      var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
+      var b = (1 +
+          (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+      var c = (1 + (Injector.customerValueData.valueBonus / 100));
 
-    var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
-    var b = (1 +
-        (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
-    var c = (1 + (Injector.customerValueData.valueBonus / 100));
-
-    int finalValue = (a * b * c).round();
+      finalValue = (a * b * c).round();
+    } catch (e) {
+      print(e);
+    }
 
     return finalValue;
   }
 
   static getLoyalty(QuestionData questionData) {
     var random = ((Random().nextInt(10))) / 10;
+    int finalValue = 0;
+    try {
+      var a = max(pow(questionData.counter, 2), 1);
+      var b = questionData.counter * random;
+      var c = (1 + (Injector.customerValueData.loyaltyBonus / 100));
 
-    var a = max(pow(questionData.counter, 2), 1);
-    var b = questionData.counter * random;
-    var c = (1 + (Injector.customerValueData.loyaltyBonus / 100));
-
-    int finalValue = (a + b * c).round();
+      finalValue = (a + b * c).round();
+    } catch (e) {
+      print(e);
+    }
 
     return finalValue;
   }
@@ -431,14 +433,18 @@ class Utils {
 //    =ROUND((MAX(MIN(K16,10)^1.2,1)+(MIN(K16,10)*RAND()))*(1+(0.01*MIN($K$12,900)))*(2-$N$14),0)
 
     var random = ((Random().nextInt(10))) / 10;
+    int finalValue = 0;
+    try {
+      var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
+          min(questionData.counter, 10) * random;
+      var b = (1 +
+          (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+      var c = (2 - (Injector.customerValueData.resourceBonus / 100));
 
-    var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
-        min(questionData.counter, 10) * random;
-    var b = (1 +
-        (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
-    var c = (2 - (Injector.customerValueData.resourceBonus / 100));
-
-    int finalValue = (a * b * c).round();
+      int finalValue = (a * b * c).round();
+    } catch (e) {
+      print(e);
+    }
 
     return finalValue;
   }
@@ -466,8 +472,8 @@ class Utils {
     Injector.streamController.add("manage level");
   }
 
- static getProgress(Organization organization) {
-    var progress =  organization.level / 10;
+  static getProgress(Organization organization) {
+    var progress = organization.level / 10;
 
     if (progress <= 1 && progress >= 0) {
       return progress;
@@ -494,11 +500,11 @@ class Utils {
 //      title = message['title'];
 //      body = message['body'];
 //    } else {
-      message.values.forEach((value) {
-        if (Map.from(value)['title'] != null) title = Map.from(value)['title'];
+    message.values.forEach((value) {
+      if (Map.from(value)['title'] != null) title = Map.from(value)['title'];
 
-        if (Map.from(value)['body'] != null) body = Map.from(value)['body'];
-      });
+      if (Map.from(value)['body'] != null) body = Map.from(value)['body'];
+    });
 //    }
 
     print(title);
