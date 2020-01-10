@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -47,21 +48,22 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       } else {
         if (Injector.prefs.getString(PrefKeys.questionData) != null) {
 
-          print(" hello   ===>>>   ${arrQuestions.length} ===  ");
-
           arrQuestions = QuestionsResponse.fromJson(
               jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
               .data;
 
-          print(" hello   ===>>>   ${arrQuestions.length} ===  ");
+          arrQuestions.forEach((questionData) {
 
-//          arrQuestions.forEach((question) {
-//
-//            if (questionData.attemptTime == 0 ||
-//                questionData.attemptTime -
-//                        DateTime.now().millisecondsSinceEpoch >
-//                    24) arrQuestions.add(questionData);
-//          });
+            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss").parse(questionData.attemptTime);
+            print("question date string : -    ${questionData.attemptTime}");
+
+
+            if (questionData.attemptTime.isEmpty ||
+                newDateTimeObj2.millisecondsSinceEpoch
+                   - DateTime.now().millisecondsSinceEpoch
+                    >
+                    24) arrQuestions.add(questionData);
+          });
 
           if (arrQuestions != null && arrQuestions.length > 0) {
             setState(() {});

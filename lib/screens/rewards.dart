@@ -86,6 +86,60 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
 
+
+  showFirstHalf() {
+    return Expanded(
+      flex: 1,
+      child: Card(
+        color: Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.bgProf,
+        margin: EdgeInsets.all(0),
+        elevation: 10,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color:
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image:
+                        AssetImage(Utils.getAssetsImg('bg_reward_sub')),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(context, StringRes.category),
+                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: Container(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: arrAchievementData.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return showCategoryItem(index);
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   showSecondHalf() {
     return Expanded(
       flex: 3,
@@ -137,58 +191,6 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  showFirstHalf() {
-    return Expanded(
-      flex: 1,
-      child: Card(
-        color: Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.bgProf,
-        margin: EdgeInsets.all(0),
-        elevation: 10,
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                height: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('bg_reward_sub')),
-                            fit: BoxFit.fill)
-                        : null),
-                child: Text(
-                  Utils.getText(context, StringRes.category),
-                  style: TextStyle(color: ColorRes.white, fontSize: 17),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: Container(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: arrAchievementData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return showCategoryItem(index);
-                    },
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   showSecondHalfSecondCategory() {
     return Expanded(
@@ -470,7 +472,7 @@ class _CategoryItemState extends State<CategoryItem> {
       child: Container(
           height: Injector.isBusinessMode ? 50 : 40,
           margin: EdgeInsets.only(
-              left: 5, right: 5, top: Injector.isBusinessMode ? 0 : 5),
+              left: 5, right: 5, top: Injector.isBusinessMode ? 0 : 5, bottom: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: Injector.isBusinessMode
