@@ -1,7 +1,7 @@
 class ManageModulePermissionRequest {
-  String userId;
-  String moduleId;
-  String type;
+  int userId;
+  int moduleId;
+  int type;
 
   ManageModulePermissionRequest({this.userId, this.moduleId, this.type});
 

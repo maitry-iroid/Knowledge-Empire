@@ -15,7 +15,6 @@ import '../helper/string_res.dart';
 import '../helper/web_api.dart';
 import '../models/questions.dart';
 
-
 class NewCustomerPage extends StatefulWidget {
   @override
   _NewCustomerPageState createState() => _NewCustomerPageState();
@@ -41,28 +40,25 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     resourceBonus = Injector.customerValueData.resourceBonus;
     valueBonus = Injector.customerValueData.valueBonus;
 
-
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         getQuestions();
       } else {
         if (Injector.prefs.getString(PrefKeys.questionData) != null) {
-
           arrQuestions = QuestionsResponse.fromJson(
-              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
+                  jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
               .data;
 
           arrQuestions.forEach((questionData) {
-
-            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss").parse(questionData.attemptTime);
+            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss")
+                .parse(questionData.attemptTime);
             print("question date string : -    ${questionData.attemptTime}");
 
-
-            if (questionData.attemptTime.isEmpty ||
-                newDateTimeObj2.millisecondsSinceEpoch
-                   - DateTime.now().millisecondsSinceEpoch
-                    >
-                    24) arrQuestions.add(questionData);
+            if (questionData.attemptTime == null ||
+                questionData.attemptTime.isEmpty ||
+                newDateTimeObj2.millisecondsSinceEpoch -
+                        DateTime.now().millisecondsSinceEpoch >
+                    24 * 60 * 60 * 1000) arrQuestions.add(questionData);
           });
 
           if (arrQuestions != null && arrQuestions.length > 0) {
@@ -72,7 +68,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       }
     });
   }
-
 
   getQuestions() {
     setState(() {

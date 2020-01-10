@@ -26,8 +26,8 @@ import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
-//  static const baseUrl = "http://13.127.186.25:7000/api";
-  static const baseUrl = "http://18.141.132.109:7000/api";
+  static const baseUrl = "http://13.127.186.25:7000/api";
+//  static const baseUrl = "http://18.141.132.109:7000/api";
 
   static String apiRequestLogin = "login";
 
@@ -173,7 +173,8 @@ class WebApi {
   Future<LearningModuleResponse> getLearningModule(int isChallenge) async {
     initDio();
 
-    var req = json.encode({'userId': Injector.userData.userId,'isChallenge': isChallenge.toString()});
+    var req = json.encode(
+        {'userId': Injector.userData.userId, 'isChallenge': isChallenge});
 
     print("getLearningModule" + " - " + req);
     print(dio.options.headers);
@@ -328,8 +329,8 @@ class WebApi {
 
     try {
       final response = await dio.post("",
-          data:
-              json.encode(getRequest('releaseResource', json.encode(rq.toJson()))));
+          data: json
+              .encode(getRequest('releaseResource', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -337,8 +338,6 @@ class WebApi {
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         return releaseResourceResponse;
-
-
       }
       print(response.data);
       return null;
@@ -505,12 +504,12 @@ class WebApi {
       BuildContext context, ManageModulePermissionRequest rq) async {
     initDio();
 
-    print("get_achievements" + json.encode(rq.toJson()));
+    print("updateModulePermission_ " + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
           data: json.encode(
-              getRequest('getUserAchievement', json.encode(rq.toJson()))));
+              getRequest('updateModulePermission', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -706,17 +705,19 @@ class WebApi {
 //    }
 //  }
 
-  Future<QuestionsResponse> getDownloadQuestions(Map<String, dynamic> jsonMap) async {
+  Future<QuestionsResponse> getDownloadQuestions(
+      Map<String, dynamic> jsonMap) async {
     initDio();
 
     print("questions_request__" + json.encode(jsonMap));
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('getDownloadQuestions', json.encode(jsonMap))));
+          data: json.encode(
+              getRequest('getDownloadQuestions', json.encode(jsonMap))));
       if (response.statusCode == 200) {
         print(response.data);
         QuestionsResponse questionsResponse =
-        QuestionsResponse.fromJson(jsonDecode(response.data));
+            QuestionsResponse.fromJson(jsonDecode(response.data));
         return questionsResponse;
       }
       print(response.data);
@@ -726,5 +727,4 @@ class WebApi {
       return null;
     }
   }
-
 }

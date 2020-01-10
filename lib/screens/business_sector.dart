@@ -659,9 +659,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     });
 
     ManageModulePermissionRequest rq = ManageModulePermissionRequest();
-    rq.userId = Injector.userData.userId.toString();
-    rq.type = isSwitched ? "1" : "0";
-    rq.moduleId = selectedModule.moduleId.toString();
+    rq.userId = Injector.userData.userId;
+    rq.type = isSwitched ? 1 : 0;
+    rq.moduleId = selectedModule.moduleId;
 
     WebApi().manageModulePermission(context, rq).then((response) {
       setState(() {
@@ -710,7 +710,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           List<QuestionData> arrQuestions = data.data;
 
 
-
           for (int i = 0; i < arrQuestions.length; i++) {
             arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
             arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
@@ -734,7 +733,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             print('[BackgroundFetch] setSpentTime start FAILURE: $e');
           });
 
-          Utils.showToast("Downloaded successfully");
+//          Utils.showToast("Downloaded successfully");
         } else {
           Utils.showToast(data.msg);
         }

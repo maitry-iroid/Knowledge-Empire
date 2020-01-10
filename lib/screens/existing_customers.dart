@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -26,25 +30,35 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     // TODO: implement initState
     super.initState();
 
-    getQuestions();
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        getQuestions();
+      } else {
+        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+          List<String> jsonQuestionData =
+              Injector.prefs.getStringList(PrefKeys.questionData);
 
-//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-//      List<String> jsonQuestionData =
-//          Injector.prefs.getStringList(PrefKeys.questionData);
-//
-//      jsonQuestionData.forEach((jsonQuestion) {
-//        QuestionData questionData =
-//            QuestionData.fromJson(jsonDecode(jsonQuestion));
-//
-//        if (questionData.isAnsweredCorrect &&
-//            questionData.attemptTime - DateTime.now().millisecondsSinceEpoch <
-//                24*60*60*1000) arrQuestions.add(questionData);
-//      });
-//
-//      if (arrQuestions != null) {
-//        setState(() {});
-//      }
-//    }
+          jsonQuestionData.forEach((jsonQuestion) {
+            QuestionData questionData =
+                QuestionData.fromJson(jsonDecode(jsonQuestion));
+
+            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss").parse(questionData.attemptTime);
+            print("question date string : -    ${questionData.attemptTime}");
+
+
+            if (questionData.isAnsweredCorrect &&
+                newDateTimeObj2.millisecondsSinceEpoch -
+                        DateTime.now().millisecondsSinceEpoch <
+                    24 * 60 * 60 * 1000) arrQuestions.add(questionData);
+          });
+
+          if (arrQuestions != null) {
+            setState(() {});
+          }
+        }
+      }
+    });
+
   }
 
   @override
@@ -71,7 +85,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       });
 
       WebApi().releaseResource(context, rq).then((getReleaseResourceData) {
-
         setState(() {
           isLoading = false;
         });

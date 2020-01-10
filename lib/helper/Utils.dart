@@ -324,40 +324,40 @@ class Utils {
   }
 
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
-    List<String> jsonQuestionData = List();
-    List<QuestionData> questionData_ = List();
-
-    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-      List<String> jsonQuestionData =
-          Injector.prefs.getStringList(PrefKeys.questionData);
-
-      jsonQuestionData.forEach((jsonQuestion) {
-        questionData_.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
-      });
-    }
-
-    questionData_.addAll(arrQuestions);
-
-    questionData_.forEach((questionData) {
-      jsonQuestionData.add(json.encode(questionData));
-    });
-
-    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
+//    List<String> jsonQuestionData = List();
+//    List<QuestionData> questionData_ = List();
+//
+//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+//      List<String> jsonQuestionData =
+//          Injector.prefs.getStringList(PrefKeys.questionData);
+//
+//      jsonQuestionData.forEach((jsonQuestion) {
+//        questionData_.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
+//      });
+//    }
+//
+//    questionData_.addAll(arrQuestions);
+//
+//    questionData_.forEach((questionData) {
+//      jsonQuestionData.add(json.encode(questionData));
+//    });
+//
+//    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
   }
 
   static List<QuestionData> getQuestionsLocally() {
-    List<QuestionData> questionData = List();
-
-    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-      List<String> jsonQuestionData =
-          Injector.prefs.getStringList(PrefKeys.questionData);
-
-      jsonQuestionData.forEach((jsonQuestion) {
-        questionData.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
-      });
-    }
-
-    return questionData;
+//    List<QuestionData> questionData = List();
+//
+//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+//      List<String> jsonQuestionData =
+//          Injector.prefs.getStringList(PrefKeys.questionData);
+//
+//      jsonQuestionData.forEach((jsonQuestion) {
+//        questionData.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
+//      });
+//    }
+//
+//    return questionData;
   }
 
   static getCurrentFormattedDate() {
@@ -441,7 +441,7 @@ class Utils {
           (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
       var c = (2 - (Injector.customerValueData.resourceBonus / 100));
 
-      int finalValue = (a * b * c).round();
+      finalValue = (a * b * c).round();
     } catch (e) {
       print(e);
     }
@@ -519,5 +519,24 @@ class Utils {
     await Injector.flutterLocalNotificationsPlugin.show(
         Injector.notificationID, title, body, platformChannelSpecifics,
         payload: 'item x');
+  }
+
+  static updateAttemptTimeInQuestionDataLocally(
+      int questionId, String attemptTime) async {
+    List<QuestionData> arrQuestions = List();
+
+    QuestionsResponse questionsResponse = QuestionsResponse.fromJson(
+        jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
+    arrQuestions = questionsResponse.data;
+
+    arrQuestions
+        .where((que) => que.questionId == questionId)
+        .first
+        .attemptTime = attemptTime;
+
+    questionsResponse.data = arrQuestions;
+
+    await Injector.prefs.setString(
+        PrefKeys.questionData, json.encode(questionsResponse.toJson()));
   }
 }
