@@ -192,7 +192,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       Injector.streamController = StreamController.broadcast();
 
     Injector.streamController.stream.listen((data) {
-      print("mode changed" + data);
+//      print("mode changed" + data);
       if (mounted) {
         setState(() {});
       }

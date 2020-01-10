@@ -42,7 +42,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     resourceBonus = Injector.customerValueData.resourceBonus;
     valueBonus = Injector.customerValueData.valueBonus;
 
-//    getQuestions();
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {

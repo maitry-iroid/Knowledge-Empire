@@ -254,7 +254,7 @@ class WebApi {
     };
 
     BaseOptions options = new BaseOptions(
-        baseUrl: "http://13.127.186.25:7000/api",
+        baseUrl: baseUrl,
         connectTimeout: 20000,
         receiveTimeout: 3000,
         headers: headers);

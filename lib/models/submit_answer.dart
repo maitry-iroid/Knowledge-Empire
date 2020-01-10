@@ -1,6 +1,8 @@
 class SubmitAnswerRequest {
   String userId;
   int totalQuestionAnswered;
+  int isChallenge;
+  int challengeId;
   List<SubmitAnswer> answer;
 
   SubmitAnswerRequest(
@@ -10,6 +12,8 @@ class SubmitAnswerRequest {
 
   SubmitAnswerRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
+    isChallenge = json['isChallenge'];
+    challengeId = json['challengeId'];
     totalQuestionAnswered = json['totalQuestionAnswered'];
     if (json['answer'] != null) {
       answer = new List<SubmitAnswer>();
@@ -22,6 +26,8 @@ class SubmitAnswerRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
+    data['isChallenge'] = this.isChallenge;
+    data['challengeId'] = this.challengeId;
     data['totalQuestionAnswered'] = this.totalQuestionAnswered;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();

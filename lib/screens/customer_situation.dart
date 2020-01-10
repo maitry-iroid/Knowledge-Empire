@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:ke_employee/animation/particle_model.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -118,7 +121,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //  }
 
   checkAudio() {
-    if(currentVol != 0) {
+    if (currentVol != 0) {
       if (Injector.isBusinessMode) {
         if (questionData.isAnsweredCorrect == true) {
           return Utils.correctAnswerSound();
@@ -152,11 +155,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   pdfShow() {
     return isPdf(correctWrongImage())
         ? SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:${result}");
-      },
-      initialUrl: correctWrongImage(),
-    )
+            completeCallback: (bool result) {
+              print("completeCallback,result:${result}");
+            },
+            initialUrl: correctWrongImage(),
+          )
         : Container();
   }
 
@@ -185,17 +188,30 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               showSubHeader(context),
               Expanded(
                   child: Row(
-                    children: <Widget>[
-                      showFirstHalf(context),
-                      showSecondHalf(context),
-                    ],
-                  )),
+                children: <Widget>[
+                  showFirstHalf(context),
+                  showSecondHalf(context),
+                ],
+              )),
             ],
           ),
-        )
+        ),
+//        Positioned.fill(child: Particles(30)),
+//        Rendering(
+//          builder: (context, time) {
+//            _simulateParticles(time);
+//            return CustomPaint(
+//              painter: ParticlePainter(particles, time),
+//            );
+//          },
+//        )
       ],
     );
   }
+
+//  _simulateParticles(Duration time) {
+//    particles.forEach((particle) => particle.maintainRestart(time));
+//  }
 
   showSubHeader(BuildContext context) {
     return Container(
@@ -226,9 +242,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("eddit_profile")),
-                      fit: BoxFit.fill))
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill))
                       : null),
 
               child: Text(
@@ -245,7 +261,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image:
-                          AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
                           fit: BoxFit.fill)),
                   child: Center(
                     child: Text(
@@ -255,7 +271,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     ),
                   )),
               onTap: () {
-                if(currentVol != 0) {
+                if (currentVol != 0) {
                   Utils.playClickSound();
                 }
                 gotoMainScreen(context);
@@ -265,7 +281,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         )
 //                  CommonView.showTitle(
 //                      context, Utils.getText(context, StringRes.engagement))
-    );
+        );
   }
 
   bool isAnswerCorrect(int index) {
@@ -343,15 +359,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index) ||
-                      arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+                      width: 1,
+                      color: isAnswerCorrect(index) ||
+                              arrAnswerSituation[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : checkAnswerBusinessMode(index),
@@ -360,15 +376,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                      : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
+                      image: AssetImage(
+                        checkAnswer(index),
 //                          Utils.getAssetsImg(
 //                          arrAnswerSituation[index].isSelected
 //                              ? "rounded_rectangle_837_blue"
 //                              : "rounded_rectangle_8371"
 //                      )
-                  ),
-                  fit: BoxFit.fill))
+                      ),
+                      fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -382,7 +398,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                          arrAnswerSituation[index].isSelected
 //                          ? ColorRes.white
 //                          : ColorRes.textProf
-                      ),
+                          ),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -396,7 +412,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                            arrAnswerSituation[index].isSelected
 //                            ? ColorRes.white
 //                            : ColorRes.textProf
-                        )),
+                            )),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -426,7 +442,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             child: Container(
               alignment: Alignment.center,
               padding:
-              EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+                  EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
@@ -467,12 +483,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       ? null
                       : Border.all(width: 1, color: ColorRes.white),
                   color:
-                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   image: Injector.isBusinessMode
                       ? DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("eddit_profile")),
-                      fit: BoxFit.fill)
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill)
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.answers),
@@ -485,7 +501,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             alignment: Alignment.bottomRight,
             child: InkResponse(
               onTap: () {
-                if(currentVol != 0) {
+                if (currentVol != 0) {
                   Utils.playClickSound();
                 }
                 showDialog(
@@ -500,14 +516,14 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   decoration: BoxDecoration(
                       image:
 //                                    Injector.isBusinessMode ?
-                      DecorationImage(
-                          image: AssetImage(Injector.isBusinessMode
-                              ? Utils.getAssetsImg(
-                              "full_expand_question_answers")
-                              : Utils.getAssetsImg("expand_pro")),
-                          fit: BoxFit.fill)
+                          DecorationImage(
+                              image: AssetImage(Injector.isBusinessMode
+                                  ? Utils.getAssetsImg(
+                                      "full_expand_question_answers")
+                                  : Utils.getAssetsImg("expand_pro")),
+                              fit: BoxFit.fill)
 //                                        : null
-                  )),
+                      )),
             ),
           )
         ],
@@ -521,12 +537,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //        image: DecorationImage(image: fileInfo.file.path != null ? NetworkImage(correctWrongImage())  :  AssetImage(fileInfo.file.path))
 //      );
       return Image(
-        image: NetworkImage(correctWrongImage()),fit: BoxFit.fill,
+        image: NetworkImage(correctWrongImage()), fit: BoxFit.fill,
 //        fileInfo.file.path == null ? NetworkImage(correctWrongImage()) : AssetImage(fileInfo.file.path)
       );
-    } else
-    if (isVideo(correctWrongImage()) &&
-        _controller.value.initialized) {
+    } else if (isVideo(correctWrongImage()) && _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
         child: Stack(
@@ -544,13 +558,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 onPressed: () {
                   questionData.videoPlay == 1
                       ? setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  })
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
                       : setState(() {
-                    _controller.play();
-                  });
+                          _controller.play();
+                        });
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 7,
@@ -640,71 +654,66 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   showQueMedia(BuildContext context) {
     return InkResponse(
         onTap: () {
-          if(currentVol != 0) {
+          if (currentVol != 0) {
             Utils.playClickSound();
           }
           showDialog(
             context: context,
 //            builder: (_) => correctWrongImage() != null ? CorrectWrongMeidaAlertt() : Container(),
-            builder: (_) => CorrectWrongMeidaAlertt(),
+            builder: (_) => CorrectWrongMediaAlert(),
 
 //              CorrectWrongMeidaAlertt()
 //                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
           );
         },
-        child:  Stack(
+        child: Stack(
           children: <Widget>[
             Card(
               elevation: 10,
               color: ColorRes.transparent.withOpacity(0.4),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
-              margin:
-              EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
+              margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
               child: Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height / 2.5,
-
                   padding:
-                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                      EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: ColorRes.white, width: 1)
-                  ),
+                      border: Border.all(color: ColorRes.white, width: 1)),
                   child: showMediaView(context)),
             ),
             showExpandIcon(context)
           ],
-        )
-    );
+        ));
   }
 
   showExpandIcon(BuildContext context) {
-    return  Positioned(
-      bottom: 0,right: 0,
+    return Positioned(
+      bottom: 0,
+      right: 0,
       child: InkResponse(
         child: Container(
             alignment: Alignment.center,
             height: Utils.getDeviceWidth(context) / 20,
             width: Utils.getDeviceWidth(context) / 20,
             decoration: BoxDecoration(
-                image:  DecorationImage(
+                image: DecorationImage(
                     image: AssetImage(Injector.isBusinessMode
-                        ? Utils.getAssetsImg(
-                        "full_expand_question_answers")
+                        ? Utils.getAssetsImg("full_expand_question_answers")
                         : Utils.getAssetsImg("expand_pro")),
-                    fit: BoxFit.fill)
-            )),
+                    fit: BoxFit.fill))),
         onTap: () {
-          if(currentVol != 0) {
+          if (currentVol != 0) {
             Utils.playClickSound();
           }
           showDialog(
             context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
-            builder: (_) => CorrectWrongMeidaAlertt(),
+            builder: (_) => CorrectWrongMediaAlert(),
           );
         },
       ),
@@ -815,9 +824,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("eddit_profile")),
-                                fit: BoxFit.fill)
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("eddit_profile")),
+                                    fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
@@ -833,7 +842,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 //                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
-                          if(currentVol != 0) {
+                          if (currentVol != 0) {
                             Utils.playClickSound();
                           }
                           //alert pop
@@ -846,12 +855,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("close_dialog")),
-                                    fit: BoxFit.fill)
+                                    DecorationImage(
+                                        image: AssetImage(
+                                            Utils.getAssetsImg("close_dialog")),
+                                        fit: BoxFit.fill)
 //                                    : null
-                            )),
+                                )),
                       ),
                     )
                   ],
@@ -863,17 +872,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-//  int _selectedItem = 0;
-//
-//  List<Answer> arrAnswerSituation = List();
-
-//  selectItem(index) {
-//    setState(() {
-//      _selectedItem = index;
-//      print(selectItem.toString());
-//    });
-//  }
 
   bool isAnswerCorrect(int index) {
 //    List<Answer> selectedAnswer =
@@ -919,49 +917,11 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     } else {
       return ColorRes.white;
     }
-
-    /* if (arrAnswerSituation[index].isSelected == true) {
-      if (questionDataCustSituation.correctAnswerId ==
-          arrAnswerSituation[index].answerId) {
-        return ColorRes.answerCorrect;
-      } else {
-        return ColorRes.greyText;
-      }
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return ColorRes.answerCorrect;
-    } else {
-      return ColorRes.white;
-    }*/
-    return Utils.getAssetsImg("bg_green");
   }
-
-//  checkAnswerBusinessMode(int index) {
-////    Widget child;
-//
-//    if (arrAnswerSituation[index].isSelected == true) {
-//      if (questionDataCustSituation.correctAnswerId ==
-//          arrAnswerSituation[index].answerId) {
-//        return ColorRes.answerCorrect;
-//      } else {
-//        return ColorRes.greyText;
-//      }
-//    } else if (questionDataCustSituation.correctAnswerId ==
-//        arrAnswerSituation[index].answerId) {
-//      return ColorRes.answerCorrect;
-//    } else {
-//      return ColorRes.white;
-//    }
-//    return Utils.getAssetsImg("bg_green");
-//  }
 
   Widget showItemsFullScreen(int index) {
     return GestureDetector(
-        onTap: () {
-//          setState(() {
-//            arrAnswerSituation[index].isSelected = !arrAnswerSituation[index].isSelected;
-//          });
-        },
+        onTap: () {},
         child: Container(
 //          height: 50,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
@@ -969,59 +929,26 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(18),
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index) ||
-                      arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
-              color: Injector.isBusinessMode
-                  ? null
-                  : checkAnswerBusinessMode(index),
-//              (arrAnswerSituation[index].isSelected
-//                      ? ColorRes.greenDot
-//                      : ColorRes.white),
-              image: Injector.isBusinessMode
-                  ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
-//                          Utils.getAssetsImg(
-//                          arrAnswerSituation[index].isSelected
-//                              ? "rounded_rectangle_837_blue"
-//                              : "rounded_rectangle_8371"
-//                      )
-                  ),
-                  fit: BoxFit.fill))
-                  : null),
-          /* BoxDecoration(
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
                       width: 1,
-                      color: arrAnswerSituation[index].isSelected
+                      color: isAnswerCorrect(index) ||
+                              arrAnswerSituation[index].isSelected
                           ? ColorRes.white
                           : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : checkAnswerBusinessMode(index),
-//              (arrAnswerSituation[index].isSelected
-//                      ? ColorRes.greenDot
-//                      : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(checkAnswer(index)
-//                          Utils.getAssetsImg(
-//                          arrAnswerSituation[index].isSelected
-//                              ? "rounded_rectangle_837_blue"
-//                              : "rounded_rectangle_8371")
-                          ),
+                      image: AssetImage(
+                        checkAnswer(index),
+                      ),
                       fit: BoxFit.fill))
-                  : null),*/
+                  : null),
+
           child: Row(
             children: <Widget>[
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -1030,11 +957,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
-                      color: (checkTextColor(index)
-//                          arrAnswerSituation[index].isSelected
-//                          ? ColorRes.white
-//                          : ColorRes.textProf
-                      ),
+                      color: (checkTextColor(index)),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -1042,23 +965,13 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                 child: SingleChildScrollView(
                   child: new Text(
                     arrAnswerSituation[index].answer,
-                    style: TextStyle(
-                        color: (checkTextColor(index)
-//                            arrAnswerSituation[index].isSelected
-//                            ? ColorRes.white
-//                            : ColorRes.textProf
-                        )),
-//                    maxLines: 3,
+                    style: TextStyle(color: (checkTextColor(index))),
                     overflow: TextOverflow.fade,
                   ),
                 ),
               )
             ],
           ),
-//        Text(
-//          widget.title,
-//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-//        ),
         ));
   }
 }
@@ -1161,7 +1074,7 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
 //          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            if(currentVol != 0) {
+                            if (currentVol != 0) {
                               Utils.playClickSound();
                             }
                             //alert pop
@@ -1174,39 +1087,39 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode  ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode  ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
@@ -1252,24 +1165,27 @@ checkAnswer(int index) {
 //---------------------------------------------------------
 //image show  in alert
 
-class CorrectWrongMeidaAlertt extends StatefulWidget {
-//  bool CheckQuestion;
-
-//  final String img;
-
-//  CorrectWrongImageAlert({Key key}) : super(key: key);
-
+class CorrectWrongMediaAlert extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => CorrectWrongMeidaAlerttState();
+  State<StatefulWidget> createState() => CorrectWrongMediaAlertState();
 }
 
-class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
+class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
 
+  final Random random = Random();
+  final int numberOfParticles = 20;
+
+  final List<ParticleModel> particles = [];
+
   @override
   void initState() {
+//    List.generate(numberOfParticles, (index) {
+//      particles.add(ParticleModel(random));
+//    });
+
     super.initState();
 
     controller =
@@ -1283,7 +1199,6 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
 
     controller.forward();
     initVideoController1();
-
   }
 
   bool checkimg = true;
@@ -1305,11 +1220,11 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
   pdfShow() {
     return isPdf(correctWrongImage())
         ? SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:$result");
-      },
-      initialUrl: correctWrongImage(),
-    )
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: correctWrongImage(),
+          )
         : Container();
   }
 
@@ -1322,11 +1237,10 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
   }
 
   void initVideoController1() {
-
     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
-          Utils.getCacheFile(questionData.mediaLink).file)
+              Utils.getCacheFile(questionData.mediaLink).file)
           : VideoPlayerController.network(questionData.mediaLink)
         ..initialize().then((_) {
           setState(() {
@@ -1344,13 +1258,11 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
 
   showMediaView(BuildContext context) {
     if (isImage(correctWrongImage())) {
-      return Image(
-          image:
-          NetworkImage(correctWrongImage())
+      return Image(image: NetworkImage(correctWrongImage())
 //          fileInfo.file.path != null
 //              ? AssetImage(fileInfo.file.path)
 //              : NetworkImage(correctWrongImage())
-      );
+          );
     } else if (isVideo(correctWrongImage()) && _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
@@ -1366,13 +1278,13 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
                 onPressed: () {
                   questionData.videoPlay == 1
                       ? setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  })
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
                       : setState(() {
-                    _controller.play();
-                  });
+                          _controller.play();
+                        });
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 7,
@@ -1431,42 +1343,12 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
                             top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
                         width: Utils.getDeviceWidth(context) / 1.2,
-
                         decoration: BoxDecoration(
-//                            color: Colors.transparent,
-//                            image: isImage(correctWrongImage()) correctWrongImage ? DecorationImage(
-//                                    image: Utils.getCacheFile(correctWrongImage()) != null
-//                                        ? FileImage(Utils.getCacheFile( correctWrongImage()).file)
-//                                        : NetworkImage(correctWrongImage()),
-//                                    fit: BoxFit.fill) : null,
                             borderRadius: BorderRadius.circular(10),
                             border: isImage(questionData.mediaLink)
                                 ? Border.all(color: ColorRes.white, width: 1)
                                 : null),
                         child: showMediaView(context),
-//                        isVideo(questionData.mediaLink) &&
-//                                _controller.value.initialized
-//                            ? AspectRatio(
-//                                aspectRatio: _controller.value.aspectRatio,
-//                                child: VideoPlayer(_controller),
-//                              )
-//                            : pdfShow(),
-
-                        /* BoxDecoration(
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: NetworkImage(widget.img),
-                              fit: BoxFit.fill),
-
-//                          image: isImage(questionData.mediaLink)
-//                              ? DecorationImage(
-//                              image: NetworkImage(widget.img),
-//                              fit: BoxFit.fill)
-//                              : null,
-                          borderRadius: BorderRadius.circular(10),
-                          /* border:
-                                Border.all(color: ColorRes.white, width: 1)*/
-                        ),*/
                       ),
                     ),
 
@@ -1474,151 +1356,51 @@ class CorrectWrongMeidaAlerttState extends State<CorrectWrongMeidaAlertt>
                     Positioned(
                       top: 0,
                       right: 0,
-//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
-//                        .topRight),
-//          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            if(currentVol != 0) {
+                            if (currentVol != 0) {
                               Utils.playClickSound();
                             }
-                            //alert pop
                             Navigator.pop(context);
-
-//                          (checkimg == true ? showDialog(
-//                            context: context,
-//                            builder: (_) => FunkyOverlay(),
-//                          ) : null );
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
     );
   }
 }
-/*class CategoryItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  Function(int) selectItem;
-
-  CategoryItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
-
-  _CategoryItemState createState() => _CategoryItemState();
-}
-
-class _CategoryItemState extends State<CategoryItem> {
-  var _indexShow = ["A", "B", "C", "D"];
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.selectItem(widget.index);
-//        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(
-//              builder: (context) => HomePage(
-//                    initialPageType: Const.typeDebrief,
-//                  )),
-//        );
-      },
-      child: Container(
-//          height: 60,
-        margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-        padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(15),
-            border: Injector.isBusinessMode
-                ? null
-                : Border.all(
-                    width: 1,
-                    color:
-                        widget.isSelected ? ColorRes.white : ColorRes.fontGrey),
-            color: Injector.isBusinessMode
-                ? null
-                : (widget.isSelected ? ColorRes.greenDot : ColorRes.white),
-            image: Injector.isBusinessMode
-                ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                        ? "bg_green"
-                        : "rounded_rectangle_8371")),
-                    fit: BoxFit.fill)
-                : null),
-        child: Row(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-            Title(
-                color: ColorRes.greenDot,
-                child: new Text(_indexShow[widget.index],
-                    style: TextStyle(
-                        color: (widget.isSelected
-                            ? ColorRes.white
-                            : ColorRes.textProf)))),
-            Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-            Expanded(
-              child: SingleChildScrollView(
-                child: new Text(
-                  "hellohellohellohellohellhellohellohelllohellohellohellohelloellohellohellohellohell",
-                  style: TextStyle(
-                      color: (widget.isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf)),
-                ),
-              ),
-            )
-          ],
-        ),
-//        Text(
-//          widget.title,
-//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-//        ),
-      ),
-    );
-  }
-}*/
-
