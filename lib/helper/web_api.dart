@@ -21,6 +21,7 @@ import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/releaseResource.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
@@ -320,30 +321,24 @@ class WebApi {
   }
 
   Future<GetCustomerValueResponse> releaseResource(
-      BuildContext context, Map<String, dynamic> jsonMap) async {
+      BuildContext context, ReleaseResourceRequest rq) async {
     initDio();
 
-    print("releaseResource" + json.encode(jsonMap));
+    print("releaseResource" + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
           data:
-              json.encode(getRequest('releaseResource', json.encode(jsonMap))));
+              json.encode(getRequest('releaseResource', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         GetCustomerValueResponse releaseResourceResponse =
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
-        if (releaseResourceResponse != null) {
-          if (releaseResourceResponse.flag == "true") {
-            return releaseResourceResponse;
-          } else {
-            Utils.showToast(releaseResourceResponse.msg);
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
+        return releaseResourceResponse;
+
+
       }
       print(response.data);
       return null;

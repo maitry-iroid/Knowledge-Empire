@@ -60,7 +60,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       QuestionData questionData = arrQuestions[index];
 
       ReleaseResourceRequest rq = ReleaseResourceRequest();
-      rq.userId = Injector.userData.userId.toString();
+      rq.userId = Injector.userData.userId;
       rq.questionId = questionData.questionId;
       rq.moduleId = questionData.moduleId;
       rq.resources = questionData.resources;
@@ -70,20 +70,29 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         isLoading = true;
       });
 
-      WebApi()
-          .releaseResource(context, rq.toJson())
-          .then((getReleaseResourceData) {
+      WebApi().releaseResource(context, rq).then((getReleaseResourceData) {
+
+        setState(() {
+          isLoading = false;
+        });
+
         if (getReleaseResourceData != null) {
-          Injector.customerValueData = getReleaseResourceData.data;
+          if (getReleaseResourceData.flag == "true") {
+            Injector.customerValueData = getReleaseResourceData.data;
 //          arrOrganization = getreleaseresourceData.organization;
 
-          Injector.streamController.add("release resources");
+            Injector.streamController.add("release resources");
 
-          setState(() {
-            arrQuestions.removeAt(index);
+            setState(() {
+              arrQuestions.removeAt(index);
 
-            isLoading = false;
-          });
+              isLoading = false;
+            });
+          } else {
+            Utils.showToast(getReleaseResourceData.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {
         print(e);
@@ -129,14 +138,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: ColorRes.colorBgDark,
         body: Stack(
           children: <Widget>[
             CommonView.showBackground(context),
             Container(
-              margin: EdgeInsets.only(left: 30,right: 30,top: Utils.getHeaderHeight(context)),
+              margin: EdgeInsets.only(
+                  left: 30, right: 30, top: Utils.getHeaderHeight(context)),
               child: Column(
                 children: <Widget>[
                   SizedBox(

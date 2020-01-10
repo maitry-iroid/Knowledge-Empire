@@ -1,5 +1,5 @@
 class ReleaseResourceRequest {
-  String userId;
+  int userId;
   int questionId;
   int moduleId;
   int resources;
