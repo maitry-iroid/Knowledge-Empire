@@ -345,21 +345,6 @@ class Utils {
 //    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
   }
 
-  static List<QuestionData> getQuestionsLocally() {
-//    List<QuestionData> questionData = List();
-//
-//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-//      List<String> jsonQuestionData =
-//          Injector.prefs.getStringList(PrefKeys.questionData);
-//
-//      jsonQuestionData.forEach((jsonQuestion) {
-//        questionData.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
-//      });
-//    }
-//
-//    return questionData;
-  }
-
   static getCurrentFormattedDate() {
     var now = new DateTime.fromMillisecondsSinceEpoch(
         DateTime.now().millisecondsSinceEpoch,
@@ -538,5 +523,32 @@ class Utils {
 
     await Injector.prefs.setString(
         PrefKeys.questionData, json.encode(questionsResponse.toJson()));
+  }
+
+  static List<QuestionData> getQuestionsLocally(int type) {
+    List<QuestionData> arrFinalQuestion = List();
+
+    if (Injector.prefs.getString(PrefKeys.questionData) != null) {
+      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(
+              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
+          .data;
+
+      arrQuestionsLocal.forEach((questionData) {
+        if (questionData.attemptTime == null ||
+            questionData.attemptTime.isEmpty) {
+          arrFinalQuestion.add(questionData);
+        } else {
+          DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss")
+              .parse(questionData.attemptTime);
+          print("question date string : -    ${questionData.attemptTime}");
+
+          if (type == Const.typeNewCustomer
+              ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
+              : newDateTimeObj2.difference(DateTime.now()).inDays <=1)
+            arrFinalQuestion.add(questionData);
+        }
+      });
+    }
+    return arrFinalQuestion;
   }
 }

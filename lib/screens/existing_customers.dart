@@ -34,31 +34,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       if (isConnected) {
         getQuestions();
       } else {
-        if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-          List<String> jsonQuestionData =
-              Injector.prefs.getStringList(PrefKeys.questionData);
+        arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueTYpe);
 
-          jsonQuestionData.forEach((jsonQuestion) {
-            QuestionData questionData =
-                QuestionData.fromJson(jsonDecode(jsonQuestion));
-
-            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss").parse(questionData.attemptTime);
-            print("question date string : -    ${questionData.attemptTime}");
-
-
-            if (questionData.isAnsweredCorrect &&
-                newDateTimeObj2.millisecondsSinceEpoch -
-                        DateTime.now().millisecondsSinceEpoch <
-                    24 * 60 * 60 * 1000) arrQuestions.add(questionData);
-          });
-
-          if (arrQuestions != null) {
-            setState(() {});
-          }
+        if (arrQuestions != null && arrQuestions.length > 0) {
+          arrQuestions = arrQuestions;
+          setState(() {});
         }
       }
     });
-
   }
 
   @override
@@ -332,7 +315,11 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     fit: BoxFit.fill)),
           ),
           onTap: () {
-            releaseResource(index);
+            Utils.isInternetConnectedWithAlert().then((isConnected) {
+              if (isConnected) {
+                releaseResource(index);
+              }
+            });
           },
         )
       ],

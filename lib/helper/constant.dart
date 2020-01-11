@@ -56,6 +56,7 @@ class Const {
   static int getNewQueType= 1;
   static int getExistingQueTYpe= 2;
 
+
 }
 
 

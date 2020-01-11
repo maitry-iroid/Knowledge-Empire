@@ -44,26 +44,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       if (isConnected) {
         getQuestions();
       } else {
-        if (Injector.prefs.getString(PrefKeys.questionData) != null) {
-          arrQuestions = QuestionsResponse.fromJson(
-                  jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
-              .data;
+         arrQuestions =
+            Utils.getQuestionsLocally(Const.getNewQueType);
 
-          arrQuestions.forEach((questionData) {
-            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss")
-                .parse(questionData.attemptTime);
-            print("question date string : -    ${questionData.attemptTime}");
-
-            if (questionData.attemptTime == null ||
-                questionData.attemptTime.isEmpty ||
-                newDateTimeObj2.millisecondsSinceEpoch -
-                        DateTime.now().millisecondsSinceEpoch >
-                    24 * 60 * 60 * 1000) arrQuestions.add(questionData);
-          });
-
-          if (arrQuestions != null && arrQuestions.length > 0) {
-            setState(() {});
-          }
+        if (arrQuestions != null && arrQuestions.length > 0) {
+          setState(() {});
         }
       }
     });
@@ -381,18 +366,3 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     );
   }
 }
-
-/*class Screen2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.green,
-      body: Center(
-        child: RaisedButton(
-          child: Text('Go Back!'),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-    );
-  }
-}*/
