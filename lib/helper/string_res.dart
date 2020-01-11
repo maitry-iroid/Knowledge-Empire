@@ -71,6 +71,7 @@ class StringRes {
   static var bailout = "bailout";
   static var requestBailOut = "requestbailout";
   static var downLoad = "downLoad";
+  static var sound = "sound";
   static var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
 
   //business sectors
@@ -156,7 +157,8 @@ class StringRes {
       'sendChallenge': 'Send Challenge',
       'bailout': 'Bail Out',
       'requestbailout': 'Request Bail Out',
-      'downLoad': 'DownLoad'
+      'downLoad': 'DownLoad',
+      'sound': 'Sound'
     },
     'es': {
       'title': 'Hola Mundo',

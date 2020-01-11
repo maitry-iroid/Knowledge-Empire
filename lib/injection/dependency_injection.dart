@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 //import 'package:audioplayers/audio_cache.dart';
 //import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -23,12 +24,12 @@ class Injector {
   static CustomerValueData customerValueData;
   static int mode;
   static bool isBusinessMode = true;
-//  static AudioPlayer audioPlayer;
-//  static AudioCache audioCache;
   static DefaultCacheManager cacheManager;
   static StreamController<String> streamController;
-  static FirebaseMessaging firebaseMessaging ;
+  static FirebaseMessaging firebaseMessaging;
+
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  static bool isSoundEnable;
 
 //  factory Injector {
 //    return _singleton;
@@ -39,13 +40,16 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
 
-//    audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
-//
-//    audioCache = AudioCache();
     firebaseMessaging = FirebaseMessaging();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     deviceId = await FlutterUdid.udid;
+
+    if (prefs.getBool(PrefKeys.isSoundEnable) == null) {
+      await prefs.setBool(PrefKeys.isSoundEnable, true);
+    }
+
+    isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
     if (prefs.getString(PrefKeys.user) != null &&
         prefs.getString(PrefKeys.user).isNotEmpty) {
@@ -56,10 +60,8 @@ class Injector {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
-
       streamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
-
 
       mode = prefs.getInt(PrefKeys.mode) != null
           ? prefs.getInt(PrefKeys.mode)

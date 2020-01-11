@@ -8,4 +8,5 @@ class PrefKeys {
   static var customerValueData = "customerValueData";
   static var learningModles = "learningModles";
   static var download = "download";
+  static var isSoundEnable = "isSoundEnable";
 }

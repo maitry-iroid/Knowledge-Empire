@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'dart:math';
-
 import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -206,26 +204,9 @@ class Utils {
   }
 
   static String getText(BuildContext context, String text) {
-//    return AppLocalizations.of(context).tr(text);
-
     return AppLocalizations.of(context).text(text) != null
         ? AppLocalizations.of(context).text(text)
         : text;
-
-    if (Injector.prefs.getString(PrefKeys.userId) != null &&
-        Injector.prefs.getString(PrefKeys.userId).isNotEmpty) {
-      return Injector.isBusinessMode
-          ? StringRes.localizedValues['en'][text] != null
-              ? StringRes.localizedValues['en'][text]
-              : ""
-          : StringRes.localizedValuesProf['en'][text] != null
-              ? StringRes.localizedValuesProf['en'][text]
-              : "";
-    } else {
-      return StringRes.localizedValues['en'][text] != null
-          ? StringRes.localizedValues['en'][text]
-          : "";
-    }
   }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
@@ -295,27 +276,28 @@ class Utils {
 //    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
 //    Audio audio = Audio.load('assets/sounds/all_button_clicks.wav');
 //    audio.play();
-    return audioPlay('assets/sounds/all_button_clicks.wav');
+    if (Injector.isSoundEnable)
+      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/right_answer.wav");
-    return audioPlay('assets/sounds/right_answer.wav');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/right_answer.wav');
   }
 
   static incorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/wrong_answer.wav");
-    return audioPlay('assets/sounds/wrong_answer.wav');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/wrong_answer.wav');
   }
 
   static procorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
-    return audioPlay('assets/sounds/pro_right_answer.mp3');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_right_answer.mp3');
   }
 
   static proincorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
-    return audioPlay('assets/sounds/pro_wrong_answer.mp3');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_wrong_answer.mp3');
   }
 
   static audioPlay(String path) async {
@@ -544,7 +526,7 @@ class Utils {
 
           if (type == Const.typeNewCustomer
               ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
-              : newDateTimeObj2.difference(DateTime.now()).inDays <=1)
+              : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
             arrFinalQuestion.add(questionData);
         }
       });

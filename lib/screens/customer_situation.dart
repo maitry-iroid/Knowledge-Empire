@@ -1,13 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ke_employee/animation/particle_model.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:path/path.dart';
-import 'package:path/path.dart' as prefix0;
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
@@ -1178,7 +1176,6 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   final Random random = Random();
   final int numberOfParticles = 20;
 
-  final List<ParticleModel> particles = [];
 
   @override
   void initState() {

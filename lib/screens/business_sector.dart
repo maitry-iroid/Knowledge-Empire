@@ -421,10 +421,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     Switch(
                       value: selectedModule.isDownloadEnable == 1,
                       onChanged: (value) {
-                        setState(() {
-                          isSwitched = value;
+                        Utils.isInternetConnectedWithAlert()
+                            .then((isConnected) {
+                          if (isConnected) {
+                            setState(() {
+                              isSwitched = value;
+                            });
+                            updatePermission();
+                          }
                         });
-                        updatePermission();
                       },
                       activeTrackColor: ColorRes.white,
                       inactiveTrackColor: ColorRes.lightGrey,
@@ -461,11 +466,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         )),
                     onTap: () {
                       Utils.playClickSound();
-                      if (selectedModule.isAssign == 0) {
-                        assignUserToModule(Const.subscribe);
-                      } else {
-                        assignUserToModule(Const.unSubscribe);
-                      }
+
+                      Utils.isInternetConnectedWithAlert().then((isConnected) {
+                        if (isConnected) {
+                          if (selectedModule.isAssign == 0) {
+                            assignUserToModule(Const.subscribe);
+                          } else {
+                            assignUserToModule(Const.unSubscribe);
+                          }
+                        }
+                      });
                     })
               ],
             ),
@@ -646,11 +656,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       });
       Utils.showToast(e.toString());
     });
-
-
-
-
-
   }
 
   Future<void> updatePermission() async {
@@ -684,7 +689,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     });
 
-  /*  if (isSwitched == false) {
+    /*  if (isSwitched == false) {
       return await Injector.prefs.remove(PrefKeys.questionData);
 //      return  Injector.cacheManager.emptyCache();
     }*/
@@ -709,7 +714,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (data.flag == "true") {
           List<QuestionData> arrQuestions = data.data;
 
-
           for (int i = 0; i < arrQuestions.length; i++) {
             arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
             arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
@@ -717,7 +721,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
             print(arrQuestions[i].value);
           }
-
 
           await Injector.prefs
               .setString(PrefKeys.questionData, json.encode(data.toJson()));
