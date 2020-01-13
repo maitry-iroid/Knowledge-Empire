@@ -6,6 +6,9 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/models/register_for_push.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/dashboard.dart';
@@ -45,6 +48,7 @@ class FadeRouteHome extends PageRouteBuilder {
   final int value;
 
   final int userId;
+
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
 
@@ -55,8 +59,7 @@ class FadeRouteHome extends PageRouteBuilder {
       this.questionDataSituation,
       this.value,
       this.arrFriends,
-      this.userId
-      })
+      this.userId})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -146,8 +149,7 @@ class HomePage extends StatefulWidget {
       this.questionDataSituation,
       this.value,
       this.arrFriends,
-      this.userId
-      })
+      this.userId})
       : super(key: key);
 
 //  final  QuestionData questionData;
@@ -176,81 +178,28 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     initPush();
 
-    if (Injector.streamController == null)
-      Injector.streamController = StreamController.broadcast();
+    initStreamController();
 
-    Injector.streamController.stream.listen((data) {
-//      print("mode changed" + data);
-      if (mounted) {
-        setState(() {});
-      }
-    }, onDone: () {
-      print("Task Done1");
-    }, onError: (error) {
-      print("Some Error1");
-    });
+    initCheckNetworkConnectivity();
 
-    WidgetsBinding.instance.addObserver(this);
-
-    _connectivitySubscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      if (result != ConnectivityResult.none) {
-        Utils.showToast(result.toString());
-
-        Utils.callSubmitAnswerApi(context);
-      }
-    });
-
-    if (widget.initialPageType == Const.typeHome)
-      _selectedDrawerIndex = 0;
-    else if (widget.initialPageType == Const.typeBusinessSector)
-      _selectedDrawerIndex = 1;
-    else if (widget.initialPageType == Const.typeNewCustomer)
-      _selectedDrawerIndex = 2;
-    else if (widget.initialPageType == Const.typeExistingCustomer)
-      _selectedDrawerIndex = 3;
-    else if (widget.initialPageType == Const.typeReward)
-      _selectedDrawerIndex = 4;
-    else if (widget.initialPageType == Const.typeTeam)
-      _selectedDrawerIndex = 5;
-    else if (widget.initialPageType == Const.typeChallenges)
-      _selectedDrawerIndex = 6;
-    else if (widget.initialPageType == Const.typeOrg)
-      _selectedDrawerIndex = 7;
-    else if (widget.initialPageType == Const.typePL)
-      _selectedDrawerIndex = 8;
-    else if (widget.initialPageType == Const.typeRanking)
-      _selectedDrawerIndex = 9;
-    else if (widget.initialPageType == Const.typeProfile)
-      _selectedDrawerIndex = 10;
-    else if (widget.initialPageType == Const.typeHelp)
-      _selectedDrawerIndex = 11;
-    else if (widget.initialPageType == Const.typeEngagement)
-      _selectedDrawerIndex = 12;
-    else if (widget.initialPageType == Const.typeDebrief)
-      _selectedDrawerIndex = 13;
-    else
-      _selectedDrawerIndex = 0;
+    setSelectedIndex();
 
     getCustomerValues();
+
+    getPendingChallenges();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _connectivitySubscription?.cancel();
     super.dispose();
   }
@@ -284,6 +233,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     Injector.firebaseMessaging.getToken().then((token) {
       print("token : " + token);
+
+      callRegisterForPush(token);
     });
   }
 
@@ -402,35 +353,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    drawerItems = [
-      DrawerItem(Utils.getText(context, StringRes.home),
-          Injector.isBusinessMode ? "main_screen_icon" : "ic_home_prof"),
-      DrawerItem(
-          Utils.getText(context, StringRes.businessSector),
-          Injector.isBusinessMode
-              ? "business_sectors"
-              : "ic_pro_business_sectors"),
-      DrawerItem(Utils.getText(context, StringRes.newCustomers),
-          Injector.isBusinessMode ? "new-customer" : "ic_pro_new_cutomer"),
-      DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-          Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
-      DrawerItem(Utils.getText(context, StringRes.rewards),
-          Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
-      DrawerItem(Utils.getText(context, StringRes.team),
-          Injector.isBusinessMode ? "team" : "ic_pro_team"),
-      DrawerItem(Utils.getText(context, StringRes.challenges),
-          Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
-      DrawerItem(Utils.getText(context, StringRes.organizations),
-          Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
-      DrawerItem(Utils.getText(context, StringRes.pl),
-          Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
-      DrawerItem(Utils.getText(context, StringRes.ranking),
-          Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
-      DrawerItem(Utils.getText(context, StringRes.profile),
-          Injector.isBusinessMode ? "profile_icon" : "ic_profile_prof"),
-      DrawerItem(Utils.getText(context, StringRes.help),
-          Injector.isBusinessMode ? "help_icon" : "help_icon"),
-    ];
+    initDrawerItems();
 
     var drawerOptions = <Widget>[];
     for (var i = 0; i < drawerItems.length; i++) {
@@ -438,12 +361,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
           title: showMainItem(drawerItems[i], i),
           selected: i == _selectedDrawerIndex,
-          onTap: () => _onSelectItem(i)
-//          if(currentVol != 0) {
-//            _onSelectItem(i);
-//          }
-//          }
-          ));
+          onTap: () => _onSelectItem(i)));
     }
 
     return Scaffold(
@@ -482,7 +400,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             isShowMenu: true,
             openProfile: openProfile,
           ),
-
+          CommonView.showCircularProgress(isLoading)
         ],
       )),
     );
@@ -549,14 +467,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
     else if (_selectedDrawerIndex == 13)
-
-      return CustomerSituationPage(questionDataCustomerSituation: widget.questionDataSituation);
+      return CustomerSituationPage(
+          questionDataCustomerSituation: widget.questionDataSituation);
 
 //      return ParticleBackgroundApp(
 //          questionDataCustomerSituation: widget.questionDataSituation);
 
     else if (_selectedDrawerIndex == 6)
-      return ChallengesPage(arrFriends: widget.arrFriends,userId: widget.userId, );
+      return ChallengesPage(
+        arrFriends: widget.arrFriends,
+        userId: widget.userId,
+      );
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }
@@ -582,6 +503,170 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //        isLoading = false;
 //      });
       Utils.showToast(e.toString());
+    });
+  }
+
+  void setSelectedIndex() {
+    if (widget.initialPageType == Const.typeHome)
+      _selectedDrawerIndex = 0;
+    else if (widget.initialPageType == Const.typeBusinessSector)
+      _selectedDrawerIndex = 1;
+    else if (widget.initialPageType == Const.typeNewCustomer)
+      _selectedDrawerIndex = 2;
+    else if (widget.initialPageType == Const.typeExistingCustomer)
+      _selectedDrawerIndex = 3;
+    else if (widget.initialPageType == Const.typeReward)
+      _selectedDrawerIndex = 4;
+    else if (widget.initialPageType == Const.typeTeam)
+      _selectedDrawerIndex = 5;
+    else if (widget.initialPageType == Const.typeChallenges)
+      _selectedDrawerIndex = 6;
+    else if (widget.initialPageType == Const.typeOrg)
+      _selectedDrawerIndex = 7;
+    else if (widget.initialPageType == Const.typePL)
+      _selectedDrawerIndex = 8;
+    else if (widget.initialPageType == Const.typeRanking)
+      _selectedDrawerIndex = 9;
+    else if (widget.initialPageType == Const.typeProfile)
+      _selectedDrawerIndex = 10;
+    else if (widget.initialPageType == Const.typeHelp)
+      _selectedDrawerIndex = 11;
+    else if (widget.initialPageType == Const.typeEngagement)
+      _selectedDrawerIndex = 12;
+    else if (widget.initialPageType == Const.typeDebrief)
+      _selectedDrawerIndex = 13;
+    else
+      _selectedDrawerIndex = 0;
+  }
+
+  void initStreamController() {
+    if (Injector.streamController == null)
+      Injector.streamController = StreamController.broadcast();
+
+    Injector.streamController.stream.listen((data) {
+      if (mounted) {
+        setState(() {});
+      }
+    }, onDone: () {
+      print("Task Done1");
+    }, onError: (error) {
+      print("Some Error1");
+    });
+  }
+
+  void initCheckNetworkConnectivity() {
+    WidgetsBinding.instance.addObserver(this);
+
+    _connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result != ConnectivityResult.none) {
+        Utils.callSubmitAnswerApi(context);
+      }
+    });
+  }
+
+  bool isLoading = false;
+
+  void getPendingChallenges() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        setState(() {
+          isLoading = true;
+        });
+
+        GetChallengesRequest rq = GetChallengesRequest();
+        rq.userId = Injector.userData.userId;
+        rq.challengeId = 0;
+
+        WebApi().getChallenges(context, rq).then((response) {
+          setState(() {
+            isLoading = false;
+          });
+
+          if (response != null) {
+            if (response.flag == "true") {
+              if (response.data.length > 0)
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EngagementCustomer(
+                              questionDataEngCustomer:
+                                  response.data[0].challenge[0],
+                            )));
+            } else {
+              Utils.showToast(response.msg);
+            }
+          }
+        }).catchError((e) {
+          Utils.showToast(e.toString());
+
+          setState(() {
+            isLoading = false;
+          });
+        });
+      }
+    });
+  }
+
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
+      bool isFromProfile, bool isOldPasswordRequired) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => EngagementCustomer());
+  }
+
+  void initDrawerItems() {
+    drawerItems = [
+      DrawerItem(Utils.getText(context, StringRes.home),
+          Injector.isBusinessMode ? "main_screen_icon" : "ic_home_prof"),
+      DrawerItem(
+          Utils.getText(context, StringRes.businessSector),
+          Injector.isBusinessMode
+              ? "business_sectors"
+              : "ic_pro_business_sectors"),
+      DrawerItem(Utils.getText(context, StringRes.newCustomers),
+          Injector.isBusinessMode ? "new-customer" : "ic_pro_new_cutomer"),
+      DrawerItem(Utils.getText(context, StringRes.existingCustomers),
+          Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
+      DrawerItem(Utils.getText(context, StringRes.rewards),
+          Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
+      DrawerItem(Utils.getText(context, StringRes.team),
+          Injector.isBusinessMode ? "team" : "ic_pro_team"),
+      DrawerItem(Utils.getText(context, StringRes.challenges),
+          Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
+      DrawerItem(Utils.getText(context, StringRes.organizations),
+          Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
+      DrawerItem(Utils.getText(context, StringRes.pl),
+          Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
+      DrawerItem(Utils.getText(context, StringRes.ranking),
+          Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
+      DrawerItem(Utils.getText(context, StringRes.profile),
+          Injector.isBusinessMode ? "profile_icon" : "ic_profile_prof"),
+      DrawerItem(Utils.getText(context, StringRes.help),
+          Injector.isBusinessMode ? "help_icon" : "help_icon"),
+    ];
+  }
+
+  void callRegisterForPush(String token) {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        RegisterForPushRequest rq = RegisterForPushRequest();
+        rq.userId = Injector.userData.userId;
+        rq.deviceId = Injector.deviceId;
+        rq.deviceType = "android";
+        rq.deviceToken = token;
+
+        WebApi().registerForPush(rq).then((response) {
+          if (response != null) {
+            if (response.flag == "true") {
+              Utils.showToast(response.msg);
+            }
+          }
+        });
+      }
+    }).catchError((e) {
+      Utils.showToast(e);
     });
   }
 }

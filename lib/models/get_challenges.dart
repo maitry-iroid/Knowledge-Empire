@@ -1,6 +1,8 @@
+import 'package:ke_employee/models/questions.dart';
+
 class GetChallengesRequest {
-  String userId;
-  String challengeId;
+  int userId;
+  int challengeId;
 
   GetChallengesRequest({this.userId, this.challengeId});
 
@@ -54,7 +56,7 @@ class GetChallengeData {
   String firstName;
   String lastName;
   String profileImage;
-  List<Challenge> challenge;
+  List<QuestionData> challenge;
 
   GetChallengeData({this.firstName, this.lastName, this.profileImage, this.challenge});
 
@@ -63,9 +65,9 @@ class GetChallengeData {
     lastName = json['lastName'];
     profileImage = json['profileImage'];
     if (json['challenge'] != null) {
-      challenge = new List<Challenge>();
+      challenge = new List<QuestionData>();
       json['challenge'].forEach((v) {
-        challenge.add(new Challenge.fromJson(v));
+        challenge.add(new QuestionData.fromJson(v));
       });
     }
   }

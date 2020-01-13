@@ -16,30 +16,28 @@ import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/login.dart';
 import '../models/get_customer_value.dart';
 
-
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
 
-
   FadeRouteLogin({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: LoginPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: LoginPage(),
+          ),
+        );
 }
 
 class LoginPage extends StatefulWidget {
@@ -59,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   //Sound Is mute
@@ -142,12 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: ColorRes.white),
                       ),
                       onTap: () {
-//                        if(currentVol != 0) {
-                          Utils.playClickSound();
-//                        }
-
+                        Utils.playClickSound();
                         Navigator.push(context, FadeRouteForgotPassword());
-
                       },
                     ),
                   ),
@@ -262,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
         Injector.customerValueData = customerValueData;
 
         if (loginData.data.isPasswordChanged == "0") {
-          Utils.showChangePasswordDialog(_scaffoldKey, false,false);
+          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
           if (loginData.data.isFirstTimeLogin)
             navigateToIntro();
@@ -281,14 +274,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToIntro() {
-
-    Navigator.pushAndRemoveUntil(context, FadeRouteIntro(), ModalRoute.withName("/login"));
+    Navigator.pushAndRemoveUntil(
+        context, FadeRouteIntro(), ModalRoute.withName("/login"));
   }
 
   void navigateToDashboard() {
-
-    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
-
+    Navigator.pushAndRemoveUntil(
+        context, FadeRouteHome(), ModalRoute.withName("/login"));
   }
 
   showEmailView() {
