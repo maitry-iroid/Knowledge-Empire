@@ -20,7 +20,6 @@ import '../helper/string_res.dart';
 import 'login.dart';
 import '../models/logout.dart';
 
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -47,10 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
         : "";
 
     super.initState();
-
   }
-
-
 
   Notifier _notifier;
   File _image;
@@ -165,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           InkResponse(
                             onTap: () {
 //                              if (currentVol != 0) {
-                                Utils.playClickSound();
+                              Utils.playClickSound();
 //                              }
                               Navigator.push(context, FadeRouteIntro());
 
@@ -289,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         onTap: () async {
 //                          if (currentVol != 0) {
-                            Utils.playClickSound();
+                          Utils.playClickSound();
 //                          }
 
                           if (Injector.isBusinessMode)
@@ -311,6 +307,36 @@ class _ProfilePageState extends State<ProfilePage> {
 //                    MaterialPageRoute(builder: (context) => HomePage()),
 //                  );
                         },
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          InkResponse(
+                            child: Text(
+                                Utils.getText(context, StringRes.sound)),
+                            onTap: () {
+                              Utils.playClickSound();
+                            },
+                          ),
+                          Switch(
+                            value: Injector.isSoundEnable,
+                            onChanged: (value) {
+                              Utils.isInternetConnectedWithAlert()
+                                  .then((isConnected) {
+                                if (isConnected) {
+                                  setState(() {
+                                    Injector.isSoundEnable = value;
+                                    Injector.prefs
+                                        .setBool(PrefKeys.isSoundEnable, value);
+                                  });
+                                }
+                              });
+                            },
+                            activeTrackColor: ColorRes.white,
+                            inactiveTrackColor: ColorRes.lightGrey,
+                            activeColor: Colors.white,
+                          ),
+                        ],
                       ),
                       InkResponse(
                         child: Container(
@@ -343,7 +369,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         onTap: () async {
 //                          if(currentVol != 0) {
-                            Utils.playClickSound();
+                          Utils.playClickSound();
 //                          }
 //                          Injector.customerValueData.manager != null || Injector.customerValueData.manager.isNotEmpty ?
 
@@ -472,7 +498,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   logout() async {
 //    if(currentVol != 0) {
-      Utils.playClickSound();
+    Utils.playClickSound();
 //    }
     setState(() {
       isLoading = true;
@@ -521,9 +547,8 @@ class _ProfilePageState extends State<ProfilePage> {
               width: 30,
             ),
             onTap: () {
-
 //              if(currentVol != 0) {
-                Utils.playClickSound();
+              Utils.playClickSound();
 //              }
               Utils.performBack(context);
             },
@@ -681,7 +706,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   onTap: () {
 //                    if(currentVol != 0) {
-                      Utils.playClickSound();
+                    Utils.playClickSound();
 //                    }
                     FocusScope.of(context).requestFocus(myFocusNode);
                   },
@@ -783,7 +808,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     onTap: () {
 //                      if(currentVol != 0) {
-                        Utils.playClickSound();
+                      Utils.playClickSound();
 //                      }
                       Utils.showChangePasswordDialog(_scaffoldKey, true, true);
                     },
@@ -838,7 +863,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void showPhotoOptionDialog(BuildContext mainContext) {
     // flutter defined function
 //    if(currentVol != 0) {
-      Utils.playClickSound();
+    Utils.playClickSound();
 //    }
     showDialog(
       context: mainContext,
@@ -857,7 +882,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 onTap: () {
 //                  if(currentVol != 0) {
-                    Utils.playClickSound();
+                  Utils.playClickSound();
 //                  }
                   //alert pop
                   Navigator.pop(context);
@@ -876,7 +901,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 onTap: () async {
 //                  if(currentVol != 0) {
-                    Utils.playClickSound();
+                  Utils.playClickSound();
 //                  }
                   //alert pop
                   Navigator.pop(context);
@@ -892,7 +917,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   updateProfile() {
 //    if(currentVol != 0) {
-      Utils.playClickSound();
+    Utils.playClickSound();
 //    }
     var req = {
       'userId': Injector.userData.userId,
@@ -920,7 +945,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
           Utils.showToast("Profile updated successfully!");
 
-         Injector.streamController.add("update_profile");
+          Injector.streamController.add("update_profile");
         }
       } else {
         Utils.showToast("Something went wrong.");

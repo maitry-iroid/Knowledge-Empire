@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -26,25 +30,18 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     // TODO: implement initState
     super.initState();
 
-    getQuestions();
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        getQuestions();
+      } else {
+        arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueTYpe);
 
-//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-//      List<String> jsonQuestionData =
-//          Injector.prefs.getStringList(PrefKeys.questionData);
-//
-//      jsonQuestionData.forEach((jsonQuestion) {
-//        QuestionData questionData =
-//            QuestionData.fromJson(jsonDecode(jsonQuestion));
-//
-//        if (questionData.isAnsweredCorrect &&
-//            questionData.attemptTime - DateTime.now().millisecondsSinceEpoch <
-//                24*60*60*1000) arrQuestions.add(questionData);
-//      });
-//
-//      if (arrQuestions != null) {
-//        setState(() {});
-//      }
-//    }
+        if (arrQuestions != null && arrQuestions.length > 0) {
+          arrQuestions = arrQuestions;
+          setState(() {});
+        }
+      }
+    });
   }
 
   @override
@@ -60,7 +57,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       QuestionData questionData = arrQuestions[index];
 
       ReleaseResourceRequest rq = ReleaseResourceRequest();
-      rq.userId = Injector.userData.userId.toString();
+      rq.userId = Injector.userData.userId;
       rq.questionId = questionData.questionId;
       rq.moduleId = questionData.moduleId;
       rq.resources = questionData.resources;
@@ -70,20 +67,28 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         isLoading = true;
       });
 
-      WebApi()
-          .releaseResource(context, rq.toJson())
-          .then((getReleaseResourceData) {
+      WebApi().releaseResource(context, rq).then((getReleaseResourceData) {
+        setState(() {
+          isLoading = false;
+        });
+
         if (getReleaseResourceData != null) {
-          Injector.customerValueData = getReleaseResourceData.data;
+          if (getReleaseResourceData.flag == "true") {
+            Injector.customerValueData = getReleaseResourceData.data;
 //          arrOrganization = getreleaseresourceData.organization;
 
-          Injector.streamController.add("release resources");
+            Injector.streamController.add("release resources");
 
-          setState(() {
-            arrQuestions.removeAt(index);
+            setState(() {
+              arrQuestions.removeAt(index);
 
-            isLoading = false;
-          });
+              isLoading = false;
+            });
+          } else {
+            Utils.showToast(getReleaseResourceData.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {
         print(e);
@@ -129,14 +134,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: ColorRes.colorBgDark,
         body: Stack(
           children: <Widget>[
             CommonView.showBackground(context),
             Container(
-              margin: EdgeInsets.only(left: 30,right: 30,top: Utils.getHeaderHeight(context)),
+              margin: EdgeInsets.only(
+                  left: 30, right: 30, top: Utils.getHeaderHeight(context)),
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -310,7 +315,11 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     fit: BoxFit.fill)),
           ),
           onTap: () {
-            releaseResource(index);
+            Utils.isInternetConnectedWithAlert().then((isConnected) {
+              if (isConnected) {
+                releaseResource(index);
+              }
+            });
           },
         )
       ],

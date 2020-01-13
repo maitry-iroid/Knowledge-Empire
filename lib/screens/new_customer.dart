@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../helper/web_api.dart';
 import '../models/questions.dart';
-
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -42,38 +40,19 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     resourceBonus = Injector.customerValueData.resourceBonus;
     valueBonus = Injector.customerValueData.valueBonus;
 
-
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         getQuestions();
       } else {
-        if (Injector.prefs.getString(PrefKeys.questionData) != null) {
+         arrQuestions =
+            Utils.getQuestionsLocally(Const.getNewQueType);
 
-          arrQuestions = QuestionsResponse.fromJson(
-              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
-              .data;
-
-          arrQuestions.forEach((questionData) {
-
-            DateTime newDateTimeObj2 = new DateFormat("dd/MM/yyyy HH:mm:ss").parse(questionData.attemptTime);
-            print("question date string : -    ${questionData.attemptTime}");
-
-
-            if (questionData.attemptTime.isEmpty ||
-                newDateTimeObj2.millisecondsSinceEpoch
-                   - DateTime.now().millisecondsSinceEpoch
-                    >
-                    24) arrQuestions.add(questionData);
-          });
-
-          if (arrQuestions != null && arrQuestions.length > 0) {
-            setState(() {});
-          }
+        if (arrQuestions != null && arrQuestions.length > 0) {
+          setState(() {});
         }
       }
     });
   }
-
 
   getQuestions() {
     setState(() {
@@ -387,18 +366,3 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     );
   }
 }
-
-/*class Screen2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.green,
-      body: Center(
-        child: RaisedButton(
-          child: Text('Go Back!'),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-    );
-  }
-}*/

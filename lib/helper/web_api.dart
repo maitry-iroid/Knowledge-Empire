@@ -21,12 +21,14 @@ import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/releaseResource.dart';
+import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
-//  static const baseUrl = "http://13.127.186.25:7000/api";
-  static const baseUrl = "http://18.141.132.109:7000/api";
+//  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
+  static const baseUrl = "http://18.141.132.109:7000/api";   // prod url
 
   static String apiRequestLogin = "login";
 
@@ -169,10 +171,11 @@ class WebApi {
     }
   }
 
-  Future<LearningModuleResponse> getLearningModule(int isChallenge) async {
+  Future<LearningModuleResponse> getLearningModule(int userId,int isChallenge) async {
     initDio();
 
-    var req = json.encode({'userId': Injector.userData.userId,'isChallenge': isChallenge.toString()});
+    var req = json.encode(
+        {'userId': userId, 'isChallenge': isChallenge});
 
     print("getLearningModule" + " - " + req);
     print(dio.options.headers);
@@ -320,30 +323,22 @@ class WebApi {
   }
 
   Future<GetCustomerValueResponse> releaseResource(
-      BuildContext context, Map<String, dynamic> jsonMap) async {
+      BuildContext context, ReleaseResourceRequest rq) async {
     initDio();
 
-    print("releaseResource" + json.encode(jsonMap));
+    print("releaseResource" + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
-          data:
-              json.encode(getRequest('releaseResource', json.encode(jsonMap))));
+          data: json
+              .encode(getRequest('releaseResource', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         GetCustomerValueResponse releaseResourceResponse =
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
-        if (releaseResourceResponse != null) {
-          if (releaseResourceResponse.flag == "true") {
-            return releaseResourceResponse;
-          } else {
-            Utils.showToast(releaseResourceResponse.msg);
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
+        return releaseResourceResponse;
       }
       print(response.data);
       return null;
@@ -510,12 +505,12 @@ class WebApi {
       BuildContext context, ManageModulePermissionRequest rq) async {
     initDio();
 
-    print("get_achievements" + json.encode(rq.toJson()));
+    print("updateModulePermission_ " + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
           data: json.encode(
-              getRequest('getUserAchievement', json.encode(rq.toJson()))));
+              getRequest('updateModulePermission', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -711,13 +706,37 @@ class WebApi {
 //    }
 //  }
 
-  Future<QuestionsResponse> getDownloadQuestions(Map<String, dynamic> jsonMap) async {
+  Future<QuestionsResponse> getDownloadQuestions(
+      Map<String, dynamic> jsonMap) async {
     initDio();
 
     print("questions_request__" + json.encode(jsonMap));
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('getDownloadQuestions', json.encode(jsonMap))));
+          data: json.encode(
+              getRequest('getDownloadQuestions', json.encode(jsonMap))));
+      if (response.statusCode == 200) {
+        print(response.data);
+        QuestionsResponse questionsResponse =
+            QuestionsResponse.fromJson(jsonDecode(response.data));
+        return questionsResponse;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<QuestionsResponse> searchFriends(SearchFriendRequest rq) async {
+    initDio();
+
+    print("searchFriends" + json.encode(rq.toJson()));
+    try {
+      final response = await dio.post("",
+          data: json.encode(
+              getRequest('searchFriends', json.encode(rq.toJson()))));
       if (response.statusCode == 200) {
         print(response.data);
         QuestionsResponse questionsResponse =
@@ -731,5 +750,4 @@ class WebApi {
       return null;
     }
   }
-
 }

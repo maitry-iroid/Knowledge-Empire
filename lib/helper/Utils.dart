@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'dart:math';
-
 import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -206,26 +204,9 @@ class Utils {
   }
 
   static String getText(BuildContext context, String text) {
-//    return AppLocalizations.of(context).tr(text);
-
     return AppLocalizations.of(context).text(text) != null
         ? AppLocalizations.of(context).text(text)
         : text;
-
-    if (Injector.prefs.getString(PrefKeys.userId) != null &&
-        Injector.prefs.getString(PrefKeys.userId).isNotEmpty) {
-      return Injector.isBusinessMode
-          ? StringRes.localizedValues['en'][text] != null
-              ? StringRes.localizedValues['en'][text]
-              : ""
-          : StringRes.localizedValuesProf['en'][text] != null
-              ? StringRes.localizedValuesProf['en'][text]
-              : "";
-    } else {
-      return StringRes.localizedValues['en'][text] != null
-          ? StringRes.localizedValues['en'][text]
-          : "";
-    }
   }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
@@ -295,27 +276,28 @@ class Utils {
 //    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
 //    Audio audio = Audio.load('assets/sounds/all_button_clicks.wav');
 //    audio.play();
-    return audioPlay('assets/sounds/all_button_clicks.wav');
+    if (Injector.isSoundEnable)
+      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/right_answer.wav");
-    return audioPlay('assets/sounds/right_answer.wav');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/right_answer.wav');
   }
 
   static incorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/wrong_answer.wav");
-    return audioPlay('assets/sounds/wrong_answer.wav');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/wrong_answer.wav');
   }
 
   static procorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
-    return audioPlay('assets/sounds/pro_right_answer.mp3');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_right_answer.mp3');
   }
 
   static proincorrectAnswerSound() async {
 //    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
-    return audioPlay('assets/sounds/pro_wrong_answer.mp3');
+    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_wrong_answer.mp3');
   }
 
   static audioPlay(String path) async {
@@ -324,40 +306,25 @@ class Utils {
   }
 
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
-    List<String> jsonQuestionData = List();
-    List<QuestionData> questionData_ = List();
-
-    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-      List<String> jsonQuestionData =
-          Injector.prefs.getStringList(PrefKeys.questionData);
-
-      jsonQuestionData.forEach((jsonQuestion) {
-        questionData_.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
-      });
-    }
-
-    questionData_.addAll(arrQuestions);
-
-    questionData_.forEach((questionData) {
-      jsonQuestionData.add(json.encode(questionData));
-    });
-
-    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
-  }
-
-  static List<QuestionData> getQuestionsLocally() {
-    List<QuestionData> questionData = List();
-
-    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-      List<String> jsonQuestionData =
-          Injector.prefs.getStringList(PrefKeys.questionData);
-
-      jsonQuestionData.forEach((jsonQuestion) {
-        questionData.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
-      });
-    }
-
-    return questionData;
+//    List<String> jsonQuestionData = List();
+//    List<QuestionData> questionData_ = List();
+//
+//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
+//      List<String> jsonQuestionData =
+//          Injector.prefs.getStringList(PrefKeys.questionData);
+//
+//      jsonQuestionData.forEach((jsonQuestion) {
+//        questionData_.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
+//      });
+//    }
+//
+//    questionData_.addAll(arrQuestions);
+//
+//    questionData_.forEach((questionData) {
+//      jsonQuestionData.add(json.encode(questionData));
+//    });
+//
+//    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
   }
 
   static getCurrentFormattedDate() {
@@ -441,7 +408,7 @@ class Utils {
           (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
       var c = (2 - (Injector.customerValueData.resourceBonus / 100));
 
-      int finalValue = (a * b * c).round();
+      finalValue = (a * b * c).round();
     } catch (e) {
       print(e);
     }
@@ -519,5 +486,51 @@ class Utils {
     await Injector.flutterLocalNotificationsPlugin.show(
         Injector.notificationID, title, body, platformChannelSpecifics,
         payload: 'item x');
+  }
+
+  static updateAttemptTimeInQuestionDataLocally(
+      int questionId, String attemptTime) async {
+    List<QuestionData> arrQuestions = List();
+
+    QuestionsResponse questionsResponse = QuestionsResponse.fromJson(
+        jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
+    arrQuestions = questionsResponse.data;
+
+    arrQuestions
+        .where((que) => que.questionId == questionId)
+        .first
+        .attemptTime = attemptTime;
+
+    questionsResponse.data = arrQuestions;
+
+    await Injector.prefs.setString(
+        PrefKeys.questionData, json.encode(questionsResponse.toJson()));
+  }
+
+  static List<QuestionData> getQuestionsLocally(int type) {
+    List<QuestionData> arrFinalQuestion = List();
+
+    if (Injector.prefs.getString(PrefKeys.questionData) != null) {
+      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(
+              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
+          .data;
+
+      arrQuestionsLocal.forEach((questionData) {
+        if (questionData.attemptTime == null ||
+            questionData.attemptTime.isEmpty) {
+          arrFinalQuestion.add(questionData);
+        } else {
+          DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss")
+              .parse(questionData.attemptTime);
+          print("question date string : -    ${questionData.attemptTime}");
+
+          if (type == Const.typeNewCustomer
+              ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
+              : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
+            arrFinalQuestion.add(questionData);
+        }
+      });
+    }
+    return arrFinalQuestion;
   }
 }

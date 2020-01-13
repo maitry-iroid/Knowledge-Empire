@@ -65,6 +65,7 @@ class LoginResponseData {
   int activeCompany;
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
+  bool isSoundEnable = false;
 
   LoginResponseData();
 

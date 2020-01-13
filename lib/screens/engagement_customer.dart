@@ -437,6 +437,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     rq.totalQuestionAnswered = rq.answer.length;
 
+    Utils.updateAttemptTimeInQuestionDataLocally(questionData.questionId,submitAnswer.attemptTime);
+
     return rq;
   }
 

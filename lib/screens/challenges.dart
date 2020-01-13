@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 //import 'package:volume/volume.dart';
@@ -19,8 +20,8 @@ class ChallengesPage extends StatefulWidget {
   List<GetFriendsData> arrFriends = List();
   final int userId;
 
-  ChallengesPage(
-      { Key key,this.arrFriends, this.userId}) : super(key: key);
+  ChallengesPage({Key key, this.arrFriends, this.userId}) : super(key: key);
+
   @override
   _ChallengesPageState createState() => _ChallengesPageState();
 }
@@ -28,21 +29,7 @@ class ChallengesPage extends StatefulWidget {
 class _ChallengesPageState extends State<ChallengesPage> {
   bool isLoading = false;
   List<GetFriendsData> arrFriends = List();
-
-//  List<String> arrFriends = [
-//    "hello",
-//    "world",
-//    "good",
-//    "morning",
-//    "hello",
-//    "world",
-//    "good",
-//    "morning",
-//    "hello",
-//    "world",
-//    "good",
-//    "morning"
-//  ];
+  List<LearningModuleData> arrLearningModules = List();
 
   List<String> arrRewards = ["2%", "4%", "6%", "8%", "10%"];
 
@@ -56,8 +43,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //    getFriendsData = widget.friendsData;
     arrFriends = widget.arrFriends;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +66,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             height: 1,
           ),
         ),
+        CommonView.showCircularProgress(isLoading)
       ],
     );
   }
@@ -184,7 +170,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: arrLearningModules.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showSectorItem(index);
                   },
@@ -234,9 +220,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: arrRewards.length ,
+                  itemCount: arrRewards.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return showFriendItem(index,2);
+                    return showFriendItem(index, 2);
                   },
                 ),
               ),
@@ -264,7 +250,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
   int selectedIndex = -1;
 
   _onSelectedFriend(int index) {
-    setState(() => selectedIndex = index);
+    setState(() {
+      selectedIndex = index;
+
+      selectedFriendId = arrFriends[selectedIndex].userId;
+    });
   }
 
   int selectedRewardsIndex = -1;
@@ -274,8 +264,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   selectedItem(int type, int index) {
-    if(type == 1) {
-      if(arrFriends[index].userId == widget.userId) {
+    if (type == 1) {
+      if (arrFriends[index].userId == widget.userId) {
         return Colors.blue;
       } else {
         return ColorRes.greyText;
@@ -286,7 +276,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         return ColorRes.greyText;
       }*/
     } else {
-      if(selectedRewardsIndex == index) {
+      if (selectedRewardsIndex == index) {
         return ColorRes.blue;
       } else {
         return ColorRes.greyText;
@@ -306,9 +296,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
         alignment: Alignment.center,
         width: Utils.getDeviceWidth(context) / 18,
         decoration: BoxDecoration(
-            color: Injector.isBusinessMode ? selectedItem(type, index)
+          color: Injector.isBusinessMode
+              ? selectedItem(type, index)
 //            selectedIndex != null && selectedIndex == index ? ColorRes.blue : ColorRes.greyText
-                : ColorRes.white,
+              : ColorRes.white,
           borderRadius: BorderRadius.circular(20),
 //            image: Injector.isBusinessMode
 //                ? DecorationImage(
@@ -320,12 +311,15 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //                    fit: BoxFit.fill)
 //                : null
         ),
-        margin: EdgeInsets.symmetric(vertical: type == 1 ? 5 : Utils.getDeviceHeight(context) / 7, horizontal: type == 1 ? 8 : 8),
+        margin: EdgeInsets.symmetric(
+            vertical: type == 1 ? 5 : Utils.getDeviceHeight(context) / 7,
+            horizontal: type == 1 ? 8 : 8),
 //        padding: EdgeInsets.symmetric(vertical: 2),
-        child: Text( type != 2 ?
-          arrFriends[index].name : arrRewards[index],
+        child: Text(
+          type != 2 ? arrFriends[index].name : arrRewards[index],
           style: TextStyle(
-              color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
+              color:
+                  Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
               fontSize: 17),
         ),
       ),
@@ -342,7 +336,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     return GestureDetector(
       onTap: () {
 //        if(currentVol != 0) {
-          Utils.playClickSound();
+        Utils.playClickSound();
 //        }
         _onSelectedSector(index);
       },
@@ -367,7 +361,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Text('HealthCare',
+                  child: Text(arrLearningModules[index].moduleName,
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -396,7 +390,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 3.6,
                   lineHeight: 20.0,
-                  percent: 0.5,
+                  percent: arrLearningModules[index].moduleProgress / 100,
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -405,7 +399,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Positioned(
                   left: 6,
                   child: Text(
-                    "50%",
+                    arrLearningModules[index].moduleProgress.toString() + "%",
                     style: TextStyle(color: ColorRes.white, fontSize: 14),
                   ),
                 )
@@ -479,6 +473,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
             bottomRight: Radius.circular(8)));
   }
 
+  int selectedFriendId = 0;
+
   void getFriends() {
     setState(() {
       isLoading = true;
@@ -486,11 +482,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     GetFriendsRequest rq = GetFriendsRequest();
     rq.userId = Injector.userData.userId;
-    rq.groupId = 0 ;
-    rq.category = 0 ;
-    rq.searchBy = 0 ;
-    rq.filter = 0 ;
-
+    rq.groupId = 0;
+    rq.category = 0;
+    rq.searchBy = 0;
+    rq.filter = 0;
 
     WebApi().getFriends(context, rq).then((response) {
       setState(() {
@@ -501,6 +496,31 @@ class _ChallengesPageState extends State<ChallengesPage> {
         if (response.flag == "true") {
           if (response.data != null) {
             arrFriends = response.data;
+
+            if (arrFriends.length > 0) {
+              selectedFriendId = arrFriends[0].userId;
+              setState(() {});
+            }
+          }
+        }
+      }
+    });
+  }
+
+  void getBusinessSectors() {
+    setState(() {
+      isLoading = true;
+    });
+
+    WebApi().getLearningModule(selectedFriendId, 1).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          if (response.data != null) {
+            arrLearningModules = response.data;
             setState(() {});
           }
         }

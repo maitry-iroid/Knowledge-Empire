@@ -93,7 +93,8 @@ class QuestionData {
         this.correctAnswerImage,
         this.inCorrectAnswerImage,
         this.videoPlay,
-        this.videoLoop
+        this.videoLoop,
+        this.attemptTime
       });
 
   QuestionData.fromJson(Map<String, dynamic> json) {
@@ -121,6 +122,7 @@ class QuestionData {
     inCorrectAnswerImage = json['inCorrectAnswerImage'];
     videoPlay = json['videoPlay'];
     videoLoop = json['videoLoop'];
+    attemptTime = json['attemptTime'];
   }
 
   Map<String, dynamic> toJson() {
@@ -146,6 +148,7 @@ class QuestionData {
     }
     data['correctAnswerImage'] = this.correctAnswerImage;
     data['inCorrectAnswerImage'] = this.inCorrectAnswerImage;
+    data['attemptTime'] = this.attemptTime;
     return data;
   }
 }
