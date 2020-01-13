@@ -66,6 +66,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             height: 1,
           ),
         ),
+        CommonView.showCircularProgress(isLoading)
       ],
     );
   }
@@ -249,7 +250,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
   int selectedIndex = -1;
 
   _onSelectedFriend(int index) {
-    setState(() => selectedIndex = index);
+    setState(() {
+      selectedIndex = index;
+
+      selectedFriendId = arrFriends[selectedIndex].userId;
+    });
   }
 
   int selectedRewardsIndex = -1;
@@ -385,7 +390,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 3.6,
                   lineHeight: 20.0,
-                  percent: arrLearningModules[index].moduleProgress/100,
+                  percent: arrLearningModules[index].moduleProgress / 100,
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -468,6 +473,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
             bottomRight: Radius.circular(8)));
   }
 
+  int selectedFriendId = 0;
+
   void getFriends() {
     setState(() {
       isLoading = true;
@@ -489,7 +496,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
         if (response.flag == "true") {
           if (response.data != null) {
             arrFriends = response.data;
-            setState(() {});
+
+            if (arrFriends.length > 0) {
+              selectedFriendId = arrFriends[0].userId;
+              setState(() {});
+            }
           }
         }
       }
@@ -501,7 +512,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       isLoading = true;
     });
 
-    WebApi().getLearningModule(1).then((response) {
+    WebApi().getLearningModule(selectedFriendId, 1).then((response) {
       setState(() {
         isLoading = false;
       });

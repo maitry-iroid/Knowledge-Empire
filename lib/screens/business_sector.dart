@@ -490,7 +490,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       isLoading = true;
     });
 
-    WebApi().getLearningModule(0).then((data) async {
+    WebApi().getLearningModule(Injector.userData.userId,0).then((data) async {
       setState(() {
         isLoading = false;
       });
