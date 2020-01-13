@@ -730,7 +730,7 @@ class WebApi {
     }
   }
 
-  Future<QuestionsResponse> searchFriends(SearchFriendRequest rq) async {
+  Future<SearchFriendResponse> searchFriends(SearchFriendRequest rq) async {
     initDio();
 
     print("searchFriends" + json.encode(rq.toJson()));
@@ -740,9 +740,10 @@ class WebApi {
               .encode(getRequest('searchFriends', json.encode(rq.toJson()))));
       if (response.statusCode == 200) {
         print("searchFriends"+"_"+response.data);
-        QuestionsResponse questionsResponse =
-            QuestionsResponse.fromJson(jsonDecode(response.data));
-        return questionsResponse;
+//        QuestionsResponse questionsResponse =
+        SearchFriendResponse searchFriendResponse =
+        SearchFriendResponse.fromJson(jsonDecode(response.data));
+        return searchFriendResponse;
       }
       print(response.data);
       return null;
