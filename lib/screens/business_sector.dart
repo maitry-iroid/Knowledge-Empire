@@ -58,7 +58,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     });
-
 //    isSwitched = Global.shared.isInstructionView;
   }
 
