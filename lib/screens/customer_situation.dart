@@ -1,13 +1,15 @@
+import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:ke_employee/animation/particle_model.dart';
+import 'package:flutter/services.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:path/path.dart';
-import 'package:path/path.dart' as prefix0;
+import 'package:simple_animations/simple_animations.dart';
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
@@ -18,6 +20,11 @@ import '../commonview/background.dart';
 import 'home.dart';
 import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'dart:math';
+import 'dart:ui' as ui;
+
+//import 'package:ke_employee/simple_animations.dart';
+//import 'package:simple_animations_example_app/widgets/example_page.dart';
 
 List<Answer> arrAnswerSituation = List();
 
@@ -32,6 +39,8 @@ List abcdList = List();
 FileInfo fileInfo;
 
 int currentVol;
+
+//customer answer show screen : -
 
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
@@ -181,6 +190,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       fit: StackFit.expand,
       children: <Widget>[
         CommonView.showBackground(context),
+
         Padding(
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
           child: Column(
@@ -196,6 +206,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             ],
           ),
         ),
+
+        gifImageShow(),
+
 //        Positioned.fill(child: Particles(30)),
 //        Rendering(
 //          builder: (context, time) {
@@ -212,6 +225,47 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //  _simulateParticles(Duration time) {
 //    particles.forEach((particle) => particle.maintainRestart(time));
 //  }
+
+  bool isGif = true;
+  gifImageShow() {
+
+    if (questionData.isAnsweredCorrect == true) {
+
+      Future.delayed(const Duration(seconds: 5), () {
+        setState(() {
+          // Here you can write your code for open new view
+          isGif = false;
+        });
+      });
+
+      return Visibility(
+          child: Container(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Image(
+                  image: AssetImage("assets/images/dollar.gif"),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+
+//        maintainSize: true,
+//        maintainAnimation: true,
+//        maintainState: true,
+//        visible: false, // hiden image
+
+        visible: isGif,
+      );
+
+    }
+
+
+  }
 
   showSubHeader(BuildContext context) {
     return Container(
@@ -1178,7 +1232,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   final Random random = Random();
   final int numberOfParticles = 20;
 
-  final List<ParticleModel> particles = [];
+//  final List<ParticleModel> particles = [];
 
   @override
   void initState() {
@@ -1404,3 +1458,171 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     );
   }
 }
+
+/*
+class ParticleBackgroundApp extends StatelessWidget {
+  final QuestionData questionDataCustomerSituation;
+
+  ParticleBackgroundApp({Key key, this.questionDataCustomerSituation})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: <Widget>[
+      Positioned.fill(child: CustomerSituationPage(questionDataCustomerSituation: questionDataCustomerSituation,)),
+//      Positioned.fill(child: AnimatedBackground()),
+//      Positioned.fill(child: AnimatedBackground(questionDataParticles: questionDataCustomerSituation)),
+      Positioned.fill(child: Particles(20)),
+    ]);
+  }
+}
+
+
+// animation code
+class Particles extends StatefulWidget {
+  final int numberOfParticles;
+
+//  final QuestionData questionDataParticles;
+
+  Particles(this.numberOfParticles,);
+
+  @override
+  _ParticlesState createState() => _ParticlesState();
+}
+
+class Login extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "hello"
+      ),
+    );
+  }
+}
+
+class _ParticlesState extends State<Particles> {
+  final Random random = Random();
+
+  final List<ParticleModel> particles = [];
+
+  @override
+  void initState() {
+    List.generate(widget.numberOfParticles, (index) {
+      particles.add(ParticleModel(random));
+    });
+    super.initState();
+    init();
+
+//    context.current.trim();
+
+//    new Future.delayed(
+//        const Duration(seconds: 5),
+//            () => Navigator.push(context,
+//          MaterialPageRoute(builder: (context) => CustomerSituationPage()),
+//        ));
+      Navigator.of(context).pop();
+  }
+
+  //image show top to bottom
+  ui.Image image;
+  bool isImageloaded = false;
+
+  Future <Null> init() async {
+    final ByteData data = await rootBundle.load('assets/images/add_emplyee.png');
+    image = await loadImage(new Uint8List.view(data.buffer));
+  }
+
+  Future<ui.Image> loadImage(List<int> img) async {
+    final Completer<ui.Image> completer = new Completer();
+    ui.decodeImageFromList(img, (ui.Image img) {
+      setState(() {
+        isImageloaded = true;
+      });
+      return completer.complete(img);
+    });
+    return completer.future;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Rendering(
+      startTime: Duration(seconds: 50),
+      onTick: _simulateParticles,
+      builder: (context, time) {
+        return CustomPaint(
+          painter: ParticlePainter(particles, time, image),
+        );
+      },
+    );
+  }
+
+  _simulateParticles(Duration time) {
+    particles.forEach((particle) => particle.maintainRestart(time));
+  }
+}
+
+class ParticleModel {
+  Animatable tween;
+  double size;
+  AnimationProgress animationProgress;
+  Random random;
+
+  ParticleModel(this.random) {
+    restart();
+  }
+
+  restart({Duration time = Duration.zero}) {
+    //random.nextDouble()
+    final startPosition = Offset(-0.2 + 1.4 * random.nextDouble(), 0.0);
+    final endPosition = Offset(-0.2 + 1.4 * random.nextDouble(), 1.2);
+    final duration = Duration(milliseconds: 300 + random.nextInt(3000));
+
+    tween = MultiTrackTween([
+      Track("x").add(
+          duration, Tween(begin: startPosition.dx, end: endPosition.dx),
+          curve: Curves.easeInOutSine),
+      Track("y").add(
+          duration, Tween(begin: startPosition.dy, end: endPosition.dy),
+          curve: Curves.easeIn),
+    ]);
+    animationProgress = AnimationProgress(duration: duration, startTime: time);
+    size = 0.5 + random.nextDouble() * 0.01;
+  }
+
+  maintainRestart(Duration time) {
+    if (animationProgress.progress(time) == 1.0) {
+      restart(time: time);
+    }
+  }
+}
+
+class ParticlePainter extends CustomPainter {
+  List<ParticleModel> particles;
+  Duration time;
+  ui.Image image;
+  ParticlePainter(this.particles, this.time, this.image);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+//    final paint = Paint()..color = Colors.white.withAlpha(50);
+    final paint = Paint()..color = Colors.cyan;
+//    final paint = paintImage(canvas: null, rect: null, image: null);
+
+
+//    final paint = paintImage(canvas: null, rect: null, image: )
+
+    particles.forEach((particle) {
+      var progress = particle.animationProgress.progress(time);
+      final animation = particle.tween.transform(progress);
+      final position =
+      Offset(animation["x"] * size.width, animation["y"] * size.height);
+//      canvas.drawCircle(position, size.width * 0.2 * particle.size, paint);
+      canvas.drawImage(image, position, new Paint());
+
+    });
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+*/

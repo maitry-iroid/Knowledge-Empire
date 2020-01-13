@@ -549,8 +549,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
     else if (_selectedDrawerIndex == 13)
-      return CustomerSituationPage(
-          questionDataCustomerSituation: widget.questionDataSituation);
+
+      return CustomerSituationPage(questionDataCustomerSituation: widget.questionDataSituation);
+
+//      return ParticleBackgroundApp(
+//          questionDataCustomerSituation: widget.questionDataSituation);
+
     else if (_selectedDrawerIndex == 6)
       return ChallengesPage(arrFriends: widget.arrFriends,userId: widget.userId, );
     else
