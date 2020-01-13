@@ -150,15 +150,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
                                 arrSearchFriends.clear();
                                 searchText = text;
 
-                                /*  setState(() {
+                                  setState(() {
                                   if (text.isEmpty) {
-                                    arrFinalLearningModules
-                                        .addAll(arrLearningModules);
-                                  } else {
-//                              present = 0;
-                                    searchData();
+                                    arrSearchFriends.addAll(arrFriends);
                                   }
-                                });*/
+                                  /*else {
+                                    searchData();
+                                  }*/
+                                });
                               },
 //                          textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.left,
@@ -228,10 +227,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   searchFriends() {
-//    var data = arrFriends
-//        .where((friendsName) =>
-//        friendsName.name.toLowerCase().contains(arrSearchFriends.toLowerCase()))
-//        .toList();
+    var data = arrFriends
+        .where((friendsName) =>
+        friendsName.name.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
+    print("search_data___" + data.length.toString());
+
+    arrSearchFriends.addAll(data);
 
     /*
     for (int i = 0; i < arrFriends.length; i++) {
