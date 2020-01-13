@@ -312,8 +312,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           InkResponse(
-                            child: Text(
-                                Utils.getText(context, StringRes.sound)),
+                            child:
+                                Text(Utils.getText(context, StringRes.sound)),
                             onTap: () {
                               Utils.playClickSound();
                             },
@@ -916,9 +916,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   updateProfile() {
-//    if(currentVol != 0) {
     Utils.playClickSound();
-//    }
     var req = {
       'userId': Injector.userData.userId,
       'name': nameController.text.trim(),

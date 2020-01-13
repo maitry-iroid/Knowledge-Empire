@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_challenges.dart';
 import 'package:path/path.dart';
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
@@ -18,8 +18,6 @@ import '../commonview/background.dart';
 import 'home.dart';
 import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'dart:math';
-import 'dart:ui' as ui;
 
 //import 'package:ke_employee/simple_animations.dart';
 //import 'package:simple_animations_example_app/widgets/example_page.dart';
@@ -43,7 +41,16 @@ int currentVol;
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
 
-  CustomerSituationPage({Key key, this.questionDataCustomerSituation})
+  final int questionPosition;
+  final int challengePosition;
+  final List<GetChallengeData> getChallengeData;
+
+  CustomerSituationPage(
+      {Key key,
+      this.questionDataCustomerSituation,
+      this.questionPosition,
+      this.challengePosition,
+      this.getChallengeData})
       : super(key: key);
 
   @override
@@ -61,7 +68,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   openProfile() {
     if (mounted) {
-//      setState(() => _selectedDrawerIndex = 10);
       setState(() => _selectedItem = 12);
     }
   }
@@ -70,9 +76,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-//    _selectedItem = widget.selectedIndex;
-
     questionDataCustSituation = widget.questionDataCustomerSituation;
     arrAnswerSituation = widget.questionDataCustomerSituation.answer;
 
@@ -224,10 +227,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //  }
 
   bool isGif = true;
+
   gifImageShow() {
-
     if (questionData.isAnsweredCorrect == true) {
-
       Future.delayed(const Duration(seconds: 5), () {
         setState(() {
           // Here you can write your code for open new view
@@ -236,20 +238,20 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       });
 
       return Visibility(
-          child: Container(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                child: Image(
-                  image: AssetImage("assets/images/dollar.gif"),
-                  fit: BoxFit.fitHeight,
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: Image(
+                    image: AssetImage("assets/images/dollar.gif"),
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
 
 //        maintainSize: true,
 //        maintainAnimation: true,
@@ -258,10 +260,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
         visible: isGif,
       );
-
     }
-
-
   }
 
   showSubHeader(BuildContext context) {
@@ -692,14 +691,25 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context, FadeRouteHome(), ModalRoute.withName("home"));
+    if (widget.getChallengeData != null) {
+      Navigator.pushAndRemoveUntil(
+          context, FadeRouteHome(), ModalRoute.withName("home"));
 
-    Navigator.push(
-        context,
-        FadeRouteHome(
-            initialPageType: Const.typeNewCustomer,
-            questionDataSituation: null));
+      Navigator.push(
+          context,
+          FadeRouteHome(
+              initialPageType: Const.typeNewCustomer,
+              questionDataSituation: null));
+    } else {
+      if (widget.questionPosition + 1 <
+          widget.getChallengeData[widget.challengePosition].challenge.length -
+              1) {
+
+
+
+
+      }
+    }
   }
 
   showQueMedia(BuildContext context) {
@@ -1228,7 +1238,6 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
 
   final Random random = Random();
   final int numberOfParticles = 20;
-
 
   @override
   void initState() {

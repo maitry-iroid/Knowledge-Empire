@@ -463,7 +463,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == 12)
       return EngagementCustomer(
-          questionDataEngCustomer: widget.questionDataHomeScr);
+        questionDataEngCustomer: widget.questionDataHomeScr,
+        getChallengeData: null,
+      );
 //    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
 
     else if (_selectedDrawerIndex == 13)
@@ -587,13 +589,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           if (response != null) {
             if (response.flag == "true") {
               if (response.data.length > 0)
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EngagementCustomer(
-                              questionDataEngCustomer:
-                                  response.data[0].challenge[0],
-                            )));
+                showChallengeQuestionDialog(_scaffoldKey, response.data);
             } else {
               Utils.showToast(response.msg);
             }
@@ -609,11 +605,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
-  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      bool isFromProfile, bool isOldPasswordRequired) async {
+  static showChallengeQuestionDialog(
+    GlobalKey<ScaffoldState> _scaffoldKey,
+    List<GetChallengeData> data,
+  ) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => EngagementCustomer());
+        builder: (BuildContext context) => EngagementCustomer(
+            questionDataEngCustomer: data[0].challenge[0],
+            challengePosition: 0,
+            questionPosition: 0,
+            getChallengeData: data));
   }
 
   void initDrawerItems() {

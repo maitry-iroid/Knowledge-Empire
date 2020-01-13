@@ -151,25 +151,3 @@ class Challenge {
     return data;
   }
 }
-
-class Answer {
-  int option;
-  String answerId;
-  String answer;
-
-  Answer({this.option, this.answerId, this.answer});
-
-  Answer.fromJson(Map<String, dynamic> json) {
-    option = json['option'];
-    answerId = json['answerId'];
-    answer = json['answer'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['option'] = this.option;
-    data['answerId'] = this.answerId;
-    data['answer'] = this.answer;
-    return data;
-  }
-}

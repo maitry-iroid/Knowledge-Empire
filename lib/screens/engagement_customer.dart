@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_challenges.dart';
 import 'package:path/path.dart';
 
 import '../commonview/background.dart';
@@ -32,8 +33,16 @@ VideoPlayerController _controller;
 
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
+  final int questionPosition;
+  final int challengePosition;
+  final List<GetChallengeData> getChallengeData;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer}) : super(key: key);
+  EngagementCustomer(
+      {Key key,
+      this.questionDataEngCustomer,
+      this.questionPosition,
+      this.challengePosition,this.getChallengeData})
+      : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
