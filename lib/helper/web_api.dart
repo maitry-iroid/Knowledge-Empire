@@ -21,6 +21,7 @@ import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/models/register_for_push.dart';
 import 'package:ke_employee/models/releaseResource.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
@@ -28,7 +29,7 @@ import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
 //  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
-  static const baseUrl = "http://18.141.132.109:7000/api";   // prod url
+  static const baseUrl = "http://18.141.132.109:7000/api"; // prod url
 
   static String apiRequestLogin = "login";
 
@@ -171,11 +172,11 @@ class WebApi {
     }
   }
 
-  Future<LearningModuleResponse> getLearningModule(int userId,int isChallenge) async {
+  Future<LearningModuleResponse> getLearningModule(
+      int userId, int isChallenge) async {
     initDio();
 
-    var req = json.encode(
-        {'userId': userId, 'isChallenge': isChallenge});
+    var req = json.encode({'userId': userId, 'isChallenge': isChallenge});
 
     print("getLearningModule" + " - " + req);
     print(dio.options.headers);
@@ -650,7 +651,7 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-      print(e);
+      print("sendChallenge+" + "_" + e);
       return null;
     }
   }
@@ -667,7 +668,7 @@ class WebApi {
               .encode(getRequest('getChallenge', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
-        print(response.data);
+        print("getChallenge"+"_"+response.data);
         GetChallengesResponse responseData =
             GetChallengesResponse.fromJson(jsonDecode(response.data));
         return responseData;
@@ -675,7 +676,7 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-      print(e);
+      print("getChallenges_" + e.toString());
       return null;
     }
   }
@@ -716,7 +717,7 @@ class WebApi {
           data: json.encode(
               getRequest('getDownloadQuestions', json.encode(jsonMap))));
       if (response.statusCode == 200) {
-        print(response.data);
+        print("getDownloadQuestions"+"_"+response.data);
         QuestionsResponse questionsResponse =
             QuestionsResponse.fromJson(jsonDecode(response.data));
         return questionsResponse;
@@ -735,13 +736,36 @@ class WebApi {
     print("searchFriends" + json.encode(rq.toJson()));
     try {
       final response = await dio.post("",
-          data: json.encode(
-              getRequest('searchFriends', json.encode(rq.toJson()))));
+          data: json
+              .encode(getRequest('searchFriends', json.encode(rq.toJson()))));
       if (response.statusCode == 200) {
-        print(response.data);
+        print("searchFriends"+"_"+response.data);
         QuestionsResponse questionsResponse =
-        QuestionsResponse.fromJson(jsonDecode(response.data));
+            QuestionsResponse.fromJson(jsonDecode(response.data));
         return questionsResponse;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<RegisterForPushResponse> registerForPush(
+      RegisterForPushRequest rq) async {
+    initDio();
+
+    print("registerForPush" + json.encode(rq.toJson()));
+    try {
+      final response = await dio.post("",
+          data: json
+              .encode(getRequest('registerForPush', json.encode(rq.toJson()))));
+      if (response.statusCode == 200) {
+        print("registerForPush"+"_"+response.data);
+        RegisterForPushResponse registerForPushResponse =
+            RegisterForPushResponse.fromJson(jsonDecode(response.data));
+        return registerForPushResponse;
       }
       print(response.data);
       return null;

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
@@ -22,8 +21,6 @@ import '../models/questions.dart';
 import '../models/submit_answer.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
-import 'package:notifier/main_notifier.dart';
-
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 List<Answer> arrAnswer = List();
@@ -33,16 +30,10 @@ QuestionData questionData = QuestionData();
 List abcdList = List();
 VideoPlayerController _controller;
 
-//AudioManager audioManager;
-//int currentVol;
-
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
 
-  final Notifier notifier;
-
-  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
-      : super(key: key);
+  EngagementCustomer({Key key, this.questionDataEngCustomer}) : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -145,27 +136,27 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        CommonView.showBackground(context),
-        Column(
-          children: <Widget>[
-            showSubHeader(context),
-            showMainBody(context),
-          ],
-        ),
-        CommonView.showCircularProgress(isLoading)
-      ],
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          CommonView.showBackground(context),
+          Column(
+            children: <Widget>[
+              showSubHeader(context),
+              showMainBody(context),
+            ],
+          ),
+          CommonView.showCircularProgress(isLoading)
+        ],
+      ),
     );
   }
 
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
-//          if(currentVol != 0) {
           Utils.playClickSound();
-//          }
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
@@ -437,7 +428,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     rq.totalQuestionAnswered = rq.answer.length;
 
-    Utils.updateAttemptTimeInQuestionDataLocally(questionData.questionId,submitAnswer.attemptTime);
+    Utils.updateAttemptTimeInQuestionDataLocally(
+        questionData.questionId, submitAnswer.attemptTime);
 
     return rq;
   }
@@ -483,29 +475,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: ColorRes.white, width: 1),
                 ),
-
-//                  child: ListView.builder(
-//                    shrinkWrap: true,
-//                    physics: ClampingScrollPhysics(),
-//                    itemCount: arrAnswer.length,
-//                    itemBuilder: (BuildContext context, int index) {
-//                      return showItem(index);
-//                    },
-//                  ),
-                child:
-//                  childNotifier.of(context).register<String>('selectQuestionAction', (data) {
-//                    print(data.data);
-//                    return Text('${data.data}');
-                    ListView.builder(
+                child: ListView.builder(
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   itemCount: arrAnswer.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showItem(index);
                   },
-                )
-//                  }),
-                ),
+                )),
           ),
 
           Align(
@@ -564,9 +541,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                                   ? Utils.getAssetsImg(
                                       "full_expand_question_answers")
                                   : Utils.getAssetsImg("expand_pro")),
-                              fit: BoxFit.fill)
-//                                  : null
-                      )),
+                              fit: BoxFit.fill))),
             ),
           )
         ],
@@ -606,8 +581,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   padding:
                       EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(
-//                              color:
-//                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: ColorRes.white, width: 1)),
                   child: showMediaView(context)),
@@ -639,9 +612,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             Container(
               child: MaterialButton(
                 height: 100,
-//                                            minWidth: Utils.getDeviceHeight(context) / 7,
-//                                            height: Utils.getDeviceHeight(context) / 7,
-//                                            color: Colors.transparent.withOpacity(0.0),
                 onPressed: () {
                   questionData.videoPlay == 1
                       ? setState(() {
@@ -696,10 +666,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         : Utils.getAssetsImg("expand_pro")),
                     fit: BoxFit.fill))),
         onTap: () {
-//          if(currentVol != 0) {
           Utils.playClickSound();
-//          }
-          showDialog(context: context, builder: (_) => expandMedia());
+          showDialog(context: context, builder: (_) => ExpandMedia());
         },
       ),
     );
@@ -710,7 +678,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     isImage(questionData.mediaLink)
         ? showDialog(
             context: context,
-            builder: (_) => expandMedia(),
+            builder: (_) => ExpandMedia(),
           )
         : Container();
   }
@@ -759,8 +727,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 
   @override
   Widget build(BuildContext context) {
-//    _notifier = NotifierProvider.of(context);
-
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -773,8 +739,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
                 padding: const EdgeInsets.all(25.0),
-//                padding: const EdgeInsets.only(
-//                    top: 0, bottom: 0, right: 0, left: 00),
                 child: Stack(
                   fit: StackFit.loose,
                   alignment: Alignment.center,
@@ -809,7 +773,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
 //                          })
                           ),
                     ),
-
                     Positioned(
                       top: 0,
 //                      alignment: Alignment.topCenter,
@@ -843,17 +806,12 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         ),
                       ),
                     ),
-                    //Full Screen Alert Show Question : -
                     Positioned(
                       top: 0,
                       right: 0,
-//                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
-//                          if(currentVol != 0) {
                           Utils.playClickSound();
-//                          }
-                          //alert pop
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -981,8 +939,6 @@ checkAnswer(int index) {
     return Utils.getAssetsImg("Answer_Alert_Background_White");
   }
 }
-
-//rounded_rectangle_837_blue,rounded_rectangle_8371
 
 //----------------------------------------
 //Question full screen show Alertdialog
@@ -1171,14 +1127,14 @@ class FunkyOverlayState extends State<FunkyOverlay>
 //======================================
 //image show  in alert
 
-class expandMedia extends StatefulWidget {
+class ExpandMedia extends StatefulWidget {
 //  bool CheckQuestion;
 
   @override
-  State<StatefulWidget> createState() => expandMediaState();
+  State<StatefulWidget> createState() => ExpandMediaState();
 }
 
-class expandMediaState extends State<expandMedia>
+class ExpandMediaState extends State<ExpandMedia>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
