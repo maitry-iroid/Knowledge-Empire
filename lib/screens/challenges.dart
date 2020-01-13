@@ -29,6 +29,10 @@ class ChallengesPage extends StatefulWidget {
 class _ChallengesPageState extends State<ChallengesPage> {
   bool isLoading = false;
   List<GetFriendsData> arrFriends = List();
+  List<GetFriendsData> arrSearchFriends = List();
+
+  List<GetFriendsData> responseArrFriends = List();
+
   List<LearningModuleData> arrLearningModules = List();
 
   List<String> arrRewards = ["2%", "4%", "6%", "8%", "10%"];
@@ -42,7 +46,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //    updateVolumes();
 //    getFriendsData = widget.friendsData;
     arrFriends = widget.arrFriends;
+    selectedFriendId = arrFriends[0].userId;
+    getBusinessSectors();
   }
+
+  TextEditingController searchController = TextEditingController();
+  String searchText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +127,90 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 ),
               ),
               Expanded(
+                flex: 1,
+//                margin: EdgeInsets.symmetric(vertical: 5),
+//                padding: EdgeInsets.only(left: 20, right: 10, top: 2, bottom: 2),
+//            color: ColorRes.lightBg,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Container(
+                            height: 30,
+//                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
+                            padding: EdgeInsets.only(top: 13, left: 10),
+                            margin: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 2),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: ColorRes.white,
+                            ),
+//                        alignment: Alignment.center,
+                            child: TextField(
+                              onChanged: (text) {
+                                arrSearchFriends.clear();
+                                searchText = text;
+
+                                /*  setState(() {
+                                  if (text.isEmpty) {
+                                    arrFinalLearningModules
+                                        .addAll(arrLearningModules);
+                                  } else {
+//                              present = 0;
+                                    searchData();
+                                  }
+                                });*/
+                              },
+//                          textAlignVertical: TextAlignVertical.center,
+                              textAlign: TextAlign.left,
+                              maxLines: 1,
+                              controller: searchController,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: ColorRes.hintColor,
+                              ),
+                              decoration: InputDecoration(
+//                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
+                                  hintText: Utils.getText(
+                                      context, StringRes.searchForKeywords),
+                                  hintStyle:
+                                      TextStyle(color: ColorRes.hintColor),
+                                  border: InputBorder.none),
+                            ))),
+                    SizedBox(
+                      width: 1,
+                    ),
+                    MaterialButton(
+                      height: 10,
+                      minWidth: 5,
+                      onPressed: () {
+                        searchFriends();
+                      },
+                      child: Icon(
+                        Icons.search,
+                        color: ColorRes.white,
+                      ),
+//                      child: Image(image: AssetImage(
+//                        Utils.getAssetsImg(
+//                            Injector.isBusinessMode ? "search" : 'search_prof'),
+//                      ),
+////                        fit: BoxFit.fill,
+//                      ),
+                    )
+
+//                    Image(
+//                      height: 35,
+//                      width: 40,
+//                      image: AssetImage(
+//                        Utils.getAssetsImg(
+//                            Injector.isBusinessMode ? "search" : 'search_prof'),
+//                      ),
+//                      fit: BoxFit.fill,
+//                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 3,
                 child: ListView.builder(
 //                  itemCount: 1,
                   itemCount: arrFriends != null ? arrFriends.length : 0,
@@ -132,6 +225,23 @@ class _ChallengesPageState extends State<ChallengesPage> {
         ),
       ),
     );
+  }
+
+  searchFriends() {
+//    var data = arrFriends
+//        .where((friendsName) =>
+//        friendsName.name.toLowerCase().contains(arrSearchFriends.toLowerCase()))
+//        .toList();
+
+    /*
+    for (int i = 0; i < arrFriends.length; i++) {
+      String friendsName = arrFriends[i].name;
+      if (friendsName == searchController.text) {
+
+      } else {
+
+      }
+    }*/
   }
 
   showBusinessSectors() {
@@ -227,19 +337,24 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 ),
               ),
               InkResponse(
-                  child: Container(
-                margin: EdgeInsets.only(bottom: 5, left: 20, right: 20, top: 5),
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            Utils.getAssetsImg("bg_switch_to_prfsnl")),
-                        fit: BoxFit.fill)),
-                child: Text(
-                  Utils.getText(context, StringRes.sendChallenge),
-                  style: TextStyle(color: ColorRes.white),
+                child: Container(
+                  margin:
+                      EdgeInsets.only(bottom: 5, left: 20, right: 20, top: 5),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg("bg_switch_to_prfsnl")),
+                          fit: BoxFit.fill)),
+                  child: Text(
+                    Utils.getText(context, StringRes.sendChallenge),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
                 ),
-              )),
+                onTap: () {
+                  sendChallenges();
+                },
+              ),
             ],
           ),
         ),
@@ -257,7 +372,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     });
   }
 
-  int selectedRewardsIndex = -1;
+  int selectedRewardsIndex = 0;
 
   _onSelectedRewards(int index) {
     setState(() => selectedRewardsIndex = index);
@@ -294,7 +409,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: Utils.getDeviceWidth(context) / 18,
+        width: 40,
+//        width: Utils.getDeviceWidth(context) / 18,
         decoration: BoxDecoration(
           color: Injector.isBusinessMode
               ? selectedItem(type, index)
@@ -473,7 +589,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             bottomRight: Radius.circular(8)));
   }
 
-  int selectedFriendId = 0;
+  int selectedFriendId = 3;
 
   void getFriends() {
     setState(() {
@@ -495,7 +611,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            arrFriends = response.data;
+            responseArrFriends = response.data;
 
             if (arrFriends.length > 0) {
               selectedFriendId = arrFriends[0].userId;
@@ -504,6 +620,18 @@ class _ChallengesPageState extends State<ChallengesPage> {
           }
         }
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -521,10 +649,23 @@ class _ChallengesPageState extends State<ChallengesPage> {
         if (response.flag == "true") {
           if (response.data != null) {
             arrLearningModules = response.data;
+            print(" ==>>   arrLearningModules $arrLearningModules ");
             setState(() {});
           }
         }
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 
@@ -536,8 +677,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     SendChallengesRequest rq = SendChallengesRequest();
     rq.userId = Injector.userData.userId;
     rq.friendId = widget.userId;
-    rq.moduleId = 0;
-    rq.rewards = 0;
+    rq.moduleId = arrLearningModules[0].moduleId;
+    rq.rewards = selectedRewardsIndex;
 
     WebApi().sendChallenges(context, rq).then((response) {
       setState(() {
@@ -548,10 +689,21 @@ class _ChallengesPageState extends State<ChallengesPage> {
         if (response.flag == "true") {
           if (response.data != null) {
 //            arrFriends = response.data;
+            if (response.msg != null) {
+              Utils.showToast(response.msg);
+            } else {
+              Utils.showToast("Send Challeange is success.");
+            }
             setState(() {});
           }
         }
       }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
     });
   }
 }
