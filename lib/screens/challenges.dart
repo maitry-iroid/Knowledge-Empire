@@ -588,7 +588,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     GetFriendsRequest rq = GetFriendsRequest();
     rq.userId = Injector.userData.userId;
     rq.groupId = 0;
-    rq.category = 0;
+    rq.category = 3;
     rq.searchBy = 0;
     rq.filter = 0;
 
@@ -604,7 +604,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
             if (arrFriends.length > 0) {
               selectedFriendId = arrFriends[0].userId;
-              getBusinessSectors();
               setState(() {});
             }
           }

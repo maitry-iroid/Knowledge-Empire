@@ -28,8 +28,8 @@ import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
 class WebApi {
-  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
-//  static const baseUrl = "http://18.141.132.109:7000/api"; // prod url
+//  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
+  static const baseUrl = "http://18.141.132.109:7000/api"; // prod url
 
   static String apiRequestLogin = "login";
 
@@ -327,7 +327,7 @@ class WebApi {
       BuildContext context, ReleaseResourceRequest rq) async {
     initDio();
 
-    print("releaseResource" + json.encode(rq.toJson()));
+//    print("releaseResource" + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
@@ -341,7 +341,7 @@ class WebApi {
 
         return releaseResourceResponse;
       }
-      print(response.data);
+//      print(response.data);
       return null;
     } catch (e) {
       print(e);

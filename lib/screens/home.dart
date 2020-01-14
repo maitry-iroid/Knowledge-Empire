@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
@@ -149,9 +148,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-    print("home_init");
-
-    initPush();
+//    print("home_init");
 
     initStreamController();
 
@@ -159,10 +156,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
-    getCustomerValues();
-//
-//    if (widget.initialPageType != 12 && widget.initialPageType != 13 ||
-//        widget.initialPageType != 6) getPendingChallenges();
+    if (widget.initialPageType != 12 && widget.initialPageType != 13 ||
+        widget.initialPageType != 6) {
+      getCustomerValues();
+//      getPendingChallenges();
+    }
   }
 
   @override
@@ -177,82 +175,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } else if (state == AppLifecycleState.inactive) {}
   }
 
-  void initPush() async {
-    firebaseCloudMessagingListeners();
 
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
-    var initializationSettingsIOS = IOSInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    await Injector.flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
-        onSelectNotification: onSelectNotification);
-
-    Injector.firebaseMessaging.requestNotificationPermissions();
-
-    Injector.firebaseMessaging.getToken().then((token) {
-      print("token : " + token);
-
-      callRegisterForPush(token);
-    });
-  }
-
-  Future<void> onSelectNotification(String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-  }
-
-  Future<void> onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {
-    print("onDidReceiveLocalNotification");
-    // display a dialog with the notification details, tap ok to go to another page
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
-        title: Text(title),
-        content: Text(body),
-        actions: [
-          CupertinoDialogAction(
-            isDefaultAction: true,
-            child: Text('Ok'),
-            onPressed: () async {
-              Navigator.of(context, rootNavigator: true).pop();
-//              await Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                  builder: (context) => SecondScreen(payload),
-//                ),
-//              );
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  void firebaseCloudMessagingListeners() async {
-    Injector.firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('on message $message');
-
-        Utils.showNotification(message);
-      },
-//      onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
-      onResume: (Map<String, dynamic> message) async {
-        print('on resume $message');
-
-        Utils.showNotification(message);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print('on launch $message');
-
-        Utils.showNotification(message);
-      },
-    );
-  }
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
@@ -400,7 +323,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
-    print("get_page--- " + _selectedDrawerIndex.toString());
+//    print("get_page--- " + _selectedDrawerIndex.toString());
 
     if (_selectedDrawerIndex == 12)
       return EngagementCustomer(
@@ -594,25 +517,5 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     ];
   }
 
-  void callRegisterForPush(String token) {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        RegisterForPushRequest rq = RegisterForPushRequest();
-        rq.userId = Injector.userData.userId;
-        rq.deviceId = Injector.deviceId;
-        rq.deviceType = "android";
-        rq.deviceToken = token;
 
-        WebApi().registerForPush(rq).then((response) {
-          if (response != null) {
-            if (response.flag == "true") {
-              Utils.showToast(response.msg);
-            }
-          }
-        });
-      }
-    }).catchError((e) {
-      Utils.showToast(e);
-    });
-  }
 }

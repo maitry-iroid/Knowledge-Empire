@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ui' as prefix0;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -254,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
 
         Injector.customerValueData = customerValueData;
 
-        if (loginData.data.isPasswordChanged == "0") {
+        if (loginData.data.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
           if (loginData.data.isFirstTimeLogin)
