@@ -382,7 +382,7 @@ class _RankingPageState extends State<RankingPage> {
 //                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
               if(arrFriends[index].isFriend == 1) {
                 Navigator.push(context, FadeRouteHome(arrFriends: arrFriends,
-                    initialPageType: Const.typeChallenges, userId: arrFriends[index].userId));
+                    initialPageType: Const.typeChallenges, friendId: arrFriends[index].userId));
                 print(arrFriends[index].isFriend);
                 }
               },

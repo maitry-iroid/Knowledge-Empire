@@ -100,11 +100,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     print(cacheVideo);
     DefaultCacheManager().getFile(cacheVideo).listen((f) {
-      setState(() {
-        fileInfo = f;
-        print(fileInfo);
-        error = null;
-      });
+      if (mounted) {
+        setState(() {
+          fileInfo = f;
+          print(fileInfo);
+          error = null;
+        });
+      }
     }).onError((e) {
       setState(() {
         fileInfo = null;
@@ -166,7 +168,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     return isPdf(correctWrongImage())
         ? SimplePdfViewerWidget(
             completeCallback: (bool result) {
-              print("completeCallback,result:${result}");
+              print("completeCallback,result:$result");
             },
             initialUrl: correctWrongImage(),
           )
@@ -187,27 +189,28 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
 //    print("$path =>>>>>  $from");
 
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        CommonView.showBackground(context),
-        Padding(
-          padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-          child: Column(
-            children: <Widget>[
-              showSubHeader(context),
-              Expanded(
-                  child: Row(
-                children: <Widget>[
-                  showFirstHalf(context),
-                  showSecondHalf(context),
-                ],
-              )),
-            ],
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          CommonView.showBackground(context),
+          Padding(
+            padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+            child: Column(
+              children: <Widget>[
+                showSubHeader(context),
+                Expanded(
+                    child: Row(
+                  children: <Widget>[
+                    showFirstHalf(context),
+                    showSecondHalf(context),
+                  ],
+                )),
+              ],
+            ),
           ),
-        ),
 
-        gifImageShow(),
+          gifImageShow(),
 
 //        Positioned.fill(child: Particles(30)),
 //        Rendering(
@@ -218,7 +221,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //            );
 //          },
 //        )
-      ],
+        ],
+      ),
     );
   }
 
@@ -231,10 +235,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   gifImageShow() {
     if (questionData.isAnsweredCorrect == true) {
       Future.delayed(const Duration(seconds: 5), () {
-        setState(() {
-          // Here you can write your code for open new view
-          isGif = false;
-        });
+        if (mounted) {
+          setState(() {
+            isGif = false;
+          });
+        }
       });
 
       return Visibility(
@@ -252,12 +257,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             ],
           ),
         ),
-
-//        maintainSize: true,
-//        maintainAnimation: true,
-//        maintainState: true,
-//        visible: false, // hiden image
-
         visible: isGif,
       );
     }
@@ -704,10 +703,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (widget.questionPosition + 1 <
           widget.getChallengeData[widget.challengePosition].challenge.length -
               1) {
-
-
-
-
+        Utils.showChallengeQuestionDialog(_scaffoldKey, widget.getChallengeData,
+            widget.challengePosition, widget.questionPosition);
       }
     }
   }

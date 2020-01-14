@@ -131,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           Container(
                             width: 150,
-                            height: Injector.isBusinessMode ? 35 : 30,
+                            height: Injector.isBusinessMode ? 30 : 30,
                             margin:
                                 EdgeInsets.only(top: 15, left: 45, right: 0),
                             alignment: Alignment.center,
@@ -262,7 +262,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Container(
                           height: 35,
                           margin: EdgeInsets.only(top: 15),
-                          padding: EdgeInsets.only(left: 8, right: 8),
                           alignment: Alignment.center,
                           child: Text(
                             Utils.getText(
@@ -341,7 +340,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       InkResponse(
                         child: Container(
                           height: 35,
-                          margin: EdgeInsets.only(top: 15),
+                          width: 50,
+//                          margin: EdgeInsets.only(top: 15),
                           padding: EdgeInsets.only(left: 8, right: 8),
                           alignment: Alignment.center,
                           child: Text(

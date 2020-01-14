@@ -14,6 +14,8 @@ import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -496,10 +498,9 @@ class Utils {
         jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
     arrQuestions = questionsResponse.data;
 
-    arrQuestions
-        .where((que) => que.questionId == questionId)
-        .first
-        .attemptTime = attemptTime;
+    QuestionData questionData =
+        arrQuestions.where((que) => que.questionId == questionId).first;
+    questionData.attemptTime = attemptTime;
 
     questionsResponse.data = arrQuestions;
 
@@ -532,5 +533,20 @@ class Utils {
       });
     }
     return arrFinalQuestion;
+  }
+
+  static showChallengeQuestionDialog(
+      GlobalKey<ScaffoldState> _scaffoldKey,
+      List<GetChallengeData> data,
+      int challengePosition,
+      int questionPosition) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => EngagementCustomer(
+            questionDataEngCustomer:
+                data[challengePosition].challenge[questionPosition],
+            challengePosition: challengePosition,
+            questionPosition: questionPosition,
+            getChallengeData: data));
   }
 }

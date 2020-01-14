@@ -46,8 +46,11 @@ class FadeRouteHome extends PageRouteBuilder {
   final QuestionData questionDataSituation;
 
   final int value;
+  final int friendId;
 
-  final int userId;
+  final int questionPosition;
+  final int challengePosition;
+  final List<GetChallengeData> getChallengeData;
 
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
@@ -59,7 +62,10 @@ class FadeRouteHome extends PageRouteBuilder {
       this.questionDataSituation,
       this.value,
       this.arrFriends,
-      this.userId})
+      this.friendId,
+      this.questionPosition,
+      this.challengePosition,
+      this.getChallengeData})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -81,53 +87,10 @@ class FadeRouteHome extends PageRouteBuilder {
               questionDataSituation: questionDataSituation,
               value: value,
               arrFriends: arrFriends,
-              userId: userId,
             ),
           ),
         );
 }
-
-/*
-class RotationRoute extends PageRouteBuilder {
-  final Widget page;
-  final int initialPageType;
-
-  final QuestionData questionDataHomeScr;
-  final QuestionData questionDataSituation;
-
-  RotationRoute({this.page,this.initialPageType,
-    this.questionDataHomeScr,
-    this.questionDataSituation})
-      : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionDuration: Duration(seconds: 1),
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        RotationTransition(
-          turns: Tween<double>(
-            begin: 0.0,
-            end: 1.0,
-          ).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Curves.linear,
-            ),
-          ),
-          child: HomePage(initialPageType: initialPageType,
-            questionDataHomeScr: questionDataHomeScr,
-            questionDataSituation: questionDataSituation,),
-        ),
-  );
-}*/
 
 class HomePage extends StatefulWidget {
   final int initialPageType;
@@ -136,9 +99,11 @@ class HomePage extends StatefulWidget {
   final QuestionData questionDataSituation;
 
   final int value;
-  final int userId;
+  final int friendId;
 
-//  final GetFriendsData friendsData;
+  final int questionPosition;
+  final int challengePosition;
+  final List<GetChallengeData> getChallengeData;
 
   List<GetFriendsData> arrFriends = List();
 
@@ -149,12 +114,11 @@ class HomePage extends StatefulWidget {
       this.questionDataSituation,
       this.value,
       this.arrFriends,
-      this.userId})
+      this.friendId,
+      this.questionPosition,
+      this.challengePosition,
+      this.getChallengeData})
       : super(key: key);
-
-//  final  QuestionData questionData;
-//
-//  HomePage({Key key, this.questionData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -185,6 +149,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
+    print("home_init");
+
     initPush();
 
     initStreamController();
@@ -194,8 +160,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     setSelectedIndex();
 
     getCustomerValues();
-
-    getPendingChallenges();
+//
+//    if (widget.initialPageType != 12 && widget.initialPageType != 13 ||
+//        widget.initialPageType != 6) getPendingChallenges();
   }
 
   @override
@@ -207,13 +174,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-//      await Volume.getVol.then((value) {
-//        print("volume_" + value.toString());
-//      });
-    } else if (state == AppLifecycleState.inactive) {
-//      Utils.showToast("inactive");
-
-    }
+    } else if (state == AppLifecycleState.inactive) {}
   }
 
   void initPush() async {
@@ -327,22 +288,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   openProfile() {
-//    _onSelectItem(10);
-
     if (mounted) {
       setState(() => _selectedDrawerIndex = 10);
-//      Navigator.of(context).pop(); // close the drawer
     }
   }
 
   _onSelectItem(int index) {
-//    if (currentVol != 0) {
     Utils.playClickSound();
-//    }
 
     if (mounted) {
-//      Injector.audioPlayer.play("assets/sounds/all_button_clicks.wav",isLocal: true);
-
       setState(() => _selectedDrawerIndex = index);
       Navigator.of(context).pop(); // close the drawer
       if (_selectedDrawerIndex == 11) {
@@ -377,22 +331,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
       backgroundColor: ColorRes.colorBgDark,
       body: SafeArea(
-          child:
-              /*_selectedDrawerIndex != 0
-                ? Column(
-              children: <Widget>[
-                HeaderView(
-                  scaffoldKey: _scaffoldKey,
-                  isShowMenu: true,
-                  openProfile: openProfile,
-                ),
-                Expanded(
-                  child: getPage(),
-                ),
-              ],
-            )
-                :*/
-              Stack(
+          child: Stack(
         children: <Widget>[
           getPage(),
           HeaderView(
@@ -461,24 +400,25 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
+    print("get_page--- " + _selectedDrawerIndex.toString());
+
     if (_selectedDrawerIndex == 12)
       return EngagementCustomer(
-        questionDataEngCustomer: widget.questionDataHomeScr,
-        getChallengeData: null,
-      );
-//    return DebriefPage(questionDataCustomerSituation: widget.questionDataHomeScr,);
-
+          questionDataEngCustomer: widget.questionDataHomeScr,
+          getChallengeData: widget.getChallengeData,
+          challengePosition: widget.challengePosition,
+          questionPosition: widget.questionPosition);
     else if (_selectedDrawerIndex == 13)
       return CustomerSituationPage(
-          questionDataCustomerSituation: widget.questionDataSituation);
-
-//      return ParticleBackgroundApp(
-//          questionDataCustomerSituation: widget.questionDataSituation);
-
+        questionDataCustomerSituation: widget.questionDataSituation,
+        getChallengeData: widget.getChallengeData,
+        challengePosition: widget.challengePosition,
+        questionPosition: widget.questionPosition,
+      );
     else if (_selectedDrawerIndex == 6)
       return ChallengesPage(
         arrFriends: widget.arrFriends,
-        userId: widget.userId,
+        userId: widget.friendId,
       );
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
@@ -509,36 +449,40 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-    if (widget.initialPageType == Const.typeHome)
-      _selectedDrawerIndex = 0;
-    else if (widget.initialPageType == Const.typeBusinessSector)
-      _selectedDrawerIndex = 1;
-    else if (widget.initialPageType == Const.typeNewCustomer)
-      _selectedDrawerIndex = 2;
-    else if (widget.initialPageType == Const.typeExistingCustomer)
-      _selectedDrawerIndex = 3;
-    else if (widget.initialPageType == Const.typeReward)
-      _selectedDrawerIndex = 4;
-    else if (widget.initialPageType == Const.typeTeam)
-      _selectedDrawerIndex = 5;
-    else if (widget.initialPageType == Const.typeChallenges)
-      _selectedDrawerIndex = 6;
-    else if (widget.initialPageType == Const.typeOrg)
-      _selectedDrawerIndex = 7;
-    else if (widget.initialPageType == Const.typePL)
-      _selectedDrawerIndex = 8;
-    else if (widget.initialPageType == Const.typeRanking)
-      _selectedDrawerIndex = 9;
-    else if (widget.initialPageType == Const.typeProfile)
-      _selectedDrawerIndex = 10;
-    else if (widget.initialPageType == Const.typeHelp)
-      _selectedDrawerIndex = 11;
-    else if (widget.initialPageType == Const.typeEngagement)
-      _selectedDrawerIndex = 12;
-    else if (widget.initialPageType == Const.typeDebrief)
-      _selectedDrawerIndex = 13;
-    else
-      _selectedDrawerIndex = 0;
+    _selectedDrawerIndex = widget.initialPageType != null
+        ? widget.initialPageType
+        : Const.typeHome;
+
+//    if (widget.initialPageType == Const.typeHome)
+//      _selectedDrawerIndex = 0;
+//    else if (widget.initialPageType == Const.typeBusinessSector)
+//      _selectedDrawerIndex = 1;
+//    else if (widget.initialPageType == Const.typeNewCustomer)
+//      _selectedDrawerIndex = 2;
+//    else if (widget.initialPageType == Const.typeExistingCustomer)
+//      _selectedDrawerIndex = 3;
+//    else if (widget.initialPageType == Const.typeReward)
+//      _selectedDrawerIndex = 4;
+//    else if (widget.initialPageType == Const.typeTeam)
+//      _selectedDrawerIndex = 5;
+//    else if (widget.initialPageType == Const.typeChallenges)
+//      _selectedDrawerIndex = 6;
+//    else if (widget.initialPageType == Const.typeOrg)
+//      _selectedDrawerIndex = 7;
+//    else if (widget.initialPageType == Const.typePL)
+//      _selectedDrawerIndex = 8;
+//    else if (widget.initialPageType == Const.typeRanking)
+//      _selectedDrawerIndex = 9;
+//    else if (widget.initialPageType == Const.typeProfile)
+//      _selectedDrawerIndex = 10;
+//    else if (widget.initialPageType == Const.typeHelp)
+//      _selectedDrawerIndex = 11;
+//    else if (widget.initialPageType == Const.typeEngagement)
+//      _selectedDrawerIndex = 12;
+//    else if (widget.initialPageType == Const.typeDebrief)
+//      _selectedDrawerIndex = 13;
+//    else
+//      _selectedDrawerIndex = 0;
   }
 
   void initStreamController() {

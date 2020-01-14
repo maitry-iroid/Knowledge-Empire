@@ -13,13 +13,10 @@ import '../helper/string_res.dart';
 import '../helper/web_api.dart';
 import '../models/get_friends.dart';
 
-//int currentVol;
-GetFriendsData getFriendsData = GetFriendsData();
-
 
 class ChallengesPage extends StatefulWidget {
-//  final GetFriendsData friendsData;
-  List<GetFriendsData> arrFriends = List();
+
+  final List<GetFriendsData> arrFriends;
   final int userId;
 
   ChallengesPage({Key key, this.arrFriends, this.userId}) : super(key: key);
@@ -41,19 +38,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getFriends();
-//    initPlatformState();
-//    updateVolumes();
-//    getFriendsData = widget.friendsData;
-    arrFriends = widget.arrFriends;
-    selectedFriendId = arrFriends[0].userId;
-    getBusinessSectors();
+//    arrFriends = widget.arrFriends;
+//    selectedFriendId = arrFriends[0].userId;
+//    getBusinessSectors();
 
     arrSearchFriends = arrFriends;
     if (arrSearchFriends.length > 0) setState(() {});
-
   }
 
   TextEditingController searchController = TextEditingController();
@@ -154,7 +146,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                             child: TextField(
                               onChanged: (text) {
                                 searchText = text;
-                                 setState(() {
+                                setState(() {
                                   if (text.isEmpty) {
                                     arrSearchFriends = arrFriends;
                                   }
@@ -228,7 +220,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   searchFriends() {
-
     getSearchFriends();
 
     /*arrSearchFriends.clear();
@@ -238,7 +229,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
         .toList();
     print("search_data___" + data.length.toString());
     arrSearchFriends.addAll(data); */
-
   }
 
   showBusinessSectors() {
@@ -614,6 +604,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
             if (arrFriends.length > 0) {
               selectedFriendId = arrFriends[0].userId;
+              getBusinessSectors();
               setState(() {});
             }
           }
@@ -656,8 +647,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     });
   }
 
-
-
   void sendChallenges() {
     setState(() {
       isLoading = true;
@@ -696,8 +685,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     });
   }
 
-
-
   void getSearchFriends() {
     setState(() {
       isLoading = true;
@@ -707,7 +694,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.userId = Injector.userData.userId.toString();
     rq.searchText = searchController.text;
 
-
     WebApi().searchFriends(rq).then((response) {
       setState(() {
         isLoading = false;
@@ -716,10 +702,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-
             List<GetFriendsData> getFriendsData = responseArrFriends;
 
-          /*  for(int i = 0; i < getFriendsData.length; i++ ) {
+            /*  for(int i = 0; i < getFriendsData.length; i++ ) {
               if(arrSearchFriends[i].name == getFriendsData[i].name) {
                 arrSearchFriends = getFriendsData;
               }

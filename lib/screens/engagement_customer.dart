@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:path/path.dart';
 
 import '../commonview/background.dart';
@@ -41,7 +42,8 @@ class EngagementCustomer extends StatefulWidget {
       {Key key,
       this.questionDataEngCustomer,
       this.questionPosition,
-      this.challengePosition,this.getChallengeData})
+      this.challengePosition,
+      this.getChallengeData})
       : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class EngagementCustomer extends StatefulWidget {
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List abcdIndex = ['A', 'B', 'C', 'D'];
+  List alphaIndex = ['A', 'B', 'C', 'D'];
   int _selectedDrawerIndex = 0;
 
   bool isLoading = false;
@@ -72,7 +74,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     questionData = widget.questionDataEngCustomer;
     widget.questionDataEngCustomer.answer.shuffle();
     arrAnswer = widget.questionDataEngCustomer.answer;
-    abcdList = abcdIndex;
+    abcdList = alphaIndex;
     print(questionData.value);
 //    downloadFile();
     initVideoController();
@@ -84,7 +86,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    try {
+//      _controller?.dispose();
+    } catch (e) {
+      print(e);
+    }
     super.dispose();
   }
 
@@ -102,7 +108,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
-  referesh() {
+  refresh() {
     setState(() {});
   }
 
@@ -110,7 +116,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     return isPdf(questionData.mediaLink)
         ? SimplePdfViewerWidget(
             completeCallback: (bool result) {
-              print("completeCallback,result:${result}");
+              print("completeCallback,result:$result");
             },
             initialUrl: Utils.getCacheFile(questionData.mediaLink) != null
                 ? Utils.getCacheFile(questionData.mediaLink)
@@ -121,7 +127,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void initVideoController() {
     if (isVideo(questionData.mediaLink)) {
-//    if (isVideo(arrAnswer)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)
@@ -146,6 +151,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -421,15 +427,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     submitAnswer.questionId = questionData.questionId;
     submitAnswer.moduleId = questionData.moduleId;
-    submitAnswer.counter = max(
-        questionData.isAnsweredCorrect
-            ? (questionData.counter + 1)
-            : (questionData.counter ~/ 2).round(),
-        0);
-    submitAnswer.loyalty = questionData.loyalty;
+    if (widget.getChallengeData == null) {
+      submitAnswer.counter = max(
+          questionData.isAnsweredCorrect
+              ? (questionData.counter + 1)
+              : (questionData.counter ~/ 2).round(),
+          0);
+      submitAnswer.loyalty = questionData.loyalty;
+      submitAnswer.value = questionData.value;
+      submitAnswer.resources = questionData.resources;
+    }
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
-    submitAnswer.value = questionData.value;
-    submitAnswer.resources = questionData.resources;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
@@ -437,19 +445,45 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     rq.totalQuestionAnswered = rq.answer.length;
 
-    Utils.updateAttemptTimeInQuestionDataLocally(
-        questionData.questionId, submitAnswer.attemptTime);
+    Utils.isInternetConnected().then((isConnected) {
+      if (!isConnected) {
+        Utils.updateAttemptTimeInQuestionDataLocally(
+            questionData.questionId, submitAnswer.attemptTime);
+      }
+    });
 
     return rq;
   }
 
   void navigateToSituation(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        FadeRouteHome(
-            initialPageType: Const.typeDebrief,
-            questionDataSituation: questionData),
-        ModalRoute.withName("/home"));
+    if (widget.getChallengeData == null) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          FadeRouteHome(
+              initialPageType: Const.typeDebrief,
+              questionDataSituation: questionData),
+          ModalRoute.withName("/home"));
+    } else {
+      showCustomerSituationDialog(_scaffoldKey, widget.getChallengeData,
+          widget.challengePosition, widget.questionPosition);
+    }
+  }
+
+  static showCustomerSituationDialog(
+    GlobalKey<ScaffoldState> _scaffoldKey,
+    List<GetChallengeData> data,
+    int challengePosition,
+    int questionPosition,
+  ) async {
+    Navigator.pop(_scaffoldKey.currentContext);
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => CustomerSituationPage(
+            questionDataCustomerSituation:
+                data[challengePosition].challenge[questionPosition],
+            challengePosition: challengePosition,
+            questionPosition: questionPosition,
+            getChallengeData: data));
   }
 
   showFirstHalf(BuildContext context) {
@@ -867,7 +901,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
 
-          widget.engagementCustomerState.referesh();
+          widget.engagementCustomerState.refresh();
         },
         child: Container(
 //          height: 45,
