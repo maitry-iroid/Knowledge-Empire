@@ -13,9 +13,7 @@ import '../helper/string_res.dart';
 import '../helper/web_api.dart';
 import '../models/get_friends.dart';
 
-
 class ChallengesPage extends StatefulWidget {
-
   final List<GetFriendsData> arrFriends;
   final int userId;
 
@@ -28,6 +26,7 @@ class ChallengesPage extends StatefulWidget {
 class _ChallengesPageState extends State<ChallengesPage> {
   bool isLoading = false;
   List<GetFriendsData> arrFriends = List();
+  List<GetFriendsData> arrFriendsToShow = List();
   List<GetFriendsData> arrSearchFriends = List();
 
   List<GetFriendsData> responseArrFriends = List();
@@ -54,17 +53,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: <Widget>[
         CommonView.showBackground(context),
-        Column(
-          children: <Widget>[
-            SizedBox(
-              height: Utils.getHeaderHeight(context) + 10,
-            ),
-            CommonView.showTitle(context, StringRes.challenges),
-            showMainBody(),
-          ],
-        ),
         Card(
           margin: EdgeInsets.all(0),
           elevation: 10,
@@ -73,22 +64,26 @@ class _ChallengesPageState extends State<ChallengesPage> {
             height: 1,
           ),
         ),
+        ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            SizedBox(
+              height: Utils.getHeaderHeight(context) + 10,
+            ),
+            CommonView.showTitle(context, StringRes.challenges),
+            showMainBody(),
+          ],
+        ),
         CommonView.showCircularProgress(isLoading)
       ],
     );
   }
 
   showMainBody() {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
-        child: Row(
-          children: <Widget>[
-            showFriends(),
-            showBusinessSectors(),
-            showRewards()
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
+      child: Row(
+        children: <Widget>[showFriends(), showBusinessSectors(), showRewards()],
       ),
     );
   }
@@ -162,20 +157,21 @@ class _ChallengesPageState extends State<ChallengesPage> {
                               ),
                               decoration: InputDecoration(
 //                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
-                                  hintText: Utils.getText(
-                                      context, StringRes.searchForKeywords),
-                                  hintStyle:
-                                      TextStyle(color: ColorRes.hintColor),
-                                  border: InputBorder.none),
+                                hintText: Utils.getText(
+                                    context, StringRes.searchForKeywords),
+                                hintStyle: TextStyle(
+                                    color: ColorRes.hintColor, fontSize: 14),
+                                border: InputBorder.none,
+                              ),
                             ))),
                     SizedBox(
                       width: 1,
                     ),
                     MaterialButton(
-                      height: 10,
+                      height: 5,
                       minWidth: 5,
                       onPressed: () {
-                        searchFriends();
+                        getSearchFriends();
                       },
                       child: Icon(
                         Icons.search,
@@ -204,9 +200,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
               Expanded(
                 flex: 3,
                 child: ListView.builder(
-//                  itemCount: 1,
-                  itemCount: arrFriends != null ? arrSearchFriends.length : 0,
-//                  var isSelected = true;
+                  itemCount:
+                      arrFriendsToShow != null ? arrFriendsToShow.length : 0,
                   itemBuilder: (BuildContext context, int index) {
                     return showFriendItem(index, 1);
                   },
@@ -588,8 +583,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     GetFriendsRequest rq = GetFriendsRequest();
     rq.userId = Injector.userData.userId;
     rq.groupId = 0;
-    rq.category = 3;
-    rq.searchBy = 0;
+    rq.category = 0;
+    rq.searchBy = 3;
     rq.filter = 0;
 
     WebApi().getFriends(context, rq).then((response) {
@@ -600,7 +595,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            responseArrFriends = response.data;
+            arrFriends = response.data;
+            arrFriendsToShow = response.data;
 
             if (arrFriends.length > 0) {
               selectedFriendId = arrFriends[0].userId;
@@ -703,12 +699,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
           if (response.data != null) {
             List<GetFriendsData> getFriendsData = responseArrFriends;
 
-            /*  for(int i = 0; i < getFriendsData.length; i++ ) {
-              if(arrSearchFriends[i].name == getFriendsData[i].name) {
-                arrSearchFriends = getFriendsData;
-              }
-            }*/
+            if (getFriendsData.length > 0) {
+              arrFriendsToShow = getFriendsData;
 
+              setState(() {});
+            }
           }
         }
       }

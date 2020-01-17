@@ -136,7 +136,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             _controller.pause();
           });
         });
-
+      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
       questionData.videoLoop == 1
           ? _controller.setLooping(true)
           : _controller.setLooping(false);

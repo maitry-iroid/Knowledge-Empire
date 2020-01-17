@@ -67,7 +67,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
   int _selectedItem = 0;
 
-  int _subSelectedItem = -1;
+  int _subSelectedItem = 0;
 
   selectItem(index) {
     setState(() {
@@ -372,8 +372,8 @@ class _RewardsPageState extends State<RewardsPage> {
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
                         color: _subSelectedItem == index
-                            ? ColorRes.white
-                            : ColorRes.borderRewardsName,
+                            ? ColorRes.borderRewardsName
+                            : ColorRes.white,
                         width: 1)),
 //                 child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),

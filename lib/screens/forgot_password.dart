@@ -76,7 +76,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         ),
         child: Stack(
+          alignment: Alignment.centerLeft,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 50),
+              child: Image(
+                image: AssetImage(
+                  Utils.getAssetsImg('logo_login'),
+                ),
+                width: Utils.getDeviceHeight(context) / 2,
+              ),
+            ),
             Align(
                 alignment: Alignment.centerRight,
                 child: Container(

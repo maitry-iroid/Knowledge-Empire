@@ -8,7 +8,7 @@ import Firebase
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
+) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
 //    FirebaseApp.configure()
     if FirebaseApp.app() == nil {
