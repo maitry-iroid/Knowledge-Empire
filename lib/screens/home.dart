@@ -175,8 +175,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } else if (state == AppLifecycleState.inactive) {}
   }
 
-
-
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
@@ -188,17 +186,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return RewardsPage();
+        return /*RewardsPage()*/ Container();
       case 5:
-        return TeamPage();
+        return /*TeamPage()*/ Container();
       case 6:
-        return ChallengesPage();
+        return /*ChallengesPage()*/ Container();
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return PLPage();
+        return /*PLPage()*/ Container();
       case 9:
-        return RankingPage();
+        return /*RankingPage()*/ Container();
       case 10:
         return ProfilePage();
 //      case 11:
@@ -221,9 +219,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
-      Navigator.of(context).pop(); // close the drawer
-      if (_selectedDrawerIndex == 11) {
-        Navigator.push(context, FadeRouteIntro());
+
+      if (index == Const.typeChallenges ||
+          index == Const.typeReward ||
+          index == Const.typePL ||
+          index == Const.typeRanking ||
+          index == Const.typeTeam) {
+        Utils.showComingSoonDialog(context);
+      } else {
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == 11) {
+          Navigator.push(context, FadeRouteIntro());
+        }
       }
     }
   }
@@ -323,22 +330,20 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
-//    print("get_page--- " + _selectedDrawerIndex.toString());
-
-    if (_selectedDrawerIndex == 12)
+    if (_selectedDrawerIndex == Const.typeEngagement)
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr,
           getChallengeData: widget.getChallengeData,
           challengePosition: widget.challengePosition,
           questionPosition: widget.questionPosition);
-    else if (_selectedDrawerIndex == 13)
+    else if (_selectedDrawerIndex == Const.typeCustomerSituation)
       return CustomerSituationPage(
         questionDataCustomerSituation: widget.questionDataSituation,
         getChallengeData: widget.getChallengeData,
         challengePosition: widget.challengePosition,
         questionPosition: widget.questionPosition,
       );
-    else if (_selectedDrawerIndex == 6)
+    else if (_selectedDrawerIndex == Const.typeChallenges)
       return ChallengesPage(
         arrFriends: widget.arrFriends,
         userId: widget.friendId,
@@ -375,37 +380,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _selectedDrawerIndex = widget.initialPageType != null
         ? widget.initialPageType
         : Const.typeHome;
-
-//    if (widget.initialPageType == Const.typeHome)
-//      _selectedDrawerIndex = 0;
-//    else if (widget.initialPageType == Const.typeBusinessSector)
-//      _selectedDrawerIndex = 1;
-//    else if (widget.initialPageType == Const.typeNewCustomer)
-//      _selectedDrawerIndex = 2;
-//    else if (widget.initialPageType == Const.typeExistingCustomer)
-//      _selectedDrawerIndex = 3;
-//    else if (widget.initialPageType == Const.typeReward)
-//      _selectedDrawerIndex = 4;
-//    else if (widget.initialPageType == Const.typeTeam)
-//      _selectedDrawerIndex = 5;
-//    else if (widget.initialPageType == Const.typeChallenges)
-//      _selectedDrawerIndex = 6;
-//    else if (widget.initialPageType == Const.typeOrg)
-//      _selectedDrawerIndex = 7;
-//    else if (widget.initialPageType == Const.typePL)
-//      _selectedDrawerIndex = 8;
-//    else if (widget.initialPageType == Const.typeRanking)
-//      _selectedDrawerIndex = 9;
-//    else if (widget.initialPageType == Const.typeProfile)
-//      _selectedDrawerIndex = 10;
-//    else if (widget.initialPageType == Const.typeHelp)
-//      _selectedDrawerIndex = 11;
-//    else if (widget.initialPageType == Const.typeEngagement)
-//      _selectedDrawerIndex = 12;
-//    else if (widget.initialPageType == Const.typeDebrief)
-//      _selectedDrawerIndex = 13;
-//    else
-//      _selectedDrawerIndex = 0;
   }
 
   void initStreamController() {
@@ -516,6 +490,4 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Injector.isBusinessMode ? "help_icon" : "help_icon"),
     ];
   }
-
-
 }

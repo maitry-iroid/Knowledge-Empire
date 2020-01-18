@@ -355,7 +355,7 @@ class CommonView {
             Navigator.push(
                 context,
                 FadeRouteHome(
-                    initialPageType: Const.typeDebrief,
+                    initialPageType: Const.typeCustomerSituation,
                     questionDataSituation: questionData));
 
 //            Navigator.push(
@@ -417,7 +417,12 @@ class CommonView {
 
   static showBackgroundOrg(BuildContext context) {
     return Injector.isBusinessMode
-        ? Image(image: AssetImage(Utils.getAssetsImg('organization_bg')),fit: BoxFit.fill,width: double.infinity,height: double.infinity,)
+        ? Image(
+            image: AssetImage(Utils.getAssetsImg('organization_bg')),
+            fit: BoxFit.fill,
+            width: double.infinity,
+            height: double.infinity,
+          )
         : Container(
             color: ColorRes.bgProf,
           );
@@ -629,7 +634,14 @@ class CommonView {
   }
 
   static performItemClick(BuildContext context, int type) {
-    Navigator.push(context, FadeRouteHome(initialPageType: type));
+    if (type == Const.typeChallenges ||
+        type == Const.typeReward ||
+        type == Const.typePL ||
+        type == Const.typeRanking ||
+        type == Const.typeTeam)
+      Utils.showComingSoonDialog(context);
+    else
+      Navigator.push(context, FadeRouteHome(initialPageType: type));
 
 //    Navigator.push(
 //        context,

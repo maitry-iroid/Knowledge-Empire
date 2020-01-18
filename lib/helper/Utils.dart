@@ -525,7 +525,7 @@ class Utils {
               .parse(questionData.attemptTime);
           print("question date string : -    ${questionData.attemptTime}");
 
-          if (type == Const.typeNewCustomer
+          if (type == Const.getNewQueType
               ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
               : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
             arrFinalQuestion.add(questionData);
@@ -548,5 +548,28 @@ class Utils {
             challengePosition: challengePosition,
             questionPosition: questionPosition,
             getChallengeData: data));
+  }
+
+
+  static showComingSoonDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(
+            "Coming Soon..",
+            style: TextStyle(fontSize: 20),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

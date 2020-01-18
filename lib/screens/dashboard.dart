@@ -23,7 +23,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class DashboardPageState extends State<DashboardPage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -33,7 +32,7 @@ class DashboardPageState extends State<DashboardPage> {
 //    updateVolumes();
   }
 
- /* Future<void> initPlatformState() async {
+  /* Future<void> initPlatformState() async {
     await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
 //    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
   }
@@ -51,15 +50,13 @@ class DashboardPageState extends State<DashboardPage> {
       backgroundColor: ColorRes.white,
       body: SafeArea(
         child: Container(
-          margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 7.5),
-          height: double.infinity,
-          width: double.infinity,
-          child: showMainView()
-        ),
+            margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 7.5),
+            height: double.infinity,
+            width: double.infinity,
+            child: showMainView()),
       ),
     );
   }
-
 
   showProfile() {
     return Container(
@@ -71,7 +68,6 @@ class DashboardPageState extends State<DashboardPage> {
           border: Border.all(color: ColorRes.colorPrimary)),
     );
   }
-
 
   showMainView() {
     return Container(
@@ -92,7 +88,6 @@ class DashboardPageState extends State<DashboardPage> {
           showMainItem(Const.typeOrg),
           showMainItem(Const.typePL),
           showMainItem(Const.typeRanking),
-
         ],
       ),
     );
@@ -144,7 +139,7 @@ class DashboardPageState extends State<DashboardPage> {
       ),
       onTap: () {
 //        if(currentVol != 0) {
-          Utils.playClickSound();
+        Utils.playClickSound();
 //        }
 
         performItemClick(type);
@@ -153,8 +148,14 @@ class DashboardPageState extends State<DashboardPage> {
   }
 
   performItemClick(int type) {
-
-    Navigator.push(context, FadeRouteHome(initialPageType: type));
+    if (type == Const.typeChallenges ||
+        type == Const.typeReward ||
+        type == Const.typePL ||
+        type == Const.typeRanking ||
+        type == Const.typeTeam)
+      Utils.showComingSoonDialog(context);
+    else
+      Navigator.push(context, FadeRouteHome(initialPageType: type));
   }
 
   getTitle(int type) {

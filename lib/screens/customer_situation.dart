@@ -689,23 +689,33 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-    if (widget.getChallengeData != null) {
-      Navigator.pushAndRemoveUntil(
-          context, FadeRouteHome(), ModalRoute.withName("home"));
 
-      Navigator.push(
-          context,
-          FadeRouteHome(
-              initialPageType: Const.typeNewCustomer,
-              questionDataSituation: null));
-    } else {
-      if (widget.questionPosition + 1 <
-          widget.getChallengeData[widget.challengePosition].challenge.length -
-              1) {
-        Utils.showChallengeQuestionDialog(_scaffoldKey, widget.getChallengeData,
-            widget.challengePosition, widget.questionPosition);
-      }
-    }
+    Navigator.pushAndRemoveUntil(
+        context, FadeRouteHome(), ModalRoute.withName("home"));
+
+    Navigator.push(
+        context,
+        FadeRouteHome(
+            initialPageType: Const.typeNewCustomer,
+            questionDataSituation: null));
+
+//    if (widget.getChallengeData != null) {
+//      Navigator.pushAndRemoveUntil(
+//          context, FadeRouteHome(), ModalRoute.withName("home"));
+//
+//      Navigator.push(
+//          context,
+//          FadeRouteHome(
+//              initialPageType: Const.typeNewCustomer,
+//              questionDataSituation: null));
+//    } else {
+//      if (widget.questionPosition + 1 <
+//          widget.getChallengeData[widget.challengePosition].challenge.length -
+//              1) {
+//        Utils.showChallengeQuestionDialog(_scaffoldKey, widget.getChallengeData,
+//            widget.challengePosition, widget.questionPosition);
+//      }
+//    }
   }
 
   showQueMedia(BuildContext context) {

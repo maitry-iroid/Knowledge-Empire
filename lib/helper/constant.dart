@@ -13,7 +13,7 @@ class Const {
   static var typeProfile = 10;
   static var typeHelp = 11;
   static var typeEngagement = 12;
-  static var typeDebrief = 13;
+  static var typeCustomerSituation = 13;
 
   static var typeName = 26;
   static var typeSideMenu = 27;

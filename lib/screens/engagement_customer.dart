@@ -261,9 +261,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     await Injector.prefs
         .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
 
-    Utils.isInternetConnected().then((isConnected) {
-      Injector.customerValueData.totalBalance = questionData.value;
+    Injector.customerValueData.totalBalance =
+        Injector.customerValueData.totalBalance + questionData.value;
 
+    Injector.prefs.setString(PrefKeys.customerValueData,
+        jsonEncode(Injector.customerValueData.toJson()));
+
+    Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         callSubmitAnswerApi(context);
       } else {
@@ -456,17 +460,24 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void navigateToSituation(BuildContext context) {
-    if (widget.getChallengeData == null) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          FadeRouteHome(
-              initialPageType: Const.typeDebrief,
-              questionDataSituation: questionData),
-          ModalRoute.withName("/home"));
-    } else {
-      showCustomerSituationDialog(_scaffoldKey, widget.getChallengeData,
-          widget.challengePosition, widget.questionPosition);
-    }
+    Navigator.pushAndRemoveUntil(
+        context,
+        FadeRouteHome(
+            initialPageType: Const.typeCustomerSituation,
+            questionDataSituation: questionData),
+        ModalRoute.withName("/home"));
+
+//    if (widget.getChallengeData == null) {
+//      Navigator.pushAndRemoveUntil(
+//          context,
+//          FadeRouteHome(
+//              initialPageType: Const.typeDebrief,
+//              questionDataSituation: questionData),
+//          ModalRoute.withName("/home"));
+//    } else {
+//      showCustomerSituationDialog(_scaffoldKey, widget.getChallengeData,
+//          widget.challengePosition, widget.questionPosition);
+//    }
   }
 
   static showCustomerSituationDialog(
