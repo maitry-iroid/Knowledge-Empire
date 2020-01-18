@@ -11,8 +11,6 @@ import 'package:ke_employee/injection/dependency_injection.dart' as prefix0;
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
@@ -27,7 +25,6 @@ class OrganizationsPage2 extends StatefulWidget {
 class _OrganizationsPage2State extends State<OrganizationsPage2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  Notifier _notifier;
 
   List<Organization> arrOrganization = List();
   bool isLoading = false;
@@ -44,7 +41,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
 
     return Scaffold(
       key: _scaffoldKey,

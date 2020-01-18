@@ -24,7 +24,6 @@ import 'package:ke_employee/screens/new_customer.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
-import 'package:ke_employee/screens/ranking.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 
@@ -104,7 +103,7 @@ class HomePage extends StatefulWidget {
   final int challengePosition;
   final List<GetChallengeData> getChallengeData;
 
-  List<GetFriendsData> arrFriends = List();
+  final List<GetFriendsData> arrFriends;
 
   HomePage(
       {Key key,

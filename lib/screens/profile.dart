@@ -8,8 +8,6 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/bailout.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -48,20 +46,17 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
   }
 
-  Notifier _notifier;
   File _image;
   String photoUrl = "";
 
   @override
   void dispose() {
-    _notifier.dispose();
     myFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
 
     return Scaffold(
       key: _scaffoldKey,

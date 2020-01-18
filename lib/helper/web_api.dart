@@ -12,6 +12,7 @@ import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/get_user_group.dart';
@@ -26,9 +27,12 @@ import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 
+import 'constant.dart';
+
 class WebApi {
-  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
+//  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
 //  static const baseUrl = "http://18.141.132.109:7000/api"; // prod url
+  static final baseUrl = Const.SERVER_ONE;
 
   static String apiRequestLogin = "login";
 
@@ -667,7 +671,7 @@ class WebApi {
               .encode(getRequest('getChallenge', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
-        print("getChallenge"+"_"+response.data);
+        print("getChallenge" + "_" + response.data);
         GetChallengesResponse responseData =
             GetChallengesResponse.fromJson(jsonDecode(response.data));
         return responseData;
@@ -716,7 +720,7 @@ class WebApi {
           data: json.encode(
               getRequest('getDownloadQuestions', json.encode(jsonMap))));
       if (response.statusCode == 200) {
-        print("getDownloadQuestions"+"_"+response.data);
+        print("getDownloadQuestions" + "_" + response.data);
         QuestionsResponse questionsResponse =
             QuestionsResponse.fromJson(jsonDecode(response.data));
         return questionsResponse;
@@ -738,10 +742,10 @@ class WebApi {
           data: json
               .encode(getRequest('searchFriends', json.encode(rq.toJson()))));
       if (response.statusCode == 200) {
-        print("searchFriends"+"_"+response.data);
+        print("searchFriends" + "_" + response.data);
 //        QuestionsResponse questionsResponse =
         SearchFriendResponse searchFriendResponse =
-        SearchFriendResponse.fromJson(jsonDecode(response.data));
+            SearchFriendResponse.fromJson(jsonDecode(response.data));
         return searchFriendResponse;
       }
       print(response.data);
@@ -762,10 +766,31 @@ class WebApi {
           data: json
               .encode(getRequest('registerForPush', json.encode(rq.toJson()))));
       if (response.statusCode == 200) {
-        print("registerForPush"+"_"+response.data);
+        print("registerForPush" + "_" + response.data);
         RegisterForPushResponse registerForPushResponse =
             RegisterForPushResponse.fromJson(jsonDecode(response.data));
         return registerForPushResponse;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<DashboardResponse> getDashboardValue(DashboardRequest rq) async {
+    initDio();
+
+    print("dashboard_" + json.encode(rq.toJson()));
+    try {
+      final response = await dio.post("",
+          data: json.encode(getRequest('dashboard', json.encode(rq.toJson()))));
+      if (response.statusCode == 200) {
+        print("dashboard" + "_" + response.data);
+        DashboardResponse dashboardResponse =
+            DashboardResponse.fromJson(jsonDecode(response.data));
+        return dashboardResponse;
       }
       print(response.data);
       return null;

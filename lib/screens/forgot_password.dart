@@ -9,20 +9,17 @@ import 'package:ke_employee/models/forgot_password.dart';
 
 class FadeRouteForgotPassword extends PageRouteBuilder {
   final Widget page;
+
   FadeRouteForgotPassword({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
+    pageBuilder: (BuildContext context,
         Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
+        Animation<double> secondaryAnimation,) =>
     page,
-    transitionsBuilder: (
-        BuildContext context,
+    transitionsBuilder: (BuildContext context,
         Animation<double> animation,
         Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
+        Widget child,) =>
         FadeTransition(
           opacity: animation,
           child: ForgotPasswordPage(),
@@ -76,16 +73,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         ),
         child: Stack(
-          alignment: Alignment.centerLeft,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 50),
-              child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg('logo_login'),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg('logo_login'),
+                    ),
+                    width: Utils.getDeviceHeight(context) / 2,
+                  ),
                 ),
-                width: Utils.getDeviceHeight(context) / 2,
-              ),
             ),
             Align(
                 alignment: Alignment.centerRight,
@@ -159,8 +158,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText:
-                          Utils.getText(context, StringRes.enterRegisteredEmail)
-                              .toUpperCase(),
+                      Utils.getText(context, StringRes.enterRegisteredEmail)
+                          .toUpperCase(),
                       hintStyle: TextStyle(color: ColorRes.hintColor)),
                 ),
               ),
@@ -205,9 +204,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   validateForm() {
-
 //    if(currentVol != 0) {
-      Utils.playClickSound();
+    Utils.playClickSound();
 //    }
     if (emailController.text.isEmpty) {
       Utils.showToast("Email can't be empty.");

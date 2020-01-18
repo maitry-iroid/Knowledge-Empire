@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -130,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                 shrinkWrap: true,
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
+//                  Text(Const.APP_NAME),
                   showEmailView(),
                   SizedBox(
                     height: 10,

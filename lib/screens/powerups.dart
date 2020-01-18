@@ -10,8 +10,6 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
-import 'package:notifier/main_notifier.dart';
-import 'package:notifier/notifier_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
@@ -43,7 +41,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
   List<Organization> arrOrganization = List();
 
-  Notifier _notifier;
 
   @override
   void initState() {
@@ -58,7 +55,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _notifier.dispose();
     super.dispose();
   }
 
@@ -97,7 +93,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
   @override
   Widget build(BuildContext context) {
-    _notifier = NotifierProvider.of(context);
     return Stack(
       children: <Widget>[
         CommonView.showBackground(context),
