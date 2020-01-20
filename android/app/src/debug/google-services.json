@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "338294941257",
+    "firebase_url": "https://ke-dev-21fd7.firebaseio.com",
+    "project_id": "ke-dev-21fd7",
+    "storage_bucket": "ke-dev-21fd7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338294941257:android:d3d652485dffd504fe0198",
+        "android_client_info": {
+          "package_name": "com.keemployee.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338294941257-i9bgbr1e0bh6q6tdd0frejuia22jabb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkiJ98bLbs79p0QtC6JScginSq1otOZVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338294941257-i9bgbr1e0bh6q6tdd0frejuia22jabb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

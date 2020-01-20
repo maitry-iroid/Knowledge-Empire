@@ -18,7 +18,7 @@ allprojects {
         jcenter()
     }
 }
-5
+
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
