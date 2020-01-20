@@ -142,20 +142,9 @@ class DashboardPageState extends State<DashboardPage> {
         Utils.playClickSound();
 //        }
 
-        performItemClick(type);
+        Utils.performDashboardItemClick(context, type);
       },
     );
-  }
-
-  performItemClick(int type) {
-    if (type == Const.typeChallenges ||
-        type == Const.typeReward ||
-        type == Const.typePL ||
-        type == Const.typeRanking ||
-        type == Const.typeTeam)
-      Utils.showComingSoonDialog(context);
-    else
-      Navigator.push(context, FadeRouteHome(initialPageType: type));
   }
 
   getTitle(int type) {

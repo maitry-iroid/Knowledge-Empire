@@ -24,6 +24,7 @@ import 'package:ke_employee/screens/new_customer.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
+import 'package:ke_employee/screens/ranking.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 
@@ -85,6 +86,7 @@ class FadeRouteHome extends PageRouteBuilder {
               questionDataSituation: questionDataSituation,
               value: value,
               arrFriends: arrFriends,
+              friendId: friendId,
             ),
           ),
         );
@@ -195,7 +197,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 8:
         return /*PLPage()*/ Container();
       case 9:
-        return /*RankingPage()*/ Container();
+        return RankingPage();
       case 10:
         return ProfilePage();
 //      case 11:
@@ -219,15 +221,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      if (index == Const.typeChallenges ||
-          index == Const.typeReward ||
-          index == Const.typePL ||
-          index == Const.typeRanking ||
-          index == Const.typeTeam) {
+      if (index == Const.typePL || index == Const.typeTeam) {
         Utils.showComingSoonDialog(context);
       } else {
         Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == 11) {
+        if (_selectedDrawerIndex == Const.typeHelp) {
           Navigator.push(context, FadeRouteIntro());
         }
       }

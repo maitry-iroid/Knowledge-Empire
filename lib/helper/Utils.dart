@@ -550,7 +550,6 @@ class Utils {
             getChallengeData: data));
   }
 
-
   static showComingSoonDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -571,5 +570,16 @@ class Utils {
         );
       },
     );
+  }
+
+  static performDashboardItemClick(BuildContext context, int type) {
+    if (
+//    type == Const.typeChallenges ||
+//        type == Const.typeReward ||
+        type == Const.typePL ||
+        type == Const.typeTeam)
+      Utils.showComingSoonDialog(context);
+    else
+      Navigator.push(context, FadeRouteHome(initialPageType: type));
   }
 }

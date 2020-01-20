@@ -461,7 +461,7 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    performItemClick(context, Const.typeOrg);
+                    Utils.performDashboardItemClick(context, Const.typeOrg);
                   },
                 ),
                 InkResponse(
@@ -471,7 +471,7 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    performItemClick(context, Const.typePL);
+                    Utils.performDashboardItemClick(context, Const.typePL);
                   },
                 ),
                 InkResponse(
@@ -481,7 +481,7 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    performItemClick(context, Const.typeRanking);
+                    Utils.performDashboardItemClick(context, Const.typeRanking);
                   },
                 ),
               ],
@@ -514,7 +514,7 @@ class CommonView {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        performItemClick(context, Const.typeReward);
+                        Utils.performDashboardItemClick(context, Const.typeReward);
                       },
                     )),
                 Padding(
@@ -527,7 +527,7 @@ class CommonView {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        performItemClick(context, Const.typeTeam);
+                        Utils.performDashboardItemClick(context, Const.typeTeam);
                       },
                     )),
                 Padding(
@@ -541,7 +541,7 @@ class CommonView {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        performItemClick(context, Const.typeChallenges);
+                        Utils.performDashboardItemClick(context, Const.typeChallenges);
                       }),
                 ),
               ],
@@ -568,7 +568,7 @@ class CommonView {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        performItemClick(context, Const.typeBusinessSector);
+                        Utils.performDashboardItemClick(context, Const.typeBusinessSector);
                       }),
                   InkResponse(
                       child: Image(
@@ -577,7 +577,7 @@ class CommonView {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        performItemClick(context, Const.typeNewCustomer);
+                        Utils.performDashboardItemClick(context, Const.typeNewCustomer);
                       }),
 //                SizedBox(
 //                  width: Utils.getDeviceWidth(context) / 20,
@@ -590,7 +590,7 @@ class CommonView {
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        performItemClick(context, Const.typeExistingCustomer);
+                        Utils.performDashboardItemClick(context, Const.typeExistingCustomer);
                       }),
                 ],
               ),
@@ -633,21 +633,5 @@ class CommonView {
     );
   }
 
-  static performItemClick(BuildContext context, int type) {
-    if (type == Const.typeChallenges ||
-        type == Const.typeReward ||
-        type == Const.typePL ||
-        type == Const.typeRanking ||
-        type == Const.typeTeam)
-      Utils.showComingSoonDialog(context);
-    else
-      Navigator.push(context, FadeRouteHome(initialPageType: type));
 
-//    Navigator.push(
-//        context,
-//        MaterialPageRoute(
-//            builder: (context) => HomePage(
-//                  initialPageType: type,
-//                )));
-  }
 }

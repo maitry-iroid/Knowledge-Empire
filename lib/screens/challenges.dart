@@ -52,6 +52,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.userId != null) selectedFriendId = widget.userId;
+
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -64,8 +66,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             height: 1,
           ),
         ),
-        ListView(
-          shrinkWrap: true,
+        Column(
           children: <Widget>[
             SizedBox(
               height: Utils.getHeaderHeight(context) + 10,
@@ -80,10 +81,16 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   showMainBody() {
-    return Container(
-      margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
-      child: Row(
-        children: <Widget>[showFriends(), showBusinessSectors(), showRewards()],
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
+        child: Row(
+          children: <Widget>[
+            showFriends(),
+            showBusinessSectors(),
+            showRewards()
+          ],
+        ),
       ),
     );
   }
@@ -121,15 +128,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 flex: 1,
-//                margin: EdgeInsets.symmetric(vertical: 5),
-//                padding: EdgeInsets.only(left: 20, right: 10, top: 2, bottom: 2),
-//            color: ColorRes.lightBg,
                 child: Row(
                   children: <Widget>[
                     Expanded(
                         child: Container(
                             height: 30,
-//                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                             padding: EdgeInsets.only(top: 13, left: 10),
                             margin: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 2),
@@ -137,7 +140,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
                               borderRadius: BorderRadius.circular(15),
                               color: ColorRes.white,
                             ),
-//                        alignment: Alignment.center,
                             child: TextField(
                               onChanged: (text) {
                                 searchText = text;
@@ -147,7 +149,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
                                   }
                                 });
                               },
-//                          textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.left,
                               maxLines: 1,
                               controller: searchController,
@@ -177,23 +178,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                         Icons.search,
                         color: ColorRes.white,
                       ),
-//                      child: Image(image: AssetImage(
-//                        Utils.getAssetsImg(
-//                            Injector.isBusinessMode ? "search" : 'search_prof'),
-//                      ),
-////                        fit: BoxFit.fill,
-//                      ),
                     )
-
-//                    Image(
-//                      height: 35,
-//                      width: 40,
-//                      image: AssetImage(
-//                        Utils.getAssetsImg(
-//                            Injector.isBusinessMode ? "search" : 'search_prof'),
-//                      ),
-//                      fit: BoxFit.fill,
-//                    )
                   ],
                 ),
               ),
@@ -203,7 +188,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   itemCount:
                       arrFriendsToShow != null ? arrFriendsToShow.length : 0,
                   itemBuilder: (BuildContext context, int index) {
-                    return showFriendItem(index, 1);
+                    return showFriendItem(index);
                   },
                 ),
               ),
@@ -309,20 +294,27 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: arrRewards.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return showFriendItem(index, 2);
-                  },
+                child: Center(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: arrRewards.length,
+                      padding: EdgeInsets.all(0),
+                      itemBuilder: (BuildContext context, int index) {
+                        return showRewardItem(index);
+                      },
+                    ),
+                  ),
                 ),
               ),
               InkResponse(
                 child: Container(
                   margin:
-                      EdgeInsets.only(bottom: 5, left: 20, right: 20, top: 5),
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                      EdgeInsets.only(bottom: 5, left: 15, right: 15, top: 5),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
@@ -334,7 +326,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   ),
                 ),
                 onTap: () {
-                  sendChallenges();
+                  if (selectedModuleIndex != null && selectedModuleIndex != -1)
+                    sendChallenges();
+                  else {
+                    Utils.showToast(
+                        "Oops..No learining module found for this user.");
+                  }
                 },
               ),
             ],
@@ -351,6 +348,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
       selectedIndex = index;
 
       selectedFriendId = arrFriends[selectedIndex].userId;
+
+      getBusinessSectors();
     });
   }
 
@@ -362,16 +361,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   selectedItem(int type, int index) {
     if (type == 1) {
-      if (arrFriends[index].userId == widget.userId) {
+      if (arrFriends[index].userId == selectedFriendId) {
         return Colors.blue;
       } else {
         return ColorRes.greyText;
       }
-      /*if(selectedIndex == index) {
-        return ColorRes.blue;
-      } else {
-        return ColorRes.greyText;
-      }*/
     } else {
       if (selectedRewardsIndex == index) {
         return ColorRes.blue;
@@ -381,42 +375,23 @@ class _ChallengesPageState extends State<ChallengesPage> {
     }
   }
 
-  showFriendItem(int index, int type) {
+  showFriendItem(int index) {
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
-        type == 1 ? _onSelectedFriend(index) : _onSelectedRewards(index);
-
-        //        Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
+        _onSelectedFriend(index);
       },
       child: Container(
         alignment: Alignment.center,
         width: 40,
-//        height: 40,
-//        width: Utils.getDeviceWidth(context) / 18,
         decoration: BoxDecoration(
-          color: Injector.isBusinessMode
-              ? selectedItem(type, index)
-//            selectedIndex != null && selectedIndex == index ? ColorRes.blue : ColorRes.greyText
-              : ColorRes.white,
+          color:
+              Injector.isBusinessMode ? selectedItem(1, index) : ColorRes.white,
           borderRadius: BorderRadius.circular(20),
-//            image: Injector.isBusinessMode
-//                ? DecorationImage(
-//                    image: AssetImage(
-//                      selectedIndex != null && selectedIndex == index
-//                          ? Utils.getAssetsImg('bg_blue')
-//                          : Utils.getAssetsImg('rounded_rect_challenges'),
-//                    ),
-//                    fit: BoxFit.fill)
-//                : null
         ),
-        margin: EdgeInsets.symmetric(
-//            vertical: type == 1 ? 5 : Utils.getDeviceHeight(context) / 7,
-            vertical: type == 1 ? 5 : 50,
-            horizontal: type == 1 ? 8 : 8),
-//        padding: EdgeInsets.symmetric(vertical: 2),
+        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
         child: Text(
-          type != 2 ? arrFriends[index].name : arrRewards[index],
+          arrFriends[index].name,
           style: TextStyle(
               color:
                   Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
@@ -426,18 +401,42 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-  var selectItem = -1;
+  showRewardItem(int index) {
+    return GestureDetector(
+      onTap: () {
+        Utils.playClickSound();
+        _onSelectedRewards(index);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 40,
+        decoration: BoxDecoration(
+          color:
+              Injector.isBusinessMode ? selectedItem(2, index) : ColorRes.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 2),
+        child: Text(
+          arrRewards[index],
+          style: TextStyle(
+              color:
+                  Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
+              fontSize: 17),
+        ),
+      ),
+    );
+  }
+
+  var selectedModuleIndex = -1;
 
   _onSelectedSector(int index) {
-    setState(() => selectItem = index);
+    setState(() => selectedModuleIndex = index);
   }
 
   showSectorItem(int index) {
     return GestureDetector(
       onTap: () {
-//        if(currentVol != 0) {
         Utils.playClickSound();
-//        }
         _onSelectedSector(index);
       },
       child: Container(
@@ -447,7 +446,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
             image: Injector.isBusinessMode
                 ? DecorationImage(
                     image: AssetImage(
-                      selectItem != null && selectItem == index
+                      selectedModuleIndex != null &&
+                              selectedModuleIndex == index
                           ? Utils.getAssetsImg('challenges_bg_sector')
                           : Utils.getAssetsImg(''),
                     ),
@@ -507,46 +507,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  showRewardItem(int index) {
-    return Container(
-      color: Injector.isBusinessMode ? null : ColorRes.white,
-      margin: EdgeInsets.symmetric(vertical: 7),
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Text('HealthCare',
-                    style: TextStyle(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.white
-                            : ColorRes.textProf,
-                        fontSize: 18)),
-              ),
-              Image(
-                image: AssetImage(
-                  Utils.getAssetsImg("back"),
-                ),
-                width: 25,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 3,
-          ),
-          LinearPercentIndicator(
-            width: Utils.getDeviceWidth(context) / 3.4,
-            lineHeight: 20.0,
-            percent: 0.5,
-            backgroundColor: Colors.grey,
-            progressColor: Colors.blue,
-          )
-        ],
       ),
     );
   }
@@ -649,8 +609,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     SendChallengesRequest rq = SendChallengesRequest();
     rq.userId = Injector.userData.userId;
-    rq.friendId = widget.userId;
-    rq.moduleId = arrLearningModules[0].moduleId;
+    rq.friendId = selectedFriendId;
+    rq.moduleId = arrLearningModules[selectedModuleIndex].moduleId;
     rq.rewards = selectedRewardsIndex;
 
     WebApi().sendChallenges(context, rq).then((response) {
@@ -667,8 +627,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
             } else {
               Utils.showToast("Send Challeange is success.");
             }
-            setState(() {});
           }
+        } else {
+          Utils.showToast(response.msg);
         }
       }
     }).catchError((e) {
