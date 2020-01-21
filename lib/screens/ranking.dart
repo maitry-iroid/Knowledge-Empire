@@ -12,7 +12,6 @@ import 'package:ke_employee/models/get_user_group.dart';
 import '../commonview/background.dart';
 import '../helper/constant.dart';
 
-
 //AudioManager audioManager;
 //int currentVol;
 
@@ -372,18 +371,22 @@ class _RankingPageState extends State<RankingPage> {
           Expanded(
             flex: 3,
             child: InkResponse(
-                child: arrFriends[index].isFriend == 0
-                    ? Image(
-                        image: AssetImage(
-                            Utils.getAssetsImg('ic_challenge_disable')))
-                    : Image(
-                        image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
+              child: arrFriends[index].isFriend == 0
+                  ? Image(
+                      image: AssetImage(
+                          Utils.getAssetsImg('ic_challenge_disable')))
+                  : Image(
+                      image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
               onTap: () {
 //                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-              if(arrFriends[index].isFriend == 1) {
-                Navigator.push(context, FadeRouteHome(arrFriends: arrFriends,
-                    initialPageType: Const.typeChallenges, friendId: arrFriends[index].userId));
-                print(arrFriends[index].isFriend);
+                if (arrFriends[index].isFriend == 1) {
+                  Navigator.push(
+                      context,
+                      FadeRouteHome(
+                          arrFriends: arrFriends,
+                          initialPageType: Const.typeChallenges,
+                          friendId: arrFriends[index].userId));
+                  print(arrFriends[index].isFriend);
                 }
               },
             ),
@@ -393,23 +396,16 @@ class _RankingPageState extends State<RankingPage> {
             child: InkResponse(
                 onTap: () {
                   print("hello$index");
-
-//                  if(currentVol != 0) {
-                    Utils.playClickSound();
-//                  }
-//                index ? :
-//                  _isSelected(index);
+                  Utils.playClickSound();
                   setState(() {
-//                    arrFriends[index].isFriends = !arrFriends[index].isFriends;
                     if (arrFriends[index].isFriend == 0) {
                       arrFriends[index].isFriend = 1;
-                      getFriendsUnfriend(index, 1);
+                      friendUnFriendUser(index, 1);
                     } else {
                       arrFriends[index].isFriend = 0;
-                      getFriendsUnfriend(index, 2);
+                      friendUnFriendUser(index, 2);
                     }
                   });
-//                  selectedIndex == index;  0 arrCategories[index].isFriend == true
                 },
                 child: Image(
                   image: AssetImage(
@@ -436,7 +432,7 @@ class _RankingPageState extends State<RankingPage> {
           if (selectedLeftCategory != index) {
             setState(() {
 //              if(currentVol != 0) {
-                Utils.playClickSound();
+              Utils.playClickSound();
 //              }
               selectedLeftCategory = index;
             });
@@ -540,7 +536,7 @@ class _RankingPageState extends State<RankingPage> {
     });
   }
 
-  void getFriendsUnfriend(int index, int i) {
+  void friendUnFriendUser(int index, int i) {
     setState(() {
       isLoading = true;
     });
@@ -557,15 +553,11 @@ class _RankingPageState extends State<RankingPage> {
 
       if (response != null) {
         if (response.flag == "true") {
-            if(i == 1) {
-              Utils.showToast("friend request send successfully");
-            } else {
-              Utils.showToast("unfriend successfully");
-            }
-//          if (response.data != null) {
-//            arrFriends = response.data;
-//            setState(() {});
-//          }
+          if (i == 1) {
+            Utils.showToast("friend request send successfully");
+          } else {
+            Utils.showToast("unfriend successfully");
+          }
 
         }
       }
@@ -597,7 +589,7 @@ class _OptionItemState extends State<OptionItem> {
     return GestureDetector(
         onTap: () {
 //          if(currentVol != 0) {
-            Utils.playClickSound();
+          Utils.playClickSound();
 //          }
           widget.selectItem(widget.index);
         },
@@ -634,7 +626,7 @@ class _CustomItemState extends State<CustomItem> {
 //        if (currentVol != 0) {
 //          audioManager = AudioManager.STREAM_SYSTEM;
 
-          Utils.playClickSound();
+        Utils.playClickSound();
 //        }
         widget.selectItem(widget.index);
       },
@@ -683,7 +675,7 @@ class _TimeItemState extends State<TimeItem> {
     return GestureDetector(
       onTap: () {
 //        if (currentVol != 0) {
-          Utils.playClickSound();
+        Utils.playClickSound();
 //        }
         widget.selectItem(widget.index);
       },
@@ -731,7 +723,7 @@ class _ProfitItemState extends State<TimeItem> {
     return GestureDetector(
       onTap: () {
 //        if (currentVol != 0) {
-          Utils.playClickSound();
+        Utils.playClickSound();
 //        }
         widget.selectItem(widget.index);
       },

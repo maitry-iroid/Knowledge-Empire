@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
@@ -29,8 +30,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
   List<GetFriendsData> arrFriendsToShow = List();
   List<GetFriendsData> arrSearchFriends = List();
 
-  List<GetFriendsData> responseArrFriends = List();
-
   List<LearningModuleData> arrLearningModules = List();
 
   List<String> arrRewards = ["2%", "4%", "6%", "8%", "10%"];
@@ -54,43 +53,41 @@ class _ChallengesPageState extends State<ChallengesPage> {
   Widget build(BuildContext context) {
     if (widget.userId != null) selectedFriendId = widget.userId;
 
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        CommonView.showBackground(context),
-        Card(
-          margin: EdgeInsets.all(0),
-          elevation: 10,
-          child: Container(
-            color: ColorRes.colorBgDark,
-            height: 1,
-          ),
-        ),
-        Column(
-          children: <Widget>[
-            SizedBox(
-              height: Utils.getHeaderHeight(context) + 10,
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          CommonView.showBackground(context),
+          Card(
+            margin: EdgeInsets.all(0),
+            elevation: 10,
+            child: Container(
+              color: ColorRes.colorBgDark,
+              height: 1,
             ),
-            CommonView.showTitle(context, StringRes.challenges),
-            showMainBody(),
-          ],
-        ),
-        CommonView.showCircularProgress(isLoading)
-      ],
+          ),
+          ListView(
+            shrinkWrap: false,
+            children: <Widget>[
+              SizedBox(
+                height: Utils.getHeaderHeight(context) + 10,
+              ),
+              CommonView.showTitle(context, StringRes.challenges),
+              showMainBody(),
+            ],
+          ),
+          CommonView.showCircularProgress(isLoading)
+        ],
+      ),
     );
   }
 
   showMainBody() {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
-        child: Row(
-          children: <Widget>[
-            showFriends(),
-            showBusinessSectors(),
-            showRewards()
-          ],
-        ),
+    return Container(
+      height: Utils.getDeviceHeight(context) - 150,
+      margin: EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 8),
+      child: Row(
+        children: <Widget>[showFriends(), showBusinessSectors(), showRewards()],
       ),
     );
   }
@@ -126,65 +123,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   style: TextStyle(color: ColorRes.white, fontSize: 17),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Container(
-                            height: 30,
-                            padding: EdgeInsets.only(top: 13, left: 10),
-                            margin: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 2),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorRes.white,
-                            ),
-                            child: TextField(
-                              onChanged: (text) {
-                                searchText = text;
-                                setState(() {
-                                  if (text.isEmpty) {
-                                    arrSearchFriends = arrFriends;
-                                  }
-                                });
-                              },
-                              textAlign: TextAlign.left,
-                              maxLines: 1,
-                              controller: searchController,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: ColorRes.hintColor,
-                              ),
-                              decoration: InputDecoration(
-//                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
-                                hintText: Utils.getText(
-                                    context, StringRes.searchForKeywords),
-                                hintStyle: TextStyle(
-                                    color: ColorRes.hintColor, fontSize: 14),
-                                border: InputBorder.none,
-                              ),
-                            ))),
-                    SizedBox(
-                      width: 1,
-                    ),
-                    MaterialButton(
-                      height: 5,
-                      minWidth: 5,
-                      onPressed: () {
-                        getSearchFriends();
-                      },
-                      child: Icon(
-                        Icons.search,
-                        color: ColorRes.white,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              showSearchView(),
               Expanded(
                 flex: 3,
                 child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount:
                       arrFriendsToShow != null ? arrFriendsToShow.length : 0,
                   itemBuilder: (BuildContext context, int index) {
@@ -247,6 +190,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: arrLearningModules.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showSectorItem(index);
@@ -300,6 +244,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     height: 40,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: arrRewards.length,
                       padding: EdgeInsets.all(0),
@@ -383,19 +328,49 @@ class _ChallengesPageState extends State<ChallengesPage> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: 40,
         decoration: BoxDecoration(
           color:
               Injector.isBusinessMode ? selectedItem(1, index) : ColorRes.white,
           borderRadius: BorderRadius.circular(20),
         ),
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-        child: Text(
-          arrFriends[index].name,
-          style: TextStyle(
-              color:
-                  Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
-              fontSize: 17),
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding:EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                arrFriendsToShow[index].name,
+                style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : ColorRes.fontGrey,
+                    fontSize: 15),
+              ),
+            ),
+            InkResponse(
+                onTap: () {
+                  print("hello$index");
+                  Utils.playClickSound();
+                  setState(() {
+                    if (arrFriends[index].isFriend == 0) {
+                      arrFriends[index].isFriend = 1;
+                      friendUnFriendUser(index, 1);
+                    } else {
+                      arrFriends[index].isFriend = 0;
+                      friendUnFriendUser(index, 2);
+                    }
+                  });
+                },
+                child: Image(
+                  image: AssetImage(
+                    selectedFriendId != null &&
+                            arrFriendsToShow[index].isFriend == 0
+                        ? Utils.getAssetsImg('add_emplyee')
+                        : Utils.getAssetsImg('remove_friend'),
+                  ),
+                  width: 20,
+                )),
+          ],
         ),
       ),
     );
@@ -558,7 +533,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             arrFriends = response.data;
             arrFriendsToShow = response.data;
 
-            if (arrFriends.length > 0) {
+            if (arrFriendsToShow.length > 0) {
               selectedFriendId = arrFriends[0].userId;
               setState(() {});
             }
@@ -571,6 +546,33 @@ class _ChallengesPageState extends State<ChallengesPage> {
         isLoading = false;
       });
       Utils.showToast(e.toString());
+    });
+  }
+
+  void friendUnFriendUser(int index, int action) {
+    setState(() {
+      isLoading = true;
+    });
+
+    GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
+    rq.userId = Injector.userData.userId;
+    rq.requestedTo = arrFriends[index].userId;
+    rq.action = action;
+
+    WebApi().friendUnFriendUser(context, rq).then((response) {
+      setState(() {
+        isLoading = false;
+      });
+
+      if (response != null) {
+        if (response.flag == "true") {
+          if (action == 1) {
+            Utils.showToast("friend request send successfully");
+          } else {
+            Utils.showToast("unfriend successfully");
+          }
+        }
+      }
     });
   }
 
@@ -658,7 +660,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            List<GetFriendsData> getFriendsData = responseArrFriends;
+            List<GetFriendsData> getFriendsData = response.data;
 
             if (getFriendsData.length > 0) {
               arrFriendsToShow = getFriendsData;
@@ -675,5 +677,57 @@ class _ChallengesPageState extends State<ChallengesPage> {
       });
       Utils.showToast(e.toString());
     });
+  }
+
+  showSearchView() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+            child: Container(
+                height: 25,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: 8, left: 10),
+                margin: EdgeInsets.symmetric(horizontal: 8,vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: ColorRes.white,
+                ),
+                child: TextField(
+                  onChanged: (text) {
+                    searchText = text;
+                    setState(() {
+                      if (text.isEmpty) {
+                        arrSearchFriends = arrFriends;
+                      }
+                    });
+                  },
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                  controller: searchController,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: ColorRes.hintColor,
+                  ),
+                  decoration: InputDecoration(
+//                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
+                    hintText:
+                        Utils.getText(context, StringRes.searchForKeywords),
+                    hintStyle:
+                        TextStyle(color: ColorRes.hintColor, fontSize: 14),
+                    border: InputBorder.none,
+                  ),
+                ))),
+
+        InkResponse(
+          onTap: () {
+            getSearchFriends();
+          },
+          child: Icon(
+            Icons.search,
+            color: ColorRes.white,
+          ),
+        )
+      ],
+    );
   }
 }

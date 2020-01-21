@@ -418,7 +418,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           )
                         : Container(),
                     Switch(
-                      value: selectedModule.isDownloadEnable == 1,
+                      value: isSwitched,
                       onChanged: (value) {
                         Utils.isInternetConnectedWithAlert()
                             .then((isConnected) {
