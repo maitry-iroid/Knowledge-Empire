@@ -14,7 +14,6 @@ import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -537,17 +536,14 @@ class Utils {
 
   static showChallengeQuestionDialog(
       GlobalKey<ScaffoldState> _scaffoldKey,
-      List<GetChallengeData> data,
+      List<QuestionData> data,
       int challengePosition,
       int questionPosition) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => EngagementCustomer(
-            questionDataEngCustomer:
-                data[challengePosition].challenge[questionPosition],
-            challengePosition: challengePosition,
-            questionPosition: questionPosition,
-            getChallengeData: data));
+              questionDataEngCustomer: data[challengePosition],
+            ));
   }
 
   static showComingSoonDialog(BuildContext context) {
@@ -576,8 +572,7 @@ class Utils {
     if (
 //    type == Const.typeChallenges ||
 //        type == Const.typeReward ||
-        type == Const.typePL ||
-        type == Const.typeTeam)
+        type == Const.typePL || type == Const.typeTeam)
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context, FadeRouteHome(initialPageType: type));

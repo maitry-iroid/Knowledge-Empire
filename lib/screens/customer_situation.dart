@@ -41,15 +41,7 @@ int currentVol;
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
 
-  final int questionPosition;
-  final int challengePosition;
-  final List<GetChallengeData> getChallengeData;
-
-  CustomerSituationPage({Key key,
-    this.questionDataCustomerSituation,
-    this.questionPosition,
-    this.challengePosition,
-    this.getChallengeData})
+  CustomerSituationPage({Key key, this.questionDataCustomerSituation})
       : super(key: key);
 
   @override
@@ -166,11 +158,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   pdfShow() {
     return isPdf(correctWrongImage())
         ? SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:$result");
-      },
-      initialUrl: correctWrongImage(),
-    )
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: correctWrongImage(),
+          )
         : Container();
   }
 
@@ -200,11 +192,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 showSubHeader(context),
                 Expanded(
                     child: Row(
-                      children: <Widget>[
-                        showFirstHalf(context),
-                        showSecondHalf(context),
-                      ],
-                    )),
+                  children: <Widget>[
+                    showFirstHalf(context),
+                    showSecondHalf(context),
+                  ],
+                )),
               ],
             ),
           ),
@@ -290,9 +282,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("eddit_profile")),
-                      fit: BoxFit.fill))
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill))
                       : null),
 
               child: Text(
@@ -309,7 +301,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image:
-                          AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
                           fit: BoxFit.fill)),
                   child: Center(
                     child: Text(
@@ -329,7 +321,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         )
 //                  CommonView.showTitle(
 //                      context, Utils.getText(context, StringRes.engagement))
-    );
+        );
   }
 
   bool isAnswerCorrect(int index) {
@@ -407,15 +399,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index) ||
-                      arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+                      width: 1,
+                      color: isAnswerCorrect(index) ||
+                              arrAnswerSituation[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : checkAnswerBusinessMode(index),
@@ -424,15 +416,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                      : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
+                      image: AssetImage(
+                        checkAnswer(index),
 //                          Utils.getAssetsImg(
 //                          arrAnswerSituation[index].isSelected
 //                              ? "rounded_rectangle_837_blue"
 //                              : "rounded_rectangle_8371"
 //                      )
-                  ),
-                  fit: BoxFit.fill))
+                      ),
+                      fit: BoxFit.fill))
                   : null),
           child: Row(
             children: <Widget>[
@@ -446,7 +438,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                          arrAnswerSituation[index].isSelected
 //                          ? ColorRes.white
 //                          : ColorRes.textProf
-                      ),
+                          ),
                     ),
                   )),
               Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
@@ -460,7 +452,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                            arrAnswerSituation[index].isSelected
 //                            ? ColorRes.white
 //                            : ColorRes.textProf
-                        )),
+                            )),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -490,7 +482,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             child: Container(
               alignment: Alignment.center,
               padding:
-              EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+                  EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
@@ -531,12 +523,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       ? null
                       : Border.all(width: 1, color: ColorRes.white),
                   color:
-                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   image: Injector.isBusinessMode
                       ? DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("eddit_profile")),
-                      fit: BoxFit.fill)
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill)
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.answers),
@@ -564,14 +556,14 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   decoration: BoxDecoration(
                       image:
 //                                    Injector.isBusinessMode ?
-                      DecorationImage(
-                          image: AssetImage(Injector.isBusinessMode
-                              ? Utils.getAssetsImg(
-                              "full_expand_question_answers")
-                              : Utils.getAssetsImg("expand_pro")),
-                          fit: BoxFit.fill)
+                          DecorationImage(
+                              image: AssetImage(Injector.isBusinessMode
+                                  ? Utils.getAssetsImg(
+                                      "full_expand_question_answers")
+                                  : Utils.getAssetsImg("expand_pro")),
+                              fit: BoxFit.fill)
 //                                        : null
-                  )),
+                      )),
             ),
           )
         ],
@@ -606,13 +598,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 onPressed: () {
                   questionData.videoPlay == 1
                       ? setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  })
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
                       : setState(() {
-                    _controller.play();
-                  });
+                          _controller.play();
+                        });
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 7,
@@ -689,7 +681,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-
     Navigator.pushAndRemoveUntil(
         context, FadeRouteHome(), ModalRoute.withName("home"));
 
@@ -743,12 +734,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
               child: Container(
                   alignment: Alignment.center,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height / 2.5,
+                  height: MediaQuery.of(context).size.height / 2.5,
                   padding:
-                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                      EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
@@ -894,9 +882,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("eddit_profile")),
-                                fit: BoxFit.fill)
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("eddit_profile")),
+                                    fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
@@ -925,12 +913,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("close_dialog")),
-                                    fit: BoxFit.fill)
+                                    DecorationImage(
+                                        image: AssetImage(
+                                            Utils.getAssetsImg("close_dialog")),
+                                        fit: BoxFit.fill)
 //                                    : null
-                            )),
+                                )),
                       ),
                     )
                   ],
@@ -999,24 +987,24 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(18),
+                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index) ||
-                      arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+                      width: 1,
+                      color: isAnswerCorrect(index) ||
+                              arrAnswerSituation[index].isSelected
+                          ? ColorRes.white
+                          : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : checkAnswerBusinessMode(index),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
-                  ),
-                  fit: BoxFit.fill))
+                      image: AssetImage(
+                        checkAnswer(index),
+                      ),
+                      fit: BoxFit.fill))
                   : null),
 
           child: Row(
@@ -1157,39 +1145,39 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode  ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode  ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),
@@ -1288,11 +1276,11 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   pdfShow() {
     return isPdf(correctWrongImage())
         ? SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:$result");
-      },
-      initialUrl: correctWrongImage(),
-    )
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: correctWrongImage(),
+          )
         : Container();
   }
 
@@ -1308,9 +1296,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     if (isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
-          Utils
-              .getCacheFile(questionData.mediaLink)
-              .file)
+              Utils.getCacheFile(questionData.mediaLink).file)
           : VideoPlayerController.network(questionData.mediaLink)
         ..initialize().then((_) {
           setState(() {
@@ -1332,7 +1318,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
 //          fileInfo.file.path != null
 //              ? AssetImage(fileInfo.file.path)
 //              : NetworkImage(correctWrongImage())
-      );
+          );
     } else if (isVideo(correctWrongImage()) && _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
@@ -1348,13 +1334,13 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                 onPressed: () {
                   questionData.videoPlay == 1
                       ? setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  })
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
                       : setState(() {
-                    _controller.play();
-                  });
+                          _controller.play();
+                        });
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 7,
@@ -1435,39 +1421,39 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              ))
+                                      ))
                               : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 40,
-                              width: Utils.getDeviceWidth(context) / 40,
-                              decoration: BoxDecoration(
-                                  image:
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image:
 //                                      Injector.isBusinessMode ?
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(
+                                                  Utils.getAssetsImg(
+                                                      "close_dialog")),
+                                              fit: BoxFit.contain)
 //                                          : null
-                              )))),
+                                      )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-            ),
+                ),
           ),
         ),
       ),

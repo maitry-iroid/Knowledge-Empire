@@ -32,7 +32,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   List<LearningModuleData> arrLearningModules = List();
 
-  List<String> arrRewards = ["2%", "4%", "6%", "8%", "10%"];
+  List<int> arrRewards = [2, 4, 6, 8, 10];
 
   @override
   void initState() {
@@ -334,7 +334,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           borderRadius: BorderRadius.circular(20),
         ),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        padding:EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -352,11 +352,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   print("hello$index");
                   Utils.playClickSound();
                   setState(() {
-                    if (arrFriends[index].isFriend == 0) {
-                      arrFriends[index].isFriend = 1;
+                    if (arrFriendsToShow[index].isFriend == 0) {
+                      arrFriendsToShow[index].isFriend = 1;
                       friendUnFriendUser(index, 1);
                     } else {
-                      arrFriends[index].isFriend = 0;
+                      arrFriendsToShow[index].isFriend = 0;
                       friendUnFriendUser(index, 2);
                     }
                   });
@@ -392,7 +392,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         ),
         margin: EdgeInsets.symmetric(horizontal: 2),
         child: Text(
-          arrRewards[index],
+          arrRewards[index].toString()+"%",
           style: TextStyle(
               color:
                   Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
@@ -535,6 +535,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
             if (arrFriendsToShow.length > 0) {
               selectedFriendId = arrFriends[0].userId;
+              getBusinessSectors();
               setState(() {});
             }
           }
@@ -556,7 +557,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
     rq.userId = Injector.userData.userId;
-    rq.requestedTo = arrFriends[index].userId;
+    rq.requestedTo = arrFriendsToShow[index].userId;
     rq.action = action;
 
     WebApi().friendUnFriendUser(context, rq).then((response) {
@@ -590,7 +591,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
         if (response.flag == "true") {
           if (response.data != null) {
             arrLearningModules = response.data;
-            print(" ==>>   arrLearningModules $arrLearningModules ");
+
+            if (arrLearningModules.length > 0) {
+              selectedModuleIndex = 0;
+            }
             setState(() {});
           }
         }
@@ -613,7 +617,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.userId = Injector.userData.userId;
     rq.friendId = selectedFriendId;
     rq.moduleId = arrLearningModules[selectedModuleIndex].moduleId;
-    rq.rewards = selectedRewardsIndex;
+    rq.rewards = arrRewards[selectedRewardsIndex];
 
     WebApi().sendChallenges(context, rq).then((response) {
       setState(() {
@@ -687,7 +691,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 height: 25,
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(top: 8, left: 10),
-                margin: EdgeInsets.symmetric(horizontal: 8,vertical: 5),
+                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: ColorRes.white,
@@ -717,7 +721,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     border: InputBorder.none,
                   ),
                 ))),
-
         InkResponse(
           onTap: () {
             getSearchFriends();

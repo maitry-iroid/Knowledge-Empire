@@ -19,12 +19,11 @@ class GetChallengesRequest {
   }
 }
 
-
 class GetChallengesResponse {
   String flag;
   String result;
   String msg;
-  List<GetChallengeData> data;
+  List<QuestionData> data;
 
   GetChallengesResponse({this.flag, this.result, this.msg, this.data});
 
@@ -33,9 +32,9 @@ class GetChallengesResponse {
     result = json['result'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<GetChallengeData>();
+      data = new List<QuestionData>();
       json['data'].forEach((v) {
-        data.add(new GetChallengeData.fromJson(v));
+        data.add(new QuestionData.fromJson(v));
       });
     }
   }
@@ -47,106 +46,6 @@ class GetChallengesResponse {
     data['msg'] = this.msg;
     if (this.data != null) {
       data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class GetChallengeData {
-  String firstName;
-  String lastName;
-  String profileImage;
-  List<QuestionData> challenge;
-
-  GetChallengeData({this.firstName, this.lastName, this.profileImage, this.challenge});
-
-  GetChallengeData.fromJson(Map<String, dynamic> json) {
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    profileImage = json['profileImage'];
-    if (json['challenge'] != null) {
-      challenge = new List<QuestionData>();
-      json['challenge'].forEach((v) {
-        challenge.add(new QuestionData.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['profileImage'] = this.profileImage;
-    if (this.challenge != null) {
-      data['challenge'] = this.challenge.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Challenge {
-  int questionId;
-  String title;
-  String question;
-  String correctAnswerId;
-  String description;
-  String mediaLink;
-  String correctAnswerImage;
-  String inCorrectAnswerImage;
-  String supportFileType;
-  int videoPlay;
-  int videoLoop;
-  List<Answer> answer;
-
-  Challenge(
-      {this.questionId,
-        this.title,
-        this.question,
-        this.correctAnswerId,
-        this.description,
-        this.mediaLink,
-        this.correctAnswerImage,
-        this.inCorrectAnswerImage,
-        this.supportFileType,
-        this.videoPlay,
-        this.videoLoop,
-        this.answer});
-
-  Challenge.fromJson(Map<String, dynamic> json) {
-    questionId = json['questionId'];
-    title = json['title'];
-    question = json['question'];
-    correctAnswerId = json['correctAnswerId'];
-    description = json['description'];
-    mediaLink = json['mediaLink'];
-    correctAnswerImage = json['correctAnswerImage'];
-    inCorrectAnswerImage = json['inCorrectAnswerImage'];
-    supportFileType = json['supportFileType'];
-    videoPlay = json['videoPlay'];
-    videoLoop = json['videoLoop'];
-    if (json['answer'] != null) {
-      answer = new List<Answer>();
-      json['answer'].forEach((v) {
-        answer.add(new Answer.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['questionId'] = this.questionId;
-    data['title'] = this.title;
-    data['question'] = this.question;
-    data['correctAnswerId'] = this.correctAnswerId;
-    data['description'] = this.description;
-    data['mediaLink'] = this.mediaLink;
-    data['correctAnswerImage'] = this.correctAnswerImage;
-    data['inCorrectAnswerImage'] = this.inCorrectAnswerImage;
-    data['supportFileType'] = this.supportFileType;
-    data['videoPlay'] = this.videoPlay;
-    data['videoLoop'] = this.videoLoop;
-    if (this.answer != null) {
-      data['answer'] = this.answer.map((v) => v.toJson()).toList();
     }
     return data;
   }

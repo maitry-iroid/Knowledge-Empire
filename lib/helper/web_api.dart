@@ -638,7 +638,7 @@ class WebApi {
       BuildContext context, SendChallengesRequest rq) async {
     initDio();
 
-    print("getChallenges" + json.encode(rq.toJson()));
+    print("sendChallenges" + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",

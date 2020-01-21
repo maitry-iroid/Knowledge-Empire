@@ -34,17 +34,8 @@ VideoPlayerController _controller;
 
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
-  final int questionPosition;
-  final int challengePosition;
-  final List<GetChallengeData> getChallengeData;
 
-  EngagementCustomer(
-      {Key key,
-      this.questionDataEngCustomer,
-      this.questionPosition,
-      this.challengePosition,
-      this.getChallengeData})
-      : super(key: key);
+  EngagementCustomer({Key key, this.questionDataEngCustomer}) : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -431,7 +422,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     submitAnswer.questionId = questionData.questionId;
     submitAnswer.moduleId = questionData.moduleId;
-    if (widget.getChallengeData == null) {
       submitAnswer.counter = max(
           questionData.isAnsweredCorrect
               ? (questionData.counter + 1)
@@ -440,7 +430,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       submitAnswer.loyalty = questionData.loyalty;
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
-    }
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
@@ -480,22 +469,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //    }
   }
 
-  static showCustomerSituationDialog(
-    GlobalKey<ScaffoldState> _scaffoldKey,
-    List<GetChallengeData> data,
-    int challengePosition,
-    int questionPosition,
-  ) async {
-    Navigator.pop(_scaffoldKey.currentContext);
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => CustomerSituationPage(
-            questionDataCustomerSituation:
-                data[challengePosition].challenge[questionPosition],
-            challengePosition: challengePosition,
-            questionPosition: questionPosition,
-            getChallengeData: data));
-  }
+
 
   showFirstHalf(BuildContext context) {
     return Expanded(

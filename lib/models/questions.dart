@@ -54,6 +54,9 @@ class QuestionsResponse {
 
 class QuestionData {
   int questionId;
+  int firstName;
+  int lastName;
+  int profileImage;
   String title;
   String question;
   String moduleName;
@@ -78,6 +81,9 @@ class QuestionData {
   QuestionData(
       {this.questionId,
         this.title,
+        this.firstName,
+        this.lastName,
+        this.profileImage,
         this.question,
         this.moduleName,
         this.moduleId,
@@ -100,6 +106,9 @@ class QuestionData {
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
     title = json['title'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    profileImage = json['profileImage'];
     question = json['question'];
     moduleName = json['moduleName'];
     moduleId = json['moduleId'];
@@ -129,6 +138,9 @@ class QuestionData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['questionId'] = this.questionId;
     data['title'] = this.title;
+    data['firstName'] = this.firstName;
+    data['lastName'] = this.lastName;
+    data['profileImage'] = this.profileImage;
     data['question'] = this.question;
     data['moduleName'] = this.moduleName;
     data['moduleId'] = this.moduleId;

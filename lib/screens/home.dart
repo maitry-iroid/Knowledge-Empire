@@ -43,13 +43,10 @@ class FadeRouteHome extends PageRouteBuilder {
 
   final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
+  final QuestionData questionDataChallenge;
 
   final int value;
   final int friendId;
-
-  final int questionPosition;
-  final int challengePosition;
-  final List<GetChallengeData> getChallengeData;
 
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
@@ -62,9 +59,7 @@ class FadeRouteHome extends PageRouteBuilder {
       this.value,
       this.arrFriends,
       this.friendId,
-      this.questionPosition,
-      this.challengePosition,
-      this.getChallengeData})
+      this.questionDataChallenge})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -97,13 +92,10 @@ class HomePage extends StatefulWidget {
 
   final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
+  final QuestionData questionDataChallenge;
 
   final int value;
   final int friendId;
-
-  final int questionPosition;
-  final int challengePosition;
-  final List<GetChallengeData> getChallengeData;
 
   final List<GetFriendsData> arrFriends;
 
@@ -115,9 +107,7 @@ class HomePage extends StatefulWidget {
       this.value,
       this.arrFriends,
       this.friendId,
-      this.questionPosition,
-      this.challengePosition,
-      this.getChallengeData})
+      this.questionDataChallenge})
       : super(key: key);
 
   @override
@@ -157,10 +147,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
-    if (widget.initialPageType != 12 && widget.initialPageType != 13 ||
-        widget.initialPageType != 6) {
+    if (widget.initialPageType != Const.typeChallenges &&
+            widget.initialPageType != Const.typeCustomerSituation ||
+        widget.initialPageType != Const.typeChallenges) {
       getCustomerValues();
-//      getPendingChallenges();
+      getPendingChallenges();
     }
   }
 
@@ -329,16 +320,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == Const.typeEngagement)
       return EngagementCustomer(
-          questionDataEngCustomer: widget.questionDataHomeScr,
-          getChallengeData: widget.getChallengeData,
-          challengePosition: widget.challengePosition,
-          questionPosition: widget.questionPosition);
+        questionDataEngCustomer: widget.questionDataHomeScr,
+      );
     else if (_selectedDrawerIndex == Const.typeCustomerSituation)
       return CustomerSituationPage(
         questionDataCustomerSituation: widget.questionDataSituation,
-        getChallengeData: widget.getChallengeData,
-        challengePosition: widget.challengePosition,
-        questionPosition: widget.questionPosition,
       );
     else if (_selectedDrawerIndex == Const.typeChallenges)
       return ChallengesPage(
@@ -427,7 +413,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           if (response != null) {
             if (response.flag == "true") {
               if (response.data.length > 0)
-                showChallengeQuestionDialog(_scaffoldKey, response.data);
+                showChallengeQuestionDialog(_scaffoldKey, response.data[0]);
             } else {
               Utils.showToast(response.msg);
             }
@@ -445,15 +431,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   static showChallengeQuestionDialog(
     GlobalKey<ScaffoldState> _scaffoldKey,
-    List<GetChallengeData> data,
+    QuestionData questionData,
   ) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => EngagementCustomer(
-            questionDataEngCustomer: data[0].challenge[0],
-            challengePosition: 0,
-            questionPosition: 0,
-            getChallengeData: data));
+              questionDataEngCustomer: questionData,
+            ));
   }
 
   void initDrawerItems() {

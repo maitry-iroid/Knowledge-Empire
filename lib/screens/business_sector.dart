@@ -489,7 +489,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       isLoading = true;
     });
 
-    WebApi().getLearningModule(Injector.userData.userId,0).then((data) async {
+    WebApi().getLearningModule(Injector.userData.userId, 0).then((data) async {
       setState(() {
         isLoading = false;
       });
@@ -509,6 +509,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             if (arrLearningModules.length > 0 &&
                 (selectedModule.moduleId == null)) {
               selectedModule = arrLearningModules[0];
+              isSwitched = selectedModule.isDownloadEnable == 1;
             }
           });
 
