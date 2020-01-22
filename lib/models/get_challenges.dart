@@ -23,7 +23,7 @@ class GetChallengesResponse {
   String flag;
   String result;
   String msg;
-  List<QuestionData> data;
+  QuestionData data;
 
   GetChallengesResponse({this.flag, this.result, this.msg, this.data});
 
@@ -31,12 +31,7 @@ class GetChallengesResponse {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
-    if (json['data'] != null) {
-      data = new List<QuestionData>();
-      json['data'].forEach((v) {
-        data.add(new QuestionData.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? new QuestionData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,8 +40,11 @@ class GetChallengesResponse {
     data['result'] = this.result;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data.toJson();
     }
     return data;
   }
 }
+
+
+

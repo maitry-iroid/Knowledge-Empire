@@ -212,7 +212,7 @@ class HeaderViewState extends State<HeaderView> {
                         lineHeight: 19.0,
                         percent: HeaderUtils.getProgressInt(type) >= 0 &&
                                 HeaderUtils.getProgressInt(type) <= 1
-                            ? HeaderUtils.getProgressInt(type).toDouble()
+                            ? HeaderUtils.getProgressInt(type)??0.toDouble()
                             : 0.0,
                         backgroundColor: Colors.transparent,
                         progressColor: Injector.isBusinessMode
@@ -252,7 +252,7 @@ class HeaderViewState extends State<HeaderView> {
               image: DecorationImage(
                   image: Injector.userData.profileImage != null &&
                           Injector.userData.profileImage.isNotEmpty
-                      ? NetworkImage(Injector.userData.profileImage)
+                      ? Utils.getCacheNetworkImage(Injector.userData.profileImage)
                       : AssetImage(Utils.getAssetsImg('user_org')),
                   fit: BoxFit.fill),
               border: Border.all(color: ColorRes.textLightBlue)),

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:audiofileplayer/audiofileplayer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -14,6 +15,7 @@ import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -22,6 +24,8 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
+import 'package:path/path.dart';
+import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -534,18 +538,6 @@ class Utils {
     return arrFinalQuestion;
   }
 
-  static showChallengeQuestionDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey,
-      List<QuestionData> data,
-      int challengePosition,
-      int questionPosition) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => EngagementCustomer(
-              questionDataEngCustomer: data[challengePosition],
-            ));
-  }
-
   static showComingSoonDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -572,9 +564,84 @@ class Utils {
     if (
 //    type == Const.typeChallenges ||
 //        type == Const.typeReward ||
-        type == Const.typePL || type == Const.typeTeam)
+        /*type == Const.typePL ||*/ type == Const.typeTeam)
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context, FadeRouteHome(initialPageType: type));
+  }
+
+  static checkAudio() {
+    if (Injector.isBusinessMode) {
+      if (questionData.isAnsweredCorrect == true) {
+        return Utils.correctAnswerSound();
+      } else {
+        return Utils.incorrectAnswerSound();
+      }
+    } else {
+      if (questionData.isAnsweredCorrect == true) {
+        return Utils.procorrectAnswerSound();
+      } else {
+        return Utils.proincorrectAnswerSound();
+      }
+    }
+  }
+
+  static pdfShow() {
+    return Utils.isPdf(questionData.mediaLink)
+        ? SimplePdfViewerWidget(
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: questionData.mediaLink,
+          )
+        : Container();
+  }
+
+  static isImage(String path) {
+    return extension(path) == ".png" ||
+        extension(path) == ".jpeg" ||
+        extension(path) == ".jpg";
+  }
+
+  static isVideo(String path) {
+    return extension(path) == ".mp4";
+  }
+
+  static isPdf(String path) {
+    return extension(path) == ".pdf";
+  }
+
+  static getCacheNetworkImage(String url) {
+    if (url.isNotEmpty) {
+      return CachedNetworkImageProvider(url,
+          scale: 1, cacheManager: Injector.cacheManager);
+    } else
+      return AssetImage(Utils.getAssetsImg("title_art_2"));
+  }
+
+  static showCustomerSituationDialog(
+    GlobalKey<ScaffoldState> _scaffoldKey,
+    QuestionData questionData,
+    QuestionData nextChallengeQuestionData,
+  ) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => CustomerSituationPage(
+              questionDataCustomerSituation: questionData,
+              isChallenge: true,
+              nextChallengeQuestionData: nextChallengeQuestionData,
+            ));
+  }
+
+  static showChallengeQuestionDialog(
+    GlobalKey<ScaffoldState> _scaffoldKey,
+    QuestionData questionData,
+  ) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => EngagementCustomer(
+              questionDataEngCustomer: questionData,
+              isChallenge: true,
+            ));
   }
 }

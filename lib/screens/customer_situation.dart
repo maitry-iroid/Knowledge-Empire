@@ -6,8 +6,6 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_challenges.dart';
-import 'package:path/path.dart';
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
@@ -19,12 +17,7 @@ import 'home.dart';
 import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-//import 'package:ke_employee/simple_animations.dart';
-//import 'package:simple_animations_example_app/widgets/example_page.dart';
-
 List<Answer> arrAnswerSituation = List();
-
-int _selectedItem = 0;
 
 QuestionData questionDataCustSituation = QuestionData();
 
@@ -34,14 +27,16 @@ List abcdList = List();
 
 FileInfo fileInfo;
 
-int currentVol;
-
-//customer answer show screen : -
-
 class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
+  final bool isChallenge;
+  final QuestionData nextChallengeQuestionData;
 
-  CustomerSituationPage({Key key, this.questionDataCustomerSituation})
+  CustomerSituationPage(
+      {Key key,
+      this.questionDataCustomerSituation,
+      this.isChallenge,
+      this.nextChallengeQuestionData})
       : super(key: key);
 
   @override
@@ -51,17 +46,11 @@ class CustomerSituationPage extends StatefulWidget {
 class _CustomerSituationPageState extends State<CustomerSituationPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-//  int _selectedItem = 0;
-
   int index = 1;
 
-  List abcdIndex = ['A', 'B', 'C', 'D'];
+  bool isGif = true;
 
-  openProfile() {
-    if (mounted) {
-      setState(() => _selectedItem = 12);
-    }
-  }
+  List alphaIndex = ['A', 'B', 'C', 'D'];
 
   selectItem(index) {}
 
@@ -70,18 +59,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     questionDataCustSituation = widget.questionDataCustomerSituation;
     arrAnswerSituation = widget.questionDataCustomerSituation.answer;
 
-    abcdList = abcdIndex;
+    abcdList = alphaIndex;
 
     super.initState();
-    checkAudio();
+    Utils.checkAudio();
 
     downloadFile();
     correctWrongImage();
-
-//    Utils.isInternetConnected().then((isConnected) {
-//      if(isConnected == false) {
-//      }
-//    });
   }
 
   String error;
@@ -114,77 +98,18 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     }
   }
 
-//  int _selectedDrawerIndex = 0;
-//
-//  selectItem(index) {
-//    setState(() {
-//      _selectedItem = index;
-//      print(selectItem.toString());
-//    });
-//  }
-
-  checkAudio() {
-    if (currentVol != 0) {
-      if (Injector.isBusinessMode) {
-        if (questionData.isAnsweredCorrect == true) {
-          return Utils.correctAnswerSound();
-        } else {
-          return Utils.incorrectAnswerSound();
-        }
-      } else {
-        if (questionData.isAnsweredCorrect == true) {
-          return Utils.procorrectAnswerSound();
-        } else {
-          return Utils.proincorrectAnswerSound();
-        }
-      }
-    }
-  }
-
-  isImage(String path) {
-    return extension(path) == ".png" ||
-        extension(path) == ".jpeg" ||
-        extension(path) == ".jpg";
-  }
-
-  isVideo(String path) {
-    return extension(path) == ".mp4";
-  }
-
-  isPdf(String path) {
-    return extension(path) == ".pdf";
-  }
-
-  pdfShow() {
-    return isPdf(correctWrongImage())
-        ? SimplePdfViewerWidget(
-            completeCallback: (bool result) {
-              print("completeCallback,result:$result");
-            },
-            initialUrl: correctWrongImage(),
-          )
-        : Container();
-  }
-
   @override
   Widget build(BuildContext context) {
-//    var path = "N/A";
-//    if (fileInfo?.file != null) {
-//      path = fileInfo.file.path;
-//    }
-//
-//    var from = "N/A";
-//    if (fileInfo != null) {
-//      from = fileInfo.source.toString();
-//    }
-
-//    print("$path =>>>>>  $from");
-
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          CommonView.showBackground(context),
+          widget.isChallenge
+              ? Container(
+                  color: ColorRes.colorBgDark,
+                )
+              : CommonView.showBackground(context),
           Padding(
             padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
             child: Column(
@@ -200,28 +125,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ],
             ),
           ),
-
           gifImageShow(),
-
-//        Positioned.fill(child: Particles(30)),
-//        Rendering(
-//          builder: (context, time) {
-//            _simulateParticles(time);
-//            return CustomPaint(
-//              painter: ParticlePainter(particles, time),
-//            );
-//          },
-//        )
         ],
       ),
     );
   }
-
-//  _simulateParticles(Duration time) {
-//    particles.forEach((particle) => particle.maintainRestart(time));
-//  }
-
-  bool isGif = true;
 
   gifImageShow() {
     if (questionData.isAnsweredCorrect == true) {
@@ -250,6 +158,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         ),
         visible: isGif,
       );
+    } else {
+      return Container();
     }
   }
 
@@ -261,22 +171,22 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           children: <Widget>[
             Container(
               width: 70,
+              child: Text(
+                questionDataCustSituation.firstName +
+                    " " +
+                    questionDataCustSituation.lastName,
+                style: TextStyle(color: ColorRes.white, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
             ),
             Container(
               alignment: Alignment.center,
               height: 30,
-//                          margin: EdgeInsets.only(left: 50.0, right: 50.0),
-//                      color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
                   borderRadius: Injector.isBusinessMode
                       ? null
                       : BorderRadius.circular(15),
-//                          border: Injector.isBusinessMode
-//                              ? null
-//                              : Border.all(
-//                              width: 1,
-//                              color: ColorRes.blueMenuSelected),
                   color: Injector.isBusinessMode
                       ? null
                       : ColorRes.blueMenuSelected,
@@ -286,7 +196,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                               AssetImage(Utils.getAssetsImg("eddit_profile")),
                           fit: BoxFit.fill))
                       : null),
-
               child: Text(
                 Utils.getText(context, StringRes.debrief),
                 style: TextStyle(color: ColorRes.white, fontSize: 16),
@@ -311,30 +220,18 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     ),
                   )),
               onTap: () {
-                if (currentVol != 0) {
-                  Utils.playClickSound();
-                }
+                Utils.playClickSound();
                 gotoMainScreen(context);
               },
             )
           ],
-        )
-//                  CommonView.showTitle(
-//                      context, Utils.getText(context, StringRes.engagement))
-        );
+        ));
   }
 
   bool isAnswerCorrect(int index) {
-//    List<Answer> selectedAnswer =
-//        questionData.answer.where((answer) => answer.isSelected).toList();
-//
     bool isAnswerCorrect = true;
 
     var arr = questionData.correctAnswerId.split(',');
-//
-//    if (arr.length != selectedAnswer.length) {
-//      return false;
-//    }
 
     if (!arr.contains(arrAnswerSituation[index].option.toString())) {
       isAnswerCorrect = false;
@@ -345,126 +242,67 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   checkAnswerBusinessMode(int index) {
-//    Widget child;
-    var correctAnserId;
-//    = int.parse(questionDataCustSituation.correctAnswerId);
-
-//    foreach(var s in str.Split(',')) {
-////    int num;
-//    if (int.TryParse(s, out correctAnserId))
-//    return correctAnserId;
-//    }
-
     if (isAnswerCorrect(index) == true) {
       return ColorRes.answerCorrect;
-//       if (questionData.isAnsweredCorrect == true) {
-//         return ColorRes.answerCorrect;
-//       } else {
-//         return ColorRes.greyText;
-//       }
     } else if (!isAnswerCorrect(index) &&
         arrAnswerSituation[index].isSelected) {
       return ColorRes.greyText;
     } else {
       return ColorRes.white;
     }
-
-    /* if (arrAnswerSituation[index].isSelected == true) {
-      if (questionDataCustSituation.correctAnswerId ==
-          arrAnswerSituation[index].answerId) {
-        return ColorRes.answerCorrect;
-      } else {
-        return ColorRes.greyText;
-      }
-    } else if (questionDataCustSituation.correctAnswerId ==
-        arrAnswerSituation[index].answerId) {
-      return ColorRes.answerCorrect;
-    } else {
-      return ColorRes.white;
-    }*/
-    return Utils.getAssetsImg("bg_green");
   }
 
   Widget showItemC(int index) {
-    return GestureDetector(
-        onTap: () {
-//          setState(() {
-//            arrAnswerSituation[index].isSelected = !arrAnswerSituation[index].isSelected;
-//          });
-        },
-        child: Container(
-          height: 47,
-          margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(
-                      width: 1,
-                      color: isAnswerCorrect(index) ||
-                              arrAnswerSituation[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.fontGrey),
-              color: Injector.isBusinessMode
-                  ? null
-                  : checkAnswerBusinessMode(index),
-//              (arrAnswerSituation[index].isSelected
-//                      ? ColorRes.greenDot
-//                      : ColorRes.white),
-              image: Injector.isBusinessMode
-                  ? (DecorationImage(
-                      image: AssetImage(
-                        checkAnswer(index),
-//                          Utils.getAssetsImg(
-//                          arrAnswerSituation[index].isSelected
-//                              ? "rounded_rectangle_837_blue"
-//                              : "rounded_rectangle_8371"
-//                      )
-                      ),
-                      fit: BoxFit.fill))
-                  : null),
-          child: Row(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Title(
-                  color: ColorRes.greenDot,
-                  child: new Text(
-                    abcdList[index],
-                    style: TextStyle(
-                      color: (checkTextColor(index)
-//                          arrAnswerSituation[index].isSelected
-//                          ? ColorRes.white
-//                          : ColorRes.textProf
-                          ),
-                    ),
-                  )),
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: new Text(
-                    arrAnswerSituation[index].answer,
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: (checkTextColor(index)
-//                            arrAnswerSituation[index].isSelected
-//                            ? ColorRes.white
-//                            : ColorRes.textProf
-                            )),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+    return Container(
+      height: 47,
+      margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius:
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+          border: Injector.isBusinessMode
+              ? null
+              : Border.all(
+                  width: 1,
+                  color: isAnswerCorrect(index) ||
+                          arrAnswerSituation[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
+          color:
+              Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
+          image: Injector.isBusinessMode
+              ? (DecorationImage(
+                  image: AssetImage(
+                    checkAnswer(index),
                   ),
+                  fit: BoxFit.fill))
+              : null),
+      child: Row(
+        children: <Widget>[
+          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+          Title(
+              color: ColorRes.greenDot,
+              child: new Text(
+                abcdList[index],
+                style: TextStyle(
+                  color: (checkTextColor(index)),
                 ),
-              )
-            ],
-          ),
-//        Text(
-//          widget.title,
-//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-//        ),
-        ));
+              )),
+          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+          Expanded(
+            child: SingleChildScrollView(
+              child: new Text(
+                arrAnswerSituation[index].answer,
+                style: TextStyle(fontSize: 14, color: (checkTextColor(index))),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   showFirstHalf(BuildContext context) {
@@ -495,13 +333,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 physics: ClampingScrollPhysics(),
                 itemCount: arrAnswerSituation.length,
                 itemBuilder: (BuildContext context, index) {
-//                                return CategoryItem(
-//                                  selectItem,
-//                                  index: index,
-//                                  isSelected:
-//                                      _selectedItem == index ? true : false,
-////                                  title: arrSector[index],
-//                                );
                   return showItemC(index);
                 },
               ),
@@ -541,29 +372,23 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             alignment: Alignment.bottomRight,
             child: InkResponse(
               onTap: () {
-                if (currentVol != 0) {
-                  Utils.playClickSound();
-                }
+                Utils.playClickSound();
                 showDialog(
                   context: context,
                   builder: (_) => AlertCheckAnswersCorrect(),
                 );
               },
               child: Container(
-                  alignment: Alignment.center,
-                  height: Utils.getDeviceWidth(context) / 20,
-                  width: Utils.getDeviceWidth(context) / 20,
-                  decoration: BoxDecoration(
-                      image:
-//                                    Injector.isBusinessMode ?
-                          DecorationImage(
-                              image: AssetImage(Injector.isBusinessMode
-                                  ? Utils.getAssetsImg(
-                                      "full_expand_question_answers")
-                                  : Utils.getAssetsImg("expand_pro")),
-                              fit: BoxFit.fill)
-//                                        : null
-                      )),
+                alignment: Alignment.center,
+                height: Utils.getDeviceWidth(context) / 20,
+                width: Utils.getDeviceWidth(context) / 20,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Injector.isBusinessMode
+                            ? Utils.getAssetsImg("full_expand_question_answers")
+                            : Utils.getAssetsImg("expand_pro")),
+                        fit: BoxFit.fill)),
+              ),
             ),
           )
         ],
@@ -572,15 +397,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   showMediaView(BuildContext context) {
-    if (isImage(correctWrongImage())) {
-//      return BoxDecoration(
-//        image: DecorationImage(image: fileInfo.file.path != null ? NetworkImage(correctWrongImage())  :  AssetImage(fileInfo.file.path))
-//      );
+    if (Utils.isImage(correctWrongImage())) {
       return Image(
-        image: NetworkImage(correctWrongImage()), fit: BoxFit.fill,
-//        fileInfo.file.path == null ? NetworkImage(correctWrongImage()) : AssetImage(fileInfo.file.path)
+        image: NetworkImage(correctWrongImage()),
+        fit: BoxFit.fill,
       );
-    } else if (isVideo(correctWrongImage()) && _controller.value.initialized) {
+    } else if (Utils.isVideo(correctWrongImage()) &&
+        _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
         child: Stack(
@@ -592,9 +415,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             Container(
               child: MaterialButton(
                 height: 100,
-//                                            minWidth: Utils.getDeviceHeight(context) / 7,
-//                                            height: Utils.getDeviceHeight(context) / 7,
-//                                            color: Colors.transparent.withOpacity(0.0),
                 onPressed: () {
                   questionData.videoPlay == 1
                       ? setState(() {
@@ -623,10 +443,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           ],
         ),
       );
-    } else if (isPdf(questionData.mediaLink)) {
+    } else if (Utils.isPdf(questionData.mediaLink)) {
       return SimplePdfViewerWidget(
         completeCallback: (bool result) {
-          print("completeCallback,result:${result}");
+          print("completeCallback,result:$result");
         },
         initialUrl: questionData.mediaLink,
       );
@@ -639,37 +459,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Column(
           children: <Widget>[
             showQueMedia(context),
-            /* InkResponse(
-              onTap: () {
-                Utils.playClickSound();
-                showDialog(
-                  context: context,
-                  builder: (_) => CorrectWrongImageAlert(),
-//                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
-                );
-              },
-              child: Container(
-                margin:
-                    EdgeInsets.only(top: 18, bottom: 10, left: 0, right: 0),
-                height: Utils.getDeviceHeight(context) / 2.7,
-                decoration: BoxDecoration(
-
-////                                Utils.getCacheFile(correctWrongImage()) != null
-////                                    ? FileImage(
-////                                        Utils.getCacheFile(correctWrongImage())
-////                                            .file)
-////                                    : NetworkImage(correctWrongImage()),
-//
-//                            fit: BoxFit.fill)
-//                        : null,
-                    borderRadius: BorderRadius.circular(10),
-                    border: isImage(questionData.mediaLink)
-                        ? Border.all(color: ColorRes.white, width: 1)
-                        : null),
-                child: showMediaView(context),
-              ),
-            ),*/
-
             Expanded(
                 child: CommonView.questionAndExplanation(
                     context,
@@ -681,47 +470,32 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context, FadeRouteHome(), ModalRoute.withName("home"));
+    if (widget.isChallenge) {
+      Navigator.pop(context);
+      if (widget.nextChallengeQuestionData != null &&
+          widget.nextChallengeQuestionData.challengeId != null) {
+        Utils.showChallengeQuestionDialog(
+            _scaffoldKey, widget.nextChallengeQuestionData);
+      }
+    } else {
+      Navigator.pushAndRemoveUntil(
+          context, FadeRouteHome(), ModalRoute.withName("home"));
 
-    Navigator.push(
-        context,
-        FadeRouteHome(
-            initialPageType: Const.typeNewCustomer,
-            questionDataSituation: null));
-
-//    if (widget.getChallengeData != null) {
-//      Navigator.pushAndRemoveUntil(
-//          context, FadeRouteHome(), ModalRoute.withName("home"));
-//
-//      Navigator.push(
-//          context,
-//          FadeRouteHome(
-//              initialPageType: Const.typeNewCustomer,
-//              questionDataSituation: null));
-//    } else {
-//      if (widget.questionPosition + 1 <
-//          widget.getChallengeData[widget.challengePosition].challenge.length -
-//              1) {
-//        Utils.showChallengeQuestionDialog(_scaffoldKey, widget.getChallengeData,
-//            widget.challengePosition, widget.questionPosition);
-//      }
-//    }
+      Navigator.push(
+          context,
+          FadeRouteHome(
+              initialPageType: Const.typeNewCustomer,
+              questionDataSituation: null));
+    }
   }
 
   showQueMedia(BuildContext context) {
     return InkResponse(
         onTap: () {
-          if (currentVol != 0) {
-            Utils.playClickSound();
-          }
+          Utils.playClickSound();
           showDialog(
             context: context,
-//            builder: (_) => correctWrongImage() != null ? CorrectWrongMeidaAlertt() : Container(),
             builder: (_) => CorrectWrongMediaAlert(),
-
-//              CorrectWrongMeidaAlertt()
-//                  builder: (_) => CorrectWrongImageAlert(img: correctWrongImage()),
           );
         },
         child: Stack(
@@ -765,9 +539,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         : Utils.getAssetsImg("expand_pro")),
                     fit: BoxFit.fill))),
         onTap: () {
-          if (currentVol != 0) {
-            Utils.playClickSound();
-          }
+          Utils.playClickSound();
           showDialog(
             context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
@@ -824,8 +596,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
                 padding: const EdgeInsets.all(25.0),
-//                padding: const EdgeInsets.only(
-//                    top: 0, bottom: 0, right: 0, left: 00),
                 child: Stack(
                   fit: StackFit.loose,
                   alignment: Alignment.center,
@@ -862,7 +632,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
 
                     Positioned(
                       top: 0,
-//                      alignment: Alignment.topCenter,
                       child: Container(
                         alignment: Alignment.center,
                         height: 35,
@@ -897,12 +666,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                     Positioned(
                       top: 0,
                       right: 0,
-//                    alignment: Alignment.bottomRight,
                       child: InkResponse(
                         onTap: () {
-                          if (currentVol != 0) {
-                            Utils.playClickSound();
-                          }
+                          Utils.playClickSound();
                           //alert pop
                           Navigator.pop(context);
                         },
@@ -929,19 +695,10 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
     );
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
   bool isAnswerCorrect(int index) {
-//    List<Answer> selectedAnswer =
-//        questionData.answer.where((answer) => answer.isSelected).toList();
-//
     bool isAnswerCorrect = true;
 
     var arr = questionData.correctAnswerId.split(',');
-//
-//    if (arr.length != selectedAnswer.length) {
-//      return false;
-//    }
 
     if (!arr.contains(arrAnswerSituation[index].option.toString())) {
       isAnswerCorrect = false;
@@ -952,23 +709,8 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   }
 
   checkAnswerBusinessMode(int index) {
-//    Widget child;
-    var correctAnserId;
-//    = int.parse(questionDataCustSituation.correctAnswerId);
-
-//    foreach(var s in str.Split(',')) {
-////    int num;
-//    if (int.TryParse(s, out correctAnserId))
-//    return correctAnserId;
-//    }
-
     if (isAnswerCorrect(index) == true) {
       return ColorRes.answerCorrect;
-//       if (questionData.isAnsweredCorrect == true) {
-//         return ColorRes.answerCorrect;
-//       } else {
-//         return ColorRes.greyText;
-//       }
     } else if (!isAnswerCorrect(index) &&
         arrAnswerSituation[index].isSelected) {
       return ColorRes.greyText;
@@ -1086,7 +828,6 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
           child: Container(
             decoration: ShapeDecoration(
                 color: Colors.transparent,
-//                color: Colors.transparent.withOpacity(0.8),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
@@ -1109,39 +850,19 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                           color: Colors.transparent,
                           image: DecorationImage(
                               image: NetworkImage(correctWrongImage()),
-//                              fileInfo.file.path != null ? AssetImage(fileInfo.file.path) : NetworkImage(correctWrongImage()),
-
-//                              NetworkImage(questionData.isAnsweredCorrect
-//                                  ? questionData.correctAnswerImage
-//                                  : questionData.inCorrectAnswerImage),
-
                               fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(10),
-                          /* border:
-                                Border.all(color: ColorRes.white, width: 1)*/
                         ),
                       ),
                     ),
-
-                    //Full Screen Alert Show
                     Positioned(
                       top: 0,
                       right: 0,
-//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
-//                        .topRight),
-//          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-                            if (currentVol != 0) {
-                              Utils.playClickSound();
-                            }
+                            Utils.playClickSound();
                             //alert pop
                             Navigator.pop(context);
-
-//                          (checkimg == true ? showDialog(
-//                            context: context,
-//                            builder: (_) => FunkyOverlay(),
-//                          ) : null );
                           },
                           child: (checkimg == true
                               ? Container(
@@ -1149,35 +870,22 @@ class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image:
-//                                      Injector.isBusinessMode  ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
-//                                          : null
-                                      ))
+                                      image: DecorationImage(
+                                          image: AssetImage(Utils.getAssetsImg(
+                                              "close_dialog")),
+                                          fit: BoxFit.contain)))
                               : Container(
                                   alignment: Alignment.center,
                                   height: Utils.getDeviceWidth(context) / 40,
                                   width: Utils.getDeviceWidth(context) / 40,
                                   decoration: BoxDecoration(
-                                      image:
-//                                      Injector.isBusinessMode  ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
-//                                          : null
-                                      )))),
+                                      image: DecorationImage(
+                                          image: AssetImage(Utils.getAssetsImg(
+                                              "close_dialog")),
+                                          fit: BoxFit.contain))))),
                     )
                   ],
-                )
-//              child: CommonView.questionAndExplanationFullAlert(
-//                context, "Question"),
-                ),
+                )),
           ),
         ),
       ),
@@ -1259,31 +967,6 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
 
   bool checkimg = true;
 
-  isImage(String path) {
-    return extension(path) == ".png" ||
-        extension(path) == ".jpeg" ||
-        extension(path) == ".jpg";
-  }
-
-  isVideo(String path) {
-    return extension(path) == ".mp4";
-  }
-
-  isPdf(String path) {
-    return extension(path) == ".pdf";
-  }
-
-  pdfShow() {
-    return isPdf(correctWrongImage())
-        ? SimplePdfViewerWidget(
-            completeCallback: (bool result) {
-              print("completeCallback,result:$result");
-            },
-            initialUrl: correctWrongImage(),
-          )
-        : Container();
-  }
-
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
       return questionDataCustSituation.correctAnswerImage;
@@ -1293,7 +976,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   }
 
   void initVideoController1() {
-    if (isVideo(questionData.mediaLink)) {
+    if (Utils.isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)
@@ -1313,13 +996,10 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   }
 
   showMediaView(BuildContext context) {
-    if (isImage(correctWrongImage())) {
-      return Image(image: NetworkImage(correctWrongImage())
-//          fileInfo.file.path != null
-//              ? AssetImage(fileInfo.file.path)
-//              : NetworkImage(correctWrongImage())
-          );
-    } else if (isVideo(correctWrongImage()) && _controller.value.initialized) {
+    if (Utils.isImage(correctWrongImage())) {
+      return Utils.getCacheNetworkImage(correctWrongImage());
+    } else if (Utils.isVideo(correctWrongImage()) &&
+        _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
         child: Stack(
@@ -1359,10 +1039,10 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
           ],
         ),
       );
-    } else if (isPdf(correctWrongImage())) {
+    } else if (Utils.isPdf(correctWrongImage())) {
       return SimplePdfViewerWidget(
         completeCallback: (bool result) {
-          print("completeCallback,result:${result}");
+          print("completeCallback,result:$result");
         },
         initialUrl: questionData.mediaLink,
       );
@@ -1401,7 +1081,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                         width: Utils.getDeviceWidth(context) / 1.2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: isImage(questionData.mediaLink)
+                            border: Utils.isImage(questionData.mediaLink)
                                 ? Border.all(color: ColorRes.white, width: 1)
                                 : null),
                         child: showMediaView(context),
@@ -1414,9 +1094,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                       right: 0,
                       child: InkResponse(
                           onTap: () {
-                            if (currentVol != 0) {
-                              Utils.playClickSound();
-                            }
+                            Utils.playClickSound();
                             Navigator.pop(context);
                           },
                           child: (checkimg == true

@@ -36,7 +36,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   int maxVol, currentVol;
 
-  bool isSwitched;
+  bool isSwitched = false;
 
   @override
   void initState() {

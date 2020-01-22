@@ -8,9 +8,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_challenges.dart';
-import 'package:ke_employee/screens/customer_situation.dart';
-import 'package:path/path.dart';
+import 'package:ke_employee/models/submit_challenge_question.dart';
 
 import '../commonview/background.dart';
 
@@ -21,7 +19,6 @@ import '../helper/res.dart';
 import 'home.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
@@ -34,8 +31,10 @@ VideoPlayerController _controller;
 
 class EngagementCustomer extends StatefulWidget {
   final QuestionData questionDataEngCustomer;
+  final bool isChallenge;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer}) : super(key: key);
+  EngagementCustomer({Key key, this.questionDataEngCustomer, this.isChallenge})
+      : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -45,21 +44,19 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List alphaIndex = ['A', 'B', 'C', 'D'];
-  int _selectedDrawerIndex = 0;
 
   bool isLoading = false;
 
   String urlPDFPath = "";
   String assetPDFPath = "";
 
-  int _totalPages = 0;
-  int _currentPage = 0;
   bool pdfReady = false;
-  PDFViewController _pdfViewController;
+
+  FileInfo fileInfo;
+  String error;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     questionData = widget.questionDataEngCustomer;
@@ -69,10 +66,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     print(questionData.value);
 //    downloadFile();
     initVideoController();
-
-//    audioManager = AudioManager.STREAM_SYSTEM;
-//    initPlatformState();
-//    updateVolumes();
   }
 
   @override
@@ -85,39 +78,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     super.dispose();
   }
 
-  selectItem(index) {
-    setState(() {
-//      _selectedItem = index;
-      print(selectItem.toString());
-    });
-  }
-
-  openProfile() {
-    if (mounted) {
-      setState(() => _selectedDrawerIndex = 10);
-//      setState(() => _selectedItem = 10);
-    }
-  }
-
-  refresh() {
-    setState(() {});
-  }
-
-  pdfShow() {
-    return isPdf(questionData.mediaLink)
-        ? SimplePdfViewerWidget(
-            completeCallback: (bool result) {
-              print("completeCallback,result:$result");
-            },
-            initialUrl: Utils.getCacheFile(questionData.mediaLink) != null
-                ? Utils.getCacheFile(questionData.mediaLink)
-                : questionData.mediaLink,
-          )
-        : Container();
-  }
-
   void initVideoController() {
-    if (isVideo(questionData.mediaLink)) {
+    if (Utils.isVideo(questionData.mediaLink)) {
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)
@@ -136,9 +98,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
-  FileInfo fileInfo;
-  String error;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,7 +105,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          CommonView.showBackground(context),
+          widget.isChallenge
+              ? Container(
+                  color: ColorRes.colorBgDark,
+                )
+              : CommonView.showBackground(context),
           Column(
             children: <Widget>[
               showSubHeader(context),
@@ -157,6 +120,30 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ],
       ),
     );
+  }
+
+  selectItem(index) {
+    setState(() {
+//      _selectedItem = index;
+      print(selectItem.toString());
+    });
+  }
+
+  refresh() {
+    setState(() {});
+  }
+
+  pdfShow() {
+    return Utils.isPdf(questionData.mediaLink)
+        ? SimplePdfViewerWidget(
+            completeCallback: (bool result) {
+              print("completeCallback,result:$result");
+            },
+            initialUrl: Utils.getCacheFile(questionData.mediaLink) != null
+                ? Utils.getCacheFile(questionData.mediaLink)
+                : questionData.mediaLink,
+          )
+        : Container();
   }
 
   Widget showItem(int index) {
@@ -262,7 +249,36 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (isConnected) {
         callSubmitAnswerApi(context);
       } else {
-        navigateToSituation(context);
+        navigateToSituation(context, null);
+      }
+    });
+  }
+
+  void performSubmitChallenge(BuildContext context) async {
+    Utils.playClickSound();
+
+    List<Answer> selectedAnswer =
+        arrAnswer.where((answer) => answer.isSelected).toList();
+
+    if (selectedAnswer.length == 0) {
+      Utils.showToast("Please select at least one option");
+      return;
+    }
+
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
+
+    SubmitChallengesRequest rq = SubmitChallengesRequest();
+
+    rq.userId = Injector.userData.userId;
+    rq.challengeId = widget.questionDataEngCustomer.challengeId;
+    rq.questionId = widget.questionDataEngCustomer.questionId;
+    rq.isAnsweredCorrect = questionData.isAnsweredCorrect ? 1 : 0;
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        callSubmitChallengeApi(context, rq);
+      } else {
+        navigateToSituation(context, null);
       }
     });
   }
@@ -287,7 +303,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
       Injector.streamController.add("submit answer");
 
-      navigateToSituation(context);
+      navigateToSituation(context, null);
     }).catchError((e) {
       print(e);
       setState(() {
@@ -297,40 +313,65 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     });
   }
 
-  isImage(String path) {
-    return extension(path) == ".png" ||
-        extension(path) == ".jpeg" ||
-        extension(path) == ".jpg";
-  }
+  void callSubmitChallengeApi(
+      BuildContext context, SubmitChallengesRequest rq) {
+    setState(() {
+      isLoading = true;
+    });
 
-  isVideo(String path) {
-    return extension(path) == ".mp4";
-  }
+    WebApi().submitChallengeQuestion(context, rq).then((data) async {
+      setState(() {
+        isLoading = false;
+      });
 
-  isPdf(String path) {
-    return extension(path) == ".pdf";
+      if (data != null) {
+        navigateToSituation(context, data);
+      }
+    }).catchError((e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+      Utils.showToast(e.toString());
+    });
   }
-
-//  List <String> photos = ["add_emp_check",""];
-//  int _pos = 0;
-//  Timer _timer;
-//  imageChanges() {
-//    _timer = new Timer(const Duration(seconds: 5), () {
-//      setState(() {
-//        _pos = (_pos + 1) % photos.length;
-//      });
-//    });
-//  }
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: Utils.getHeaderHeight(context) + 10),
+        margin: EdgeInsets.only(
+            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              width: 80,
-            ),
+            widget.isChallenge
+                ? Row(
+                    children: <Widget>[
+                      Container(
+                        width: 30,
+                        height: 30,
+                        margin: EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: questionData.profileImage != null &&
+                                        questionData.profileImage.isNotEmpty
+                                    ? Utils.getCacheNetworkImage(
+                                        questionData.profileImage)
+                                    : AssetImage(
+                                        Utils.getAssetsImg('user_org')),
+                                fit: BoxFit.fill),
+                            border: Border.all(color: ColorRes.textLightBlue)),
+                      ),
+                      Text(
+                        questionData.firstName + " " + questionData.lastName,
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  )
+                : Container(
+                    width: 100,
+                  ),
             Container(
               alignment: Alignment.center,
               height: 30,
@@ -361,7 +402,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             InkResponse(
               child: Container(
                 alignment: Alignment.center,
-                width: 80,
+                width: 100,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -374,10 +415,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 ),
               ),
               onTap: () {
-//                if(currentVol != 0) {
                 Utils.playClickSound();
-//                }
-                performSubmitAnswer(context);
+
+                if (widget.isChallenge)
+                  performSubmitChallenge(context);
+                else
+                  performSubmitAnswer(context);
               },
             )
           ],
@@ -422,6 +465,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     submitAnswer.questionId = questionData.questionId;
     submitAnswer.moduleId = questionData.moduleId;
+    if (!widget.isChallenge) {
       submitAnswer.counter = max(
           questionData.isAnsweredCorrect
               ? (questionData.counter + 1)
@@ -430,6 +474,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       submitAnswer.loyalty = questionData.loyalty;
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
+    }
     submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
@@ -448,28 +493,22 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     return rq;
   }
 
-  void navigateToSituation(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-        context,
-        FadeRouteHome(
-            initialPageType: Const.typeCustomerSituation,
-            questionDataSituation: questionData),
-        ModalRoute.withName("/home"));
-
-//    if (widget.getChallengeData == null) {
-//      Navigator.pushAndRemoveUntil(
-//          context,
-//          FadeRouteHome(
-//              initialPageType: Const.typeDebrief,
-//              questionDataSituation: questionData),
-//          ModalRoute.withName("/home"));
-//    } else {
-//      showCustomerSituationDialog(_scaffoldKey, widget.getChallengeData,
-//          widget.challengePosition, widget.questionPosition);
-//    }
+  void navigateToSituation(
+      BuildContext context, QuestionData nextChallengeQuestionData) {
+    if (!widget.isChallenge) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          FadeRouteHome(
+              initialPageType: Const.typeCustomerSituation,
+              questionDataSituation: questionData,
+              isChallenge: widget.isChallenge),
+          ModalRoute.withName("/home"));
+    } else {
+      Navigator.pop(context);
+      Utils.showCustomerSituationDialog(_scaffoldKey,
+          widget.questionDataEngCustomer, nextChallengeQuestionData);
+    }
   }
-
-
 
   showFirstHalf(BuildContext context) {
     return Expanded(
@@ -619,15 +658,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showMediaView(BuildContext context) {
-    if (isImage(questionData.mediaLink)) {
+    if (Utils.isImage(questionData.mediaLink)) {
       return Image(
-        image: isImage(questionData.mediaLink)
+        image: Utils.isImage(questionData.mediaLink)
             ? Utils.getCacheFile(questionData.mediaLink) != null
                 ? FileImage(Utils.getCacheFile(questionData.mediaLink).file)
                 : NetworkImage(questionData.mediaLink)
             : AssetImage(Utils.getAssetsImg('back')),
       );
-    } else if (isVideo(questionData.mediaLink) &&
+    } else if (Utils.isVideo(questionData.mediaLink) &&
         _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
@@ -668,10 +707,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           ],
         ),
       );
-    } else if (isPdf(questionData.mediaLink)) {
+    } else if (Utils.isPdf(questionData.mediaLink)) {
       return SimplePdfViewerWidget(
         completeCallback: (bool result) {
-          print("completeCallback,result:${result}");
+          print("completeCallback,result:$result");
         },
         initialUrl: questionData.mediaLink,
       );
@@ -703,7 +742,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void performImageClick(BuildContext context) {
     Utils.playClickSound();
-    isImage(questionData.mediaLink)
+    Utils.isImage(questionData.mediaLink)
         ? showDialog(
             context: context,
             builder: (_) => ExpandMedia(),
@@ -716,14 +755,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //Answers Select Full screen in show
 
 class FunkyOverlayAnswers extends StatefulWidget {
-//  FunkyOverlayAnswers(_EngagementCustomerState _engagementCustomerState);
-
-//  final _EngagementCustomerState;
-//
-//  FunkyOverlayAnswers({ Key key, this._EngagementCustomerState }) : super(key: key);
-
-//  bool CheckQuestion;
-
   FunkyOverlayAnswers({Key key, this.engagementCustomerState})
       : super(key: key);
   final _EngagementCustomerState engagementCustomerState;
@@ -865,23 +896,10 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
     );
   }
 
-//  int _selectedItem = 0;
-//
-//  List<Answer> arrAnswer = List();
-
-//  selectItem(index) {
-//    setState(() {
-//      _selectedItem = index;
-//      print(selectItem.toString());
-//    });
-//  }
-
   Widget showItemFullScree(int index) {
     return GestureDetector(
         onTap: () {
-//          if(currentVol != 0) {
           Utils.playClickSound();
-//          }
           setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
@@ -1185,31 +1203,6 @@ class ExpandMediaState extends State<ExpandMedia>
 
   bool checkimg = true;
 
-  pdfShow() {
-    return isPdf(questionData.mediaLink)
-        ? SimplePdfViewerWidget(
-            completeCallback: (bool result) {
-              print("completeCallback,result:$result");
-            },
-            initialUrl: questionData.mediaLink,
-          )
-        : Container();
-  }
-
-  isImage(String path) {
-    return extension(path) == ".png" ||
-        extension(path) == ".jpeg" ||
-        extension(path) == ".jpg";
-  }
-
-  isVideo(String path) {
-    return extension(path) == ".mp4";
-  }
-
-  isPdf(String path) {
-    return extension(path) == ".pdf";
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -1220,7 +1213,6 @@ class ExpandMediaState extends State<ExpandMedia>
           child: Container(
             decoration: ShapeDecoration(
                 color: Colors.transparent,
-//                color: Colors.transparent.withOpacity(0.8),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
@@ -1241,22 +1233,21 @@ class ExpandMediaState extends State<ExpandMedia>
                         height: Utils.getDeviceHeight(context) / 1.5,
                         decoration: BoxDecoration(
                           color: Colors.transparent,
-                          image: isImage(questionData.mediaLink)
+                          image: Utils.isImage(questionData.mediaLink)
                               ? DecorationImage(
-                                  image: NetworkImage(questionData.mediaLink),
+                                  image: Utils.getCacheNetworkImage(
+                                      questionData.mediaLink),
                                   fit: BoxFit.fill)
                               : null,
                           borderRadius: BorderRadius.circular(10),
-                          /* border:
-                                Border.all(color: ColorRes.white, width: 1)*/
                         ),
-                        child: isVideo(questionData.mediaLink) &&
+                        child: Utils.isVideo(questionData.mediaLink) &&
                                 _controller.value.initialized
                             ? AspectRatio(
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
                               )
-                            : pdfShow(),
+                            : Utils.pdfShow(),
                       ),
                     ),
 
@@ -1264,21 +1255,10 @@ class ExpandMediaState extends State<ExpandMedia>
                     Positioned(
                       top: 0,
                       right: 0,
-//                    alignment: (checkimg == true ? Alignment.bottomRight : Alignment
-//                        .topRight),
-//          Alignment.bottomRight,
                       child: InkResponse(
                           onTap: () {
-//                            if(currentVol != 0) {
                             Utils.playClickSound();
-//                            }
-                            //alert pop
                             Navigator.pop(context);
-
-//                          (checkimg == true ? showDialog(
-//                            context: context,
-//                            builder: (_) => FunkyOverlay(),
-//                          ) : null );
                           },
                           child: (checkimg == true
                               ? Container(
@@ -1311,10 +1291,7 @@ class ExpandMediaState extends State<ExpandMedia>
                                       )))),
                     )
                   ],
-                )
-//              child: CommonView.questionAndExplanationFullAlert(
-//                context, "Question"),
-                ),
+                )),
           ),
         ),
       ),

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		26B649AA23D874D8009495DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B649A923D874D7009495DE /* GoogleService-Info.plist */; };
+		26B649AC23D8751E009495DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26B649AB23D8751D009495DE /* GoogleService-Info.plist */; };
 		26E9F5AD23C4A5FD00C043BB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26E9F5AC23C4A5FC00C043BB /* GoogleService-Info.plist */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3B80C3941E831B6300D905FE /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B80C3931E831B6300D905FE /* App.framework */; };
@@ -45,6 +47,8 @@
 		2600D06B23C494A100F520C1 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2600D06C23C494B200F520C1 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		266A35B123BF4FBD008BFACD /* Ke Employee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ke Employee.entitlements"; sourceTree = "<group>"; };
+		26B649A923D874D7009495DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		26B649AB23D8751D009495DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		26E9F5AC23C4A5FC00C043BB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
@@ -80,6 +84,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26B6499C23D870FD009495DE /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				26B649A923D874D7009495DE /* GoogleService-Info.plist */,
+			);
+			name = Dev;
+			sourceTree = "<group>";
+		};
+		26B6499E23D871E7009495DE /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				26B6499F23D871F3009495DE /* Prod */,
+				26B6499C23D870FD009495DE /* Dev */,
+			);
+			name = Firebase;
+			sourceTree = "<group>";
+		};
+		26B6499F23D871F3009495DE /* Prod */ = {
+			isa = PBXGroup;
+			children = (
+				26B649AB23D8751D009495DE /* GoogleService-Info.plist */,
+			);
+			name = Prod;
+			sourceTree = "<group>";
+		};
 		5C0466B0F2D7C1A138D039F4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +167,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				26B6499E23D871E7009495DE /* Firebase */,
 				266A35B123BF4FBD008BFACD /* Ke Employee.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -175,6 +205,7 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				7A18F2CFD5AF278F13F18C85 /* [CP] Embed Pods Frameworks */,
+				26B6499D23D87145009495DE /* Firebase Setup */,
 			);
 			buildRules = (
 			);
@@ -226,11 +257,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				26B649AC23D8751E009495DE /* GoogleService-Info.plist in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				9740EEB41CF90195004384FC /* Debug.xcconfig in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				26E9F5AD23C4A5FD00C043BB /* GoogleService-Info.plist in Resources */,
+				26B649AA23D874D8009495DE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +291,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		26B6499D23D87145009495DE /* Firebase Setup */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Firebase Setup";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ \"${CONFIGURATION}\" == \"Debug\" ] || [ \"${CONFIGURATION}\" == \"Release\" ]; then\ncp -r \"${PROJECT_DIR}/Runner/Firebase/Prod/GoogleService-Info.plist\" \"${PROJECT_DIR}/Runner/GoogleService-Info.plist\"\n\necho \"Production plist copied\"\n\nelif [ \"${CONFIGURATION}\" == \"Debug Dev\" ] || [ \"${CONFIGURATION}\" == \"Release Dev\" ]; then\n\ncp -r \"${PROJECT_DIR}/Runner/Firebase/Dev/GoogleService-Info.plist\" \"${PROJECT_DIR}/Runner/GoogleService-Info.plist\"\n\necho \"Development plist copied\"\nfi\n";
 		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;

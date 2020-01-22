@@ -1,4 +1,4 @@
-enum Environment { DEV,  PROD }
+enum Environment { DEV, PROD }
 
 class Const {
   static var deviceType = "android";
@@ -60,7 +60,7 @@ class Const {
       case Environment.DEV:
         _config = _Config.debugConstants;
         break;
-        case Environment.PROD:
+      case Environment.PROD:
         _config = _Config.prodConstants;
         break;
     }

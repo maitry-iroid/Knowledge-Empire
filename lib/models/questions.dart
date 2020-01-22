@@ -1,6 +1,8 @@
 class QuestionRequest {
-  int userId ;
-  int moduleId ;
+  int userId;
+
+  int moduleId;
+
   int type = 1;
 
   QuestionRequest();
@@ -53,10 +55,11 @@ class QuestionsResponse {
 }
 
 class QuestionData {
-  int questionId;
-  int firstName;
-  int lastName;
-  int profileImage;
+  int questionId; // if question is from challenge
+  int challengeId; // if question is from challenge
+  String firstName; // if question is from challenge
+  String lastName; // if question is from challenge
+  String profileImage;
   String title;
   String question;
   String moduleName;
@@ -80,31 +83,32 @@ class QuestionData {
 
   QuestionData(
       {this.questionId,
-        this.title,
-        this.firstName,
-        this.lastName,
-        this.profileImage,
-        this.question,
-        this.moduleName,
-        this.moduleId,
-        this.companyId,
-        this.daysInList,
-        this.counter,
-        this.description,
-        this.correctAnswerId,
-        this.loyalty,
-        this.value,
-        this.mediaLink,
-        this.answer,
-        this.correctAnswerImage,
-        this.inCorrectAnswerImage,
-        this.videoPlay,
-        this.videoLoop,
-        this.attemptTime
-      });
+      this.challengeId,
+      this.title,
+      this.firstName,
+      this.lastName,
+      this.profileImage,
+      this.question,
+      this.moduleName,
+      this.moduleId,
+      this.companyId,
+      this.daysInList,
+      this.counter,
+      this.description,
+      this.correctAnswerId,
+      this.loyalty,
+      this.value,
+      this.mediaLink,
+      this.answer,
+      this.correctAnswerImage,
+      this.inCorrectAnswerImage,
+      this.videoPlay,
+      this.videoLoop,
+      this.attemptTime});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
+    challengeId = json['challengeId'];
     title = json['title'];
     firstName = json['firstName'];
     lastName = json['lastName'];
@@ -137,6 +141,7 @@ class QuestionData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['questionId'] = this.questionId;
+    data['challengeId'] = this.challengeId;
     data['title'] = this.title;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
@@ -166,11 +171,10 @@ class QuestionData {
 }
 
 class Answer {
-  String answerId;
+  int answerId;
   String answer;
   int option;
   bool isSelected = false;
-
 
   Answer({this.answerId, this.answer});
 
@@ -188,6 +192,3 @@ class Answer {
     return data;
   }
 }
-
-
-

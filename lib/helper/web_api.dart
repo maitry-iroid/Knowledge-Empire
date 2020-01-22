@@ -26,6 +26,7 @@ import 'package:ke_employee/models/releaseResource.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:ke_employee/models/submit_answer.dart';
+import 'package:ke_employee/models/submit_challenge_question.dart';
 
 import 'constant.dart';
 
@@ -436,6 +437,40 @@ class WebApi {
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
         return getCustomerValueResponse;
+      }
+      print(response.data);
+      return null;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<QuestionData> submitChallengeQuestion(
+      BuildContext context, SubmitChallengesRequest rq) async {
+    initDio();
+
+    print("submitChallengeAnswer__" + json.encode(rq.toJson()));
+
+    try {
+      final response = await dio.post("",
+          data: json.encode(
+              getRequest('submitChallengeAnswer', json.encode(rq.toJson()))));
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        GetChallengesResponse responseData =
+            GetChallengesResponse.fromJson(jsonDecode(response.data));
+
+        if (responseData != null) {
+          if (responseData.flag == "true") {
+            return responseData.data;
+          } else {
+            Utils.showToast(responseData.msg);
+          }
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
       }
       print(response.data);
       return null;

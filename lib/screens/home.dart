@@ -47,6 +47,7 @@ class FadeRouteHome extends PageRouteBuilder {
 
   final int value;
   final int friendId;
+  final bool isChallenge;
 
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
@@ -59,7 +60,8 @@ class FadeRouteHome extends PageRouteBuilder {
       this.value,
       this.arrFriends,
       this.friendId,
-      this.questionDataChallenge})
+      this.questionDataChallenge,
+      this.isChallenge})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -82,6 +84,7 @@ class FadeRouteHome extends PageRouteBuilder {
               value: value,
               arrFriends: arrFriends,
               friendId: friendId,
+              isChallenge: isChallenge,
             ),
           ),
         );
@@ -96,6 +99,7 @@ class HomePage extends StatefulWidget {
 
   final int value;
   final int friendId;
+  final bool isChallenge;
 
   final List<GetFriendsData> arrFriends;
 
@@ -107,7 +111,8 @@ class HomePage extends StatefulWidget {
       this.value,
       this.arrFriends,
       this.friendId,
-      this.questionDataChallenge})
+      this.questionDataChallenge,
+      this.isChallenge})
       : super(key: key);
 
   @override
@@ -151,7 +156,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             widget.initialPageType != Const.typeCustomerSituation ||
         widget.initialPageType != Const.typeChallenges) {
       getCustomerValues();
-      getPendingChallenges();
+      if (widget.isChallenge == null || !widget.isChallenge)
+        getPendingChallenges();
     }
   }
 
@@ -186,7 +192,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return /*PLPage()*/ Container();
+        return PLPage();
       case 9:
         return RankingPage();
       case 10:
@@ -212,7 +218,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      if (index == Const.typePL || index == Const.typeTeam) {
+      //TODO please uncomment pl condition
+
+      if (/*index == Const.typePL ||*/ index == Const.typeTeam) {
         Utils.showComingSoonDialog(context);
       } else {
         Navigator.of(context).pop(); // close the drawer
@@ -320,12 +328,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == Const.typeEngagement)
       return EngagementCustomer(
-        questionDataEngCustomer: widget.questionDataHomeScr,
-      );
+          questionDataEngCustomer: widget.questionDataHomeScr,
+          isChallenge: widget.isChallenge);
     else if (_selectedDrawerIndex == Const.typeCustomerSituation)
       return CustomerSituationPage(
-        questionDataCustomerSituation: widget.questionDataSituation,
-      );
+          questionDataCustomerSituation: widget.questionDataSituation,
+          isChallenge: widget.isChallenge);
     else if (_selectedDrawerIndex == Const.typeChallenges)
       return ChallengesPage(
         arrFriends: widget.arrFriends,
@@ -352,9 +360,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     }).catchError((e) {
       print(e);
-//      setState(() {
-//        isLoading = false;
-//      });
       Utils.showToast(e.toString());
     });
   }
@@ -412,8 +417,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
           if (response != null) {
             if (response.flag == "true") {
-              if (response.data.length > 0)
-                showChallengeQuestionDialog(_scaffoldKey, response.data[0]);
+              if (response.data != null && response.data.challengeId != null)
+                Utils.showChallengeQuestionDialog(_scaffoldKey, response.data);
             } else {
               Utils.showToast(response.msg);
             }
@@ -427,17 +432,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         });
       }
     });
-  }
-
-  static showChallengeQuestionDialog(
-    GlobalKey<ScaffoldState> _scaffoldKey,
-    QuestionData questionData,
-  ) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => EngagementCustomer(
-              questionDataEngCustomer: questionData,
-            ));
   }
 
   void initDrawerItems() {

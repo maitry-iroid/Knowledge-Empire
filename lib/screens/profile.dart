@@ -57,7 +57,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor:
@@ -604,7 +603,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   image: _image != null
                       ? FileImage(_image)
                       : photoUrl != null
-                          ? NetworkImage(photoUrl)
+                          ? Utils.getCacheNetworkImage(photoUrl)
                           : AssetImage(
                               Utils.getAssetsImg("dashboard-background"),
                             ),

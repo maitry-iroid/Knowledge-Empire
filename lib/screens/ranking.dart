@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/listItem/group_item.dart';
+import 'package:ke_employee/listItem/time_item.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
@@ -93,7 +96,7 @@ class _RankingPageState extends State<RankingPage> {
     if (selectedTime != index) {
       setState(() {
         selectedTime = index;
-        print(selectGroup.toString());
+        print(selectedTime.toString());
       });
       getFriends();
     }
@@ -131,7 +134,7 @@ class _RankingPageState extends State<RankingPage> {
                       physics: ClampingScrollPhysics(),
                       itemCount: arrGroups.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return CustomItem(
+                        return GroupItem(
                           selectGroup,
                           index: index,
                           isSelected: selectedGroup == index ? true : false,
@@ -203,7 +206,7 @@ class _RankingPageState extends State<RankingPage> {
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text('Company Name gggggggggggggg',
+                          child: Text('Company Name',
                               style: TextStyle(
                                   color: ColorRes.white, fontSize: 15),
                               maxLines: 1,
@@ -225,7 +228,6 @@ class _RankingPageState extends State<RankingPage> {
                   child: Container(
                     height: 30,
                     margin: EdgeInsets.only(left: 0),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -233,7 +235,7 @@ class _RankingPageState extends State<RankingPage> {
                                 Utils.getAssetsImg("bg_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
-                      'Challenge',
+                      Utils.getText(context, StringRes.challenges),
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
@@ -280,140 +282,9 @@ class _RankingPageState extends State<RankingPage> {
       height: 38,
       child: Row(
         children: <Widget>[
-          Expanded(
-            flex: 16,
-            child: Container(
-              width: Utils.getDeviceWidth(context) / 12,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: ColorRes.white,
-                  borderRadius: BorderRadius.circular(20)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Image(
-                          image: AssetImage(Utils.getAssetsImg('arrow_green')),
-                          width: 15,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Container(
-                          width: 25,
-                          child: Text((index + 1).toString() + ".",
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: ColorRes.textBlue,
-                                fontSize: 20,
-                              )),
-                        ),
-                        Container(
-                          height: 38,
-                          width: 38,
-                          margin: EdgeInsets.only(right: 5),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('add_emplyee'))),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(arrFriends[index].name,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: ColorRes.textBlue, fontSize: 16),
-                              textAlign: TextAlign.left),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: ColorRes.greyText,
-                    width: 1,
-                    margin: EdgeInsets.symmetric(vertical: 5),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(arrFriends[index].name,
-                        maxLines: 1,
-                        style:
-                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
-                        textAlign: TextAlign.center),
-                  ),
-                  Container(
-                    height: 52,
-                    padding: EdgeInsets.symmetric(horizontal: 13),
-                    margin: EdgeInsets.only(right: 1),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg('value')),
-                          fit: BoxFit.fill),
-                    ),
-                    child: Text(
-                      arrFriends[index].score.toString(),
-                      style: TextStyle(color: ColorRes.white, fontSize: 18),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: InkResponse(
-              child: arrFriends[index].isFriend == 0
-                  ? Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg('ic_challenge_disable')))
-                  : Image(
-                      image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
-              onTap: () {
-//                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                if (arrFriends[index].isFriend == 1) {
-                  Navigator.push(
-                      context,
-                      FadeRouteHome(
-                          arrFriends: arrFriends,
-                          initialPageType: Const.typeChallenges,
-                          friendId: arrFriends[index].userId));
-                  print(arrFriends[index].isFriend);
-                }
-              },
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: InkResponse(
-                onTap: () {
-                  print("hello$index");
-                  Utils.playClickSound();
-                  setState(() {
-                    if (arrFriends[index].isFriend == 0) {
-                      arrFriends[index].isFriend = 1;
-                      friendUnFriendUser(index, 1);
-                    } else {
-                      arrFriends[index].isFriend = 0;
-                      friendUnFriendUser(index, 2);
-                    }
-                  });
-                },
-                child: Image(
-                  image: AssetImage(
-                      selectedUser != null && arrFriends[index].isFriend == 0
-                          ? Utils.getAssetsImg('add_emplyee')
-                          : Utils.getAssetsImg('remove_friend')),
-                )),
-          ),
+          showUserDetails(index),
+          showChallengeButton(index),
+          showFriendUnFriendButton(index)
         ],
       ),
     );
@@ -558,193 +429,146 @@ class _RankingPageState extends State<RankingPage> {
           } else {
             Utils.showToast("unfriend successfully");
           }
-
         }
       }
     });
   }
-}
-//------------------  option item --------
 
-class OptionItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  Function(int) selectItem;
-
-  OptionItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
-
-  _OptionItemState createState() => _OptionItemState();
-}
-
-class _OptionItemState extends State<OptionItem> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
+  showChallengeButton(int index) {
+    return Expanded(
+      flex: 3,
+      child: InkResponse(
+        child: arrFriends[index].isFriend == 0
+            ? Image(
+                image: AssetImage(Utils.getAssetsImg('ic_challenge_disable')))
+            : Image(image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
         onTap: () {
-//          if(currentVol != 0) {
-          Utils.playClickSound();
-//          }
-          widget.selectItem(widget.index);
+//                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          if (arrFriends[index].isFriend == 1) {
+            Navigator.push(
+                context,
+                FadeRouteHome(
+                    arrFriends: arrFriends,
+                    initialPageType: Const.typeChallenges,
+                    friendId: arrFriends[index].userId));
+            print(arrFriends[index].isFriend);
+          }
         },
-        child: Image(
-          image: AssetImage(Utils.getAssetsImg('ranking_profit')),
-          width: 10,
-        ));
-  }
-}
-
-//------------------  header item --------
-class CustomItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  Function(int) selectItem;
-
-  CustomItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
-
-  _CustomItemState createState() => _CustomItemState();
-}
-
-class _CustomItemState extends State<CustomItem> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-//        if (currentVol != 0) {
-//          audioManager = AudioManager.STREAM_SYSTEM;
-
-        Utils.playClickSound();
-//        }
-        widget.selectItem(widget.index);
-      },
-      child: Container(
-        width: Utils.getDeviceWidth(context) / 9,
-        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                    ? "ranking_selected"
-                    : "ranking_unselected")),
-                fit: BoxFit.fill)),
-        child: Text(
-          widget.title,
-          style: TextStyle(color: ColorRes.white, fontSize: 15),
-        ),
       ),
     );
   }
-}
 
-//-----------------------
+  showFriendUnFriendButton(int index) {
+    return Expanded(
+      flex: 3,
+      child: InkResponse(
+          onTap: () {
+            print("hello$index");
+            Utils.playClickSound();
+            setState(() {
+              if (arrFriends[index].isFriend == 0) {
+                arrFriends[index].isFriend = 1;
+                friendUnFriendUser(index, 1);
+              } else {
+                arrFriends[index].isFriend = 0;
+                friendUnFriendUser(index, 2);
+              }
+            });
+          },
+          child: Image(
+            image: AssetImage(
+                selectedUser != null && arrFriends[index].isFriend == 0
+                    ? Utils.getAssetsImg('add_emplyee')
+                    : Utils.getAssetsImg('remove_friend')),
+          )),
+    );
+  }
 
-class TimeItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  Function(int) selectItem;
-
-  TimeItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
-
-  _TimeItemState createState() => _TimeItemState();
-}
-
-class _TimeItemState extends State<TimeItem> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-//        if (currentVol != 0) {
-        Utils.playClickSound();
-//        }
-        widget.selectItem(widget.index);
-      },
+  showUserDetails(int index) {
+    return Expanded(
+      flex: 16,
       child: Container(
         width: Utils.getDeviceWidth(context) / 12,
-        margin: EdgeInsets.symmetric(vertical: 11, horizontal: 3),
+        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                    ? "ranking_selected"
-                    : "ranking_unselected")),
-                fit: BoxFit.fill)),
-        child: Text(
-          widget.title,
-          style: TextStyle(color: ColorRes.white, fontSize: 15),
+            color: ColorRes.white, borderRadius: BorderRadius.circular(20)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              flex: 4,
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image(
+                    image: AssetImage(Utils.getAssetsImg('arrow_green')),
+                    width: 15,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    width: 25,
+                    child: Text((index + 1).toString() + ".",
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: ColorRes.textBlue,
+                          fontSize: 20,
+                        )),
+                  ),
+                  Container(
+                    height: 38,
+                    width: 38,
+                    margin: EdgeInsets.only(right: 5),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg('add_emplyee'))),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(arrFriends[index].name,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                        textAlign: TextAlign.left),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: ColorRes.greyText,
+              width: 1,
+              margin: EdgeInsets.symmetric(vertical: 5),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(arrFriends[index].name,
+                  maxLines: 1,
+                  style: TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                  textAlign: TextAlign.center),
+            ),
+            Container(
+              height: 52,
+              padding: EdgeInsets.symmetric(horizontal: 13),
+              margin: EdgeInsets.only(right: 1),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg('value')),
+                    fit: BoxFit.fill),
+              ),
+              child: Text(
+                arrFriends[index].score.toString(),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-//-----------------------
-
-class ProfitItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  Function(int) selectItem;
-
-  ProfitItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
-
-  _ProfitItemState createState() => _ProfitItemState();
-}
-
-class _ProfitItemState extends State<TimeItem> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-//        if (currentVol != 0) {
-        Utils.playClickSound();
-//        }
-        widget.selectItem(widget.index);
-      },
-      child: Container(
-        width: Utils.getDeviceWidth(context) / 12,
-        margin: EdgeInsets.symmetric(vertical: 11, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                    ? "ranking_selected"
-                    : "ranking_unselected")),
-                fit: BoxFit.fill)),
-        child: Text(
-          widget.title,
-          style: TextStyle(color: ColorRes.white, fontSize: 15),
-        ),
-      ),
-    );
-  }
-}
-
-//-----------------------
