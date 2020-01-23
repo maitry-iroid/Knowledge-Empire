@@ -4,10 +4,8 @@ import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/models/get_challenges.dart';
-import 'package:ke_employee/models/register_for_push.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/dashboard.dart';
@@ -26,7 +24,6 @@ import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
 import 'package:ke_employee/screens/rewards.dart';
-import 'package:ke_employee/screens/team.dart';
 
 import 'P+L.dart';
 import 'business_sector.dart';
@@ -48,6 +45,7 @@ class FadeRouteHome extends PageRouteBuilder {
   final int value;
   final int friendId;
   final bool isChallenge;
+  final bool isCameFromDashboard;
 
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
@@ -61,7 +59,8 @@ class FadeRouteHome extends PageRouteBuilder {
       this.arrFriends,
       this.friendId,
       this.questionDataChallenge,
-      this.isChallenge})
+      this.isChallenge,
+      this.isCameFromDashboard})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -100,6 +99,7 @@ class HomePage extends StatefulWidget {
   final int value;
   final int friendId;
   final bool isChallenge;
+  final bool isCameFromDashboard;
 
   final List<GetFriendsData> arrFriends;
 
@@ -112,7 +112,8 @@ class HomePage extends StatefulWidget {
       this.arrFriends,
       this.friendId,
       this.questionDataChallenge,
-      this.isChallenge})
+      this.isChallenge,
+      this.isCameFromDashboard})
       : super(key: key);
 
   @override
@@ -155,7 +156,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (widget.initialPageType != Const.typeChallenges &&
             widget.initialPageType != Const.typeCustomerSituation ||
         widget.initialPageType != Const.typeChallenges) {
-      getCustomerValues();
+      if (widget.isCameFromDashboard??true) getCustomerValues();
+
       if (widget.isChallenge == null || !widget.isChallenge)
         getPendingChallenges();
     }
@@ -184,11 +186,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return /*RewardsPage()*/ Container();
+        return RewardsPage();
       case 5:
         return /*TeamPage()*/ Container();
       case 6:
-        return /*ChallengesPage()*/ Container();
+        return ChallengesPage();
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
@@ -408,7 +410,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
         GetChallengesRequest rq = GetChallengesRequest();
         rq.userId = Injector.userData.userId;
-        rq.challengeId = 0;
 
         WebApi().getChallenges(context, rq).then((response) {
           setState(() {

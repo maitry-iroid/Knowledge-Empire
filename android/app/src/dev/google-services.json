@@ -1,35 +1,78 @@
 {
   "project_info": {
-    "project_number": "338294941257",
-    "firebase_url": "https://ke-dev-21fd7.firebaseio.com",
-    "project_id": "ke-dev-21fd7",
-    "storage_bucket": "ke-dev-21fd7.appspot.com"
+    "project_number": "251118877885",
+    "firebase_url": "https://ke-employee.firebaseio.com",
+    "project_id": "ke-employee",
+    "storage_bucket": "ke-employee.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:338294941257:android:d3d652485dffd504fe0198",
+        "mobilesdk_app_id": "1:251118877885:android:e064d35522bf8ec0ec4bd4",
         "android_client_info": {
-          "package_name": "com.keemployee.app.dev"
+          "package_name": "com.keemployee.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "338294941257-i9bgbr1e0bh6q6tdd0frejuia22jabb5.apps.googleusercontent.com",
+          "client_id": "251118877885-n1nhpo94j6d4pdrnjtdobm8d4bu3f2e0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCkiJ98bLbs79p0QtC6JScginSq1otOZVk"
+          "current_key": "AIzaSyC8dreWXCHQk6e97lx0jQXwwD9fWi-dAYM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "338294941257-i9bgbr1e0bh6q6tdd0frejuia22jabb5.apps.googleusercontent.com",
+              "client_id": "251118877885-n1nhpo94j6d4pdrnjtdobm8d4bu3f2e0.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "251118877885-1atv871rmp36abm53680ntrffpcudi0c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.knowledgeempiredev.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251118877885:android:6e557cb0f679ccffec4bd4",
+        "android_client_info": {
+          "package_name": "com.keemployee.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251118877885-n1nhpo94j6d4pdrnjtdobm8d4bu3f2e0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8dreWXCHQk6e97lx0jQXwwD9fWi-dAYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251118877885-n1nhpo94j6d4pdrnjtdobm8d4bu3f2e0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "251118877885-1atv871rmp36abm53680ntrffpcudi0c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.knowledgeempiredev.app"
+              }
             }
           ]
         }

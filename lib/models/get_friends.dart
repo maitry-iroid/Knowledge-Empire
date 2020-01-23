@@ -4,6 +4,8 @@ class GetFriendsRequest {
   int searchBy;
   int filter;
   int groupId;
+  int scrollType;
+  int lastUserId;
 
   GetFriendsRequest({this.userId, this.category, this.searchBy, this.filter});
 
@@ -13,6 +15,8 @@ class GetFriendsRequest {
     searchBy = json['searchBy'];
     filter = json['filter'];
     groupId = json['groupId'];
+    scrollType = json['scrollType'];
+    lastUserId = json['lastUserId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +26,8 @@ class GetFriendsRequest {
     data['searchBy'] = this.searchBy;
     data['filter'] = this.filter;
     data['groupId'] = this.groupId;
+    data['scrollType'] = this.scrollType;
+    data['lastUserId'] = this.lastUserId;
     return data;
   }
 }
@@ -61,6 +67,7 @@ class GetFriendsResponse {
 class GetFriendsData {
   int userId;
   String name;
+  String companyName;
   int score;
   int isFriend;
 //  bool isFriends = false;
@@ -70,6 +77,7 @@ class GetFriendsData {
   GetFriendsData.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     name = json['name'];
+    companyName = json['companyName'];
     score = json['score'];
     isFriend = json['isFriend'];
 //    isFriends = json['isFriends'];
@@ -79,6 +87,7 @@ class GetFriendsData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['name'] = this.name;
+    data['companyName'] = this.companyName;
     data['score'] = this.score;
     data['isFriend'] = this.isFriend;
 //    data['isFriends'] = this.isFriends;

@@ -339,7 +339,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           children: <Widget>[
             Expanded(
               child: Text(
-                arrFriendsToShow[index].name,
+                arrFriendsToShow[index].name??"",
                 style: TextStyle(
                     color: Injector.isBusinessMode
                         ? ColorRes.white
@@ -349,7 +349,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
             ),
             InkResponse(
                 onTap: () {
-                  print("hello$index");
                   Utils.playClickSound();
                   setState(() {
                     if (arrFriendsToShow[index].isFriend == 0) {
@@ -428,8 +427,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     ),
                     fit: BoxFit.fill)
                 : null),
-        margin: EdgeInsets.symmetric(vertical: 3),
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        margin: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: <Widget>[
             Padding(padding: EdgeInsets.only(bottom: 5)),
@@ -521,6 +520,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.category = 0;
     rq.searchBy = 3;
     rq.filter = 0;
+    rq.lastUserId = 0;
+    rq.scrollType = 1;
 
     WebApi().getFriends(context, rq).then((response) {
       setState(() {

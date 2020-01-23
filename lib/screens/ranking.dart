@@ -10,13 +10,9 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
-//import 'package:volume/volume.dart';
 
 import '../commonview/background.dart';
 import '../helper/constant.dart';
-
-//AudioManager audioManager;
-//int currentVol;
 
 class RankingPage extends StatefulWidget {
   @override
@@ -37,29 +33,30 @@ class _RankingPageState extends State<RankingPage> {
 
   bool isCheckFriend = false;
 
+  ScrollController _scrollController = new ScrollController();
+
+  int present = 1;
+
+  String searchText = "";
+
   @override
   void initState() {
     super.initState();
-
-//    audioManager = AudioManager.STREAM_SYSTEM;
-//    initPlatformState();
-//    updateVolumes();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        present++;
+        getFriends();
+      } else if (_scrollController.position.pixels ==
+          _scrollController.position.minScrollExtent) {
+        present--;
+        getFriends();
+      }
+    });
 
     getUserGroups();
     getFriends();
   }
-
-//  Future<void> initPlatformState() async {
-//    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-////    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-//  }
-//
-//  updateVolumes() async {
-//    // get Current Volume
-//    currentVol = await Volume.getVol;
-//    print("helloooo =======>>>  $currentVol");
-//    setState(() {});
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +140,7 @@ class _RankingPageState extends State<RankingPage> {
                               : "",
                         );
                       },
+                      controller: _scrollController,
                     ),
                   ),
                   ListView.builder(
@@ -379,6 +377,8 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getFriends() {
+    print("present__" + present.toString());
+
     setState(() {
       isLoading = true;
     });
@@ -546,14 +546,14 @@ class _RankingPageState extends State<RankingPage> {
             ),
             Expanded(
               flex: 3,
-              child: Text(arrFriends[index].name,
+              child: Text(arrFriends[index].companyName,
                   maxLines: 1,
                   style: TextStyle(color: ColorRes.textBlue, fontSize: 16),
                   textAlign: TextAlign.center),
             ),
             Container(
               height: 52,
-              padding: EdgeInsets.symmetric(horizontal: 13),
+//              padding: EdgeInsets.symmetric(horizontal: 13),
               margin: EdgeInsets.only(right: 1),
               alignment: Alignment.center,
               decoration: BoxDecoration(

@@ -36,7 +36,9 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
+    print(Const.SERVER_ONE);
+
     initPlatformState();
 
     if (Injector.prefs.getInt(PrefKeys.userId) != null) {

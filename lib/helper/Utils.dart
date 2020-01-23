@@ -209,9 +209,7 @@ class Utils {
   }
 
   static String getText(BuildContext context, String text) {
-    return AppLocalizations.of(context).text(text) != null
-        ? AppLocalizations.of(context).text(text)
-        : text;
+    return AppLocalizations.of(context).text(text) ?? text;
   }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
@@ -473,9 +471,9 @@ class Utils {
 //      body = message['body'];
 //    } else {
     message.values.forEach((value) {
-      if (Map.from(value)['title'] != null) title = Map.from(value)['title'];
+      title = Map.from(value)['title'] ?? "";
 
-      if (Map.from(value)['body'] != null) body = Map.from(value)['body'];
+      body = Map.from(value)['body'] ?? "";
     });
 //    }
 
@@ -567,7 +565,7 @@ class Utils {
         /*type == Const.typePL ||*/ type == Const.typeTeam)
       Utils.showComingSoonDialog(context);
     else
-      Navigator.push(context, FadeRouteHome(initialPageType: type));
+      Navigator.push(context, FadeRouteHome(initialPageType: type,isCameFromDashboard: true));
   }
 
   static checkAudio() {

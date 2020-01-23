@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>338294941257-2ffr4l9t1cd3iala7r1hsiqeu7htausf.apps.googleusercontent.com</string>
+	<string>251118877885-1atv871rmp36abm53680ntrffpcudi0c.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.338294941257-2ffr4l9t1cd3iala7r1hsiqeu7htausf</string>
+	<string>com.googleusercontent.apps.251118877885-1atv871rmp36abm53680ntrffpcudi0c</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBYgp04NiM3EB8FH7F_JOPuuXrh8A1FlAs</string>
+	<string>AIzaSyAV_qtMMXgUxPimpdJPPH5Kv7NmVSkHGZg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>338294941257</string>
+	<string>251118877885</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.knowledgeempiredev.app</string>
 	<key>PROJECT_ID</key>
-	<string>ke-dev-21fd7</string>
+	<string>ke-employee</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ke-dev-21fd7.appspot.com</string>
+	<string>ke-employee.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:338294941257:ios:d3d7d9442cd20ed3fe0198</string>
+	<string>1:251118877885:ios:d1dc6ca744db420dec4bd4</string>
 	<key>DATABASE_URL</key>
-	<string>https://ke-dev-21fd7.firebaseio.com</string>
+	<string>https://ke-employee.firebaseio.com</string>
 </dict>
 </plist>
