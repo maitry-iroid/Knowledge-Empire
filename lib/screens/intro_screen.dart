@@ -13,7 +13,7 @@ import 'package:ke_employee/screens/home.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../commonview/header.dart';
-import 'dashboard_new.dart';
+import 'dashboard_game.dart';
 import '../helper/constant.dart';
 
 
@@ -99,7 +99,7 @@ class IntroPageState extends State<IntroPage> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context),
+              CommonView.showDashboardView(context,null),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -1037,7 +1037,7 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typePL) {
                           selectedType = Const.typeRanking;
                         } else if (selectedType == Const.typeRanking) {
-                          DashboardNewPage();
+                          DashboardGamePage();
                         }
                       });
                     },

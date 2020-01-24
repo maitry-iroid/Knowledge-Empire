@@ -13,7 +13,7 @@ import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/register_for_push.dart';
-import 'package:ke_employee/screens/dashboard_new.dart';
+import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -191,7 +191,7 @@ class MyAppState extends State<MyApp> {
 //        '/splash': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => HomePage(),
         '/engage': (BuildContext ext) => EngagementCustomer(),
-        '/dashboard': (BuildContext context) => DashboardNewPage(),
+        '/dashboard': (BuildContext context) => DashboardGamePage(),
         '/intro': (BuildContext context) => IntroPage(),
 //        '/contacts': (BuildContext context) => ContactsScreen(),
       },

@@ -149,28 +149,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Utils.getAssetsImg('bg_setting')))
                                     : null),
                           ),
-
-//                          Padding(padding: EdgeInsets.only(top: 30)),
-
                           InkResponse(
                             onTap: () {
-//                              if (currentVol != 0) {
                               Utils.playClickSound();
-//                              }
                               Navigator.push(context, FadeRouteIntro());
-
-//                              Navigator.push(
-//                                  context,
-//                                  MaterialPageRoute(
-//                                      builder: (context) => HomePage(
-//                                            initialPageType: Const.typeHelp,
-//                                          )));
                             },
                             child: Container(
                               height: 25,
                               width: 25,
                               margin: EdgeInsets.only(top: 15),
-//                    child: Image(image: AssetImage(Utils.getAssetsImg("ic_profile_help"))),
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Injector.isBusinessMode
@@ -277,9 +264,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.fill)),
                         ),
                         onTap: () async {
-//                          if (currentVol != 0) {
                           Utils.playClickSound();
-//                          }
 
                           if (Injector.isBusinessMode)
                             await Injector.prefs
@@ -292,13 +277,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           });
 
                           Injector.streamController.add("chnage mode");
-
-//                          _notifier.notify('updateHeaderValue',
-//                              'Sending data from notfier!');
-//                  Navigator.pushReplacement(
-//                    context,
-//                    MaterialPageRoute(builder: (context) => HomePage()),
-//                  );
                         },
                       ),
                       Row(
@@ -306,7 +284,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           InkResponse(
                             child:
-                                Text(Utils.getText(context, StringRes.sound)),
+                                Text(Utils.getText(context, StringRes.sound),style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.fontDarkGrey),),
                             onTap: () {
                               Utils.playClickSound();
                             },
@@ -325,9 +303,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 }
                               });
                             },
-                            activeTrackColor: ColorRes.white,
-                            inactiveTrackColor: ColorRes.lightGrey,
-                            activeColor: Colors.white,
+                            activeTrackColor: Injector.isBusinessMode?ColorRes.white:ColorRes.lightGrey,
+                            inactiveTrackColor: Injector.isBusinessMode?ColorRes.lightGrey:ColorRes.lightGrey,
+                            activeColor: Injector.isBusinessMode?ColorRes.blue:ColorRes.blue,
                           ),
                         ],
                       ),
@@ -335,7 +313,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Container(
                           height: 35,
                           width: 50,
-//                          margin: EdgeInsets.only(top: 15),
                           padding: EdgeInsets.only(left: 8, right: 8),
                           alignment: Alignment.center,
                           child: Text(
@@ -345,9 +322,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Injector
                                             .customerValueData.manager.isEmpty
                                     ? StringRes.bailout
-                                    : StringRes.requestBailOut
-//
-                                ),
+                                    : StringRes.requestBailOut),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -362,10 +337,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fit: BoxFit.fill)),
                         ),
                         onTap: () async {
-//                          if(currentVol != 0) {
                           Utils.playClickSound();
-//                          }
-//                          Injector.customerValueData.manager != null || Injector.customerValueData.manager.isNotEmpty ?
 
                           _asyncConfirmDialog(context);
                         },
@@ -392,29 +364,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 )),
-            /*  Expanded(
-                flex: 1,
-                child: InkResponse(
-                  onTap: () {
-//                      HelpPage();
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) => HelpPage()));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomePage(
-                              initialPageType: Const.typeHelp,
-                            )));
-                  },
-                  child: Container(
-//                    child: Image(image: AssetImage(Utils.getAssetsImg("ic_profile_help"))),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("ic_profile_help") : Utils.getAssetsImg("null"))
-                        )
-                    ),
-                  ),
-                )
-            )*/
           ],
         ),
       ),
@@ -428,7 +377,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Alert', style: TextStyle(color: ColorRes.black)),
-          content: const Text('Are you conform Request Bail Out.'),
+          content: const Text('Are you sure you want to Bail Out.'),
           actions: <Widget>[
             FlatButton(
               child: const Text('Yes'),
@@ -491,9 +440,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   logout() async {
-//    if(currentVol != 0) {
     Utils.playClickSound();
-//    }
     setState(() {
       isLoading = true;
     });
@@ -541,9 +488,7 @@ class _ProfilePageState extends State<ProfilePage> {
               width: 30,
             ),
             onTap: () {
-//              if(currentVol != 0) {
               Utils.playClickSound();
-//              }
               Utils.performBack(context);
             },
           ),
@@ -665,7 +610,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 38,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -699,9 +644,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 40,
                   ),
                   onTap: () {
-//                    if(currentVol != 0) {
                     Utils.playClickSound();
-//                    }
                     FocusScope.of(context).requestFocus(myFocusNode);
                   },
                 )
@@ -742,7 +685,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 38,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -801,9 +744,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               )),
                     ),
                     onTap: () {
-//                      if(currentVol != 0) {
                       Utils.playClickSound();
-//                      }
                       Utils.showChangePasswordDialog(_scaffoldKey, true, true);
                     },
                   ),
@@ -855,10 +796,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void showPhotoOptionDialog(BuildContext mainContext) {
-    // flutter defined function
-//    if(currentVol != 0) {
     Utils.playClickSound();
-//    }
     showDialog(
       context: mainContext,
       builder: (BuildContext context) {
@@ -875,10 +813,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () {
-//                  if(currentVol != 0) {
                   Utils.playClickSound();
-//                  }
-                  //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeGallery);
                 },
@@ -894,10 +829,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                 ),
                 onTap: () async {
-//                  if(currentVol != 0) {
                   Utils.playClickSound();
-//                  }
-                  //alert pop
                   Navigator.pop(context);
                   getImage(Const.typeCamera);
                 },
@@ -914,7 +846,6 @@ class _ProfilePageState extends State<ProfilePage> {
     var req = {
       'userId': Injector.userData.userId,
       'name': nameController.text.trim(),
-      'profileImage': ""
     };
 
     setState(() {
@@ -935,12 +866,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
           Injector.userData = data.data;
 
-          Utils.showToast("Profile updated successfully!");
+          Utils.showToast(
+              Utils.getText(context, StringRes.successProfileUpdate));
 
           Injector.streamController.add("update_profile");
         }
       } else {
-        Utils.showToast("Something went wrong.");
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
       print(e);

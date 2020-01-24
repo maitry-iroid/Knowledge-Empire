@@ -54,11 +54,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   FileInfo fileInfo;
   String error;
+  bool isChallenge = false;
 
   @override
   void initState() {
     super.initState();
 
+    isChallenge = widget.isChallenge ?? false;
     questionData = widget.questionDataEngCustomer;
     widget.questionDataEngCustomer.answer.shuffle();
     arrAnswer = widget.questionDataEngCustomer.answer;
@@ -105,7 +107,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          widget.isChallenge
+          isChallenge
               ? Container(
                   color: ColorRes.colorBgDark,
                 )
@@ -343,7 +345,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            widget.isChallenge
+            isChallenge
                 ? Row(
                     children: <Widget>[
                       Container(
@@ -390,11 +392,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           fit: BoxFit.fill))
                       : null),
               child: Text(
-                Utils.getText(
-                    context,
-                    Injector.isBusinessMode
-                        ? StringRes.engagement
-                        : StringRes.engagement),
+                Utils.getText(context, StringRes.engagement),
                 style: TextStyle(color: ColorRes.white, fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -417,7 +415,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               onTap: () {
                 Utils.playClickSound();
 
-                if (widget.isChallenge)
+                if (isChallenge)
                   performSubmitChallenge(context);
                 else
                   performSubmitAnswer(context);
@@ -465,7 +463,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     submitAnswer.questionId = questionData.questionId;
     submitAnswer.moduleId = questionData.moduleId;
-    if (!widget.isChallenge) {
+    if (!isChallenge) {
       submitAnswer.counter = max(
           questionData.isAnsweredCorrect
               ? (questionData.counter + 1)
@@ -495,13 +493,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void navigateToSituation(
       BuildContext context, QuestionData nextChallengeQuestionData) {
-    if (!widget.isChallenge) {
+    if (!isChallenge) {
       Navigator.pushAndRemoveUntil(
           context,
           FadeRouteHome(
               initialPageType: Const.typeCustomerSituation,
               questionDataSituation: questionData,
-              isChallenge: widget.isChallenge),
+              isChallenge: isChallenge),
           ModalRoute.withName("/home"));
     } else {
       Navigator.pop(context);

@@ -169,16 +169,35 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              width: 70,
-              child: Text(
-                questionDataCustSituation.firstName +
-                    " " +
-                    questionDataCustSituation.lastName,
-                style: TextStyle(color: ColorRes.white, fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            widget.isChallenge
+                ? Row(
+                    children: <Widget>[
+                      Container(
+                        width: 30,
+                        height: 30,
+                        margin: EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: questionData.profileImage != null &&
+                                        questionData.profileImage.isNotEmpty
+                                    ? Utils.getCacheNetworkImage(
+                                        questionData.profileImage)
+                                    : AssetImage(
+                                        Utils.getAssetsImg('user_org')),
+                                fit: BoxFit.fill),
+                            border: Border.all(color: ColorRes.textLightBlue)),
+                      ),
+                      Text(
+                        questionData.firstName + " " + questionData.lastName,
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  )
+                : Container(
+                    width: 100,
+                  ),
             Container(
               alignment: Alignment.center,
               height: 30,
@@ -197,7 +216,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                           fit: BoxFit.fill))
                       : null),
               child: Text(
-                Utils.getText(context, StringRes.debrief),
+                Utils.getText(context, StringRes.situation),
                 style: TextStyle(color: ColorRes.white, fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -464,7 +483,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     context,
                     Utils.getText(context, StringRes.explanation),
                     true,
-                    questionDataCustSituation.question))
+                    questionDataCustSituation.description))
           ],
         ));
   }

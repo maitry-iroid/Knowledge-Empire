@@ -38,6 +38,7 @@ class _RankingPageState extends State<RankingPage> {
   int present = 1;
 
   String searchText = "";
+  int lastUserId = 0;
 
   @override
   void initState() {
@@ -46,16 +47,24 @@ class _RankingPageState extends State<RankingPage> {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         present++;
-        getFriends();
+
+        getFriends(true);
       } else if (_scrollController.position.pixels ==
           _scrollController.position.minScrollExtent) {
         present--;
-        getFriends();
+
+        getFriends(false);
       }
     });
 
     getUserGroups();
-    getFriends();
+    getFriends(true);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -85,7 +94,7 @@ class _RankingPageState extends State<RankingPage> {
         selectedGroup = index;
         print(selectGroup.toString());
       });
-      getFriends();
+      getFriends(true);
     }
   }
 
@@ -95,7 +104,7 @@ class _RankingPageState extends State<RankingPage> {
         selectedTime = index;
         print(selectedTime.toString());
       });
-      getFriends();
+      getFriends(true);
     }
   }
 
@@ -140,7 +149,6 @@ class _RankingPageState extends State<RankingPage> {
                               : "",
                         );
                       },
-                      controller: _scrollController,
                     ),
                   ),
                   ListView.builder(
@@ -195,7 +203,7 @@ class _RankingPageState extends State<RankingPage> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
-                              'Name',
+                              Utils.getText(context, StringRes.name),
                               style: TextStyle(
                                   color: ColorRes.white, fontSize: 15),
                               maxLines: 1,
@@ -203,8 +211,9 @@ class _RankingPageState extends State<RankingPage> {
                           ),
                         ),
                         Expanded(
-                          flex: 2,
-                          child: Text('Company Name',
+                          flex: 3,
+                          child: Text(
+                              Utils.getText(context, StringRes.companyName),
                               style: TextStyle(
                                   color: ColorRes.white, fontSize: 15),
                               maxLines: 1,
@@ -212,7 +221,7 @@ class _RankingPageState extends State<RankingPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 10),
-                          child: Text('Score',
+                          child: Text(Utils.getText(context, StringRes.score),
                               style: TextStyle(
                                   color: ColorRes.white, fontSize: 15),
                               textAlign: TextAlign.right),
@@ -252,7 +261,7 @@ class _RankingPageState extends State<RankingPage> {
                                 Utils.getAssetsImg("bg_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
-                      'Friend',
+                      Utils.getText(context, StringRes.friend),
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
@@ -265,8 +274,9 @@ class _RankingPageState extends State<RankingPage> {
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemCount: arrFriends.length,
+              controller: _scrollController,
               itemBuilder: (BuildContext context, int index) {
-                return getItem(index);
+                return showFriendItem(index);
               },
             ),
           )
@@ -275,7 +285,7 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
-  getItem(int index) {
+  showFriendItem(int index) {
     return Container(
       height: 38,
       child: Row(
@@ -300,13 +310,11 @@ class _RankingPageState extends State<RankingPage> {
         onTap: () {
           if (selectedLeftCategory != index) {
             setState(() {
-//              if(currentVol != 0) {
               Utils.playClickSound();
-//              }
               selectedLeftCategory = index;
             });
 
-            getFriends();
+            getFriends(true);
           }
         },
         child: Container(
@@ -376,7 +384,7 @@ class _RankingPageState extends State<RankingPage> {
     });
   }
 
-  void getFriends() {
+  void getFriends(bool isScrollDown) {
     print("present__" + present.toString());
 
     setState(() {
@@ -386,10 +394,13 @@ class _RankingPageState extends State<RankingPage> {
     GetFriendsRequest rq = GetFriendsRequest();
     rq.userId = Injector.userData.userId;
     rq.category = selectedLeftCategory + 1;
+    rq.scrollType = isScrollDown ? 1 : 0;
     rq.searchBy = selectedGroup >= 0 && selectedGroup <= 1
         ? selectedGroup + 1
         : arrGroups[selectedGroup].groupId;
     rq.filter = selectedTime + 1;
+    rq.lastUserId =
+    arrFriends.length>0?isScrollDown ? arrFriends.last.userId : arrFriends.first.userId:0;
 
     WebApi().getFriends(context, rq).then((response) {
       setState(() {
@@ -399,7 +410,7 @@ class _RankingPageState extends State<RankingPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            arrFriends = response.data;
+            arrFriends.addAll(response.data);
             setState(() {});
           }
         }
@@ -504,10 +515,15 @@ class _RankingPageState extends State<RankingPage> {
                   SizedBox(
                     width: 10,
                   ),
-                  Image(
-                    image: AssetImage(Utils.getAssetsImg('arrow_green')),
-                    width: 15,
-                  ),
+                  RotatedBox(
+                      quarterTurns: arrFriends[index].rate == "down"?2:4,
+                      child: Image(
+                        image: AssetImage(Utils.getAssetsImg('arrow_green')),
+                        width: 15,
+                        color: arrFriends[index].rate == "down"
+                            ? ColorRes.red
+                            : ColorRes.greenDot,
+                      )),
                   SizedBox(
                     width: 5,
                   ),
@@ -546,14 +562,15 @@ class _RankingPageState extends State<RankingPage> {
             ),
             Expanded(
               flex: 3,
-              child: Text(arrFriends[index].companyName,
+              child: Text(arrFriends[index].companyName ?? "",
                   maxLines: 1,
                   style: TextStyle(color: ColorRes.textBlue, fontSize: 16),
                   textAlign: TextAlign.center),
             ),
             Container(
               height: 52,
-//              padding: EdgeInsets.symmetric(horizontal: 13),
+              width: 70,
+              padding: EdgeInsets.only(right: 10, left: 14, top: 1),
               margin: EdgeInsets.only(right: 1),
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -562,8 +579,12 @@ class _RankingPageState extends State<RankingPage> {
                     fit: BoxFit.fill),
               ),
               child: Text(
-                arrFriends[index].score.toString(),
-                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                arrFriends[index].score.toString() ?? "",
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: 14,
+                ),
+                maxLines: 1,
               ),
             ),
           ],

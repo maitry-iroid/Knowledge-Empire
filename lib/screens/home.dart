@@ -8,8 +8,8 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
-import 'package:ke_employee/screens/dashboard.dart';
-import 'package:ke_employee/screens/dashboard_new.dart';
+import 'package:ke_employee/screens/dashboard_prof.dart';
+import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -178,7 +178,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return Injector.isBusinessMode ? DashboardNewPage() : DashboardPage();
+        return Injector.isBusinessMode ? DashboardGamePage() : DashboardProfPage();
       case 1:
         return BusinessSectorPage();
       case 2:

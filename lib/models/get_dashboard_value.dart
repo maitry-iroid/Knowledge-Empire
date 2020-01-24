@@ -1,6 +1,6 @@
 class DashboardRequest {
-  String userId;
-  String mode;
+  int userId;
+  int mode;
 
   DashboardRequest({this.userId, this.mode});
 

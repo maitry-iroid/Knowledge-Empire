@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/models/questions.dart';
 
@@ -404,7 +406,7 @@ class CommonView {
     return Injector.isBusinessMode
         ? Stack(
             children: <Widget>[
-              showDashboardView(context),
+              showDashboardView(context, null),
               Container(
                 color: ColorRes.black.withOpacity(0.75),
               )
@@ -437,7 +439,12 @@ class CommonView {
                 fit: BoxFit.fill)));
   }
 
-  static Widget showDashboardView(BuildContext context) {
+  List<GetDashboardData> data = List();
+
+  static Widget showDashboardView(
+      BuildContext context, List<GetDashboardData> data) {
+    List<GetDashboardData> arrDashboardData = data;
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -455,9 +462,14 @@ class CommonView {
             child: Row(
               children: <Widget>[
                 InkResponse(
-                  child: Image(
-                    image: AssetImage(Utils.getAssetsImg("organization")),
-                    width: Utils.getDeviceWidth(context) / 4.5,
+                  child: Stack(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getAssetsImg("organization")),
+                        width: Utils.getDeviceWidth(context) / 4.5,
+                      ),
+                      Utils.showUnreadCount(Const.typeOrg, 17, 5, data)
+                    ],
                   ),
                   onTap: () {
                     Utils.playClickSound();
@@ -465,9 +477,14 @@ class CommonView {
                   },
                 ),
                 InkResponse(
-                  child: Image(
-                    image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                    width: Utils.getDeviceWidth(context) / 4.5,
+                  child: Stack(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getAssetsImg("profit-loss")),
+                        width: Utils.getDeviceWidth(context) / 4.5,
+                      ),
+                      Utils.showUnreadCount(Const.typePL, 17, 5, data)
+                    ],
                   ),
                   onTap: () {
                     Utils.playClickSound();
@@ -475,9 +492,14 @@ class CommonView {
                   },
                 ),
                 InkResponse(
-                  child: Image(
-                    image: AssetImage(Utils.getAssetsImg("ranking")),
-                    width: Utils.getDeviceWidth(context) / 4.5,
+                  child: Stack(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getAssetsImg("ranking")),
+                        width: Utils.getDeviceWidth(context) / 4.5,
+                      ),
+                      Utils.showUnreadCount(Const.typeRanking, 17, 5, data)
+                    ],
                   ),
                   onTap: () {
                     Utils.playClickSound();
@@ -507,41 +529,56 @@ class CommonView {
                 Padding(
                     padding: EdgeInsets.only(bottom: 40, left: 20),
                     child: InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("rewards")),
-//                      height: Utils.getDeviceHeight(context) / 2.9,
-                        width: Utils.getDeviceHeight(context) / 3.0,
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage(Utils.getAssetsImg("rewards")),
+                            width: Utils.getDeviceHeight(context) / 3.0,
+                          ),
+                          Utils.showUnreadCount(Const.typeReward, 17, 5, data)
+                        ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(context, Const.typeReward);
+                        Utils.performDashboardItemClick(
+                            context, Const.typeReward);
                       },
                     )),
                 Padding(
                     padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
                     child: InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("team")),
-//                      height: Utils.getDeviceHeight(context) / 2.4,
-                        width: Utils.getDeviceHeight(context) / 3.0,
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage(Utils.getAssetsImg("team")),
+                            width: Utils.getDeviceHeight(context) / 3.0,
+                          ),
+                          Utils.showUnreadCount(Const.typeTeam, 18, 20, data)
+                        ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(context, Const.typeTeam);
+                        Utils.performDashboardItemClick(
+                            context, Const.typeTeam);
                       },
                     )),
                 Padding(
                   padding:
                       EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                   child: InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("challenges")),
-//                      height: Utils.getDeviceHeight(context) / 3.3,
-                        width: Utils.getDeviceHeight(context) / 2.6,
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage(Utils.getAssetsImg("challenges")),
+                            width: Utils.getDeviceHeight(context) / 2.6,
+                          ),
+                          Utils.showUnreadCount(Const.typeChallenges, 17, 17, data)
+                        ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(context, Const.typeChallenges);
+                        Utils.performDashboardItemClick(
+                            context, Const.typeChallenges);
                       }),
                 ),
               ],
@@ -560,37 +597,54 @@ class CommonView {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   InkResponse(
-                      child: Image(
-                        image:
-                            AssetImage(Utils.getAssetsImg("business_sectors")),
-//                      height: Utils.getDeviceHeight(context) / 2.85,
-                        width: Utils.getDeviceWidth(context) / 3.5,
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage(
+                                Utils.getAssetsImg("business_sectors")),
+                            width: Utils.getDeviceWidth(context) / 3.5,
+                          ),
+                          Utils.showUnreadCount(Const.typeBusinessSector, 10, 35, data)
+                        ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(context, Const.typeBusinessSector);
+                        Utils.performDashboardItemClick(
+                            context, Const.typeBusinessSector);
                       }),
                   InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("new-customer")),
-                        width: Utils.getDeviceWidth(context) / 4.2,
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image:
+                                AssetImage(Utils.getAssetsImg("new-customer")),
+                            width: Utils.getDeviceWidth(context) / 4.2,
+                          ),
+                          Utils.showUnreadCount(Const.typeNewCustomer, 10, 15, data)
+                        ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(context, Const.typeNewCustomer);
+                        Utils.performDashboardItemClick(
+                            context, Const.typeNewCustomer);
                       }),
 //                SizedBox(
 //                  width: Utils.getDeviceWidth(context) / 20,
 //                ),
                   InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("existing")),
-//                      height: Utils.getDeviceHeight(context) / 3.1,
-                        width: Utils.getDeviceWidth(context) / 4.6,
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage(Utils.getAssetsImg("existing")),
+                            width: Utils.getDeviceWidth(context) / 4.6,
+                          ),
+                          Utils.showUnreadCount(Const.typeExistingCustomer, 10, 35, data)
+                        ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(context, Const.typeExistingCustomer);
+                        Utils.performDashboardItemClick(
+                            context, Const.typeExistingCustomer);
                       }),
                 ],
               ),
@@ -632,6 +686,4 @@ class CommonView {
       ),
     );
   }
-
-
 }

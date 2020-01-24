@@ -1,48 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/screens/business_sector.dart';
-import 'package:ke_employee/screens/challenges.dart';
-import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/screens/new_customer.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 
-import 'P+L.dart';
 import '../helper/constant.dart';
-import 'home.dart';
 
-//AudioManager audioManager;
-//int currentVol;
+class DashboardProfPage extends StatefulWidget {
+  DashboardProfPage({Key key}) : super(key: key);
 
-class DashboardPage extends StatefulWidget {
-  DashboardPage({Key key}) : super(key: key);
-
-  DashboardPageState createState() => DashboardPageState();
+  DashboardProfPageState createState() => DashboardProfPageState();
 }
 
-class DashboardPageState extends State<DashboardPage> {
+class DashboardProfPageState extends State<DashboardProfPage> {
+  List<GetDashboardData> arrDashboardData = List();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-//    audioManager = AudioManager.STREAM_SYSTEM;
-//    initPlatformState();
-//    updateVolumes();
-  }
 
-  /* Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
+    getDashboardConfig();
   }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +37,24 @@ class DashboardPageState extends State<DashboardPage> {
             child: showMainView()),
       ),
     );
+  }
+
+  void getDashboardConfig() {
+    Utils.isInternetConnected().then((isConnected) {
+      DashboardRequest rq = DashboardRequest();
+      rq.userId = Injector.userData.userId;
+      rq.mode = Injector.mode;
+
+      WebApi().getDashboardValue(rq).then((response) {
+        if (response?.data != null) {
+          setState(() {
+            arrDashboardData = response.data;
+          });
+        }
+      });
+    }).catchError((e) {
+      print(e);
+    });
   }
 
   showProfile() {
@@ -111,16 +110,7 @@ class DashboardPageState extends State<DashboardPage> {
                   image: AssetImage(Utils.getAssetsImg(getImage(type))),
                   width: Utils.getDeviceHeight(context) / 5.8,
                 ),
-                Positioned(
-                  right: 5,
-                  top: 5,
-                  child: Container(
-                    width: 15,
-                    height: 15,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: ColorRes.greenDot),
-                  ),
-                )
+                Utils.showUnreadCount(type, 2, 2, arrDashboardData)
               ],
             ),
             SizedBox(
@@ -138,9 +128,7 @@ class DashboardPageState extends State<DashboardPage> {
         ),
       ),
       onTap: () {
-//        if(currentVol != 0) {
         Utils.playClickSound();
-//        }
 
         Utils.performDashboardItemClick(context, type);
       },
@@ -192,29 +180,6 @@ class DashboardPageState extends State<DashboardPage> {
     else
       return "";
   }
-
-  /*getImage(int type) {
-    if (type == Const.typeBusinessSector)
-      return "ic_business";
-    else if (type == Const.typeNewCustomer)
-      return "ic_new_customer";
-    else if (type == Const.typeExistingCustomer)
-      return "ic_existing_customer";
-    else if (type == Const.typeOrg)
-      return "ic_org";
-    else if (type == Const.typeChallenges)
-      return "ic_ranking";
-    else if (type == Const.typePL)
-      return "ic_PL";
-    else if (type == Const.typeReward)
-      return "ic_reward";
-    else if (type == Const.typeRanking)
-      return "ic_ranking";
-    else if (type == Const.typeTeam)
-      return "ic_team";
-    else
-      return "";
-  }*/
 
   String getHeaderIcon(int type) {
     if (type == Const.typeSalesPersons)

@@ -63,6 +63,7 @@ class StringRes {
   static var achievement = "achievement";
   static var nextLevel = "nextLevel";
   static var friends = "friends";
+  static var friend = "friend";
   static var sendChallenge = "sendChallenge";
   static var next = "next";
   static var answers = "answers";
@@ -72,7 +73,12 @@ class StringRes {
   static var requestBailOut = "requestbailout";
   static var downLoad = "downLoad";
   static var sound = "sound";
-  static var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+  static var loremIpsum =
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+  static var successProfileUpdate = "successProfileUpdate";
+  static var score = "score";
+  static var companyName = "companyName";
+  static var situation = "situation";
 
   //business sectors
 
@@ -145,11 +151,12 @@ class StringRes {
       'unSubscribe': 'Unsubscribe',
       'subscribed': 'Subscribed',
       'engagement': 'Engagement',
-      'debrief': 'Debrief',
+      'situation': 'Customer Situation',
       'category': 'Category',
       'achievement': 'Achievement',
       'nextLevel': 'Next Level',
       'friends': 'Friends',
+      'friend': 'Friend',
       'next': 'Next',
       'answers': 'Answers',
       'question': 'Question',
@@ -158,7 +165,10 @@ class StringRes {
       'bailout': 'Bail Out',
       'requestbailout': 'Request Bail Out',
       'downLoad': 'DownLoad',
-      'sound': 'Sound'
+      'sound': 'Sound',
+      'successProfileUpdate': 'Profile updated successfully!',
+      'score': 'Score',
+      'companyName': 'Company Name'
     },
     'es': {
       'title': 'Hola Mundo',
@@ -179,13 +189,12 @@ class StringRes {
       'team': "Team",
       'sector': 'Module',
       'size': 'Q&A',
-      'engagement': 'Customer Situation',
-      'debrief': 'Customer Situation',
+      'engagement': 'Debriefing',
+      'situation': 'Situation',
       'value': 'Knowledge Points (KP)',
       'loyalty': 'Repeat in ...',
       'endRel': 'Release',
       'resources': 'Study Points (SP)',
-
     },
     'es': {
       'title': 'Hola Mundo',

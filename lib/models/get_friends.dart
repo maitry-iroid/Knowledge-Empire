@@ -70,6 +70,7 @@ class GetFriendsData {
   String companyName;
   int score;
   int isFriend;
+  String rate;
 //  bool isFriends = false;
 
   GetFriendsData({this.userId, this.name, this.score, this.isFriend});
@@ -80,6 +81,7 @@ class GetFriendsData {
     companyName = json['companyName'];
     score = json['score'];
     isFriend = json['isFriend'];
+    rate = json['rate'];
 //    isFriends = json['isFriends'];
   }
 
@@ -90,6 +92,7 @@ class GetFriendsData {
     data['companyName'] = this.companyName;
     data['score'] = this.score;
     data['isFriend'] = this.isFriend;
+    data['rate'] = this.rate;
 //    data['isFriends'] = this.isFriends;
     return data;
   }

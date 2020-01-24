@@ -335,8 +335,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                                       AssetImage(Utils.getAssetsImg("bg_blue")),
                                   fit: BoxFit.fill)
                               : null),
-                      child: Text(
-                        Utils.getText(context, StringRes.description),
+                      child: Text("sjcd",
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                         textAlign: TextAlign.center,
                       ),

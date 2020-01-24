@@ -13,8 +13,10 @@ import 'package:crypto/crypto.dart';
 import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
@@ -565,7 +567,8 @@ class Utils {
         /*type == Const.typePL ||*/ type == Const.typeTeam)
       Utils.showComingSoonDialog(context);
     else
-      Navigator.push(context, FadeRouteHome(initialPageType: type,isCameFromDashboard: true));
+      Navigator.push(context,
+          FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
   }
 
   static checkAudio() {
@@ -641,5 +644,42 @@ class Utils {
               questionDataEngCustomer: questionData,
               isChallenge: true,
             ));
+  }
+
+  static showUnreadCount(
+      int type, double top, double right, List<GetDashboardData> data) {
+    return Positioned(
+      right: right,
+      top: top,
+      child: ConstrainedBox(
+        constraints: new BoxConstraints(
+          minHeight: 25.0,
+          minWidth: 25.0,
+        ),
+        child: new DecoratedBox(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: ColorRes.greenDot),
+            child: Center(
+              child: Text(
+                getCount(type, data).toString(),
+                style: TextStyle(color: ColorRes.white),
+              ),
+            )),
+//        alignment: Alignment.center,
+//        padding: EdgeInsets.all(3),
+//        decoration: BoxDecoration(
+//            borderRadius: BorderRadius.circular(20), color: ColorRes.greenDot),
+      ),
+    );
+  }
+
+  static int getCount(int type, List<GetDashboardData> data) {
+    if (data != null)
+      return data.length > 0
+          ? (data?.where((obj) => obj.type == type)?.first?.count ?? 00)
+          : 00;
+    else
+      return 0;
   }
 }

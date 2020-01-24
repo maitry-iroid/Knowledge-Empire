@@ -48,9 +48,9 @@ class WebApi {
 
   static getUploadProfileRequest(String req, String data, File file) async {
     return FormData.fromMap({
-      'api_id': 'e1530f4d52b7a5b806e2b051e72c80ef',
-      'api_secret': '1a42cc080ef2464a60134473276fe42e',
-      'api_request': req,
+      'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef',
+      'apiSecret': '1a42cc080ef2464a60134473276fe42e',
+      'apiRequest': req,
       'data': data,
       'profileImage': file != null
           ? await MultipartFile.fromFile(file.path, filename: "image.jpg")
