@@ -71,7 +71,7 @@ class HeaderViewState extends State<HeaderView> {
           showHeaderItem(Const.typeEmployee, context),
           showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeServicesPerson, context),
-//          showHeaderItem(Const.typeBrandValue, context),
+          showHeaderItem(Const.typeBrandValue, context),
           showHeaderItem(Const.typeMoney, context),
           showHelpView(context)
         ],
