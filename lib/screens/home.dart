@@ -148,6 +148,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //    print("home_init");
 
     initStreamController();
+    initStreamControllerProfile();
+
 
     initCheckNetworkConnectivity();
 
@@ -388,6 +390,45 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       print("Some Error1");
     });
   }
+
+
+
+  void initStreamControllerProfile() {
+    if (Injector.streamController == null)
+      Injector.streamController = StreamController.broadcast();
+
+    Injector.streamController.stream.listen((data) {
+      if (mounted) {
+        setState(() {
+
+          print(data);
+
+          if(data == "profile open") {
+//            openProfile(type);
+            _selectedDrawerIndex = Const.typeProfile;
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+          } else if (data == "${Const.typeOrg}") {
+            _selectedDrawerIndex = Const.typeOrg;
+          } else if (data == "${Const.typeTeam}") {
+            _selectedDrawerIndex = Const.typeTeam;
+          } else if (data == "${Const.typeNewCustomer}") {
+            _selectedDrawerIndex = Const.typeNewCustomer;
+          } else if (data == "${Const.typeExistingCustomer}") {
+            _selectedDrawerIndex = Const.typeExistingCustomer;
+          } else if (data == "${Const.typeRanking}") {
+            _selectedDrawerIndex = Const.typeRanking;
+          } else if (data == "${Const.typePL}") {
+            _selectedDrawerIndex = Const.typePL;
+          }
+        });
+      }
+    }, onDone: () {
+      print("Task Done11");
+    }, onError: (error) {
+      print("Some Error11");
+    });
+  }
+
 
   void initCheckNetworkConnectivity() {
     WidgetsBinding.instance.addObserver(this);
