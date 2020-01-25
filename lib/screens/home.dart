@@ -156,7 +156,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (widget.initialPageType != Const.typeChallenges &&
             widget.initialPageType != Const.typeCustomerSituation ||
         widget.initialPageType != Const.typeChallenges) {
-      if (widget.isCameFromDashboard??true) getCustomerValues();
+      if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
       if (widget.isChallenge == null || !widget.isChallenge)
         getPendingChallenges();
@@ -178,7 +178,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return Injector.isBusinessMode ? DashboardGamePage() : DashboardProfPage();
+        return Injector.isBusinessMode
+            ? DashboardGamePage()
+            : DashboardProfPage();
       case 1:
         return BusinessSectorPage();
       case 2:
@@ -208,9 +210,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  openProfile() {
+  openProfile(int type) {
     if (mounted) {
-      setState(() => _selectedDrawerIndex = 10);
+      setState(() => _selectedDrawerIndex = type);
     }
   }
 
@@ -275,7 +277,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   showMainItem(DrawerItem item, int i) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: Injector.isBusinessMode?8:5, horizontal: 5),
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode
@@ -303,7 +305,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Center(
             child: Image(
               image: AssetImage(Utils.getAssetsImg(item.icon)),
-              height: Injector.isBusinessMode ? 45 : 40,
+              height: Injector.isBusinessMode ? 45 : 45,
               width: Injector.isBusinessMode ? 80 : 70,
             ),
           ),
@@ -438,32 +440,35 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initDrawerItems() {
     drawerItems = [
       DrawerItem(Utils.getText(context, StringRes.home),
-          Injector.isBusinessMode ? "main_screen_icon" : "ic_home_prof"),
+          Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home"),
       DrawerItem(
           Utils.getText(context, StringRes.businessSector),
           Injector.isBusinessMode
               ? "business_sectors"
-              : "ic_pro_business_sectors"),
+              : "ic_pro_home_business"),
       DrawerItem(Utils.getText(context, StringRes.newCustomers),
-          Injector.isBusinessMode ? "new-customer" : "ic_pro_new_cutomer"),
+          Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer"),
       DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-          Injector.isBusinessMode ? "existing" : "ic_pro_existing_cust"),
+          Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer"),
       DrawerItem(Utils.getText(context, StringRes.rewards),
-          Injector.isBusinessMode ? "rewards" : "ic_pro_award"),
+          Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards"),
       DrawerItem(Utils.getText(context, StringRes.team),
-          Injector.isBusinessMode ? "team" : "ic_pro_team"),
+          Injector.isBusinessMode ? "team" : "ic_pro_home_team"),
       DrawerItem(Utils.getText(context, StringRes.challenges),
-          Injector.isBusinessMode ? "challenges" : "ic_pro_challenge"),
-      DrawerItem(Utils.getText(context, StringRes.organizations),
-          Injector.isBusinessMode ? "organization" : "ic_pro_organization"),
+          Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges"),
+      DrawerItem(
+          Utils.getText(context, StringRes.organizations),
+          Injector.isBusinessMode
+              ? "organization"
+              : "ic_pro_home_organization"),
       DrawerItem(Utils.getText(context, StringRes.pl),
-          Injector.isBusinessMode ? "profit-loss" : "ic_pro_pl"),
+          Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl"),
       DrawerItem(Utils.getText(context, StringRes.ranking),
-          Injector.isBusinessMode ? "ranking" : "ic_pro_ranking"),
+          Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking"),
       DrawerItem(Utils.getText(context, StringRes.profile),
-          Injector.isBusinessMode ? "profile_icon" : "ic_profile_prof"),
+          Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile"),
       DrawerItem(Utils.getText(context, StringRes.help),
-          Injector.isBusinessMode ? "help_icon" : "help_icon"),
+          Injector.isBusinessMode ? "help_icon" : "ic_pro_help"),
     ];
   }
 }

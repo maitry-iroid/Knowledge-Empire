@@ -8,11 +8,11 @@ class HeaderUtils {
       return "ic_sales_header";
     else if (type == Const.typeEmployee)
       return "ic_people";
-    else if (type == Const.typeBadge)
+    else if (type == Const.typeBrandValue)
       return "ic_badge";
     else if (type == Const.typeServicesPerson)
       return "ic_resourses";
-    else if (type == Const.typeDollar)
+    else if (type == Const.typeMoney)
       return "ic_dollar";
     else
       return "";
@@ -25,7 +25,7 @@ class HeaderUtils {
       return getProgressText(type);
     }  else if (type == Const.typeServicesPerson) {
       return getProgressText(type);
-    }else if (type == Const.typeBadge) {
+    }else if (type == Const.typeBrandValue) {
       return getAnswerRatio();
     } else
       return "0/0";
@@ -38,7 +38,7 @@ class HeaderUtils {
       return getProgressValue(type);
     } else if (type == Const.typeServicesPerson) {
       return getProgressValue(type);
-    } else if (type == Const.typeBadge) {
+    } else if (type == Const.typeBrandValue) {
       return getBonusValue();
     } else
       return 0.0;

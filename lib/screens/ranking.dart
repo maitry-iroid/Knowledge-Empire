@@ -48,17 +48,17 @@ class _RankingPageState extends State<RankingPage> {
           _scrollController.position.maxScrollExtent) {
         present++;
 
-        getFriends(true);
+        getFriends(true, true);
       } else if (_scrollController.position.pixels ==
           _scrollController.position.minScrollExtent) {
         present--;
 
-        getFriends(false);
+        getFriends(false, true);
       }
     });
 
     getUserGroups();
-    getFriends(true);
+    getFriends(true, false);
   }
 
   @override
@@ -94,7 +94,7 @@ class _RankingPageState extends State<RankingPage> {
         selectedGroup = index;
         print(selectGroup.toString());
       });
-      getFriends(true);
+      getFriends(true, false);
     }
   }
 
@@ -104,7 +104,7 @@ class _RankingPageState extends State<RankingPage> {
         selectedTime = index;
         print(selectedTime.toString());
       });
-      getFriends(true);
+      getFriends(true, false);
     }
   }
 
@@ -314,7 +314,7 @@ class _RankingPageState extends State<RankingPage> {
               selectedLeftCategory = index;
             });
 
-            getFriends(true);
+            getFriends(true, false);
           }
         },
         child: Container(
@@ -384,7 +384,7 @@ class _RankingPageState extends State<RankingPage> {
     });
   }
 
-  void getFriends(bool isScrollDown) {
+  void getFriends(bool isScrollDown, bool isToAddData) {
     print("present__" + present.toString());
 
     setState(() {
@@ -399,8 +399,9 @@ class _RankingPageState extends State<RankingPage> {
         ? selectedGroup + 1
         : arrGroups[selectedGroup].groupId;
     rq.filter = selectedTime + 1;
-    rq.lastUserId =
-    arrFriends.length>0?isScrollDown ? arrFriends.last.userId : arrFriends.first.userId:0;
+    rq.lastUserId = arrFriends.length > 0
+        ? isScrollDown ? arrFriends.last.userId : arrFriends.first.userId
+        : 0;
 
     WebApi().getFriends(context, rq).then((response) {
       setState(() {
@@ -410,7 +411,10 @@ class _RankingPageState extends State<RankingPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            arrFriends.addAll(response.data);
+            if (isToAddData)
+              arrFriends.addAll(response.data);
+            else
+              arrFriends = response.data;
             setState(() {});
           }
         }
@@ -516,7 +520,7 @@ class _RankingPageState extends State<RankingPage> {
                     width: 10,
                   ),
                   RotatedBox(
-                      quarterTurns: arrFriends[index].rate == "down"?2:4,
+                      quarterTurns: arrFriends[index].rate == "down" ? 2 : 4,
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg('arrow_green')),
                         width: 15,

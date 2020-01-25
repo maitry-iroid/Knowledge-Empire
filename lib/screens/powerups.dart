@@ -303,7 +303,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                       ),
                       child: SingleChildScrollView(
                         child: Text(
-                          StringRes.description,
+                          arrOrganization[selectedIndex].description,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                               color: Injector.isBusinessMode
@@ -335,7 +335,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                                       AssetImage(Utils.getAssetsImg("bg_blue")),
                                   fit: BoxFit.fill)
                               : null),
-                      child: Text("sjcd",
+                      child: Text(StringRes.description,
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                         textAlign: TextAlign.center,
                       ),

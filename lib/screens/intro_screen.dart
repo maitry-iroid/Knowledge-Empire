@@ -179,8 +179,8 @@ class IntroPageState extends State<IntroPage> {
           showHeaderItem(Const.typeEmployee, context),
           showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeServicesPerson, context),
-          showHeaderItem(Const.typeBadge, context),
-          showHeaderItem(Const.typeDollar, context),
+          showHeaderItem(Const.typeBrandValue, context),
+          showHeaderItem(Const.typeMoney, context),
           Opacity(
             child: showProfile(context),
             opacity: selectedType == Const.typeProfile ? 1 : 0,
@@ -228,7 +228,7 @@ class IntroPageState extends State<IntroPage> {
             SizedBox(
               width: 4,
             ),
-            type != Const.typeDollar
+            type != Const.typeMoney
                 ? Stack(
                     alignment: Alignment.centerLeft,
                     children: <Widget>[
@@ -730,7 +730,7 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeBadge
+          selectedType == Const.typeBrandValue
               ? Positioned(
                   top: 65,
                   left: Utils.getDeviceWidth(context) / 2.8,
@@ -746,7 +746,7 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeDollar
+          selectedType == Const.typeMoney
               ? Positioned(
                   top: 60,
                   left: Utils.getDeviceWidth(context) / 2.6,
@@ -949,12 +949,12 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typeBusinessSector) {
                           selectedType = Const.typeProfile;
                         } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeDollar;
-                        } else if (selectedType == Const.typeDollar) {
-                          selectedType = Const.typeBadge;
+                          selectedType = Const.typeMoney;
+                        } else if (selectedType == Const.typeMoney) {
+                          selectedType = Const.typeBrandValue;
                         } else if (selectedType == Const.typeServicesPerson) {
                           selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBadge) {
+                        } else if (selectedType == Const.typeBrandValue) {
                           selectedType = Const.typeServicesPerson;
                         } else if (selectedType == Const.typeEmployee) {
                           selectedType = Const.typeName;
@@ -1012,11 +1012,11 @@ class IntroPageState extends State<IntroPage> {
                           selectedType = Const.typeServicesPerson;
                         } else if (selectedType == Const.typeEmployee) {
                           selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBadge) {
-                          selectedType = Const.typeDollar;
+                        } else if (selectedType == Const.typeBrandValue) {
+                          selectedType = Const.typeMoney;
                         } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeBadge;
-                        } else if (selectedType == Const.typeDollar) {
+                          selectedType = Const.typeBrandValue;
+                        } else if (selectedType == Const.typeMoney) {
                           selectedType = Const.typeProfile;
                         } else if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeBusinessSector;

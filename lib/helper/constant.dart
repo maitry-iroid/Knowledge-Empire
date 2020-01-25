@@ -22,9 +22,9 @@ class Const {
 
   static var typeSalesPersons = 11;
   static var typeEmployee = 12;
-  static var typeBadge = 13;
+  static var typeBrandValue = 13;
   static var typeServicesPerson = 14;
-  static var typeDollar = 15;
+  static var typeMoney = 15;
 
   static var typeHR = 1;
   static var typeMarketing = 2;

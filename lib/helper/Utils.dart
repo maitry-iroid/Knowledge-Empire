@@ -656,20 +656,18 @@ class Utils {
           minHeight: 25.0,
           minWidth: 25.0,
         ),
-        child: new DecoratedBox(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ColorRes.greenDot),
-            child: Center(
-              child: Text(
-                getCount(type, data).toString(),
-                style: TextStyle(color: ColorRes.white),
-              ),
-            )),
-//        alignment: Alignment.center,
-//        padding: EdgeInsets.all(3),
-//        decoration: BoxDecoration(
-//            borderRadius: BorderRadius.circular(20), color: ColorRes.greenDot),
+        child: getCount(type, data) > 0
+            ? new DecoratedBox(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorRes.greenDot),
+                child: Center(
+                  child: Text(
+                    getCount(type, data).toString(),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
+                ))
+            : null,
       ),
     );
   }

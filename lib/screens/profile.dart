@@ -149,23 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             Utils.getAssetsImg('bg_setting')))
                                     : null),
                           ),
-                          InkResponse(
-                            onTap: () {
-                              Utils.playClickSound();
-                              Navigator.push(context, FadeRouteIntro());
-                            },
-                            child: Container(
-                              height: 25,
-                              width: 25,
-                              margin: EdgeInsets.only(top: 15),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(Injector.isBusinessMode
-                                          ? Utils.getAssetsImg(
-                                              "ic_profile_help")
-                                          : Utils.getAssetsImg("pro_help")))),
-                            ),
-                          )
+
                         ],
                       ),
                       Container(

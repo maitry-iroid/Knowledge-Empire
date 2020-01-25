@@ -186,11 +186,11 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "ic_checked_header";
     else if (type == Const.typeEmployee)
       return "ic_people";
-    else if (type == Const.typeBadge)
+    else if (type == Const.typeBrandValue)
       return "ic_badge";
     else if (type == Const.typeServicesPerson)
       return "ic_resourses";
-    else if (type == Const.typeDollar)
+    else if (type == Const.typeMoney)
       return "ic_dollar";
     else
       return "";
@@ -201,7 +201,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "30/100";
     } else if (type == Const.typeEmployee) {
       return "50/100";
-    } else if (type == Const.typeBadge) {
+    } else if (type == Const.typeBrandValue) {
       return "60/100";
     } else if (type == Const.typeServicesPerson) {
       return "80/100";
@@ -214,7 +214,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return 0.3;
     } else if (type == Const.typeEmployee) {
       return 0.5;
-    } else if (type == Const.typeBadge) {
+    } else if (type == Const.typeBrandValue) {
       return 0.6;
     } else if (type == Const.typeServicesPerson) {
       return 0.8;
