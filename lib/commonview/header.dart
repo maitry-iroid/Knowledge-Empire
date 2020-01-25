@@ -45,6 +45,7 @@ class HeaderViewState extends State<HeaderView> {
   void dispose() {
     super.dispose();
 
+
 //    if (Injector.streamController != null) Injector.streamController.close();
   }
 
