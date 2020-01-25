@@ -112,10 +112,10 @@ class _RankingPageState extends State<RankingPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        showLeftItem(0),
-        showLeftItem(1),
-        showLeftItem(2),
-        showLeftItem(3),
+        showLeftItem(0,StringRes.revenue),
+        showLeftItem(1,StringRes.profit),
+        showLeftItem(2,StringRes.customers),
+        showLeftItem(3,StringRes.brand),
       ],
     );
   }
@@ -303,7 +303,7 @@ class _RankingPageState extends State<RankingPage> {
         selectedLeftCategory != index ? "ranking_bg_gray" : "rankinf_bg_blue"));
   }
 
-  showLeftItem(int index) {
+  showLeftItem(int index, String title) {
     return Expanded(
       flex: 1,
       child: InkResponse(
@@ -323,8 +323,16 @@ class _RankingPageState extends State<RankingPage> {
           padding: EdgeInsets.all(25),
           decoration:
               BoxDecoration(image: DecorationImage(image: getBgImage(index))),
-          child: Image(
-            image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
+          child: Column(
+            children: <Widget>[
+              Expanded(child: Image(
+                image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
+              )),
+              Container(
+//                height: 10,
+//                child: Text(title),
+              )
+            ],
           ),
         ),
       ),

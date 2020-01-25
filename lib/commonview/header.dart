@@ -6,7 +6,9 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/screens/intro_screen.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatefulWidget {
@@ -182,15 +184,28 @@ class HeaderViewState extends State<HeaderView> {
 
         if (type == Const.typeEmployee) {
           /*  open organization / power-ups screen  */
+          if(Injector.isBusinessMode == true) {
+            Injector.streamController?.add("${Const.typeOrg}");
+          } else {
+            Injector.streamController?.add("${Const.typeTeam}");
+          }
+
         } else if (type == Const.typeSalesPersons) {
           /*  open new customer screen  */
+          Injector.streamController?.add("${Const.typeNewCustomer}");
         } else if (type == Const.typeServicesPerson) {
           /*  open existing customer screen  */
+          Injector.streamController?.add("${Const.typeExistingCustomer}");
         } else if (type == Const.typeBrandValue) {
           /*  open ranking screen  */
+          Injector.streamController?.add("${Const.typeRanking}");
         } else if (type == Const.typeMoney) {
           /*  open PL screen  */
+          Injector.streamController?.add("${Const.typePL}");
         }
+//        else if (type == Const.typeProfile) {
+//          Injector.streamController?.add("profile open");
+//        }
       },
     );
   }
@@ -214,7 +229,11 @@ class HeaderViewState extends State<HeaderView> {
         ),
         onTap: () {
           Utils.playClickSound();
-          widget.openProfile();
+//          widget.openProfile();
+          Injector.streamController?.add("profile open");
+
+//          Navigator.push(context, MaterialPageRoute(builder: (context) => FadeRouteHome()));
+
         });
   }
 

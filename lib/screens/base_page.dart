@@ -16,7 +16,7 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: HeaderView(isShowMenu: true,scaffoldKey: _scaffoldKey,openProfile: null),
+      body: HeaderView(isShowMenu: true,scaffoldKey: _scaffoldKey, openProfile: null),
     );
   }
 }

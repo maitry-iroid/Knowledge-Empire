@@ -79,6 +79,10 @@ class StringRes {
   static var score = "score";
   static var companyName = "companyName";
   static var situation = "situation";
+  static var revenue = "revenue";
+  static var profit = "profit";
+  static var customers = "customers";
+  static var brand = "brand";
 
   //business sectors
 
@@ -168,7 +172,11 @@ class StringRes {
       'sound': 'Sound',
       'successProfileUpdate': 'Profile updated successfully!',
       'score': 'Score',
-      'companyName': 'Company Name'
+      'companyName': 'Company Name',
+      'revenue': "Revenue",
+      'profit': "Profit",
+      'customers': "Customers",
+      'brand': "Brand"
     },
     'es': {
       'title': 'Hola Mundo',

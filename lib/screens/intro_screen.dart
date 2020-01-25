@@ -16,9 +16,6 @@ import '../commonview/header.dart';
 import 'dashboard_game.dart';
 import '../helper/constant.dart';
 
-
-
-
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
 
@@ -51,7 +48,7 @@ class IntroPage extends StatefulWidget {
 
 class IntroPageState extends State<IntroPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  int selectedType = Const.typeName;
+  int selectedType = Const.typeProfile;
 
   AnimationController controller;
   Animation<double> animation;
@@ -83,13 +80,10 @@ class IntroPageState extends State<IntroPage> {
     });*/
 
 //    controller.forward();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: ColorRes.colorBgDark,
@@ -99,7 +93,7 @@ class IntroPageState extends State<IntroPage> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context,null),
+              CommonView.showDashboardView(context, null),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -138,7 +132,11 @@ class IntroPageState extends State<IntroPage> {
             opacity: 0.1,
           ),
           SizedBox(
-            width: 12,
+            width: 7,
+          ),
+          Opacity(
+            child: showProfile(context),
+            opacity: selectedType == Const.typeProfile ? 1 : 0,
           ),
           Expanded(
             child: Opacity(
@@ -183,7 +181,7 @@ class IntroPageState extends State<IntroPage> {
           showHeaderItem(Const.typeMoney, context),
           Opacity(
             child: showProfile(context),
-            opacity: selectedType == Const.typeProfile ? 1 : 0,
+            opacity: selectedType == Const.typeProfile ? 0 : 0,
           ),
         ],
       ),
@@ -288,7 +286,7 @@ class IntroPageState extends State<IntroPage> {
         child: Container(
           width: 30,
           height: 30,
-          margin: EdgeInsets.symmetric(horizontal: 5),
+          margin: EdgeInsets.symmetric(horizontal: 0),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
@@ -669,6 +667,22 @@ class IntroPageState extends State<IntroPage> {
         children: <Widget>[
           //-----------
 
+          selectedType == Const.typeProfile
+              ? Positioned(
+                  top: 60,
+                  right: Utils.getDeviceWidth(context) / 2.3,
+//            right: Utils.getDeviceWidth(context) / 2.9,
+                  child: InkResponse(
+                    child: Image(
+                      image:
+                          AssetImage(Utils.getAssetsImg("intro_bub_profile")),
+                      height: Utils.getDeviceHeight(context) / 1.9,
+                    ),
+                    onTap: () {},
+                  ),
+                )
+              : Container(),
+
           selectedType == Const.typeName
               ? Positioned(
                   top: 65,
@@ -755,22 +769,6 @@ class IntroPageState extends State<IntroPage> {
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("intro_bub_cash")),
                       height: Utils.getDeviceHeight(context) / 1.3,
-                    ),
-                    onTap: () {},
-                  ),
-                )
-              : Container(),
-
-          selectedType == Const.typeProfile
-              ? Positioned(
-                  top: 60,
-                  left: Utils.getDeviceWidth(context) / 1.9,
-//            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg("intro_bub_profile")),
-                      height: Utils.getDeviceHeight(context) / 1.9,
                     ),
                     onTap: () {},
                   ),
@@ -911,7 +909,7 @@ class IntroPageState extends State<IntroPage> {
               : Container(),
 //-------------------------------------------------------------------------------------------------------
 
-          selectedType == Const.typeName
+          selectedType == Const.typeProfile
               ? Container()
               : Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
@@ -924,11 +922,12 @@ class IntroPageState extends State<IntroPage> {
                     ),
                     onTap: () {
 //                      if(currentVol != 0) {
-                        Utils.playClickSound();
+                      Utils.playClickSound();
 //                      }
 
                       setState(() {
-                        if (selectedType == Const.typeName) {
+
+                        if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeRanking;
                         } else if (selectedType == Const.typeRanking) {
                           selectedType = Const.typePL;
@@ -947,8 +946,8 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typeNewCustomer) {
                           selectedType = Const.typeBusinessSector;
                         } else if (selectedType == Const.typeBusinessSector) {
-                          selectedType = Const.typeProfile;
-                        } else if (selectedType == Const.typeProfile) {
+//                          selectedType = Const.typeProfile;
+//                        } else if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeMoney;
                         } else if (selectedType == Const.typeMoney) {
                           selectedType = Const.typeBrandValue;
@@ -956,10 +955,12 @@ class IntroPageState extends State<IntroPage> {
                           selectedType = Const.typeSalesPersons;
                         } else if (selectedType == Const.typeBrandValue) {
                           selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeName;
                         } else if (selectedType == Const.typeSalesPersons) {
                           selectedType = Const.typeEmployee;
+                        } else if (selectedType == Const.typeEmployee) {
+                          selectedType = Const.typeName;
+                        } else if (selectedType == Const.typeName) {
+                          selectedType = Const.typeProfile;
                         }
                       });
                     },
@@ -979,7 +980,7 @@ class IntroPageState extends State<IntroPage> {
                         ),
                         onTap: () {
 //                          if(currentVol != 0) {
-                            Utils.playClickSound();
+                          Utils.playClickSound();
 //                          }
                           setState(() {
                             Navigator.pushAndRemoveUntil(context,
@@ -999,14 +1000,14 @@ class IntroPageState extends State<IntroPage> {
                     onTap: () {
 //                      AudioManager.STREAM_SYSTEM;
 
-
-
 //                      if(currentVol != 0) {
-                        Utils.playClickSound();
+                      Utils.playClickSound();
 //                      }
 
                       setState(() {
-                        if (selectedType == Const.typeName) {
+                        if (selectedType == Const.typeProfile) {
+                          selectedType = Const.typeName;
+                        } else if (selectedType == Const.typeName) {
                           selectedType = Const.typeEmployee;
                         } else if (selectedType == Const.typeSalesPersons) {
                           selectedType = Const.typeServicesPerson;
@@ -1017,8 +1018,8 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typeServicesPerson) {
                           selectedType = Const.typeBrandValue;
                         } else if (selectedType == Const.typeMoney) {
-                          selectedType = Const.typeProfile;
-                        } else if (selectedType == Const.typeProfile) {
+//                          selectedType = Const.typeProfile;
+//                        } else if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeBusinessSector;
                         } else if (selectedType == Const.typeBusinessSector) {
                           selectedType = Const.typeNewCustomer;
