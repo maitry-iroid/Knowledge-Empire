@@ -142,18 +142,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-  searchFriends() {
-    getSearchFriends();
-
-    /*arrSearchFriends.clear();
-    var data = arrFriends
-        .where((friendsName) =>
-        friendsName.name.toLowerCase().contains(searchText.toLowerCase()))
-        .toList();
-    print("search_data___" + data.length.toString());
-    arrSearchFriends.addAll(data); */
-  }
-
   showBusinessSectors() {
     return Expanded(
       flex: 4,
@@ -339,7 +327,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           children: <Widget>[
             Expanded(
               child: Text(
-                arrFriendsToShow[index].name??"",
+                arrFriendsToShow[index].name ?? "",
                 style: TextStyle(
                     color: Injector.isBusinessMode
                         ? ColorRes.white
@@ -391,7 +379,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         ),
         margin: EdgeInsets.symmetric(horizontal: 2),
         child: Text(
-          arrRewards[index].toString()+"%",
+          arrRewards[index].toString() + "%",
           style: TextStyle(
               color:
                   Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
@@ -427,7 +415,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     ),
                     fit: BoxFit.fill)
                 : null),
-        margin: EdgeInsets.symmetric(vertical: 3,horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: <Widget>[
@@ -688,40 +676,40 @@ class _ChallengesPageState extends State<ChallengesPage> {
     return Row(
       children: <Widget>[
         Expanded(
-            child: Container(
-                height: 25,
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 8, left: 10),
-                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: ColorRes.white,
-                ),
-                child: TextField(
-                  onChanged: (text) {
-                    searchText = text;
-                    setState(() {
-                      if (text.isEmpty) {
-                        arrSearchFriends = arrFriends;
-                      }
-                    });
-                  },
-                  textAlign: TextAlign.left,
-                  maxLines: 1,
-                  controller: searchController,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: ColorRes.hintColor,
-                  ),
-                  decoration: InputDecoration(
+          child: Container(
+            height: 25,
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(top: 10, left: 10),
+            margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: ColorRes.white,
+            ),
+            child: TextField(
+              onChanged: (text) {
+                searchText = text;
+                setState(() {
+                  if (text.isEmpty) {
+                    arrSearchFriends = arrFriends;
+                  }
+                });
+              },
+              textAlign: TextAlign.left,
+              maxLines: 1,
+              controller: searchController,
+              style: TextStyle(
+                fontSize: 14,
+                color: ColorRes.hintColor,
+              ),
+              decoration: InputDecoration(
 //                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
-                    hintText:
-                        Utils.getText(context, StringRes.searchForKeywords),
-                    hintStyle:
-                        TextStyle(color: ColorRes.hintColor, fontSize: 14),
-                    border: InputBorder.none,
-                  ),
-                ))),
+                hintText: Utils.getText(context, StringRes.searchForKeywords),
+                hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 14),
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
         InkResponse(
           onTap: () {
             getSearchFriends();

@@ -54,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -64,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+//      resizeToAvoidBottomPadding: false,
       backgroundColor: ColorRes.fontDarkGrey,
       body: Container(
         height: double.infinity,
@@ -308,7 +308,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.only(left: 5),
+                margin: EdgeInsets.only(left: 8),
                 child: Center(
                   child: TextField(
                     controller: emailController,

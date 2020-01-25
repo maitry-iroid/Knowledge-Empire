@@ -74,17 +74,17 @@ android {
 //        }
     }
     flavorDimensions "default"
-    productFlavors {
-        dev {
-            dimension "default"
-            applicationIdSuffix ".dev"
-            resValue "string", "app_name", "KE dev"
-        }
-        prod {
-            dimension "default"
-            resValue "string", "app_name", "KE prod"
-        }
-    }
+//    productFlavors {
+//        dev {
+//            dimension "default"
+//            applicationIdSuffix ".dev"
+//            resValue "string", "app_name", "KE dev"
+//        }
+//        prod {
+//            dimension "default"
+//            resValue "string", "app_name", "KE prod"
+//        }
+//    }
 }
 
 flutter {

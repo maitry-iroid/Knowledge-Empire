@@ -188,7 +188,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return RewardsPage();
+        return /*RewardsPage()*/ Container();
       case 5:
         return /*TeamPage()*/ Container();
       case 6:
@@ -196,7 +196,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return PLPage();
+        return /*PLPage()*/ Container();
       case 9:
         return RankingPage();
       case 10:
@@ -210,9 +210,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  openProfile(int type) {
+  openProfile() {
     if (mounted) {
-      setState(() => _selectedDrawerIndex = type);
+      setState(() => _selectedDrawerIndex = Const.typeProfile);
     }
   }
 
@@ -224,7 +224,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
       //TODO please uncomment pl condition
 
-      if (/*index == Const.typePL ||*/ index == Const.typeTeam) {
+      if (index == Const.typeReward ||
+          index == Const.typePL ||
+          index == Const.typeTeam) {
         Utils.showComingSoonDialog(context);
       } else {
         Navigator.of(context).pop(); // close the drawer
@@ -277,7 +279,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   showMainItem(DrawerItem item, int i) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: Injector.isBusinessMode?8:5, horizontal: 5),
+      padding: EdgeInsets.symmetric(
+          vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode
@@ -363,7 +366,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Injector.streamController?.add("This a test data");
       }
     }).catchError((e) {
-      print(e);
+      print("getCustomerValues___"+e.toString());
       Utils.showToast(e.toString());
     });
   }

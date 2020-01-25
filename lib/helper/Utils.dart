@@ -563,8 +563,8 @@ class Utils {
   static performDashboardItemClick(BuildContext context, int type) {
     if (
 //    type == Const.typeChallenges ||
-//        type == Const.typeReward ||
-        /*type == Const.typePL ||*/ type == Const.typeTeam)
+        type == Const.typeReward ||
+        type == Const.typePL || type == Const.typeTeam)
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context,
@@ -616,6 +616,13 @@ class Utils {
     if (url.isNotEmpty) {
       return CachedNetworkImageProvider(url,
           scale: 1, cacheManager: Injector.cacheManager);
+    } else
+      return AssetImage(Utils.getAssetsImg("title_art_2"));
+  }
+
+  static getCacheNetworkImageWidget(String url) {
+    if (url.isNotEmpty) {
+      return CachedNetworkImage(imageUrl: url);
     } else
       return AssetImage(Utils.getAssetsImg("title_art_2"));
   }

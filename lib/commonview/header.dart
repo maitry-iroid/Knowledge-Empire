@@ -45,7 +45,6 @@ class HeaderViewState extends State<HeaderView> {
   void dispose() {
     super.dispose();
 
-
 //    if (Injector.streamController != null) Injector.streamController.close();
   }
 
@@ -70,7 +69,7 @@ class HeaderViewState extends State<HeaderView> {
           showHeaderItem(Const.typeEmployee, context),
           showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeServicesPerson, context),
-          showHeaderItem(Const.typeBrandValue, context),
+//          showHeaderItem(Const.typeBrandValue, context),
           showHeaderItem(Const.typeMoney, context),
           showHelpView(context)
         ],
@@ -147,9 +146,11 @@ class HeaderViewState extends State<HeaderView> {
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 19.0,
-                          percent: HeaderUtils.getProgressInt(type) >= 0 &&
-                                  HeaderUtils.getProgressInt(type) <= 1
-                              ? HeaderUtils.getProgressInt(type) ?? 0.toDouble()
+                          percent:
+                                  HeaderUtils.getProgressInt(type) >= 0 &&
+                                      HeaderUtils.getProgressInt(type) <= 1
+                              ? HeaderUtils.getProgressInt(type)?.toDouble() ??
+                                  0.toDouble()
                               : 0.0,
                           backgroundColor: Colors.transparent,
                           progressColor: Injector.isBusinessMode

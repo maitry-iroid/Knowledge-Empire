@@ -40,7 +40,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Utils.isInternetConnectedWithAlert().then((isConnected) {
@@ -585,78 +584,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     arrFinalLearningModules.addAll(data);
   }
 
-  void downloadAllQuestions() async {
-    int dataSize = 0;
 
-    setState(() {
-      isLoading = true;
-    });
-
-    QuestionRequest rq = QuestionRequest();
-    rq.userId = Injector.userData.userId;
-    rq.moduleId = selectedModule.moduleId;
-
-    WebApi().getQuestions(rq.toJson()).then((questionResponse) async {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (questionResponse != null) {
-        if (questionResponse.flag == "true") {
-          print("length" + questionResponse.toJson().length.toString());
-
-          List<QuestionData> arrQuestions = questionResponse.data;
-
-          for (int i = 0; i < questionResponse.data.length; i++) {
-            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
-
-            print(arrQuestions[i].value);
-          }
-
-          questionResponse.data = arrQuestions;
-          print("arraquestionsss =============>>>>>>>  $questionResponse.data");
-
-          /*if (isSwitched) {
-            await Injector.prefs.setString(
-                PrefKeys.questionData, json.encode(questionResponse.toJson()));
-          } */
-          /*else {
-            await Injector.prefs.remove(PrefKeys.questionData);
-          }*/
-
-          questionResponse.data.forEach((questionData) async {
-            if (questionData.mediaLink.isNotEmpty)
-              await DefaultCacheManager()
-                  .downloadFile(questionData.mediaLink)
-                  .then((fileInfo) {
-                dataSize += fileInfo.file.lengthSync();
-                print("hello $dataSize");
-              });
-          });
-
-//          if(isSwitched == false) {
-//            questionResponse.data.forEach((questionData) async {
-//              await DefaultCacheManager().emptyCache();
-//            });
-//          }
-
-          print(dataSize);
-
-          getQuestions();
-
-          Utils.showToast("Downloaded successfully");
-        }
-      }
-    }).catchError((e) {
-      print(e);
-      setState(() {
-        isLoading = false;
-      });
-      Utils.showToast(e.toString());
-    });
-  }
 
   Future<void> updatePermission() async {
     setState(() {
@@ -678,10 +606,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           Utils.showToast("Permission updated Successfully!");
 
           if (isSwitched) {
-//            downloadAllQuestions();
-
+            getQuestions();
           } else {
 //            Injector.cacheManager.emptyCache();
+
+            //TODO remove question for selected sector
+//            Injector.prefs.remove(PrefKeys.questionData);
           }
         } else {
           Utils.showToast(response.msg);

@@ -188,6 +188,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
+                      fontSize: 15,
                       color: (arrAnswer[index].isSelected
                           ? ColorRes.white
                           : ColorRes.textProf),
@@ -199,7 +200,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 15,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
@@ -366,7 +367,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       ),
                       Text(
                         questionData.firstName + " " + questionData.lastName,
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        style: TextStyle(color: ColorRes.white, fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -393,7 +394,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.engagement),
-                style: TextStyle(color: ColorRes.white, fontSize: 16),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -627,9 +628,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showQueMedia(BuildContext context) {
     return InkResponse(
         onTap: () {
-//        if(currentVol != 0) {
           Utils.playClickSound();
-//        }
           performImageClick(context);
         },
         child: Stack(
@@ -658,11 +657,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaView(BuildContext context) {
     if (Utils.isImage(questionData.mediaLink)) {
       return Image(
-        image: Utils.isImage(questionData.mediaLink)
-            ? Utils.getCacheFile(questionData.mediaLink) != null
-                ? FileImage(Utils.getCacheFile(questionData.mediaLink).file)
-                : NetworkImage(questionData.mediaLink)
-            : AssetImage(Utils.getAssetsImg('back')),
+        image: Utils.getCacheFile(questionData.mediaLink) != null
+            ? FileImage(Utils.getCacheFile(questionData.mediaLink).file)
+            : NetworkImage(questionData.mediaLink),
+        fit: BoxFit.fill,
       );
     } else if (Utils.isVideo(questionData.mediaLink) &&
         _controller.value.initialized) {
@@ -858,7 +856,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
-                          style: TextStyle(color: ColorRes.white, fontSize: 18),
+                          style: TextStyle(color: ColorRes.white, fontSize: 22),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -939,6 +937,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
+                      fontSize: 18,
                       color: (arrAnswer[index].isSelected
                           ? ColorRes.white
                           : ColorRes.textProf),
@@ -950,6 +949,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
+                        fontSize: 18,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),

@@ -416,7 +416,7 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-      print(e);
+      print("getCustomerValue__"+e.toString());
       return null;
     }
   }
@@ -830,7 +830,7 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-      print(e);
+      print("dashboard_"+e.toString());
       return null;
     }
   }

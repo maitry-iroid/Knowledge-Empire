@@ -146,7 +146,7 @@ class CommonView {
                     color: Injector.isBusinessMode
                         ? ColorRes.white
                         : ColorRes.textProf,
-                    fontSize: 14),
+                    fontSize: 15),
               ),
             ),
           ),
@@ -176,7 +176,7 @@ class CommonView {
                     : null),
             child: Text(
               title,
-              style: TextStyle(color: ColorRes.white, fontSize: 16),
+              style: TextStyle(color: ColorRes.white, fontSize: 18),
               textAlign: TextAlign.center,
             ),
           ),

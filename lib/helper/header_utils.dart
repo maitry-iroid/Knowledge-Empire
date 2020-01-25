@@ -23,9 +23,9 @@ class HeaderUtils {
       return getProgressText(type);
     } else if (type == Const.typeEmployee) {
       return getProgressText(type);
-    }  else if (type == Const.typeServicesPerson) {
+    } else if (type == Const.typeServicesPerson) {
       return getProgressText(type);
-    }else if (type == Const.typeBrandValue) {
+    } else if (type == Const.typeBrandValue) {
       return getAnswerRatio();
     } else
       return "0/0";
@@ -64,7 +64,7 @@ class HeaderUtils {
 
   static getProgressText(int organizationType) {
     if (Injector.customerValueData != null) {
-      int totalEmployee = getTotalValue(organizationType)??0 * 10;
+      int totalEmployee = getTotalValue(organizationType) ?? 0 * 10;
       int remainingCapacity = getOccupiedValue(organizationType);
 
       if (remainingCapacity != null && totalEmployee != null) {
@@ -95,8 +95,8 @@ class HeaderUtils {
         Injector.customerValueData.correctAnswerCount != null &&
         Injector.customerValueData.totalAttemptedQuestion != null &&
         Injector.customerValueData.totalAttemptedQuestion != 0) {
-      return ((Injector.customerValueData.correctAnswerCount??0 /
-                  Injector.customerValueData.totalAttemptedQuestion) *
+      return ((Injector.customerValueData.correctAnswerCount ??
+                  0 / Injector.customerValueData.totalAttemptedQuestion) *
               100)
           .toStringAsFixed(2);
     } else
@@ -104,30 +104,35 @@ class HeaderUtils {
   }
 
   static double getBonusValue() {
-    return (Injector.customerValueData.correctAnswerCount??0 /
-                    Injector.customerValueData.totalAttemptedQuestion) >=
-                0 &&
-            (Injector.customerValueData.correctAnswerCount??0 /
-                    Injector.customerValueData.totalAttemptedQuestion) <=
-                1
-        ? (Injector.customerValueData.correctAnswerCount??0 /
-            Injector.customerValueData.totalAttemptedQuestion)
-        : 0.0;
+    try {
+      return (Injector.customerValueData.correctAnswerCount ??
+                      0 / Injector.customerValueData.totalAttemptedQuestion) >=
+                  0 &&
+              (Injector.customerValueData.correctAnswerCount ??
+                      0 / Injector.customerValueData.totalAttemptedQuestion) <=
+                  1
+          ? (Injector.customerValueData.correctAnswerCount ??
+              0 / Injector.customerValueData.totalAttemptedQuestion)
+          : 0.0;
+    } catch (e) {
+      print(e);
+      return 0.0;
+    }
   }
 
   static int getOccupiedValue(int organizationType) {
     try {
       if (organizationType == Const.typeEmployee) {
-            return Injector.customerValueData.totalEmployeeCapacity??0 -
-                Injector.customerValueData.remainingEmployeeCapacity;
-          } else if (organizationType == Const.typeSalesPersons) {
-            return Injector.customerValueData.totalSalesPerson??0 -
-                Injector.customerValueData.remainingSalesPerson;
-          } else if (organizationType == Const.typeServicesPerson) {
-            return Injector.customerValueData.totalCustomerCapacity??0 -
-                Injector.customerValueData.remainingCustomerCapacity;
-          } else
-            return 0;
+        return Injector.customerValueData.totalEmployeeCapacity ??
+            0 - Injector.customerValueData.remainingEmployeeCapacity;
+      } else if (organizationType == Const.typeSalesPersons) {
+        return Injector.customerValueData.totalSalesPerson ??
+            0 - Injector.customerValueData.remainingSalesPerson;
+      } else if (organizationType == Const.typeServicesPerson) {
+        return Injector.customerValueData.totalCustomerCapacity ??
+            0 - Injector.customerValueData.remainingCustomerCapacity;
+      } else
+        return 0;
     } catch (e) {
       print(e);
     }
@@ -136,11 +141,11 @@ class HeaderUtils {
 
   static int getTotalValue(int organizationType) {
     if (organizationType == Const.typeEmployee) {
-      return Injector.customerValueData.totalEmployeeCapacity??0;
+      return Injector.customerValueData.totalEmployeeCapacity ?? 0;
     } else if (organizationType == Const.typeSalesPersons) {
-      return Injector.customerValueData.totalSalesPerson??0;
+      return Injector.customerValueData.totalSalesPerson ?? 0;
     } else if (organizationType == Const.typeServicesPerson) {
-      return Injector.customerValueData.totalCustomerCapacity??0;
+      return Injector.customerValueData.totalCustomerCapacity ?? 0;
     } else
       return 0;
   }

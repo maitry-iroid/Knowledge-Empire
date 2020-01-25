@@ -110,20 +110,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   color: ColorRes.colorBgDark,
                 )
               : CommonView.showBackground(context),
-          Padding(
-            padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-            child: Column(
-              children: <Widget>[
-                showSubHeader(context),
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    showFirstHalf(context),
-                    showSecondHalf(context),
-                  ],
-                )),
-              ],
-            ),
+          Column(
+            children: <Widget>[
+              showSubHeader(context),
+              Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      showFirstHalf(context),
+                      showSecondHalf(context),
+                    ],
+                  )),
+            ],
           ),
           gifImageShow(),
         ],
@@ -163,41 +160,127 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     }
   }
 
+//  showSubHeader(BuildContext context) {
+//    return Container(
+//        margin: EdgeInsets.only(top: 10),
+//        child: Row(
+//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//          children: <Widget>[
+//            widget.isChallenge
+//                ? Row(
+//                    children: <Widget>[
+//                      Container(
+//                        width: 30,
+//                        height: 30,
+//                        margin: EdgeInsets.only(right: 8),
+//                        decoration: BoxDecoration(
+//                            shape: BoxShape.circle,
+//                            image: DecorationImage(
+//                                image: questionData.profileImage != null &&
+//                                        questionData.profileImage.isNotEmpty
+//                                    ? Utils.getCacheNetworkImage(
+//                                        questionData.profileImage)
+//                                    : AssetImage(
+//                                        Utils.getAssetsImg('user_org')),
+//                                fit: BoxFit.fill),
+//                            border: Border.all(color: ColorRes.textLightBlue)),
+//                      ),
+//                      Text(
+//                        questionData.firstName + " " + questionData.lastName,
+//                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+//                        textAlign: TextAlign.center,
+//                      ),
+//                    ],
+//                  )
+//                : Container(
+//                    width: 100,
+//                  ),
+//            Container(
+//              alignment: Alignment.center,
+//              height: 30,
+//              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+//              decoration: BoxDecoration(
+//                  borderRadius: Injector.isBusinessMode
+//                      ? null
+//                      : BorderRadius.circular(15),
+//                  color: Injector.isBusinessMode
+//                      ? null
+//                      : ColorRes.blueMenuSelected,
+//                  image: Injector.isBusinessMode
+//                      ? (DecorationImage(
+//                          image:
+//                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+//                          fit: BoxFit.fill))
+//                      : null),
+//              child: Text(
+//                Utils.getText(context, StringRes.situation),
+//                style: TextStyle(color: ColorRes.white, fontSize: 16),
+//                textAlign: TextAlign.center,
+//              ),
+//            ),
+//            InkResponse(
+//              child: Container(
+//                  alignment: Alignment.center,
+//                  width: 80,
+//                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+//                  decoration: BoxDecoration(
+//                      image: DecorationImage(
+//                          image:
+//                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
+//                          fit: BoxFit.fill)),
+//                  child: Center(
+//                    child: Text(
+//                      Utils.getText(context, StringRes.next),
+//                      style: TextStyle(color: ColorRes.white, fontSize: 16),
+//                      textAlign: TextAlign.center,
+//                    ),
+//                  )),
+//              onTap: () {
+//                Utils.playClickSound();
+//                gotoMainScreen(context);
+//              },
+//            )
+//          ],
+//        ));
+//  }
+
+
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: EdgeInsets.only(
+            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             widget.isChallenge
                 ? Row(
-                    children: <Widget>[
-                      Container(
-                        width: 30,
-                        height: 30,
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: questionData.profileImage != null &&
-                                        questionData.profileImage.isNotEmpty
-                                    ? Utils.getCacheNetworkImage(
-                                        questionData.profileImage)
-                                    : AssetImage(
-                                        Utils.getAssetsImg('user_org')),
-                                fit: BoxFit.fill),
-                            border: Border.all(color: ColorRes.textLightBlue)),
-                      ),
-                      Text(
-                        questionData.firstName + " " + questionData.lastName,
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  )
+              children: <Widget>[
+                Container(
+                  width: 30,
+                  height: 30,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: questionData.profileImage != null &&
+                              questionData.profileImage.isNotEmpty
+                              ? Utils.getCacheNetworkImage(
+                              questionData.profileImage)
+                              : AssetImage(
+                              Utils.getAssetsImg('user_org')),
+                          fit: BoxFit.fill),
+                      border: Border.all(color: ColorRes.textLightBlue)),
+                ),
+                Text(
+                  questionData.firstName + " " + questionData.lastName,
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
                 : Container(
-                    width: 100,
-                  ),
+              width: 100,
+            ),
             Container(
               alignment: Alignment.center,
               height: 30,
@@ -211,33 +294,31 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-                          fit: BoxFit.fill))
+                      image:
+                      AssetImage(Utils.getAssetsImg("eddit_profile")),
+                      fit: BoxFit.fill))
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.situation),
-                style: TextStyle(color: ColorRes.white, fontSize: 16),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
             ),
             InkResponse(
               child: Container(
-                  alignment: Alignment.center,
-                  width: 80,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                          fit: BoxFit.fill)),
-                  child: Center(
-                    child: Text(
-                      Utils.getText(context, StringRes.next),
-                      style: TextStyle(color: ColorRes.white, fontSize: 16),
-                      textAlign: TextAlign.center,
-                    ),
-                  )),
+                alignment: Alignment.center,
+                width: 100,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                        fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.next),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               onTap: () {
                 Utils.playClickSound();
                 gotoMainScreen(context);
@@ -246,6 +327,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           ],
         ));
   }
+
 
   bool isAnswerCorrect(int index) {
     bool isAnswerCorrect = true;
@@ -305,6 +387,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               child: new Text(
                 abcdList[index],
                 style: TextStyle(
+                  fontSize: 15,
                   color: (checkTextColor(index)),
                 ),
               )),
@@ -313,7 +396,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             child: SingleChildScrollView(
               child: new Text(
                 arrAnswerSituation[index].answer,
-                style: TextStyle(fontSize: 14, color: (checkTextColor(index))),
+                style: TextStyle(fontSize: 15, color: (checkTextColor(index))),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -776,6 +859,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
+                      fontSize:18,
                       color: (checkTextColor(index)),
                     ),
                   )),
@@ -783,8 +867,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
               Expanded(
                 child: SingleChildScrollView(
                   child: new Text(
+
                     arrAnswerSituation[index].answer,
-                    style: TextStyle(color: (checkTextColor(index))),
+                    style: TextStyle(fontSize:18,color: (checkTextColor(index))),
                     overflow: TextOverflow.fade,
                   ),
                 ),
@@ -1016,7 +1101,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
 
   showMediaView(BuildContext context) {
     if (Utils.isImage(correctWrongImage())) {
-      return Utils.getCacheNetworkImage(correctWrongImage());
+      return Utils.getCacheNetworkImageWidget(correctWrongImage());
     } else if (Utils.isVideo(correctWrongImage()) &&
         _controller.value.initialized) {
       return AspectRatio(
