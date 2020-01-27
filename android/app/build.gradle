@@ -66,12 +66,8 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            resValue "string", "app_name", "KE prod"
         }
-//        debug {
-//            applicationIdSuffix ".dev"
-//            resValue "string", "app_name", "KE dev"
-//        }
+        
     }
     flavorDimensions "default"
 //    productFlavors {

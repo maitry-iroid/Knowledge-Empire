@@ -77,15 +77,11 @@ class HeaderUtils {
 
   static double getBonusValue() {
     try {
-      return (Injector.customerValueData.correctAnswerCount ??
-                      0 / Injector.customerValueData.totalAttemptedQuestion) >=
-                  0 &&
-              (Injector.customerValueData.correctAnswerCount ??
-                      0 / Injector.customerValueData.totalAttemptedQuestion) <=
-                  1
-          ? (Injector.customerValueData.correctAnswerCount ??
-              0 / Injector.customerValueData.totalAttemptedQuestion)
-          : 0.0;
+      return (Injector.customerValueData?.correctAnswerCount ?? 0) /
+          ((Injector.customerValueData.totalAttemptedQuestion == null ||
+                  Injector.customerValueData.totalAttemptedQuestion == 0)
+              ? 1
+              : Injector.customerValueData.totalAttemptedQuestion);
     } catch (e) {
       print(e);
       return 0.0;
