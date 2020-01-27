@@ -23,9 +23,9 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
-	<string>NO</string>
+	<true/>
 	<key>FirebaseScreenReportingEnabled</key>
-	<string>NO</string>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -36,8 +36,6 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Can I use camera please?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow app to access your location for showing you near by friends.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow app to access your location for showing you near by friends.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Can I use the mic please?</string>

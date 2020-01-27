@@ -22,7 +22,6 @@ import 'package:ke_employee/screens/login.dart';
 
 import 'home.dart';
 
-
 class MyApp extends StatefulWidget {
   @override
   MyAppState createState() => MyAppState();
@@ -36,7 +35,6 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-
     print(Const.SERVER_ONE);
 
     initPlatformState();
@@ -66,7 +64,7 @@ class MyAppState extends State<MyApp> {
         });
       }
     }).catchError((e) {
-      print("registerForPush_"+e.toString());
+      print("registerForPush_" + e.toString());
       Utils.showToast(e);
     });
   }
@@ -75,7 +73,7 @@ class MyAppState extends State<MyApp> {
     firebaseCloudMessagingListeners();
 
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('ic_launcher');
+        AndroidInitializationSettings('ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings(
         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var initializationSettings = InitializationSettings(
@@ -84,9 +82,9 @@ class MyAppState extends State<MyApp> {
         initializationSettings,
         onSelectNotification: onSelectNotification);
 
-    Injector.firebaseMessaging.requestNotificationPermissions();
+    await Injector.firebaseMessaging.requestNotificationPermissions();
 
-    Injector.firebaseMessaging.getToken().then((token) {
+    await Injector.firebaseMessaging.getToken().then((token) {
       print("token : " + token);
 
       callRegisterForPush(token);
@@ -183,9 +181,9 @@ class MyAppState extends State<MyApp> {
           )),
       home: Injector.prefs.getInt(PrefKeys.userId) != null
           ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
-          Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
-          ? IntroPage()
-          : HomePage())
+                  Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
+              ? IntroPage()
+              : HomePage())
           : LoginPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
@@ -222,16 +220,16 @@ class MyAppState extends State<MyApp> {
             requiresStorageNotLow: false,
             requiresDeviceIdle: false,
             requiredNetworkType: BackgroundFetchConfig.NETWORK_TYPE_NONE),
-            () async {
-          // This is the fetch-event callback.
-          print('[BackgroundFetch] Event received');
-          setState(() {
-            _events.insert(0, new DateTime.now());
-          });
-          // IMPORTANT:  You must signal completion of your fetch task or the OS can punish your app
-          // for taking too long in the background.
-          BackgroundFetch.finish();
-        }).then((int status) {
+        () async {
+      // This is the fetch-event callback.
+      print('[BackgroundFetch] Event received');
+      setState(() {
+        _events.insert(0, new DateTime.now());
+      });
+      // IMPORTANT:  You must signal completion of your fetch task or the OS can punish your app
+      // for taking too long in the background.
+      BackgroundFetch.finish();
+    }).then((int status) {
       print('[BackgroundFetch] configure success: $status');
       setState(() {
         _status = status;
