@@ -1,12 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -293,7 +290,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         }
       });
     }).catchError((e) {
-      print(e);
+      print("getOrganizations_"+e.toString());
       setState(() {
         isLoading = false;
       });
@@ -377,7 +374,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           Utils.getText(context, StringRes.somethingWrong);
         }
       }).catchError((e) {
-        print(e);
+        print("manageOrg_"+e.toString());
+
         setState(() {
           isLoading = false;
         });

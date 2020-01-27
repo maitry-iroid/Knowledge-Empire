@@ -66,6 +66,7 @@ class MyAppState extends State<MyApp> {
         });
       }
     }).catchError((e) {
+      print("registerForPush_"+e.toString());
       Utils.showToast(e);
     });
   }

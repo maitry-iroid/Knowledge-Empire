@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -91,7 +87,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {
-        print(e);
+        print("releaseResources_"+e.toString());
         setState(() {
           isLoading = false;
         });
@@ -124,7 +120,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
-      print(e);
+      print("getQuestions_"+e.toString());
       setState(() {
         isLoading = false;
       });

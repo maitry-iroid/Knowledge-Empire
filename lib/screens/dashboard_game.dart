@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
         }
       });
     }).catchError((e) {
-      print(e);
+      print("getDashboardValue_"+e.toString());
     });
   }
 }

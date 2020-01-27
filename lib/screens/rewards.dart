@@ -331,7 +331,6 @@ class _RewardsPageState extends State<RewardsPage> {
       isLoading = true;
     });
 
-    String oneAsString = _selectedItem.toString();
 
     GetAchievementRequest rq = GetAchievementRequest();
     rq.userId = Injector.userData.userId;
@@ -446,7 +445,7 @@ class CategoryItem extends StatefulWidget {
   final String title;
   final int index;
   final bool isSelected;
-  Function(int) selectItem;
+  final Function(int) selectItem;
 
   CategoryItem(
     this.selectItem, {

@@ -308,7 +308,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
       navigateToSituation(context, null);
     }).catchError((e) {
-      print(e);
+      print("submitAnswer_"+e.toString());
       setState(() {
         isLoading = false;
       });
@@ -331,7 +331,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         navigateToSituation(context, data);
       }
     }).catchError((e) {
-      print(e);
+      print("submitChallenge_"+e.toString());
       setState(() {
         isLoading = false;
       });

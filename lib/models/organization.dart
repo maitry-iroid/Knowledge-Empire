@@ -86,7 +86,7 @@ class OrganizationData {
     data['totalCustomerCapicity'] = this.totalCustomerCapicity;
     data['remainingCustomerCapicity'] = this.remainingCustomerCapicity;
     data['remianingSalesPerson'] = this.remianingSalesPerson;
-    data[' int totalSalesPerson;'] = this.totalSalesPerson;;
+    data[' int totalSalesPerson;'] = this.totalSalesPerson;
     data['totalBalance'] = this.totalBalance;
     if (this.organization != null) {
       data['organization'] = this.organization.map((v) => v.toJson()).toList();
