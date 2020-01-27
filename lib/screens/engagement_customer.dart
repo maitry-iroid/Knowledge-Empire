@@ -660,7 +660,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         image: Utils.getCacheFile(questionData.mediaLink) != null
             ? FileImage(Utils.getCacheFile(questionData.mediaLink).file)
             : NetworkImage(questionData.mediaLink),
-        fit: BoxFit.fill,
+//        fit: BoxFit.fill,
       );
     } else if (Utils.isVideo(questionData.mediaLink) &&
         _controller.value.initialized) {
@@ -871,8 +871,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 40,
-                            width: Utils.getDeviceWidth(context) / 40,
+                            height: Utils.getDeviceWidth(context) / 30,
+                            width: Utils.getDeviceWidth(context) / 30,
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
@@ -1129,8 +1129,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           child: (checkimg == true
                               ? Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 30,
+                                  width: Utils.getDeviceWidth(context) / 30,
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
@@ -1143,8 +1143,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                       ))
                               : Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 30,
+                                  width: Utils.getDeviceWidth(context) / 30,
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
@@ -1230,12 +1230,13 @@ class ExpandMediaState extends State<ExpandMedia>
                             top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
                         decoration: BoxDecoration(
-                          color: Colors.transparent,
+                          color: Injector.isBusinessMode ? ColorRes.black : ColorRes.white ,
                           image: Utils.isImage(questionData.mediaLink)
                               ? DecorationImage(
                                   image: Utils.getCacheNetworkImage(
                                       questionData.mediaLink),
-                                  fit: BoxFit.fill)
+//                                  fit: BoxFit.fill
+                          )
                               : null,
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -1261,8 +1262,8 @@ class ExpandMediaState extends State<ExpandMedia>
                           child: (checkimg == true
                               ? Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 30,
+                                  width: Utils.getDeviceWidth(context) / 30,
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
@@ -1275,8 +1276,8 @@ class ExpandMediaState extends State<ExpandMedia>
                                       ))
                               : Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 30,
+                                  width: Utils.getDeviceWidth(context) / 30,
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?

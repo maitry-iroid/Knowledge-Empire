@@ -776,8 +776,8 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                         },
                         child: Container(
                             alignment: Alignment.center,
-                            height: Utils.getDeviceWidth(context) / 40,
-                            width: Utils.getDeviceWidth(context) / 40,
+                            height: Utils.getDeviceWidth(context) / 30,
+                            width: Utils.getDeviceWidth(context) / 30,
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
@@ -880,122 +880,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   }
 }
 
-//======================================
-//image show  in alert
 
-class ImageCorrectIncorrectAlert extends StatefulWidget {
-//  bool CheckQuestion;
-
-  @override
-  State<StatefulWidget> createState() => ImageCorrectIncorrectAlertState();
-}
-
-class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> scaleAnimation;
-  bool checkimg = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
-
-    controller.addListener(() {
-      setState(() {});
-    });
-
-    controller.forward();
-
-    correctWrongImage();
-  }
-
-  correctWrongImage() {
-    if (questionData.isAnsweredCorrect == true) {
-      return questionDataCustSituation.correctAnswerImage;
-    } else {
-      return questionDataCustSituation.inCorrectAnswerImage;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Material(
-        color: Colors.transparent,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: Container(
-            decoration: ShapeDecoration(
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
-            child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Stack(
-                  fit: StackFit.loose,
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.only(
-                          top: 25, bottom: 15, right: 25, left: 25),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: 0, bottom: 0, left: 0, right: 0),
-                        height: Utils.getDeviceHeight(context) / 2.7,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: NetworkImage(correctWrongImage()),
-                              fit: BoxFit.fill),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: InkResponse(
-                          onTap: () {
-                            Utils.playClickSound();
-                            //alert pop
-                            Navigator.pop(context);
-                          },
-                          child: (checkimg == true
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(Utils.getAssetsImg(
-                                              "close_dialog")),
-                                          fit: BoxFit.contain)))
-                              : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(Utils.getAssetsImg(
-                                              "close_dialog")),
-                                          fit: BoxFit.contain))))),
-                    )
-                  ],
-                )),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 checkTextColor(int index) {
   var arrCorrectAns = questionDataCustSituation.correctAnswerId.split(",");
@@ -1136,7 +1021,8 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                                 ? Utils.getAssetsImg("") //add_emp_check
                                 : Utils.getAssetsImg("play_button"),
                           ),
-                          fit: BoxFit.scaleDown)),
+                          fit: BoxFit.scaleDown
+                      )),
                 ),
               ),
             )
@@ -1184,6 +1070,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                         height: Utils.getDeviceHeight(context) / 1.5,
                         width: Utils.getDeviceWidth(context) / 1.2,
                         decoration: BoxDecoration(
+                            color: Injector.isBusinessMode ? ColorRes.black : ColorRes.white ,
                             borderRadius: BorderRadius.circular(10),
                             border: Utils.isImage(questionData.mediaLink)
                                 ? Border.all(color: ColorRes.white, width: 1)
@@ -1204,8 +1091,8 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                           child: (checkimg == true
                               ? Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 30,
+                                  width: Utils.getDeviceWidth(context) / 30,
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
@@ -1218,8 +1105,8 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                                       ))
                               : Container(
                                   alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
+                                  height: Utils.getDeviceWidth(context) / 30,
+                                  width: Utils.getDeviceWidth(context) / 30,
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
@@ -1242,6 +1129,127 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     );
   }
 }
+
+
+//======================================
+//image show  in alert
+
+/*
+class ImageCorrectIncorrectAlert extends StatefulWidget {
+//  bool CheckQuestion;
+
+  @override
+  State<StatefulWidget> createState() => ImageCorrectIncorrectAlertState();
+}
+
+class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> scaleAnimation;
+  bool checkimg = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+
+    correctWrongImage();
+  }
+
+  correctWrongImage() {
+    if (questionData.isAnsweredCorrect == true) {
+      return questionDataCustSituation.correctAnswerImage;
+    } else {
+      return questionDataCustSituation.inCorrectAnswerImage;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+//                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Stack(
+                  fit: StackFit.loose,
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 25, bottom: 15, right: 25, left: 25),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: 0, bottom: 0, left: 0, right: 0),
+                        height: Utils.getDeviceHeight(context) / 2.7,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+//                          color: Injector.isBusinessMode ? ColorRes.black : ColorRes.white,
+                          image: DecorationImage(
+                              image: NetworkImage(correctWrongImage()),
+//                              fit: BoxFit.fill
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: InkResponse(
+                          onTap: () {
+                            Utils.playClickSound();
+                            //alert pop
+                            Navigator.pop(context);
+                          },
+                          child: (checkimg == true
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(Utils.getAssetsImg(
+                                              "close_dialog")),
+                                          fit: BoxFit.contain)))
+                              : Container(
+                                  alignment: Alignment.center,
+                                  height: Utils.getDeviceWidth(context) / 40,
+                                  width: Utils.getDeviceWidth(context) / 40,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(Utils.getAssetsImg(
+                                              "close_dialog")),
+                                          fit: BoxFit.contain))))),
+                    )
+                  ],
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+}*/
 
 /*
 class ParticleBackgroundApp extends StatelessWidget {

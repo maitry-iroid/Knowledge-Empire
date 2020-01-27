@@ -148,9 +148,8 @@ class HeaderViewState extends State<HeaderView> {
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 19.0,
-                          percent:
-                                  HeaderUtils.getProgressInt(type) >= 0 &&
-                                      HeaderUtils.getProgressInt(type) <= 1
+                          percent: HeaderUtils.getProgressInt(type) >= 0 &&
+                                  HeaderUtils.getProgressInt(type) <= 1
                               ? HeaderUtils.getProgressInt(type)?.toDouble() ??
                                   0.toDouble()
                               : 0.0,
@@ -184,12 +183,11 @@ class HeaderViewState extends State<HeaderView> {
 
         if (type == Const.typeEmployee) {
           /*  open organization / power-ups screen  */
-          if(Injector.isBusinessMode == true) {
+          if (Injector.isBusinessMode == true) {
             Injector.streamController?.add("${Const.typeOrg}");
           } else {
             Injector.streamController?.add("${Const.typeTeam}");
           }
-
         } else if (type == Const.typeSalesPersons) {
           /*  open new customer screen  */
           Injector.streamController?.add("${Const.typeNewCustomer}");
@@ -233,7 +231,6 @@ class HeaderViewState extends State<HeaderView> {
           Injector.streamController?.add("profile open");
 
 //          Navigator.push(context, MaterialPageRoute(builder: (context) => FadeRouteHome()));
-
         });
   }
 
