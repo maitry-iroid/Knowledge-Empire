@@ -294,7 +294,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         Utils.showToast("Something went wrong.");
       }
     }).catchError((e) {
-      print(e);
+      print("changePassword_"+e.toString());
       setState(() {
         isLoading = false;
       });

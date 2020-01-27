@@ -1,11 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -95,7 +92,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         });
       }
     }).catchError((e) {
-      print(e);
+      print("getQuestions_"+e.toString());
       if (mounted) {
         setState(() {
           isLoading = false;

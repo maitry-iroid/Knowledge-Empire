@@ -66,6 +66,7 @@ class MyAppState extends State<MyApp> {
         });
       }
     }).catchError((e) {
+      print("registerForPush_"+e.toString());
       Utils.showToast(e);
     });
   }
@@ -155,7 +156,7 @@ class MyAppState extends State<MyApp> {
     ]);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Ke Employee',
       theme: ThemeData(
           accentColor: ColorRes.transparent,
           fontFamily: 'TrulyMadly',

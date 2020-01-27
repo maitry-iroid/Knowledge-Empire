@@ -237,7 +237,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         Utils.showToast('Something went worng.');
       }
     }).catchError((e) {
-      print(e);
+      print("forgotPassword_"+e.toString());
       setState(() {
         isLoading = false;
       });

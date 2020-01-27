@@ -23,9 +23,6 @@ import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
-import 'package:ke_employee/screens/rewards.dart';
-
-import 'P+L.dart';
 import 'business_sector.dart';
 import '../commonview/header.dart';
 import '../helper/Utils.dart';
@@ -149,7 +146,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     initStreamController();
     initStreamControllerProfile();
-
 
     initCheckNetworkConnectivity();
 
@@ -368,7 +364,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Injector.streamController?.add("This a test data");
       }
     }).catchError((e) {
-      print("getCustomerValues___"+e.toString());
+      print("getCustomerValues___" + e.toString());
       Utils.showToast(e.toString());
     });
   }
@@ -394,8 +390,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
-
-
   void initStreamControllerProfile() {
     if (Injector.streamController == null)
       Injector.streamController = StreamController.broadcast();
@@ -403,13 +397,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     Injector.streamController.stream.listen((data) {
       if (mounted) {
         setState(() {
-
           print(data);
 
-          if(data == "profile open") {
-//            openProfile(type);
+          if (data == "${Const.typeProfile}") {
             _selectedDrawerIndex = Const.typeProfile;
-//            Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
           } else if (data == "${Const.typeOrg}") {
             _selectedDrawerIndex = Const.typeOrg;
           } else if (data == "${Const.typeTeam}") {
@@ -431,7 +422,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       print("Some Error11");
     });
   }
-
 
   void initCheckNetworkConnectivity() {
     WidgetsBinding.instance.addObserver(this);
@@ -472,7 +462,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
-
+          print("getChallenges_"+e.toString());
           setState(() {
             isLoading = false;
           });

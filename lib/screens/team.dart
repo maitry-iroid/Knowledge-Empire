@@ -26,7 +26,7 @@ class _TeamPageState extends State<TeamPage> {
           ),
         ),
       ],
-    );;
+    );
   }
 
   Row showTitle() {

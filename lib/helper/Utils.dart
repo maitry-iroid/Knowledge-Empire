@@ -355,7 +355,7 @@ class Utils {
       await Injector.prefs.remove(PrefKeys.answerData);
       Injector.streamController.add("submit answer");
     }).catchError((e) {
-      print(e);
+      print("callSubmitAnswerApi"+e.toString());
       Utils.showToast(e.toString());
     });
   }

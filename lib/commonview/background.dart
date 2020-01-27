@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -122,7 +121,7 @@ class CommonView {
   }
 
   static questionAndExplanation(
-      BuildContext context, String title, bool checkimg, String Questions) {
+      BuildContext context, String title, bool checking, String questions) {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -141,7 +140,7 @@ class CommonView {
             ),
             child: SingleChildScrollView(
               child: Text(
-                Questions,
+                questions,
                 style: TextStyle(
                     color: Injector.isBusinessMode
                         ? ColorRes.white
@@ -156,7 +155,7 @@ class CommonView {
           child: Container(
             alignment: Alignment.center,
             height: 30,
-            margin: (checkimg == true
+            margin: (checking == true
                 ? EdgeInsets.symmetric(
                     horizontal: Utils.getDeviceWidth(context) / 7)
                 : EdgeInsets.symmetric(
@@ -184,19 +183,19 @@ class CommonView {
         //Full Screen Alert Show
         Align(
           alignment:
-              (checkimg == true ? Alignment.bottomRight : Alignment.topRight),
+              (checking == true ? Alignment.bottomRight : Alignment.topRight),
 //          Alignment.bottomRight,
           child: InkResponse(
               onTap: () {
                 Utils.playClickSound();
 
-                if (checkimg)
+                if (checking)
                   showDialog(
                     context: context,
                     builder: (_) => FunkyOverlay(title: title),
                   );
               },
-              child: (checkimg == true
+              child: (checking == true
                   ? Container(
                       alignment: Alignment.center,
                       height: Utils.getDeviceWidth(context) / 20,
@@ -443,7 +442,6 @@ class CommonView {
 
   static Widget showDashboardView(
       BuildContext context, List<GetDashboardData> data) {
-    List<GetDashboardData> arrDashboardData = data;
 
     return Container(
       width: double.infinity,

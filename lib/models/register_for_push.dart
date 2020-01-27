@@ -28,15 +28,13 @@ class RegisterForPushResponse {
   String flag;
   String result;
   String msg;
-  Data data;
 
-  RegisterForPushResponse({this.flag, this.result, this.msg, this.data});
+  RegisterForPushResponse({this.flag, this.result, this.msg});
 
   RegisterForPushResponse.fromJson(Map<String, dynamic> json) {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -44,20 +42,6 @@ class RegisterForPushResponse {
     data['flag'] = this.flag;
     data['result'] = this.result;
     data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
-  Data();
-
-  Data.fromJson(Map<String, dynamic> json) {}
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
     return data;
   }
 }

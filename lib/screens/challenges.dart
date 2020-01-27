@@ -531,7 +531,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print(e);
+      print("getFriends_"+e.toString());
+
       setState(() {
         isLoading = false;
       });
@@ -589,7 +590,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print(e);
+      print("getLearningModule_"+e.toString());
+
       setState(() {
         isLoading = false;
       });
@@ -628,7 +630,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print(e);
+      print("sendChallenge_"+e.toString());
+
       setState(() {
         isLoading = false;
       });
@@ -664,7 +667,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print(e);
+      print("searchFriends_"+e.toString());
+
       setState(() {
         isLoading = false;
       });

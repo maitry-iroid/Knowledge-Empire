@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -239,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     }).catchError((e) {
-      print(e);
+      print("login_"+e.toString());
       setState(() {
         isLoading = false;
       });
@@ -275,7 +274,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     }).catchError((e) {
-      print(e);
+      print("customervalue_"+e.toString());
       setState(() {
         isLoading = false;
       });

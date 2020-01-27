@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -416,7 +415,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                             },
                           )
                         : Container(),
-                    Switch(
+                    selectedModule.isAssign == 1?Switch(
                       value: isSwitched,
                       onChanged: (value) {
                         Utils.isInternetConnectedWithAlert()
@@ -432,7 +431,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       activeTrackColor: ColorRes.white,
                       inactiveTrackColor: ColorRes.lightGrey,
                       activeColor: Colors.white,
-                    ),
+                    ):Container(),
                   ],
                 ),
                 InkResponse(
@@ -518,7 +517,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       } else
         Utils.showToast("Something went wrong");
     }).catchError((e) {
-      print(e);
+      print("getLeariningModule_"+e.toString());
+
       setState(() {
         isLoading = false;
       });
@@ -565,7 +565,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       } else
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
     }).catchError((e) {
-      print(e);
+      print("assignUserModule_"+e.toString());
+
       setState(() {
         isLoading = false;
       });
@@ -674,7 +675,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
-      print(e);
+      print("downloadQuestion_"+e.toString());
+
       setState(() {
         isLoading = false;
       });

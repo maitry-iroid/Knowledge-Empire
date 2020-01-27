@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/bailout.dart';
 
 import '../commonview/background.dart';
@@ -415,7 +414,7 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       }
     }).catchError((e) {
-      print(e.toString());
+      print("bailOut_"+e.toString());
       Utils.showToast(e.toString());
       setState(() {
         isLoading = false;
@@ -452,7 +451,7 @@ class _ProfilePageState extends State<ProfilePage> {
       Navigator.pushAndRemoveUntil(
           context, FadeRouteLogin(), ModalRoute.withName("/home"));
     }).catchError((e) {
-      print(e);
+      print("logout_"+e.toString());
       setState(() {
         isLoading = false;
       });
@@ -859,7 +858,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
-      print(e);
+      print("updatePorfile_"+e.toString());
       setState(() {
         isLoading = false;
       });

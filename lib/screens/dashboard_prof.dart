@@ -53,7 +53,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
         }
       });
     }).catchError((e) {
-      print(e);
+      print("getDashboardValue_"+e.toString());
     });
   }
 

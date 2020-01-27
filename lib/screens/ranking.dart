@@ -134,7 +134,7 @@ class _RankingPageState extends State<RankingPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-              height: 30,
+              height: Injector.isBusinessMode ? 50 : 30,
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -174,10 +174,11 @@ class _RankingPageState extends State<RankingPage> {
           Container(
             child: Row(
               children: <Widget>[
-                Container(
-                  width: 35,
-                  height: 35,
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
+                InkResponse(
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -188,6 +189,10 @@ class _RankingPageState extends State<RankingPage> {
                     'You',
                     style: TextStyle(color: ColorRes.white, fontSize: 15),
                   ),
+                  onTap: () {
+                    _scrollController.jumpTo(
+                        double.parse(_scrollController.position.toString()));
+                  },
                 ),
                 Expanded(
                   flex: 15,
@@ -334,13 +339,14 @@ class _RankingPageState extends State<RankingPage> {
               BoxDecoration(image: DecorationImage(image: getBgImage(index))),
           child: Column(
             children: <Widget>[
-              Expanded(child: Image(
+              Expanded(
+                  child: Image(
                 image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
               )),
               Container(
 //                height: 10,
 //                child: Text(title),
-              )
+                  )
             ],
           ),
         ),

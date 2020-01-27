@@ -6,9 +6,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/screens/intro_screen.dart';
-import 'package:ke_employee/screens/profile.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatefulWidget {
@@ -67,7 +65,6 @@ class HeaderViewState extends State<HeaderView> {
         children: <Widget>[
           showMenuView(),
           showProfile(context),
-          showUserNameCompanyName(context),
           showHeaderItem(Const.typeEmployee, context),
           showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeServicesPerson, context),
@@ -209,29 +206,33 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   showProfile(BuildContext context) {
-    return InkResponse(
-        child: Container(
-          width: 30,
-          height: 30,
-          margin: EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: Injector.userData.profileImage != null &&
-                          Injector.userData.profileImage.isNotEmpty
-                      ? Utils.getCacheNetworkImage(
-                          Injector.userData.profileImage)
-                      : AssetImage(Utils.getAssetsImg('user_org')),
-                  fit: BoxFit.fill),
-              border: Border.all(color: ColorRes.textLightBlue)),
-        ),
-        onTap: () {
-          Utils.playClickSound();
-//          widget.openProfile();
-          Injector.streamController?.add("profile open");
-
-//          Navigator.push(context, MaterialPageRoute(builder: (context) => FadeRouteHome()));
-        });
+    return Expanded(
+      child: InkResponse(
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 30,
+                height: 30,
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: Injector.userData.profileImage != null &&
+                                Injector.userData.profileImage.isNotEmpty
+                            ? Utils.getCacheNetworkImage(
+                                Injector.userData.profileImage)
+                            : AssetImage(Utils.getAssetsImg('user_org')),
+                        fit: BoxFit.fill),
+                    border: Border.all(color: ColorRes.textLightBlue)),
+              ),
+              showUserNameCompanyName(context),
+            ],
+          ),
+          onTap: () {
+            Utils.playClickSound();
+            Injector.streamController?.add("${Const.typeProfile}");
+          }),
+    );
   }
 
   String getHeadText(int type) {
@@ -269,36 +270,34 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   showUserNameCompanyName(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            Injector.userData != null ? Injector.userData.companyName : "",
-            style: TextStyle(
-                color: Injector.isBusinessMode
-                    ? ColorRes.textLightBlue
-                    : ColorRes.white,
-                fontSize: 15),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Text(
-            Injector.userData != null ? Injector.userData.name : "",
-            style: TextStyle(
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.textLightBlue,
-                fontSize: 15),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          )
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          Injector.userData != null ? Injector.userData.companyName : "",
+          style: TextStyle(
+              color: Injector.isBusinessMode
+                  ? ColorRes.textLightBlue
+                  : ColorRes.white,
+              fontSize: 15),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(
+          height: 2,
+        ),
+        Text(
+          Injector.userData != null ? Injector.userData.name : "",
+          style: TextStyle(
+              color: Injector.isBusinessMode
+                  ? ColorRes.white
+                  : ColorRes.textLightBlue,
+              fontSize: 15),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        )
+      ],
     );
   }
 
