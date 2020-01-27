@@ -188,7 +188,7 @@ class _RankingPageState extends State<RankingPage> {
                   child: Text(
                     'You',
                     style: TextStyle(color: ColorRes.white, fontSize: 15),
-                  ),
+                  )),
                   onTap: () {
                     _scrollController.jumpTo(
                         double.parse(_scrollController.position.toString()));

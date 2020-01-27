@@ -270,7 +270,7 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   showUserNameCompanyName(BuildContext context) {
-    return Column(
+    return Expanded(child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -298,7 +298,7 @@ class HeaderViewState extends State<HeaderView> {
           overflow: TextOverflow.ellipsis,
         )
       ],
-    );
+    ));
   }
 
   showMenuView() {
