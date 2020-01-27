@@ -109,14 +109,18 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showFirstColumn() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        showLeftItem(0, StringRes.revenue),
-        showLeftItem(1, StringRes.profit),
-        showLeftItem(2, StringRes.customers),
-        showLeftItem(3, StringRes.brand),
-      ],
+    return Container(
+
+      color: Injector.isBusinessMode ? Colors.transparent : ColorRes.rankingBackGround,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          showLeftItem(0,StringRes.revenue),
+          showLeftItem(1,StringRes.profit),
+          showLeftItem(2,StringRes.customers),
+          showLeftItem(3,StringRes.brand),
+        ],
+      ),
     );
   }
 
@@ -130,7 +134,7 @@ class _RankingPageState extends State<RankingPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-              height: 50,
+              height: Injector.isBusinessMode ? 50 : 30,
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -176,16 +180,15 @@ class _RankingPageState extends State<RankingPage> {
                     height: 35,
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg("bg_you")),
-                            fit: BoxFit.fill)),
-                    child: Text(
-                      'You',
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
-                    ),
-                  ),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg( Injector.isBusinessMode ? "bg_you" : "bg_pro_you")),
+                          fit: BoxFit.fill)),
+                  child: Text(
+                    'You',
+                    style: TextStyle(color: ColorRes.white, fontSize: 15),
+                  )),
                   onTap: () {
                     _scrollController.jumpTo(
                         double.parse(_scrollController.position.toString()));
@@ -200,7 +203,8 @@ class _RankingPageState extends State<RankingPage> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                Utils.getAssetsImg("bg_ranking_header")),
+                                Utils.getAssetsImg(Injector.isBusinessMode ? "bg_ranking_header" : "bg_pro_ranking_header")
+                            ),
                             fit: BoxFit.fill)),
                     child: Row(
                       children: <Widget>[
@@ -245,7 +249,7 @@ class _RankingPageState extends State<RankingPage> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                Utils.getAssetsImg("bg_ranking_header_1")),
+                                Utils.getAssetsImg(Injector.isBusinessMode ? "bg_ranking_header_1" : "bg_pro_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.challenges),
@@ -264,7 +268,7 @@ class _RankingPageState extends State<RankingPage> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                Utils.getAssetsImg("bg_ranking_header_1")),
+                                Utils.getAssetsImg(Injector.isBusinessMode ? "bg_ranking_header_1" : "bg_pro_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.friend),
@@ -306,7 +310,10 @@ class _RankingPageState extends State<RankingPage> {
 
   getBgImage(int index) {
     return AssetImage(Utils.getAssetsImg(
-        selectedLeftCategory != index ? "ranking_bg_gray" : "rankinf_bg_blue"));
+      Injector.isBusinessMode ?
+        selectedLeftCategory != index ? "ranking_bg_gray" : "rankinf_bg_blue" :
+      selectedLeftCategory != index ? "ranking_bg_pro_deselected" : "ranking_bg_pro_selected"
+    ));
   }
 
   showLeftItem(int index, String title) {
@@ -326,7 +333,8 @@ class _RankingPageState extends State<RankingPage> {
         child: Container(
           height: 80,
           width: 80,
-          padding: EdgeInsets.symmetric(horizontal: 25),
+          padding: Injector.isBusinessMode ? EdgeInsets.all(20) : EdgeInsets.all(18),
+          margin: Injector.isBusinessMode ? EdgeInsets.all(0) : EdgeInsets.all(5),
           decoration:
               BoxDecoration(image: DecorationImage(image: getBgImage(index))),
           child: Column(
@@ -588,16 +596,21 @@ class _RankingPageState extends State<RankingPage> {
             ),
             Container(
               height: 52,
-              width: 70,
+              width: 60,
               padding: EdgeInsets.only(right: 10, left: 14, top: 1),
               margin: EdgeInsets.only(right: 1),
               alignment: Alignment.center,
               decoration: BoxDecoration(
+
+                color: Injector.isBusinessMode ? Colors.transparent : ColorRes.titleBlueProf,
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                border: Border.all(width: 1, color: ColorRes.rankingBackGround),
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg('value')),
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? 'value' : '')),
                     fit: BoxFit.fill),
               ),
               child: Text(
+//                "0000",
                 arrFriends[index].score.toString() ?? "",
                 style: TextStyle(
                   color: ColorRes.white,

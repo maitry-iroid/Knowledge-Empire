@@ -226,119 +226,119 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Widget showItem(int index) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          child: Container(
-              height: Injector.isBusinessMode ? 30 : 25,
-              padding: EdgeInsets.only(left: 10),
-              margin: EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                  color: Injector.isBusinessMode ? null : ColorRes.white,
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("bg_record_white")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 4,
-                    child: Text(
+    return InkResponse(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+                height: Injector.isBusinessMode ? 30 : 25,
+                padding: EdgeInsets.only(left: 10),
+                margin: EdgeInsets.symmetric(vertical: 4),
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.white,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image:
+                        AssetImage(Utils.getAssetsImg("bg_record_white")),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Text(
 //                      Utils.getText(context, StringRes.newCustomers),
-                      arrQuestions[index].title,
-                      style: TextStyle(
-                        color: ColorRes.textRecordBlue,
-                        fontSize: 15,
+                        arrQuestions[index].title,
+                        style: TextStyle(
+                          color: ColorRes.textRecordBlue,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
                     ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Text(
-                      arrQuestions[index].moduleName,
-                      style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        arrQuestions[index].moduleName,
+                        style: TextStyle(
+                            color: ColorRes.textRecordBlue, fontSize: 15),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      ("${arrQuestions[index].value.toString()} \$"),
-                      style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        ("${arrQuestions[index].value.toString()} \$"),
+                        style: TextStyle(
+                            color: ColorRes.textRecordBlue, fontSize: 15),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      ("${arrQuestions[index].loyalty.toString()} d"),
-                      style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        ("${arrQuestions[index].loyalty.toString()} d"),
+                        style: TextStyle(
+                            color: ColorRes.textRecordBlue, fontSize: 15),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      arrQuestions[index].resources.toString(),
-                      style: TextStyle(
-                          color: ColorRes.textRecordBlue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        arrQuestions[index].resources.toString(),
+                        style: TextStyle(
+                            color: ColorRes.textRecordBlue, fontSize: 15),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                ],
-              )),
-        ),
-        InkResponse(
-          child: Container(
-              height: Injector.isBusinessMode ? 32 : 25,
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(left: 10, right: 2),
-              padding: EdgeInsets.only(left: 15, right: 15),
-              decoration: BoxDecoration(
-                  color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                Utils.getText(context, StringRes.engageNow),
-                style: TextStyle(color: ColorRes.white, fontSize: 14),
-              )),
-          onTap: () {
-//            if (currentVol != 0) {
-            Utils.playClickSound();
-//            }
+                  ],
+                )),
+          ),
+          InkResponse(
+            child: Container(
+                height: Injector.isBusinessMode ? 32 : 25,
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 10, right: 2),
+                padding: EdgeInsets.only(left: 15, right: 15),
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image:
+                        AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(context, StringRes.engageNow),
+                  style: TextStyle(color: ColorRes.white, fontSize: 14),
+                )),
+            onTap: () {
 
-            if (Injector.customerValueData.remainingSalesPerson >=
-                    arrQuestions[index].resources &&
-                Injector.customerValueData.remainingCustomerCapacity > 0) {
-              Navigator.push(
-                  context,
-                  FadeRouteHome(
-                      initialPageType: Const.typeEngagement,
-                      questionDataHomeScr: arrQuestions[index],
-                      value: arrQuestions[index].value));
+              Utils.playClickSound();
+
+              if (Injector.customerValueData.remainingSalesPerson >=
+                  arrQuestions[index].resources &&
+                  Injector.customerValueData.remainingCustomerCapacity > 0) {
+                Navigator.push(
+                    context,
+                    FadeRouteHome(
+                        initialPageType: Const.typeEngagement,
+                        questionDataHomeScr: arrQuestions[index],
+                        value: arrQuestions[index].value));
 
 /*              Navigator.push(
             if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
@@ -352,14 +352,36 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             questionDataHomeScr: arrQuestions[index],
                           )));*/
 
-            } else {
-              Utils.showToast("You need atleast " +
-                  arrQuestions[index].resources.toString() +
-                  " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-            }
-          },
-        ),
-      ],
+              } else {
+                Utils.showToast("You need atleast " +
+                    arrQuestions[index].resources.toString() +
+                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+              }
+            },
+          ),
+        ],
+      ),
+      onTap: () {
+        {
+          Utils.playClickSound();
+
+          if (Injector.customerValueData.remainingSalesPerson >=
+              arrQuestions[index].resources &&
+              Injector.customerValueData.remainingCustomerCapacity > 0) {
+            Navigator.push(
+                context,
+                FadeRouteHome(
+                    initialPageType: Const.typeEngagement,
+                    questionDataHomeScr: arrQuestions[index],
+                    value: arrQuestions[index].value));
+
+          } else {
+            Utils.showToast("You need atleast " +
+                arrQuestions[index].resources.toString() +
+                " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+          }
+        }
+      },
     );
   }
 }
