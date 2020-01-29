@@ -471,7 +471,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     onTap: () {
                       Utils.playClickSound();
 
-                      if (selectedModule.isSubscribedFromBackend == 1) {
+                      if (selectedModule.isSubscribedFromBackend == 0) {
                         Utils.isInternetConnectedWithAlert()
                             .then((isConnected) {
                           if (isConnected) {
