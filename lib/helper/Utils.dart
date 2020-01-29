@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -278,11 +279,11 @@ class Utils {
 //  }
 
   static playClickSound() async {
-//    Injector.audioPlayer.play("sounds/all_button_clicks.wav");
+    if (Injector.isSoundEnable) Injector.player.play("all_button_clicks.wav");
 //    Audio audio = Audio.load('assets/sounds/all_button_clicks.wav');
 //    audio.play();
-    if (Injector.isSoundEnable)
-      audioPlay('assets/sounds/all_button_clicks.wav');
+//    if (Injector.isSoundEnable)
+//      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
@@ -355,7 +356,7 @@ class Utils {
       await Injector.prefs.remove(PrefKeys.answerData);
       Injector.streamController.add("submit answer");
     }).catchError((e) {
-      print("callSubmitAnswerApi"+e.toString());
+      print("callSubmitAnswerApi" + e.toString());
       Utils.showToast(e.toString());
     });
   }
@@ -468,16 +469,16 @@ class Utils {
 
 //    addBadge();
 
-//    if (Platform.isIOS) {
-//      title = message['title'];
-//      body = message['body'];
-//    } else {
-    message.values.forEach((value) {
-      title = Map.from(value)['title'] ?? "";
+    if (Platform.isIOS) {
+      title = message['title'];
+      body = message['body'];
+    } else {
+      message.values.forEach((value) {
+        title = Map.from(value)['title'] ?? "";
 
-      body = Map.from(value)['body'] ?? "";
-    });
-//    }
+        body = Map.from(value)['body'] ?? "";
+      });
+    }
 
     print(title);
     print(body);
@@ -564,7 +565,8 @@ class Utils {
     if (
 //    type == Const.typeChallenges ||
         type == Const.typeReward ||
-        type == Const.typePL || type == Const.typeTeam)
+            type == Const.typePL ||
+            type == Const.typeTeam)
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context,

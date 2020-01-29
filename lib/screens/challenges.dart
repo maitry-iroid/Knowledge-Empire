@@ -128,8 +128,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 flex: 3,
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount:
-                      arrFriendsToShow != null ? arrFriendsToShow.length : 0,
+                  itemCount: arrFriendsToShow.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showFriendItem(index);
                   },
@@ -294,7 +293,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   selectedItem(int type, int index) {
     if (type == 1) {
-      if (arrFriends[index].userId == selectedFriendId) {
+      if (arrFriendsToShow[index].userId == selectedFriendId) {
         return Colors.blue;
       } else {
         return ColorRes.greyText;
@@ -519,6 +518,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
+
+            response.data.removeWhere(
+                    (friend) => friend.userId == Injector.userData.userId);
+
             arrFriends = response.data;
             arrFriendsToShow = response.data;
 
@@ -531,7 +534,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print("getFriends_"+e.toString());
+      print("getFriends_" + e.toString());
 
       setState(() {
         isLoading = false;
@@ -590,7 +593,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print("getLearningModule_"+e.toString());
+      print("getLearningModule_" + e.toString());
 
       setState(() {
         isLoading = false;
@@ -630,7 +633,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print("sendChallenge_"+e.toString());
+      print("sendChallenge_" + e.toString());
 
       setState(() {
         isLoading = false;
@@ -659,6 +662,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
             List<GetFriendsData> getFriendsData = response.data;
 
             if (getFriendsData.length > 0) {
+
+              print("===="+getFriendsData.length.toString()+"=======");
+
+              getFriendsData.removeWhere(
+                  (friend) => friend.userId == Injector.userData.userId);
+
+              print("===="+getFriendsData.length.toString()+"=======");
+
               arrFriendsToShow = getFriendsData;
 
               setState(() {});
@@ -667,7 +678,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError((e) {
-      print("searchFriends_"+e.toString());
+      print("searchFriends_" + e.toString());
 
       setState(() {
         isLoading = false;
