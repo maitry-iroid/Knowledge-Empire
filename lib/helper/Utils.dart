@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:audiofileplayer/audiofileplayer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -280,36 +279,30 @@ class Utils {
 
   static playClickSound() async {
     if (Injector.isSoundEnable) Injector.player.play("all_button_clicks.wav");
-//    Audio audio = Audio.load('assets/sounds/all_button_clicks.wav');
-//    audio.play();
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
-//    Injector.audioPlayer.play("sounds/right_answer.wav");
-    if (Injector.isSoundEnable) audioPlay('assets/sounds/right_answer.wav');
+    if (Injector.isSoundEnable) Injector.player.play("right_answer.wav");
   }
 
   static incorrectAnswerSound() async {
-//    Injector.audioPlayer.play("sounds/wrong_answer.wav");
-    if (Injector.isSoundEnable) audioPlay('assets/sounds/wrong_answer.wav');
+    if (Injector.isSoundEnable) Injector.player.play("wrong_answer.wav");
   }
 
   static procorrectAnswerSound() async {
-//    Injector.audioPlayer.play("sounds/pro_right_answer.mp3");
-    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_right_answer.mp3');
+    if (Injector.isSoundEnable) Injector.player.play("pro_right_answer.mp3");
   }
 
   static proincorrectAnswerSound() async {
-//    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
-    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_wrong_answer.mp3');
+    if (Injector.isSoundEnable) Injector.player.play("pro_wrong_answer.mp3");
   }
 
-  static audioPlay(String path) async {
-    Audio audio = Audio.load(path);
-    audio.play();
-  }
+//  static audioPlay(String path) async {
+//    Audio audio = Audio.load(path);
+//    audio.play();
+//  }
 
   static saveQuestionLocally(List<QuestionData> arrQuestions) async {
 //    List<String> jsonQuestionData = List();
@@ -565,11 +558,10 @@ class Utils {
     if (
 //    type == Const.typeChallenges ||
         type == Const.typeReward ||
-            type == Const.typePL ||
             type == Const.typeTeam)
-        type == Const.typePL
+//        type == Const.typePL
 //            || type == Const.typeTeam
-    )
+//    )
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context,
@@ -693,3 +685,8 @@ class Utils {
       return 0;
   }
 }
+
+
+
+//    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
+//    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_wrong_answer.mp3');

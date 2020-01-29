@@ -32,7 +32,7 @@ dependencies:
   flutter_introduction_tooltip: 0.0.4
   image_picker: 0.6.2+3
   dio: ^3.0.7
-  audiofileplayer: ^1.1.1
+#  audiofileplayer: ^1.1.1
   video_player: ^0.10.5
   path: 1.6.4
   simple_pdf_viewer: ^0.2.2
