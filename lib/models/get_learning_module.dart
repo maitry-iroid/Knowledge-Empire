@@ -39,6 +39,7 @@ class LearningModuleData {
   int companyId;
   int isDownloadEnable;
   int moduleProgress;
+  int isSubscribedFromBackend;
 
   LearningModuleData();
 
@@ -51,6 +52,7 @@ class LearningModuleData {
     companyId = json['companyId'];
     isDownloadEnable = json['isDownloadEnable'];
     moduleProgress = json['moduleProgress'];
+    isSubscribedFromBackend = json['isSubscribedFromBackend'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +65,7 @@ class LearningModuleData {
     data['companyId'] = this.companyId;
     data['isDownloadEnable'] = this.isDownloadEnable;
     data['moduleProgress'] = this.moduleProgress;
+    data['isSubscribedFromBackend'] = this.isSubscribedFromBackend;
     return data;
   }
 }

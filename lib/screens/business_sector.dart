@@ -409,29 +409,36 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     selectedModule.isAssign == 1
                         ? InkResponse(
                             child: Text(
-                                Utils.getText(context, StringRes.downLoad)),
+                              Utils.getText(context, StringRes.downLoad),
+                              style: TextStyle(
+                                  color: Injector.isBusinessMode
+                                      ? ColorRes.white
+                                      : ColorRes.fontDarkGrey),
+                            ),
                             onTap: () {
                               Utils.playClickSound();
                             },
                           )
                         : Container(),
-                    selectedModule.isAssign == 1?Switch(
-                      value: isSwitched,
-                      onChanged: (value) {
-                        Utils.isInternetConnectedWithAlert()
-                            .then((isConnected) {
-                          if (isConnected) {
-                            setState(() {
-                              isSwitched = value;
-                            });
-                            updatePermission();
-                          }
-                        });
-                      },
-                      activeTrackColor: ColorRes.white,
-                      inactiveTrackColor: ColorRes.lightGrey,
-                      activeColor: Colors.white,
-                    ):Container(),
+                    selectedModule.isAssign == 1
+                        ? Switch(
+                            value: isSwitched,
+                            onChanged: (value) {
+                              Utils.isInternetConnectedWithAlert()
+                                  .then((isConnected) {
+                                if (isConnected) {
+                                  setState(() {
+                                    isSwitched = value;
+                                  });
+                                  updatePermission();
+                                }
+                              });
+                            },
+                            activeTrackColor: ColorRes.white,
+                            inactiveTrackColor: ColorRes.lightGrey,
+                            activeColor: Colors.white,
+                          )
+                        : Container(),
                   ],
                 ),
                 InkResponse(
@@ -464,15 +471,21 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     onTap: () {
                       Utils.playClickSound();
 
-                      Utils.isInternetConnectedWithAlert().then((isConnected) {
-                        if (isConnected) {
-                          if (selectedModule.isAssign == 0) {
-                            assignUserToModule(Const.subscribe);
-                          } else {
-                            assignUserToModule(Const.unSubscribe);
+                      if (selectedModule.isSubscribedFromBackend == 1) {
+                        Utils.isInternetConnectedWithAlert()
+                            .then((isConnected) {
+                          if (isConnected) {
+                            if (selectedModule.isAssign == 0) {
+                              assignUserToModule(Const.subscribe);
+                            } else {
+                              assignUserToModule(Const.unSubscribe);
+                            }
                           }
-                        }
-                      });
+                        });
+                      } else {
+                        Utils.showToast(
+                            "Oops..You are now allowed to perform this action!");
+                      }
                     })
               ],
             ),
@@ -517,7 +530,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       } else
         Utils.showToast("Something went wrong");
     }).catchError((e) {
-      print("getLeariningModule_"+e.toString());
+      print("getLeariningModule_" + e.toString());
 
       setState(() {
         isLoading = false;
@@ -565,7 +578,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       } else
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
     }).catchError((e) {
-      print("assignUserModule_"+e.toString());
+      print("assignUserModule_" + e.toString());
 
       setState(() {
         isLoading = false;
@@ -584,8 +597,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
     arrFinalLearningModules.addAll(data);
   }
-
-
 
   Future<void> updatePermission() async {
     setState(() {
@@ -675,7 +686,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
-      print("downloadQuestion_"+e.toString());
+      print("downloadQuestion_" + e.toString());
 
       setState(() {
         isLoading = false;
