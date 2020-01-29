@@ -83,6 +83,10 @@ class StringRes {
   static var profit = "profit";
   static var customers = "customers";
   static var brand = "brand";
+  static var learningModule = "learningModule";
+  static var levels = "levels";
+  static var complete = "complete";
+
 
   //business sectors
 
@@ -176,7 +180,10 @@ class StringRes {
       'revenue': "Revenue",
       'profit': "Profit",
       'customers': "Customers",
-      'brand': "Brand"
+      'brand': "Brand",
+      'learningModule': "Learning Module",
+      'levels': "Levels",
+      'complete': "%Complete",
     },
     'es': {
       'title': 'Hola Mundo',

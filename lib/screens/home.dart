@@ -23,6 +23,7 @@ import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
+import 'package:ke_employee/screens/team.dart';
 import 'business_sector.dart';
 import '../commonview/header.dart';
 import '../helper/Utils.dart';
@@ -188,7 +189,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 4:
         return /*RewardsPage()*/ Container();
       case 5:
-        return /*TeamPage()*/ Container();
+        return TeamPage();
       case 6:
         return ChallengesPage();
       case 7:
@@ -223,8 +224,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       //TODO please uncomment pl condition
 
       if (index == Const.typeReward ||
-          index == Const.typePL ||
-          index == Const.typeTeam) {
+          index == Const.typePL
+//          || index == Const.typeTeam
+      ) {
         Utils.showComingSoonDialog(context);
       } else {
         Navigator.of(context).pop(); // close the drawer

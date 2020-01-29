@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 import '../helper/Utils.dart';
 import '../helper/res.dart';
@@ -16,14 +17,18 @@ class _TeamPageState extends State<TeamPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Stack(
+    return Stack(
       children: <Widget>[
         CommonView.showBackground(context),
         Padding(
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-          child: Column(
-            children: <Widget>[CommonView.showTitle(context, StringRes.team)],
-          ),
+          child: showMainBody(),
+//          child: Column(
+//            children: <Widget>[
+//              CommonView.showTitle(context, StringRes.team),
+//              showMainBody()
+//            ],
+//          ),
         ),
       ],
     );
@@ -62,6 +67,389 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
+  showMainBody() {
+    return Row(
+      children: <Widget>[showFirstHalf(), showSecondHalf()],
+    );
+  }
+
+  showFirstHalf() {
+    return Expanded(
+        flex: 1,
+        child: SingleChildScrollView(
+            child: Column(
+          children: <Widget>[
+            showProfile(),
+            showListHeader(),
+          ],
+        )));
+  }
+
+  showProfile() {
+    return Container(
+//        height: 200,
+        margin: EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 10),
+        child: Column(
+          children: <Widget>[
+            firstColumn(),
+            secondColumn(),
+            thirdColumn(),
+          ],
+        ));
+  }
+
+  showListHeader() {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 30,
+          margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_grey_teamheader")),
+                  fit: BoxFit.fill)),
+//      color: ColorRes.white,
+          padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              listHeaderText(StringRes.learningModule),
+              listHeaderText(StringRes.levels),
+              listHeaderText(StringRes.complete)
+            ],
+          ),
+        ),
+        showListView()
+      ],
+    );
+  }
+
+  showListView() {
+    return Container(
+      padding: EdgeInsets.only(left: 15, right: 15, top: 0, bottom: 0),
+      child: ListView.builder(
+          itemCount: 30,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return showListData();
+//        return ListTile(
+//          title: Text("hello"),
+//        );
+          }),
+    );
+  }
+
+  showListData() {
+    return Container(
+        height: 30,
+        padding: EdgeInsets.only(left: 65, right: 35, top: 5, bottom: 5),
+        margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("bg_white_smalldata")),
+                fit: BoxFit.fill)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[listTextData(), listTextData(), listTextData()],
+        ));
+  }
+
+  profileBorderShow() {
+    return BoxDecoration(
+        border: Border.all(width: 1, color: ColorRes.white),
+        borderRadius: BorderRadius.all(Radius.circular(20)));
+  }
+
+  listHeaderText(String title) {
+    return Container(
+      child: Text(title),
+    );
+  }
+
+  listTextData() {
+    return Container(
+      child: Text(
+        "helll",
+        textAlign: TextAlign.right,
+        style: TextStyle(color: ColorRes.textRecordBlue),
+      ),
+    );
+  }
+
+  showProfileText(String title) {
+    return Container(
+      margin: EdgeInsets.only(left: 20, top: 5),
+      child: Text(title),
+    );
+  }
+
+  firstColumn() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          showProfileText("Name:"),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  height: 25,
+                  width: 115,
+                  margin: EdgeInsets.only(left: 55, top: 8, bottom: 5),
+                  decoration: profileBorderShow(),
+                  child: Center(
+                    child: Text("eric androld"),
+                  ),
+                ),
+                Container(
+                  height: 25,
+                  width: 80,
+                  margin: EdgeInsets.only(left: 0, top: 8, bottom: 5),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg("bg_change_pw")),
+                          fit: BoxFit.fill)),
+                  child: Center(
+                    child: Text(StringRes.bailout),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  secondColumn() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          showProfileText("Department:"),
+          Container(
+            height: 25,
+            width: 150,
+//                    padding: EdgeInsets.only(left: 15, top: 8),
+            margin: EdgeInsets.only(left: 10, top: 8, bottom: 5),
+            decoration: profileBorderShow(),
+            child: Center(
+              child: Text("sales department"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  thirdColumn() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          showProfileText("Resets:"),
+          Container(
+            height: 25,
+            width: 60,
+//                    padding: EdgeInsets.only(left: 57, top: 8),
+            margin: EdgeInsets.only(left: 45, top: 8, bottom: 5),
+            decoration: profileBorderShow(),
+            child: Center(
+              child: Text("5"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //second half
+
+  bool toggle = false;
+  Map<String, double> dataMap = Map();
+  List<Color> colorList = [
+    ColorRes.chartTen,
+    ColorRes.chartNine,
+    ColorRes.chartEight,
+    ColorRes.chartSeven,
+    ColorRes.chartSix,
+    ColorRes.chartFive,
+    ColorRes.chartFour,
+    ColorRes.chartThree,
+    ColorRes.chartTwo,
+    ColorRes.chartOne,
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    dataMap.putIfAbsent("1", () => 5);
+    dataMap.putIfAbsent("2", () => 3);
+    dataMap.putIfAbsent("3", () => 2);
+    dataMap.putIfAbsent("4", () => 2);
+    dataMap.putIfAbsent("5", () => 5);
+    dataMap.putIfAbsent("6", () => 3);
+    dataMap.putIfAbsent("7", () => 2);
+    dataMap.putIfAbsent("8", () => 2);
+    dataMap.putIfAbsent("9", () => 2);
+    dataMap.putIfAbsent("10", () => 2);
+
+    openCloseMap.putIfAbsent("Open", () => 5);
+    openCloseMap.putIfAbsent("Close", () => 3);
+  }
+
+  Map<String, double> openCloseMap = Map();
+  List<Color> colorOpenCloseList = [
+    ColorRes.chartOpen,
+    ColorRes.chartClose,
+  ];
+
+  showSecondHalf() {
+    return Expanded(
+        flex: 1,
+        child: SingleChildScrollView(
+            child: Column(
+          children: <Widget>[
+            qLevel(),
+//            pieChart("Q Level",1),
+            qStatus(),
+//            pieChart("Q Status",2),
+          ],
+        )));
+  }
+
+  qLevel() {
+    return Container(
+        height: 200,
+        alignment: Alignment.centerLeft,
+        margin: EdgeInsets.only(left: 0),
+        child: pieChart("Q Level", 1));
+  }
+
+  qStatus() {
+    return Container(
+      height: 200,
+      width: Utils.getDeviceWidth(context),
+//      color: ColorRes.blackTransparent,
+      child: pieChart("Q Status", 2),
+    );
+  }
+
+  pieChart(String title, int type) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          height: 25,
+          width: 100,
+          margin: EdgeInsets.only(left: 60, top: 10),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_piechart")),
+                  fit: BoxFit.fill)),
+          child: Center(
+            child: Text(title),
+          ),
+        ),
+        Row (
+          children: <Widget>[
+            Container(
+//                width: 150,
+//            height: 150,
+//              child: Expanded(
+                child: Center(
+                    child: PieChart(
+                  dataMap: type == 1 ? dataMap : openCloseMap,
+                  animationDuration: Duration(milliseconds: 800),
+                  chartLegendSpacing: 32.0,
+                  chartRadius: MediaQuery.of(context).size.width / 5,
+//                showChartValuesInPercentage: true,
+                  showChartValues: false,
+                  showChartValuesOutside: false,
+                  chartValueBackgroundColor: Colors.transparent,
+                  colorList: type == 1 ? colorList : colorOpenCloseList,
+//                showLegends: true,
+                  legendPosition: LegendPosition.right,
+                  showChartValueLabel: false,
+                  initialAngle: 0,
+                  chartValueStyle: defaultChartValueStyle.copyWith(
+//                    color: Colors.blueGrey[900].withOpacity(0.9),
+                      color: type == 1 ? ColorRes.white : Colors.transparent),
+                  showLegends: type == 1 ? false : true,
+                  chartType: ChartType.disc,
+                )),
+//              ),
+            ),
+
+
+            type == 1 ?
+            Expanded(
+//                width: 150,
+                child: Column(
+                  children: <Widget>[
+                    firstColumnColor(),
+                    firstColumnColor(),
+
+                    secondColumnColor(),
+                    secondColumnColor()
+                  ],
+                ),
+
+            ) : Container()
+          ],
+        )
+      ],
+    );
+  }
+
+  firstColumnColor() {
+    return Row(
+      children: <Widget>[
+        rightSideData(),
+        rightSideData(),
+        rightSideData()
+      ],
+    );
+  }
+
+  secondColumnColor() {
+    return  Row(
+      children: <Widget>[
+        rightSideData(),
+        rightSideData()
+      ],
+    );
+  }
+
+  rightSideData() {
+    return Container(
+      padding: EdgeInsets.all(4),
+      child: indexColor(),
+    );
+  }
+
+
+  indexColor() {
+    return Row(
+      children: <Widget>[
+        Container(
+          height: 18,
+          width: 18,
+          decoration: BoxDecoration(
+            color: ColorRes.chartSix
+          ),
+        ),
+        Container(
+          height: 15,
+          width: 30,
+          padding: EdgeInsets.only(left: 7),
+          child: Text("10"),
+        )
+      ],
+    );
+  }
+
+
+/*
   Container showSubHeader() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
@@ -275,5 +663,5 @@ class _TeamPageState extends State<TeamPage> {
         ),
       ),
     );
-  }
+  }*/
 }

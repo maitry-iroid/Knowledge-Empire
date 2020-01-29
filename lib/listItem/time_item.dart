@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -30,6 +31,14 @@ class _TimeItemState extends State<TimeItem> {
     }
   }
 
+  dayBoxCircular1() {
+    if(widget.index == 0) {
+      return BorderRadius.only(bottomLeft: Radius.circular(0), topLeft: Radius.circular(0));
+    } else if(widget.index == 2) {
+      return BorderRadius.only(bottomRight: Radius.circular(0), topRight: Radius.circular(0));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -42,8 +51,8 @@ class _TimeItemState extends State<TimeItem> {
         margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 11, horizontal: 3) : EdgeInsets.symmetric(vertical: 5, horizontal: 1),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: widget.isSelected ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
-            borderRadius: dayBoxCircular(),
+            color: Injector.isBusinessMode ? Colors.transparent : widget.isSelected ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
+            borderRadius: Injector.isBusinessMode ? dayBoxCircular1() : dayBoxCircular(),
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? widget.isSelected
                     ? "ranking_selected"

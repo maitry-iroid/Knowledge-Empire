@@ -49,6 +49,25 @@ class ColorRes {
   static Color bgSettings= Color(0xFF959595);
   static Color borderRewardsName = Color(0xFFf8bb43);
   static Color rankingBackGround = Color(0xFFa5b7cf);
+
+  static Color chartTen = Color(0xFF823d28);
+  static Color chartNine = Color(0xFF8e4a35);
+  static Color chartEight = Color(0xFF9f5842);
+  static Color chartSeven = Color(0xFFa86753);
+  static Color chartSix = Color(0xFFbc7b67);
+  static Color chartFive = Color(0xFFc78977);
+  static Color chartFour = Color(0xFFdca595);
+  static Color chartThree = Color(0xFFe6b8aa);
+  static Color chartTwo = Color(0xFFf3ccc0);
+  static Color chartOne = Color(0xFFf9d2c6);
+
+  static Color chartOpen = Color(0xFF6fac46);
+  static Color chartClose = Color(0xFFc4d8bc);
+
+
+
+
+
 }
 
 class DimenRes {

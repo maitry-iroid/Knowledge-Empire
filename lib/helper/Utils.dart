@@ -564,7 +564,9 @@ class Utils {
     if (
 //    type == Const.typeChallenges ||
         type == Const.typeReward ||
-        type == Const.typePL || type == Const.typeTeam)
+        type == Const.typePL
+//            || type == Const.typeTeam
+    )
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context,

@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
+import 'package:package_info/package_info.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -43,6 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
         : "";
 
     super.initState();
+
+    packagesInfo();
   }
 
   File _image;
@@ -52,6 +55,16 @@ class _ProfilePageState extends State<ProfilePage> {
   void dispose() {
     myFocusNode.dispose();
     super.dispose();
+  }
+
+  String version = "";
+
+  packagesInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String appName = packageInfo.appName;
+    String packageName = packageInfo.packageName;
+    version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
   }
 
   @override
@@ -119,41 +132,59 @@ class _ProfilePageState extends State<ProfilePage> {
                       horizontal: Utils.getDeviceWidth(context) / 20),
                   child: ListView(
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
-                            width: 150,
-                            height: Injector.isBusinessMode ? 30 : 30,
-                            margin:
-                                EdgeInsets.only(top: 15, left: 45, right: 0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              Utils.getText(context, StringRes.settings),
-                              style: TextStyle(
-                                  color: ColorRes.white,
-                                  fontSize: 17,
-                                  letterSpacing: 0.5),
-                            ),
-                            decoration: BoxDecoration(
-                                color: Injector.isBusinessMode
-                                    ? null
-                                    : ColorRes.titleBlueProf,
-                                borderRadius: Injector.isBusinessMode
-                                    ? null
-                                    : BorderRadius.circular(20),
-                                image: Injector.isBusinessMode
-                                    ? DecorationImage(
-                                        image: AssetImage(
-                                            Utils.getAssetsImg('bg_setting')))
-                                    : null),
-                          ),
-
-                        ],
+                      Container(
+                        width: 150,
+                        height: Injector.isBusinessMode ? 30 : 30,
+                        margin: EdgeInsets.only(top: 15, left: 0, right: 0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          Utils.getText(context, StringRes.settings),
+                          style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 17,
+                              letterSpacing: 0.5),
+                        ),
+                        decoration: BoxDecoration(
+                            color: Injector.isBusinessMode
+                                ? null
+                                : ColorRes.titleBlueProf,
+                            borderRadius: Injector.isBusinessMode
+                                ? null
+                                : BorderRadius.circular(20),
+                            image: Injector.isBusinessMode
+                                ? DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg('bg_setting')))
+                                : null
+                        ),
                       ),
                       Container(
                         height: 30,
-                        margin: EdgeInsets.only(top: 15, bottom: 10),
+//                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg('bg_privacy')))
+                                  : null),
+
+                              child: Center(
+                                child: Text("App Version: $version", style: TextStyle(color: ColorRes.white),),
+                              ),
+                            ),
+
+                      ),
+                      Container(
+                        height: 30,
+                        margin: EdgeInsets.only(top: 0, bottom: 10),
                         alignment: Alignment.center,
                         child: Text(
                           Utils.getText(context, StringRes.privacyPolicy),
@@ -266,8 +297,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           InkResponse(
-                            child:
-                                Text(Utils.getText(context, StringRes.sound),style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.fontDarkGrey),),
+                            child: Text(
+                              Utils.getText(context, StringRes.sound),
+                              style: TextStyle(
+                                  color: Injector.isBusinessMode
+                                      ? ColorRes.white
+                                      : ColorRes.fontDarkGrey),
+                            ),
                             onTap: () {
                               Utils.playClickSound();
                             },
@@ -286,9 +322,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                 }
                               });
                             },
-                            activeTrackColor: Injector.isBusinessMode?ColorRes.white:ColorRes.lightGrey,
-                            inactiveTrackColor: Injector.isBusinessMode?ColorRes.lightGrey:ColorRes.lightGrey,
-                            activeColor: Injector.isBusinessMode?ColorRes.blue:ColorRes.blue,
+                            activeTrackColor: Injector.isBusinessMode
+                                ? ColorRes.white
+                                : ColorRes.lightGrey,
+                            inactiveTrackColor: Injector.isBusinessMode
+                                ? ColorRes.lightGrey
+                                : ColorRes.lightGrey,
+                            activeColor: Injector.isBusinessMode
+                                ? ColorRes.blue
+                                : ColorRes.blue,
                           ),
                         ],
                       ),
@@ -414,7 +456,7 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       }
     }).catchError((e) {
-      print("bailOut_"+e.toString());
+      print("bailOut_" + e.toString());
       Utils.showToast(e.toString());
       setState(() {
         isLoading = false;
@@ -451,7 +493,7 @@ class _ProfilePageState extends State<ProfilePage> {
       Navigator.pushAndRemoveUntil(
           context, FadeRouteLogin(), ModalRoute.withName("/home"));
     }).catchError((e) {
-      print("logout_"+e.toString());
+      print("logout_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -593,7 +635,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 38,
-                              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -668,7 +711,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 38,
-                              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -858,7 +902,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
-      print("updatePorfile_"+e.toString());
+      print("updatePorfile_" + e.toString());
       setState(() {
         isLoading = false;
       });
