@@ -37,6 +37,8 @@ class MyAppState extends State<MyApp> {
   void initState() {
     print(Const.SERVER_ONE);
 
+    Injector.player.loadAll(['all_button_clicks.wav']);
+
     initPlatformState();
 
     if (Injector.prefs.getInt(PrefKeys.userId) != null) {

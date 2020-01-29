@@ -77,13 +77,15 @@ class HeaderUtils {
 
   static double getBonusValue() {
     try {
-      return (Injector.customerValueData?.correctAnswerCount ?? 0) /
-          ((Injector.customerValueData.totalAttemptedQuestion == null ||
-                  Injector.customerValueData.totalAttemptedQuestion == 0)
+      double value = (Injector.customerValueData?.correctAnswerCount ?? 0) /
+          ((Injector.customerValueData?.totalAttemptedQuestion == null ||
+                  Injector.customerValueData?.totalAttemptedQuestion == 0)
               ? 1
-              : Injector.customerValueData.totalAttemptedQuestion);
+              : Injector.customerValueData?.totalAttemptedQuestion);
+
+      return value / 100;
     } catch (e) {
-      print(e);
+      print("getBonusValue_" + e.toString());
       return 0.0;
     }
   }
@@ -99,7 +101,7 @@ class HeaderUtils {
       } else
         return 0;
     } catch (e) {
-      print(e);
+      print("getRemainingValue_" + e.toString());
     }
     return 0;
   }

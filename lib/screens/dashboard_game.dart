@@ -64,7 +64,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
     Utils.isInternetConnected().then((isConnected) {
       DashboardRequest rq = DashboardRequest();
       rq.userId = Injector.userData.userId;
-      rq.mode = Injector.mode;
+      rq.mode = Injector.mode??Injector.isBusinessMode;
 
       WebApi().getDashboardValue(rq).then((response) {
         if (response?.data != null) {
