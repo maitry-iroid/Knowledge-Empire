@@ -110,15 +110,16 @@ class _RankingPageState extends State<RankingPage> {
 
   showFirstColumn() {
     return Container(
-
-      color: Injector.isBusinessMode ? Colors.transparent : ColorRes.rankingBackGround,
+      color: Injector.isBusinessMode
+          ? Colors.transparent
+          : ColorRes.rankingBackGround,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          showLeftItem(0,StringRes.revenue),
-          showLeftItem(1,StringRes.profit),
-          showLeftItem(2,StringRes.customers),
-          showLeftItem(3,StringRes.brand),
+          showLeftItem(0, StringRes.revenue),
+          showLeftItem(1, StringRes.profit),
+          showLeftItem(2, StringRes.customers),
+          showLeftItem(3, StringRes.brand),
         ],
       ),
     );
@@ -127,6 +128,8 @@ class _RankingPageState extends State<RankingPage> {
   var arrCategory = ['World', 'Country', 'Friends'];
 
   var arrTime = ['Day', 'Month', 'Year'];
+
+  final _height = 100.0;
 
   showSecondColumn() {
     return Expanded(
@@ -176,22 +179,29 @@ class _RankingPageState extends State<RankingPage> {
               children: <Widget>[
                 InkResponse(
                   child: Container(
-                    width: 35,
-                    height: 35,
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
+                      width: 35,
+                      height: 35,
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg( Injector.isBusinessMode ? "bg_you" : "bg_pro_you")),
-                          fit: BoxFit.fill)),
-                  child: Text(
-                    'You',
-                    style: TextStyle(color: ColorRes.white, fontSize: 15),
-                  )),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(Utils.getAssetsImg(
+                                  Injector.isBusinessMode
+                                      ? "bg_you"
+                                      : "bg_pro_you")),
+                              fit: BoxFit.fill)),
+                      child: Text(
+                        'You',
+                        style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      )),
                   onTap: () {
-                    _scrollController.jumpTo(
-                        double.parse(_scrollController.position.toString()));
+                    int index = arrFriends.indexOf(arrFriends.firstWhere(
+                        (friend) => friend.userId == Injector.userData.userId));
+
+                    _scrollController.animateTo(_height * index,
+                        duration: Duration(seconds: 2),
+                        curve: Curves.fastOutSlowIn);
                   },
                 ),
                 Expanded(
@@ -202,9 +212,10 @@ class _RankingPageState extends State<RankingPage> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg(Injector.isBusinessMode ? "bg_ranking_header" : "bg_pro_ranking_header")
-                            ),
+                            image: AssetImage(Utils.getAssetsImg(
+                                Injector.isBusinessMode
+                                    ? "bg_ranking_header"
+                                    : "bg_pro_ranking_header")),
                             fit: BoxFit.fill)),
                     child: Row(
                       children: <Widget>[
@@ -248,8 +259,10 @@ class _RankingPageState extends State<RankingPage> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg(Injector.isBusinessMode ? "bg_ranking_header_1" : "bg_pro_ranking_header_1")),
+                            image: AssetImage(Utils.getAssetsImg(
+                                Injector.isBusinessMode
+                                    ? "bg_ranking_header_1"
+                                    : "bg_pro_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.challenges),
@@ -267,8 +280,10 @@ class _RankingPageState extends State<RankingPage> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg(Injector.isBusinessMode ? "bg_ranking_header_1" : "bg_pro_ranking_header_1")),
+                            image: AssetImage(Utils.getAssetsImg(
+                                Injector.isBusinessMode
+                                    ? "bg_ranking_header_1"
+                                    : "bg_pro_ranking_header_1")),
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.friend),
@@ -309,11 +324,11 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   getBgImage(int index) {
-    return AssetImage(Utils.getAssetsImg(
-      Injector.isBusinessMode ?
-        selectedLeftCategory != index ? "ranking_bg_gray" : "rankinf_bg_blue" :
-      selectedLeftCategory != index ? "ranking_bg_pro_deselected" : "ranking_bg_pro_selected"
-    ));
+    return AssetImage(Utils.getAssetsImg(Injector.isBusinessMode
+        ? selectedLeftCategory != index ? "ranking_bg_gray" : "rankinf_bg_blue"
+        : selectedLeftCategory != index
+            ? "ranking_bg_pro_deselected"
+            : "ranking_bg_pro_selected"));
   }
 
   showLeftItem(int index, String title) {
@@ -333,8 +348,10 @@ class _RankingPageState extends State<RankingPage> {
         child: Container(
           height: 80,
           width: 80,
-          padding: Injector.isBusinessMode ? EdgeInsets.all(20) : EdgeInsets.all(18),
-          margin: Injector.isBusinessMode ? EdgeInsets.all(0) : EdgeInsets.all(5),
+          padding:
+              Injector.isBusinessMode ? EdgeInsets.all(20) : EdgeInsets.all(18),
+          margin:
+              Injector.isBusinessMode ? EdgeInsets.all(0) : EdgeInsets.all(5),
           decoration:
               BoxDecoration(image: DecorationImage(image: getBgImage(index))),
           child: Column(
@@ -434,9 +451,12 @@ class _RankingPageState extends State<RankingPage> {
       if (response != null) {
         if (response.flag == "true") {
           if (response.data != null) {
-            if (isToAddData)
+            if (isToAddData) {
               arrFriends.addAll(response.data);
-            else
+              arrFriends.addAll(response.data);
+              arrFriends.addAll(response.data);
+              arrFriends.addAll(response.data);
+            } else
               arrFriends = response.data;
             setState(() {});
           }
@@ -601,12 +621,14 @@ class _RankingPageState extends State<RankingPage> {
               margin: EdgeInsets.only(right: 1),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-
-                color: Injector.isBusinessMode ? Colors.transparent : ColorRes.titleBlueProf,
+                color: Injector.isBusinessMode
+                    ? Colors.transparent
+                    : ColorRes.titleBlueProf,
                 borderRadius: BorderRadius.all(Radius.circular(18)),
                 border: Border.all(width: 1, color: ColorRes.rankingBackGround),
                 image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? 'value' : '')),
+                    image: AssetImage(Utils.getAssetsImg(
+                        Injector.isBusinessMode ? 'value' : '')),
                     fit: BoxFit.fill),
               ),
               child: Text(

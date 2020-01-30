@@ -434,9 +434,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                 }
                               });
                             },
-                            activeTrackColor: ColorRes.white,
+                            activeTrackColor: selectedModule.isSubscribedFromBackend==1?ColorRes.lightGrey:ColorRes.white,
                             inactiveTrackColor: ColorRes.lightGrey,
-                            activeColor: Colors.white,
+                            activeColor: selectedModule.isSubscribedFromBackend==1?ColorRes.lightGrey:ColorRes.white,
                           )
                         : Container(),
                   ],
