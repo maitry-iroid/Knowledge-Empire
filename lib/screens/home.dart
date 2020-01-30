@@ -188,7 +188,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return RewardsPage() ;
+        return RewardsPage();
       case 5:
         return TeamPage();
       case 6:
@@ -222,10 +222,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      //TODO please uncomment pl condition
 
       if (
-//      index == Const.typeReward ||
           index == Const.typePL
 //          || index == Const.typeTeam
       ) {

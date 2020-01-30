@@ -159,7 +159,8 @@ class HeaderViewState extends State<HeaderView> {
                       Positioned(
                         left: 4,
                         child: Text(
-                          HeaderUtils.getProgress(type)+"%",
+                          HeaderUtils.getProgress(type).toString() +
+                              (type == Const.typeBrandValue ? "%" : ""),
                           style: TextStyle(color: ColorRes.white, fontSize: 14),
                         ),
                       )
@@ -176,31 +177,21 @@ class HeaderViewState extends State<HeaderView> {
         ),
       ),
       onTap: () {
-        //TODO perform click
-
         if (type == Const.typeEmployee) {
-          /*  open organization / power-ups screen  */
           if (Injector.isBusinessMode == true) {
             Injector.streamController?.add("${Const.typeOrg}");
           } else {
             Injector.streamController?.add("${Const.typeTeam}");
           }
         } else if (type == Const.typeSalesPersons) {
-          /*  open new customer screen  */
           Injector.streamController?.add("${Const.typeNewCustomer}");
         } else if (type == Const.typeServicesPerson) {
-          /*  open existing customer screen  */
           Injector.streamController?.add("${Const.typeExistingCustomer}");
         } else if (type == Const.typeBrandValue) {
-          /*  open ranking screen  */
           Injector.streamController?.add("${Const.typeRanking}");
         } else if (type == Const.typeMoney) {
-          /*  open PL screen  */
           Injector.streamController?.add("${Const.typePL}");
         }
-//        else if (type == Const.typeProfile) {
-//          Injector.streamController?.add("profile open");
-//        }
       },
     );
   }
@@ -270,7 +261,8 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   showUserNameCompanyName(BuildContext context) {
-    return Expanded(child: Column(
+    return Expanded(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

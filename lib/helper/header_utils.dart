@@ -70,7 +70,10 @@ class HeaderUtils {
 
   static getAnswerRatio() {
     return ((Injector.customerValueData?.correctAnswerCount ?? 0) /
-            (Injector.customerValueData?.totalAttemptedQuestion ?? 1) *
+            (Injector.customerValueData?.totalAttemptedQuestion == null ||
+                    Injector.customerValueData?.totalAttemptedQuestion == 0
+                ? 1
+                : Injector.customerValueData?.totalAttemptedQuestion) *
             100)
         .toStringAsFixed(2);
   }
@@ -83,7 +86,7 @@ class HeaderUtils {
               ? 1
               : Injector.customerValueData?.totalAttemptedQuestion);
 
-      value = (value / 100) * (10 / 100);
+      value = (value / 10);
 
       return value <= 1 || value >= 0 ? value : 0.0;
     } catch (e) {
