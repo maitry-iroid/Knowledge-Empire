@@ -543,7 +543,7 @@ class CommonView {
                       },
                     )),
                 Padding(
-                    padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
+                    padding: EdgeInsets.only(bottom: 15, left: 40, right: 10),
                     child: InkResponse(
                       child: Stack(
                         children: <Widget>[
@@ -562,7 +562,7 @@ class CommonView {
                     )),
                 Padding(
                   padding:
-                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                      EdgeInsets.only(bottom: 0, left: 0, right: 10, top: 00),
                   child: InkResponse(
                       child: Stack(
                         children: <Widget>[

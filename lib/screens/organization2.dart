@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -12,6 +14,7 @@ import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 
+int position1;
 class OrganizationsPage2 extends StatefulWidget {
   @override
   _OrganizationsPage2State createState() => _OrganizationsPage2State();
@@ -32,7 +35,38 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) getOrganization();
     });
+//    initStreamControllerProfile();
   }
+
+  reference() {
+    setState(() {
+    });
+  }
+
+//  void initStreamControllerProfile() {
+//    if (Injector.streamController == null)
+//      Injector.streamController = StreamController.broadcast();
+//
+//    Injector.streamController.stream.listen((data) {
+//      if (mounted) {
+//        setState(() {
+//          print(data);
+//
+//          if (data == "update plus") {
+//            manageLevel(position1, Const.add);
+////            showConfirmDialog(position1, Const.add);
+//          } else if(data == "update minus") {
+//            manageLevel(position1, Const.subtract);
+//          }
+//
+//        });
+//      }
+//    }, onDone: () {
+//      print("Task Done11");
+//    }, onError: (error) {
+//      print("Some Error11");
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,116 +102,152 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   showItem(int type) {
     int position = type - 1;
 
+//    setState(() {
+//      position1 = position;
+//    });
+
+    if (Injector.streamController == null)
+      Injector.streamController = StreamController.broadcast();
+
+    Injector.streamController.stream.listen((data) {
+      if (mounted) {
+        setState(() {
+          print(data);
+
+          if (data == "update plus") {
+            manageLevel(position, Const.add);
+//            showConfirmDialog(position1, Const.add);
+          } else if(data == "update minus") {
+            manageLevel(position, Const.subtract);
+          }
+
+        });
+      }
+    }, onDone: () {
+      print("Task Done11");
+    }, onError: (error) {
+      print("Some Error11");
+    });
 
     return Stack(
       fit: StackFit.loose,
       children: <Widget>[
-        Container(
-          height: 60,
-          child: Card(
-            margin: EdgeInsets.all(4),
-            elevation: 5,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 5, right: 5),
-                      width: 18,
-                      height: 18,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          color: ColorRes.headerBlue),
-                      child: Text(
-                        arrOrganization[position].level.toString(),
+        InkResponse(
+          child: Container(
+            height: 60,
+            child: Card(
+              margin: EdgeInsets.all(4),
+              elevation: 5,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 5, right: 5),
+                        width: 18,
+                        height: 18,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            color: ColorRes.headerBlue),
+                        child: Text(
+                          arrOrganization[position].level.toString(),
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.white
+                                  : ColorRes.hintColor),
+                        ),
+                      ),
+                      Text(
+                        getTitle(position),
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Injector.isBusinessMode
-                                ? ColorRes.white
+                                ? ColorRes.textBlue
                                 : ColorRes.hintColor),
                       ),
-                    ),
-                    Text(
-                      getTitle(position),
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Injector.isBusinessMode
-                              ? ColorRes.textBlue
-                              : ColorRes.hintColor),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    InkResponse(
-                      child: Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg('minus')),
-                          fit: BoxFit.fill,
-                          width: 13,
-                        ),
+                      SizedBox(
+                        width: 5,
                       ),
-                      onTap: () {
-                        showConfirmDialog(position, Const.subtract);
-                      },
-                    ),
-                    Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: 15,
-                          width: Utils.getDeviceWidth(context) / 16.4,
-                          margin: EdgeInsets.symmetric(horizontal: 0),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg('bg_progress_2')),
-                                  fit: BoxFit.fill)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+
+//                      InkResponse(
+//                        child: Padding(
+//                          padding: EdgeInsets.all(5),
+//                          child: Image(
+//                            image: AssetImage(Utils.getAssetsImg('minus')),
+//                            fit: BoxFit.fill,
+//                            width: 13,
+//                          ),
+//                        ),
+//                        onTap: () {
+//                          showConfirmDialog(position, Const.subtract);
+//                        },
+//                      ),
+
+                      Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Container(
+                            height: 15,
+                            width: Utils.getDeviceWidth(context) / 10,
+//                            width: Utils.getDeviceWidth(context) / 16.4,
+                            margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg('bg_progress_2')),
+                                    fit: BoxFit.fill)),
 //                padding: EdgeInsets.symmetric(vertical: 2),
-                        ),
-                        LinearPercentIndicator(
-                          width: Utils.getDeviceWidth(context) / 15,
-                          lineHeight: 15.0,
-                          percent: Utils.getProgress(arrOrganization[position]),
-                          backgroundColor: Colors.transparent,
-                          progressColor: Colors.blue,
-                        )
-                      ],
-                    ),
-                    InkResponse(
-                      child: Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg('plus')),
-                          fit: BoxFit.fill,
-                          width: 13,
-                        ),
+                          ),
+                          LinearPercentIndicator(
+                            width: Utils.getDeviceWidth(context) / 9,
+                            lineHeight: 15.0,
+                            percent: Utils.getProgress(arrOrganization[position]),
+                            backgroundColor: Colors.transparent,
+                            progressColor: Colors.blue,
+                          )
+                        ],
                       ),
-                      onTap: () {
-                        showConfirmDialog(position, Const.add);
-                      },
-                    )
-                  ],
-                ),
-              ],
+
+//                     InkResponse(
+//                        child: Padding(
+//                          padding: EdgeInsets.all(5),
+//                          child: Image(
+//                            image: AssetImage(Utils.getAssetsImg('plus')),
+//                            fit: BoxFit.fill,
+//                            width: 13,
+//                          ),
+//                        ),
+//                        onTap: () {
+//                          showConfirmDialog(position, Const.add);
+//                        },
+//                      )
+
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
+          onTap: () {
+//            showBody(context, arrOrganization[position].description);
+            Utils.showOrgInfoDialog(_scaffoldKey, arrOrganization[position].description, position);
+          },
         ),
-        Positioned(
+      /*  Positioned(
           right: 2,
           top: 0,
           child: Container(
@@ -204,7 +274,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               },
             ),
           ),
-        )
+        )*/
       ],
     );
   }
@@ -383,4 +453,240 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       });
     });
   }
+
+
+  showBody(BuildContext context, String arrayData) {
+    return showDialog(context: context,
+
+      builder: (BuildContext context) {
+      return Center(
+        child: Stack(
+          children: <Widget>[
+            Container(
+                padding: EdgeInsets.all(20),
+                margin: EdgeInsets.all(40),
+                alignment: Alignment.center,
+                width: Utils.getDeviceWidth(context) / 2.5,
+                height: Utils.getDeviceHeight(context) / 2.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorRes.white,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        Utils.getText(context, arrayData),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 13)),
+                    Container(
+                        child: showTextEmp("Fire 10 employees", "minus", 1)),
+                    Padding(padding: EdgeInsets.only(top: 8)),
+                    Container(child: showTextEmp("Hire 10 employees", "plus", 2)),
+                    Padding(padding: EdgeInsets.only(top: 8)),
+                    InkResponse(
+                      child: Container(
+                        child: Text("Cancel",
+                            style: TextStyle(color: ColorRes.blue, fontSize: 17)),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                )),
+//          Container(),
+//          Container(),
+//          Container(),
+            Positioned(
+                right: 10,
+                child: InkResponse(
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg('close_dialog')),
+                      width: 20,
+                    ),
+                  ),
+                  onTap: () {
+                    Utils.playClickSound();
+                    Navigator.pop(context);
+                  },
+                ))
+          ],
+        ),
+      );
+      }
+    );
+  }
+
+
+  showTextEmp(String textShow, String img, int type) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Container(
+          child: Text('$textShow',
+              style: TextStyle(color: ColorRes.blue, fontSize: 17)),
+        ),
+        InkResponse(
+          child: Container(
+            child: Image(
+                height: 20,
+                width: 20,
+                image: AssetImage(Utils.getAssetsImg('$img'))),
+          ),
+          onTap: () {
+//            type == 1
+//                ? showConfirmDialog(position, Const.add)
+//                : showConfirmDialog(position, Const.add);
+          },
+        )
+      ],
+    );
+  }
+
 }
+
+
+
+//alert dialog open
+
+class OrgInfoDialog extends StatefulWidget {
+  OrgInfoDialog({
+    Key key,
+    this.text,
+    this.organizationsPage2,
+    this.position
+  }) : super(key: key);
+
+  final String text;
+  final _OrganizationsPage2State organizationsPage2;
+  final int position;
+
+
+  @override
+  OrgInfoDialogState createState() => new OrgInfoDialogState();
+}
+
+class OrgInfoDialogState extends State<OrgInfoDialog> {
+  final pass1Controller = TextEditingController();
+  final pass2Controller = TextEditingController();
+  final pass3Controller = TextEditingController();
+  bool isLoading = false;
+
+  List<Organization> arrOrganization = List();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: showBody(context),
+    );
+  }
+
+
+  showBody(BuildContext context) {
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          Container(
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.all(40),
+              alignment: Alignment.center,
+              width: Utils.getDeviceWidth(context) / 2.0,
+              height: Utils.getDeviceHeight(context) / 2.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: ColorRes.white,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        Utils.getText(context, widget.text),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 13)),
+                    InkResponse(
+                      child: InkResponse(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 2, color: ColorRes.blue),
+                              borderRadius: BorderRadius.all(Radius.circular(20))
+                          ),
+                          child: Text('Fire 10 employees',
+                              style: TextStyle(color: ColorRes.blue, fontSize: 17)),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Injector.streamController.add("update minus");
+                        },
+                      ),
+                    ),
+//                      showTextEmp("Fire 10 employees", "minus", 1)),
+                    Padding(padding: EdgeInsets.only(top: 8)),
+                    InkResponse(
+                      child: InkResponse(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 2, color: ColorRes.blue),
+                              borderRadius: BorderRadius.all(Radius.circular(20))
+                          ),
+                          child: Text('Hire 10 employees',
+                              style: TextStyle(color: ColorRes.blue, fontSize: 17)),
+                        ),
+                        onTap: () {
+//                            widget.organizationsPage2.showConfirmDialog(widget.position, Const.add);
+//                          widget.organizationsPage2.manageLevel(widget.position, Const.add);
+//                          widget.organizationsPage2.refresh();
+                          Navigator.pop(context);
+                          Injector.streamController.add("update plus");
+                          widget.organizationsPage2.reference();
+
+
+                        },
+                      ),
+                    ),
+//                  Container(child: showTextEmp("Hire 10 employees", "plus", 2)),
+                    Padding(padding: EdgeInsets.only(top: 12)),
+                    InkResponse(
+                      child: Container(
+                        child: Text("Cancel",
+                            style: TextStyle(color: ColorRes.blue, fontSize: 17)),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+              )
+          ),
+          Positioned(
+              right: 10,
+              child: InkResponse(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg('close_dialog')),
+                    width: 20,
+                  ),
+                ),
+                onTap: () {
+                  Utils.playClickSound();
+                  Navigator.pop(context);
+                },
+              ))
+        ],
+      ),
+    );
+  }
+}
+

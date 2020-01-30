@@ -86,6 +86,11 @@ class StringRes {
   static var learningModule = "learningModule";
   static var levels = "levels";
   static var complete = "complete";
+  static var qLevel = "qLevel";
+  static var qStatus = "qStatus";
+  static var lastLog = "lastLog";
+  static var points = "points";
+  static var correct = "correct";
 
 
   //business sectors
@@ -184,6 +189,12 @@ class StringRes {
       'learningModule': "Learning Module",
       'levels': "Levels",
       'complete': "%Complete",
+      'qLevel':"Q Level",
+      'qStatus':"Q Status",
+      'lastLog':"Last Log",
+      'points':"Points",
+      'correct':"%Correct",
+
     },
     'es': {
       'title': 'Hola Mundo',

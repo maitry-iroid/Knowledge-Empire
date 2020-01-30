@@ -15,6 +15,10 @@ class TeamPage extends StatefulWidget {
 class _TeamPageState extends State<TeamPage> {
   var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
+  bool secondScreen = true;
+
+  List<String> indexList = ['1','2','3,','4','5','6','7','8','9','10'];
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -22,13 +26,13 @@ class _TeamPageState extends State<TeamPage> {
         CommonView.showBackground(context),
         Padding(
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-          child: showMainBody(),
-//          child: Column(
-//            children: <Widget>[
-//              CommonView.showTitle(context, StringRes.team),
-//              showMainBody()
-//            ],
-//          ),
+//          child: showMainBody(),
+          child: Column(
+            children: <Widget>[
+              CommonView.showTitle(context, StringRes.team),
+              showMainBody()
+            ],
+          ),
         ),
       ],
     );
@@ -68,14 +72,15 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   showMainBody() {
-    return Row(
+    return Expanded(
+        child: Row(
       children: <Widget>[showFirstHalf(), showSecondHalf()],
-    );
+    ));
   }
 
   showFirstHalf() {
     return Expanded(
-        flex: 1,
+        flex: 8,
         child: SingleChildScrollView(
             child: Column(
           children: <Widget>[
@@ -86,16 +91,18 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   showProfile() {
-    return Container(
+    return Visibility(child: Container(
 //        height: 200,
-        margin: EdgeInsets.only(left: 0, right: 0, top: 25, bottom: 10),
+        margin: EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 10),
         child: Column(
           children: <Widget>[
             firstColumn(),
             secondColumn(),
             thirdColumn(),
           ],
-        ));
+        )),
+      visible: secondScreen,
+    );
   }
 
   showListHeader() {
@@ -110,14 +117,24 @@ class _TeamPageState extends State<TeamPage> {
                   fit: BoxFit.fill)),
 //      color: ColorRes.white,
           padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-          child: Row(
+          child:
+          secondScreen != true ?
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              listHeaderText(StringRes.name),
+              listHeaderText(StringRes.lastLog),
+              listHeaderText(StringRes.points),
+              listHeaderText(StringRes.correct),
+            ],
+          ) : Row (
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               listHeaderText(StringRes.learningModule),
               listHeaderText(StringRes.levels),
-              listHeaderText(StringRes.complete)
+              listHeaderText(StringRes.complete),
             ],
-          ),
+          )
         ),
         showListView()
       ],
@@ -195,8 +212,8 @@ class _TeamPageState extends State<TeamPage> {
               children: <Widget>[
                 Container(
                   height: 25,
-                  width: 115,
-                  margin: EdgeInsets.only(left: 55, top: 8, bottom: 5),
+                  width: 110,
+                  margin: EdgeInsets.only(left: 50, top: 8, bottom: 5),
                   decoration: profileBorderShow(),
                   child: Center(
                     child: Text("eric androld"),
@@ -204,7 +221,7 @@ class _TeamPageState extends State<TeamPage> {
                 ),
                 Container(
                   height: 25,
-                  width: 80,
+                  width: 70,
                   margin: EdgeInsets.only(left: 0, top: 8, bottom: 5),
                   decoration: BoxDecoration(
                       image: DecorationImage(
@@ -251,7 +268,7 @@ class _TeamPageState extends State<TeamPage> {
             height: 25,
             width: 60,
 //                    padding: EdgeInsets.only(left: 57, top: 8),
-            margin: EdgeInsets.only(left: 45, top: 8, bottom: 5),
+            margin: EdgeInsets.only(left: 40, top: 8, bottom: 5),
             decoration: profileBorderShow(),
             child: Center(
               child: Text("5"),
@@ -264,19 +281,18 @@ class _TeamPageState extends State<TeamPage> {
 
   //second half
 
-  bool toggle = false;
   Map<String, double> dataMap = Map();
   List<Color> colorList = [
-    ColorRes.chartTen,
-    ColorRes.chartNine,
-    ColorRes.chartEight,
-    ColorRes.chartSeven,
-    ColorRes.chartSix,
-    ColorRes.chartFive,
-    ColorRes.chartFour,
-    ColorRes.chartThree,
-    ColorRes.chartTwo,
     ColorRes.chartOne,
+    ColorRes.chartTwo,
+    ColorRes.chartThree,
+    ColorRes.chartFour,
+    ColorRes.chartFive,
+    ColorRes.chartSix,
+    ColorRes.chartSeven,
+    ColorRes.chartEight,
+    ColorRes.chartNine,
+    ColorRes.chartTen,
   ];
 
   @override
@@ -305,7 +321,7 @@ class _TeamPageState extends State<TeamPage> {
 
   showSecondHalf() {
     return Expanded(
-        flex: 1,
+        flex: 6,
         child: SingleChildScrollView(
             child: Column(
           children: <Widget>[
@@ -322,7 +338,7 @@ class _TeamPageState extends State<TeamPage> {
         height: 200,
         alignment: Alignment.centerLeft,
         margin: EdgeInsets.only(left: 0),
-        child: pieChart("Q Level", 1));
+        child: pieChart(StringRes.qLevel, 1));
   }
 
   qStatus() {
@@ -330,7 +346,7 @@ class _TeamPageState extends State<TeamPage> {
       height: 200,
       width: Utils.getDeviceWidth(context),
 //      color: ColorRes.blackTransparent,
-      child: pieChart("Q Status", 2),
+      child: pieChart(StringRes.qStatus, 2),
     );
   }
 
@@ -341,7 +357,7 @@ class _TeamPageState extends State<TeamPage> {
         Container(
           height: 25,
           width: 100,
-          margin: EdgeInsets.only(left: 25, top: 30),
+          margin: EdgeInsets.only(left: 25, top: 10),
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(Utils.getAssetsImg("bg_piechart")),
@@ -350,73 +366,104 @@ class _TeamPageState extends State<TeamPage> {
             child: Text(title),
           ),
         ),
-        Row (
+        Row(
           children: <Widget>[
             Container(
 //                width: 150,
 //            height: 150,
 //              child: Expanded(
-                child: Center(
-                    child: PieChart(
-                  dataMap: type == 1 ? dataMap : openCloseMap,
-                  animationDuration: Duration(milliseconds: 800),
-                  chartLegendSpacing: 32.0,
-                  chartRadius: MediaQuery.of(context).size.width / 5,
+              child: Center(
+                  child: PieChart(
+                dataMap: type == 1 ? dataMap : openCloseMap,
+                animationDuration: Duration(milliseconds: 800),
+                chartLegendSpacing: 32.0,
+                chartRadius: MediaQuery.of(context).size.width / 5,
 //                showChartValuesInPercentage: true,
-                  showChartValues: false,
-                  showChartValuesOutside: false,
-                  chartValueBackgroundColor: Colors.transparent,
-                  colorList: type == 1 ? colorList : colorOpenCloseList,
+                showChartValues: false,
+                showChartValuesOutside: false,
+                chartValueBackgroundColor: Colors.transparent,
+                colorList: type == 1 ? colorList : colorOpenCloseList,
 //                showLegends: true,
-                  legendPosition: LegendPosition.right,
-                  showChartValueLabel: false,
-                  initialAngle: 0,
-                  chartValueStyle: defaultChartValueStyle.copyWith(
+                legendPosition: LegendPosition.right,
+                showChartValueLabel: false,
+                initialAngle: 0,
+                chartValueStyle: defaultChartValueStyle.copyWith(
 //                    color: Colors.blueGrey[900].withOpacity(0.9),
-                      color: type == 1 ? ColorRes.white : Colors.transparent),
-                  showLegends: type == 1 ? false : true,
-                  chartType: ChartType.disc,
-                )),
+                    color: type == 1 ? ColorRes.white : Colors.transparent),
+                showLegends: type == 1 ? false : true,
+                chartType: ChartType.disc,
+              )),
 //              ),
             ),
 
 
+
             type == 1 ?
-            Expanded(
-//                width: 150,
-                child: Column(
-                  children: <Widget>[
-                    firstColumnColor(),
-                    firstColumnColor(),
-
-                    secondColumnColor(),
-                    secondColumnColor()
-                  ],
-                ),
-
+            Container(
+              height: 125,
+              width: 150,
+              child: GridView.count(
+                // Create a grid with 2 columns. If you change the scrollDirection to
+                // horizontal, this would produce 2 rows.
+                scrollDirection: Axis.horizontal,
+                crossAxisCount: 4,
+                // Generate 100 Widgets that display their index in the List
+                children: List.generate(10, (index) {
+                  return Row(
+                    children: <Widget>[
+                      Container(
+                        height: 13,
+                        width: 13,
+                        margin: EdgeInsets.only(right: 5),
+                        decoration: BoxDecoration(
+                          color: colorList[index]
+                        ),
+                      ),
+                      Container(
+                        child: Text(indexList[index]),
+                      )
+                    ],
+                  );
+                }),
+              ),
             ) : Container()
-          ],
-        )
-      ],
+
+
+            /* Container(
+                width: 150,
+                child: GridView.count(crossAxisCount: 4,
+                  children: List.generate(10, (index) {
+                    return Center(
+                      child: Text("hello"),
+                    );
+                  }),
+                )
+              /*Column(
+                      children: <Widget>[
+                        firstColumnColor(),
+                        firstColumnColor(),
+                        secondColumnColor(),
+                        secondColumnColor()
+                      ],
+                    ),
+                  )*/
+//                : Container()
+//          ],
+            ) */
+      ],)]
     );
   }
 
+
   firstColumnColor() {
     return Row(
-      children: <Widget>[
-        rightSideData(),
-        rightSideData(),
-        rightSideData()
-      ],
+      children: <Widget>[rightSideData(), rightSideData(), rightSideData()],
     );
   }
 
   secondColumnColor() {
-    return  Row(
-      children: <Widget>[
-        rightSideData(),
-        rightSideData()
-      ],
+    return Row(
+      children: <Widget>[rightSideData(), rightSideData()],
     );
   }
 
@@ -427,16 +474,13 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-
   indexColor() {
     return Row(
       children: <Widget>[
         Container(
           height: 18,
           width: 18,
-          decoration: BoxDecoration(
-            color: ColorRes.chartSix
-          ),
+          decoration: BoxDecoration(color: ColorRes.chartSix),
         ),
         Container(
           height: 15,
@@ -447,7 +491,6 @@ class _TeamPageState extends State<TeamPage> {
       ],
     );
   }
-
 
 /*
   Container showSubHeader() {
