@@ -557,8 +557,10 @@ class Utils {
   static performDashboardItemClick(BuildContext context, int type) {
     if (
 //    type == Const.typeChallenges ||
-        type == Const.typeReward ||
-            type == Const.typeTeam)
+//        type == Const.typeReward ||
+//            type == Const.typeTeam
+            type == -1
+    )
 //        type == Const.typePL
 //            || type == Const.typeTeam
 //    )
