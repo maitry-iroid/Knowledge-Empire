@@ -23,6 +23,7 @@ import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
+import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 import 'business_sector.dart';
 import '../commonview/header.dart';
@@ -187,7 +188,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return /*RewardsPage()*/ Container();
+        return RewardsPage();
       case 5:
         return TeamPage();
       case 6:
@@ -221,9 +222,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      //TODO please uncomment pl condition
 
-      if (index == Const.typeReward ||
+      if (
           index == Const.typePL
 //          || index == Const.typeTeam
       ) {

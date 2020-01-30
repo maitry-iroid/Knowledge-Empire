@@ -555,13 +555,7 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, int type) {
-    if (
-//    type == Const.typeChallenges ||
-        type == Const.typeReward ||
-            type == Const.typeTeam)
-//        type == Const.typePL
-//            || type == Const.typeTeam
-//    )
+    if (type == Const.typePL)
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context,
@@ -685,8 +679,6 @@ class Utils {
       return 0;
   }
 }
-
-
 
 //    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
 //    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_wrong_answer.mp3');
