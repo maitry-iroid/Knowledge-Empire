@@ -83,7 +83,9 @@ class HeaderUtils {
               ? 1
               : Injector.customerValueData?.totalAttemptedQuestion);
 
-      return value / 100;
+      value = (value / 100) * (10 / 100);
+
+      return value <= 1 || value >= 0 ? value : 0.0;
     } catch (e) {
       print("getBonusValue_" + e.toString());
       return 0.0;

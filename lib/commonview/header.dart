@@ -159,7 +159,7 @@ class HeaderViewState extends State<HeaderView> {
                       Positioned(
                         left: 4,
                         child: Text(
-                          HeaderUtils.getProgress(type),
+                          HeaderUtils.getProgress(type)+"%",
                           style: TextStyle(color: ColorRes.white, fontSize: 14),
                         ),
                       )
