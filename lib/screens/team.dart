@@ -341,7 +341,7 @@ class _TeamPageState extends State<TeamPage> {
         Container(
           height: 25,
           width: 100,
-          margin: EdgeInsets.only(left: 60, top: 10),
+          margin: EdgeInsets.only(left: 25, top: 30),
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(Utils.getAssetsImg("bg_piechart")),

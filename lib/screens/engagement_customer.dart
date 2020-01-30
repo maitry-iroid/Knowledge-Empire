@@ -1222,7 +1222,8 @@ class ExpandMediaState extends State<ExpandMedia>
                     Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
+                          borderRadius: BorderRadius.circular(10.0)
+                      ),
                       margin: EdgeInsets.only(
                           top: 35, bottom: 15, right: 25, left: 25),
                       child: Container(

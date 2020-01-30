@@ -57,10 +57,12 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  String version = "";
+  String version;
+
+  PackageInfo packageInfo;
 
   packagesInfo() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    packageInfo = await PackageInfo.fromPlatform();
     String appName = packageInfo.appName;
     String packageName = packageInfo.packageName;
     version = packageInfo.version;
@@ -163,21 +165,22 @@ class _ProfilePageState extends State<ProfilePage> {
 //                        alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10, bottom: 10),
                         child: Container(
-                          decoration: BoxDecoration(
+                         /* decoration: BoxDecoration(
                               color: Injector.isBusinessMode
                                   ? null
                                   : ColorRes.bgSettings,
                               borderRadius: Injector.isBusinessMode
                                   ? null
                                   : BorderRadius.circular(20),
-                              image: Injector.isBusinessMode
-                                  ? DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg('bg_privacy')))
-                                  : null),
+//                              image: Injector.isBusinessMode
+//                                  ? DecorationImage(
+//                                  image: AssetImage(
+//                                      Utils.getAssetsImg('bg_privacy')))
+//                                  : null
+                          ),*/
 
                               child: Center(
-                                child: Text("App Version: $version", style: TextStyle(color: ColorRes.white),),
+                                child: Text("App Version: $version", style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey),),
                               ),
                             ),
 
