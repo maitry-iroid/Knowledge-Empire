@@ -77,7 +77,33 @@ class _LoginPageState extends State<LoginPage> {
         child: Stack(
           alignment: Alignment.centerLeft,
           children: <Widget>[
-            Padding(
+
+            Row(
+              children: <Widget>[
+                Expanded(flex: 1,
+                  child: Image(
+                  height: Utils.getDeviceHeight(context) / 1.7,
+                  image: AssetImage(
+                    Utils.getAssetsImg('logo_login'),
+                  ),
+                  width: Utils.getDeviceHeight(context) / 2,
+                ),),
+                Expanded(flex: 1,
+                    child: Container(
+                      width: Utils.getDeviceWidth(context) / 2.3,
+                      height: Utils.getDeviceHeight(context) / 1.7,
+                      margin: EdgeInsets.only(right: 20,left: 15),
+                      decoration: BoxDecoration(
+                        color: ColorRes.colorBgDark,
+                        border: Border.all(color: ColorRes.white, width: 1),
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      child: showLoginForm(),
+                    ))
+              ],
+            ),
+
+         /*   Padding(
               padding: EdgeInsets.only(left: 50),
               child: Image(
                 image: AssetImage(
@@ -99,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: showLoginForm(),
                 )),
+            */
             CommonView.showCircularProgress(isLoading)
           ],
         ),

@@ -104,8 +104,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
                   Utils.playClickSound();
 //                }
 
-                Utils.showOrgInfoDialog(
-                    _scaffoldKey, arrOrganization[position].description);
+//                Utils.showOrgInfoDialog(
+//                    _scaffoldKey, arrOrganization[position].description);
               },
             )
           ],

@@ -26,6 +26,7 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
+import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
@@ -224,11 +225,12 @@ class Utils {
   }
 
   static showOrgInfoDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey, String description) async {
+      GlobalKey<ScaffoldState> _scaffoldKey, String description, int position) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => OrgInfoDialog(
               text: description,
+              position: position,
             ));
   }
 
