@@ -548,10 +548,11 @@ class _RankingPageState extends State<RankingPage> {
       child: Container(
         width: Utils.getDeviceWidth(context) / 12,
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: ColorRes.white, borderRadius: BorderRadius.circular(20)),
+            color: ColorRes.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: ColorRes.white)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[

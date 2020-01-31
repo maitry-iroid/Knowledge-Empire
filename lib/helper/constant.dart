@@ -17,6 +17,8 @@ class Const {
   static var typeEngagement = 12;
   static var typeCustomerSituation = 13;
 
+  static var openPendingChallengeDialog =101;
+
   static var typeName = 26;
   static var typeSideMenu = 27;
 
@@ -86,6 +88,7 @@ class _Config {
 
   static Map<String, dynamic> debugConstants = {
     SERVER_ONE: "http://13.127.186.25:7000/api",
+//    SERVER_ONE: "http://13.127.186.25:7001/api",  // for achievement feature
     APP_NAME: "KE Dev",
   };
 
