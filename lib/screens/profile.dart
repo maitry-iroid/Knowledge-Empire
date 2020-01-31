@@ -45,7 +45,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     super.initState();
 
-    packagesInfo();
+//    packagesInfo();
+    _initPackageInfo();
+
   }
 
   File _image;
@@ -57,17 +59,21 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  String version;
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
 
-  PackageInfo packageInfo;
-
-  packagesInfo() async {
-    packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo.appName;
-    String packageName = packageInfo.packageName;
-    version = packageInfo.version;
-    String buildNumber = packageInfo.buildNumber;
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),*/
 
                               child: Center(
-                                child: Text("App Version: $version", style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey),),
+                                child: Text("App Version: ${_packageInfo.version}", style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey),),
                               ),
                             ),
 

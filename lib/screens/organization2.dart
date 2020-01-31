@@ -42,11 +42,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 //    initStreamControllerProfile();
   }
 
-//  reference() {
-//    setState(() {
-//    });
-//  }
-
   void initStreamControllerProfile() {
     if (Injector.streamController == null)
       Injector.streamController = StreamController.broadcast();
@@ -110,8 +105,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     int position = type - 1;
     initStreamControllerProfile();
 
-
-
     return Stack(
       fit: StackFit.loose,
       children: <Widget>[
@@ -160,10 +153,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       ),
                     ],
                   ),
-//                  Row(
-//                    mainAxisAlignment: MainAxisAlignment.center,
-//                    crossAxisAlignment: CrossAxisAlignment.center,
-//                    children: <Widget>[
 //                          showConfirmDialog(position, Const.subtract);
                     Center(
                       child: Stack(
@@ -192,9 +181,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                         ],
                       ),
                     )
-
-//                    ],
-//                  ),
                 ],
               ),
             ),
@@ -251,7 +237,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             child: showItem(Const.typeCRM),
           ),
           Positioned(
-            right: 10,
+            right: 5,
             top: 50,
             child: showItem(Const.typeFinance),
           ),
@@ -261,7 +247,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             child: showItem(Const.typeHR),
           ),
           Positioned(
-            right: Utils.getDeviceWidth(context) / 6.5,
+            right: Utils.getDeviceWidth(context) / 7.0,
             top: 20,
             child: showItem(Const.typeMarketing),
           ),
@@ -278,7 +264,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: Utils.getDeviceWidth(context) / 6.4,
+              width: Utils.getDeviceWidth(context) / 6.0,
               padding: EdgeInsets.only(top: 5),
               child: showItem(Const.typeServices),
             ),
@@ -286,7 +272,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              width: Utils.getDeviceWidth(context) / 6.4,
+              width: Utils.getDeviceWidth(context) / 6.0,
               padding: EdgeInsets.only(bottom: 5),
               child: showItem(Const.typeOperations),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../helper/Utils.dart';
@@ -15,7 +16,7 @@ class TeamPage extends StatefulWidget {
 class _TeamPageState extends State<TeamPage> {
   var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
-  bool secondScreen = true;
+  bool secondScreen = false;
 
   List<String> indexList = ['1','2','3,','4','5','6','7','8','9','10'];
 
@@ -29,7 +30,10 @@ class _TeamPageState extends State<TeamPage> {
 //          child: showMainBody(),
           child: Column(
             children: <Widget>[
-              CommonView.showTitle(context, StringRes.team),
+
+              secondScreen != true ?
+              CommonView.showTitle(context, StringRes.team) :
+              showTitleSecondScreen(context, StringRes.team),
               showMainBody()
             ],
           ),
@@ -38,7 +42,7 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-  Row showTitle() {
+/*  Row showTitle() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -69,7 +73,7 @@ class _TeamPageState extends State<TeamPage> {
         )
       ],
     );
-  }
+  }*/
 
   showMainBody() {
     return Expanded(
@@ -80,7 +84,7 @@ class _TeamPageState extends State<TeamPage> {
 
   showFirstHalf() {
     return Expanded(
-        flex: 8,
+        flex: secondScreen != true ? 8 : 1,
         child: SingleChildScrollView(
             child: Column(
           children: <Widget>[
@@ -110,13 +114,13 @@ class _TeamPageState extends State<TeamPage> {
       children: <Widget>[
         Container(
           height: 30,
-          margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+          margin: secondScreen != true ? EdgeInsets.only(left: 15, right: 15, top: 8, bottom: 10) : EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(Utils.getAssetsImg("bg_grey_teamheader")),
                   fit: BoxFit.fill)),
 //      color: ColorRes.white,
-          padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+          padding: secondScreen != true ? EdgeInsets.only(left: 25, right: 15, top: 5, bottom: 5) : EdgeInsets.only(left: 13, right: 15, top: 5, bottom: 5) ,
           child:
           secondScreen != true ?
           Row(
@@ -149,7 +153,7 @@ class _TeamPageState extends State<TeamPage> {
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return showListData();
+            return showListData(index);
 //        return ListTile(
 //          title: Text("hello"),
 //        );
@@ -157,19 +161,30 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-  showListData() {
-    return Container(
-        height: 30,
-        padding: EdgeInsets.only(left: 65, right: 35, top: 5, bottom: 5),
-        margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("bg_white_smalldata")),
-                fit: BoxFit.fill)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[listTextData(), listTextData(), listTextData()],
-        ));
+  showListData(int index) {
+    return InkResponse(
+      child: Container(
+          height: 30,
+          padding: secondScreen != true ?  EdgeInsets.only(left: 30, right: 25, top: 5, bottom: 5) : EdgeInsets.only(left: 23, right: 0, top: 5, bottom: 5),
+          margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_white_smalldata")),
+                  fit: BoxFit.fill)),
+          child: secondScreen != true ? Row (
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[listTextData(), listTextData(), listTextData(), listTextData()],
+          ) : Row (
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[listTextData(), listTextData(), listTextData()],
+          )
+      ),
+      onTap: () {
+        setState(() {
+          secondScreen = true;
+        });
+      },
+    );
   }
 
   profileBorderShow() {
@@ -222,7 +237,7 @@ class _TeamPageState extends State<TeamPage> {
                 Container(
                   height: 25,
                   width: 70,
-                  margin: EdgeInsets.only(left: 0, top: 8, bottom: 5),
+                  margin: EdgeInsets.only(left: 0, top: 8, bottom: 5, right: 5),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bg_change_pw")),
@@ -321,7 +336,7 @@ class _TeamPageState extends State<TeamPage> {
 
   showSecondHalf() {
     return Expanded(
-        flex: 6,
+        flex: secondScreen != true ? 6 : 1,
         child: SingleChildScrollView(
             child: Column(
           children: <Widget>[
@@ -489,6 +504,64 @@ class _TeamPageState extends State<TeamPage> {
           child: Text("10"),
         )
       ],
+    );
+  }
+
+
+  showTitleSecondScreen(BuildContext context, String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg(
+                  Injector.isBusinessMode ? "back" : 'back_prof')),
+              width: 30,
+            ),
+            onTap: () {
+              Utils.playClickSound();
+              setState(() {
+                secondScreen = false;
+              });
+//              Utils.performBack(context);
+            },
+          ),
+          Container(
+            alignment: Alignment.center,
+            height: 30,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                borderRadius:
+                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                border: Injector.isBusinessMode
+                    ? null
+                    : Border.all(width: 1, color: ColorRes.white),
+                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                    image: AssetImage(
+                      Utils.getAssetsImg("bg_blue"),
+                    ),
+                    fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(context, Utils.getText(context, title)),
+              style: TextStyle(
+                color: ColorRes.white,
+                fontSize: DimenRes.titleTextSize,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Container(
+            width: 30,
+          )
+        ],
+      ),
     );
   }
 
