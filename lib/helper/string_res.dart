@@ -91,6 +91,8 @@ class StringRes {
   static var lastLog = "lastLog";
   static var points = "points";
   static var correct = "correct";
+  static var fireEmp = "fireEmp";
+  static var hireEmp = "hireEmp";
 
 
   //business sectors
@@ -194,7 +196,8 @@ class StringRes {
       'lastLog':"Last Log",
       'points':"Points",
       'correct':"%Correct",
-
+      'fireEmp':"Fire 10 employees",
+      'hireEmp':"Fire 10 employees"
     },
     'es': {
       'title': 'Hola Mundo',
