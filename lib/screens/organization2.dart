@@ -30,7 +30,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Utils.isInternetConnectedWithAlert().then((isConnected) {
@@ -473,7 +472,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                                   Border.all(width: 2, color: ColorRes.blue),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: Text(StringRes.hireEmp,
+                          child: Text("Hire 10 employees",
                               style: TextStyle(
                                   color: ColorRes.blue, fontSize: 17)),
                         ),
@@ -504,7 +503,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                                   Border.all(width: 2, color: ColorRes.blue),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: Text(StringRes.fireEmp,
+                          child: Text("Fire 10 employees",
                               style: TextStyle(
                                   color: ColorRes.red, fontSize: 17)),
                         ),

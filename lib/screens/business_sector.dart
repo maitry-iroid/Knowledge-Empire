@@ -434,9 +434,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                 }
                               });
                             },
-                            activeTrackColor: selectedModule.isSubscribedFromBackend==1?ColorRes.lightGrey:ColorRes.white,
+                            activeTrackColor:
+                                selectedModule.isSubscribedFromBackend == 1
+                                    ? ColorRes.lightGrey
+                                    : ColorRes.white,
                             inactiveTrackColor: ColorRes.lightGrey,
-                            activeColor: selectedModule.isSubscribedFromBackend==1?ColorRes.lightGrey:ColorRes.white,
+                            activeColor:
+                                selectedModule.isSubscribedFromBackend == 1
+                                    ? ColorRes.lightGrey
+                                    : ColorRes.white,
                           )
                         : Container(),
                   ],
@@ -620,10 +626,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           if (isSwitched) {
             getQuestions();
           } else {
-//            Injector.cacheManager.emptyCache();
-
-            //TODO remove question for selected sector
-//            Injector.prefs.remove(PrefKeys.questionData);
+//            removeDownloadedQuestion();
           }
         } else {
           Utils.showToast(response.msg);
@@ -693,5 +696,19 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       });
       Utils.showToast(e.toString());
     });
+  }
+
+  void removeDownloadedQuestion() async {
+    List<QuestionData> arrQuestions =
+        Utils.getQuestionsLocally(Const.getNewQueType);
+
+    arrQuestions.removeWhere(
+        (question) => question.questionId == selectedModule.moduleId);
+
+    QuestionsResponse questionsResponse = QuestionsResponse();
+    questionsResponse.data = arrQuestions;
+
+    await Injector.prefs.setString(
+        PrefKeys.questionData, json.encode(questionsResponse.toJson()));
   }
 }

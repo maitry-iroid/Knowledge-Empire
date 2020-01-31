@@ -11,7 +11,6 @@ import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:ke_employee/dialogs/loader.dart';
-import 'package:ke_employee/dialogs/org_info.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
