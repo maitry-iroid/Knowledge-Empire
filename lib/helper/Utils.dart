@@ -465,16 +465,28 @@ class Utils {
 
 //    addBadge();
 
-    if (Platform.isIOS) {
-      title = message['title'];
-      body = message['body'];
-    } else {
-      message.values.forEach((value) {
-        title = Map.from(value)['title'] ?? "";
+//    if (Platform.isIOS) {
+//      title = message['title'];
+//      body = message['body'];
+//    } else {
 
-        body = Map.from(value)['body'] ?? "";
-      });
+    title = message['notification']['title'];
+    body = message['notification']['body'];
+
+    String challengeId = message['data']['challengeId'];
+
+    if(challengeId!=null){
+      Injector.streamController?.add("${Const.openPendingChallengeDialog}");
     }
+
+//      message.values.forEach((value) {
+//        title = Map.from(value)['title'] ?? "";
+//
+//        body = Map.from(value)['body'] ?? "";
+//      });
+
+    Utils.showToast(title);
+//    }
 
     print(title);
     print(body);

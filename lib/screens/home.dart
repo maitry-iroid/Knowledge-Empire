@@ -147,7 +147,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //    print("home_init");
 
     initStreamController();
-    initStreamControllerProfile();
 
     initCheckNetworkConnectivity();
 
@@ -222,11 +221,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-
-      if (
-          index == Const.typePL
+      if (index == Const.typePL
 //          || index == Const.typeTeam
-      ) {
+          ) {
         Utils.showComingSoonDialog(context);
       } else {
         Navigator.of(context).pop(); // close the drawer
@@ -383,21 +380,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     Injector.streamController.stream.listen((data) {
       if (mounted) {
-        setState(() {});
-      }
-    }, onDone: () {
-      print("Task Done1");
-    }, onError: (error) {
-      print("Some Error1");
-    });
-  }
-
-  void initStreamControllerProfile() {
-    if (Injector.streamController == null)
-      Injector.streamController = StreamController.broadcast();
-
-    Injector.streamController.stream.listen((data) {
-      if (mounted) {
         setState(() {
           print(data);
 
@@ -415,6 +397,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             _selectedDrawerIndex = Const.typeRanking;
           } else if (data == "${Const.typePL}") {
             _selectedDrawerIndex = Const.typePL;
+          } else if (data == "${Const.openPendingChallengeDialog}") {
+            getPendingChallenges();
           }
         });
       }
@@ -464,7 +448,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
-          print("getChallenges_"+e.toString());
+          print("getChallenges_" + e.toString());
           setState(() {
             isLoading = false;
           });
