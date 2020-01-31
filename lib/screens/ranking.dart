@@ -501,15 +501,16 @@ class _RankingPageState extends State<RankingPage> {
                 image: AssetImage(Utils.getAssetsImg('ic_challenge_disable')))
             : Image(image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
         onTap: () {
-//                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-          if (arrFriends[index].isFriend == 1) {
-            Navigator.push(
-                context,
-                FadeRouteHome(
-                    arrFriends: arrFriends,
-                    initialPageType: Const.typeChallenges,
-                    friendId: arrFriends[index].userId));
-            print(arrFriends[index].isFriend);
+          if (!isCurrentUser(index)) {
+            if (arrFriends[index].isFriend == 1) {
+              Navigator.push(
+                  context,
+                  FadeRouteHome(
+                      arrFriends: arrFriends,
+                      initialPageType: Const.typeChallenges,
+                      friendId: arrFriends[index].userId));
+              print(arrFriends[index].isFriend);
+            }
           }
         },
       ),
@@ -521,17 +522,19 @@ class _RankingPageState extends State<RankingPage> {
       flex: 3,
       child: InkResponse(
           onTap: () {
-            print("hello$index");
             Utils.playClickSound();
-            setState(() {
-              if (arrFriends[index].isFriend == 0) {
-                arrFriends[index].isFriend = 1;
-                friendUnFriendUser(index, 1);
-              } else {
-                arrFriends[index].isFriend = 0;
-                friendUnFriendUser(index, 2);
-              }
-            });
+
+            if (!isCurrentUser(index)) {
+              setState(() {
+                if (arrFriends[index].isFriend == 0) {
+                  arrFriends[index].isFriend = 1;
+                  friendUnFriendUser(index, 1);
+                } else {
+                  arrFriends[index].isFriend = 0;
+                  friendUnFriendUser(index, 2);
+                }
+              });
+            }
           },
           child: Image(
             image: AssetImage(
@@ -546,105 +549,121 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 16,
       child: Container(
-        width: Utils.getDeviceWidth(context) / 12,
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+        margin: EdgeInsets.symmetric(vertical: 2, horizontal: 1),
+        decoration: isCurrentUser(index)
+            ? BoxDecoration(
+                border: Border.all(color: ColorRes.white),
+                borderRadius: BorderRadius.circular(20),
+              )
+            : null,
+        child: Container(
+          width: Utils.getDeviceWidth(context) / 12,
+          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
             color: ColorRes.white,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: ColorRes.white)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 4,
-              child: Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 10,
-                  ),
-                  RotatedBox(
-                      quarterTurns: arrFriends[index].rate == "down" ? 2 : 4,
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg('arrow_green')),
-                        width: 15,
-                        color: arrFriends[index].rate == "down"
-                            ? ColorRes.red
-                            : ColorRes.greenDot,
-                      )),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    width: 25,
-                    child: Text((index + 1).toString() + ".",
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: ColorRes.textBlue,
-                          fontSize: 20,
-                        )),
-                  ),
-                  Container(
-                    height: 38,
-                    width: 38,
-                    margin: EdgeInsets.only(right: 5),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg('add_emplyee'))),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 4,
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                  Expanded(
-                    child: Text(arrFriends[index].name,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            TextStyle(color: ColorRes.textBlue, fontSize: 16),
-                        textAlign: TextAlign.left),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: ColorRes.greyText,
-              width: 1,
-              margin: EdgeInsets.symmetric(vertical: 5),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(arrFriends[index].companyName ?? "",
-                  maxLines: 1,
-                  style: TextStyle(color: ColorRes.textBlue, fontSize: 16),
-                  textAlign: TextAlign.center),
-            ),
-            Container(
-              height: 52,
-              width: 60,
-              padding: EdgeInsets.only(right: 10, left: 14, top: 1),
-              margin: EdgeInsets.only(right: 1),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Injector.isBusinessMode
-                    ? Colors.transparent
-                    : ColorRes.titleBlueProf,
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                border: Border.all(width: 1, color: ColorRes.rankingBackGround),
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        Injector.isBusinessMode ? 'value' : '')),
-                    fit: BoxFit.fill),
-              ),
-              child: Text(
-//                "0000",
-                arrFriends[index].score.toString() ?? "",
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: 14,
+                    RotatedBox(
+                        quarterTurns: arrFriends[index].rate == "down" ? 2 : 4,
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg('arrow_green')),
+                          width: 15,
+                          color: arrFriends[index].rate == "down"
+                              ? ColorRes.red
+                              : ColorRes.greenDot,
+                        )),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Container(
+                      width: 25,
+                      child: Text((index + 1).toString() + ".",
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: ColorRes.textBlue,
+                            fontSize: 20,
+                          )),
+                    ),
+                    Container(
+                      height: 38,
+                      width: 38,
+                      margin: EdgeInsets.only(right: 5),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage(Utils.getAssetsImg('add_emplyee'))),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(arrFriends[index].name,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                          textAlign: TextAlign.left),
+                    ),
+                  ],
                 ),
-                maxLines: 1,
               ),
-            ),
-          ],
+              Container(
+                color: ColorRes.greyText,
+                width: 1,
+                margin: EdgeInsets.symmetric(vertical: 5),
+              ),
+              Expanded(
+                flex: 3,
+                child: Text(arrFriends[index].companyName ?? "",
+                    maxLines: 1,
+                    style: TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                    textAlign: TextAlign.center),
+              ),
+              Container(
+                height: 52,
+                width: 60,
+                padding: EdgeInsets.only(right: 10, left: 14, top: 1),
+                margin: EdgeInsets.only(right: 1),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Injector.isBusinessMode
+                      ? Colors.transparent
+                      : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  border:
+                      Border.all(width: 1, color: ColorRes.rankingBackGround),
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg(
+                          Injector.isBusinessMode ? 'value' : '')),
+                      fit: BoxFit.fill),
+                ),
+                child: Text(
+//                "0000",
+                  arrFriends[index].score.toString() ?? "",
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  isCurrentUser(int index) {
+    return arrFriends.length > 0 &&
+        arrFriends[index].userId == Injector.userData.userId;
   }
 }
