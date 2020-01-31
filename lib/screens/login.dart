@@ -61,47 +61,112 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+        key: _scaffoldKey,
 //      resizeToAvoidBottomPadding: false,
-      backgroundColor: ColorRes.fontDarkGrey,
-      body: Container(
+        backgroundColor: ColorRes.fontDarkGrey,
+        body: Container(
+//        height: double.infinity,
+
+            height: 400,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
+                fit: BoxFit.cover,
+//            alignment: Alignment.center,
+              ),
+            ),
+
+          child: Row(
+//            alignment: Alignment.center,
+            children: <Widget>[
+              Container(
+                height: Utils.getDeviceHeight(context) / 2.0,
+                width: Utils.getDeviceWidth(context) / 3.5,
+//                padding: EdgeInsets.only(left: 50),
+                margin: EdgeInsets.only(left: 40),
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage(Utils.getAssetsImg("logo_login")), fit: BoxFit.fill)
+                ),
+              ),
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    width: Utils.getDeviceWidth(context) / 2.3,
+                    height: Utils.getDeviceHeight(context) / 1.7,
+                    margin: EdgeInsets.only(right: 20,left: Utils.getDeviceWidth(context) / 5.5),
+                    decoration: BoxDecoration(
+                      color: ColorRes.colorBgDark,
+                      border: Border.all(color: ColorRes.white, width: 1),
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                    child: showLoginForm(),
+                  ))
+            ],
+          ),
+
+        )
+
+        /*Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
+
+          decoration: BoxDecoration(
           image: DecorationImage(
             image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
             fit: BoxFit.fill,
-            alignment: Alignment.topCenter,
+//            alignment: Alignment.center,
           ),
         ),
-        child: Stack(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text("hello"),
+            ),
+            Expanded(
+                flex: 1,
+                child: Container(
+                  width: Utils.getDeviceWidth(context) / 2.3,
+                  height: Utils.getDeviceHeight(context) / 1.7,
+                  margin: EdgeInsets.only(right: 20,left: 15),
+                  decoration: BoxDecoration(
+                    color: ColorRes.colorBgDark,
+                    border: Border.all(color: ColorRes.white, width: 1),
+                    borderRadius: new BorderRadius.circular(10.0),
+                  ),
+                  child: showLoginForm(),
+                ))
+          ],
+        )
+        /*Stack(
           alignment: Alignment.centerLeft,
           children: <Widget>[
 
-            Row(
-              children: <Widget>[
-                Expanded(flex: 1,
-                  child: Image(
-                  height: Utils.getDeviceHeight(context) / 1.7,
-                  image: AssetImage(
-                    Utils.getAssetsImg('logo_login'),
-                  ),
-                  width: Utils.getDeviceHeight(context) / 2,
-                ),),
-                Expanded(flex: 1,
-                    child: Container(
-                      width: Utils.getDeviceWidth(context) / 2.3,
-                      height: Utils.getDeviceHeight(context) / 1.7,
-                      margin: EdgeInsets.only(right: 20,left: 15),
-                      decoration: BoxDecoration(
-                        color: ColorRes.colorBgDark,
-                        border: Border.all(color: ColorRes.white, width: 1),
-                        borderRadius: new BorderRadius.circular(10.0),
-                      ),
-                      child: showLoginForm(),
-                    ))
-              ],
-            ),
+//            Row(
+//              children: <Widget>[
+//                Expanded(flex: 1,
+//                  child: Image(
+//                  height: Utils.getDeviceHeight(context) / 1.7,
+//                  image: AssetImage(
+//                    Utils.getAssetsImg('logo_login'),
+//                  ),
+//                  width: Utils.getDeviceHeight(context) / 2,
+//                ),),
+//                Expanded(flex: 1,
+//                    child: Container(
+//                      width: Utils.getDeviceWidth(context) / 2.3,
+//                      height: Utils.getDeviceHeight(context) / 1.7,
+//                      margin: EdgeInsets.only(right: 20,left: 15),
+//                      decoration: BoxDecoration(
+//                        color: ColorRes.colorBgDark,
+//                        border: Border.all(color: ColorRes.white, width: 1),
+//                        borderRadius: new BorderRadius.circular(10.0),
+//                      ),
+//                      child: showLoginForm(),
+//                    ))
+//              ],
+//            ),
 
          /*   Padding(
               padding: EdgeInsets.only(left: 50),
@@ -128,9 +193,9 @@ class _LoginPageState extends State<LoginPage> {
             */
             CommonView.showCircularProgress(isLoading)
           ],
-        ),
-      ),
-    );
+        ), */
+      ), */
+        );
   }
 
   showLoginForm() {
@@ -265,7 +330,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     }).catchError((e) {
-      print("login_"+e.toString());
+      print("login_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -301,7 +366,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     }).catchError((e) {
-      print("customervalue_"+e.toString());
+      print("customervalue_" + e.toString());
       setState(() {
         isLoading = false;
       });

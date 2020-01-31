@@ -15,6 +15,10 @@ import '../helper/constant.dart';
 import '../helper/string_res.dart';
 
 int position1;
+
+bool isCheckLoad = false;
+
+
 class OrganizationsPage2 extends StatefulWidget {
   @override
   _OrganizationsPage2State createState() => _OrganizationsPage2State();
@@ -38,35 +42,38 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 //    initStreamControllerProfile();
   }
 
-  reference() {
-    setState(() {
-    });
-  }
-
-//  void initStreamControllerProfile() {
-//    if (Injector.streamController == null)
-//      Injector.streamController = StreamController.broadcast();
-//
-//    Injector.streamController.stream.listen((data) {
-//      if (mounted) {
-//        setState(() {
-//          print(data);
-//
-//          if (data == "update plus") {
-//            manageLevel(position1, Const.add);
-////            showConfirmDialog(position1, Const.add);
-//          } else if(data == "update minus") {
-//            manageLevel(position1, Const.subtract);
-//          }
-//
-//        });
-//      }
-//    }, onDone: () {
-//      print("Task Done11");
-//    }, onError: (error) {
-//      print("Some Error11");
+//  reference() {
+//    setState(() {
 //    });
 //  }
+
+  void initStreamControllerProfile() {
+    if (Injector.streamController == null)
+      Injector.streamController = StreamController.broadcast();
+
+    Injector.streamController.stream.listen((data) {
+      if (mounted) {
+        setState(() {
+          print(data);
+
+          if(isCheckLoad == true) {
+            if (data == "update plus") {
+              manageLevel(position1, Const.add);
+              isCheckLoad = false;
+//            showConfirmDialog(position1, Const.add);
+            } else if (data == "update minus") {
+              manageLevel(position1, Const.subtract);
+              isCheckLoad = false;
+            }
+          }
+        });
+      }
+    }, onDone: () {
+      print("Task Done11");
+    }, onError: (error) {
+      print("Some Error11");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,33 +108,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItem(int type) {
     int position = type - 1;
+    initStreamControllerProfile();
 
-//    setState(() {
-//      position1 = position;
-//    });
 
-    if (Injector.streamController == null)
-      Injector.streamController = StreamController.broadcast();
-
-    Injector.streamController.stream.listen((data) {
-      if (mounted) {
-        setState(() {
-          print(data);
-
-          if (data == "update plus") {
-            manageLevel(position, Const.add);
-//            showConfirmDialog(position1, Const.add);
-          } else if(data == "update minus") {
-            manageLevel(position, Const.subtract);
-          }
-
-        });
-      }
-    }, onDone: () {
-      print("Task Done11");
-    }, onError: (error) {
-      print("Some Error11");
-    });
 
     return Stack(
       fit: StackFit.loose,
@@ -177,26 +160,13 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-
-//                      InkResponse(
-//                        child: Padding(
-//                          padding: EdgeInsets.all(5),
-//                          child: Image(
-//                            image: AssetImage(Utils.getAssetsImg('minus')),
-//                            fit: BoxFit.fill,
-//                            width: 13,
-//                          ),
-//                        ),
-//                        onTap: () {
+//                  Row(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    crossAxisAlignment: CrossAxisAlignment.center,
+//                    children: <Widget>[
 //                          showConfirmDialog(position, Const.subtract);
-//                        },
-//                      ),
-
-                      Stack(
+                    Center(
+                      child: Stack(
                         alignment: Alignment.center,
                         children: <Widget>[
                           Container(
@@ -210,9 +180,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                                     image: AssetImage(
                                         Utils.getAssetsImg('bg_progress_2')),
                                     fit: BoxFit.fill)),
-//                padding: EdgeInsets.symmetric(vertical: 2),
                           ),
                           LinearPercentIndicator(
+//                            padding: EdgeInsets.only(left: 5, right: 5),
                             width: Utils.getDeviceWidth(context) / 9,
                             lineHeight: 15.0,
                             percent: Utils.getProgress(arrOrganization[position]),
@@ -221,30 +191,17 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                           )
                         ],
                       ),
+                    )
 
-//                     InkResponse(
-//                        child: Padding(
-//                          padding: EdgeInsets.all(5),
-//                          child: Image(
-//                            image: AssetImage(Utils.getAssetsImg('plus')),
-//                            fit: BoxFit.fill,
-//                            width: 13,
-//                          ),
-//                        ),
-//                        onTap: () {
-//                          showConfirmDialog(position, Const.add);
-//                        },
-//                      )
-
-                    ],
-                  ),
+//                    ],
+//                  ),
                 ],
               ),
             ),
           ),
           onTap: () {
 //            showBody(context, arrOrganization[position].description);
-            Utils.showOrgInfoDialog(_scaffoldKey, arrOrganization[position].description, position);
+            Utils.showOrgInfoDialog(_scaffoldKey, arrOrganization[position].description, position, true);
           },
         ),
       /*  Positioned(
@@ -388,7 +345,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     }
   }
 
-  Future<void> showConfirmDialog(int position, int action) async {
+ /* Future<void> showConfirmDialog(int position, int action) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -417,7 +374,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         );
       },
     );
-  }
+  } */
 
   manageLevel(int position, int action) {
     Utils.isInternetConnectedWithAlert().then((_) {
@@ -454,100 +411,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     });
   }
 
-
-  showBody(BuildContext context, String arrayData) {
-    return showDialog(context: context,
-
-      builder: (BuildContext context) {
-      return Center(
-        child: Stack(
-          children: <Widget>[
-            Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(40),
-                alignment: Alignment.center,
-                width: Utils.getDeviceWidth(context) / 2.5,
-                height: Utils.getDeviceHeight(context) / 2.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: ColorRes.white,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                        Utils.getText(context, arrayData),
-                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 13)),
-                    Container(
-                        child: showTextEmp("Fire 10 employees", "minus", 1)),
-                    Padding(padding: EdgeInsets.only(top: 8)),
-                    Container(child: showTextEmp("Hire 10 employees", "plus", 2)),
-                    Padding(padding: EdgeInsets.only(top: 8)),
-                    InkResponse(
-                      child: Container(
-                        child: Text("Cancel",
-                            style: TextStyle(color: ColorRes.blue, fontSize: 17)),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                )),
-//          Container(),
-//          Container(),
-//          Container(),
-            Positioned(
-                right: 10,
-                child: InkResponse(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg('close_dialog')),
-                      width: 20,
-                    ),
-                  ),
-                  onTap: () {
-                    Utils.playClickSound();
-                    Navigator.pop(context);
-                  },
-                ))
-          ],
-        ),
-      );
-      }
-    );
-  }
-
-
-  showTextEmp(String textShow, String img, int type) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Container(
-          child: Text('$textShow',
-              style: TextStyle(color: ColorRes.blue, fontSize: 17)),
-        ),
-        InkResponse(
-          child: Container(
-            child: Image(
-                height: 20,
-                width: 20,
-                image: AssetImage(Utils.getAssetsImg('$img'))),
-          ),
-          onTap: () {
-//            type == 1
-//                ? showConfirmDialog(position, Const.add)
-//                : showConfirmDialog(position, Const.add);
-          },
-        )
-      ],
-    );
-  }
-
 }
 
 
@@ -559,12 +422,14 @@ class OrgInfoDialog extends StatefulWidget {
     Key key,
     this.text,
     this.organizationsPage2,
-    this.position
+    this.position,
+    this.checkUpdate
   }) : super(key: key);
 
   final String text;
   final _OrganizationsPage2State organizationsPage2;
   final int position;
+  final bool checkUpdate;
 
 
   @override
@@ -593,11 +458,11 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
       child: Stack(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(15),
               margin: EdgeInsets.all(40),
               alignment: Alignment.center,
-              width: Utils.getDeviceWidth(context) / 2.0,
-              height: Utils.getDeviceHeight(context) / 2.0,
+              width: Utils.getDeviceWidth(context) / 1.8,
+              height: Utils.getDeviceHeight(context) / 1.8,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: ColorRes.white,
@@ -615,7 +480,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                     InkResponse(
                       child: InkResponse(
                         child: Container(
-                          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
                           decoration: BoxDecoration(
                               border: Border.all(width: 2, color: ColorRes.blue),
                               borderRadius: BorderRadius.all(Radius.circular(20))
@@ -626,15 +491,19 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                         onTap: () {
                           Navigator.pop(context);
                           Injector.streamController.add("update minus");
+                          setState(() {
+                            position1 = widget.position;
+                            isCheckLoad = widget.checkUpdate;
+                          });
                         },
                       ),
                     ),
 //                      showTextEmp("Fire 10 employees", "minus", 1)),
-                    Padding(padding: EdgeInsets.only(top: 8)),
+                    Padding(padding: EdgeInsets.only(top: 5)),
                     InkResponse(
                       child: InkResponse(
                         child: Container(
-                          padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
                           decoration: BoxDecoration(
                               border: Border.all(width: 2, color: ColorRes.blue),
                               borderRadius: BorderRadius.all(Radius.circular(20))
@@ -648,14 +517,18 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
 //                          widget.organizationsPage2.refresh();
                           Navigator.pop(context);
                           Injector.streamController.add("update plus");
-                          widget.organizationsPage2.reference();
+                          setState(() {
+                            position1 = widget.position;
+                            isCheckLoad = widget.checkUpdate;
+                          });
+//                          widget.organizationsPage2.reference();
 
 
                         },
                       ),
                     ),
 //                  Container(child: showTextEmp("Hire 10 employees", "plus", 2)),
-                    Padding(padding: EdgeInsets.only(top: 12)),
+                    Padding(padding: EdgeInsets.only(top: 8)),
                     InkResponse(
                       child: Container(
                         child: Text("Cancel",
