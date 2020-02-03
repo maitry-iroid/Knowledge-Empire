@@ -158,7 +158,6 @@ class WebApi {
 
       final response = await dio.post("", data: formData,
           onSendProgress: (int sent, int total) {
-        print("$sent $total");
       });
 
       print(response.data);
@@ -189,7 +188,6 @@ class WebApi {
       final response = await dio
           .post("", data: getRequest('getLearningModule', req),
               onSendProgress: (int sent, int total) {
-        print("$sent $total");
       });
 
       print(response.data);
@@ -202,7 +200,7 @@ class WebApi {
 
       return null;
     } catch (e) {
-      print(e);
+      print("getLearningModule_"+e);
       return null;
     }
   }

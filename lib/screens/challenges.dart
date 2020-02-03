@@ -663,12 +663,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
             if (getFriendsData.length > 0) {
 
-              print("===="+getFriendsData.length.toString()+"=======");
 
               getFriendsData.removeWhere(
                   (friend) => friend.userId == Injector.userData.userId);
 
-              print("===="+getFriendsData.length.toString()+"=======");
 
               arrFriendsToShow = getFriendsData;
 

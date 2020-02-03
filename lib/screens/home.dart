@@ -157,8 +157,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         widget.initialPageType != Const.typeChallenges) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
-      if (widget.isChallenge == null || !widget.isChallenge)
-        getPendingChallenges();
+
+      //TODO uncomment below code
+//      if (widget.isChallenge == null || !widget.isChallenge)
+//        getPendingChallenges();
     }
   }
 
@@ -403,9 +405,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         });
       }
     }, onDone: () {
-      print("Task Done11");
     }, onError: (error) {
-      print("Some Error11");
     });
   }
 
