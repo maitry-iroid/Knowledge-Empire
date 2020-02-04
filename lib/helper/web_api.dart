@@ -7,6 +7,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/achievement_category.dart';
+import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/change_password.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_achievement.dart';
@@ -90,9 +91,16 @@ class WebApi {
 
     if (response.statusCode == 200) {
       print(response.data);
-      LoginResponse loginRequest =
+      LoginResponse loginResponse =
           LoginResponse.fromJson(jsonDecode(response.data));
-      return loginRequest;
+
+      if (loginResponse.flag == "false" &&
+          loginResponse.msg == "You are removed from company".trim()) {
+        Utils.showToast("loginResponse.msg");
+        return null;
+      }
+
+      return loginResponse;
     } else {
       return null;
     }
@@ -156,9 +164,8 @@ class WebApi {
       FormData formData = await getUploadProfileRequest(
           'updateProfile', json.encode(jsonMap), file);
 
-      final response = await dio.post("", data: formData,
-          onSendProgress: (int sent, int total) {
-      });
+      final response = await dio.post("",
+          data: formData, onSendProgress: (int sent, int total) {});
 
       print(response.data);
 
@@ -185,10 +192,9 @@ class WebApi {
     print(dio.options.headers);
 
     try {
-      final response = await dio
-          .post("", data: getRequest('getLearningModule', req),
-              onSendProgress: (int sent, int total) {
-      });
+      final response = await dio.post("",
+          data: getRequest('getLearningModule', req),
+          onSendProgress: (int sent, int total) {});
 
       print(response.data);
 
@@ -200,7 +206,7 @@ class WebApi {
 
       return null;
     } catch (e) {
-      print("getLearningModule_"+e);
+      print("getLearningModule_" + e);
       return null;
     }
   }
@@ -219,11 +225,9 @@ class WebApi {
     print("assignUserToModule" + " - " + req);
 
     try {
-      final response = await dio
-          .post("", data: getRequest('assignUserToModule', req),
-              onSendProgress: (int sent, int total) {
-        print("$sent $total");
-      });
+      final response = await dio.post("",
+          data: getRequest('assignUserToModule', req),
+          onSendProgress: (int sent, int total) {});
 
       print(response.data);
 
@@ -274,21 +278,15 @@ class WebApi {
     initDio();
 
     print("questions_request__" + json.encode(jsonMap));
-    try {
-      final response = await dio.post("",
-          data: json.encode(getRequest('getQuestions', json.encode(jsonMap))));
-      if (response.statusCode == 200) {
-        print(response.data);
-        QuestionsResponse questionRequest =
-            QuestionsResponse.fromJson(jsonDecode(response.data));
-        return questionRequest;
-      }
+    final response = await dio.post("",
+        data: json.encode(getRequest('getQuestions', json.encode(jsonMap))));
+    if (response.statusCode == 200) {
       print(response.data);
+      QuestionsResponse questionRequest =
+          QuestionsResponse.fromJson(jsonDecode(response.data));
+      return questionRequest;
+    } else
       return null;
-    } catch (e) {
-      print(e);
-      return null;
-    }
   }
 
   Future<OrganizationData> getOrganizations(
@@ -326,10 +324,8 @@ class WebApi {
   }
 
   Future<GetCustomerValueResponse> releaseResource(
-      BuildContext context, ReleaseResourceRequest rq) async {
+      ReleaseResourceRequest rq) async {
     initDio();
-
-//    print("releaseResource" + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
@@ -385,49 +381,40 @@ class WebApi {
     }
   }
 
-  Future<CustomerValueData> getCustomerValue(
-      BuildContext context, Map<String, dynamic> jsonMap) async {
+  Future<GetCustomerValueResponse> getCustomerValue(
+      CustomerValueRequest jsonMap) async {
     initDio();
 
-    print("getCustomerValue__" + json.encode(jsonMap));
+    print("getCustomerValue__" + json.encode(jsonMap.toJson()));
 
     try {
       final response = await dio.post("",
-          data: json
-              .encode(getRequest('getCustomerValue', json.encode(jsonMap))));
+          data: json.encode(
+              getRequest('getCustomerValue', json.encode(jsonMap.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
         GetCustomerValueResponse getCustomerValueResponse =
             GetCustomerValueResponse.fromJson(jsonDecode(response.data));
 
-        if (getCustomerValueResponse != null) {
-          if (getCustomerValueResponse.flag == "true") {
-            return getCustomerValueResponse.data;
-          } else {
-            Utils.showToast(getCustomerValueResponse.msg);
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
+        return getCustomerValueResponse;
       }
       print(response.data);
       return null;
     } catch (e) {
-      print("getCustomerValue__"+e.toString());
+      print("getCustomerValue__" + e.toString());
       return null;
     }
   }
 
-  Future<GetCustomerValueResponse> bailOut(
-      BuildContext context, Map<String, dynamic> jsonMap) async {
+  Future<GetCustomerValueResponse> bailOut(BailOutRequest rq) async {
     initDio();
 
-    print("bailOut__" + json.encode(jsonMap));
+    print("bailOut__" + json.encode(rq.toJson()));
 
     try {
       final response = await dio.post("",
-          data: json.encode(getRequest('bailOut', json.encode(jsonMap))));
+          data: json.encode(getRequest('bailOut', json.encode(rq.toJson()))));
 
       if (response.statusCode == 200) {
         print(response.data);
@@ -828,7 +815,7 @@ class WebApi {
       print(response.data);
       return null;
     } catch (e) {
-      print("dashboard_"+e.toString());
+      print("dashboard_" + e.toString());
       return null;
     }
   }

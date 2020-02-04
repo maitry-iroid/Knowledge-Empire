@@ -67,15 +67,15 @@ class _LoginPageState extends State<LoginPage> {
         body: Container(
 //        height: double.infinity,
 
-            height: 400,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
-                fit: BoxFit.cover,
+          height: 400,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
+              fit: BoxFit.cover,
 //            alignment: Alignment.center,
-              ),
             ),
+          ),
 
           child: Row(
 //            alignment: Alignment.center,
@@ -86,15 +86,17 @@ class _LoginPageState extends State<LoginPage> {
 //                padding: EdgeInsets.only(left: 50),
                 margin: EdgeInsets.only(left: 40),
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(Utils.getAssetsImg("logo_login")), fit: BoxFit.fill)
-                ),
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("logo_login")),
+                        fit: BoxFit.fill)),
               ),
               Expanded(
                   flex: 5,
                   child: Container(
                     width: Utils.getDeviceWidth(context) / 2.3,
                     height: Utils.getDeviceHeight(context) / 1.7,
-                    margin: EdgeInsets.only(right: 20,left: Utils.getDeviceWidth(context) / 5.5),
+                    margin: EdgeInsets.only(
+                        right: 20, left: Utils.getDeviceWidth(context) / 5.5),
                     decoration: BoxDecoration(
                       color: ColorRes.colorBgDark,
                       border: Border.all(color: ColorRes.white, width: 1),
@@ -104,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
                   ))
             ],
           ),
-
         )
 
         /*Container(
@@ -320,7 +321,12 @@ class _LoginPageState extends State<LoginPage> {
 
           Injector.userData = loginResponseData;
 
-          getCustomerValues(loginData);
+          if (loginData.data.isFirstTimeLogin)
+            navigateToIntro();
+          else {
+            navigateToDashboard();
+          }
+
         } else {
           setState(() {
             isLoading = false;
@@ -342,27 +348,31 @@ class _LoginPageState extends State<LoginPage> {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi()
-        .getCustomerValue(context, rq.toJson())
-        .then((customerValueData) async {
+    WebApi().getCustomerValue(rq).then((getCustomerValueResponse) async {
       setState(() {
         isLoading = false;
       });
 
-      if (customerValueData != null) {
-        await Injector.prefs.setString(PrefKeys.customerValueData,
-            json.encode(customerValueData.toJson()));
+      if (getCustomerValueResponse != null) {
+        if (getCustomerValueResponse.flag == "true") {
+          if (getCustomerValueResponse.data != null) {
+            await Injector.prefs.setString(PrefKeys.customerValueData,
+                json.encode(getCustomerValueResponse.data.toJson()));
 
-        Injector.customerValueData = customerValueData;
+            Injector.customerValueData = getCustomerValueResponse.data;
 
-        if (loginData.data.isPasswordChanged == 0) {
-          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-        } else {
-          if (loginData.data.isFirstTimeLogin)
-            navigateToIntro();
-          else {
-            navigateToDashboard();
+            if (loginData.data.isPasswordChanged == 0) {
+              Utils.showChangePasswordDialog(_scaffoldKey, false, false);
+            } else {
+              if (loginData.data.isFirstTimeLogin)
+                navigateToIntro();
+              else {
+                navigateToDashboard();
+              }
+            }
           }
+        } else {
+          Utils.showToast(getCustomerValueResponse.msg);
         }
       }
     }).catchError((e) {

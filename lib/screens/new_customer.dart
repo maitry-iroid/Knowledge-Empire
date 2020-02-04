@@ -29,7 +29,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
@@ -112,7 +111,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     );
   }
 
-//  CommonView.showCircularProgress(isLoading)
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +133,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               ],
             ),
           ),
-          Container(child: showCircularProgress()),
+          CommonView.showCircularProgress(isLoading)
         ],
       ),
     ));
@@ -146,7 +144,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       child: ListView.builder(
         itemCount: arrQuestions.length,
         itemBuilder: (BuildContext context, int index) {
-//          print(("${getValue(index).toString()} \$"));
           return showItem(index);
         },
       ),
@@ -171,7 +168,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -180,7 +177,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 5,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -189,7 +186,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -198,7 +195,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
           ),
@@ -206,7 +203,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.resources),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -215,7 +212,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.engage),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -339,18 +336,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         initialPageType: Const.typeEngagement,
                         questionDataHomeScr: arrQuestions[index],
                         value: arrQuestions[index].value));
-
-/*              Navigator.push(
-            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
-                Utils.getServicesPersonCount() > 0) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(
-
-                            initialPageType: Const.typeEngagement,
-                            questionDataHomeScr: arrQuestions[index],
-                          )));*/
 
               } else {
                 Utils.showToast("You need atleast " +

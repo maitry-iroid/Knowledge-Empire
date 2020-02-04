@@ -158,29 +158,12 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Ke Employee',
       theme: ThemeData(
-          accentColor: ColorRes.transparent,
-          fontFamily: 'TrulyMadly',
-          backgroundColor: Injector.mode == Const.businessMode
-              ? ColorRes.colorBgDark
-              : ColorRes.white,
-          textTheme: TextTheme(
-            headline: TextStyle(
-                fontSize: 17.0,
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.colorBgDark),
-            title: TextStyle(
-                fontSize: 17,
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.colorBgDark),
-            body1: TextStyle(fontSize: 15, color: ColorRes.white),
-            body2: TextStyle(
-                fontSize: 14,
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.colorBgDark),
-          )),
+        accentColor: ColorRes.transparent,
+        fontFamily: 'TrulyMadly',
+        backgroundColor: Injector.mode == Const.businessMode
+            ? ColorRes.colorBgDark
+            : ColorRes.white,
+      ),
       home: Injector.prefs.getInt(PrefKeys.userId) != null
           ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
                   Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
@@ -189,12 +172,10 @@ class MyAppState extends State<MyApp> {
           : LoginPage(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginPage(),
-//        '/splash': (BuildContext context) => SplashScreen(),
         '/home': (BuildContext context) => HomePage(),
         '/engage': (BuildContext ext) => EngagementCustomer(),
         '/dashboard': (BuildContext context) => DashboardGamePage(),
         '/intro': (BuildContext context) => IntroPage(),
-//        '/contacts': (BuildContext context) => ContactsScreen(),
       },
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [

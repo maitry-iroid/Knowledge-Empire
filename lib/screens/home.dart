@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
@@ -144,8 +145,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
 
-//    print("home_init");
-
     initStreamController();
 
     initCheckNetworkConnectivity();
@@ -156,7 +155,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             widget.initialPageType != Const.typeCustomerSituation ||
         widget.initialPageType != Const.typeChallenges) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
-
 
       //TODO uncomment below code
 //      if (widget.isChallenge == null || !widget.isChallenge)
@@ -200,8 +198,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return /*PLPage()*/ Container();
       case 9:
         return RankingPage();
-      case 10:
-        return ProfilePage();
+//      case 10:
+//        return ProfilePage();
 //      case 11:
 //        return IntroPage();
 //        return FadeRouteIntro();
@@ -332,7 +330,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
-    if (_selectedDrawerIndex == Const.typeEngagement)
+    if (_selectedDrawerIndex == Const.typeProfile)
+      return ProfilePage();
+    else if (_selectedDrawerIndex == Const.typeEngagement)
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr,
           isChallenge: widget.isChallenge);
@@ -353,21 +353,31 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi()
-        .getCustomerValue(context, rq.toJson())
-        .then((customerValueData) async {
-      if (customerValueData != null) {
-        await Injector.prefs.setString(PrefKeys.customerValueData,
-            json.encode(customerValueData.toJson()));
+    customerValueBloc?.getCustomerValue(rq);
 
-        Injector.customerValueData = customerValueData;
-
-        Injector.streamController?.add("This a test data");
-      }
-    }).catchError((e) {
-      print("getCustomerValues___" + e.toString());
-      Utils.showToast(e.toString());
-    });
+//    WebApi()
+//        .getCustomerValue( rq)
+//        .then((getCustomerValueResponse) async {
+//      if (getCustomerValueResponse != null) {
+//        if (getCustomerValueResponse.flag == "true") {
+//          if (getCustomerValueResponse.data != null) {
+//            await Injector.prefs.setString(PrefKeys.customerValueData,
+//                json.encode(getCustomerValueResponse.data.toJson()));
+//
+//            Injector.customerValueData = getCustomerValueResponse.data;
+//
+//            Injector.streamController?.add("This a test data");
+//          }
+//        } else {
+//          Utils.showToast(getCustomerValueResponse.msg);
+//        }
+//      } else {
+//        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+//      }
+//    }).catchError((e) {
+//      print("getCustomerValues___" + e.toString());
+//      Utils.showToast(e.toString());
+//    });
   }
 
   void setSelectedIndex() {
@@ -404,9 +414,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           }
         });
       }
-    }, onDone: () {
-    }, onError: (error) {
-    });
+    }, onDone: () {}, onError: (error) {});
   }
 
   void initCheckNetworkConnectivity() {

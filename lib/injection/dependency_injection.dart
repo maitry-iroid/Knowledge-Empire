@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_udid/flutter_udid.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -29,6 +30,7 @@ class Injector {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
   static AudioCache player = AudioCache(prefix: 'sounds/');
+
 
 //  factory Injector {
 //    return _singleton;
@@ -54,6 +56,7 @@ class Injector {
         prefs.getString(PrefKeys.user).isNotEmpty) {
       userData = LoginResponseData.fromJson(
           jsonDecode(prefs.getString(PrefKeys.user)));
+
 
       if (prefs.getString(PrefKeys.customerValueData) != null)
         customerValueData = CustomerValueData.fromJson(

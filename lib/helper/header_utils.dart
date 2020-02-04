@@ -52,7 +52,7 @@ class HeaderUtils {
 
     print(value.toString());
 
-    return value <= 1 || value >= 0 ? value : 0.0;
+    return (value <= 1 && value >= 0) ? value.toDouble() : 0.0;
   }
 
   static String getProgressText(int organizationType) {
@@ -86,11 +86,9 @@ class HeaderUtils {
               ? 1
               : Injector.customerValueData?.totalAttemptedQuestion);
 
-      value = (value / 10);
 
       return value <= 1 || value >= 0 ? value : 0.0;
     } catch (e) {
-      print("getBonusValue_" + e.toString());
       return 0.0;
     }
   }

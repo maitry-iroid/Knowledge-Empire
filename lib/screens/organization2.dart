@@ -332,36 +332,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     }
   }
 
-  /* Future<void> showConfirmDialog(int position, int action) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text(action == Const.add
-              ? arrOrganization[position].addLevelConfirmMessage
-              : arrOrganization[position].subtractLevelConfirmMessage),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Yes'),
-              onPressed: () {
-                manageLevel(position, action);
-                //alert pop
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('No'),
-              onPressed: () {
-                //alert pop
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  } */
 
   manageLevel(int position, int action) {
     Utils.isInternetConnectedWithAlert().then((_) {

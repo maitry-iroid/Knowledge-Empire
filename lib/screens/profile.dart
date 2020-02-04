@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
@@ -439,38 +440,40 @@ class _ProfilePageState extends State<ProfilePage> {
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
 
-    setState(() {
-      isLoading = true;
-    });
+    customerValueBloc?.bailOut(rq);
 
-    WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (customerValueResponse != null) {
-        if (customerValueResponse.flag == "true") {
-          if (customerValueResponse.data != null) {
-            await Injector.prefs.setString(PrefKeys.customerValueData,
-                json.encode(customerValueResponse.data.toJson()));
-
-            Injector.customerValueData = customerValueResponse.data;
-            Utils.showToast(
-                Utils.getText(context, "Action performed successfully!"));
-
-            Injector.streamController.add("bail out");
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
-      }
-    }).catchError((e) {
-      print("bailOut_" + e.toString());
-      Utils.showToast(e.toString());
-      setState(() {
-        isLoading = false;
-      });
-    });
+//    setState(() {
+//      isLoading = true;
+//    });
+//
+//    WebApi().bailOut( rq).then((customerValueResponse) async {
+//      setState(() {
+//        isLoading = false;
+//      });
+//
+//      if (customerValueResponse != null) {
+//        if (customerValueResponse.flag == "true") {
+//          if (customerValueResponse.data != null) {
+//            await Injector.prefs.setString(PrefKeys.customerValueData,
+//                json.encode(customerValueResponse.data.toJson()));
+//
+//            Injector.customerValueData = customerValueResponse.data;
+//            Utils.showToast(
+//                Utils.getText(context, "Action performed successfully!"));
+//
+//            Injector.streamController.add("bail out");
+//          }
+//        } else {
+//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+//        }
+//      }
+//    }).catchError((e) {
+//      print("bailOut_" + e.toString());
+//      Utils.showToast(e.toString());
+//      setState(() {
+//        isLoading = false;
+//      });
+//    });
   }
 
   logout() async {
