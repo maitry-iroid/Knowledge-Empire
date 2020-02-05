@@ -309,30 +309,23 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    WebApi().login(loginRequest.toJson()).then((loginData) async {
+    WebApi()
+        .callAPI(WebApi.rqLogin, loginRequest.toJson())
+        .then((loginData) async {
       if (loginData != null) {
-        if (loginData.flag == "true") {
-          LoginResponseData loginResponseData = loginData.data;
+        LoginResponseData loginResponseData =
+            LoginResponseData.fromJson(loginData);
 
-          await Injector.prefs
-              .setInt(PrefKeys.userId, loginResponseData.userId);
-          await Injector.prefs.setString(
-              PrefKeys.user, json.encode(loginResponseData.toJson()));
+        await Injector.prefs.setInt(PrefKeys.userId, loginResponseData.userId);
+        await Injector.prefs.setString(PrefKeys.user, jsonEncode(loginData));
 
-          Injector.userData = loginResponseData;
+        Injector.userData = loginResponseData;
+        Injector.userId = loginResponseData.userId;
 
-          if (loginData.data.isFirstTimeLogin)
-            navigateToIntro();
-          else {
-            navigateToDashboard();
-          }
-
-        } else {
-          setState(() {
-            isLoading = false;
-          });
-
-          Utils.showToast(loginData.msg);
+        if (loginResponseData.isFirstTimeLogin)
+          navigateToIntro();
+        else {
+          navigateToDashboard();
         }
       }
     }).catchError((e) {
@@ -348,31 +341,25 @@ class _LoginPageState extends State<LoginPage> {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi().getCustomerValue(rq).then((getCustomerValueResponse) async {
+    WebApi().callAPI(WebApi.rqGetCustomerValue, rq.toJson()).then((data) async {
       setState(() {
         isLoading = false;
       });
 
-      if (getCustomerValueResponse != null) {
-        if (getCustomerValueResponse.flag == "true") {
-          if (getCustomerValueResponse.data != null) {
-            await Injector.prefs.setString(PrefKeys.customerValueData,
-                json.encode(getCustomerValueResponse.data.toJson()));
+      if (data != null) {
+        await Injector.prefs
+            .setString(PrefKeys.customerValueData, json.encode(data.toJson()));
 
-            Injector.customerValueData = getCustomerValueResponse.data;
+        Injector.customerValueData = data;
 
-            if (loginData.data.isPasswordChanged == 0) {
-              Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-            } else {
-              if (loginData.data.isFirstTimeLogin)
-                navigateToIntro();
-              else {
-                navigateToDashboard();
-              }
-            }
-          }
+        if (loginData.data.isPasswordChanged == 0) {
+          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
-          Utils.showToast(getCustomerValueResponse.msg);
+          if (loginData.data.isFirstTimeLogin)
+            navigateToIntro();
+          else {
+            navigateToDashboard();
+          }
         }
       }
     }).catchError((e) {

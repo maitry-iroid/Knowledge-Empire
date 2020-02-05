@@ -108,19 +108,15 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     rq.userId = Injector.userData.userId;
     rq.type = Const.getExistingQueTYpe;
 
-    WebApi().getQuestions(rq.toJson()).then((data) {
+    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          arrQuestions = data.data;
-        } else {
-          Utils.showToast(data.msg);
-        }
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        data.forEach((v) {
+          arrQuestions.add(QuestionData.fromJson(v));
+        });
       }
     }).catchError((e) {
       print("getQuestions_" + e.toString());
@@ -188,7 +184,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -197,7 +193,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -206,7 +202,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -215,7 +211,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -224,7 +220,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),

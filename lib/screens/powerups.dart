@@ -32,7 +32,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
   List<Organization> arrOrganization = List();
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -59,21 +58,19 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         isLoading = true;
       });
 
-      WebApi()
-          .getOrganizations(context, rq.toJson())
-          .then((getOrganizationData) {
+      WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
         setState(() {
           isLoading = false;
         });
-        if (getOrganizationData != null) {
-          organizationData = getOrganizationData;
-          arrOrganization = getOrganizationData.organization;
+        if (data != null) {
+          organizationData = OrganizationData.fromJson(data);
+          arrOrganization = organizationData.organization;
           selectedOrg = arrOrganization[0];
 
           setState(() {});
         }
       }).catchError((e) {
-        print("getOrganizations_"+e.toString());
+        print("getOrganizations_" + e.toString());
         setState(() {
           isLoading = false;
         });
@@ -326,7 +323,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                                       AssetImage(Utils.getAssetsImg("bg_blue")),
                                   fit: BoxFit.fill)
                               : null),
-                      child: Text(StringRes.description,
+                      child: Text(
+                        StringRes.description,
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                         textAlign: TextAlign.center,
                       ),
@@ -353,36 +351,40 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                       showConfirmDialog(Const.subtract);
                     },
                   ),
-    arrOrganization.length>0? Stack(
-                    alignment: Alignment.centerLeft,
-                    children: <Widget>[
-                      Container(
-                        height: 27,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: ColorRes.greyText,
+                  arrOrganization.length > 0
+                      ? Stack(
+                          alignment: Alignment.centerLeft,
+                          children: <Widget>[
+                            Container(
+                              height: 27,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: ColorRes.greyText,
 //                          image: Injector.isBusinessMode
 //                              ? DecorationImage(
 //                                  image: AssetImage(
 //                                      Utils.getAssetsImg('bg_progress')),
 //                                  fit: BoxFit.fill)
 //                              : null,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Injector.isBusinessMode
-                                ? null
-                                : Border.all(color: ColorRes.white, width: 1)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Injector.isBusinessMode ? 0 : 3),
-                        child:LinearPercentIndicator(
-                          width: Utils.getDeviceWidth(context) / 7,
-                          lineHeight: 25.0,
-                          percent:Utils.getProgress(arrOrganization[selectedIndex]),
-                          backgroundColor: Colors.transparent,
-                          progressColor: ColorRes.titleBlueProf,
-                        ),
-                      ),
-                    ],
-                  ):Container(),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Injector.isBusinessMode
+                                      ? null
+                                      : Border.all(
+                                          color: ColorRes.white, width: 1)),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Injector.isBusinessMode ? 0 : 3),
+                              child: LinearPercentIndicator(
+                                width: Utils.getDeviceWidth(context) / 7,
+                                lineHeight: 25.0,
+                                percent: Utils.getProgress(
+                                    arrOrganization[selectedIndex]),
+                                backgroundColor: Colors.transparent,
+                                progressColor: ColorRes.titleBlueProf,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
                   InkResponse(
                     child: Padding(
                       padding: EdgeInsets.all(5),
@@ -422,8 +424,12 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           content: Text(action == Const.add
-              ? selectedOrg.addLevelConfirmMessage!=null?selectedOrg.addLevelConfirmMessage:""
-              : selectedOrg.subtractLevelConfirmMessage!=null?selectedOrg.subtractLevelConfirmMessage:""),
+              ? selectedOrg.addLevelConfirmMessage != null
+                  ? selectedOrg.addLevelConfirmMessage
+                  : ""
+              : selectedOrg.subtractLevelConfirmMessage != null
+                  ? selectedOrg.subtractLevelConfirmMessage
+                  : ""),
           actions: <Widget>[
             FlatButton(
               child: Text('Yes'),
@@ -456,25 +462,23 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         isLoading = true;
       });
 
-      WebApi().manageOrganizations(context, rq).then((getOrganizationData) {
+      WebApi().callAPI(WebApi.rqManageOrganization, rq.toJson()).then((data) {
         setState(() {
           isLoading = false;
         });
 
-        if (getOrganizationData != null) {
+        if (data != null) {
+          ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
 
-          arrOrganization[selectedIndex] = getOrganizationData.organization[0];
+          arrOrganization[selectedIndex] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
 
-
-        Utils.performManageLevel(getOrganizationData);
-
-
+          Utils.performManageLevel(manageOrgData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
       }).catchError((e) {
-        print("manageOrg_"+e.toString());
+        print("manageOrg_" + e.toString());
         setState(() {
           isLoading = false;
         });

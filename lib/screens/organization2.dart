@@ -152,33 +152,33 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 //                          showConfirmDialog(position, Const.subtract);
 //                  Center(
 //                    child:
-                    Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: 15,
-                          width: Utils.getDeviceWidth(context) / 10,
+                  Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: 15,
+                        width: Utils.getDeviceWidth(context) / 10,
 //                            width: Utils.getDeviceWidth(context) / 16.4,
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 3, vertical: 5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg('bg_progress_2')),
-                                  fit: BoxFit.fill)),
-                        ),
-                        LinearPercentIndicator(
-                          alignment: MainAxisAlignment.center,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    Utils.getAssetsImg('bg_progress_2')),
+                                fit: BoxFit.fill)),
+                      ),
+                      LinearPercentIndicator(
+                        alignment: MainAxisAlignment.center,
 //                          margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
 //                            padding: EdgeInsets.only(left: 5, right: 5),
-                          width: Utils.getDeviceWidth(context) / 9,
-                          lineHeight: 15.0,
-                          percent: Utils.getProgress(arrOrganization[position]),
-                          backgroundColor: Colors.transparent,
-                          progressColor: Colors.blue,
-                        )
-                      ],
+                        width: Utils.getDeviceWidth(context) / 9,
+                        lineHeight: 15.0,
+                        percent: Utils.getProgress(arrOrganization[position]),
+                        backgroundColor: Colors.transparent,
+                        progressColor: Colors.blue,
+                      )
+                    ],
 //                    ),
                   )
                 ],
@@ -293,11 +293,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         isLoading = true;
       });
 
-      WebApi()
-          .getOrganizations(context, rq.toJson())
-          .then((getOrganizationData) {
-        if (getOrganizationData != null) {
-          arrOrganization = getOrganizationData.organization;
+      WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
+        if (data != null) {
+          arrOrganization = OrganizationData.fromJson(data).organization;
 
           setState(() {
             isLoading = false;
@@ -332,7 +330,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     }
   }
 
-
   manageLevel(int position, int action) {
     Utils.isInternetConnectedWithAlert().then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
@@ -345,16 +342,18 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       });
 
       WebApi()
-          .manageOrganizations(context, rq)
-          .then((getOrganizationData) async {
+          .callAPI(WebApi.rqManageOrganization, rq.toJson())
+          .then((data) async {
         setState(() {
           isLoading = false;
         });
 
-        if (getOrganizationData != null) {
-          arrOrganization[position] = getOrganizationData.organization[0];
+        if (data != null) {
+          ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
+
+          arrOrganization[position] = manageOrgData.organization[0];
           setState(() {});
-          Utils.performManageLevel(getOrganizationData);
+          Utils.performManageLevel(manageOrgData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
@@ -474,8 +473,8 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
                           child: Text("Fire 10 employees",
-                              style: TextStyle(
-                                  color: ColorRes.red, fontSize: 17)),
+                              style:
+                                  TextStyle(color: ColorRes.red, fontSize: 17)),
                         ),
                         onTap: () {
                           Navigator.pop(context);

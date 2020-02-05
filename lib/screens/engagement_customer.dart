@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
 
 import '../commonview/background.dart';
@@ -294,21 +295,22 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       isLoading = true;
     });
 
-    WebApi().submitAnswers(context, rq).then((data) async {
+    WebApi().callAPI(WebApi.rqSubmitAnswers, rq.toJson()).then((data) async {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        Injector.customerValueData = data;
+        Injector.customerValueData = CustomerValueData.fromJson(data);
+
+        await Injector.prefs.remove(PrefKeys.answerData);
+
+        Injector.streamController.add("submit answer");
+
+        navigateToSituation(context, null);
       }
-      await Injector.prefs.remove(PrefKeys.answerData);
-
-      Injector.streamController.add("submit answer");
-
-      navigateToSituation(context, null);
     }).catchError((e) {
-      print("submitAnswer_"+e.toString());
+      print("submitAnswer_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -322,7 +324,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       isLoading = true;
     });
 
-    WebApi().submitChallengeQuestion(context, rq).then((data) async {
+    WebApi()
+        .callAPI(WebApi.rqSubmitChallengeAnswer, rq.toJson())
+        .then((data) async {
       setState(() {
         isLoading = false;
       });
@@ -331,7 +335,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         navigateToSituation(context, data);
       }
     }).catchError((e) {
-      print("submitChallenge_"+e.toString());
+      print("submitChallenge_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -1222,8 +1226,7 @@ class ExpandMediaState extends State<ExpandMedia>
                     Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)
-                      ),
+                          borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.only(
                           top: 35, bottom: 15, right: 25, left: 25),
                       child: Container(
@@ -1231,13 +1234,15 @@ class ExpandMediaState extends State<ExpandMedia>
                             top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
                         decoration: BoxDecoration(
-                          color: Injector.isBusinessMode ? ColorRes.black : ColorRes.white ,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.black
+                              : ColorRes.white,
                           image: Utils.isImage(questionData.mediaLink)
                               ? DecorationImage(
                                   image: Utils.getCacheNetworkImage(
                                       questionData.mediaLink),
 //                                  fit: BoxFit.fill
-                          )
+                                )
                               : null,
                           borderRadius: BorderRadius.circular(10),
                         ),

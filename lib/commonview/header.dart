@@ -67,13 +67,13 @@ class HeaderViewState extends State<HeaderView> {
           : ColorRes.headerBlue,
       child: StreamBuilder(
           stream: customerValueBloc?.customerValue,
-          builder: (context, AsyncSnapshot<GetCustomerValueResponse> snapshot) {
+          builder: (context, AsyncSnapshot<CustomerValueData> snapshot) {
             if (snapshot.hasData) {
-              return _buildSearchResults(snapshot?.data?.data);
+              return _buildSearchResults(snapshot?.data);
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
-            return _buildSearchResults(snapshot?.data?.data);
+            return _buildSearchResults(snapshot?.data);
 //            return Center(child: CircularProgressIndicator());
           }),
     );

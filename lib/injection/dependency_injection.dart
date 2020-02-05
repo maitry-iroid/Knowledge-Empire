@@ -20,6 +20,7 @@ class Injector {
   static String deviceId = "";
   static int notificationID = 0;
   static LoginResponseData userData;
+  static int userId;
   static CustomerValueData customerValueData;
   static int mode;
   static bool isBusinessMode = true;
@@ -56,6 +57,8 @@ class Injector {
         prefs.getString(PrefKeys.user).isNotEmpty) {
       userData = LoginResponseData.fromJson(
           jsonDecode(prefs.getString(PrefKeys.user)));
+
+      userId = userData.userId;
 
 
       if (prefs.getString(PrefKeys.customerValueData) != null)

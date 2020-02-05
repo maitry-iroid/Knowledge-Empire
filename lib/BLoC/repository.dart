@@ -9,19 +9,12 @@ import 'package:ke_employee/models/releaseResource.dart';
 class Repository {
   WebApi webApi = WebApi();
 
-  Future<LearningModuleResponse> fetchModule(int isChallenge) =>
-      webApi.getLearningModule(Injector.userData.userId, isChallenge);
+  Future<dynamic> getCustomerValue(CustomerValueRequest rq) =>
+      webApi.callAPI(WebApi.rqGetCustomerValue, rq.toJson());
 
-  Future<LoginResponse> assignUserToModule(
-          int moduleId, String type, int companyId) =>
-      webApi.assignUserToModule(moduleId, type, companyId);
+  Future<CustomerValueData> bailOut(BailOutRequest rq) =>
+      webApi.callAPI(WebApi.rqBailOut, rq.toJson());
 
-  Future<GetCustomerValueResponse> getCustomerValue(CustomerValueRequest rq) =>
-      webApi.getCustomerValue(rq);
-
-  Future<GetCustomerValueResponse> bailOut(BailOutRequest rq) =>
-      webApi.bailOut(rq);
-
-  Future<GetCustomerValueResponse> releaseResource(ReleaseResourceRequest rq) =>
-      webApi.releaseResource(rq);
+  Future<CustomerValueData> releaseResource(ReleaseResourceRequest rq) =>
+      webApi.callAPI(WebApi.rqReleaseResource, rq.toJson());
 }

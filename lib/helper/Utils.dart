@@ -223,8 +223,8 @@ class Utils {
             isOldPasswordRequired: isOldPasswordRequired));
   }
 
-  static showOrgInfoDialog(
-      GlobalKey<ScaffoldState> _scaffoldKey, String description, int position, bool checkUpdate) async {
+  static showOrgInfoDialog(GlobalKey<ScaffoldState> _scaffoldKey,
+      String description, int position, bool checkUpdate) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => OrgInfoDialog(
@@ -344,12 +344,14 @@ class Utils {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
         jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
-    WebApi().submitAnswers(context, rq).then((data) async {
+    WebApi().callAPI(WebApi.rqSubmitAnswers, rq.toJson()).then((data) async {
       if (data != null) {
-        Injector.customerValueData = data;
+        CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+
+        Injector.customerValueData = customerValueData;
+        await Injector.prefs.remove(PrefKeys.answerData);
+        Injector.streamController.add("submit answer");
       }
-      await Injector.prefs.remove(PrefKeys.answerData);
-      Injector.streamController.add("submit answer");
     }).catchError((e) {
       print("callSubmitAnswerApi" + e.toString());
       Utils.showToast(e.toString());
@@ -474,7 +476,7 @@ class Utils {
 
     String challengeId = message['data']['challengeId'];
 
-    if(challengeId!=null){
+    if (challengeId != null) {
       Injector.streamController?.add("${Const.openPendingChallengeDialog}");
     }
 

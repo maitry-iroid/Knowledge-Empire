@@ -46,8 +46,8 @@ class Const {
   static int imgQuality = 20;
   static double imgScaleProfile = 1;
 
-  static String subscribe = "1";
-  static String unSubscribe = "0";
+  static int subscribe = 1;
+  static int unSubscribe = 0;
 
   static int add = 1;
   static int subtract = 2;

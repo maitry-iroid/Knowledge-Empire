@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -25,8 +24,6 @@ class BusinessSectorPage extends StatefulWidget {
 
 class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
-
-  final bloc = ModuleBloc();
 
   List<LearningModuleData> arrLearningModules = List();
   List<LearningModuleData> arrFinalLearningModules = List();
@@ -509,35 +506,47 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       isLoading = true;
     });
 
-    WebApi().getLearningModule(Injector.userData.userId, 0).then((data) async {
+    GetLearningModuleRequest rq = GetLearningModuleRequest();
+    rq.userId = Injector.userId;
+
+    WebApi()
+        .callAPI(WebApi.rqGetLearningModule, rq.toJson())
+        .then((data) async {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          await Injector.prefs
-              .setString(PrefKeys.learningModles, json.encode(data));
+        List<LearningModuleData> arrData = new List<LearningModuleData>();
 
-          setState(() {
-            arrLearningModules.clear();
-            arrFinalLearningModules.clear();
+        data.forEach((v) {
+          arrData.add(LearningModuleData.fromJson(v));
+        });
 
-            arrLearningModules.addAll(data.data);
-            arrFinalLearningModules.addAll(data.data);
+        LearningModuleResponse learningModuleResponse =
+            LearningModuleResponse();
+        learningModuleResponse.data = arrData;
 
-            if (arrLearningModules.length > 0 &&
-                (selectedModule.moduleId == null)) {
-              selectedModule = arrLearningModules[0];
-              isSwitched = selectedModule.isDownloadEnable == 1;
-            }
-          });
+        await Injector.prefs.setString(PrefKeys.learningModles,
+            jsonEncode(learningModuleResponse.toJson()));
 
-          getQuestions();
+        setState(() {
+          arrLearningModules.clear();
+          arrFinalLearningModules.clear();
+
+          arrLearningModules.addAll(arrData);
+          arrFinalLearningModules.addAll(arrData);
+
+          if (arrLearningModules.length > 0 &&
+              (selectedModule.moduleId == null)) {
+            selectedModule = arrLearningModules[0];
+            isSwitched = selectedModule.isDownloadEnable == 1;
+          }
+        });
+
+        getQuestions();
 //          downloadAllQuestions();
-        }
-      } else
-        Utils.showToast("Something went wrong");
+      }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
 
@@ -549,32 +558,33 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   //
-  void assignUserToModule(String type) async {
+  void assignUserToModule(int type) async {
     setState(() {
       isLoading = true;
     });
 
-    WebApi()
-        .assignUserToModule(
-            selectedModule.moduleId, type, selectedModule.companyId)
-        .then((data) {
+    AssignModuleRequest rq = AssignModuleRequest();
+    rq.userId = Injector.userId;
+    rq.companyId = selectedModule.companyId;
+    rq.moduleId = selectedModule.moduleId;
+    rq.type = type;
+
+    WebApi().callAPI(WebApi.rqAssignUserToModule, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          if (type == Const.subscribe) {
-            Utils.showToast("Subscribed successfully!");
-            selectedModule.isAssign = 1;
-          } else {
-            Utils.showToast("Unsubscribed successfully!");
-            selectedModule.isAssign = 0;
-          }
-          setState(() {});
+        if (type == Const.subscribe) {
+          Utils.showToast("Subscribed successfully!");
+          selectedModule.isAssign = 1;
+        } else {
+          Utils.showToast("Unsubscribed successfully!");
+          selectedModule.isAssign = 0;
         }
+        setState(() {});
 
-//          setState(() {
+        //          setState(() {
 //
 //          });  arrLearningModules
 ////                    .where(
@@ -584,8 +594,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 ////                "1";
 
         fetchLearningModules();
-      } else
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
     }).catchError((e) {
       print("assignUserModule_" + e.toString());
 
@@ -617,23 +626,18 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.type = isSwitched ? 1 : 0;
     rq.moduleId = selectedModule.moduleId;
 
-    WebApi().manageModulePermission(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqUpdateModulePermission, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          Utils.showToast("Permission updated Successfully!");
+      if (data != null) {
+        Utils.showToast("Permission updated Successfully!");
 
-          if (rq.type==1) {
-            getQuestions();
-          } else {
-            removeDownloadedQuestion();
-          }
-        } else {
-          Utils.showToast(response.msg);
-        }
+        if (rq.type == 0)
+          removeDownloadedQuestion();
+        else
+          getQuestions();
       }
     });
 
@@ -653,43 +657,46 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     DownloadQuestionsRequest rq = DownloadQuestionsRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi().getDownloadQuestions(rq.toJson()).then((data) async {
+    WebApi()
+        .callAPI(WebApi.rqGetDownloadQuestions, rq.toJson())
+        .then((data) async {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          List<QuestionData> arrQuestions = data.data;
+        List<QuestionData> arrQuestions = new List<QuestionData>();
 
-          for (int i = 0; i < arrQuestions.length; i++) {
-            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+        data.forEach((v) {
+          arrQuestions.add(QuestionData.fromJson(v));
+        });
 
-            print(arrQuestions[i].value);
-          }
+        for (int i = 0; i < arrQuestions.length; i++) {
+          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
 
-          await Injector.prefs
-              .setString(PrefKeys.questionData, json.encode(data.toJson()));
+          print(arrQuestions[i].value);
+        }
+
+        QuestionsResponse questionsResponse = QuestionsResponse();
+        questionsResponse.data = arrQuestions;
+
+        await Injector.prefs.setString(
+            PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+
+        //TODO remove media also
 
 //          Injector.cacheManager.emptyCache();
 
-          await BackgroundFetch.start().then((int status) async {
-            for (int i = 0; i < arrQuestions.length; i++) {
-              await Injector.cacheManager
-                  .getSingleFile(arrQuestions[i].mediaLink);
-            }
-          }).catchError((e) {
-            print('[BackgroundFetch] setSpentTime start FAILURE: $e');
-          });
-
-//          Utils.showToast("Downloaded successfully");
-        } else {
-          Utils.showToast(data.msg);
-        }
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        await BackgroundFetch.start().then((int status) async {
+          for (int i = 0; i < arrQuestions.length; i++) {
+            await Injector.cacheManager
+                .getSingleFile(arrQuestions[i].mediaLink);
+          }
+        }).catchError((e) {
+          print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+        });
       }
     }).catchError((e) {
       print("downloadQuestion_" + e.toString());
@@ -702,7 +709,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void removeDownloadedQuestion() async {
-
     print("riddhi_______");
 
     List<QuestionData> arrQuestions =

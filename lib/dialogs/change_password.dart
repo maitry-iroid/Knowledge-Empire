@@ -267,34 +267,29 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
     ChangePasswordRequest rq = ChangePasswordRequest();
     rq.userId = Injector.userData.userId;
-    rq.oldPassword = widget.isFromProfile?Utils.generateMd5(pass1Controller.text.trim()):null;
+    rq.oldPassword = widget.isFromProfile
+        ? Utils.generateMd5(pass1Controller.text.trim())
+        : null;
     rq.password = Utils.generateMd5(pass2Controller.text.trim());
     rq.isOldPasswordRequired = widget.isOldPasswordRequired;
 
-    WebApi().changePassword(rq).then((data) {
+    WebApi().callAPI(WebApi.rqChangePassword, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          Utils.showToast("password changed Successfully.");
+        Utils.showToast("Password changed Successfully.");
 
-          if (widget.isFromProfile) {
-            Navigator.pop(context);
-          } else {
-
-            Navigator.pushAndRemoveUntil(
-                context, FadeRouteIntro(), ModalRoute.withName("/login"));
-          }
+        if (widget.isFromProfile) {
+          Navigator.pop(context);
         } else {
-          Utils.showToast(data.msg);
+          Navigator.pushAndRemoveUntil(
+              context, FadeRouteIntro(), ModalRoute.withName("/login"));
         }
-      } else {
-        Utils.showToast("Something went wrong.");
       }
     }).catchError((e) {
-      print("changePassword_"+e.toString());
+      print("changePassword_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -304,6 +299,5 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
   void navigateToDashboard() {
     Navigator.push(context, FadeRouteHome());
-
   }
 }

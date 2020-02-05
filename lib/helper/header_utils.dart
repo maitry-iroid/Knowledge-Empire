@@ -111,11 +111,11 @@ class HeaderUtils {
 
   static int getTotalValue(int organizationType) {
     if (organizationType == Const.typeEmployee) {
-      return Injector.customerValueData.totalEmployeeCapacity ?? 0;
+      return Injector.customerValueData?.totalEmployeeCapacity ?? 0;
     } else if (organizationType == Const.typeSalesPersons) {
-      return Injector.customerValueData.totalSalesPerson ?? 0;
+      return Injector.customerValueData?.totalSalesPerson ?? 0;
     } else if (organizationType == Const.typeServicesPerson) {
-      return Injector.customerValueData.totalCustomerCapacity ?? 0;
+      return Injector.customerValueData?.totalCustomerCapacity ?? 0;
     } else
       return 0;
   }

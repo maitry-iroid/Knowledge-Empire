@@ -441,18 +441,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         GetChallengesRequest rq = GetChallengesRequest();
         rq.userId = Injector.userData.userId;
 
-        WebApi().getChallenges(context, rq).then((response) {
+        WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) {
           setState(() {
             isLoading = false;
           });
 
-          if (response != null) {
-            if (response.flag == "true") {
-              if (response.data != null && response.data.challengeId != null)
-                Utils.showChallengeQuestionDialog(_scaffoldKey, response.data);
-            } else {
-              Utils.showToast(response.msg);
-            }
+          if (data != null) {
+            QuestionData questionData = QuestionData.fromJson(data);
+
+            if (questionData != null && questionData.challengeId != null)
+              Utils.showChallengeQuestionDialog(_scaffoldKey, data);
           }
         }).catchError((e) {
           Utils.showToast(e.toString());

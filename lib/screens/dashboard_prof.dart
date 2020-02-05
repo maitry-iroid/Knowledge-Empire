@@ -45,15 +45,17 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.mode;
 
-      WebApi().getDashboardValue(rq).then((response) {
-        if (response?.data != null) {
-          setState(() {
-            arrDashboardData = response.data;
+      WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
+        if (data != null) {
+          data.forEach((v) {
+            arrDashboardData.add(GetDashboardData.fromJson(v));
           });
+
+          if (arrDashboardData.isNotEmpty) setState(() {});
         }
       });
     }).catchError((e) {
-      print("getDashboardValue_"+e.toString());
+      print("getDashboardValue_" + e.toString());
     });
   }
 

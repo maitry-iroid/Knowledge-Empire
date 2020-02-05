@@ -7,58 +7,37 @@ import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/releaseResource.dart';
 import 'package:rxdart/rxdart.dart';
 
-final moduleBloc = ModuleBloc();
 final customerValueBloc = CustomerValueBloc();
-
-class ModuleBloc {
-  Repository _repository = Repository();
-
-  final _moduleFetcher = PublishSubject<LearningModuleResponse>();
-
-  Observable<LearningModuleResponse> get modules => _moduleFetcher.stream;
-
-  fetchModules(int isChallenge) async {
-    LearningModuleResponse learningModuleResponse =
-        await _repository.fetchModule(isChallenge);
-    _moduleFetcher.sink.add(learningModuleResponse);
-  }
-
-  dispose() {
-    _moduleFetcher.close();
-  }
-}
 
 class CustomerValueBloc {
   Repository _repository = Repository();
 
-  final _assignModuleSubject = PublishSubject<GetCustomerValueResponse>();
+  final _assignModuleSubject = PublishSubject<CustomerValueData>();
 
-  Observable<GetCustomerValueResponse> get customerValue =>
+  Observable<CustomerValueData> get customerValue =>
       _assignModuleSubject.stream;
 
   getCustomerValue(CustomerValueRequest rq) async {
-    GetCustomerValueResponse getCustomerValueResponse =
-        await _repository.getCustomerValue(rq);
-    _assignModuleSubject.sink.add(getCustomerValueResponse);
+    dynamic data = await _repository.getCustomerValue(rq);
+
+    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+    _assignModuleSubject.sink.add(customerValueData);
   }
 
   bailOut(BailOutRequest rq) async {
-    GetCustomerValueResponse getCustomerValueResponse =
-        await _repository.bailOut(rq);
-    _assignModuleSubject.sink.add(getCustomerValueResponse);
+    dynamic data = await _repository.bailOut(rq);
+
+    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+    _assignModuleSubject.sink.add(customerValueData);
   }
 
   releaseResource(ReleaseResourceRequest rq) async {
-    GetCustomerValueResponse getCustomerValueResponse =
-        await _repository.releaseResource(rq);
+    dynamic data = await _repository.releaseResource(rq);
 
-    if (getCustomerValueResponse.flag == "true") {
-      if (getCustomerValueResponse.data != null)
-        _assignModuleSubject.sink.add(getCustomerValueResponse);
-      else
-        Utils.showToast("Something went wrong");
-    } else
-      Utils.showToast(getCustomerValueResponse.msg ?? "");
+    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+
+    if (customerValueData != null)
+      _assignModuleSubject.sink.add(customerValueData);
   }
 
   dispose() {

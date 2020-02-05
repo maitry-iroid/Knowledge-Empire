@@ -57,12 +57,8 @@ class MyAppState extends State<MyApp> {
         rq.deviceType = "android";
         rq.deviceToken = token;
 
-        WebApi().registerForPush(rq).then((response) {
-          if (response != null) {
-            if (response.flag == "true") {
-//              Utils.showToast(response.msg);
-            }
-          }
+        WebApi().callAPI(WebApi.rqRegisterForPush, rq.toJson()).then((data) {
+          if (data != null) {}
         });
       }
     }).catchError((e) {

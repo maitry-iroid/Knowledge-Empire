@@ -407,19 +407,17 @@ class _RankingPageState extends State<RankingPage> {
     GetUserGroupRequest rq = GetUserGroupRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi().getUserGroup(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (response.data != null) {
-            arrGroups.addAll(response.data);
+      if (data != null) {
+        data.forEach((v) {
+          arrGroups.add(GetUserGroupData.fromJson(v));
+        });
 
-            setState(() {});
-          }
-        }
+        if (arrGroups.isNotEmpty) setState(() {});
       }
     });
   }
@@ -443,23 +441,24 @@ class _RankingPageState extends State<RankingPage> {
         ? isScrollDown ? arrFriends.last.userId : arrFriends.first.userId
         : 0;
 
-    WebApi().getFriends(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (response.data != null) {
-            if (isToAddData) {
-              arrFriends.addAll(response.data);
-              arrFriends.addAll(response.data);
-              arrFriends.addAll(response.data);
-              arrFriends.addAll(response.data);
-            } else
-              arrFriends = response.data;
-            setState(() {});
-          }
+      if (data != null) {
+        List<GetFriendsData> arrFriendsData = List();
+
+        data.forEach((v) {
+          arrFriendsData.add(GetFriendsData.fromJson(v));
+        });
+
+        if (arrFriendsData.isNotEmpty) {
+          if (isToAddData) {
+            arrFriends.addAll(arrFriendsData);
+          } else
+            arrFriends = arrFriendsData;
+          setState(() {});
         }
       }
     });
@@ -471,22 +470,20 @@ class _RankingPageState extends State<RankingPage> {
     });
 
     GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
-    rq.userId = Injector.userData.userId;
+    rq.userId = Injector.userId;
     rq.requestedTo = arrFriends[index].userId;
     rq.action = i;
 
-    WebApi().friendUnFriendUser(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((response) {
       setState(() {
         isLoading = false;
       });
 
       if (response != null) {
-        if (response.flag == "true") {
-          if (i == 1) {
-            Utils.showToast("friend request send successfully");
-          } else {
-            Utils.showToast("unfriend successfully");
-          }
+        if (i == 1) {
+          Utils.showToast("Friend added successfully");
+        } else {
+          Utils.showToast("Unfriend successfully");
         }
       }
     });
