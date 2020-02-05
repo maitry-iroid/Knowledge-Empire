@@ -83,7 +83,8 @@ class WebApi {
 
         if (_response != null) {
           if (_response.flag == "true") {
-            return _response.data;
+            if (isUserRemovedFromCompany(_response.flag, _response.msg))
+              return _response.data;
           } else {
             Utils.showToast(_response.msg ?? "Something went wrong");
             return null;
