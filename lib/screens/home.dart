@@ -188,17 +188,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return RewardsPage();
+        return /*RewardsPage()*/Container();
       case 5:
-        return TeamPage();
+        return /*TeamPage()*/Container();
       case 6:
-        return ChallengesPage();
+        return /*ChallengesPage()*/ Container();
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return PLPage() ;
+        return /*PLPage()*/ Container();
       case 9:
-        return RankingPage();
+        return /*RankingPage()*/ Container();
 //      case 10:
 //        return ProfilePage();
 //      case 11:
@@ -222,16 +222,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-//      if (index == Const.typePL
-////          || index == Const.typeTeam
-//          ) {
-//        Utils.showComingSoonDialog(context);
-//      } else {
+      if (index == Const.typePL
+          || index == Const.typeReward
+          || index == Const.typeChallenges
+          || index == Const.typeTeam
+          || index == Const.typeRanking
+          ) {
+        Utils.showComingSoonDialog(context);
+      } else {
         Navigator.of(context).pop(); // close the drawer
         if (_selectedDrawerIndex == Const.typeHelp) {
           Navigator.push(context, FadeRouteIntro());
         }
-//      }
+      }
     }
   }
 

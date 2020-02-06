@@ -209,11 +209,12 @@ class HeaderViewState extends State<HeaderView> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: Injector.userData.profileImage != null &&
+                        image: Injector.userData == null ||
+                                Injector.userData.profileImage == null ||
                                 Injector.userData.profileImage.isNotEmpty
-                            ? Utils.getCacheNetworkImage(
-                                Injector.userData.profileImage)
-                            : AssetImage(Utils.getAssetsImg('user_org')),
+                            ? AssetImage(Utils.getAssetsImg('user_org'))
+                            : Utils.getCacheNetworkImage(
+                                Injector.userData.profileImage),
                         fit: BoxFit.fill),
                     border: Border.all(color: ColorRes.textLightBlue)),
               ),
@@ -222,7 +223,6 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-//            Injector.streamController?.add("${Const.typeProfile}");
 
             Navigator.push(
                 context,

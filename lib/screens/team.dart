@@ -550,6 +550,8 @@ class _TeamPageState extends State<TeamPage> {
 
         setState(() {});
       }
-    }).catchError((e) {});
+    }).catchError((e) {
+      Utils.showToast(e.toString());
+    });
   }
 }

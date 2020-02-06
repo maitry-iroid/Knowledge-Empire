@@ -20,24 +20,28 @@ class CustomerValueBloc {
   getCustomerValue(CustomerValueRequest rq) async {
     dynamic data = await _repository.getCustomerValue(rq);
 
-    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
-    _assignModuleSubject.sink.add(customerValueData);
+    if (data != null) {
+      CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+      _assignModuleSubject.sink.add(customerValueData);
+    }
   }
 
   bailOut(BailOutRequest rq) async {
     dynamic data = await _repository.bailOut(rq);
 
-    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
-    _assignModuleSubject.sink.add(customerValueData);
+    if (data != null) {
+      CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+      _assignModuleSubject.sink.add(customerValueData);
+    }
   }
 
   releaseResource(ReleaseResourceRequest rq) async {
     dynamic data = await _repository.releaseResource(rq);
 
-    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
-
-    if (customerValueData != null)
+    if (data != null) {
+      CustomerValueData customerValueData = CustomerValueData.fromJson(data);
       _assignModuleSubject.sink.add(customerValueData);
+    }
   }
 
   dispose() {

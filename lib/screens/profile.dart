@@ -36,11 +36,11 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     myFocusNode = FocusNode();
 
-    nameController.text = Injector.userData.name;
+    nameController.text = Injector.userData?.name;
 
     photoUrl = Injector.userData != null
-        ? Injector.userData.profileImage != null
-            ? Injector.userData.profileImage
+        ? Injector.userData?.profileImage != null
+            ? Injector.userData?.profileImage
             : ""
         : "";
 
@@ -354,7 +354,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             Utils.getText(
                                 context,
-                                Injector.customerValueData.manager == null ||
+                                Injector.customerValueData == null ||
+                                        Injector.customerValueData?.manager ==
+                                            null ||
                                         Injector
                                             .customerValueData.manager.isEmpty
                                     ? StringRes.bailout
@@ -494,11 +496,16 @@ class _ProfilePageState extends State<ProfilePage> {
       });
 
       if (data != null) {}
-      await Injector.prefs.clear();
-      Injector.userData = null;
-      Injector.customerValueData = null;
-      Navigator.pushAndRemoveUntil(
-          context, FadeRouteLogin(), ModalRoute.withName("/home"));
+      try {
+        await Injector.prefs.clear();
+        Injector.userData = null;
+        Injector.userId = null;
+        Injector.customerValueData = null;
+        Navigator.pushAndRemoveUntil(
+            context, FadeRouteLogin(), ModalRoute.withName("/home"));
+      } catch (e) {
+        print(e);
+      }
     }).catchError((e) {
       print("logout_" + e.toString());
       setState(() {
@@ -735,7 +742,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: Injector.userData.email,
+                                    hintText: Injector.userData?.email,
                                     hintStyle:
                                         TextStyle(color: ColorRes.hintColor)),
                               ),
