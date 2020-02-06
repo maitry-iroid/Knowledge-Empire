@@ -25,6 +25,7 @@ import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
+import 'P+L.dart';
 import 'business_sector.dart';
 import '../commonview/header.dart';
 import '../helper/Utils.dart';
@@ -197,7 +198,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return /*PLPage()*/ Container();
+        return PLPage() ;
       case 9:
         return RankingPage();
       case 10:
@@ -223,16 +224,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      if (index == Const.typePL
-//          || index == Const.typeTeam
-          ) {
-        Utils.showComingSoonDialog(context);
-      } else {
+//      if (index == Const.typePL
+////          || index == Const.typeTeam
+//          ) {
+//        Utils.showComingSoonDialog(context);
+//      } else {
         Navigator.of(context).pop(); // close the drawer
         if (_selectedDrawerIndex == Const.typeHelp) {
           Navigator.push(context, FadeRouteIntro());
         }
-      }
+//      }
     }
   }
 

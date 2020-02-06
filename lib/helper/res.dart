@@ -66,6 +66,23 @@ class ColorRes {
 
 
 
+  static Color crmColor = Color(0xFFa4551f);
+  static Color financeColor = Color(0xFFba6124);
+  static Color legalColor = Color(0xFFde752d);
+  static Color operationColor = Color(0xFFed7d31);
+  static Color salesColor = Color(0xFFf2af95);
+  static Color marketingColor = Color(0xFFf5c2b1);
+  static Color hrColor = Color(0xFFf7d3c7);
+
+  static Color firstColor = Color(0xFF70ad47);
+  static Color secondColor = Color(0xFFa1c491);
+  static Color thirdColor = Color(0xFFc4d8bc);
+
+
+
+
+
+
 
 
 }

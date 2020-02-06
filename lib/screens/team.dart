@@ -18,7 +18,7 @@ class _TeamPageState extends State<TeamPage> {
 
   bool secondScreen = false;
 
-  List<String> indexList = ['1','2','3,','4','5','6','7','8','9','10'];
+  List<String> indexList = ['1','2','3','4','5','6','7','8','9','10'];
 
   @override
   Widget build(BuildContext context) {
@@ -416,7 +416,10 @@ class _TeamPageState extends State<TeamPage> {
             type == 1 ?
             Container(
               height: 125,
-              width: 150,
+              width: 100,
+
+              margin: secondScreen == true ? EdgeInsets.only(left: 30) : EdgeInsets.only(left: 00),
+
               child: GridView.count(
                 // Create a grid with 2 columns. If you change the scrollDirection to
                 // horizontal, this would produce 2 rows.
@@ -470,7 +473,7 @@ class _TeamPageState extends State<TeamPage> {
   }
 
 
-  firstColumnColor() {
+/*  firstColumnColor() {
     return Row(
       children: <Widget>[rightSideData(), rightSideData(), rightSideData()],
     );
@@ -505,7 +508,7 @@ class _TeamPageState extends State<TeamPage> {
         )
       ],
     );
-  }
+  } */
 
 
   showTitleSecondScreen(BuildContext context, String title) {

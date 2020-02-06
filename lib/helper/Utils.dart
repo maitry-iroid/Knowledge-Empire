@@ -569,9 +569,9 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, int type) {
-    if (type == Const.typePL)
-      Utils.showComingSoonDialog(context);
-    else
+//    if (type == Const.typePL)
+//      Utils.showComingSoonDialog(context);
+//    else
       Navigator.push(context,
           FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
   }
