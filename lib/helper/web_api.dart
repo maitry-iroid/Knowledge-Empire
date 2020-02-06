@@ -40,6 +40,8 @@ class WebApi {
   static String rqSearchFriends = "searchFriends";
   static String rqRegisterForPush = "registerForPush";
   static String rqDashboard = "dashboard";
+  static String rqGetTeamUsers = "getTeamUsers";
+  static String rqGetTeamUserById = "getTeamUserById";
 
   static getRequest(String req, String data) {
     return {
@@ -83,8 +85,9 @@ class WebApi {
 
         if (_response != null) {
           if (_response.flag == "true") {
-            if (isUserRemovedFromCompany(_response.flag, _response.msg))
+            if (!isUserRemovedFromCompany(_response.flag, _response.msg))
               return _response.data;
+            else return null;
           } else {
             Utils.showToast(_response.msg ?? "Something went wrong");
             return null;

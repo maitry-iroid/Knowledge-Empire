@@ -12,9 +12,9 @@ class Repository {
   Future<dynamic> getCustomerValue(CustomerValueRequest rq) =>
       webApi.callAPI(WebApi.rqGetCustomerValue, rq.toJson());
 
-  Future<CustomerValueData> bailOut(BailOutRequest rq) =>
+  Future<dynamic> bailOut(BailOutRequest rq) =>
       webApi.callAPI(WebApi.rqBailOut, rq.toJson());
 
-  Future<CustomerValueData> releaseResource(ReleaseResourceRequest rq) =>
+  Future<dynamic> releaseResource(ReleaseResourceRequest rq) =>
       webApi.callAPI(WebApi.rqReleaseResource, rq.toJson());
 }
