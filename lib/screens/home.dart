@@ -186,16 +186,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
+      //TODO add container for production
         return RewardsPage();
       case 5:
+      //TODO remove comment for production
         return TeamPage();
       case 6:
+      //TODO remove comment for production
         return ChallengesPage();
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
+      //TODO remove comment for production
         return PLPage();
       case 9:
+      //TODO remove comment for production
         return RankingPage();
 //      case 10:
 //        return ProfilePage();
@@ -219,6 +224,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
+
+      //TODO remove comment for production
 
 //      if (index == Const.typePL ||
 //          index == Const.typeReward ||
