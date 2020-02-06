@@ -17,37 +17,6 @@ class GetAchievementRequest {
   }
 }
 
-class GetAchievementResponse {
-  String flag;
-  String result;
-  String msg;
-  List<GetAchievementData> data;
-
-  GetAchievementResponse({this.flag, this.result, this.msg, this.data});
-
-  GetAchievementResponse.fromJson(Map<String, dynamic> json) {
-    flag = json['flag'];
-    result = json['result'];
-    msg = json['msg'];
-    if (json['data'] != null) {
-      data = new List<GetAchievementData>();
-      json['data'].forEach((v) {
-        data.add(new GetAchievementData.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['flag'] = this.flag;
-    data['result'] = this.result;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
 
 class GetAchievementData {
   String achievementCategory;

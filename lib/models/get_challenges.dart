@@ -19,32 +19,4 @@ class GetChallengesRequest {
   }
 }
 
-class GetChallengesResponse {
-  String flag;
-  String result;
-  String msg;
-  QuestionData data;
-
-  GetChallengesResponse({this.flag, this.result, this.msg, this.data});
-
-  GetChallengesResponse.fromJson(Map<String, dynamic> json) {
-    flag = json['flag'];
-    result = json['result'];
-    msg = json['msg'];
-    data = json['data'] != null ? new QuestionData.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['flag'] = this.flag;
-    data['result'] = this.result;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
-}
-
-
 

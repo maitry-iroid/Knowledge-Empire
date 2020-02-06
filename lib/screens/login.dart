@@ -311,13 +311,13 @@ class _LoginPageState extends State<LoginPage> {
 
     WebApi()
         .callAPI(WebApi.rqLogin, loginRequest.toJson())
-        .then((loginData) async {
-      if (loginData != null) {
+        .then((data) async {
+      if (data != null) {
         LoginResponseData loginResponseData =
-            LoginResponseData.fromJson(loginData);
+            LoginResponseData.fromJson(data);
 
         await Injector.prefs.setInt(PrefKeys.userId, loginResponseData.userId);
-        await Injector.prefs.setString(PrefKeys.user, jsonEncode(loginData));
+        await Injector.prefs.setString(PrefKeys.user, jsonEncode(data));
 
         Injector.userData = loginResponseData;
         Injector.userId = loginResponseData.userId;
@@ -337,7 +337,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void getCustomerValues(LoginResponse loginData) {
+  void getCustomerValues(BaseResponse loginData) {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 

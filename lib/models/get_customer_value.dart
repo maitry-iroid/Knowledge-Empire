@@ -15,34 +15,6 @@ class CustomerValueRequest {
   }
 }
 
-class GetCustomerValueResponse {
-  String flag;
-  String result;
-  String msg;
-  CustomerValueData data;
-
-  GetCustomerValueResponse({this.flag, this.result, this.msg, this.data});
-
-  GetCustomerValueResponse.fromJson(Map<String, dynamic> json) {
-    flag = json['flag'];
-    result = json['result'];
-    msg = json['msg'];
-    data = json['data'] != null
-        ? new CustomerValueData.fromJson(json['data'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['flag'] = this.flag;
-    data['result'] = this.result;
-    data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
-}
 class CustomerValueData {
   int totalEmployeeCapacity;
   String manager;

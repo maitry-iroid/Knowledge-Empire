@@ -78,8 +78,8 @@ class WebApi {
       print(apiReq + "_" + response?.data);
 
       if (response.statusCode == 200) {
-        LoginResponse _response =
-            LoginResponse.fromJson(jsonDecode(response.data));
+        BaseResponse _response =
+            BaseResponse.fromJson(jsonDecode(response.data));
 
         if (_response != null) {
           if (_response.flag == "true") {
@@ -102,7 +102,7 @@ class WebApi {
     }
   }
 
-  Future<LoginResponse> updateProfile(
+  Future<BaseResponse> updateProfile(
       Map<String, dynamic> jsonMap, File file) async {
     initDio();
 
@@ -119,8 +119,8 @@ class WebApi {
       print(response.data);
 
       if (response.statusCode == 200) {
-        LoginResponse loginRequest =
-            LoginResponse.fromJson(jsonDecode(response.data));
+        BaseResponse loginRequest =
+            BaseResponse.fromJson(jsonDecode(response.data));
         return loginRequest;
       }
 

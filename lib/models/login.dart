@@ -20,22 +20,19 @@ class LoginRequest {
   }
 }
 
-class LoginResponse<T> {
+class BaseResponse<T> {
   String flag;
   String result;
   String msg;
   T data;
 
-  LoginResponse({this.flag, this.result, this.msg, this.data});
+  BaseResponse({this.flag, this.result, this.msg, this.data});
 
-  LoginResponse.fromJson(Map<String, dynamic> json) {
+  BaseResponse.fromJson(Map<String, dynamic> json) {
     flag = json['flag'];
     result = json['result'];
     msg = json['msg'];
     data = json['data'];
-//    data = json['data'] != null
-//        ? new LoginResponseData.fromJson(json['data'])
-//        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -44,9 +41,6 @@ class LoginResponse<T> {
     data['result'] = this.result;
     data['msg'] = this.msg;
     data['data'] = this.data;
-//    if (this.data != null) {
-//      data['data'] = this.data.toJson();
-//    }
     return data;
   }
 }
