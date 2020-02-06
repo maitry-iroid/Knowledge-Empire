@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -24,7 +23,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
   AnimationController rotationController;
 
-  List<GetDashboardData> data = List();
+  List<GetDashboardData> dashboardData = List();
 
   @override
   void initState() {
@@ -48,7 +47,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context,data),
+              CommonView.showDashboardView(context, dashboardData),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -63,19 +62,20 @@ class DashboardGamePageState extends State<DashboardGamePage>
   void getDashboardConfig() {
     Utils.isInternetConnected().then((isConnected) {
       DashboardRequest rq = DashboardRequest();
-      rq.userId = Injector.userData.userId;
-      rq.mode = Injector.mode??Injector.isBusinessMode;
+      rq.userId = Injector.userId;
+      rq.mode = Injector.mode ?? Injector.isBusinessMode;
 
-      WebApi().getDashboardValue(rq).then((response) {
-        if (response?.data != null) {
-          setState(() {
-            data = response.data;
+      WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
+        if (data != null) {
+          data.forEach((v) {
+            dashboardData.add(GetDashboardData.fromJson(v));
           });
 
+          if (dashboardData.isNotEmpty) setState(() {});
         }
       });
     }).catchError((e) {
-      print("getDashboardValue_"+e.toString());
+      print("getDashboardValue_" + e.toString());
     });
   }
 }

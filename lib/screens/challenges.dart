@@ -510,27 +510,28 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.lastUserId = 0;
     rq.scrollType = 1;
 
-    WebApi().getFriends(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (response.data != null) {
+      if (data != null) {
 
-            response.data.removeWhere(
-                    (friend) => friend.userId == Injector.userData.userId);
+        List<GetFriendsData> arrFriendsData = List();
+        data.forEach((v) {
+          arrFriendsData.add(GetFriendsData.fromJson(v));
+        });
 
-            arrFriends = response.data;
-            arrFriendsToShow = response.data;
+        arrFriendsData.removeWhere(
+                (friend) => friend.userId == Injector.userData.userId);
 
-            if (arrFriendsToShow.length > 0) {
-              selectedFriendId = arrFriends[0].userId;
-              getBusinessSectors();
-              setState(() {});
-            }
-          }
+        arrFriends = arrFriendsData;
+        arrFriendsToShow = arrFriendsData;
+
+        if (arrFriendsToShow.length > 0) {
+          selectedFriendId = arrFriends[0].userId;
+          getBusinessSectors();
+          setState(() {});
         }
       }
     }).catchError((e) {
@@ -553,18 +554,16 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.requestedTo = arrFriendsToShow[index].userId;
     rq.action = action;
 
-    WebApi().friendUnFriendUser(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (action == 1) {
-            Utils.showToast("friend request send successfully");
-          } else {
-            Utils.showToast("unfriend successfully");
-          }
+      if (data != null) {
+        if (action == 1) {
+          Utils.showToast("friend request send successfully");
+        } else {
+          Utils.showToast("unfriend successfully");
         }
       }
     });
@@ -575,22 +574,24 @@ class _ChallengesPageState extends State<ChallengesPage> {
       isLoading = true;
     });
 
-    WebApi().getLearningModule(selectedFriendId, 1).then((response) {
+    GetLearningModuleRequest rq = GetLearningModuleRequest();
+    rq.userId = selectedFriendId;
+    rq.isChallenge = 1;
+
+    WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (response.data != null) {
-            arrLearningModules = response.data;
+      if (data != null) {
+        data.forEach((v) {
+          arrLearningModules.add(LearningModuleData.fromJson(v));
+        });
 
-            if (arrLearningModules.length > 0) {
-              selectedModuleIndex = 0;
-            }
-            setState(() {});
-          }
+        if (arrLearningModules.length > 0) {
+          selectedModuleIndex = 0;
         }
+        setState(() {});
       }
     }).catchError((e) {
       print("getLearningModule_" + e.toString());
@@ -613,25 +614,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.moduleId = arrLearningModules[selectedModuleIndex].moduleId;
     rq.rewards = arrRewards[selectedRewardsIndex];
 
-    WebApi().sendChallenges(context, rq).then((response) {
+    WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (response.data != null) {
-//            arrFriends = response.data;
-            if (response.msg != null) {
-              Utils.showToast(response.msg);
-            } else {
-              Utils.showToast("Send Challeange is success.");
-            }
-          }
-        } else {
-          Utils.showToast(response.msg);
-        }
-      }
+      if (data != null) Utils.showToast("Challenge sent successfully!");
     }).catchError((e) {
       print("sendChallenge_" + e.toString());
 
@@ -651,28 +639,25 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.userId = Injector.userData.userId.toString();
     rq.searchText = searchController.text;
 
-    WebApi().searchFriends(rq).then((response) {
+    WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
-      if (response != null) {
-        if (response.flag == "true") {
-          if (response.data != null) {
-            List<GetFriendsData> getFriendsData = response.data;
+      if (data != null) {
+        List<GetFriendsData> getFriendsData = List();
 
-            if (getFriendsData.length > 0) {
+        data.forEach((v) {
+          getFriendsData.add(GetFriendsData.fromJson(v));
+        });
 
+        if (getFriendsData.isNotEmpty) {
+          getFriendsData
+              .removeWhere((friend) => friend.userId == Injector.userId);
 
-              getFriendsData.removeWhere(
-                  (friend) => friend.userId == Injector.userData.userId);
+          arrFriendsToShow = getFriendsData;
 
-
-              arrFriendsToShow = getFriendsData;
-
-              setState(() {});
-            }
-          }
+          setState(() {});
         }
       }
     }).catchError((e) {

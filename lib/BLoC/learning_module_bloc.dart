@@ -1,22 +1,46 @@
 import 'package:ke_employee/BLoC/repository.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/models/bailout.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
+import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/releaseResource.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ModuleBloc {
+final customerValueBloc = CustomerValueBloc();
+
+class CustomerValueBloc {
   Repository _repository = Repository();
 
-  final _weatherFetcher = PublishSubject<LearningModuleResponse>();
+  final _assignModuleSubject = PublishSubject<CustomerValueData>();
 
-  Observable<LearningModuleResponse> get weather => _weatherFetcher.stream;
+  Observable<CustomerValueData> get customerValue =>
+      _assignModuleSubject.stream;
 
-  fetchModules(int isChallenge ) async {
-    LearningModuleResponse weatherResponse = await _repository.fetchModule( isChallenge);
-    _weatherFetcher.sink.add(weatherResponse);
+  getCustomerValue(CustomerValueRequest rq) async {
+    dynamic data = await _repository.getCustomerValue(rq);
+
+    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+    _assignModuleSubject.sink.add(customerValueData);
+  }
+
+  bailOut(BailOutRequest rq) async {
+    dynamic data = await _repository.bailOut(rq);
+
+    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+    _assignModuleSubject.sink.add(customerValueData);
+  }
+
+  releaseResource(ReleaseResourceRequest rq) async {
+    dynamic data = await _repository.releaseResource(rq);
+
+    CustomerValueData customerValueData = CustomerValueData.fromJson(data);
+
+    if (customerValueData != null)
+      _assignModuleSubject.sink.add(customerValueData);
   }
 
   dispose() {
-    _weatherFetcher.close();
+    _assignModuleSubject.close();
   }
 }
-
-final weatherBloc = ModuleBloc();

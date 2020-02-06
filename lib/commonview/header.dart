@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/header_utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -60,19 +65,17 @@ class HeaderViewState extends State<HeaderView> {
       color: Injector.isBusinessMode
           ? ColorRes.headerDashboard
           : ColorRes.headerBlue,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          showMenuView(),
-          showProfile(context),
-          showHeaderItem(Const.typeEmployee, context),
-          showHeaderItem(Const.typeSalesPersons, context),
-          showHeaderItem(Const.typeServicesPerson, context),
-          showHeaderItem(Const.typeBrandValue, context),
-          showHeaderItem(Const.typeMoney, context),
-          showHelpView(context)
-        ],
-      ),
+      child: StreamBuilder(
+          stream: customerValueBloc?.customerValue,
+          builder: (context, AsyncSnapshot<CustomerValueData> snapshot) {
+            if (snapshot.hasData) {
+              return _buildSearchResults(snapshot?.data);
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }
+            return _buildSearchResults(snapshot?.data);
+//            return Center(child: CircularProgressIndicator());
+          }),
     );
   }
 
@@ -145,11 +148,9 @@ class HeaderViewState extends State<HeaderView> {
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 19.0,
-                          percent: HeaderUtils.getProgressInt(type) >= 0 &&
-                                  HeaderUtils.getProgressInt(type) <= 1
-                              ? HeaderUtils.getProgressInt(type)?.toDouble() ??
-                                  0.toDouble()
-                              : 0.0,
+                          percent:
+                              HeaderUtils.getProgressInt(type)?.toDouble() ??
+                                  0.toDouble(),
                           backgroundColor: Colors.transparent,
                           progressColor: Injector.isBusinessMode
                               ? Colors.blue
@@ -221,7 +222,13 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            Injector.streamController?.add("${Const.typeProfile}");
+//            Injector.streamController?.add("${Const.typeProfile}");
+
+            Navigator.push(
+                context,
+                FadeRouteHome(
+                  initialPageType: Const.typeProfile,
+                ));
           }),
     );
   }
@@ -310,5 +317,27 @@ class HeaderViewState extends State<HeaderView> {
             },
           )
         : Container();
+  }
+
+  _buildSearchResults(CustomerValueData data) {
+    if (data != null) {
+      Injector.prefs
+          .setString(PrefKeys.customerValueData, jsonEncode(data.toJson()));
+      Injector.customerValueData = data;
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        showMenuView(),
+        showProfile(context),
+        showHeaderItem(Const.typeEmployee, context),
+        showHeaderItem(Const.typeSalesPersons, context),
+        showHeaderItem(Const.typeServicesPerson, context),
+        showHeaderItem(Const.typeBrandValue, context),
+        showHeaderItem(Const.typeMoney, context),
+        showHelpView(context)
+      ],
+    );
   }
 }

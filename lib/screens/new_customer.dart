@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -29,7 +28,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
@@ -41,8 +39,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       if (isConnected) {
         getQuestions();
       } else {
-         arrQuestions =
-            Utils.getQuestionsLocally(Const.getNewQueType);
+        arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
 
         if (arrQuestions != null && arrQuestions.length > 0) {
           setState(() {});
@@ -62,28 +59,22 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     rq.type = Const.getNewQueType;
     rq.type = Const.getNewQueType;
 
-    WebApi().getQuestions(rq.toJson()).then((questionResponse) async {
-      if (questionResponse != null) {
-        if (questionResponse.flag == "true") {
-          arrQuestions = questionResponse.data;
+    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) async {
+      setState(() {
+        isLoading = false;
+      });
 
-          for (int i = 0; i < arrQuestions.length; i++) {
-            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+      if (data != null) {
+        data.forEach((v) {
+          arrQuestions.add(QuestionData.fromJson(v));
+        });
 
-            print(arrQuestions[i].value);
-//            print(arrQuestions[i].mediaLink);
-          }
+        for (int i = 0; i < arrQuestions.length; i++) {
+          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
 
-          setState(() {
-            isLoading = false;
-          });
-        } else {
-          Utils.showToast(questionResponse.msg);
-          setState(() {
-            isLoading = false;
-          });
+          print(arrQuestions[i].value);
         }
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
@@ -92,7 +83,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         });
       }
     }).catchError((e) {
-      print("getQuestions_"+e.toString());
+      print("getQuestions_" + e.toString());
       if (mounted) {
         setState(() {
           isLoading = false;
@@ -111,8 +102,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       width: 0.0,
     );
   }
-
-//  CommonView.showCircularProgress(isLoading)
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +124,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               ],
             ),
           ),
-          Container(child: showCircularProgress()),
+          CommonView.showCircularProgress(isLoading)
         ],
       ),
     ));
@@ -146,7 +135,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       child: ListView.builder(
         itemCount: arrQuestions.length,
         itemBuilder: (BuildContext context, int index) {
-//          print(("${getValue(index).toString()} \$"));
           return showItem(index);
         },
       ),
@@ -171,7 +159,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -180,7 +168,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 5,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -189,7 +177,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -198,7 +186,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
           ),
@@ -206,7 +194,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.resources),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -215,7 +203,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.engage),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -242,9 +230,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                        image:
-                        AssetImage(Utils.getAssetsImg("bg_record_white")),
-                        fit: BoxFit.fill)
+                            image: AssetImage(
+                                Utils.getAssetsImg("bg_record_white")),
+                            fit: BoxFit.fill)
                         : null),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -318,20 +306,19 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                        image:
-                        AssetImage(Utils.getAssetsImg("bg_engage_now")),
-                        fit: BoxFit.fill)
+                            image:
+                                AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                            fit: BoxFit.fill)
                         : null),
                 child: Text(
                   Utils.getText(context, StringRes.engageNow),
                   style: TextStyle(color: ColorRes.white, fontSize: 14),
                 )),
             onTap: () {
-
               Utils.playClickSound();
 
               if (Injector.customerValueData.remainingSalesPerson >=
-                  arrQuestions[index].resources &&
+                      arrQuestions[index].resources &&
                   Injector.customerValueData.remainingCustomerCapacity > 0) {
                 Navigator.push(
                     context,
@@ -339,19 +326,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         initialPageType: Const.typeEngagement,
                         questionDataHomeScr: arrQuestions[index],
                         value: arrQuestions[index].value));
-
-/*              Navigator.push(
-            if (Utils.getSalesPersonCount() >= arrQuestions[index].resources &&
-                Utils.getServicesPersonCount() > 0) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(
-
-                            initialPageType: Const.typeEngagement,
-                            questionDataHomeScr: arrQuestions[index],
-                          )));*/
-
               } else {
                 Utils.showToast("You need atleast " +
                     arrQuestions[index].resources.toString() +
@@ -366,7 +340,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Utils.playClickSound();
 
           if (Injector.customerValueData.remainingSalesPerson >=
-              arrQuestions[index].resources &&
+                  arrQuestions[index].resources &&
               Injector.customerValueData.remainingCustomerCapacity > 0) {
             Navigator.push(
                 context,
@@ -374,7 +348,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     initialPageType: Const.typeEngagement,
                     questionDataHomeScr: arrQuestions[index],
                     value: arrQuestions[index].value));
-
           } else {
             Utils.showToast("You need atleast " +
                 arrQuestions[index].resources.toString() +

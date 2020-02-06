@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -11,8 +10,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
-
-
 
 class OrganizationsPage extends StatefulWidget {
   @override
@@ -35,10 +32,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) getOrganization();
     });
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +95,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               ),
               onTap: () {
 //                if(currentVol != 0) {
-                  Utils.playClickSound();
+                Utils.playClickSound();
 //                }
 
 //                Utils.showOrgInfoDialog(
@@ -147,7 +141,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               ),
               onTap: () {
 //                if(currentVol != 0) {
-                  Utils.playClickSound();
+                Utils.playClickSound();
 //                }
 
                 showConfirmDialog(position, Const.subtract);
@@ -188,7 +182,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               ),
               onTap: () {
 //                if(currentVol != 0) {
-                  Utils.playClickSound();
+                Utils.playClickSound();
 //                }
 
                 showConfirmDialog(position, Const.add);
@@ -277,12 +271,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         isLoading = true;
       });
 
-      WebApi()
-          .getOrganizations(context, rq.toJson())
-          .then((getOrganizationData) {
-        if (getOrganizationData != null) {
-          organizationData = getOrganizationData;
-          arrOrganization = getOrganizationData.organization;
+      WebApi().callAPI(WebApi.rqGetOrganization,rq.toJson()).then((data) {
+        if (data != null) {
+          organizationData = OrganizationData.fromJson(data.toJson());
+          arrOrganization = organizationData.organization;
 
           setState(() {
             isLoading = false;
@@ -290,7 +282,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         }
       });
     }).catchError((e) {
-      print("getOrganizations_"+e.toString());
+      print("getOrganizations_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -357,24 +349,24 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       });
 
       WebApi()
-          .manageOrganizations(context, rq)
-          .then((getOrganizationData) async {
+          .callAPI(WebApi.rqManageOrganization, rq.toJson())
+          .then((data) async {
         setState(() {
           isLoading = false;
         });
 
-        if (getOrganizationData != null) {
-          arrOrganization[position] = getOrganizationData.organization[0];
+        if (data != null) {
+          ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
+
+          arrOrganization[position] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
 
           setState(() {});
 
-          Utils.performManageLevel(getOrganizationData);
-        } else {
-          Utils.getText(context, StringRes.somethingWrong);
+          Utils.performManageLevel(data);
         }
       }).catchError((e) {
-        print("manageOrg_"+e.toString());
+        print("manageOrg_" + e.toString());
 
         setState(() {
           isLoading = false;

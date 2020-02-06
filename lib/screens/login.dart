@@ -67,15 +67,15 @@ class _LoginPageState extends State<LoginPage> {
         body: Container(
 //        height: double.infinity,
 
-            height: 400,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
-                fit: BoxFit.cover,
+          height: 400,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
+              fit: BoxFit.cover,
 //            alignment: Alignment.center,
-              ),
             ),
+          ),
 
           child: Row(
 //            alignment: Alignment.center,
@@ -86,15 +86,17 @@ class _LoginPageState extends State<LoginPage> {
 //                padding: EdgeInsets.only(left: 50),
                 margin: EdgeInsets.only(left: 40),
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(Utils.getAssetsImg("logo_login")), fit: BoxFit.fill)
-                ),
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("logo_login")),
+                        fit: BoxFit.fill)),
               ),
               Expanded(
                   flex: 5,
                   child: Container(
                     width: Utils.getDeviceWidth(context) / 2.3,
                     height: Utils.getDeviceHeight(context) / 1.7,
-                    margin: EdgeInsets.only(right: 20,left: Utils.getDeviceWidth(context) / 5.5),
+                    margin: EdgeInsets.only(
+                        right: 20, left: Utils.getDeviceWidth(context) / 5.5),
                     decoration: BoxDecoration(
                       color: ColorRes.colorBgDark,
                       border: Border.all(color: ColorRes.white, width: 1),
@@ -104,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
                   ))
             ],
           ),
-
         )
 
         /*Container(
@@ -308,25 +309,23 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    WebApi().login(loginRequest.toJson()).then((loginData) async {
+    WebApi()
+        .callAPI(WebApi.rqLogin, loginRequest.toJson())
+        .then((loginData) async {
       if (loginData != null) {
-        if (loginData.flag == "true") {
-          LoginResponseData loginResponseData = loginData.data;
+        LoginResponseData loginResponseData =
+            LoginResponseData.fromJson(loginData);
 
-          await Injector.prefs
-              .setInt(PrefKeys.userId, loginResponseData.userId);
-          await Injector.prefs.setString(
-              PrefKeys.user, json.encode(loginResponseData.toJson()));
+        await Injector.prefs.setInt(PrefKeys.userId, loginResponseData.userId);
+        await Injector.prefs.setString(PrefKeys.user, jsonEncode(loginData));
 
-          Injector.userData = loginResponseData;
+        Injector.userData = loginResponseData;
+        Injector.userId = loginResponseData.userId;
 
-          getCustomerValues(loginData);
-        } else {
-          setState(() {
-            isLoading = false;
-          });
-
-          Utils.showToast(loginData.msg);
+        if (loginResponseData.isFirstTimeLogin)
+          navigateToIntro();
+        else {
+          navigateToDashboard();
         }
       }
     }).catchError((e) {
@@ -342,18 +341,16 @@ class _LoginPageState extends State<LoginPage> {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
-    WebApi()
-        .getCustomerValue(context, rq.toJson())
-        .then((customerValueData) async {
+    WebApi().callAPI(WebApi.rqGetCustomerValue, rq.toJson()).then((data) async {
       setState(() {
         isLoading = false;
       });
 
-      if (customerValueData != null) {
-        await Injector.prefs.setString(PrefKeys.customerValueData,
-            json.encode(customerValueData.toJson()));
+      if (data != null) {
+        await Injector.prefs
+            .setString(PrefKeys.customerValueData, json.encode(data.toJson()));
 
-        Injector.customerValueData = customerValueData;
+        Injector.customerValueData = data;
 
         if (loginData.data.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);

@@ -1,3 +1,24 @@
+
+class GetLearningModuleRequest {
+  int userId;
+  int isChallenge;
+
+  GetLearningModuleRequest({this.userId, this.isChallenge});
+
+  GetLearningModuleRequest.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    isChallenge = json['isChallenge'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['isChallenge'] = this.isChallenge;
+    return data;
+  }
+}
+
+
 class LearningModuleResponse {
   String flag="";
   String result="";
@@ -69,3 +90,29 @@ class LearningModuleData {
     return data;
   }
 }
+
+class AssignModuleRequest {
+  int userId;
+  int companyId;
+  int moduleId;
+  int type;
+
+  AssignModuleRequest({this.userId, this.companyId, this.moduleId, this.type});
+
+  AssignModuleRequest.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    companyId = json['companyId'];
+    moduleId = json['moduleId'];
+    type = json['type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = this.userId;
+    data['companyId'] = this.companyId;
+    data['moduleId'] = this.moduleId;
+    data['type'] = this.type;
+    return data;
+  }
+}
+

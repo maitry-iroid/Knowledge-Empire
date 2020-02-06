@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -59,40 +60,42 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       rq.resources = questionData.resources;
       rq.value = questionData.value;
 
-      setState(() {
-        isLoading = true;
-      });
+      customerValueBloc?.releaseResource(rq);
 
-      WebApi().releaseResource(context, rq).then((getReleaseResourceData) {
-        setState(() {
-          isLoading = false;
-        });
-
-        if (getReleaseResourceData != null) {
-          if (getReleaseResourceData.flag == "true") {
-            Injector.customerValueData = getReleaseResourceData.data;
-//          arrOrganization = getreleaseresourceData.organization;
-
-            Injector.streamController.add("release resources");
-
-            setState(() {
-              arrQuestions.removeAt(index);
-
-              isLoading = false;
-            });
-          } else {
-            Utils.showToast(getReleaseResourceData.msg);
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
-      }).catchError((e) {
-        print("releaseResources_"+e.toString());
-        setState(() {
-          isLoading = false;
-        });
-        Utils.showToast(e.toString());
-      });
+//      setState(() {
+//        isLoading = true;
+//      });
+//
+//      WebApi().releaseResource( rq).then((getReleaseResourceData) {
+//        setState(() {
+//          isLoading = false;
+//        });
+//
+//        if (getReleaseResourceData != null) {
+//          if (getReleaseResourceData.flag == "true") {
+//            Injector.customerValueData = getReleaseResourceData.data;
+////          arrOrganization = getreleaseresourceData.organization;
+//
+//            Injector.streamController.add("release resources");
+//
+//            setState(() {
+//              arrQuestions.removeAt(index);
+//
+//              isLoading = false;
+//            });
+//          } else {
+//            Utils.showToast(getReleaseResourceData.msg);
+//          }
+//        } else {
+//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+//        }
+//      }).catchError((e) {
+//        print("releaseResources_"+e.toString());
+//        setState(() {
+//          isLoading = false;
+//        });
+//        Utils.showToast(e.toString());
+//      });
     });
   }
 
@@ -105,22 +108,18 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     rq.userId = Injector.userData.userId;
     rq.type = Const.getExistingQueTYpe;
 
-    WebApi().getQuestions(rq.toJson()).then((data) {
+    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          arrQuestions = data.data;
-        } else {
-          Utils.showToast(data.msg);
-        }
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        data.forEach((v) {
+          arrQuestions.add(QuestionData.fromJson(v));
+        });
       }
     }).catchError((e) {
-      print("getQuestions_"+e.toString());
+      print("getQuestions_" + e.toString());
       setState(() {
         isLoading = false;
       });
@@ -185,7 +184,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -194,7 +193,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -203,7 +202,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -212,7 +211,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -221,7 +220,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
-              style: Theme.of(context).textTheme.body1,
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),

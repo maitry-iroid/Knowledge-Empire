@@ -55,7 +55,7 @@ class QuestionsResponse {
 }
 
 class QuestionData {
-  int questionId; // if question is from challenge
+  int questionId;
   int challengeId; // if question is from challenge
   String firstName; // if question is from challenge
   String lastName; // if question is from challenge

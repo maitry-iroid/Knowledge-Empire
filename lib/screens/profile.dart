@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
@@ -47,7 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
 //    packagesInfo();
     _initPackageInfo();
-
   }
 
   File _image;
@@ -72,8 +72,6 @@ class _ProfilePageState extends State<ProfilePage> {
       _packageInfo = info;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -163,15 +161,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ? DecorationImage(
                                     image: AssetImage(
                                         Utils.getAssetsImg('bg_setting')))
-                                : null
-                        ),
+                                : null),
                       ),
                       Container(
                         height: 30,
 //                        alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10, bottom: 10),
                         child: Container(
-                         /* decoration: BoxDecoration(
+                          /* decoration: BoxDecoration(
                               color: Injector.isBusinessMode
                                   ? null
                                   : ColorRes.bgSettings,
@@ -185,11 +182,16 @@ class _ProfilePageState extends State<ProfilePage> {
 //                                  : null
                           ),*/
 
-                              child: Center(
-                                child: Text("App Version: ${_packageInfo.version}", style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey),),
-                              ),
+                          child: Center(
+                            child: Text(
+                              "App Version: ${_packageInfo.version}",
+                              style: TextStyle(
+                                  color: Injector.isBusinessMode
+                                      ? ColorRes.white
+                                      : ColorRes.fontDarkGrey),
                             ),
-
+                          ),
+                        ),
                       ),
                       Container(
                         height: 30,
@@ -439,38 +441,40 @@ class _ProfilePageState extends State<ProfilePage> {
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
 
-    setState(() {
-      isLoading = true;
-    });
+    customerValueBloc?.bailOut(rq);
 
-    WebApi().bailOut(context, rq.toJson()).then((customerValueResponse) async {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (customerValueResponse != null) {
-        if (customerValueResponse.flag == "true") {
-          if (customerValueResponse.data != null) {
-            await Injector.prefs.setString(PrefKeys.customerValueData,
-                json.encode(customerValueResponse.data.toJson()));
-
-            Injector.customerValueData = customerValueResponse.data;
-            Utils.showToast(
-                Utils.getText(context, "Action performed successfully!"));
-
-            Injector.streamController.add("bail out");
-          }
-        } else {
-          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-        }
-      }
-    }).catchError((e) {
-      print("bailOut_" + e.toString());
-      Utils.showToast(e.toString());
-      setState(() {
-        isLoading = false;
-      });
-    });
+//    setState(() {
+//      isLoading = true;
+//    });
+//
+//    WebApi().bailOut( rq).then((customerValueResponse) async {
+//      setState(() {
+//        isLoading = false;
+//      });
+//
+//      if (customerValueResponse != null) {
+//        if (customerValueResponse.flag == "true") {
+//          if (customerValueResponse.data != null) {
+//            await Injector.prefs.setString(PrefKeys.customerValueData,
+//                json.encode(customerValueResponse.data.toJson()));
+//
+//            Injector.customerValueData = customerValueResponse.data;
+//            Utils.showToast(
+//                Utils.getText(context, "Action performed successfully!"));
+//
+//            Injector.streamController.add("bail out");
+//          }
+//        } else {
+//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+//        }
+//      }
+//    }).catchError((e) {
+//      print("bailOut_" + e.toString());
+//      Utils.showToast(e.toString());
+//      setState(() {
+//        isLoading = false;
+//      });
+//    });
   }
 
   logout() async {
@@ -484,21 +488,15 @@ class _ProfilePageState extends State<ProfilePage> {
     rq.deviceToken = Injector.userData.accessToken;
     rq.deviceType = Const.deviceType;
 
-    WebApi().logout(rq.toJson()).then((data) async {
+    WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
       setState(() {
         isLoading = false;
       });
 
-      if (data != null) {
-        if (data.flag == "true") {
-          await Injector.prefs.clear();
-          Injector.userData = null;
-          Injector.customerValueData = null;
-        } else {
-          Utils.showToast(data.msg);
-        }
-      }
-
+      if (data != null) {}
+      await Injector.prefs.clear();
+      Injector.userData = null;
+      Injector.customerValueData = null;
       Navigator.pushAndRemoveUntil(
           context, FadeRouteLogin(), ModalRoute.withName("/home"));
     }).catchError((e) {

@@ -220,21 +220,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     ForgotPasswordRequest rq = ForgotPasswordRequest();
     rq.email = emailController.text.trim();
 
-    WebApi().forgotPassword(rq.toJson()).then((data) {
+    WebApi().callAPI(WebApi.rqForgotPassword,rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          Utils.showToast("Mail sent Successfully.");
-          //alert pop
-          Navigator.pop(context);
-        } else {
-          Utils.showToast(data.msg);
-        }
-      } else {
-        Utils.showToast('Something went worng.');
+        Utils.showToast("Mail sent Successfully.");
+        //alert pop
+        Navigator.pop(context);
       }
     }).catchError((e) {
       print("forgotPassword_"+e.toString());
