@@ -153,13 +153,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     setSelectedIndex();
 
     if (widget.initialPageType != Const.typeChallenges &&
-            widget.initialPageType != Const.typeCustomerSituation ||
-        widget.initialPageType != Const.typeChallenges) {
+        widget.initialPageType != Const.typeCustomerSituation) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
-      //TODO uncomment below code
-//      if (widget.isChallenge == null || !widget.isChallenge)
-//        getPendingChallenges();
+      if (widget.isChallenge == null || !widget.isChallenge)
+        getPendingChallenges();
     }
   }
 
@@ -188,17 +186,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return /*RewardsPage()*/Container();
+        return RewardsPage();
       case 5:
-        return /*TeamPage()*/Container();
+        return TeamPage();
       case 6:
-        return /*ChallengesPage()*/ Container();
+        return ChallengesPage();
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return /*PLPage()*/ Container();
+        return PLPage();
       case 9:
-        return /*RankingPage()*/ Container();
+        return RankingPage();
 //      case 10:
 //        return ProfilePage();
 //      case 11:
@@ -222,18 +220,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      if (index == Const.typePL
-          || index == Const.typeReward
-          || index == Const.typeChallenges
-          || index == Const.typeTeam
-          || index == Const.typeRanking
-          ) {
-        Utils.showComingSoonDialog(context);
-      } else {
-        Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == Const.typeHelp) {
-          Navigator.push(context, FadeRouteIntro());
-        }
+//      if (index == Const.typePL ||
+//          index == Const.typeReward ||
+//          index == Const.typeChallenges ||
+//          index == Const.typeTeam ||
+//          index == Const.typeRanking) {
+//        Utils.showComingSoonDialog(context);
+//      } else {
+      Navigator.of(context).pop(); // close the drawer
+      if (_selectedDrawerIndex == Const.typeHelp) {
+        Navigator.push(context, FadeRouteIntro());
+//        }
       }
     }
   }
