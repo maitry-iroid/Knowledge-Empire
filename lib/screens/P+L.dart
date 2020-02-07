@@ -18,134 +18,7 @@ class _PLPageState extends State<PLPage> {
 
   List<charts.Series<Pollution, String>> _seriesData;
 
-  _generateData() {
-    var data1 = [
-      new Pollution(1980, 'USA', 30),
-      new Pollution(1980, 'Asia', 40),
-      new Pollution(1980, 'Europe', 10),
-    ];
-    var data2 = [
-      new Pollution(1985, 'USA', 100),
-      new Pollution(1980, 'Asia', 150),
-      new Pollution(1985, 'Europe', 80),
-    ];
-    var data3 = [
-      new Pollution(1985, 'USA', 200),
-      new Pollution(1980, 'Asia', 300),
-      new Pollution(1985, 'Europe', 180),
-    ];
 
-    var piedata = [
-      new Task('Work', 35.8, Color(0xff3366cc)),
-      new Task('Eat', 8.3, Color(0xff990099)),
-      new Task('Commute', 10.8, Color(0xff109618)),
-      new Task('TV', 15.6, Color(0xfffdbe19)),
-      new Task('Sleep', 19.2, Color(0xffff9900)),
-      new Task('Other', 10.3, Color(0xffdc3912)),
-    ];
-
-    var linesalesdata = [
-      new Sales(0, 45),
-      new Sales(1, 56),
-      new Sales(2, 55),
-      new Sales(3, 60),
-      new Sales(4, 61),
-      new Sales(5, 70),
-    ];
-    var linesalesdata1 = [
-      new Sales(0, 35),
-      new Sales(1, 46),
-      new Sales(2, 45),
-      new Sales(3, 50),
-      new Sales(4, 51),
-      new Sales(5, 60),
-    ];
-
-    var linesalesdata2 = [
-      new Sales(0, 20),
-      new Sales(1, 24),
-      new Sales(2, 25),
-      new Sales(3, 40),
-      new Sales(4, 45),
-      new Sales(5, 60),
-    ];
-
-    _seriesData.add(
-      charts.Series(
-        domainFn: (Pollution pollution, _) => pollution.place,
-        measureFn: (Pollution pollution, _) => pollution.quantity,
-        id: '2017',
-        data: data1,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (Pollution pollution, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xff990099)),
-      ),
-    );
-
-    _seriesData.add(
-      charts.Series(
-        domainFn: (Pollution pollution, _) => pollution.place,
-        measureFn: (Pollution pollution, _) => pollution.quantity,
-        id: '2018',
-        data: data2,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (Pollution pollution, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xff109618)),
-      ),
-    );
-
-    _seriesData.add(
-      charts.Series(
-        domainFn: (Pollution pollution, _) => pollution.place,
-        measureFn: (Pollution pollution, _) => pollution.quantity,
-        id: '2019',
-        data: data3,
-        fillPatternFn: (_, __) => charts.FillPatternType.solid,
-        fillColorFn: (Pollution pollution, _) =>
-            charts.ColorUtil.fromDartColor(Color(0xffff9900)),
-      ),
-    );
-
-//    _seriesPieData.add(
-//      charts.Series(
-//        domainFn: (Task task, _) => task.task,
-//        measureFn: (Task task, _) => task.taskvalue,
-//        colorFn: (Task task, _) =>
-//            charts.ColorUtil.fromDartColor(task.colorval),
-//        id: 'Air Pollution',
-//        data: piedata,
-//        labelAccessorFn: (Task row, _) => '${row.taskvalue}',
-//      ),
-//    );
-//
-//    _seriesLineData.add(
-//      charts.Series(
-//        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff990099)),
-//        id: 'Air Pollution',
-//        data: linesalesdata,
-//        domainFn: (Sales sales, _) => sales.yearval,
-//        measureFn: (Sales sales, _) => sales.salesval,
-//      ),
-//    );
-//    _seriesLineData.add(
-//      charts.Series(
-//        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xff109618)),
-//        id: 'Air Pollution',
-//        data: linesalesdata1,
-//        domainFn: (Sales sales, _) => sales.yearval,
-//        measureFn: (Sales sales, _) => sales.salesval,
-//      ),
-//    );
-//    _seriesLineData.add(
-//      charts.Series(
-//        colorFn: (__, _) => charts.ColorUtil.fromDartColor(Color(0xffff9900)),
-//        id: 'Air Pollution',
-//        data: linesalesdata2,
-//        domainFn: (Sales sales, _) => sales.yearval,
-//        measureFn: (Sales sales, _) => sales.salesval,
-//      ),
-//    );
-  }
 
 
   var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
@@ -203,7 +76,148 @@ class _PLPageState extends State<PLPage> {
     openCloseMap.putIfAbsent("Open", () => 5);
     openCloseMap.putIfAbsent("Close", () => 3);
     openCloseMap.putIfAbsent("Close1", () => 3);
+
+    oneChart();
+//    _generateData();
+    _createSampleData();
   }
+
+
+  _generateData() {
+    var data1 = [
+      new Pollution(1980, 'USA', 30),
+      new Pollution(1980, 'Asia', 40),
+      new Pollution(1980, 'Europe', 10),
+    ];
+    var data2 = [
+      new Pollution(1985, 'USA', 100),
+      new Pollution(1980, 'Asia', 150),
+      new Pollution(1985, 'Europe', 80),
+    ];
+    var data3 = [
+      new Pollution(1985, 'USA', 200),
+      new Pollution(1980, 'Asia', 300),
+      new Pollution(1985, 'Europe', 180),
+    ];
+
+
+    _seriesData.add(
+      charts.Series(
+        domainFn: (Pollution pollution, _) => pollution.place,
+        measureFn: (Pollution pollution, _) => pollution.quantity,
+        id: '2017',
+        data: data1,
+//        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (Pollution pollution, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xff990099)),
+      ),
+    );
+
+    _seriesData.add(
+      charts.Series(
+        domainFn: (Pollution pollution, _) => pollution.place,
+        measureFn: (Pollution pollution, _) => pollution.quantity,
+        id: '2018',
+        data: data2,
+//        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (Pollution pollution, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xff109618)),
+      ),
+    );
+
+    _seriesData.add(
+      charts.Series(
+        domainFn: (Pollution pollution, _) => pollution.place,
+        measureFn: (Pollution pollution, _) => pollution.quantity,
+        id: '2019',
+        data: data3,
+//        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (Pollution pollution, _) =>
+            charts.ColorUtil.fromDartColor(Color(0xffff9900)),
+      ),
+    );
+
+  }
+
+  oneChart() {
+    setState(() {
+      var data = [
+        Addcharts("he1", 3),
+        Addcharts("he2", 2),
+        Addcharts("he3", 2),
+        Addcharts("he4", 70),
+        Addcharts("he5", 7),
+        Addcharts("he6", 6),
+      ];
+
+      var series = [charts.Series(
+//        domainFn: (Addcharts, )
+        domainFn: (Addcharts addcharts, _) => addcharts.label,
+        measureFn: (Addcharts addcharts, _) => addcharts.value,
+        id: 'addcharts',
+        data: data,
+      )];
+
+      chartDisplay = charts.BarChart(
+        series,
+        animationDuration: Duration(milliseconds: 2000),
+      );
+    });
+  }
+
+  List<charts.Series> seriesList;
+  bool animate;
+
+
+
+
+
+  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
+    final desktopSalesData = [
+      new OrdinalSales('2014', 5),
+      new OrdinalSales('2015', 25),
+      new OrdinalSales('2016', 100),
+      new OrdinalSales('2017', 75),
+    ];
+
+    final tableSalesData = [
+      new OrdinalSales('2014', 25),
+      new OrdinalSales('2015', 50),
+      new OrdinalSales('2016', 10),
+      new OrdinalSales('2017', 20),
+    ];
+
+    final mobileSalesData = [
+      new OrdinalSales('2014', 10),
+      new OrdinalSales('2015', 15),
+      new OrdinalSales('2016', 50),
+      new OrdinalSales('2017', 45),
+    ];
+
+    return [
+      new charts.Series<OrdinalSales, String>(
+        id: 'Desktop',
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+        data: desktopSalesData,
+      ),
+      new charts.Series<OrdinalSales, String>(
+        id: 'Tablet',
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+        data: tableSalesData,
+      ),
+      new charts.Series<OrdinalSales, String>(
+        id: 'Mobile',
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+        data: mobileSalesData,
+      ),
+    ];
+  }
+
+
+  static var chartDisplay;
 
   @override
   Widget build(BuildContext context) {
@@ -258,10 +272,10 @@ class _PLPageState extends State<PLPage> {
 //        ));
     return Expanded(
         child: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[showFirstHalf(), showSecondHalf()],
-      ),
-    ));
+          child: Column(
+            children: <Widget>[showFirstHalf(), showSecondHalf()],
+          ),
+        ));
   }
 
   showFirstHalf() {
@@ -320,16 +334,19 @@ class _PLPageState extends State<PLPage> {
             Container(
               height: 30,
               alignment: Alignment.center,
-              child: Text("7 days developments"),
+              child: Text("7 days developments", style: TextStyle(color: ColorRes.white),),
             ),
             Expanded(
-              child: charts.BarChart(
-                _seriesData,
-                animate: true,
-                barGroupingType: charts.BarGroupingType.grouped,
-                //behaviors: [new charts.SeriesLegend()],
-                animationDuration: Duration(milliseconds: 400),
-              ),
+              child:
+              chartDisplay,
+//              charts.BarChart(
+//                seriesList,
+////                _seriesData,
+//                animate: true,
+//                barGroupingType: charts.BarGroupingType.grouped,
+//                //behaviors: [new charts.SeriesLegend()],
+//                animationDuration: Duration(milliseconds: 400),
+//              ),
             ),
             Container(
               height: 30,
@@ -349,7 +366,7 @@ class _PLPageState extends State<PLPage> {
   }
 
   bottomOption() {
-    return  Container(
+    return Container(
       child: Row(
         children: <Widget>[
           Container(
@@ -358,7 +375,7 @@ class _PLPageState extends State<PLPage> {
             color: Colors.amber,
           ),
           Container(
-            child: Text("Cost"),
+            child: Text("Cost", style: TextStyle(color: ColorRes.white),),
           )
         ],
       ),
@@ -384,13 +401,13 @@ class _PLPageState extends State<PLPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text("Day", style: TextStyle(fontSize: 13)),
+                  child: Text("Day", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("Month", style: TextStyle(fontSize: 13)),
+                  child: Text("Month", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("Year", style: TextStyle(fontSize: 13)),
+                  child: Text("Year", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
               ],
             ),
@@ -407,7 +424,7 @@ class _PLPageState extends State<PLPage> {
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bgPlPeriod")),
                           fit: BoxFit.fill)),
-                  child: Text("Last Period", style: TextStyle(fontSize: 13)),
+                  child: Text("Last Period", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
                   height: 25,
@@ -417,7 +434,7 @@ class _PLPageState extends State<PLPage> {
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bgPlPeriod")),
                           fit: BoxFit.fill)),
-                  child: Text("This Period", style: TextStyle(fontSize: 13)),
+                  child: Text("This Period", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 )
               ],
             ),
@@ -436,17 +453,17 @@ class _PLPageState extends State<PLPage> {
             width: 150,
             padding: EdgeInsets.only(left: 10),
             child:
-                Text("Cash at start of Period", style: TextStyle(fontSize: 13)),
+            Text("Cash at start of Period", style: TextStyle(fontSize: 13, color: ColorRes.white)),
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text("195000", style: TextStyle(fontSize: 13)),
+                  child: Text("195000", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("215000", style: TextStyle(fontSize: 13)),
+                  child: Text("215000", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 )
               ],
             ),
@@ -466,33 +483,40 @@ class _PLPageState extends State<PLPage> {
               fit: BoxFit.fill)),
       child: Row(
         children: <Widget>[
-          Container(
+
+//        Expanded(flex: 4, child: Text(first, style: TextStyle(fontSize: 13, color: ColorRes.white))),
+//        Expanded(flex: 2, child: Text(second, style: TextStyle(fontSize: 13, color: ColorRes.white))),
+//        Expanded(flex: 2, child: Text(third, style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.center,)),
+//        Expanded(flex: 2, child: Text(second, style: TextStyle(fontSize: 13, color: ColorRes.white))),
+//        Expanded(flex: 2, child: Text(third, style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.center,)),
+
+
+         Container(
             width: 125,
             padding: EdgeInsets.only(left: 6),
-            child: Text(first, style: TextStyle(fontSize: 13)),
+            child: Text(first, style: TextStyle(fontSize: 13, color: ColorRes.white)),
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text(second, style: TextStyle(fontSize: 13)),
+                  child: Text(second, style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text(third, style: TextStyle(fontSize: 13)),
+                  child: Text(third, style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text(second, style: TextStyle(fontSize: 13)),
+                  child: Text(second, style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text(third, style: TextStyle(fontSize: 13)),
+                  child: Text(third, style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
               ],
             ),
           )
         ],
-      ),
-    );
+      ),);
   }
 
   showListView(int type) {
@@ -509,30 +533,35 @@ class _PLPageState extends State<PLPage> {
                   width: 125,
                   padding: EdgeInsets.only(left: 10),
                   child: Text(type == 1 ? "total cost" : "total Revenue",
-                      style: TextStyle(fontSize: 13)),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Expanded(
                     child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Container(
-                      child: Text(type == 1 ? "110" : "30",
-                          style: TextStyle(fontSize: 13)),
-                    ),
-                    Container(
-                      child: Text(type == 1 ? "30000" : "50000",
-                          style: TextStyle(fontSize: 13)),
-                    ),
-                    Container(
-                      child: Text(type == 1 ? "110" : "15",
-                          style: TextStyle(fontSize: 13)),
-                    ),
-                    Container(
-                      child: Text(type == 1 ? "30000" : "45000",
-                          style: TextStyle(fontSize: 13)),
-                    )
-                  ],
-                ))
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Container(
+                          child: Text(type == 1 ? "110" : "30",
+                              style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                        ),
+                        Container(
+                          child: Text(type == 1 ? "30000" : "50000",
+                              style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                        ),
+                        Container(
+                          child: Text(type == 1 ? "110" : "15",
+                              style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                        ),
+                        Container(
+                          child: Text(type == 1 ? "30000" : "45000",
+                              style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                        )
+                      ],
+                    ))
+//                Expanded(flex: 4, child: Text(type == 1 ? "total cost" : "total Revenue", style: TextStyle(fontSize: 13, color: ColorRes.white))),
+//                Expanded(flex: 2, child: Text(type == 1 ? "110" : "30", style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.center,)),
+//                Expanded(flex: 2, child: Text(type == 1 ? "30000" : "50000", style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.center,)),
+//                Expanded(flex: 2, child: Text(type == 1 ? "110" : "15", style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.center,)),
+//                Expanded(flex: 2, child: Text(type == 1 ? "30000" : "45000", style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.center,)),
               ],
             );
           }),
@@ -548,20 +577,20 @@ class _PLPageState extends State<PLPage> {
             width: 180,
             padding: EdgeInsets.only(left: 10),
             child: Text("Other Revenue(e.g. achievements)",
-                style: TextStyle(fontSize: 13)),
+                style: TextStyle(fontSize: 13, color: ColorRes.white)),
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text("5000", style: TextStyle(fontSize: 13)),
+                  child: Text("5000", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("20", style: TextStyle(fontSize: 13)),
+                  child: Text("20", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("4000", style: TextStyle(fontSize: 13)),
+                  child: Text("4000", style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
               ],
             ),
@@ -585,20 +614,20 @@ class _PLPageState extends State<PLPage> {
             width: 160,
             padding: EdgeInsets.only(left: 10),
             child: Text(type == 1 ? "Profit" : "Cash at end of period",
-                style: TextStyle(fontSize: 13)),
+                style: TextStyle(fontSize: 13, color: ColorRes.white)),
           ),
           Expanded(
               child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Container(
-                child: Text("20,000", style: TextStyle(fontSize: 13)),
-              ),
-              Container(
-                child: Text("15,000", style: TextStyle(fontSize: 13)),
-              )
-            ],
-          ))
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Container(
+                    child: Text("20,000", style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                  ),
+                  Container(
+                    child: Text("15,000", style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                  )
+                ],
+              ))
         ],
       ),
     );
@@ -633,7 +662,7 @@ class _PLPageState extends State<PLPage> {
                     image: AssetImage(Utils.getAssetsImg("bg_piechart")),
                     fit: BoxFit.fill)),
             child: Center(
-              child: Text(title),
+              child: Text(title, style: TextStyle(color: ColorRes.white),),
             ),
           ),
           Row(
@@ -644,26 +673,30 @@ class _PLPageState extends State<PLPage> {
 //              child: Expanded(
                 child: Center(
                     child: PieChart(
-                  dataMap: type == 1 ? dataMap : openCloseMap,
-                  animationDuration: Duration(milliseconds: 800),
-                  chartLegendSpacing: 32.0,
-                  chartRadius: MediaQuery.of(context).size.width / 5,
+                      dataMap: type == 1 ? dataMap : openCloseMap,
+                      animationDuration: Duration(milliseconds: 800),
+                      chartLegendSpacing: 32.0,
+                      chartRadius: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 5,
 //                showChartValuesInPercentage: true,
-                  showChartValues: false,
-                  showChartValuesOutside: false,
-                  chartValueBackgroundColor: Colors.transparent,
-                  colorList: type == 1 ? colorList : colorOpenCloseList,
+                      showChartValues: false,
+                      showChartValuesOutside: false,
+                      chartValueBackgroundColor: Colors.transparent,
+                      colorList: type == 1 ? colorList : colorOpenCloseList,
 //                showLegends: true,
-                  legendPosition: LegendPosition.right,
-                  showChartValueLabel: false,
-                  initialAngle: 0,
-                  chartValueStyle: defaultChartValueStyle.copyWith(
+                      legendPosition: LegendPosition.right,
+                      showChartValueLabel: false,
+                      initialAngle: 0,
+                      chartValueStyle: defaultChartValueStyle.copyWith(
 //                    color: Colors.blueGrey[900].withOpacity(0.9),
-                      color: type == 1 ? ColorRes.white : Colors.transparent),
-                  showLegends: false,
+                          color: type == 1 ? ColorRes.white : Colors
+                              .transparent),
+                      showLegends: false,
 //                      showLegends: type == 1 ? false : true,
-                  chartType: ChartType.disc,
-                )),
+                      chartType: ChartType.disc,
+                    )),
 //              ),
               ),
 //              type == 1
@@ -696,7 +729,7 @@ class _PLPageState extends State<PLPage> {
                               type == 1
                                   ? costSplitList[index]
                                   : revenueSplitList[index],
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(fontSize: 12, color: ColorRes.white),
                             ),
                           )
                         ],
@@ -729,7 +762,7 @@ class _PLPageState extends State<PLPage> {
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 15, bottom: 10),
-                  child: Text("<Name of Business Sector>"),
+                  child: Text("<Name of Business Sector>", style: TextStyle(color: ColorRes.white),),
                 )
               ],
             );
@@ -764,7 +797,20 @@ class Sales {
 
 
 
+class Addcharts{
+  final String label;
+  final int value;
+
+  Addcharts(this.label, this.value);
+}
 
 
+
+class OrdinalSales {
+  final String year;
+  final int sales;
+
+  OrdinalSales(this.year, this.sales);
+}
 
 
