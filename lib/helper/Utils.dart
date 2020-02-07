@@ -571,6 +571,9 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, int type) {
+
+    //TODO remove comment for prod
+
 //    if (type == Const.typePL ||
 //        type == Const.typeRanking ||
 //        type == Const.typeTeam ||
