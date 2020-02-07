@@ -572,15 +572,15 @@ class Utils {
 
   static performDashboardItemClick(BuildContext context, int type) {
 
-    //TODO uncomment below code fro prod mode
+    //TODO remove comment for prod
 
-    if (type == Const.typePL ||
-        type == Const.typeRanking ||
-        type == Const.typeTeam ||
-        type == Const.typeReward ||
-        type == Const.typeChallenges)
-      Utils.showComingSoonDialog(context);
-    else
+//    if (type == Const.typePL ||
+//        type == Const.typeRanking ||
+//        type == Const.typeTeam ||
+//        type == Const.typeReward ||
+//        type == Const.typeChallenges)
+//      Utils.showComingSoonDialog(context);
+//    else
       Navigator.push(context,
           FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
   }
