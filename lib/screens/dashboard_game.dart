@@ -61,21 +61,23 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
   void getDashboardConfig() {
     Utils.isInternetConnected().then((isConnected) {
-      DashboardRequest rq = DashboardRequest();
-      rq.userId = Injector.userId;
-      rq.mode = Injector.mode ?? Injector.isBusinessMode;
+      if (isConnected) {
+        DashboardRequest rq = DashboardRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Injector.isBusinessMode;
 
-      WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
-        if (data != null) {
-          data.forEach((v) {
-            dashboardData.add(GetDashboardData.fromJson(v));
-          });
+        WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
+          if (data != null) {
+            data.forEach((v) {
+              dashboardData.add(GetDashboardData.fromJson(v));
+            });
 
-          if (dashboardData.isNotEmpty) setState(() {});
-        }
-      });
-    }).catchError((e) {
-      print("getDashboardValue_" + e.toString());
+            if (dashboardData.isNotEmpty) setState(() {});
+          }
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+        });
+      }
     });
   }
 }

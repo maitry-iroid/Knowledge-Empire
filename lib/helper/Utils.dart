@@ -571,13 +571,16 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, int type) {
-//    if (type == Const.typePL ||
-//        type == Const.typeRanking ||
-//        type == Const.typeTeam ||
-//        type == Const.typeReward ||
-//        type == Const.typeChallenges)
-//      Utils.showComingSoonDialog(context);
-//    else
+
+    //TODO uncomment below code fro prod mode
+
+    if (type == Const.typePL ||
+        type == Const.typeRanking ||
+        type == Const.typeTeam ||
+        type == Const.typeReward ||
+        type == Const.typeChallenges)
+      Utils.showComingSoonDialog(context);
+    else
       Navigator.push(context,
           FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
   }
@@ -674,18 +677,21 @@ class Utils {
           minHeight: 25.0,
           minWidth: 25.0,
         ),
-        child: getCount(type, data) > 0
-            ? new DecoratedBox(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorRes.greenDot),
-                child: Center(
-                  child: Text(
-                    getCount(type, data).toString(),
-                    style: TextStyle(color: ColorRes.white),
-                  ),
-                ))
-            : null,
+
+//TODO comment below code fro prod mode
+
+//        child: getCount(type, data) > 0
+//            ? new DecoratedBox(
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.circular(20),
+//                    color: ColorRes.greenDot),
+//                child: Center(
+//                  child: Text(
+//                    getCount(type, data).toString(),
+//                    style: TextStyle(color: ColorRes.white),
+//                  ),
+//                ))
+//            : null,
       ),
     );
   }

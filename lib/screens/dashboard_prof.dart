@@ -41,21 +41,23 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
   void getDashboardConfig() {
     Utils.isInternetConnected().then((isConnected) {
-      DashboardRequest rq = DashboardRequest();
-      rq.userId = Injector.userData.userId;
-      rq.mode = Injector.mode;
+      if (isConnected) {
+        DashboardRequest rq = DashboardRequest();
+        rq.userId = Injector.userData.userId;
+        rq.mode = Injector.mode;
 
-      WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
-        if (data != null) {
-          data.forEach((v) {
-            arrDashboardData.add(GetDashboardData.fromJson(v));
-          });
+        WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
+          if (data != null) {
+            data.forEach((v) {
+              arrDashboardData.add(GetDashboardData.fromJson(v));
+            });
 
-          if (arrDashboardData.isNotEmpty) setState(() {});
-        }
-      });
-    }).catchError((e) {
-      print("getDashboardValue_" + e.toString());
+            if (arrDashboardData.isNotEmpty) setState(() {});
+          }
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+        });
+      }
     });
   }
 

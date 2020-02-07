@@ -186,17 +186,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return RewardsPage();
+        return Container() /*RewardsPage()*/;
       case 5:
-        return TeamPage();
+        return Container() /*TeamPage()*/;
       case 6:
-        return ChallengesPage();
+        return Container() /*ChallengesPage()*/;
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-        return PLPage();
+        return Container() /*PLPage()*/;
       case 9:
-        return RankingPage();
+        return Container() /*RankingPage()*/;
 //      case 10:
 //        return ProfilePage();
 //      case 11:
@@ -220,17 +220,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-//      if (index == Const.typePL ||
-//          index == Const.typeReward ||
-//          index == Const.typeChallenges ||
-//          index == Const.typeTeam ||
-//          index == Const.typeRanking) {
-//        Utils.showComingSoonDialog(context);
-//      } else {
-      Navigator.of(context).pop(); // close the drawer
-      if (_selectedDrawerIndex == Const.typeHelp) {
-        Navigator.push(context, FadeRouteIntro());
-//        }
+      //TODO uncomment below code fro prod mode
+
+      if (index == Const.typePL ||
+          index == Const.typeReward ||
+          index == Const.typeChallenges ||
+          index == Const.typeTeam ||
+          index == Const.typeRanking) {
+        Utils.showComingSoonDialog(context);
+      } else {
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == Const.typeHelp) {
+          Navigator.push(context, FadeRouteIntro());
+        }
       }
     }
   }
@@ -354,7 +356,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
-    customerValueBloc?.getCustomerValue(rq);
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) customerValueBloc?.getCustomerValue(rq);
+    });
 
 //    WebApi()
 //        .getCustomerValue( rq)

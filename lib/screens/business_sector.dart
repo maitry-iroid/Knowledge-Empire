@@ -689,14 +689,18 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
 //          Injector.cacheManager.emptyCache();
 
-        await BackgroundFetch.start().then((int status) async {
-          for (int i = 0; i < arrQuestions.length; i++) {
+        for (int i = 0; i < arrQuestions.length; i++) {
+          await BackgroundFetch.start().then((int status) async {
             await Injector.cacheManager
                 .getSingleFile(arrQuestions[i].mediaLink);
-          }
-        }).catchError((e) {
-          print('[BackgroundFetch] setSpentTime start FAILURE: $e');
-        });
+            await Injector.cacheManager
+                .getSingleFile(arrQuestions[i].correctAnswerImage);
+            await Injector.cacheManager
+                .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
+          }).catchError((e) {
+            print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+          });
+        }
       }
     }).catchError((e) {
       print("downloadQuestion_" + e.toString());

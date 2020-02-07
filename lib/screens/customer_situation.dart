@@ -64,7 +64,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     super.initState();
     Utils.checkAudio();
 
-    downloadFile();
+//    downloadFile();
     correctWrongImage();
   }
 
