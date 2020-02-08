@@ -64,7 +64,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
       if (isConnected) {
         DashboardRequest rq = DashboardRequest();
         rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Injector.isBusinessMode;
+        rq.mode = Injector.mode ?? Const.businessMode;
 
         WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
           if (data != null) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -115,11 +116,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               showSubHeader(context),
               Expanded(
                   child: Row(
-                    children: <Widget>[
-                      showFirstHalf(context),
-                      showSecondHalf(context),
-                    ],
-                  )),
+                children: <Widget>[
+                  showFirstHalf(context),
+                  showSecondHalf(context),
+                ],
+              )),
             ],
           ),
           gifImageShow(),
@@ -244,7 +245,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //        ));
 //  }
 
-
   showSubHeader(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(
@@ -254,33 +254,33 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           children: <Widget>[
             widget.isChallenge
                 ? Row(
-              children: <Widget>[
-                Container(
-                  width: 30,
-                  height: 30,
-                  margin: EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: questionData.profileImage != null &&
-                              questionData.profileImage.isNotEmpty
-                              ? Utils.getCacheNetworkImage(
-                              questionData.profileImage)
-                              : AssetImage(
-                              Utils.getAssetsImg('user_org')),
-                          fit: BoxFit.fill),
-                      border: Border.all(color: ColorRes.textLightBlue)),
-                ),
-                Text(
-                  questionData.firstName + " " + questionData.lastName,
-                  style: TextStyle(color: ColorRes.white, fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )
+                    children: <Widget>[
+                      Container(
+                        width: 30,
+                        height: 30,
+                        margin: EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: questionData.profileImage != null &&
+                                        questionData.profileImage.isNotEmpty
+                                    ? Utils.getCacheNetworkImage(
+                                        questionData.profileImage)
+                                    : AssetImage(
+                                        Utils.getAssetsImg('user_org')),
+                                fit: BoxFit.fill),
+                            border: Border.all(color: ColorRes.textLightBlue)),
+                      ),
+                      Text(
+                        questionData.firstName + " " + questionData.lastName,
+                        style: TextStyle(color: ColorRes.white, fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  )
                 : Container(
-              width: 100,
-            ),
+                    width: 100,
+                  ),
             Container(
               alignment: Alignment.center,
               height: 30,
@@ -294,9 +294,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("eddit_profile")),
-                      fit: BoxFit.fill))
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill))
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.situation),
@@ -327,7 +327,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           ],
         ));
   }
-
 
   bool isAnswerCorrect(int index) {
     bool isAnswerCorrect = true;
@@ -500,59 +499,59 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showMediaView(BuildContext context) {
     if (Utils.isImage(correctWrongImage())) {
-      return Image(
-        image: NetworkImage(correctWrongImage()),
-        fit: BoxFit.fill,
-      );
-    } else if (Utils.isVideo(correctWrongImage()) &&
-        _controller.value.initialized) {
-      return AspectRatio(
-        aspectRatio: _controller.value.aspectRatio,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Container(
-              child: VideoPlayer(_controller),
-            ),
-            Container(
-              child: MaterialButton(
-                height: 100,
-                onPressed: () {
-                  questionData.videoPlay == 1
-                      ? setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        })
-                      : setState(() {
-                          _controller.play();
-                        });
-                },
-                child: Container(
-                  width: Utils.getDeviceHeight(context) / 7,
-                  height: Utils.getDeviceHeight(context) / 7,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                            _controller.value.isPlaying
-                                ? Utils.getAssetsImg("") //add_emp_check
-                                : Utils.getAssetsImg("play_button"),
-                          ),
-                          fit: BoxFit.scaleDown)),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    } else if (Utils.isPdf(questionData.mediaLink)) {
-      return SimplePdfViewerWidget(
-        completeCallback: (bool result) {
-          print("completeCallback,result:$result");
-        },
-        initialUrl: questionData.mediaLink,
-      );
-    }
+      return CachedNetworkImage(imageUrl: correctWrongImage(),);
+    } else
+      return Container();
+//    else if (Utils.isVideo(correctWrongImage()) &&
+//        _controller.value.initialized) {
+//      return AspectRatio(
+//        aspectRatio: _controller.value.aspectRatio,
+//        child: Stack(
+//          alignment: Alignment.center,
+//          children: <Widget>[
+//            Container(
+//              child: VideoPlayer(_controller),
+//            ),
+//            Container(
+//              child: MaterialButton(
+//                height: 100,
+//                onPressed: () {
+//                  questionData.videoPlay == 1
+//                      ? setState(() {
+//                          _controller.value.isPlaying
+//                              ? _controller.pause()
+//                              : _controller.play();
+//                        })
+//                      : setState(() {
+//                          _controller.play();
+//                        });
+//                },
+//                child: Container(
+//                  width: Utils.getDeviceHeight(context) / 7,
+//                  height: Utils.getDeviceHeight(context) / 7,
+//                  decoration: BoxDecoration(
+//                      image: DecorationImage(
+//                          image: AssetImage(
+//                            _controller.value.isPlaying
+//                                ? Utils.getAssetsImg("") //add_emp_check
+//                                : Utils.getAssetsImg("play_button"),
+//                          ),
+//                          fit: BoxFit.scaleDown)),
+//                ),
+//              ),
+//            )
+//          ],
+//        ),
+//      );
+//    }
+//    else if (Utils.isPdf(questionData.mediaLink)) {
+//      return SimplePdfViewerWidget(
+//        completeCallback: (bool result) {
+//          print("completeCallback,result:$result");
+//        },
+//        initialUrl: questionData.mediaLink,
+//      );
+//    }
   }
 
   showSecondHalf(BuildContext context) {
@@ -859,7 +858,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                   child: new Text(
                     abcdList[index],
                     style: TextStyle(
-                      fontSize:18,
+                      fontSize: 18,
                       color: (checkTextColor(index)),
                     ),
                   )),
@@ -867,9 +866,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
               Expanded(
                 child: SingleChildScrollView(
                   child: new Text(
-
                     arrAnswerSituation[index].answer,
-                    style: TextStyle(fontSize:18,color: (checkTextColor(index))),
+                    style:
+                        TextStyle(fontSize: 18, color: (checkTextColor(index))),
                     overflow: TextOverflow.fade,
                   ),
                 ),
@@ -879,8 +878,6 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
         ));
   }
 }
-
-
 
 checkTextColor(int index) {
   var arrCorrectAns = questionDataCustSituation.correctAnswerId.split(",");
@@ -986,7 +983,12 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
 
   showMediaView(BuildContext context) {
     if (Utils.isImage(correctWrongImage())) {
-      return Utils.getCacheNetworkImageWidget(correctWrongImage());
+      return Image(
+        image: Utils.getCacheFile(correctWrongImage()) != null
+            ? FileImage(Utils.getCacheFile(correctWrongImage()).file)
+            : NetworkImage(questionData.mediaLink),
+//        fit: BoxFit.fill,
+      );
     } else if (Utils.isVideo(correctWrongImage()) &&
         _controller.value.initialized) {
       return AspectRatio(
@@ -1021,8 +1023,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                                 ? Utils.getAssetsImg("") //add_emp_check
                                 : Utils.getAssetsImg("play_button"),
                           ),
-                          fit: BoxFit.scaleDown
-                      )),
+                          fit: BoxFit.scaleDown)),
                 ),
               ),
             )
@@ -1070,7 +1071,9 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                         height: Utils.getDeviceHeight(context) / 1.5,
                         width: Utils.getDeviceWidth(context) / 1.2,
                         decoration: BoxDecoration(
-                            color: Injector.isBusinessMode ? ColorRes.black : ColorRes.white ,
+                            color: Injector.isBusinessMode
+                                ? ColorRes.black
+                                : ColorRes.white,
                             borderRadius: BorderRadius.circular(10),
                             border: Utils.isImage(questionData.mediaLink)
                                 ? Border.all(color: ColorRes.white, width: 1)
@@ -1129,7 +1132,6 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     );
   }
 }
-
 
 //======================================
 //image show  in alert

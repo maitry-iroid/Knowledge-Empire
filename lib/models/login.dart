@@ -45,7 +45,7 @@ class BaseResponse<T> {
   }
 }
 
-class LoginResponseData {
+class UserData {
   int userId;
   String name;
   String email;
@@ -63,9 +63,9 @@ class LoginResponseData {
   bool isFirstTimeLogin = false;
   bool isSoundEnable = false;
 
-  LoginResponseData();
+  UserData();
 
-  LoginResponseData.fromJson(Map<String, dynamic> json) {
+  UserData.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     name = json['name'];
     email = json['email'];

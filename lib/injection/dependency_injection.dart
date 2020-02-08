@@ -19,7 +19,7 @@ class Injector {
   static SharedPreferences prefs;
   static String deviceId = "";
   static int notificationID = 0;
-  static LoginResponseData userData;
+  static UserData userData;
   static int userId;
   static CustomerValueData customerValueData;
   static int mode;
@@ -55,7 +55,7 @@ class Injector {
 
     if (prefs.getString(PrefKeys.user) != null &&
         prefs.getString(PrefKeys.user).isNotEmpty) {
-      userData = LoginResponseData.fromJson(
+      userData = UserData.fromJson(
           jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;
