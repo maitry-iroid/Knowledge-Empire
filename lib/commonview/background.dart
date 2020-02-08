@@ -121,7 +121,7 @@ class CommonView {
   }
 
   static questionAndExplanation(
-      BuildContext context, String title, bool checking, String questions) {
+      BuildContext context, String title, bool checking, String content) {
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -140,7 +140,7 @@ class CommonView {
             ),
             child: SingleChildScrollView(
               child: Text(
-                questions,
+                content,
                 style: TextStyle(
                     color: Injector.isBusinessMode
                         ? ColorRes.white
@@ -192,7 +192,7 @@ class CommonView {
                 if (checking)
                   showDialog(
                     context: context,
-                    builder: (_) => FunkyOverlay(title: title),
+                    builder: (_) => FunkyOverlay(title: title,content: content,),
                   );
               },
               child: (checking == true

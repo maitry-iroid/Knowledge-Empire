@@ -127,7 +127,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
               Expanded(
                 flex: 3,
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
                   itemCount: arrFriendsToShow.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showFriendItem(index);
@@ -177,8 +176,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               Expanded(
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 10,
+//                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: arrLearningModules.length,
                   itemBuilder: (BuildContext context, int index) {
                     return showSectorItem(index);
                   },
@@ -231,7 +230,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     height: 40,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: arrRewards.length,
                       padding: EdgeInsets.all(0),
@@ -423,8 +421,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                      /*arrLearningModules[index].moduleName*/
-                      "hjsgfvfghfdvghfdjh",
+                      arrLearningModules[index].moduleName,
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -453,7 +450,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 3.6,
                   lineHeight: 20.0,
-                  percent: /*arrLearningModules[index].moduleProgress / 100*/ 0.5,
+                  percent: arrLearningModules[index].moduleProgress / 100 ,
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -690,7 +687,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 setState(() {
                   if (text.isEmpty) {
                     arrSearchFriends = arrFriends;
-                  }
+                    arrFriendsToShow = arrFriends;
+                  } else
+                    getSearchFriends();
                 });
               },
               textAlign: TextAlign.left,

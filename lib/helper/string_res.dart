@@ -166,7 +166,7 @@ class StringRes {
       'unSubscribe': 'Unsubscribe',
       'subscribed': 'Subscribed',
       'engagement': 'Engagement',
-      'situation': 'Customer Situation',
+      'situation': 'Situation',
       'category': 'Category',
       'achievement': 'Achievement',
       'nextLevel': 'Next Level',

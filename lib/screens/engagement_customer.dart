@@ -995,8 +995,9 @@ class FunkyOverlay extends StatefulWidget {
 //  bool CheckQuestion;
 
   final String title;
+  final String content;
 
-  FunkyOverlay({Key key, this.title}) : super(key: key);
+  FunkyOverlay({Key key, this.title, this.content}) : super(key: key);
 
 //  EngagementCustomer({Key key, this.questionDataEngCustomer, this.notifier})
 //      : super(key: key);
@@ -1066,7 +1067,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         ),
                         child: SingleChildScrollView(
                           child: Text(
-                            questionData.question,
+                            widget.content??"",
                             style: TextStyle(
                                 color: Injector.isBusinessMode
                                     ? ColorRes.white

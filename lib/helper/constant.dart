@@ -87,8 +87,8 @@ class _Config {
   static const WHERE_AM_I = "WHERE_AM_I";
 
   static Map<String, dynamic> debugConstants = {
-//    SERVER_ONE: "http://13.127.186.25:7000/api",
-    SERVER_ONE: "http://13.127.186.25:7001/api",  // for achievement feature
+    SERVER_ONE: "http://13.127.186.25:7000/api",
+//    SERVER_ONE: "http://13.127.186.25:7001/api",  // for achievement feature
     APP_NAME: "KE Dev",
   };
 
