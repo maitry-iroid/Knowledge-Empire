@@ -899,19 +899,14 @@ class _ProfilePageState extends State<ProfilePage> {
       });
 
       if (data != null) {
-        if (data.flag == "true") {
-          data.data.accessToken = Injector.userData.accessToken;
+        await Injector.prefs
+            .setString(PrefKeys.user, json.encode(data.toJson()));
 
-          await Injector.prefs
-              .setString(PrefKeys.user, json.encode(data.data.toJson()));
+        Injector.userData = data;
 
-          Injector.userData = data.data;
+        Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
-          Utils.showToast(
-              Utils.getText(context, StringRes.successProfileUpdate));
-
-          Injector.streamController.add("update_profile");
-        }
+        Injector.streamController.add("update_profile");
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }

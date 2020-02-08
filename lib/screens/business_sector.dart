@@ -16,6 +16,7 @@ import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/getDownloadQuestions.dart';
 import '../models/get_learning_module.dart';
+import 'package:http/http.dart' as http;
 
 class BusinessSectorPage extends StatefulWidget {
   @override
@@ -689,14 +690,28 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
 //          Injector.cacheManager.emptyCache();
 
-        await BackgroundFetch.start().then((int status) async {
-          for (int i = 0; i < arrQuestions.length; i++) {
+        for (int i = 0; i < arrQuestions.length; i++) {
+          await BackgroundFetch.start().then((int status) async {
+//            print("===========length=========");
+
+//            http.Response r = await http.head(arrQuestions[i].mediaLink);
+//            http.Response r1 =
+//                await http.head(arrQuestions[i].correctAnswerImage);
+//            http.Response r2 =
+//                await http.head(arrQuestions[i].inCorrectAnswerImage);
+//            print((int.parse(r.headers["content-length"]) +int.parse(r1.headers["content-length"]) +
+//                int.parse(r2.headers["content-length"])).toString());
+
             await Injector.cacheManager
                 .getSingleFile(arrQuestions[i].mediaLink);
-          }
-        }).catchError((e) {
-          print('[BackgroundFetch] setSpentTime start FAILURE: $e');
-        });
+            await Injector.cacheManager
+                .getSingleFile(arrQuestions[i].correctAnswerImage);
+            await Injector.cacheManager
+                .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
+          }).catchError((e) {
+            print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+          });
+        }
       }
     }).catchError((e) {
       print("downloadQuestion_" + e.toString());
@@ -709,8 +724,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void removeDownloadedQuestion() async {
-    print("riddhi_______");
-
     List<QuestionData> arrQuestions =
         Utils.getQuestionsLocally(Const.getNewQueType);
 

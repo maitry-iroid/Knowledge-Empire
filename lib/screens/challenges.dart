@@ -178,7 +178,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               Expanded(
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: arrLearningModules.length,
+                  itemCount: 10,
                   itemBuilder: (BuildContext context, int index) {
                     return showSectorItem(index);
                   },
@@ -422,7 +422,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Text(arrLearningModules[index].moduleName,
+                  child: Text(
+                      /*arrLearningModules[index].moduleName*/
+                      "hjsgfvfghfdvghfdjh",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -451,7 +453,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 LinearPercentIndicator(
                   width: Utils.getDeviceWidth(context) / 3.6,
                   lineHeight: 20.0,
-                  percent: arrLearningModules[index].moduleProgress / 100,
+                  percent: /*arrLearningModules[index].moduleProgress / 100*/ 0.5,
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -516,14 +518,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
       });
 
       if (data != null) {
-
         List<GetFriendsData> arrFriendsData = List();
         data.forEach((v) {
           arrFriendsData.add(GetFriendsData.fromJson(v));
         });
 
-        arrFriendsData.removeWhere(
-                (friend) => friend.userId == Injector.userData.userId);
+        arrFriendsData
+            .removeWhere((friend) => friend.userId == Injector.userData.userId);
 
         arrFriends = arrFriendsData;
         arrFriendsToShow = arrFriendsData;

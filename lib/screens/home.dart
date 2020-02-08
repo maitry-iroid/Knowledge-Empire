@@ -361,7 +361,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
-    customerValueBloc?.getCustomerValue(rq);
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) customerValueBloc?.getCustomerValue(rq);
+    });
 
 //    WebApi()
 //        .getCustomerValue( rq)

@@ -50,7 +50,7 @@ class HeaderUtils {
 
     double value = ((remainingCapacity ?? 0) / (totalEmployee ?? 1)).toDouble();
 
-    print(value.toString());
+//    print(value.toString());
 
     return (value <= 1 && value >= 0) ? value.toDouble() : 0.0;
   }

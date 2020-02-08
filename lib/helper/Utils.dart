@@ -677,18 +677,21 @@ class Utils {
           minHeight: 25.0,
           minWidth: 25.0,
         ),
-        child: getCount(type, data) > 0
-            ? new DecoratedBox(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorRes.greenDot),
-                child: Center(
-                  child: Text(
-                    getCount(type, data).toString(),
-                    style: TextStyle(color: ColorRes.white),
-                  ),
-                ))
-            : null,
+
+//TODO comment below code fro prod mode
+
+//        child: getCount(type, data) > 0
+//            ? new DecoratedBox(
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.circular(20),
+//                    color: ColorRes.greenDot),
+//                child: Center(
+//                  child: Text(
+//                    getCount(type, data).toString(),
+//                    style: TextStyle(color: ColorRes.white),
+//                  ),
+//                ))
+//            : null,
       ),
     );
   }

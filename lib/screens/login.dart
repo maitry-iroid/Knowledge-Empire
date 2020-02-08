@@ -313,8 +313,8 @@ class _LoginPageState extends State<LoginPage> {
         .callAPI(WebApi.rqLogin, loginRequest.toJson())
         .then((data) async {
       if (data != null) {
-        LoginResponseData loginResponseData =
-            LoginResponseData.fromJson(data);
+        UserData loginResponseData =
+            UserData.fromJson(data);
 
         await Injector.prefs.setInt(PrefKeys.userId, loginResponseData.userId);
         await Injector.prefs.setString(PrefKeys.user, jsonEncode(data));

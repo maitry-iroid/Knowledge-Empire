@@ -87,7 +87,8 @@ class WebApi {
           if (_response.flag == "true") {
             if (!isUserRemovedFromCompany(_response.flag, _response.msg))
               return _response.data;
-            else return null;
+            else
+              return null;
           } else {
             Utils.showToast(_response.msg ?? "Something went wrong");
             return null;
@@ -104,7 +105,7 @@ class WebApi {
     }
   }
 
-  Future<BaseResponse> updateProfile(
+  Future<UserData> updateProfile(
       Map<String, dynamic> jsonMap, File file) async {
     initDio();
 
@@ -123,7 +124,21 @@ class WebApi {
       if (response.statusCode == 200) {
         BaseResponse loginRequest =
             BaseResponse.fromJson(jsonDecode(response.data));
-        return loginRequest;
+
+        if (loginRequest != null) {
+          if (loginRequest.flag == "true")
+            return UserData.fromJson(loginRequest.data);
+          else {
+            Utils.showToast(loginRequest.msg);
+            return null;
+          }
+        } else {
+          Utils.showToast("Something went wrong");
+          return null;
+        }
+      } else {
+        Utils.showToast("Something went wrong");
+        return null;
       }
 
       return null;
