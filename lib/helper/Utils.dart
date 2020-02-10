@@ -571,14 +571,16 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, int type) {
-
     //TODO remove comment for prod
 
-    if (type == Const.typePL ||
-        type == Const.typeRanking ||
+    if (type ==
+            Const
+                .typePL /*  ||
+      type == Const.typeRanking ||
         type == Const.typeTeam ||
         type == Const.typeReward ||
-        type == Const.typeChallenges)
+        type == Const.typeChallenges*/
+        )
       Utils.showComingSoonDialog(context);
     else
       Navigator.push(context,

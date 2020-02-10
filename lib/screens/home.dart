@@ -186,22 +186,27 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-      //TODO add container for production
-        return /*RewardsPage()*/Container();
+        //TODO add container for production
+        return RewardsPage();
+        return Container();
       case 5:
-      //TODO remove comment for production
-        return /*TeamPage()*/Container();
+        //TODO remove comment for production
+        return TeamPage();
+        return Container();
       case 6:
-      //TODO remove comment for production
-        return /*ChallengesPage()*/Container();
+        //TODO remove comment for production
+        return ChallengesPage();
+        return Container();
       case 7:
         return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
       case 8:
-      //TODO remove comment for production
-        return /*PLPage()*/Container();
+        //TODO remove comment for production
+        return PLPage();
+        return Container();
       case 9:
-      //TODO remove comment for production
-        return /*RankingPage()*/Container();
+        //TODO remove comment for production
+        return RankingPage();
+        return Container();
 //      case 10:
 //        return ProfilePage();
 //      case 11:
@@ -227,11 +232,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
       //TODO remove comment for production
 
-      if (index == Const.typePL ||
+      if (index == Const.typePL /*||
           index == Const.typeReward ||
           index == Const.typeChallenges ||
           index == Const.typeTeam ||
-          index == Const.typeRanking) {
+          index == Const.typeRanking*/) {
         Utils.showComingSoonDialog(context);
       } else {
       Navigator.of(context).pop(); // close the drawer

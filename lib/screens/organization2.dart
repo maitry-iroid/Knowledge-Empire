@@ -105,6 +105,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       children: <Widget>[
         InkResponse(
           child: Container(
+            width: 100,
             height: 60,
             child: Card(
               margin: EdgeInsets.all(4),
@@ -172,7 +173,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                         alignment: MainAxisAlignment.center,
 //                          margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
 //                            padding: EdgeInsets.only(left: 5, right: 5),
-                        width: Utils.getDeviceWidth(context) / 9,
+                        width: Utils.getDeviceWidth(context) / 9.6,
                         lineHeight: 15.0,
                         percent: Utils.getProgress(arrOrganization[position]),
                         backgroundColor: Colors.transparent,
@@ -243,12 +244,12 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             child: showItem(Const.typeFinance),
           ),
           Positioned(
-            left: Utils.getDeviceWidth(context) / 6.5,
+            left: Utils.getDeviceWidth(context) / 6.2,
             top: 20,
             child: showItem(Const.typeHR),
           ),
           Positioned(
-            right: Utils.getDeviceWidth(context) / 7.0,
+            right: Utils.getDeviceWidth(context) / 6.2,
             top: 20,
             child: showItem(Const.typeMarketing),
           ),
