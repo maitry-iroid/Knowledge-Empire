@@ -192,7 +192,10 @@ class CommonView {
                 if (checking)
                   showDialog(
                     context: context,
-                    builder: (_) => FunkyOverlay(title: title,content: content,),
+                    builder: (_) => FunkyOverlay(
+                      title: title,
+                      content: content,
+                    ),
                   );
               },
               child: (checking == true
@@ -228,76 +231,6 @@ class CommonView {
       ],
     );
   }
-
-/*
-  static answers(BuildContext context, String title){
-    return Stack(
-      children: <Widget>[
-        Card(
-          elevation: 10,
-//                          color: ColorRes.whiteDarkBg,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0)),
-          margin: EdgeInsets.only(
-              top: 25, bottom: 10, right: 10, left: 15),
-          child: Container(
-            padding: EdgeInsets.only(
-                left: 10, right: 10, top: 15, bottom: 18),
-            decoration: BoxDecoration(
-              color: ColorRes.bgDescription,
-              borderRadius: BorderRadius.circular(12),
-              border:
-              Border.all(color: ColorRes.white, width: 1),
-            ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              itemCount: arrSector.length,
-              itemBuilder: (BuildContext context, int index) {
-//                                GestureDetector(
-//                                  onTap: () {
-//                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Customer()));
-//                                  },
-//                                );
-                return CategoryItem(
-                  selectItem,
-                  // callback function, setstate for parent
-                  index: index,
-                  isSelected:
-                  _selectedItem == index ? true : false,
-                  title: arrSector[index],
-                );
-              },
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            alignment: Alignment.center,
-            height: 30,
-            margin: EdgeInsets.symmetric(
-                horizontal: Utils.getDeviceWidth(context) / 6,
-                vertical: 10),
-            padding: EdgeInsets.symmetric(
-                horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                        Utils.getAssetsImg("eddit_profile")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              'Answers',
-              style: TextStyle(
-                  color: ColorRes.white, fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-*/
 
   static topThreeButton(BuildContext context, String firstTitle,
       String secondTitle, int selectedIndex, QuestionData questionData) {
@@ -442,7 +375,6 @@ class CommonView {
 
   static Widget showDashboardView(
       BuildContext context, List<GetDashboardData> data) {
-
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -570,7 +502,8 @@ class CommonView {
                             image: AssetImage(Utils.getAssetsImg("challenges")),
                             width: Utils.getDeviceHeight(context) / 2.6,
                           ),
-                          Utils.showUnreadCount(Const.typeChallenges, 17, 17, data)
+                          Utils.showUnreadCount(
+                              Const.typeChallenges, 17, 17, data)
                         ],
                       ),
                       onTap: () {
@@ -602,7 +535,8 @@ class CommonView {
                                 Utils.getAssetsImg("business_sectors")),
                             width: Utils.getDeviceWidth(context) / 3.5,
                           ),
-                          Utils.showUnreadCount(Const.typeBusinessSector, 10, 35, data)
+                          Utils.showUnreadCount(
+                              Const.typeBusinessSector, 10, 35, data)
                         ],
                       ),
                       onTap: () {
@@ -618,7 +552,8 @@ class CommonView {
                                 AssetImage(Utils.getAssetsImg("new-customer")),
                             width: Utils.getDeviceWidth(context) / 4.2,
                           ),
-                          Utils.showUnreadCount(Const.typeNewCustomer, 10, 15, data)
+                          Utils.showUnreadCount(
+                              Const.typeNewCustomer, 10, 15, data)
                         ],
                       ),
                       onTap: () {
@@ -636,7 +571,8 @@ class CommonView {
                             image: AssetImage(Utils.getAssetsImg("existing")),
                             width: Utils.getDeviceWidth(context) / 4.6,
                           ),
-                          Utils.showUnreadCount(Const.typeExistingCustomer, 10, 35, data)
+                          Utils.showUnreadCount(
+                              Const.typeExistingCustomer, 10, 35, data)
                         ],
                       ),
                       onTap: () {

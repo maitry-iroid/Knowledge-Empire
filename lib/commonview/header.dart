@@ -179,11 +179,7 @@ class HeaderViewState extends State<HeaderView> {
       ),
       onTap: () {
         if (type == Const.typeEmployee) {
-          if (Injector.isBusinessMode == true) {
-            Injector.streamController?.add("${Const.typeOrg}");
-          } else {
-            Injector.streamController?.add("${Const.typeTeam}");
-          }
+          Injector.streamController?.add("${Const.typeOrg}");
         } else if (type == Const.typeSalesPersons) {
           Injector.streamController?.add("${Const.typeNewCustomer}");
         } else if (type == Const.typeServicesPerson) {

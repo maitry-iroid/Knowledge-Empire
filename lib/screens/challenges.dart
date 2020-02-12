@@ -58,14 +58,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
         fit: StackFit.expand,
         children: <Widget>[
           CommonView.showBackground(context),
-          Card(
-            margin: EdgeInsets.all(0),
-            elevation: 10,
-            child: Container(
-              color: ColorRes.colorBgDark,
-              height: 1,
-            ),
-          ),
+//          Card(
+//            margin: EdgeInsets.all(0),
+//            elevation: 10,
+//            child: Container(
+//              color: ColorRes.colorBgDark,
+//              height: 1,
+//            ),
+//          ),
           ListView(
             shrinkWrap: false,
             children: <Widget>[
@@ -448,7 +448,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 3.6,
+                  width: Utils.getDeviceWidth(context) / 3.7,
                   lineHeight: 20.0,
                   percent: arrLearningModules[index].moduleProgress / 100 ,
                   backgroundColor: Colors.grey,

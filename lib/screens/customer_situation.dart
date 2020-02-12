@@ -499,7 +499,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showMediaView(BuildContext context) {
     if (Utils.isImage(correctWrongImage())) {
-      return CachedNetworkImage(imageUrl: correctWrongImage(),);
+      return Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: CachedNetworkImageProvider(correctWrongImage(),
+                  scale: Const.imgScaleProfile,
+                  cacheManager: Injector.cacheManager),
+              fit: BoxFit.fill),
+        ),
+      );
     } else
       return Container();
 //    else if (Utils.isVideo(correctWrongImage()) &&

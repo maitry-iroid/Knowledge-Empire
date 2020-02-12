@@ -164,7 +164,7 @@ class StringRes {
       'somethingWrong': 'Something went wrong',
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
-      'subscribed': 'Subscribed',
+      'subscribed': 'Unsubscribe',
       'engagement': 'Engagement',
       'situation': 'Situation',
       'category': 'Category',

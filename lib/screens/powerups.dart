@@ -86,7 +86,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         CommonView.showBackground(context),
         Padding(
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-          child: Row(
+          child: arrOrganization.length>0?Row(
             children: <Widget>[
               showFirstHalf(),
               Expanded(
@@ -101,7 +101,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                     : showSecondHalf(),
               )
             ],
-          ),
+          ):Container(),
         ),
         CommonView.showCircularProgress(isLoading)
       ],

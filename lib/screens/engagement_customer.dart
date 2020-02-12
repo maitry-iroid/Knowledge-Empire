@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -243,11 +244,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     await Injector.prefs
         .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
 
-    Injector.customerValueData.totalBalance =
-        Injector.customerValueData.totalBalance + questionData.value;
+    if (questionData.isAnsweredCorrect) {
+      Injector.customerValueData.totalBalance =
+          Injector.customerValueData.totalBalance + questionData.value;
 
-    Injector.prefs.setString(PrefKeys.customerValueData,
-        jsonEncode(Injector.customerValueData.toJson()));
+      Injector.prefs.setString(PrefKeys.customerValueData,
+          jsonEncode(Injector.customerValueData.toJson()));
+    }
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -660,11 +663,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   showMediaView(BuildContext context) {
     if (Utils.isImage(questionData.mediaLink)) {
-      return Image(
-        image: Utils.getCacheFile(questionData.mediaLink) != null
-            ? FileImage(Utils.getCacheFile(questionData.mediaLink).file)
-            : NetworkImage(questionData.mediaLink),
-//        fit: BoxFit.fill,
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(questionData.mediaLink,
+                  scale: Const.imgScaleProfile,
+                  cacheManager: Injector.cacheManager),
+              fit: BoxFit.fill,
+            )),
       );
     } else if (Utils.isVideo(questionData.mediaLink) &&
         _controller.value.initialized) {
@@ -1067,12 +1076,12 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         ),
                         child: SingleChildScrollView(
                           child: Text(
-                            widget.content??"",
+                            widget.content ?? "",
                             style: TextStyle(
                                 color: Injector.isBusinessMode
                                     ? ColorRes.white
                                     : ColorRes.textProf,
-                                fontSize: 16),
+                                fontSize: 19),
                           ),
                         ),
                       ),
@@ -1242,8 +1251,7 @@ class ExpandMediaState extends State<ExpandMedia>
                               ? DecorationImage(
                                   image: Utils.getCacheNetworkImage(
                                       questionData.mediaLink),
-//                                  fit: BoxFit.fill
-                                )
+                                  fit: BoxFit.fill)
                               : null,
                           borderRadius: BorderRadius.circular(10),
                         ),
