@@ -501,12 +501,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     if (Utils.isImage(correctWrongImage())) {
       return Container(
         decoration: BoxDecoration(
-          image: DecorationImage(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            image: DecorationImage(
               image: CachedNetworkImageProvider(correctWrongImage(),
                   scale: Const.imgScaleProfile,
                   cacheManager: Injector.cacheManager),
-              fit: BoxFit.fill),
-        ),
+              fit: BoxFit.cover,
+            )),
       );
     } else
       return Container();
@@ -989,65 +992,6 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     }
   }
 
-  showMediaView(BuildContext context) {
-    if (Utils.isImage(correctWrongImage())) {
-      return Image(
-        image: Utils.getCacheFile(correctWrongImage()) != null
-            ? FileImage(Utils.getCacheFile(correctWrongImage()).file)
-            : NetworkImage(questionData.mediaLink),
-//        fit: BoxFit.fill,
-      );
-    } else if (Utils.isVideo(correctWrongImage()) &&
-        _controller.value.initialized) {
-      return AspectRatio(
-        aspectRatio: _controller.value.aspectRatio,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Container(
-              child: VideoPlayer(_controller),
-            ),
-            Container(
-              child: MaterialButton(
-                height: 100,
-                onPressed: () {
-                  questionData.videoPlay == 1
-                      ? setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        })
-                      : setState(() {
-                          _controller.play();
-                        });
-                },
-                child: Container(
-                  width: Utils.getDeviceHeight(context) / 7,
-                  height: Utils.getDeviceHeight(context) / 7,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                            _controller.value.isPlaying
-                                ? Utils.getAssetsImg("") //add_emp_check
-                                : Utils.getAssetsImg("play_button"),
-                          ),
-                          fit: BoxFit.scaleDown)),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
-    } else if (Utils.isPdf(correctWrongImage())) {
-      return SimplePdfViewerWidget(
-        completeCallback: (bool result) {
-          print("completeCallback,result:$result");
-        },
-        initialUrl: questionData.mediaLink,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -1138,6 +1082,71 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
         ),
       ),
     );
+  }
+
+  showMediaView(BuildContext context) {
+    if (Utils.isImage(correctWrongImage())) {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(correctWrongImage(),
+                  scale: Const.imgScaleProfile,
+                  cacheManager: Injector.cacheManager),
+              fit: BoxFit.cover,
+            )),
+      );
+    } else if (Utils.isVideo(correctWrongImage()) &&
+        _controller.value.initialized) {
+      return AspectRatio(
+        aspectRatio: _controller.value.aspectRatio,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Container(
+              child: VideoPlayer(_controller),
+            ),
+            Container(
+              child: MaterialButton(
+                height: 100,
+                onPressed: () {
+                  questionData.videoPlay == 1
+                      ? setState(() {
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        })
+                      : setState(() {
+                          _controller.play();
+                        });
+                },
+                child: Container(
+                  width: Utils.getDeviceHeight(context) / 7,
+                  height: Utils.getDeviceHeight(context) / 7,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            _controller.value.isPlaying
+                                ? Utils.getAssetsImg("") //add_emp_check
+                                : Utils.getAssetsImg("play_button"),
+                          ),
+                          fit: BoxFit.scaleDown)),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    } else if (Utils.isPdf(correctWrongImage())) {
+      return SimplePdfViewerWidget(
+        completeCallback: (bool result) {
+          print("completeCallback,result:$result");
+        },
+        initialUrl: questionData.mediaLink,
+      );
+    }
   }
 }
 

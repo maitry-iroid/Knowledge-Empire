@@ -153,7 +153,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     setSelectedIndex();
 
     if (widget.initialPageType != Const.typeChallenges &&
-        widget.initialPageType != Const.typeCustomerSituation) {
+        widget.initialPageType != Const.typeCustomerSituation&&
+        widget.initialPageType != Const.typeEngagement) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
       if (widget.isChallenge == null || !widget.isChallenge)
@@ -370,29 +371,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       if (isConnected) customerValueBloc?.getCustomerValue(rq);
     });
 
-//    WebApi()
-//        .getCustomerValue( rq)
-//        .then((getCustomerValueResponse) async {
-//      if (getCustomerValueResponse != null) {
-//        if (getCustomerValueResponse.flag == "true") {
-//          if (getCustomerValueResponse.data != null) {
-//            await Injector.prefs.setString(PrefKeys.customerValueData,
-//                json.encode(getCustomerValueResponse.data.toJson()));
-//
-//            Injector.customerValueData = getCustomerValueResponse.data;
-//
-//            Injector.streamController?.add("This a test data");
-//          }
-//        } else {
-//          Utils.showToast(getCustomerValueResponse.msg);
-//        }
-//      } else {
-//        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-//      }
-//    }).catchError((e) {
-//      print("getCustomerValues___" + e.toString());
-//      Utils.showToast(e.toString());
-//    });
+
   }
 
   void setSelectedIndex() {

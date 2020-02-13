@@ -522,9 +522,12 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           InkResponse(
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("back")),
-              width: 30,
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg("back")),
+                width: 30,
+              ),
             ),
             onTap: () {
               Utils.playClickSound();

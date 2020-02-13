@@ -672,7 +672,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               image: CachedNetworkImageProvider(questionData.mediaLink,
                   scale: Const.imgScaleProfile,
                   cacheManager: Injector.cacheManager),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             )),
       );
     } else if (Utils.isVideo(questionData.mediaLink) &&
@@ -1251,7 +1251,7 @@ class ExpandMediaState extends State<ExpandMedia>
                               ? DecorationImage(
                                   image: Utils.getCacheNetworkImage(
                                       questionData.mediaLink),
-                                  fit: BoxFit.fill)
+                                  fit: BoxFit.cover)
                               : null,
                           borderRadius: BorderRadius.circular(10),
                         ),

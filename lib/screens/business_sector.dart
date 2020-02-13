@@ -456,14 +456,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         decoration: BoxDecoration(
                             color: Injector.isBusinessMode
                                 ? null
-                                : ColorRes.headerBlue,
+                                : selectedModule.isSubscribedFromBackend == 1
+                                    ? ColorRes.greyText
+                                    : ColorRes.headerBlue,
                             borderRadius: Injector.isBusinessMode
                                 ? null
                                 : BorderRadius.circular(20),
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("bg_subscribe")),
+                                    image: AssetImage(Utils.getAssetsImg(
+                                        selectedModule
+                                                    .isSubscribedFromBackend ==
+                                                1
+                                            ? "ranking_unselected"
+                                            : "bg_subscribe")),
                                     fit: BoxFit.fill)
                                 : null),
                         child: Text(
@@ -471,7 +477,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                               context,
                               selectedModule.isAssign == 0
                                   ? StringRes.subscribe
-                                  : StringRes.subscribed),
+                                  : StringRes.unSubscribe),
                           style: TextStyle(color: ColorRes.white, fontSize: 17),
                           textAlign: TextAlign.center,
                         )),
@@ -479,16 +485,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       Utils.playClickSound();
 
                       if (selectedModule.isSubscribedFromBackend == 0) {
-                        Utils.isInternetConnectedWithAlert()
-                            .then((isConnected) {
-                          if (isConnected) {
-                            if (selectedModule.isAssign == 0) {
-                              assignUserToModule(Const.subscribe);
-                            } else {
-                              assignUserToModule(Const.unSubscribe);
-                            }
-                          }
-                        });
+                        if (selectedModule.isAssign == 1)
+                          showConfirmDialog();
+                        else
+                          performSubscribeUnsubscribe();
                       } else {
                         Utils.showToast(
                             "Oops..You are now allowed to perform this action!");
@@ -735,5 +735,46 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
     await Injector.prefs.setString(
         PrefKeys.questionData, json.encode(questionsResponse.toJson()));
+  }
+
+  showConfirmDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text("Confirm"),
+            content: Text("Are you sure, you want to unsubscribe " +
+                selectedModule.moduleName +
+                "? You will lose all the questions from the " +
+                Utils.getText(context, StringRes.newCustomers)),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                isDefaultAction: true,
+                child: Text("Yes"),
+                onPressed: () {
+                  performSubscribeUnsubscribe();
+
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoDialogAction(
+                child: Text("No"),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          );
+        });
+  }
+
+  void performSubscribeUnsubscribe() {
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) {
+        if (selectedModule.isAssign == 0) {
+          assignUserToModule(Const.subscribe);
+        } else {
+          assignUserToModule(Const.unSubscribe);
+        }
+      }
+    });
   }
 }

@@ -90,7 +90,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               )
             ],
           ),
-          CommonView.showCircularProgress(isLoading)
+          CommonView.showCircularProgress(isLoading),
+          showBack()
         ],
       ),
     );
@@ -366,6 +367,25 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         Utils.showToast(e.toString());
       });
     });
+  }
+
+  showBack() {
+    return Positioned(
+      top: DimenRes.titleBarHeight,
+      child: InkResponse(
+        child: Padding(
+          padding: EdgeInsets.all(30),
+          child: Image(
+            image: AssetImage(Utils.getAssetsImg("back")),
+            width: 35,
+          ),
+        ),
+        onTap: () {
+          Utils.playClickSound();
+          Utils.performBack(context);
+        },
+      ),
+    );
   }
 }
 

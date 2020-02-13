@@ -219,12 +219,7 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-
-            Navigator.push(
-                context,
-                FadeRouteHome(
-                  initialPageType: Const.typeProfile,
-                ));
+            Injector.streamController?.add("${Const.typeProfile}");
           }),
     );
   }
