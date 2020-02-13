@@ -118,7 +118,7 @@ class _RankingPageState extends State<RankingPage> {
         children: <Widget>[
           showLeftItem(0, StringRes.revenue),
           showLeftItem(1, StringRes.profit),
-          showLeftItem(2, StringRes.customers),
+          showLeftItem(2, StringRes.hashCustomers),
           showLeftItem(3, StringRes.brand),
         ],
       ),
@@ -140,6 +140,7 @@ class _RankingPageState extends State<RankingPage> {
               height: Injector.isBusinessMode ? 50 : 30,
               child: Row(
                 children: <Widget>[
+                  showBack(),
                   Expanded(
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -158,6 +159,23 @@ class _RankingPageState extends State<RankingPage> {
                       },
                     ),
                   ),
+                  arrGroups.length > 4
+                      ? Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                          size: 22.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        )
+                      : Container(),
+                  arrGroups.length > 4
+                      ? Container(
+                          height: 20,
+                          width: 1,
+                          color: ColorRes.fontGrey,
+                          margin: EdgeInsets.symmetric(horizontal: 2),
+                        )
+                      : Container(),
                   ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
@@ -310,6 +328,22 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
+  showBack() {
+    return InkResponse(
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Image(
+          image: AssetImage(Utils.getAssetsImg("back")),
+          width: 30,
+        ),
+      ),
+      onTap: () {
+        Utils.playClickSound();
+        Utils.performBack(context);
+      },
+    );
+  }
+
   showFriendItem(int index) {
     return Container(
       height: 38,
@@ -346,24 +380,36 @@ class _RankingPageState extends State<RankingPage> {
           }
         },
         child: Container(
-          height: 80,
-          width: 80,
-          padding:
-              Injector.isBusinessMode ? EdgeInsets.all(20) : EdgeInsets.all(18),
-          margin:
-              Injector.isBusinessMode ? EdgeInsets.all(0) : EdgeInsets.all(5),
-          decoration:
-              BoxDecoration(image: DecorationImage(image: getBgImage(index))),
+          width: 90,
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             children: <Widget>[
-              Expanded(
-                  child: Image(
-                image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
-              )),
               Container(
-//                height: 10,
-//                child: Text(title),
-                  )
+                height: 60,
+                width: 60,
+                padding: Injector.isBusinessMode
+                    ? EdgeInsets.all(20)
+                    : EdgeInsets.all(20),
+                margin: Injector.isBusinessMode
+                    ? EdgeInsets.all(0)
+                    : EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: getBgImage(index))),
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                        child: Image(
+                          image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
+                        )),
+                    Container(
+                    )
+                  ],
+                ),
+              ),
+              Text(
+                Utils.getText(context, title),
+                style: TextStyle(color: ColorRes.white, fontSize: 15),
+              )
             ],
           ),
         ),

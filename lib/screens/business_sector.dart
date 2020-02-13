@@ -468,7 +468,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                         selectedModule
                                                     .isSubscribedFromBackend ==
                                                 1
-                                            ? "ranking_unselected"
+                                            ? "bg_disable_subscribe"
                                             : "bg_subscribe")),
                                     fit: BoxFit.fill)
                                 : null),

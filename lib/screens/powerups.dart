@@ -324,7 +324,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                                   fit: BoxFit.fill)
                               : null),
                       child: Text(
-                        StringRes.description,
+                        Utils.getText(context, StringRes.description),
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                         textAlign: TextAlign.center,
                       ),

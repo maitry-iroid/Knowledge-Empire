@@ -63,6 +63,7 @@ class StringRes {
   static var achievement = "achievement";
   static var nextLevel = "nextLevel";
   static var friends = "friends";
+  static var competitor = "competitor";
   static var friend = "friend";
   static var sendChallenge = "sendChallenge";
   static var next = "next";
@@ -82,6 +83,7 @@ class StringRes {
   static var revenue = "revenue";
   static var profit = "profit";
   static var customers = "customers";
+  static var hashCustomers = "hashCustomers";
   static var brand = "brand";
   static var learningModule = "learningModule";
   static var levels = "levels";
@@ -171,6 +173,7 @@ class StringRes {
       'achievement': 'Achievement',
       'nextLevel': 'Next Level',
       'friends': 'Friends',
+      'competitor': 'Competitor',
       'friend': 'Friend',
       'next': 'Next',
       'answers': 'Answers',
@@ -187,6 +190,7 @@ class StringRes {
       'revenue': "Revenue",
       'profit': "Profit",
       'customers': "Customers",
+      'hashCustomers': "#Customers",
       'brand': "Brand",
       'learningModule': "Learning Module",
       'levels': "Levels",
@@ -218,8 +222,8 @@ class StringRes {
       'team': "Team",
       'sector': 'Module',
       'size': 'Q&A',
-      'engagement': 'Debriefing',
-      'situation': 'Situation',
+      'engagement': 'Situation',
+      'situation': 'Debriefing',
       'value': 'Knowledge Points (KP)',
       'loyalty': 'Repeat in ...',
       'endRel': 'Release',

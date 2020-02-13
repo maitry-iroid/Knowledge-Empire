@@ -6,25 +6,28 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/forgot_password.dart';
 
-
 class FadeRouteForgotPassword extends PageRouteBuilder {
   final Widget page;
 
   FadeRouteForgotPassword({this.page})
       : super(
-    pageBuilder: (BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,) =>
-    page,
-    transitionsBuilder: (BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,) =>
-        FadeTransition(
-          opacity: animation,
-          child: ForgotPasswordPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: ForgotPasswordPage(),
+          ),
+        );
 }
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -39,79 +42,65 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-//    audioManager = AudioManager.STREAM_SYSTEM;
-//    initPlatformState();
-//    updateVolumes();
   }
-
-  /*Future<void> initPlatformState() async {
-    await Volume.controlVolume(AudioManager.STREAM_SYSTEM);
-//    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
-  }
-
-  updateVolumes() async {
-    // get Current Volume
-    currentVol = await Volume.getVol;
-    print("helloooo =======>>>  $currentVol");
-    setState(() {});
-  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+//        key: _scaffoldKey,
       backgroundColor: ColorRes.fontDarkGrey,
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
-            fit: BoxFit.fill,
-            alignment: Alignment.topCenter,
-          ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 50),
-                  child: Image(
-                    image: AssetImage(
-                      Utils.getAssetsImg('logo_login'),
-                    ),
-                    width: Utils.getDeviceHeight(context) / 2,
-                  ),
-                ),
-            ),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: Utils.getDeviceWidth(context) / 2.3,
-                  height: Utils.getDeviceHeight(context) / 2,
-                  margin: EdgeInsets.only(right: 20),
-                  decoration: BoxDecoration(
-                    color: ColorRes.colorBgDark,
-                    border: Border.all(color: ColorRes.white, width: 1),
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: showLoginForm(),
-                )),
-            SafeArea(
-              child: IconButton(
-                icon: new Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                onPressed: () => Navigator.of(context).pop(),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: 400,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
+                fit: BoxFit.cover,
               ),
             ),
-            showCircularProgress()
-          ],
-        ),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  height: Utils.getDeviceHeight(context) / 2.0,
+                  width: Utils.getDeviceWidth(context) / 3.5,
+                  margin: EdgeInsets.only(left: 40),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("logo_login")),
+                  )),
+                ),
+                Expanded(
+                    flex: 5,
+                    child: Container(
+                      width: Utils.getDeviceWidth(context) / 2.3,
+                      height: Utils.getDeviceHeight(context) / 1.7,
+                      margin: EdgeInsets.only(
+                          right: 20, left: Utils.getDeviceWidth(context) / 5.5),
+                      decoration: BoxDecoration(
+                        color: ColorRes.colorBgDark,
+                        border: Border.all(color: ColorRes.white, width: 1),
+                        borderRadius: new BorderRadius.circular(10.0),
+                      ),
+                      child: showLoginForm(),
+                    ))
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+                size: 40,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -158,8 +147,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText:
-                      Utils.getText(context, StringRes.enterRegisteredEmail)
-                          .toUpperCase(),
+                          Utils.getText(context, StringRes.enterRegisteredEmail)
+                              .toUpperCase(),
                       hintStyle: TextStyle(color: ColorRes.hintColor)),
                 ),
               ),
@@ -220,7 +209,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     ForgotPasswordRequest rq = ForgotPasswordRequest();
     rq.email = emailController.text.trim();
 
-    WebApi().callAPI(WebApi.rqForgotPassword,rq.toJson()).then((data) {
+    WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
       setState(() {
         isLoading = false;
       });
@@ -231,7 +220,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         Navigator.pop(context);
       }
     }).catchError((e) {
-      print("forgotPassword_"+e.toString());
+      print("forgotPassword_" + e.toString());
       setState(() {
         isLoading = false;
       });

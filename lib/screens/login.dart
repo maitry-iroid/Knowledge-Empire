@@ -83,12 +83,11 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 height: Utils.getDeviceHeight(context) / 2.0,
                 width: Utils.getDeviceWidth(context) / 3.5,
-//                padding: EdgeInsets.only(left: 50),
                 margin: EdgeInsets.only(left: 40),
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("logo_login")),
-                        fit: BoxFit.fill)),
+                  image: AssetImage(Utils.getAssetsImg("logo_login")),
+                )),
               ),
               Expanded(
                   flex: 5,
@@ -309,12 +308,9 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    WebApi()
-        .callAPI(WebApi.rqLogin, loginRequest.toJson())
-        .then((data) async {
+    WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
       if (data != null) {
-        UserData loginResponseData =
-            UserData.fromJson(data);
+        UserData loginResponseData = UserData.fromJson(data);
 
         await Injector.prefs.setInt(PrefKeys.userId, loginResponseData.userId);
         await Injector.prefs.setString(PrefKeys.user, jsonEncode(data));

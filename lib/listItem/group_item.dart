@@ -29,9 +29,11 @@ class _GroupItemState extends State<GroupItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-        width: Utils.getDeviceWidth(context) / 9,
-        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 8, horizontal: 3) : EdgeInsets.symmetric(vertical: 3, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
+        width: Utils.getDeviceWidth(context) / 7.5,
+        margin: Injector.isBusinessMode
+            ? EdgeInsets.symmetric(vertical: 8, horizontal: 3)
+            : EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+        padding: EdgeInsets.symmetric(horizontal: 8),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -43,11 +45,19 @@ class _GroupItemState extends State<GroupItem> {
                 fit: BoxFit.fill)),
         child: Text(
           widget.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
-              decoration: Injector.isBusinessMode ? TextDecoration.none : widget.isSelected ? TextDecoration.underline : TextDecoration.none ,
+              decoration: Injector.isBusinessMode
+                  ? TextDecoration.none
+                  : widget.isSelected
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
               color: Injector.isBusinessMode
                   ? ColorRes.white
-                  : widget.isSelected ? ColorRes.titleBlueProf : ColorRes.fontGrey,
+                  : widget.isSelected
+                      ? ColorRes.titleBlueProf
+                      : ColorRes.fontGrey,
               fontSize: Injector.isBusinessMode ? 15 : 18),
         ),
       ),

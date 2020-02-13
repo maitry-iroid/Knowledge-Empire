@@ -168,10 +168,9 @@ class HeaderViewState extends State<HeaderView> {
                     ],
                   )
                 : Text(
-                    ' \$ ' +
-                        (Injector.customerValueData != null
-                            ? Injector.customerValueData.totalBalance.toString()
-                            : "00.00"),
+                    Injector.customerValueData != null
+                        ? Injector.customerValueData.totalBalance.toString()
+                        : "00.00",
                     style: TextStyle(color: ColorRes.white, fontSize: 16),
                   ),
           ],

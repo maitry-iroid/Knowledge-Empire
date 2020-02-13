@@ -119,7 +119,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       : ColorRes.titleBlueProf,
                 ),
                 child: Text(
-                  Utils.getText(context, StringRes.friends),
+                  Utils.getText(context, StringRes.competitor),
                   style: TextStyle(color: ColorRes.white, fontSize: 17),
                 ),
               ),

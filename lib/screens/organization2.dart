@@ -159,7 +159,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                     children: <Widget>[
                       Container(
                         height: 15,
-                        width: Utils.getDeviceWidth(context) / 10,
+                        width: Utils.getDeviceWidth(context) / 8.5,
 //                            width: Utils.getDeviceWidth(context) / 16.4,
                         margin:
                             EdgeInsets.symmetric(horizontal: 3, vertical: 5),
@@ -174,7 +174,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                         alignment: MainAxisAlignment.center,
 //                          margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
 //                            padding: EdgeInsets.only(left: 5, right: 5),
-                        width: Utils.getDeviceWidth(context) / 9.6,
+                        width: Utils.getDeviceWidth(context) / 8,
                         lineHeight: 15.0,
                         percent: Utils.getProgress(arrOrganization[position]),
                         backgroundColor: Colors.transparent,

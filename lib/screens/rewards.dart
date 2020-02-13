@@ -68,14 +68,19 @@ class _RewardsPageState extends State<RewardsPage> {
     setState(() {
       _selectedItem = index;
       print(selectItem.toString());
-      selectedAchievement = arrAchievementData[index];
+      selectedAchievement = arrAchievementData[_selectedItem];
+
+      if (selectedAchievement.subCategory.isNotEmpty) {
+        _subSelectedItem = 0;
+        selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
+      }
     });
   }
 
   subCatSelectItem(index) {
     setState(() {
       _subSelectedItem = index;
-      selectedSubCategory = selectedAchievement.subCategory[index];
+      selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
 //      isSelectSubCat = false;
     });
   }
@@ -372,7 +377,7 @@ class _RewardsPageState extends State<RewardsPage> {
                 child: Center(
                     child: Text(
                   selectedAchievement.subCategory[index].achievementName,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12, color: ColorRes.white),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
