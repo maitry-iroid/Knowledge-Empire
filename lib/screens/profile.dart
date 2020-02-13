@@ -291,17 +291,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () async {
                           Utils.playClickSound();
 
+                          Injector.isBusinessMode = !Injector.isBusinessMode;
+
                           if (Injector.isBusinessMode)
                             await Injector.prefs
-                                .setInt(PrefKeys.mode, Const.professionalMode);
+                                .setInt(PrefKeys.mode, Const.businessMode);
                           else
                             await Injector.prefs
-                                .setInt(PrefKeys.mode, Const.businessMode);
-                          setState(() {
-                            Injector.isBusinessMode = !Injector.isBusinessMode;
-                          });
+                                .setInt(PrefKeys.mode, Const.professionalMode);
 
                           Injector.streamController.add("chnage mode");
+                          setState(() {});
                         },
                       ),
                       Row(

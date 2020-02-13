@@ -153,7 +153,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     setSelectedIndex();
 
     if (widget.initialPageType != Const.typeChallenges &&
-        widget.initialPageType != Const.typeCustomerSituation&&
+        widget.initialPageType != Const.typeCustomerSituation &&
         widget.initialPageType != Const.typeEngagement) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
@@ -233,16 +233,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
       //TODO remove comment for production
 
-      if (index == Const.typePL /*||
+      if (index ==
+              Const
+                  .typePL /*||
           index == Const.typeReward ||
           index == Const.typeChallenges ||
           index == Const.typeTeam ||
-          index == Const.typeRanking*/) {
+          index == Const.typeRanking*/
+          ) {
         Utils.showComingSoonDialog(context);
       } else {
-      Navigator.of(context).pop(); // close the drawer
-      if (_selectedDrawerIndex == Const.typeHelp) {
-        Navigator.push(context, FadeRouteIntro());
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == Const.typeHelp) {
+          Navigator.push(context, FadeRouteIntro());
         }
       }
     }
@@ -370,8 +373,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) customerValueBloc?.getCustomerValue(rq);
     });
-
-
   }
 
   void setSelectedIndex() {
@@ -458,37 +459,58 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initDrawerItems() {
-    drawerItems = [
-      DrawerItem(Utils.getText(context, StringRes.home),
-          Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home"),
-      DrawerItem(
-          Utils.getText(context, StringRes.businessSector),
-          Injector.isBusinessMode
-              ? "business_sectors"
-              : "ic_pro_home_business"),
-      DrawerItem(Utils.getText(context, StringRes.newCustomers),
-          Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer"),
+    drawerItems = [];
+
+    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.home),
+        Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home"));
+
+    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.businessSector),
+        Injector.isBusinessMode ? "business_sectors" : "ic_pro_home_business"));
+
+    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.newCustomers),
+        Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer"));
+
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.existingCustomers),
           Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer"),
-      DrawerItem(Utils.getText(context, StringRes.rewards),
-          Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards"),
+    );
+
+//    if (Injector.userData.isManager == 1)
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.team),
           Injector.isBusinessMode ? "team" : "ic_pro_home_team"),
+    );
+
+    drawerItems.add(
+      DrawerItem(Utils.getText(context, StringRes.rewards),
+          Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards"),
+    );
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.challenges),
           Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges"),
+    );
+    drawerItems.add(
       DrawerItem(
           Utils.getText(context, StringRes.organizations),
           Injector.isBusinessMode
               ? "organization"
               : "ic_pro_home_organization"),
+    );
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.pl),
           Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl"),
+    );
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.ranking),
           Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking"),
+    );
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.profile),
           Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile"),
+    );
+    drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.help),
           Injector.isBusinessMode ? "help_icon" : "ic_pro_help"),
-    ];
+    );
   }
 }

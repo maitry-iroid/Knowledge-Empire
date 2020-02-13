@@ -59,6 +59,7 @@ class UserData {
   String companyName;
   String manager;
   int activeCompany;
+  int isManager;
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
   bool isSoundEnable = false;
@@ -77,6 +78,7 @@ class UserData {
     profileImage = json['profileImage'];
     accessToken = json['accessToken'];
     companyName = json['companyName'];
+    isManager = json['isManager'];
     manager = json['manager'];
     activeCompany = json['activeCompany'];
     isFirstTimeLogin = json['isFirstTimeLogin'];
@@ -94,6 +96,7 @@ class UserData {
     data['isPasswordChanged'] = this.isPasswordChanged;
     data['profileImage'] = this.profileImage;
     data['accessToken'] = this.accessToken;
+    data['isManager'] = this.isManager;
     data['companyName'] = this.companyName;
     data['manager'] = this.manager;
     data['activeCompany'] = this.activeCompany;
