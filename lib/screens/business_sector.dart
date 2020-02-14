@@ -23,6 +23,8 @@ class BusinessSectorPage extends StatefulWidget {
   _BusinessSectorPageState createState() => _BusinessSectorPageState();
 }
 
+enum DownloadingStatus { download, downloading, downloded }
+
 class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
@@ -37,6 +39,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   int maxVol, currentVol;
 
   bool isSwitched = false;
+
+  DownloadingStatus downloadingStatus;
 
   @override
   void initState() {
@@ -633,7 +637,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       });
 
       if (data != null) {
-        Utils.showToast("Permission updated Successfully!");
+        Utils.showToast("Action performed successfully!");
 
         if (rq.type == 0)
           removeDownloadedQuestion();
@@ -672,45 +676,55 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           arrQuestions.add(QuestionData.fromJson(v));
         });
 
-        for (int i = 0; i < arrQuestions.length; i++) {
-          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+        if (arrQuestions.isNotEmpty) {
+          setState(() {
+            downloadingStatus = DownloadingStatus.downloading;
+          });
 
-          print(arrQuestions[i].value);
-        }
+          for (int i = 0; i < arrQuestions.length; i++) {
+            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
 
-        QuestionsResponse questionsResponse = QuestionsResponse();
-        questionsResponse.data = arrQuestions;
+            print(arrQuestions[i].value);
+          }
 
-        await Injector.prefs.setString(
-            PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+          QuestionsResponse questionsResponse = QuestionsResponse();
+          questionsResponse.data = arrQuestions;
 
-        //TODO remove media also
+          await Injector.prefs.setString(
+              PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+
+          //TODO remove media also
 
 //          Injector.cacheManager.emptyCache();
 
-        for (int i = 0; i < arrQuestions.length; i++) {
-          await BackgroundFetch.start().then((int status) async {
-//            print("===========length=========");
+          for (int i = 0; i < arrQuestions.length; i++) {
+            await BackgroundFetch.start().then((int status) async {
+              //            print("===========length=========");
 
-//            http.Response r = await http.head(arrQuestions[i].mediaLink);
-//            http.Response r1 =
-//                await http.head(arrQuestions[i].correctAnswerImage);
-//            http.Response r2 =
-//                await http.head(arrQuestions[i].inCorrectAnswerImage);
-//            print((int.parse(r.headers["content-length"]) +int.parse(r1.headers["content-length"]) +
-//                int.parse(r2.headers["content-length"])).toString());
+              //            http.Response r = await http.head(arrQuestions[i].mediaLink);
+              //            http.Response r1 =
+              //                await http.head(arrQuestions[i].correctAnswerImage);
+              //            http.Response r2 =
+              //                await http.head(arrQuestions[i].inCorrectAnswerImage);
+              //            print((int.parse(r.headers["content-length"]) +int.parse(r1.headers["content-length"]) +
+              //                int.parse(r2.headers["content-length"])).toString());
 
-            await Injector.cacheManager
-                .getSingleFile(arrQuestions[i].mediaLink);
-            await Injector.cacheManager
-                .getSingleFile(arrQuestions[i].correctAnswerImage);
-            await Injector.cacheManager
-                .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
-          }).catchError((e) {
-            print('[BackgroundFetch] setSpentTime start FAILURE: $e');
-          });
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].mediaLink);
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].correctAnswerImage);
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
+
+              setState(() {
+                downloadingStatus = DownloadingStatus.downloded;
+              });
+            }).catchError((e) {
+              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+            });
+          }
         }
       }
     }).catchError((e) {

@@ -481,8 +481,7 @@ class _ProfilePageState extends State<ProfilePage> {
     });
 
     LogoutRequest rq = LogoutRequest();
-    rq.userId = Injector.userData.userId;
-    rq.deviceToken = Injector.userData.accessToken;
+    rq.userId = Injector.userId;
     rq.deviceType = Const.deviceType;
 
     WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
@@ -820,7 +819,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future getImage(int type) async {
-    var tempImage = await ImagePicker.pickImage(
+    File tempImage = await ImagePicker.pickImage(
       source:
           type == Const.typeGallery ? ImageSource.gallery : ImageSource.camera,
       imageQuality: Const.imgQuality,
@@ -833,6 +832,18 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     }
   }
+
+//  void compressImage() async {
+//    File imageFile = await ImagePicker.pickImage();
+//    final tempDir = await getTemporaryDirectory();
+//    final path = tempDir.path;
+//    int rand = new Math.Random().nextInt(10000);
+//
+//    Im.Image image = Im.decodeImage(imageFile.readAsBytesSync());
+//    Im.Image smallerImage = Im.copyResize(image, 500); // choose the size here, it will maintain aspect ratio
+//
+//    var compressedImage = new File('$path/img_$rand.jpg')..writeAsBytesSync(Im.encodeJpg(image, quality: 85));
+//  }
 
   void showPhotoOptionDialog(BuildContext mainContext) {
     Utils.playClickSound();
@@ -883,7 +894,7 @@ class _ProfilePageState extends State<ProfilePage> {
   updateProfile() {
     Utils.playClickSound();
     var req = {
-      'userId': Injector.userData.userId,
+      'userId': Injector.userId,
       'name': nameController.text.trim(),
     };
 
@@ -897,10 +908,7 @@ class _ProfilePageState extends State<ProfilePage> {
       });
 
       if (data != null) {
-        await Injector.prefs
-            .setString(PrefKeys.user, json.encode(data.toJson()));
-
-        Injector.userData = data;
+        await Injector.setUserData(data);
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 

@@ -585,7 +585,7 @@ class _RankingPageState extends State<RankingPage> {
         },
         child: Image(
             image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
-                ? "add_emp_check"
+                ? "add_frnd_disable"
                 : selectedUser != null && arrFriends[index].isFriend == 0
                     ? 'add_emplyee'
                     : 'remove_friend'))),

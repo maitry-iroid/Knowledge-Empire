@@ -41,7 +41,7 @@ class MyAppState extends State<MyApp> {
 
     initPlatformState();
 
-    if (Injector.prefs.getInt(PrefKeys.userId) != null) {
+    if (Injector.userId != null) {
       initPush();
     }
 
@@ -61,7 +61,7 @@ class MyAppState extends State<MyApp> {
           if (data != null) {}
         }).catchError((e) {
           print("registerForPush_" + e.toString());
-          Utils.showToast(e);
+          Utils.showToast(e.toString());
         });
       }
     });
@@ -160,7 +160,7 @@ class MyAppState extends State<MyApp> {
             ? ColorRes.colorBgDark
             : ColorRes.white,
       ),
-      home: Injector.prefs.getInt(PrefKeys.userId) != null
+      home: Injector.userId != null
           ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
                   Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
               ? IntroPage()

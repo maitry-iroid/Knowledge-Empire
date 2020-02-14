@@ -151,7 +151,9 @@ class WebApi {
   initDio() {
     String contentTypeHeader = 'application/json';
     String authorizationHeader =
-        Injector.userData != null ? "pig " + Injector.userData.accessToken : "";
+        Injector.userData != null && Injector.userData.accessToken != null
+            ? "pig " + Injector.userData.accessToken
+            : "";
     String deviceType = 'android';
     String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
 

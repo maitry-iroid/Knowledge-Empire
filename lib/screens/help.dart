@@ -10,7 +10,6 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
-  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   @override
   Widget build(BuildContext context) {

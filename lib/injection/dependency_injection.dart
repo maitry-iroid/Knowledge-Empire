@@ -70,9 +70,17 @@ class Injector {
     }
   }
 
- static updateMode(int _mode) async {
+  static updateMode(int _mode) async {
     mode = _mode;
     prefs.setInt(PrefKeys.mode, _mode);
     isBusinessMode = _mode == Const.businessMode;
+  }
+
+  static setUserData(UserData _user) async {
+    await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
+
+    Injector.userData = _user;
+
+    Injector.userId = _user.userId;
   }
 }

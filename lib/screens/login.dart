@@ -310,15 +310,11 @@ class _LoginPageState extends State<LoginPage> {
 
     WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
       if (data != null) {
-        UserData loginResponseData = UserData.fromJson(data);
+        UserData userData = UserData.fromJson(data);
 
-        await Injector.prefs.setInt(PrefKeys.userId, loginResponseData.userId);
-        await Injector.prefs.setString(PrefKeys.user, jsonEncode(data));
+        await Injector.setUserData(userData);
 
-        Injector.userData = loginResponseData;
-        Injector.userId = loginResponseData.userId;
-
-        if (loginResponseData.isFirstTimeLogin)
+        if (userData.isFirstTimeLogin)
           navigateToIntro();
         else {
           navigateToDashboard();
