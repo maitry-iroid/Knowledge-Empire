@@ -29,7 +29,7 @@ class _GroupItemState extends State<GroupItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-        width: Utils.getDeviceWidth(context) / 7.5,
+        width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode?7.5:9),
         margin: Injector.isBusinessMode
             ? EdgeInsets.symmetric(vertical: 8, horizontal: 3)
             : EdgeInsets.symmetric(vertical: 3, horizontal: 3),

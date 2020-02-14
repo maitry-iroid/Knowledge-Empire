@@ -241,14 +241,12 @@ class HeaderViewState extends State<HeaderView> {
   showHelpView(BuildContext context) {
     return InkResponse(
       child: Container(
-        height: 25,
-        width: 25,
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        height: 20,
+        width: 20,
+        padding: EdgeInsets.symmetric(horizontal: 3),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(Injector.isBusinessMode
-                    ? Utils.getAssetsImg("ic_profile_help")
-                    : Utils.getAssetsImg("pro_help")))),
+                image: AssetImage(Utils.getAssetsImg("question_mark_help")))),
       ),
       onTap: () {
         Utils.playClickSound();

@@ -32,7 +32,6 @@ class Injector {
   static bool isSoundEnable;
   static AudioCache player = AudioCache(prefix: 'sounds/');
 
-
 //  factory Injector {
 //    return _singleton;
 //  }
@@ -55,11 +54,9 @@ class Injector {
 
     if (prefs.getString(PrefKeys.user) != null &&
         prefs.getString(PrefKeys.user).isNotEmpty) {
-      userData = UserData.fromJson(
-          jsonDecode(prefs.getString(PrefKeys.user)));
+      userData = UserData.fromJson(jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;
-
 
       if (prefs.getString(PrefKeys.customerValueData) != null)
         customerValueData = CustomerValueData.fromJson(
@@ -71,5 +68,11 @@ class Injector {
       mode = prefs.getInt(PrefKeys.mode) ?? Const.businessMode;
       isBusinessMode = mode == Const.businessMode;
     }
+  }
+
+ static updateMode(int _mode) async {
+    mode = _mode;
+    prefs.setInt(PrefKeys.mode, _mode);
+    isBusinessMode = _mode == Const.businessMode;
   }
 }

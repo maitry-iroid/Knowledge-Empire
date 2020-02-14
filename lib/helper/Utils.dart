@@ -575,8 +575,8 @@ class Utils {
 
     if (type ==
             Const
-                .typePL /*  ||
-      type == Const.typeRanking ||
+                .typePL /*||
+        type == Const.typeRanking ||
         type == Const.typeTeam ||
         type == Const.typeReward ||
         type == Const.typeChallenges*/

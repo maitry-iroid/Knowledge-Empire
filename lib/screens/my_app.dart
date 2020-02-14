@@ -52,18 +52,18 @@ class MyAppState extends State<MyApp> {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         RegisterForPushRequest rq = RegisterForPushRequest();
-        rq.userId = Injector.userData.userId;
+        rq.userId = Injector.userId;
         rq.deviceId = Injector.deviceId;
         rq.deviceType = "android";
         rq.deviceToken = token;
 
         WebApi().callAPI(WebApi.rqRegisterForPush, rq.toJson()).then((data) {
           if (data != null) {}
+        }).catchError((e) {
+          print("registerForPush_" + e.toString());
+          Utils.showToast(e);
         });
       }
-    }).catchError((e) {
-      print("registerForPush_" + e.toString());
-      Utils.showToast(e);
     });
   }
 

@@ -162,7 +162,9 @@ class _RankingPageState extends State<RankingPage> {
                   arrGroups.length > 4
                       ? Icon(
                           Icons.chevron_right,
-                          color: Colors.white,
+                          color: Injector.isBusinessMode
+                              ? Colors.white
+                              : ColorRes.titleBlueProf,
                           size: 22.0,
                           semanticLabel:
                               'Text to announce in accessibility modes',
@@ -399,10 +401,10 @@ class _RankingPageState extends State<RankingPage> {
                   children: <Widget>[
                     Expanded(
                         child: Image(
-                          image: AssetImage(Utils.getAssetsImg(getInnerImage(index))),
-                        )),
-                    Container(
-                    )
+                      image:
+                          AssetImage(Utils.getAssetsImg(getInnerImage(index))),
+                    )),
+                    Container()
                   ],
                 ),
               ),
@@ -539,10 +541,12 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 3,
       child: InkResponse(
-        child: arrFriends[index].isFriend == 0
-            ? Image(
-                image: AssetImage(Utils.getAssetsImg('ic_challenge_disable')))
-            : Image(image: AssetImage(Utils.getAssetsImg('ic_challenge'))),
+        child: Image(
+            image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
+                ? "ic_challenge_disable"
+                : (arrFriends[index].isFriend == 0
+                    ? 'ic_challenge_disable'
+                    : 'ic_challenge')))),
         onTap: () {
           if (!isCurrentUser(index)) {
             if (arrFriends[index].isFriend == 1) {
@@ -564,27 +568,28 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 3,
       child: InkResponse(
-          onTap: () {
-            Utils.playClickSound();
+        onTap: () {
+          Utils.playClickSound();
 
-            if (!isCurrentUser(index)) {
-              setState(() {
-                if (arrFriends[index].isFriend == 0) {
-                  arrFriends[index].isFriend = 1;
-                  friendUnFriendUser(index, 1);
-                } else {
-                  arrFriends[index].isFriend = 0;
-                  friendUnFriendUser(index, 2);
-                }
-              });
-            }
-          },
-          child: Image(
-            image: AssetImage(
-                selectedUser != null && arrFriends[index].isFriend == 0
-                    ? Utils.getAssetsImg('add_emplyee')
-                    : Utils.getAssetsImg('remove_friend')),
-          )),
+          if (!isCurrentUser(index)) {
+            setState(() {
+              if (arrFriends[index].isFriend == 0) {
+                arrFriends[index].isFriend = 1;
+                friendUnFriendUser(index, 1);
+              } else {
+                arrFriends[index].isFriend = 0;
+                friendUnFriendUser(index, 2);
+              }
+            });
+          }
+        },
+        child: Image(
+            image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
+                ? "add_emp_check"
+                : selectedUser != null && arrFriends[index].isFriend == 0
+                    ? 'add_emplyee'
+                    : 'remove_friend'))),
+      ),
     );
   }
 
