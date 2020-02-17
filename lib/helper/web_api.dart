@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/login.dart';
 import 'constant.dart';
@@ -87,14 +88,16 @@ class WebApi {
           if (_response.flag == "true") {
             if (!isUserRemovedFromCompany(_response.flag, _response.msg))
               return _response.data;
-            else
+            else {
+              Utils.showToast("User is removed from the company");
               return null;
+            }
           } else {
-            Utils.showToast(_response.msg ?? "Something went wrong");
+            Utils.showToast(_response.msg ?? StringRes.somethingWrong);
             return null;
           }
         } else {
-          Utils.showToast("Something went wrong");
+          Utils.showToast(StringRes.somethingWrong);
           return null;
         }
       }
@@ -122,22 +125,22 @@ class WebApi {
       print(response.data);
 
       if (response.statusCode == 200) {
-        BaseResponse loginRequest =
+        BaseResponse baseResponse =
             BaseResponse.fromJson(jsonDecode(response.data));
 
-        if (loginRequest != null) {
-          if (loginRequest.flag == "true")
-            return UserData.fromJson(loginRequest.data);
+        if (baseResponse != null) {
+          if (baseResponse.flag == "true")
+            return UserData.fromJson(baseResponse.data);
           else {
-            Utils.showToast(loginRequest.msg);
+            Utils.showToast(baseResponse.msg);
             return null;
           }
         } else {
-          Utils.showToast("Something went wrong");
+          Utils.showToast( StringRes.somethingWrong);
           return null;
         }
       } else {
-        Utils.showToast("Something went wrong");
+        Utils.showToast(StringRes.somethingWrong);
         return null;
       }
 

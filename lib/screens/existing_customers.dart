@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -60,42 +61,40 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       rq.resources = questionData.resources;
       rq.value = questionData.value;
 
-      customerValueBloc?.releaseResource(rq);
+//      customerValueBloc?.releaseResource(rq);
 
-//      setState(() {
-//        isLoading = true;
-//      });
-//
-//      WebApi().releaseResource( rq).then((getReleaseResourceData) {
-//        setState(() {
-//          isLoading = false;
-//        });
-//
-//        if (getReleaseResourceData != null) {
-//          if (getReleaseResourceData.flag == "true") {
-//            Injector.customerValueData = getReleaseResourceData.data;
-////          arrOrganization = getreleaseresourceData.organization;
-//
-//            Injector.streamController.add("release resources");
-//
-//            setState(() {
-//              arrQuestions.removeAt(index);
-//
-//              isLoading = false;
-//            });
-//          } else {
-//            Utils.showToast(getReleaseResourceData.msg);
-//          }
-//        } else {
-//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-//        }
-//      }).catchError((e) {
-//        print("releaseResources_"+e.toString());
-//        setState(() {
-//          isLoading = false;
-//        });
-//        Utils.showToast(e.toString());
-//      });
+      setState(() {
+        isLoading = true;
+      });
+
+      WebApi().callAPI(WebApi.rqReleaseResource, rq.toJson()).then((data) {
+        setState(() {
+          isLoading = false;
+        });
+
+        if (data != null) {
+          CustomerValueData customerValueData =
+              CustomerValueData.fromJson(data);
+
+          Injector.setCustomerValueData(customerValueData);
+
+          Injector.streamController.add("release resources");
+
+          setState(() {
+            arrQuestions.removeAt(index);
+
+            isLoading = false;
+          });
+        } else {
+          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+        }
+      }).catchError((e) {
+        print("releaseResources_" + e.toString());
+        setState(() {
+          isLoading = false;
+        });
+        Utils.showToast(e.toString());
+      });
     });
   }
 

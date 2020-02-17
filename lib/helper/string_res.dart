@@ -53,7 +53,7 @@ class StringRes {
   static var textCRM = "textCRM";
   static var textFinance = "textFinance";
   static var textLegal = "textLegal";
-  static var somethingWrong = "somethingWrong";
+  static var somethingWrong = "Something went wrong";
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
   static var subscribed = "subscribed";
@@ -95,7 +95,7 @@ class StringRes {
   static var correct = "correct";
   static var fireEmp = "fireEmp";
   static var hireEmp = "hireEmp";
-
+  static var alertUserRemovedFromCompany = "alertUserRemovedFromCompany";
 
   //business sectors
 
@@ -195,13 +195,14 @@ class StringRes {
       'learningModule': "Learning Module",
       'levels': "Levels",
       'complete': "%Complete",
-      'qLevel':"Q Level",
-      'qStatus':"Q Status",
-      'lastLog':"Last Log",
-      'points':"Points",
-      'correct':"%Correct",
-      'fireEmp':"Fire 10 employees",
-      'hireEmp':"Fire 10 employees"
+      'qLevel': "Q Level",
+      'qStatus': "Q Status",
+      'lastLog': "Last Log",
+      'points': "Points",
+      'correct': "%Correct",
+      'fireEmp': "Fire 10 employees",
+      'hireEmp': "Fire 10 employees",
+      'alertUserRemovedFromCompany': "User is removed from the company"
     },
     'es': {
       'title': 'Hola Mundo',

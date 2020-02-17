@@ -75,7 +75,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   @override
   void dispose() {
     try {
-//      _controller?.dispose();
+      _controller?.dispose();
     } catch (e) {
       print(e);
     }
@@ -304,7 +304,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       });
 
       if (data != null) {
-        Injector.customerValueData = CustomerValueData.fromJson(data);
+        Injector.setCustomerValueData(CustomerValueData.fromJson(data));
 
         await Injector.prefs.remove(PrefKeys.answerData);
 
