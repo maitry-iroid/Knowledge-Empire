@@ -83,4 +83,10 @@ class Injector {
 
     Injector.userId = _user.userId;
   }
+  static setCustomerValueData(CustomerValueData customerValueData) async {
+    await Injector.prefs.setString(PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
+
+    Injector.customerValueData = customerValueData;
+
+  }
 }
