@@ -908,7 +908,10 @@ class _ProfilePageState extends State<ProfilePage> {
       });
 
       if (data != null) {
-        await Injector.setUserData(data);
+        Injector.userData.profileImage = data.profileImage;
+        Injector.userData.companyName = data.companyName;
+
+        await Injector.setUserData(Injector.userData);
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 

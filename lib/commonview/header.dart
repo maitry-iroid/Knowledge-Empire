@@ -206,7 +206,7 @@ class HeaderViewState extends State<HeaderView> {
                     image: DecorationImage(
                         image: Injector.userData == null ||
                                 Injector.userData.profileImage == null ||
-                                Injector.userData.profileImage.isNotEmpty
+                                Injector.userData.profileImage.isEmpty
                             ? AssetImage(Utils.getAssetsImg('user_org'))
                             : Utils.getCacheNetworkImage(
                                 Injector.userData.profileImage),
