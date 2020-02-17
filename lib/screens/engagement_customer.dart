@@ -86,7 +86,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void initVideoController() {
     if (Utils.isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+      _controller = Injector.cacheManager.getFileFromCache(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)
           : VideoPlayerController.network(questionData.mediaLink)
