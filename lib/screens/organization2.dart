@@ -106,7 +106,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       children: <Widget>[
         InkResponse(
           child: Container(
-            width: 100,
+            width: 110,
             height: 60,
             child: Card(
               margin: EdgeInsets.all(4),
@@ -174,7 +174,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                         alignment: MainAxisAlignment.center,
 //                          margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
 //                            padding: EdgeInsets.only(left: 5, right: 5),
-                        width: Utils.getDeviceWidth(context) / 8,
+                        width: Utils.getDeviceWidth(context) / 8.6,
                         lineHeight: 15.0,
                         percent: Utils.getProgress(arrOrganization[position]),
                         backgroundColor: Colors.transparent,

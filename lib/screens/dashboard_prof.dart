@@ -44,7 +44,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       if (isConnected) {
         DashboardRequest rq = DashboardRequest();
         rq.userId = Injector.userData.userId;
-        rq.mode = Injector.mode??Injector.isBusinessMode;
+        rq.mode = Injector.mode ?? Injector.isBusinessMode;
 
         WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
           if (data != null) {
@@ -72,31 +72,75 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
+  var arrTypeManager = [
+    Const.typeBusinessSector,
+    Const.typeNewCustomer,
+    Const.typeExistingCustomer,
+    Const.typeReward,
+    Const.typeTeam,
+    Const.typeChallenges,
+    Const.typeOrg,
+    Const.typePl,
+    Const.typeRanking
+  ];
+  var arrType = [
+    Const.typeBusinessSector,
+    Const.typeNewCustomer,
+    Const.typeExistingCustomer,
+    Const.typeReward,
+//    Const.typeTeam,
+    Const.typeChallenges,
+    Const.typeOrg,
+    Const.typePl,
+    Const.typeRanking
+  ];
+
   showMainView() {
     return Container(
-      margin: EdgeInsets.all(5),
-      child: GridView.count(
-        crossAxisCount: 3,
-        shrinkWrap: true,
-        childAspectRatio: 2.1,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
-        children: <Widget>[
-          showMainItem(Const.typeBusinessSector),
-          showMainItem(Const.typeNewCustomer),
-          showMainItem(Const.typeExistingCustomer),
-          showMainItem(Const.typeReward),
-          showMainItem(Const.typeTeam),
-          showMainItem(Const.typeChallenges),
-          showMainItem(Const.typeOrg),
-          showMainItem(Const.typePL),
-          showMainItem(Const.typeRanking),
-        ],
-      ),
-    );
+        margin: EdgeInsets.all(5),
+        child: GridView.count(
+          crossAxisCount: 3,
+          shrinkWrap: true,
+          childAspectRatio: 2.1,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+          children: List.generate(
+              Injector.isManager() ? arrTypeManager.length : arrType.length,
+              (index) {
+            return showMainItem(
+                Injector.isManager() ? arrTypeManager[index] : arrType[index]);
+          }),
+        ));
+//      child: GridView.count(
+//        crossAxisCount: 3,
+//        shrinkWrap: true,
+//        childAspectRatio: 2.1,
+//        crossAxisSpacing: 5,
+//        mainAxisSpacing: 5,
+//        List.generate(100, (index) {
+//          return Center(
+//            child: Text(
+//              'Item $index',
+//              style: Theme.of(context).textTheme.headline,
+//            ),
+//          );
+//        }),
+//        children: <Widget>[
+//          showMainItem(Const.typeBusinessSector),
+//          showMainItem(Const.typeNewCustomer),
+//          showMainItem(Const.typeExistingCustomer),
+//          showMainItem(Const.typeReward),
+//          showMainItem(Const.typeTeam),
+//          showMainItem(Const.typeChallenges),
+//          showMainItem(Const.typeOrg),
+//          showMainItem(Const.typePl),
+//          showMainItem(Const.typeRanking),
+//        ],
+    // ),
+    //);
   }
 
-  showMainItem(int type) {
+  showMainItem(String type) {
     return InkResponse(
       child: Container(
 //         height: Utils.getDeviceHeight(context) / 15,
@@ -139,7 +183,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-  getTitle(int type) {
+  getTitle(String type) {
     if (type == Const.typeBusinessSector)
       return Utils.getText(context, StringRes.businessSector);
     else if (type == Const.typeNewCustomer)
@@ -150,7 +194,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return Utils.getText(context, StringRes.organizations);
     else if (type == Const.typeChallenges)
       return Utils.getText(context, StringRes.challenges);
-    else if (type == Const.typePL)
+    else if (type == Const.typePl)
       return Utils.getText(context, StringRes.pl);
     else if (type == Const.typeReward)
       return Utils.getText(context, StringRes.rewards);
@@ -162,7 +206,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "";
   }
 
-  getImage(int type) {
+  getImage(String type) {
     if (type == Const.typeBusinessSector)
       return "ic_pro_home_business";
     else if (type == Const.typeNewCustomer)
@@ -173,7 +217,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "ic_pro_home_organization";
     else if (type == Const.typeChallenges)
       return "ic_pro_home_challenges";
-    else if (type == Const.typePL)
+    else if (type == Const.typePl)
       return "ic_pro_home_pl";
     else if (type == Const.typeReward)
       return "ic_pro_home_rewards";

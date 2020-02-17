@@ -340,41 +340,45 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
-                      InkResponse(
-                        child: Container(
-                          height: 35,
-                          width: 50,
-                          padding: EdgeInsets.only(left: 8, right: 8),
-                          alignment: Alignment.center,
-                          child: Text(
-                            Utils.getText(
-                                context,
-                                Injector.customerValueData == null ||
-                                        Injector.customerValueData?.manager ==
-                                            null ||
-                                        Injector
-                                            .customerValueData.manager.isEmpty
-                                    ? StringRes.bailout
-                                    : StringRes.requestBailOut),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: ColorRes.white,
-                                fontSize: 15,
-                                letterSpacing: 0.7),
-                          ),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      'bg_switch_to_prfsnl')),
-                                  fit: BoxFit.fill)),
-                        ),
-                        onTap: () async {
-                          Utils.playClickSound();
+                      !Injector.isManager() &&
+                              Injector.customerValueData.totalBalance < 0
+                          ? InkResponse(
+                              child: Container(
+                                height: 35,
+                                width: 50,
+                                padding: EdgeInsets.only(left: 8, right: 8),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  Utils.getText(
+                                      context,
+                                      Injector.customerValueData == null ||
+                                              Injector.customerValueData
+                                                      ?.manager ==
+                                                  null ||
+                                              Injector.customerValueData.manager
+                                                  .isEmpty
+                                          ? StringRes.bailout
+                                          : StringRes.requestBailOut),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: ColorRes.white,
+                                      fontSize: 15,
+                                      letterSpacing: 0.7),
+                                ),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            'bg_switch_to_prfsnl')),
+                                        fit: BoxFit.fill)),
+                              ),
+                              onTap: () async {
+                                Utils.playClickSound();
 
-                          _asyncConfirmDialog(context);
-                        },
-                      ),
+                                _asyncConfirmDialog(context);
+                              },
+                            )
+                          : Container(),
                       InkResponse(
                         child: Container(
                           height: 33,
@@ -440,38 +444,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
     customerValueBloc?.bailOut(rq);
 
-//    setState(() {
-//      isLoading = true;
-//    });
-//
-//    WebApi().bailOut( rq).then((customerValueResponse) async {
-//      setState(() {
-//        isLoading = false;
-//      });
-//
-//      if (customerValueResponse != null) {
-//        if (customerValueResponse.flag == "true") {
-//          if (customerValueResponse.data != null) {
-//            await Injector.prefs.setString(PrefKeys.customerValueData,
-//                json.encode(customerValueResponse.data.toJson()));
-//
-//            Injector.customerValueData = customerValueResponse.data;
-//            Utils.showToast(
-//                Utils.getText(context, "Action performed successfully!"));
-//
-//            Injector.streamController.add("bail out");
-//          }
-//        } else {
-//          Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-//        }
-//      }
-//    }).catchError((e) {
-//      print("bailOut_" + e.toString());
-//      Utils.showToast(e.toString());
-//      setState(() {
-//        isLoading = false;
-//      });
-//    });
   }
 
   logout() async {

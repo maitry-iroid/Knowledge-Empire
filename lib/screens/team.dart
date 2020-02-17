@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/team_user.dart';
 import 'package:ke_employee/models/team_user_by_id.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -76,8 +78,50 @@ class _TeamPageState extends State<TeamPage> {
 
   showMainBody() {
     return Expanded(
-        child: Row(
-      children: <Widget>[showFirstHalf(), showSecondHalf()],
+        child: Column(
+      children: <Widget>[
+        Injector.customerValueData.totalBalance > 0
+            ? InkResponse(
+                child: Container(
+//                  height: 35,
+                  width: 100,
+                  padding:
+                      EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
+                  alignment: Alignment.center,
+                  child: Text(
+                    Utils.getText(
+                        context,
+                        Injector.customerValueData == null ||
+                                Injector.customerValueData?.manager == null ||
+                                Injector.customerValueData.manager.isEmpty
+                            ? StringRes.bailout
+                            : StringRes.requestBailOut),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: ColorRes.white,
+                        fontSize: 15,
+                        letterSpacing: 0.7),
+                  ),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg('bg_switch_to_prfsnl')),
+                          fit: BoxFit.fill)),
+                ),
+                onTap: () async {
+                  Utils.playClickSound();
+
+                  _asyncConfirmDialog(context);
+                },
+              )
+            : Container(),
+        Expanded(
+          child: Row(
+            children: <Widget>[showFirstHalf(), showSecondHalf()],
+          ),
+        ),
+      ],
     ));
   }
 
@@ -553,5 +597,43 @@ class _TeamPageState extends State<TeamPage> {
     }).catchError((e) {
       Utils.showToast(e.toString());
     });
+  }
+
+  _asyncConfirmDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alert', style: TextStyle(color: ColorRes.black)),
+          content: const Text('Are you sure you want to Bail Out.'),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                //alert pop
+                Navigator.of(context).pop();
+                performBailOut();
+              },
+            ),
+            FlatButton(
+              child: const Text('No'),
+              onPressed: () {
+                //alert pop
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void performBailOut() {
+    BailOutRequest rq = BailOutRequest();
+    rq.userId = Injector.userData.userId;
+    rq.mode = Injector.mode;
+
+    customerValueBloc?.bailOut(rq);
   }
 }

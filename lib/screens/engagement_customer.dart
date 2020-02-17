@@ -63,13 +63,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     super.initState();
 
     isChallenge = widget.isChallenge ?? false;
-    questionData = widget.questionDataEngCustomer;
-    widget.questionDataEngCustomer.answer.shuffle();
-    arrAnswer = widget.questionDataEngCustomer.answer;
-    abcdList = alphaIndex;
-    print(questionData.value);
+    if (widget.questionDataEngCustomer!=null) {
+      questionData = widget.questionDataEngCustomer;
+      widget.questionDataEngCustomer?.answer?.shuffle();
+      arrAnswer = widget.questionDataEngCustomer.answer;
+      abcdList = alphaIndex;
+      print(questionData.value);
 //    downloadFile();
-    initVideoController();
+      initVideoController();
+    }
   }
 
   @override

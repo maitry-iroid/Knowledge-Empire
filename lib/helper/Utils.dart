@@ -570,12 +570,12 @@ class Utils {
     );
   }
 
-  static performDashboardItemClick(BuildContext context, int type) {
+  static performDashboardItemClick(BuildContext context, String type) {
     //TODO remove comment for prod
 
     if (type ==
             Const
-                .typePL /*||
+                .typePl /*||
         type == Const.typeRanking ||
         type == Const.typeTeam ||
         type == Const.typeReward ||
@@ -670,7 +670,7 @@ class Utils {
   }
 
   static showUnreadCount(
-      int type, double top, double right, List<GetDashboardData> data) {
+      String type, double top, double right, List<GetDashboardData> data) {
     return Positioned(
       right: right,
       top: top,
@@ -698,15 +698,70 @@ class Utils {
     );
   }
 
-  static int getCount(int type, List<GetDashboardData> data) {
-    if (data != null)
+  static int getCount(String _type, List<GetDashboardData> data) {
+    if (data != null) {
+      int type = 0;
+
+      if (_type == StringRes.home)
+        type = 0;
+      else if (_type == StringRes.businessSector)
+        type = 1;
+      else if (_type == StringRes.newCustomers)
+        type = 2;
+      else if (_type == StringRes.existingCustomers)
+        type = 3;
+      else if (_type == StringRes.rewards)
+        type = 4;
+      else if (_type == StringRes.team)
+        type = 5;
+      else if (_type == StringRes.challenges)
+        type = 6;
+      else if (_type == StringRes.organizations)
+        type = 7;
+      else if (_type == StringRes.pl)
+        type = 8;
+      else if (_type == StringRes.ranking)
+        type = 9;
+      else
+        type = 0;
+
       return data.length > 0
           ? (data?.where((obj) => obj.type == type)?.first?.count ?? 00)
           : 00;
-    else
+    } else
       return 0;
   }
-}
 
-//    Injector.audioPlayer.play("sounds/pro_wrong_answer.mp3");
-//    if (Injector.isSoundEnable) audioPlay('assets/sounds/pro_wrong_answer.mp3');
+  static int getHomePageIndex(String key) {
+    if (key == Const.typeHome) {
+      return 0;
+    } else if (key == Const.typeBusinessSector) {
+      return 1;
+    } else if (key == Const.typeNewCustomer) {
+      return 2;
+    } else if (key == Const.typeExistingCustomer) {
+      return 3;
+    } else if (key == Const.typeReward) {
+      return 4;
+    } else if (key == Const.typeTeam) {
+      return 5;
+    } else if (key == Const.typeChallenges) {
+      return Injector.isManager() ? 6 : 5;
+    } else if (key == Const.typeOrg) {
+      return Injector.isManager() ? 7 : 6;
+    } else if (key == Const.typePl) {
+      return Injector.isManager() ? 8 : 7;
+    } else if (key == Const.typeRanking) {
+      return Injector.isManager() ? 9 : 8;
+    } else if (key == Const.typeProfile) {
+      return Injector.isManager() ? 10 : 9;
+    } else if (key == Const.typeHelp) {
+      return Injector.isManager() ? 11 : 10;
+    } else if (key == Const.typeEngagement) {
+      return Injector.isManager() ? 12 : 11;
+    } else if (key == Const.typeCustomerSituation) {
+      return Injector.isManager() ? 13 : 12;
+    }
+    return 0;
+  }
+}

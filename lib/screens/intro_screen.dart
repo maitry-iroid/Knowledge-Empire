@@ -48,7 +48,7 @@ class IntroPage extends StatefulWidget {
 
 class IntroPageState extends State<IntroPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  int selectedType = Const.typeProfile;
+  String selectedType = Const.typeProfile;
 
   AnimationController controller;
   Animation<double> animation;
@@ -188,7 +188,7 @@ class IntroPageState extends State<IntroPage> {
     );
   }
 
-  showHeaderItem(int type, BuildContext context) {
+  showHeaderItem(String type, BuildContext context) {
     return Opacity(
       opacity: selectedType == type ? 1 : 0,
       child: Container(
@@ -329,7 +329,7 @@ class IntroPageState extends State<IntroPage> {
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.5,
                     ),
-              selectedType == Const.typePL
+              selectedType == Const.typePl
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("profit-loss")),
@@ -379,7 +379,7 @@ class IntroPageState extends State<IntroPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
-                child: selectedType == Const.typeTeam
+                child: selectedType == Utils.getHomePageIndex(Const.typeTeam)
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("team")),
@@ -394,7 +394,7 @@ class IntroPageState extends State<IntroPage> {
               Padding(
                 padding:
                     EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
-                child: selectedType == Const.typeChallenges
+                child: selectedType == Utils.getHomePageIndex(Const.typeChallenges)
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("challenges")),
@@ -415,14 +415,14 @@ class IntroPageState extends State<IntroPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              selectedType == Const.typeBusinessSector
+              selectedType == Utils.getHomePageIndex(Const.typeBusinessSector)
                   ? Image(
                       image: AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
                       width: Utils.getDeviceWidth(context) / 3.3,
                     )
                   : Container(width: Utils.getDeviceWidth(context) / 3.5),
-              selectedType == Const.typeNewCustomer
+              selectedType == Utils.getHomePageIndex(Const.typeNewCustomer)
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("new-customer")),
@@ -434,7 +434,7 @@ class IntroPageState extends State<IntroPage> {
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.2,
                     ),
-              selectedType == Const.typeExistingCustomer
+              selectedType == Utils.getHomePageIndex(Const.typeExistingCustomer)
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("existing")),
@@ -620,7 +620,7 @@ class IntroPageState extends State<IntroPage> {
     );
   }
 
-  performItemClick(int type) {
+  performItemClick(String type) {
     Navigator.push(context, FadeRouteHome(initialPageType: type));
   }
 
@@ -879,7 +879,7 @@ class IntroPageState extends State<IntroPage> {
                 )
               : Container(),
 
-          selectedType == Const.typePL
+          selectedType == Const.typePl
               ? Positioned(
                   bottom: 10,
                   left: Utils.getDeviceWidth(context) / 4.9,
@@ -930,8 +930,8 @@ class IntroPageState extends State<IntroPage> {
                         if (selectedType == Const.typeProfile) {
                           selectedType = Const.typeRanking;
                         } else if (selectedType == Const.typeRanking) {
-                          selectedType = Const.typePL;
-                        } else if (selectedType == Const.typePL) {
+                          selectedType = Const.typePl;
+                        } else if (selectedType == Const.typePl) {
                           selectedType = Const.typeOrg;
                         } else if (selectedType == Const.typeOrg) {
                           selectedType = Const.typeChallenges;
@@ -1034,8 +1034,8 @@ class IntroPageState extends State<IntroPage> {
                         } else if (selectedType == Const.typeChallenges) {
                           selectedType = Const.typeOrg;
                         } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typePL;
-                        } else if (selectedType == Const.typePL) {
+                          selectedType = Const.typePl;
+                        } else if (selectedType == Const.typePl) {
                           selectedType = Const.typeRanking;
                         } else if (selectedType == Const.typeRanking) {
                           DashboardGamePage();

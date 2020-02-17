@@ -413,12 +413,12 @@ class CommonView {
                         image: AssetImage(Utils.getAssetsImg("profit-loss")),
                         width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-                      Utils.showUnreadCount(Const.typePL, 17, 5, data)
+                      Utils.showUnreadCount(Const.typePl, 17, 5, data)
                     ],
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typePL);
+                    Utils.performDashboardItemClick(context, Const.typePl);
                   },
                 ),
                 InkResponse(
@@ -476,21 +476,24 @@ class CommonView {
                     )),
                 Padding(
                     padding: EdgeInsets.only(bottom: 15, left: 40, right: 10),
-                    child: InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          Image(
-                            image: AssetImage(Utils.getAssetsImg("team")),
-                            width: Utils.getDeviceHeight(context) / 3.0,
-                          ),
-                          Utils.showUnreadCount(Const.typeTeam, 18, 20, data)
-                        ],
+                    child: Opacity(
+                      child: InkResponse(
+                        child: Stack(
+                          children: <Widget>[
+                            Image(
+                              image: AssetImage(Utils.getAssetsImg("team")),
+                              width: Utils.getDeviceHeight(context) / 3.0,
+                            ),
+                            Utils.showUnreadCount(Const.typeTeam, 18, 20, data)
+                          ],
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Utils.performDashboardItemClick(
+                              context, Const.typeTeam);
+                        },
                       ),
-                      onTap: () {
-                        Utils.playClickSound();
-                        Utils.performDashboardItemClick(
-                            context, Const.typeTeam);
-                      },
+                      opacity: Injector.isManager() ? 1 : 0,
                     )),
                 Padding(
                   padding:
@@ -533,7 +536,7 @@ class CommonView {
                           Image(
                             image: AssetImage(
                                 Utils.getAssetsImg("business_sectors")),
-                            width: Utils.getDeviceWidth(context) / 3.5,
+                            width: Utils.getDeviceWidth(context) / 3.8,
                           ),
                           Utils.showUnreadCount(
                               Const.typeBusinessSector, 10, 35, data)
@@ -601,8 +604,8 @@ class CommonView {
             ),
           ),
           Positioned(
-            bottom: Utils.getDeviceHeight(context) / 12,
-            left: Utils.getDeviceWidth(context) / 4,
+            bottom: Utils.getDeviceHeight(context) / 20,
+            left: Utils.getDeviceWidth(context) / 3.4,
             child: Image(
               image: AssetImage(Utils.getAssetsImg("glasses")),
               height: Utils.getDeviceHeight(context) / 15,

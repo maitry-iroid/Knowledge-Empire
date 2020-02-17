@@ -79,7 +79,7 @@ class HeaderViewState extends State<HeaderView> {
     );
   }
 
-  showHeaderItem(int type, BuildContext context) {
+  showHeaderItem(String type, BuildContext context) {
     return InkResponse(
       child: Container(
         height: 40,
@@ -186,7 +186,7 @@ class HeaderViewState extends State<HeaderView> {
         } else if (type == Const.typeBrandValue) {
           Injector.streamController?.add("${Const.typeRanking}");
         } else if (type == Const.typeMoney) {
-          Injector.streamController?.add("${Const.typePL}");
+          Injector.streamController?.add("${Const.typePl}");
         }
       },
     );
@@ -223,7 +223,7 @@ class HeaderViewState extends State<HeaderView> {
     );
   }
 
-  String getHeadText(int type) {
+  String getHeadText(String type) {
     if (type == Const.typeEmployee)
       return "PU";
     else if (type == Const.typeSalesPersons)

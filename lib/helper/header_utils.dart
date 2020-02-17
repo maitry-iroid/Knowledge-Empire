@@ -3,7 +3,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'constant.dart';
 
 class HeaderUtils {
-  static String getHeaderIcon(int type) {
+  static String getHeaderIcon(String type) {
     if (type == Const.typeSalesPersons)
       return "ic_sales_header";
     else if (type == Const.typeEmployee)
@@ -18,7 +18,7 @@ class HeaderUtils {
       return "";
   }
 
-  static getProgress(int type) {
+  static getProgress(String type) {
     if (type == Const.typeSalesPersons) {
       return getProgressText(type);
     } else if (type == Const.typeEmployee) {
@@ -31,7 +31,7 @@ class HeaderUtils {
       return "0/0";
   }
 
-  static double getProgressInt(int type) {
+  static double getProgressInt(String type) {
     if (type == Const.typeSalesPersons) {
       return getProgressValue(type);
     } else if (type == Const.typeEmployee) {
@@ -44,7 +44,7 @@ class HeaderUtils {
       return 0.0;
   }
 
-  static getProgressValue(int organizationType) {
+  static getProgressValue(String organizationType) {
     int totalEmployee = getTotalValue(organizationType);
     int remainingCapacity = getRemainingValue(organizationType);
 
@@ -55,7 +55,7 @@ class HeaderUtils {
     return (value <= 1 && value >= 0) ? value.toDouble() : 0.0;
   }
 
-  static String getProgressText(int organizationType) {
+  static String getProgressText(String organizationType) {
     return (getRemainingValue(organizationType)?.toString() ?? "0") +
         "/" +
         (getTotalValue(organizationType)?.toString() ?? "0");
@@ -93,7 +93,7 @@ class HeaderUtils {
     }
   }
 
-  static int getRemainingValue(int organizationType) {
+  static int getRemainingValue(String organizationType) {
     try {
       if (organizationType == Const.typeEmployee) {
         return Injector.customerValueData?.remainingEmployeeCapacity ?? 0;
@@ -109,7 +109,7 @@ class HeaderUtils {
     return 0;
   }
 
-  static int getTotalValue(int organizationType) {
+  static int getTotalValue(String organizationType) {
     if (organizationType == Const.typeEmployee) {
       return Injector.customerValueData?.totalEmployeeCapacity ?? 0;
     } else if (organizationType == Const.typeSalesPersons) {

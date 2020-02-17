@@ -89,4 +89,8 @@ class Injector {
     Injector.customerValueData = customerValueData;
 
   }
+
+  static isManager(){
+    return userData.isManager==0;
+  }
 }

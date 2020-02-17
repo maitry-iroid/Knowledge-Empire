@@ -37,7 +37,7 @@ import '../models/get_friends.dart';
 
 class FadeRouteHome extends PageRouteBuilder {
   final Widget page;
-  final int initialPageType;
+  final String initialPageType;
 
   final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
@@ -91,7 +91,7 @@ class FadeRouteHome extends PageRouteBuilder {
 }
 
 class HomePage extends StatefulWidget {
-  final int initialPageType;
+  final String initialPageType;
 
   final QuestionData questionDataHomeScr;
   final QuestionData questionDataSituation;
@@ -192,17 +192,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return Container();
       case 5:
         //TODO remove comment for production
-        return TeamPage();
+        return Injector.isManager() ? TeamPage() : ChallengesPage();
         return Container();
       case 6:
         //TODO remove comment for production
-        return ChallengesPage();
+        return Injector.isManager()
+            ? ChallengesPage()
+            : (Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage());
         return Container();
       case 7:
-        return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
+        return Injector.isManager()
+            ? Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage()
+            : PLPage();
       case 8:
         //TODO remove comment for production
-        return PLPage();
+        return Injector.isManager() ? PLPage() : RankingPage();
         return Container();
       case 9:
         //TODO remove comment for production
@@ -221,7 +225,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   openProfile() {
     if (mounted) {
-      setState(() => _selectedDrawerIndex = Const.typeProfile);
+      setState(() =>
+          _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
     }
   }
 
@@ -234,8 +239,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       //TODO remove comment for production
 
       if (index ==
-              Const
-                  .typePL /*||
+              Utils.getHomePageIndex(Const
+                  .typePl) /*||
           index == Const.typeReward ||
           index == Const.typeChallenges ||
           index == Const.typeTeam ||
@@ -244,7 +249,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Utils.showComingSoonDialog(context);
       } else {
         Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == Const.typeHelp) {
+        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
           Navigator.push(context, FadeRouteIntro());
         }
       }
@@ -347,17 +352,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   getPage() {
-    if (_selectedDrawerIndex == Const.typeProfile)
+    if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeProfile))
       return ProfilePage();
-    else if (_selectedDrawerIndex == Const.typeEngagement)
+    else if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeEngagement))
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr,
           isChallenge: widget.isChallenge);
-    else if (_selectedDrawerIndex == Const.typeCustomerSituation)
+    else if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeCustomerSituation))
       return CustomerSituationPage(
           questionDataCustomerSituation: widget.questionDataSituation,
           isChallenge: widget.isChallenge);
-    else if (_selectedDrawerIndex == Const.typeChallenges)
+    else if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeChallenges))
       return ChallengesPage(
         arrFriends: widget.arrFriends,
         userId: widget.friendId,
@@ -376,9 +381,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-    _selectedDrawerIndex = widget.initialPageType != null
-        ? widget.initialPageType
-        : Const.typeHome;
+    _selectedDrawerIndex = Utils.getHomePageIndex(widget.initialPageType);
   }
 
   void initStreamController() {
@@ -391,19 +394,20 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           print(data);
 
           if (data == "${Const.typeProfile}") {
-            _selectedDrawerIndex = Const.typeProfile;
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile);
           } else if (data == "${Const.typeOrg}") {
-            _selectedDrawerIndex = Const.typeOrg;
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeOrg);
           } else if (data == "${Const.typeTeam}") {
-            _selectedDrawerIndex = Const.typeTeam;
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeTeam);
           } else if (data == "${Const.typeNewCustomer}") {
-            _selectedDrawerIndex = Const.typeNewCustomer;
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeNewCustomer);
           } else if (data == "${Const.typeExistingCustomer}") {
-            _selectedDrawerIndex = Const.typeExistingCustomer;
+            _selectedDrawerIndex =
+                Utils.getHomePageIndex(Const.typeExistingCustomer);
           } else if (data == "${Const.typeRanking}") {
-            _selectedDrawerIndex = Const.typeRanking;
-          } else if (data == "${Const.typePL}") {
-            _selectedDrawerIndex = Const.typePL;
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeRanking);
+          } else if (data == "${Const.typePl}") {
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typePl);
           } else if (data == "${Const.openPendingChallengeDialog}") {
             getPendingChallenges();
           }
@@ -475,16 +479,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer"),
     );
 
-//    if (Injector.userData.isManager == 1)
-    drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.team),
-          Injector.isBusinessMode ? "team" : "ic_pro_home_team"),
-    );
-
     drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.rewards),
           Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards"),
     );
+
+    if (Injector.isManager())
+      drawerItems.add(
+        DrawerItem(Utils.getText(context, StringRes.team),
+            Injector.isBusinessMode ? "team" : "ic_pro_home_team"),
+      );
+
     drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.challenges),
           Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges"),
