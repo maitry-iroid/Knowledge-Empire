@@ -16,6 +16,7 @@ import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/graph.dart';
 import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
@@ -203,7 +204,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 7:
         return Injector.isManager()
             ? Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage()
-            : PLPage();
+            : PLPage;
       case 8:
         //TODO remove comment for production
         return Injector.isManager() ? PLPage() : RankingPage();
@@ -238,21 +239,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
       //TODO remove comment for production
 
-      if (index ==
-              Utils.getHomePageIndex(Const
-                  .typePl) /*||
-          index == Const.typeReward ||
-          index == Const.typeChallenges ||
-          index == Const.typeTeam ||
-          index == Const.typeRanking*/
-          ) {
-        Utils.showComingSoonDialog(context);
-      } else {
+//      if (index ==
+//              Utils.getHomePageIndex(Const
+//                  .typePl) /*||
+//          index == Const.typeReward ||
+//          index == Const.typeChallenges ||
+//          index == Const.typeTeam ||
+//          index == Const.typeRanking*/
+//          ) {
+//        Utils.showComingSoonDialog(context);
+//      } else {
         Navigator.of(context).pop(); // close the drawer
         if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
           Navigator.push(context, FadeRouteIntro());
         }
-      }
+//      }
     }
   }
 

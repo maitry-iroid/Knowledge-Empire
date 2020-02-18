@@ -4,6 +4,7 @@ class ManageOrganizationRequest {
   int userId;
   int type;
   int action;
+  int mode;
 
   ManageOrganizationRequest({this.userId, this.type, this.action});
 

@@ -343,6 +343,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       rq.userId = Injector.userData.userId;
       rq.action = action;
       rq.type = arrOrganization[position].type;
+      rq.mode = Injector.mode;
 
       setState(() {
         isLoading = true;

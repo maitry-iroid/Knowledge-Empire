@@ -457,6 +457,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       rq.userId = Injector.userData.userId;
       rq.action = action;
       rq.type = selectedOrg.type;
+      rq.mode = Injector.mode;
 
       setState(() {
         isLoading = true;

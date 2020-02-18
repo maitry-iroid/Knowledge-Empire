@@ -72,6 +72,9 @@ class Const {
   static int getNewQueType = 1;
   static int getExistingQueTYpe = 2;
 
+  static int typeCost = 1;
+  static int typeRevenue = 2;
+
   static Map<String, dynamic> _config;
 
   static void setEnvironment(Environment env) {
