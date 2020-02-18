@@ -27,7 +27,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  TextEditingController nameController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
   bool isLoading = false;
 
   FocusNode myFocusNode;
@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     myFocusNode = FocusNode();
 
-    nameController.text = Injector.userData?.name;
+    companyController.text = Injector.userData?.companyName;
 
     photoUrl = Injector.userData != null
         ? Injector.userData?.profileImage != null
@@ -341,7 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                       ),
                       !Injector.isManager() &&
-                              Injector.customerValueData.totalBalance < 0
+                              Injector.customerValueData.totalBalance <= 0
                           ? InkResponse(
                               child: Container(
                                 height: 35,
@@ -413,11 +413,11 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert', style: TextStyle(color: ColorRes.black)),
-          content: const Text('Are you sure you want to Bail Out.'),
+//          title: Text('Alert', style: TextStyle(color: ColorRes.black)),
+          content: Text(Utils.getText(context, StringRes.alertBailOut)),
           actions: <Widget>[
             FlatButton(
-              child: const Text('Yes'),
+              child: Text(Utils.getText(context, StringRes.yes)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
@@ -425,7 +425,7 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             FlatButton(
-              child: const Text('No'),
+              child: Text(Utils.getText(context, StringRes.no)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
@@ -443,7 +443,6 @@ class _ProfilePageState extends State<ProfilePage> {
     rq.mode = Injector.mode;
 
     customerValueBloc?.bailOut(rq);
-
   }
 
   logout() async {
@@ -607,7 +606,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 13,
                           ),
                           Text(
-                            Utils.getText(context, StringRes.yourName),
+                            Utils.getText(context, StringRes.companyName),
                             style:
                                 TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
@@ -619,7 +618,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               alignment: Alignment.center,
                               height: 38,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
+                                  horizontal: 20, vertical: 0),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -627,7 +626,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fit: BoxFit.fill),
                               ),
                               child: TextField(
-                                controller: nameController,
+                                controller: companyController,
                                 obscureText: false,
                                 focusNode: myFocusNode,
                                 style: TextStyle(
@@ -635,11 +634,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontSize: 13,
                                 ),
                                 decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(bottom: 5),
                                     border: InputBorder.none,
-                                    hintText: "xxxx xxxx",
+//                                    hintText: Injector.userData?.companyName,
                                     hintStyle:
                                         TextStyle(color: ColorRes.hintColor)),
-                              ),
+                              maxLines: 1,),
                             ),
                           )
                         ],
@@ -663,6 +663,74 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 10,
             ),
             Row(
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        height: 36,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ColorRes.lightBg.withOpacity(0.5),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 13,
+                          ),
+                          Text(
+                            Utils.getText(context, StringRes.yourName),
+                            style:
+                                TextStyle(color: ColorRes.white, fontSize: 12),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 38,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_name_email")),
+                                    fit: BoxFit.fill),
+                              ),
+                              child: TextField(
+                                enabled: false,
+                                obscureText: false,
+                                style: TextStyle(
+                                  color: ColorRes.white,
+                                  fontSize: 13,
+                                ),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: Injector.userData?.name,
+                                    hintStyle:
+                                        TextStyle(color: ColorRes.hintColor)),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                InkResponse(
+                    child: Container(
+                  width: 40,
+                ))
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ), Row(
               children: <Widget>[
                 Expanded(
                   child: Stack(
@@ -831,7 +899,7 @@ class _ProfilePageState extends State<ProfilePage> {
               InkResponse(
                 child: Container(
                   padding: EdgeInsets.all(12),
-                  child: Text("Choose photo"),
+                  child: Text(Utils.getText(context, StringRes.choosePhoto)),
                   alignment: Alignment.center,
                 ),
                 onTap: () {
@@ -847,7 +915,7 @@ class _ProfilePageState extends State<ProfilePage> {
               InkResponse(
                 child: Container(
                   padding: EdgeInsets.all(12),
-                  child: Text("Take photo"),
+                  child: Text(Utils.getText(context, StringRes.takePhoto)),
                   alignment: Alignment.center,
                 ),
                 onTap: () async {
@@ -867,7 +935,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Utils.playClickSound();
     var req = {
       'userId': Injector.userId,
-      'name': nameController.text.trim(),
+      'companyName': companyController.text.trim(),
     };
 
     setState(() {

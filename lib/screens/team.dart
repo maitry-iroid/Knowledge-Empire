@@ -80,7 +80,7 @@ class _TeamPageState extends State<TeamPage> {
     return Expanded(
         child: Column(
       children: <Widget>[
-        Injector.customerValueData.totalBalance > 0
+        Injector.customerValueData.totalBalance <=0
             ? InkResponse(
                 child: Container(
 //                  height: 35,

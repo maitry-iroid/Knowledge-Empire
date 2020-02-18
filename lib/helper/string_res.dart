@@ -96,6 +96,11 @@ class StringRes {
   static var fireEmp = "fireEmp";
   static var hireEmp = "hireEmp";
   static var alertUserRemovedFromCompany = "alertUserRemovedFromCompany";
+  static var alertBailOut = "alertBailOut";
+  static var yes = "yes";
+  static var no = "no";
+  static var choosePhoto = "choosePhoto";
+  static var takePhoto = "takePhoto";
 
   //business sectors
 
@@ -202,7 +207,12 @@ class StringRes {
       'correct': "%Correct",
       'fireEmp': "Fire 10 employees",
       'hireEmp': "Fire 10 employees",
-      'alertUserRemovedFromCompany': "User is removed from the company"
+      'alertUserRemovedFromCompany': "User is removed from the company",
+      'alertBailOut': "Are you sure you want to Bail Out.",
+      'yes': "Yes",
+      'no': "No",
+      'choosePhoto': "Choose photo",
+      'takePhoto': "Take photo"
     },
     'es': {
       'title': 'Hola Mundo',
