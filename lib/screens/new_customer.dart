@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/animation/Particles.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:path/path.dart';
 
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
@@ -25,6 +27,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   int loyaltyBonus = 0;
   int resourceBonus = 0;
   int valueBonus = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -77,7 +80,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           print(arrQuestions[i].value);
         }
       } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+//        Utils.showToast(Utils.getText(
+//            _scaffoldKey?.currentContext, StringRes.somethingWrong));
         setState(() {
           isLoading = false;
         });
@@ -105,32 +109,38 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
+//    showCupertinoDialog<String>(
+//      context: context,
+//      builder: (BuildContext context) => Particles(),
+//    );
+
     return Scaffold(
+        key: _scaffoldKey,
         body: SafeArea(
-      child: Stack(
-        children: <Widget>[
-          CommonView.showBackground(context),
-          Container(
-            margin: EdgeInsets.only(
-                left: 20, right: 20, top: Utils.getHeaderHeight(context)),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 10,
+          child: Stack(
+            children: <Widget>[
+              CommonView.showBackground(context),
+              Container(
+                margin: EdgeInsets.only(
+                    left: 20, right: 20, top: Utils.getHeaderHeight(context)),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CommonView.showTitle(context, StringRes.newCustomers),
+                    showSubHeader(context),
+                    showItems(context)
+                  ],
                 ),
-                CommonView.showTitle(context, StringRes.newCustomers),
-                showSubHeader(),
-                showItems()
-              ],
-            ),
+              ),
+              CommonView.showCircularProgress(isLoading),
+            ],
           ),
-          CommonView.showCircularProgress(isLoading)
-        ],
-      ),
-    ));
+        ));
   }
 
-  Expanded showItems() {
+  Expanded showItems(BuildContext context) {
     return Expanded(
       child: ListView.builder(
         itemCount: arrQuestions.length,
@@ -141,7 +151,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     );
   }
 
-  Container showSubHeader() {
+  Container showSubHeader(BuildContext context) {
     return Container(
       height: Injector.isBusinessMode ? 30 : 25,
       margin: EdgeInsets.only(left: 0, right: 4, top: 8, bottom: 8),
@@ -311,7 +321,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             fit: BoxFit.fill)
                         : null),
                 child: Text(
-                  Utils.getText(context, StringRes.engageNow),
+                  Utils.getText(
+                      _scaffoldKey.currentContext, StringRes.engageNow),
                   style: TextStyle(color: ColorRes.white, fontSize: 14),
                 )),
             onTap: () {
@@ -321,7 +332,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       arrQuestions[index].resources &&
                   Injector.customerValueData.remainingCustomerCapacity > 0) {
                 Navigator.push(
-                    context,
+                    _scaffoldKey.currentContext,
                     FadeRouteHome(
                         initialPageType: Const.typeEngagement,
                         questionDataHomeScr: arrQuestions[index],
@@ -343,7 +354,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   arrQuestions[index].resources &&
               Injector.customerValueData.remainingCustomerCapacity > 0) {
             Navigator.push(
-                context,
+                _scaffoldKey.currentContext,
                 FadeRouteHome(
                     initialPageType: Const.typeEngagement,
                     questionDataHomeScr: arrQuestions[index],

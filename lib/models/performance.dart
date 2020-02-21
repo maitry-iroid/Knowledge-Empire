@@ -54,6 +54,7 @@ class PerformanceData {
   List<ModuleRevenue> moduleRevenue;
   OtherRevenue otherRevenue;
   OtherCost otherCost;
+  Cash cash;
   List<Graph> graph;
 
   PerformanceData(
@@ -79,6 +80,7 @@ class PerformanceData {
     otherCost = json['otherCost'] != null
         ? new OtherCost.fromJson(json['otherCost'])
         : null;
+    cash = json['cash'] != null ? new Cash.fromJson(json['cash']) : null;
     if (json['graph'] != null) {
       graph = new List<Graph>();
       json['graph'].forEach((v) {
@@ -101,6 +103,9 @@ class PerformanceData {
     }
     if (this.otherCost != null) {
       data['otherCost'] = this.otherCost.toJson();
+    }
+    if (this.cash != null) {
+      data['cash'] = this.cash.toJson();
     }
     if (this.graph != null) {
       data['graph'] = this.graph.map((v) => v.toJson()).toList();
@@ -238,6 +243,28 @@ class Graph {
     data['revenue'] = this.revenue;
     data['cost'] = this.cost;
     data['cash'] = this.cash;
+    return data;
+  }
+}
+
+class Cash {
+  int oneDayPreviousCash;
+  int previousCash;
+  int todayCash;
+
+  Cash({this.oneDayPreviousCash, this.previousCash, this.todayCash});
+
+  Cash.fromJson(Map<String, dynamic> json) {
+    oneDayPreviousCash = json['oneDayPreviousCash'];
+    previousCash = json['previousCash'];
+    todayCash = json['todayCash'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['oneDayPreviousCash'] = this.oneDayPreviousCash;
+    data['previousCash'] = this.previousCash;
+    data['todayCash'] = this.todayCash;
     return data;
   }
 }

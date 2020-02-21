@@ -490,12 +490,12 @@ class _PLPageState extends State<PLPage> {
       height: 30,
       child: Row(
         children: <Widget>[
-          Container(
-            width: 180,
-            padding: EdgeInsets.only(left: 10),
-            child: Text("Other Revenue(e.g. achievements)",
-                style: TextStyle(fontSize: 13, color: ColorRes.white)),
-          ),
+//          Container(
+//            width: 180,
+//            padding: EdgeInsets.only(left: 10),
+//            child: Text("Other Revenue(e.g. achievements)",
+//                style: TextStyle(fontSize: 13, color: ColorRes.white)),
+//          ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

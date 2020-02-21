@@ -40,7 +40,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   bool isSwitched = false;
 
-  DownloadingStatus downloadingStatus;
+  bool isDownloading = false;
 
   @override
   void initState() {
@@ -332,175 +332,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
       child: ListView(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(20),
-            child: Stack(
-              fit: StackFit.passthrough,
-              children: <Widget>[
-                Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  color: Injector.isBusinessMode
-                      ? ColorRes.whiteDarkBg
-                      : ColorRes.white,
-                  margin: EdgeInsets.only(top: 20),
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        left: 10, right: 10, top: 30, bottom: 10),
-                    decoration: BoxDecoration(
-                      color: Injector.isBusinessMode
-                          ? ColorRes.bgDescription
-                          : ColorRes.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Injector.isBusinessMode
-                          ? Border.all(color: ColorRes.white, width: 1)
-                          : null,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Text(
-                        selectedModule.moduleDescription,
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                            color: Injector.isBusinessMode
-                                ? ColorRes.white
-                                : ColorRes.textProf),
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: Utils.getTitleHeight(),
-                    margin: EdgeInsets.only(
-                        top: Injector.isBusinessMode ? 3 : 5,
-                        left: Utils.getDeviceWidth(context) / 10,
-                        right: Utils.getDeviceWidth(context) / 10),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                        color: Injector.isBusinessMode
-                            ? null
-                            : ColorRes.titleBlueProf,
-                        borderRadius: BorderRadius.circular(20),
-                        image: Injector.isBusinessMode
-                            ? DecorationImage(
-                                image:
-                                    AssetImage(Utils.getAssetsImg("bg_blue")),
-                                fit: BoxFit.fill)
-                            : null),
-                    child: Text(
-                      Utils.getText(context, StringRes.description),
-                      style: TextStyle(color: ColorRes.white, fontSize: 17),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    selectedModule.isAssign == 1
-                        ? InkResponse(
-                            child: Text(
-                              Utils.getText(context, StringRes.downLoad),
-                              style: TextStyle(
-                                  color: Injector.isBusinessMode
-                                      ? ColorRes.white
-                                      : ColorRes.fontDarkGrey),
-                            ),
-                            onTap: () {
-                              Utils.playClickSound();
-                            },
-                          )
-                        : Container(),
-                    selectedModule.isAssign == 1
-                        ? Switch(
-                            value: isSwitched,
-                            onChanged: (value) {
-                              Utils.isInternetConnectedWithAlert()
-                                  .then((isConnected) {
-                                if (isConnected) {
-                                  setState(() {
-                                    isSwitched = value;
-                                  });
-                                  updatePermission();
-                                }
-                              });
-                            },
-                            activeTrackColor:
-                                selectedModule.isSubscribedFromBackend == 1
-                                    ? ColorRes.lightGrey
-                                    : ColorRes.white,
-                            inactiveTrackColor: ColorRes.lightGrey,
-                            activeColor:
-                                selectedModule.isSubscribedFromBackend == 1
-                                    ? ColorRes.lightGrey
-                                    : ColorRes.white,
-                          )
-                        : Container(),
-                  ],
-                ),
-                InkResponse(
-                    child: Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                            color: Injector.isBusinessMode
-                                ? null
-                                : selectedModule.isSubscribedFromBackend == 1
-                                    ? ColorRes.greyText
-                                    : ColorRes.headerBlue,
-                            borderRadius: Injector.isBusinessMode
-                                ? null
-                                : BorderRadius.circular(20),
-                            image: Injector.isBusinessMode
-                                ? DecorationImage(
-                                    image: AssetImage(Utils.getAssetsImg(
-                                        selectedModule
-                                                    .isSubscribedFromBackend ==
-                                                1
-                                            ? "bg_disable_subscribe"
-                                            : "bg_subscribe")),
-                                    fit: BoxFit.fill)
-                                : null),
-                        child: Text(
-                          Utils.getText(
-                              context,
-                              selectedModule.isAssign == 0
-                                  ? StringRes.subscribe
-                                  : StringRes.unSubscribe),
-                          style: TextStyle(color: ColorRes.white, fontSize: 17),
-                          textAlign: TextAlign.center,
-                        )),
-                    onTap: () {
-                      Utils.playClickSound();
-
-                      if (selectedModule.isSubscribedFromBackend == 0) {
-                        if (selectedModule.isAssign == 1)
-                          showConfirmDialog();
-                        else
-                          performSubscribeUnsubscribe();
-                      } else {
-                        Utils.showToast(
-                            "Oops..You are now allowed to perform this action!");
-                      }
-                    })
-              ],
-            ),
-          )
+          showDescriptionView(),
+          showDownloadSubscribeOptions()
         ],
       ),
     );
@@ -678,7 +511,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
         if (arrQuestions.isNotEmpty) {
           setState(() {
-            downloadingStatus = DownloadingStatus.downloading;
+            isDownloading = true;
           });
 
           for (int i = 0; i < arrQuestions.length; i++) {
@@ -713,13 +546,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].mediaLink);
+
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].correctAnswerImage);
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
 
               setState(() {
-                downloadingStatus = DownloadingStatus.downloded;
+                isDownloading = false;
               });
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
@@ -790,5 +624,190 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     });
+  }
+
+  showDescriptionView() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color:
+                Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            margin: EdgeInsets.only(top: 20),
+            child: Container(
+              padding:
+                  EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode
+                    ? ColorRes.bgDescription
+                    : ColorRes.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Injector.isBusinessMode
+                    ? Border.all(color: ColorRes.white, width: 1)
+                    : null,
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  selectedModule.moduleDescription,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.textProf),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              height: Utils.getTitleHeight(),
+              margin: EdgeInsets.only(
+                  top: Injector.isBusinessMode ? 3 : 5,
+                  left: Utils.getDeviceWidth(context) / 10,
+                  right: Utils.getDeviceWidth(context) / 10),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.circular(20),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                Utils.getText(context, StringRes.description),
+                style: TextStyle(color: ColorRes.white, fontSize: 17),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showDownloadSwitch() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        selectedModule.isAssign == 1
+            ? InkResponse(
+                child: Text(
+                  Utils.getText(context, StringRes.downLoad),
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.fontDarkGrey),
+                ),
+                onTap: () {
+                  Utils.playClickSound();
+                },
+              )
+            : Container(),
+        selectedModule.isAssign == 1
+            ? Switch(
+                value: isSwitched,
+                onChanged: (value) {
+                  Utils.isInternetConnectedWithAlert().then((isConnected) {
+                    if (isConnected) {
+                      setState(() {
+                        isSwitched = value;
+                      });
+                      updatePermission();
+                    }
+                  });
+                },
+                activeTrackColor: selectedModule.isSubscribedFromBackend == 1
+                    ? ColorRes.lightGrey
+                    : ColorRes.white,
+                inactiveTrackColor: ColorRes.lightGrey,
+                activeColor: selectedModule.isSubscribedFromBackend == 1
+                    ? ColorRes.lightGrey
+                    : ColorRes.white,
+              )
+            : Container(),
+      ],
+    );
+  }
+
+  showSubscribeView() {
+    return InkResponse(
+        child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+                color: Injector.isBusinessMode
+                    ? null
+                    : selectedModule.isSubscribedFromBackend == 1
+                        ? ColorRes.greyText
+                        : ColorRes.headerBlue,
+                borderRadius:
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg(
+                            selectedModule.isSubscribedFromBackend == 1
+                                ? "bg_disable_subscribe"
+                                : "bg_subscribe")),
+                        fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(
+                  context,
+                  selectedModule.isAssign == 0
+                      ? StringRes.subscribe
+                      : StringRes.unSubscribe),
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              textAlign: TextAlign.center,
+            )),
+        onTap: () {
+          Utils.playClickSound();
+
+          if (selectedModule.isSubscribedFromBackend == 0) {
+            if (selectedModule.isAssign == 1)
+              showConfirmDialog();
+            else
+              performSubscribeUnsubscribe();
+          } else {
+            Utils.showToast(
+                "Oops..You are now allowed to perform this action!");
+          }
+        });
+  }
+
+  showDownloadSubscribeOptions() {
+    return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          showDownloadStatus(),
+          showDownloadSwitch(),
+          showSubscribeView()
+        ],
+      ),
+    );
+  }
+
+  showDownloadStatus() {
+    return Opacity(
+      opacity: isDownloading ? 1 : 0,
+      child: Text(
+        "Downloading...",
+        style: TextStyle(color: ColorRes.white, fontSize: 17),
+      ),
+    );
   }
 }
