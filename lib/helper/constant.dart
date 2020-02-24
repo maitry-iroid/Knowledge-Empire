@@ -75,6 +75,14 @@ class Const {
   static int typeCost = 1;
   static int typeRevenue = 2;
 
+  static int introTypeProfile = 101;
+  static int introTypeProfileUserDetails = 102;
+  static int introTypeSettings= 103;
+  static int introTypeOrg= 104;
+  static int introTypeHireHR= 105;
+  static int introTypeHireHeaderEmployee= 105;
+  static int introTypeHireHeaderTest= 106;
+
   static Map<String, dynamic> _config;
 
   static void setEnvironment(Environment env) {
@@ -116,4 +124,7 @@ class _Config {
     SERVER_ONE: "http://18.141.132.109:7000/api",
     APP_NAME: "KE Prod",
   };
+
+
+
 }

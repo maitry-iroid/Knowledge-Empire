@@ -8,4 +8,6 @@ class PrefKeys {
   static var learningModles = "learningModles";
   static var download = "download";
   static var isSoundEnable = "isSoundEnable";
+  static var isIntroRemaining = "isIntroRemaining";
+  static var currentIntroType= "currentIntroType";
 }

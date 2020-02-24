@@ -111,33 +111,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                 Injector.isManager() ? arrTypeManager[index] : arrType[index]);
           }),
         ));
-//      child: GridView.count(
-//        crossAxisCount: 3,
-//        shrinkWrap: true,
-//        childAspectRatio: 2.1,
-//        crossAxisSpacing: 5,
-//        mainAxisSpacing: 5,
-//        List.generate(100, (index) {
-//          return Center(
-//            child: Text(
-//              'Item $index',
-//              style: Theme.of(context).textTheme.headline,
-//            ),
-//          );
-//        }),
-//        children: <Widget>[
-//          showMainItem(Const.typeBusinessSector),
-//          showMainItem(Const.typeNewCustomer),
-//          showMainItem(Const.typeExistingCustomer),
-//          showMainItem(Const.typeReward),
-//          showMainItem(Const.typeTeam),
-//          showMainItem(Const.typeChallenges),
-//          showMainItem(Const.typeOrg),
-//          showMainItem(Const.typePl),
-//          showMainItem(Const.typeRanking),
-//        ],
-    // ),
-    //);
   }
 
   showMainItem(String type) {
@@ -227,46 +200,5 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "ic_pro_home_team";
     else
       return "";
-  }
-
-  String getHeaderIcon(int type) {
-    if (type == Const.typeSalesPersons)
-      return "ic_checked_header";
-    else if (type == Const.typeEmployee)
-      return "ic_people";
-    else if (type == Const.typeBrandValue)
-      return "ic_badge";
-    else if (type == Const.typeServicesPerson)
-      return "ic_resourses";
-    else if (type == Const.typeMoney)
-      return "ic_dollar";
-    else
-      return "";
-  }
-
-  getProgress(int type) {
-    if (type == Const.typeSalesPersons) {
-      return "30/100";
-    } else if (type == Const.typeEmployee) {
-      return "50/100";
-    } else if (type == Const.typeBrandValue) {
-      return "60/100";
-    } else if (type == Const.typeServicesPerson) {
-      return "80/100";
-    } else
-      return "50/100";
-  }
-
-  getProgressInt(int type) {
-    if (type == Const.typeSalesPersons) {
-      return 0.3;
-    } else if (type == Const.typeEmployee) {
-      return 0.5;
-    } else if (type == Const.typeBrandValue) {
-      return 0.6;
-    } else if (type == Const.typeServicesPerson) {
-      return 0.8;
-    } else
-      return 0.5;
   }
 }

@@ -61,6 +61,9 @@ class LearningModuleData {
   int isDownloadEnable;
   int moduleProgress;
   int isSubscribedFromBackend;
+  String fileSize;
+  bool isDownloading = false;
+
 
   LearningModuleData();
 

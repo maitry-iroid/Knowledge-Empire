@@ -50,71 +50,54 @@ class PerformanceResponse {
 }
 
 class PerformanceData {
-  List<ResourceCost> resourceCost;
-  List<ModuleRevenue> moduleRevenue;
-  OtherRevenue otherRevenue;
-  OtherCost otherCost;
-  Cash cash;
+  List<Cost> cost;
+  List<Revenue> revenue;
   List<Graph> graph;
+  Cash cash;
 
-  PerformanceData(
-      {this.resourceCost, this.moduleRevenue, this.otherRevenue, this.graph});
+  PerformanceData({this.cost, this.revenue, this.graph, this.cash});
 
   PerformanceData.fromJson(Map<String, dynamic> json) {
-    if (json['resourceCost'] != null) {
-      resourceCost = new List<ResourceCost>();
-      json['resourceCost'].forEach((v) {
-        resourceCost.add(new ResourceCost.fromJson(v));
+    if (json['cost'] != null) {
+      cost = new List<Cost>();
+      json['cost'].forEach((v) {
+        cost.add(new Cost.fromJson(v));
       });
     }
-    if (json['moduleRevenue'] != null) {
-      moduleRevenue = new List<ModuleRevenue>();
-      json['moduleRevenue'].forEach((v) {
-        moduleRevenue.add(new ModuleRevenue.fromJson(v));
+    if (json['revenue'] != null) {
+      revenue = new List<Revenue>();
+      json['revenue'].forEach((v) {
+        revenue.add(new Revenue.fromJson(v));
       });
     }
-    otherRevenue = json['otherRevenue'] != null
-        ? new OtherRevenue.fromJson(json['otherRevenue'])
-        : null;
-
-    otherCost = json['otherCost'] != null
-        ? new OtherCost.fromJson(json['otherCost'])
-        : null;
-    cash = json['cash'] != null ? new Cash.fromJson(json['cash']) : null;
     if (json['graph'] != null) {
       graph = new List<Graph>();
       json['graph'].forEach((v) {
         graph.add(new Graph.fromJson(v));
       });
     }
+    cash = json['cash'] != null ? new Cash.fromJson(json['cash']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.resourceCost != null) {
-      data['resourceCost'] = this.resourceCost.map((v) => v.toJson()).toList();
+    if (this.cost != null) {
+      data['cost'] = this.cost.map((v) => v.toJson()).toList();
     }
-    if (this.moduleRevenue != null) {
-      data['moduleRevenue'] =
-          this.moduleRevenue.map((v) => v.toJson()).toList();
-    }
-    if (this.otherRevenue != null) {
-      data['otherRevenue'] = this.otherRevenue.toJson();
-    }
-    if (this.otherCost != null) {
-      data['otherCost'] = this.otherCost.toJson();
-    }
-    if (this.cash != null) {
-      data['cash'] = this.cash.toJson();
+    if (this.revenue != null) {
+      data['revenue'] = this.revenue.map((v) => v.toJson()).toList();
     }
     if (this.graph != null) {
       data['graph'] = this.graph.map((v) => v.toJson()).toList();
+    }
+    if (this.cash != null) {
+      data['cash'] = this.cash.toJson();
     }
     return data;
   }
 }
 
-class ResourceCost {
+class Cost {
   int type;
   String name;
   int lastCost;
@@ -122,15 +105,15 @@ class ResourceCost {
   int currentCost;
   int currentEmployee;
 
-  ResourceCost(
+  Cost(
       {this.type,
-      this.name,
-      this.lastCost,
-      this.lastEmployee,
-      this.currentCost,
-      this.currentEmployee});
+        this.name,
+        this.lastCost,
+        this.lastEmployee,
+        this.currentCost,
+        this.currentEmployee});
 
-  ResourceCost.fromJson(Map<String, dynamic> json) {
+  Cost.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     name = json['name'];
     lastCost = json['lastCost'];
@@ -151,24 +134,83 @@ class ResourceCost {
   }
 }
 
-class OtherCost {
-  int lastCost;
-  int currentCost;
+class Revenue {
+  String name;
+  int lastRevenue;
+  int currentRevenue;
+  int lastTotalCustomer;
+  int currentTotalCustomer;
 
-  OtherCost({this.lastCost, this.currentCost});
+  Revenue({this.name, this.lastRevenue, this.currentRevenue});
 
-  OtherCost.fromJson(Map<String, dynamic> json) {
-    lastCost = json['lastCost'];
-    currentCost = json['currentCost'];
+  Revenue.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    lastRevenue = json['lastRevenue'];
+    currentRevenue = json['currentRevenue'];
+    lastTotalCustomer = json['lastTotalCustomer'];
+    currentTotalCustomer = json['currentTotalCustomer'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lastCost'] = this.lastCost;
-    data['currentCost'] = this.currentCost;
+    data['name'] = this.name;
+    data['lastRevenue'] = this.lastRevenue;
+    data['currentRevenue'] = this.currentRevenue;
+    data['lastTotalCustomer'] = this.lastTotalCustomer;
+    data['currentTotalCustomer'] = this.currentTotalCustomer;
     return data;
   }
 }
+
+class Graph {
+  int day;
+  int revenue;
+  int cost;
+  int cash;
+
+  Graph({this.day, this.revenue, this.cost, this.cash});
+
+  Graph.fromJson(Map<String, dynamic> json) {
+    day = json['day'];
+    revenue = json['revenue'];
+    cost = json['cost'];
+    cash = json['cash'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['day'] = this.day;
+    data['revenue'] = this.revenue;
+    data['cost'] = this.cost;
+    data['cash'] = this.cash;
+    return data;
+  }
+}
+
+class Cash {
+  int oneDayPreviousCash;
+  int previousCash;
+  int todayCash;
+
+  Cash({this.oneDayPreviousCash, this.previousCash, this.todayCash});
+
+  Cash.fromJson(Map<String, dynamic> json) {
+    oneDayPreviousCash = json['oneDayPreviousCash'];
+    previousCash = json['previousCash'];
+    todayCash = json['todayCash'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['oneDayPreviousCash'] = this.oneDayPreviousCash;
+    data['previousCash'] = this.previousCash;
+    data['todayCash'] = this.todayCash;
+    return data;
+  }
+}
+
+
+
 
 class ModuleRevenue {
   String moduleName;
@@ -222,49 +264,3 @@ class OtherRevenue {
   }
 }
 
-class Graph {
-  int day;
-  int revenue;
-  int cost;
-  int cash;
-
-  Graph({this.day, this.revenue, this.cost, this.cash});
-
-  Graph.fromJson(Map<String, dynamic> json) {
-    day = json['day'];
-    revenue = json['revenue'];
-    cost = json['cost'];
-    cash = json['cash'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['day'] = this.day;
-    data['revenue'] = this.revenue;
-    data['cost'] = this.cost;
-    data['cash'] = this.cash;
-    return data;
-  }
-}
-
-class Cash {
-  int oneDayPreviousCash;
-  int previousCash;
-  int todayCash;
-
-  Cash({this.oneDayPreviousCash, this.previousCash, this.todayCash});
-
-  Cash.fromJson(Map<String, dynamic> json) {
-    oneDayPreviousCash = json['oneDayPreviousCash'];
-    previousCash = json['previousCash'];
-    todayCash = json['todayCash'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['oneDayPreviousCash'] = this.oneDayPreviousCash;
-    data['previousCash'] = this.previousCash;
-    data['todayCash'] = this.todayCash;
-    return data;
-  }
-}

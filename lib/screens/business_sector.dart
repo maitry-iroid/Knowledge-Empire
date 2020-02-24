@@ -40,8 +40,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   bool isSwitched = false;
 
-  bool isDownloading = false;
-
   @override
   void initState() {
     super.initState();
@@ -53,7 +51,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
             Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
           arrFinalLearningModules = LearningModuleResponse.fromJson(
-                  jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
+              jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
 
@@ -78,10 +76,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 flex: 1,
                 child: Injector.isBusinessMode
                     ? Card(
-                        color: Colors.transparent,
-                        elevation: 20,
-                        child: showSecondHalf(),
-                      )
+                  color: Colors.transparent,
+                  elevation: 20,
+                  child: showSecondHalf(),
+                )
                     : showSecondHalf(),
               )
             ],
@@ -99,11 +97,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          Injector.isBusinessMode ? null : BorderRadius.circular(20),
           image: Injector.isBusinessMode
               ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("business_sec_header")),
-                  fit: BoxFit.fill)
+              image: AssetImage(Utils.getAssetsImg("business_sec_header")),
+              fit: BoxFit.fill)
               : null),
       child: Row(
         children: <Widget>[
@@ -136,11 +134,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.moduleId ==
-                    arrFinalLearningModules[index].moduleId)
+                arrFinalLearningModules[index].moduleId)
                 ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
-                    fit: BoxFit.fill)
+                image: AssetImage(Utils.getAssetsImg(
+                    Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
+                fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -159,9 +157,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           : BorderRadius.circular(20),
                       image: Injector.isBusinessMode
                           ? DecorationImage(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("bg_bus_sector_item")),
-                              fit: BoxFit.fill)
+                          image: AssetImage(
+                              Utils.getAssetsImg("bg_bus_sector_item")),
+                          fit: BoxFit.fill)
                           : null),
                   child: Stack(
                     alignment: Alignment.center,
@@ -183,20 +181,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       ),
                       arrFinalLearningModules[index].isAssign == 1
                           ? Positioned(
-                              right: 5,
-                              bottom: Injector.isBusinessMode ? 5 : 2,
-                              child: Text(
-                                Utils.getText(context, StringRes.subscribed),
-                                style: TextStyle(
-                                  color: Injector.isBusinessMode
-                                      ? ColorRes.bgHeader
-                                      : ColorRes.blue,
-                                  fontSize: 10,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
+                        right: 5,
+                        bottom: Injector.isBusinessMode ? 5 : 2,
+                        child: Text(
+                          Utils.getText(context, StringRes.subscribed),
+                          style: TextStyle(
+                            color: Injector.isBusinessMode
+                                ? ColorRes.bgHeader
+                                : ColorRes.blue,
+                            fontSize: 10,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
                           : Container()
                     ],
                   )),
@@ -210,14 +208,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
                     color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     borderRadius: Injector.isBusinessMode
                         ? null
                         : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg("value")),
-                            fit: BoxFit.fill)
+                        image: AssetImage(Utils.getAssetsImg("value")),
+                        fit: BoxFit.fill)
                         : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
@@ -263,7 +261,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
@@ -362,7 +360,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         });
 
         LearningModuleResponse learningModuleResponse =
-            LearningModuleResponse();
+        LearningModuleResponse();
         learningModuleResponse.data = arrData;
 
         await Injector.prefs.setString(PrefKeys.learningModles,
@@ -382,8 +380,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           }
         });
 
-        getQuestions();
-//          downloadAllQuestions();
+        downloadQuestions(null);
       }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
@@ -420,18 +417,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           Utils.showToast("Unsubscribed successfully!");
           selectedModule.isAssign = 0;
         }
-        setState(() {});
 
-        //          setState(() {
-//
-//          });  arrLearningModules
-////                    .where(
-////                        (module) => module.moduleId == selectedModule.moduleId)
-////                    .first
-////                    .isAssign ==
-////                "1";
-
-        fetchLearningModules();
+        setState(() {
+          arrLearningModules
+              .firstWhere(
+                  (module) => module.moduleId == selectedModule.moduleId)
+              .isAssign = selectedModule.isAssign;
+        });
       }
     }).catchError((e) {
       print("assignUserModule_" + e.toString());
@@ -446,10 +438,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void searchData() {
     var data = arrLearningModules
         .where((module) =>
-            module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
+        module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
-
-    print("search_data___" + data.length.toString());
 
     arrFinalLearningModules.addAll(data);
   }
@@ -470,30 +460,32 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       });
 
       if (data != null) {
-        Utils.showToast("Action performed successfully!");
+//        Utils.showToast(Utils.getText(context, StringRes.alertActionPerformed));
+
+        arrLearningModules
+            .firstWhere((module) => module.moduleId == selectedModule.moduleId)
+            .isDownloadEnable = isSwitched ? 1 : 0;
 
         if (rq.type == 0)
           removeDownloadedQuestion();
         else
-          getQuestions();
+          downloadQuestions(selectedModule.moduleId);
+
+        setState(() {});
       }
     });
-
-    /*  if (isSwitched == false) {
-      return await Injector.prefs.remove(PrefKeys.questionData);
-//      return  Injector.cacheManager.emptyCache();
-    }*/
   }
 
   List<QuestionData> arrQuestions = List();
 
-  getQuestions() {
+  downloadQuestions(int moduleId) {
     setState(() {
       isLoading = true;
     });
 
     DownloadQuestionsRequest rq = DownloadQuestionsRequest();
     rq.userId = Injector.userData.userId;
+    rq.moduleId = moduleId ?? 0;
 
     WebApi()
         .callAPI(WebApi.rqGetDownloadQuestions, rq.toJson())
@@ -510,9 +502,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         });
 
         if (arrQuestions.isNotEmpty) {
-          setState(() {
-            isDownloading = true;
-          });
+          if (moduleId != null) {
+            setState(() {
+              arrLearningModules
+                  .firstWhere((module) => module.moduleId == moduleId)
+                  .isDownloading = true;
+            });
+          }
 
           for (int i = 0; i < arrQuestions.length; i++) {
             arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
@@ -551,12 +547,23 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   .getSingleFile(arrQuestions[i].correctAnswerImage);
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
-
-              setState(() {
-                isDownloading = false;
-              });
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
+              if (moduleId != null) {
+                setState(() {
+                  arrLearningModules
+                      .firstWhere((module) => module.moduleId == moduleId)
+                      .isDownloading = false;
+                });
+              }
+            });
+          }
+
+          if (moduleId != null) {
+            setState(() {
+              arrLearningModules
+                  .firstWhere((module) => module.moduleId == moduleId)
+                  .isDownloading = false;
             });
           }
         }
@@ -573,10 +580,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   void removeDownloadedQuestion() async {
     List<QuestionData> arrQuestions =
-        Utils.getQuestionsLocally(Const.getNewQueType);
+    Utils.getQuestionsLocally(Const.getNewQueType);
 
     arrQuestions.removeWhere(
-        (question) => question.questionId == selectedModule.moduleId);
+            (question) => question.questionId == selectedModule.moduleId);
 
     QuestionsResponse questionsResponse = QuestionsResponse();
     questionsResponse.data = arrQuestions;
@@ -638,11 +645,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             color:
-                Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
             margin: EdgeInsets.only(top: 20),
             child: Container(
               padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode
                     ? ColorRes.bgDescription
@@ -676,12 +683,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   color:
-                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.circular(20),
                   image: Injector.isBusinessMode
                       ? DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                          fit: BoxFit.fill)
+                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                      fit: BoxFit.fill)
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
@@ -701,39 +708,39 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       children: <Widget>[
         selectedModule.isAssign == 1
             ? InkResponse(
-                child: Text(
-                  Utils.getText(context, StringRes.downLoad),
-                  style: TextStyle(
-                      color: Injector.isBusinessMode
-                          ? ColorRes.white
-                          : ColorRes.fontDarkGrey),
-                ),
-                onTap: () {
-                  Utils.playClickSound();
-                },
-              )
+          child: Text(
+            Utils.getText(context, StringRes.downLoad),
+            style: TextStyle(
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.fontDarkGrey),
+          ),
+          onTap: () {
+            Utils.playClickSound();
+          },
+        )
             : Container(),
         selectedModule.isAssign == 1
             ? Switch(
-                value: isSwitched,
-                onChanged: (value) {
-                  Utils.isInternetConnectedWithAlert().then((isConnected) {
-                    if (isConnected) {
-                      setState(() {
-                        isSwitched = value;
-                      });
-                      updatePermission();
-                    }
-                  });
-                },
-                activeTrackColor: selectedModule.isSubscribedFromBackend == 1
-                    ? ColorRes.lightGrey
-                    : ColorRes.white,
-                inactiveTrackColor: ColorRes.lightGrey,
-                activeColor: selectedModule.isSubscribedFromBackend == 1
-                    ? ColorRes.lightGrey
-                    : ColorRes.white,
-              )
+          value: isSwitched,
+          onChanged: (value) {
+            Utils.isInternetConnectedWithAlert().then((isConnected) {
+              if (isConnected) {
+                setState(() {
+                  isSwitched = value;
+                });
+                updatePermission();
+              }
+            });
+          },
+          activeTrackColor: selectedModule.isSubscribedFromBackend == 1
+              ? ColorRes.lightGrey
+              : ColorRes.white,
+          inactiveTrackColor: ColorRes.lightGrey,
+          activeColor: selectedModule.isSubscribedFromBackend == 1
+              ? ColorRes.lightGrey
+              : ColorRes.white,
+        )
             : Container(),
       ],
     );
@@ -749,17 +756,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 color: Injector.isBusinessMode
                     ? null
                     : selectedModule.isSubscribedFromBackend == 1
-                        ? ColorRes.greyText
-                        : ColorRes.headerBlue,
+                    ? ColorRes.greyText
+                    : ColorRes.headerBlue,
                 borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg(
-                            selectedModule.isSubscribedFromBackend == 1
-                                ? "bg_disable_subscribe"
-                                : "bg_subscribe")),
-                        fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg(
+                        selectedModule.isSubscribedFromBackend == 1
+                            ? "bg_disable_subscribe"
+                            : "bg_subscribe")),
+                    fit: BoxFit.fill)
                     : null),
             child: Text(
               Utils.getText(
@@ -793,6 +800,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          showFileSize(),
           showDownloadStatus(),
           showDownloadSwitch(),
           showSubscribeView()
@@ -803,11 +811,23 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   showDownloadStatus() {
     return Opacity(
-      opacity: isDownloading ? 1 : 0,
+      opacity:
+      selectedModule != null ? (selectedModule.isDownloading ? 1 : 0) : 0,
       child: Text(
         "Downloading...",
         style: TextStyle(color: ColorRes.white, fontSize: 17),
       ),
     );
+  }
+
+  showFileSize() {
+    return selectedModule != null && selectedModule.fileSize != null
+        ? Text(
+      "This module will occupie " +
+          selectedModule.fileSize.toString() +
+          "",
+      style: TextStyle(color: ColorRes.white, fontSize: 17),
+    )
+        : Container();
   }
 }

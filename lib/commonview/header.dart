@@ -80,18 +80,18 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   showHeaderItem(String type, BuildContext context) {
-    return InkResponse(
-      child: Container(
-        height: 40,
-        padding:
-            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
-        margin: EdgeInsets.symmetric(horizontal: 1),
-        decoration: BoxDecoration(
-            image: Injector.isBusinessMode
-                ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-                    fit: BoxFit.fill)
-                : null),
+    return Container(
+      foregroundDecoration:
+          BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
+      padding:
+          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      decoration: BoxDecoration(
+          image: Injector.isBusinessMode
+              ? DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+                  fit: BoxFit.fill)
+              : null),
+      child: InkResponse(
         child: Row(
           children: <Widget>[
             Stack(
@@ -175,46 +175,50 @@ class HeaderViewState extends State<HeaderView> {
                   ),
           ],
         ),
+        onTap: () {
+          if (type == Const.typeEmployee) {
+            Injector.streamController?.add("${Const.typeOrg}");
+          } else if (type == Const.typeSalesPersons) {
+            Injector.streamController?.add("${Const.typeNewCustomer}");
+          } else if (type == Const.typeServicesPerson) {
+            Injector.streamController?.add("${Const.typeExistingCustomer}");
+          } else if (type == Const.typeBrandValue) {
+            Injector.streamController?.add("${Const.typeRanking}");
+          } else if (type == Const.typeMoney) {
+            Injector.streamController?.add("${Const.typePl}");
+          }
+        },
       ),
-      onTap: () {
-        if (type == Const.typeEmployee) {
-          Injector.streamController?.add("${Const.typeOrg}");
-        } else if (type == Const.typeSalesPersons) {
-          Injector.streamController?.add("${Const.typeNewCustomer}");
-        } else if (type == Const.typeServicesPerson) {
-          Injector.streamController?.add("${Const.typeExistingCustomer}");
-        } else if (type == Const.typeBrandValue) {
-          Injector.streamController?.add("${Const.typeRanking}");
-        } else if (type == Const.typeMoney) {
-          Injector.streamController?.add("${Const.typePl}");
-        }
-      },
     );
   }
 
   showProfile(BuildContext context) {
     return Expanded(
       child: InkResponse(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 30,
-                height: 30,
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: Injector.userData == null ||
-                                Injector.userData.profileImage == null ||
-                                Injector.userData.profileImage.isEmpty
-                            ? AssetImage(Utils.getAssetsImg('user_org'))
-                            : Utils.getCacheNetworkImage(
-                                Injector.userData.profileImage),
-                        fit: BoxFit.fill),
-                    border: Border.all(color: ColorRes.textLightBlue)),
-              ),
-              showUserNameCompanyName(context),
-            ],
+          child: Container(
+            foregroundDecoration:
+                BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 30,
+                  height: 30,
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: Injector.userData == null ||
+                                  Injector.userData.profileImage == null ||
+                                  Injector.userData.profileImage.isEmpty
+                              ? AssetImage(Utils.getAssetsImg('user_org'))
+                              : Utils.getCacheNetworkImage(
+                                  Injector.userData.profileImage),
+                          fit: BoxFit.fill),
+                      border: Border.all(color: ColorRes.textLightBlue)),
+                ),
+                showUserNameCompanyName(context),
+              ],
+            ),
           ),
           onTap: () {
             Utils.playClickSound();

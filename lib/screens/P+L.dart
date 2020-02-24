@@ -405,8 +405,8 @@ class _PLPageState extends State<PLPage> {
       child: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           itemCount: type == Const.typeCost
-              ? performanceData?.resourceCost?.length
-              : performanceData?.moduleRevenue?.length,
+              ? performanceData?.cost?.length
+              : performanceData?.revenue?.length,
 //                        physics: NeverScrollableScrollPhysics(),
 //                        shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -417,8 +417,8 @@ class _PLPageState extends State<PLPage> {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                       type == Const.typeCost
-                          ? performanceData.resourceCost[index].name
-                          : performanceData.moduleRevenue[index].moduleName,
+                          ? performanceData.cost[index].name
+                          : performanceData.revenue[index].name,
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Expanded(
@@ -429,10 +429,9 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                         type == Const.typeCost
-                            ? performanceData.resourceCost[index].lastEmployee
+                            ? performanceData.cost[index].lastEmployee
                                 .toString()
-                            : performanceData
-                                .moduleRevenue[index].lastTotalCustomer
+                            : performanceData.revenue[index].lastTotalCustomer
                                 .toString(),
                         style: TextStyle(fontSize: 13, color: ColorRes.white),
                         textAlign: TextAlign.right,
@@ -442,9 +441,8 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? performanceData.resourceCost[index].lastCost
-                                  .toString()
-                              : performanceData.moduleRevenue[index].lastRevenue
+                              ? performanceData.cost[index].lastCost.toString()
+                              : performanceData.revenue[index].lastRevenue
                                   .toString(),
                           style: TextStyle(
                             fontSize: 13,
@@ -456,11 +454,10 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? performanceData
-                                  .resourceCost[index].currentEmployee
+                              ? performanceData.cost[index].currentEmployee
                                   .toString()
                               : performanceData
-                                  .moduleRevenue[index].currentTotalCustomer
+                                  .revenue[index].currentTotalCustomer
                                   .toString(),
                           style: TextStyle(fontSize: 13, color: ColorRes.white),
                           textAlign: TextAlign.right),
@@ -469,10 +466,9 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? performanceData.resourceCost[index].currentCost
+                              ? performanceData.cost[index].currentCost
                                   .toString()
-                              : performanceData
-                                  .moduleRevenue[index].currentRevenue
+                              : performanceData.revenue[index].currentRevenue
                                   .toString(),
                           style: TextStyle(fontSize: 13, color: ColorRes.white),
                           textAlign: TextAlign.right),
@@ -573,91 +569,93 @@ class _PLPageState extends State<PLPage> {
   }
 
   pieChart(String title, int type) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 25,
-            width: 100,
-            margin: EdgeInsets.only(left: 20, top: 10),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_piechart")),
-                    fit: BoxFit.fill)),
-            child: Center(
-              child: Text(
-                title,
-                style: TextStyle(color: ColorRes.white),
-              ),
-            ),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+        Widget>[
+      Container(
+        height: 25,
+        width: 100,
+        margin: EdgeInsets.only(left: 20, top: 10),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("bg_piechart")),
+                fit: BoxFit.fill)),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(color: ColorRes.white),
           ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  child: Center(
-                      child: PieChart(
-                    dataMap: type == Const.typeCost ? dataMap : openCloseMap,
-                    animationDuration: Duration(milliseconds: 800),
-                    chartLegendSpacing: 32.0,
-
-                    chartRadius: MediaQuery.of(context).size.width / 5,
-                    showChartValues: false,
-                    showChartValuesOutside: false,
-                    chartValueBackgroundColor: Colors.transparent,
-                    colorList:
-                        type == Const.typeCost ? colorList : colorOpenCloseList,
-                    legendPosition: LegendPosition.right,
-                    showChartValueLabel: false,
-                    initialAngle: 0,
-                    chartValueStyle: defaultChartValueStyle.copyWith(
-                        color: type == Const.typeCost
-                            ? ColorRes.white
-                            : Colors.transparent),
-                    showLegends: false,
-                    chartType: ChartType.disc,
-                  )),
-                ),
-                Container(
-                  height: 140,
-                  width: 80,
-                  margin: EdgeInsets.only(left: 00),
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: type == Const.typeCost
-                          ? performanceData?.resourceCost?.length
-                          : performanceData?.moduleRevenue?.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: <Widget>[
-                            Container(
-                              height: 13,
-                              width: 13,
-                              margin: EdgeInsets.only(right: 5, top: 5),
-                              decoration: BoxDecoration(
-                                  color: type == Const.typeCost
-                                      ? colorList[index]
-                                      : colorOpenCloseList[index]),
-                            ),
-                            Expanded(
-                              child: Text(
-                                type == Const.typeCost
-                                    ? performanceData.resourceCost[index].name
-                                    : performanceData
-                                        .moduleRevenue[index].moduleName,
-                                style: TextStyle(
-                                    fontSize: 12, color: ColorRes.white),
-                              ),
-                            )
-                          ],
-                        );
-                      }),
-                )
-//                  : Container()
-              ],
+        ),
+      ),
+      Expanded(
+        child: Row(
+          children: <Widget>[
+            Container(
+              child: Center(
+                  child: (type == Const.typeCost ? dataMap : openCloseMap) !=
+                          null
+                      ? PieChart(
+                          dataMap:
+                              type == Const.typeCost ? dataMap : openCloseMap,
+                          animationDuration: Duration(milliseconds: 800),
+                          chartLegendSpacing: 32.0,
+                          chartRadius: MediaQuery.of(context).size.width / 5,
+                          showChartValues: false,
+                          showChartValuesOutside: false,
+                          chartValueBackgroundColor: Colors.transparent,
+                          colorList: type == Const.typeCost
+                              ? colorList
+                              : colorOpenCloseList,
+                          legendPosition: LegendPosition.right,
+                          showChartValueLabel: false,
+                          initialAngle: 0,
+                          chartValueStyle: defaultChartValueStyle.copyWith(
+                              color: type == Const.typeCost
+                                  ? ColorRes.white
+                                  : Colors.transparent),
+                          showLegends: false,
+                          chartType: ChartType.disc,
+                        )
+                      : Container()),
             ),
-          )
-        ]);
+            Container(
+              height: 140,
+              width: 80,
+              margin: EdgeInsets.only(left: 00),
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: type == Const.typeCost
+                      ? performanceData?.cost?.length
+                      : performanceData?.revenue?.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: <Widget>[
+                        Container(
+                          height: 13,
+                          width: 13,
+                          margin: EdgeInsets.only(right: 5, top: 5),
+                          decoration: BoxDecoration(
+                              color: type == Const.typeCost
+                                  ? colorList[index]
+                                  : colorOpenCloseList[index]),
+                        ),
+                        Expanded(
+                          child: Text(
+                            type == Const.typeCost
+                                ? performanceData.cost[index].name
+                                : performanceData.revenue[index].name,
+                            style:
+                                TextStyle(fontSize: 12, color: ColorRes.white),
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+            )
+//                  : Container()
+          ],
+        ),
+      )
+    ]);
   }
 
   bottomBusinessList() {
@@ -701,38 +699,13 @@ class _PLPageState extends State<PLPage> {
         setState(() {
           performanceData = PerformanceData.fromJson(data);
 
-          if (performanceData.otherCost != null) {
-            ResourceCost resourceCost = ResourceCost();
-            resourceCost.name = "Other Cost";
-            resourceCost.currentEmployee = 0;
-            resourceCost.lastEmployee = 0;
-            resourceCost.currentCost =
-                performanceData.otherRevenue.currentRevenue;
-            resourceCost.lastCost = performanceData.otherRevenue.lastRevenue;
-
-            performanceData.resourceCost.add(resourceCost);
-          }
-
-          if (performanceData.otherRevenue != null) {
-            ModuleRevenue moduleRevenue = ModuleRevenue();
-            moduleRevenue.moduleName = "Other Revenues";
-            moduleRevenue.currentTotalCustomer = 0;
-            moduleRevenue.lastTotalCustomer = 0;
-            moduleRevenue.currentRevenue =
-                performanceData.otherRevenue.currentRevenue;
-            moduleRevenue.lastRevenue =
-                performanceData.otherRevenue.lastRevenue;
-
-            performanceData.moduleRevenue.add(moduleRevenue);
-          }
-
-          performanceData.resourceCost.forEach((cost) {
+          performanceData.cost.forEach((cost) {
             dataMap.putIfAbsent(cost.name, () => cost.currentCost.toDouble());
           });
 
-          performanceData.moduleRevenue.forEach((revenue) {
+          performanceData.revenue.forEach((revenue) {
             openCloseMap.putIfAbsent(
-                revenue.moduleName, () => revenue.currentRevenue.toDouble());
+                revenue.name, () => revenue.currentRevenue.toDouble());
           });
         });
       }

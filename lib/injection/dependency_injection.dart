@@ -27,6 +27,8 @@ class Injector {
   static DefaultCacheManager cacheManager;
   static StreamController<String> streamController;
   static FirebaseMessaging firebaseMessaging;
+  static bool isIntroRemaining = true;
+  static int currentIntroType = 0;
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
@@ -52,11 +54,12 @@ class Injector {
 
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
-    if (prefs.getString(PrefKeys.user) != null &&
-        prefs.getString(PrefKeys.user).isNotEmpty) {
+    if (prefs.getString(PrefKeys.user) != null) {
       userData = UserData.fromJson(jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;
+
+      isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
 
       if (prefs.getString(PrefKeys.customerValueData) != null)
         customerValueData = CustomerValueData.fromJson(
@@ -83,14 +86,20 @@ class Injector {
 
     Injector.userId = _user.userId;
   }
+
   static setCustomerValueData(CustomerValueData customerValueData) async {
-    await Injector.prefs.setString(PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
+    await Injector.prefs.setString(
+        PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
 
     Injector.customerValueData = customerValueData;
-
   }
 
-  static isManager(){
-    return userData.isManager==0;
+  static isManager() {
+    return userData.isManager == 0;
+  }
+
+  static updateIntroType(int introType) async {
+    await prefs.setInt(PrefKeys.currentIntroType, introType);
+    return currentIntroType == introType;
   }
 }

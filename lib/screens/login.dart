@@ -315,47 +315,11 @@ class _LoginPageState extends State<LoginPage> {
         await Injector.setUserData(userData);
 
         if (userData.isFirstTimeLogin)
-          navigateToIntro();
-        else {
-          navigateToDashboard();
-        }
+          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
+        navigateToDashboard();
       }
     }).catchError((e) {
       print("login_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
-      Utils.showToast(e.toString());
-    });
-  }
-
-  void getCustomerValues(BaseResponse loginData) {
-    CustomerValueRequest rq = CustomerValueRequest();
-    rq.userId = Injector.userData.userId;
-
-    WebApi().callAPI(WebApi.rqGetCustomerValue, rq.toJson()).then((data) async {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (data != null) {
-        await Injector.prefs
-            .setString(PrefKeys.customerValueData, json.encode(data.toJson()));
-
-        Injector.customerValueData = data;
-
-        if (loginData.data.isPasswordChanged == 0) {
-          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-        } else {
-          if (loginData.data.isFirstTimeLogin)
-            navigateToIntro();
-          else {
-            navigateToDashboard();
-          }
-        }
-      }
-    }).catchError((e) {
-      print("customervalue_" + e.toString());
       setState(() {
         isLoading = false;
       });

@@ -249,10 +249,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //          ) {
 //        Utils.showComingSoonDialog(context);
 //      } else {
-        Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
-          Navigator.push(context, FadeRouteIntro());
-        }
+      Navigator.of(context).pop(); // close the drawer
+      if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+        Navigator.push(context, FadeRouteIntro());
+      }
 //      }
     }
   }
@@ -286,12 +286,27 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           child: Stack(
         children: <Widget>[
           getPage(),
+          Container(
+            color: ColorRes.white.withOpacity(0.5),
+//            width: double.infinity,
+//            height: double.infinity,
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Welcome to Knowledge Empire",
+                    style: TextStyle(color: ColorRes.black),
+                  )
+                ],
+              ),
+            ),
+          ),
           HeaderView(
             scaffoldKey: _scaffoldKey,
             isShowMenu: true,
             openProfile: openProfile,
           ),
-          CommonView.showCircularProgress(isLoading)
+          CommonView.showCircularProgress(isLoading),
         ],
       )),
     );
@@ -355,15 +370,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeProfile))
       return ProfilePage();
-    else if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeEngagement))
+    else if (_selectedDrawerIndex ==
+        Utils.getHomePageIndex(Const.typeEngagement))
       return EngagementCustomer(
           questionDataEngCustomer: widget.questionDataHomeScr,
           isChallenge: widget.isChallenge);
-    else if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeCustomerSituation))
+    else if (_selectedDrawerIndex ==
+        Utils.getHomePageIndex(Const.typeCustomerSituation))
       return CustomerSituationPage(
           questionDataCustomerSituation: widget.questionDataSituation,
           isChallenge: widget.isChallenge);
-    else if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeChallenges))
+    else if (_selectedDrawerIndex ==
+        Utils.getHomePageIndex(Const.typeChallenges))
       return ChallengesPage(
         arrFriends: widget.arrFriends,
         userId: widget.friendId,
@@ -401,7 +419,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           } else if (data == "${Const.typeTeam}") {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeTeam);
           } else if (data == "${Const.typeNewCustomer}") {
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeNewCustomer);
+            _selectedDrawerIndex =
+                Utils.getHomePageIndex(Const.typeNewCustomer);
           } else if (data == "${Const.typeExistingCustomer}") {
             _selectedDrawerIndex =
                 Utils.getHomePageIndex(Const.typeExistingCustomer);
