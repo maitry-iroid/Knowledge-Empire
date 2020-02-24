@@ -35,7 +35,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    print("weburl-------"+Const.webUrl);
+    print("weburl-------" + Const.webUrl);
 
     Injector.player.loadAll(['all_button_clicks.wav']);
 
@@ -152,7 +152,7 @@ class MyAppState extends State<MyApp> {
     ]);
 
     return MaterialApp(
-      title: 'Ke Employee',
+      title: Const.appName,
       theme: ThemeData(
         accentColor: ColorRes.transparent,
         fontFamily: 'TrulyMadly',
