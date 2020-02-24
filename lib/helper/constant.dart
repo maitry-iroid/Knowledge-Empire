@@ -1,9 +1,12 @@
 import 'package:ke_employee/injection/dependency_injection.dart';
 
+import 'flavor_config.dart';
+
 enum Environment { DEV, PROD }
 
 class Const {
   static var deviceType = "android";
+
 //  static var typeHome = 0;
 //  static var typeBusinessSector = 1;
 //  static var typeNewCustomer = 2;
@@ -18,6 +21,8 @@ class Const {
 //  static var typeHelp = 11;
 //  static var typeEngagement = 12;
 //  static var typeCustomerSituation = 13;
+
+  static Environment envType;
 
   static var typeHome = "home";
   static var typeBusinessSector = "businessSector";
@@ -77,54 +82,32 @@ class Const {
 
   static int introTypeProfile = 101;
   static int introTypeProfileUserDetails = 102;
-  static int introTypeSettings= 103;
-  static int introTypeOrg= 104;
-  static int introTypeHireHR= 105;
-  static int introTypeHireHeaderEmployee= 105;
-  static int introTypeHireHeaderTest= 106;
+  static int introTypeSettings = 103;
+  static int introTypeOrg = 104;
+  static int introTypeHireHR = 105;
+  static int introTypeHireHeaderEmployee = 105;
+  static int introTypeHireHeaderTest = 106;
 
-  static Map<String, dynamic> _config;
+  static FlavorConfig _config;
 
   static void setEnvironment(Environment env) {
+    envType = env;
+
     switch (env) {
       case Environment.DEV:
-        _config = _Config.debugConstants;
+        _config = AppConfig.devConfig();
         break;
       case Environment.PROD:
-        _config = _Config.prodConstants;
+        _config = AppConfig.prodConfig();
         break;
     }
   }
 
-  static get SERVER_ONE {
-    return _config[_Config.SERVER_ONE];
+  static get webUrl {
+    return _config.webUrl;
   }
 
-  static get APP_NAME {
-    return _config[_Config.APP_NAME];
+  static get appName {
+    return _config.appName;
   }
-
-  static get WHERE_AM_I {
-    return _config[_Config.WHERE_AM_I];
-  }
-}
-
-class _Config {
-  static const SERVER_ONE = "SERVER_ONE";
-  static const APP_NAME = "APP_NAME";
-  static const WHERE_AM_I = "WHERE_AM_I";
-
-  static Map<String, dynamic> debugConstants = {
-    SERVER_ONE: "http://13.127.186.25:7000/api",
-//    SERVER_ONE: "http://13.127.186.25:7001/api",  // for achievement feature
-    APP_NAME: "KE Dev",
-  };
-
-  static Map<String, dynamic> prodConstants = {
-    SERVER_ONE: "http://18.141.132.109:7000/api",
-    APP_NAME: "KE Prod",
-  };
-
-
-
 }

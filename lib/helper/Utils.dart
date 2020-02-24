@@ -571,20 +571,20 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) {
-    //TODO remove comment for prod
-
-    if (type ==
-            Const
-                .typePl /*||
-        type == Const.typeRanking ||
-        type == Const.typeTeam ||
-        type == Const.typeReward ||
-        type == Const.typeChallenges*/
-        )
-      Utils.showComingSoonDialog(context);
-    else
+    if (Const.envType == Environment.DEV) {
+      if (type == Const.typePl ||
+          type == Const.typeRanking ||
+          type == Const.typeTeam ||
+          type == Const.typeReward ||
+          type == Const.typeChallenges)
+        Utils.showComingSoonDialog(context);
+      else
+        Navigator.push(context,
+            FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
+    } else {
       Navigator.push(context,
           FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
+    }
   }
 
   static checkAudio() {

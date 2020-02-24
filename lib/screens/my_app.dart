@@ -35,7 +35,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    print(Const.SERVER_ONE);
+    print("weburl-------"+Const.webUrl);
 
     Injector.player.loadAll(['all_button_clicks.wav']);
 

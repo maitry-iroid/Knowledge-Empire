@@ -11,7 +11,7 @@ import 'constant.dart';
 class WebApi {
 //  static const baseUrl = "http://13.127.186.25:7000/api";  // dev url
 //  static const baseUrl = "http://18.141.132.109:7000/api"; // prod url
-  static final baseUrl = Const.SERVER_ONE;
+  static final baseUrl = Const.webUrl;
 
   static String rqLogin = "login";
   static String rqForgotPassword = "forgot_password";
@@ -70,6 +70,8 @@ class WebApi {
 
   Future<dynamic> callAPI(String apiReq, Map<String, dynamic> jsonMap) async {
     initDio();
+
+
     print(apiReq + "_" + json.encode(jsonMap));
     try {
       final response = await dio

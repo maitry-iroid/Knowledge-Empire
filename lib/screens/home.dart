@@ -188,30 +188,34 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        //TODO add container for production
-        return RewardsPage();
-        return Container();
+        return Const.envType == Environment.DEV ? RewardsPage() : Container();
       case 5:
-        //TODO remove comment for production
-        return Injector.isManager() ? TeamPage() : ChallengesPage();
-        return Container();
+        return Const.envType == Environment.DEV
+            ? Injector.isManager() ? TeamPage() : ChallengesPage()
+            : Container();
       case 6:
-        //TODO remove comment for production
-        return Injector.isManager()
-            ? ChallengesPage()
-            : (Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage());
-        return Container();
+        return Const.envType == Environment.DEV
+            ? Injector.isManager()
+                ? ChallengesPage()
+                : (Injector.isBusinessMode
+                    ? OrganizationsPage2()
+                    : PowerUpsPage())
+            : Container();
       case 7:
-        return Injector.isManager()
-            ? Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage()
-            : PLPage;
+        return Const.envType == Environment.DEV
+            ? Injector.isManager()
+                ? Injector.isBusinessMode
+                    ? OrganizationsPage2()
+                    : PowerUpsPage()
+                : PLPage
+            : Container();
       case 8:
-        //TODO remove comment for production
-        return Injector.isManager() ? PLPage() : RankingPage();
-        return Container();
+        return Const.envType == Environment.DEV
+            ? Injector.isManager() ? PLPage() : RankingPage()
+            : Container();
+
       case 9:
-        //TODO remove comment for production
-        return RankingPage();
+        return Const.envType == Environment.DEV ? RankingPage() : Container();
         return Container();
 //      case 10:
 //        return ProfilePage();
@@ -237,23 +241,25 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       setState(() => _selectedDrawerIndex = index);
 
-      //TODO remove comment for production
-
-//      if (index ==
-//              Utils.getHomePageIndex(Const
-//                  .typePl) /*||
-//          index == Const.typeReward ||
-//          index == Const.typeChallenges ||
-//          index == Const.typeTeam ||
-//          index == Const.typeRanking*/
-//          ) {
-//        Utils.showComingSoonDialog(context);
-//      } else {
-      Navigator.of(context).pop(); // close the drawer
-      if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
-        Navigator.push(context, FadeRouteIntro());
+      if (Const.envType == Environment.PROD) {
+        if (index == Utils.getHomePageIndex(Const.typePl) ||
+            index == Utils.getHomePageIndex(Const.typeReward) ||
+            index == Utils.getHomePageIndex(Const.typeChallenges) ||
+            index == Utils.getHomePageIndex(Const.typeTeam) ||
+            index == Utils.getHomePageIndex(Const.typeRanking)) {
+          Utils.showComingSoonDialog(context);
+        } else {
+          Navigator.of(context).pop(); // close the drawer
+          if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+            Navigator.push(context, FadeRouteIntro());
+          }
+        }
+      } else {
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+          Navigator.push(context, FadeRouteIntro());
+        }
       }
-//      }
     }
   }
 

@@ -46,7 +46,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.keemployee.app.dev"
+//        applicationId "com.keemployee.app.dev"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
@@ -67,20 +67,21 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        
+
     }
     flavorDimensions "default"
-//    productFlavors {
-//        dev {
-//            dimension "default"
-//            applicationIdSuffix ".dev"
-//            resValue "string", "app_name", "KE dev"
-//        }
-//        prod {
-//            dimension "default"
-//            resValue "string", "app_name", "KE prod"
-//        }
-//    }
+    productFlavors {
+        dev {
+            dimension "default"
+            applicationId "com.keemployee.app.dev"
+            resValue "string", "app_name", "KE dev"
+        }
+        prod {
+            dimension "default"
+            applicationId "com.keemployee.app"
+            resValue "string", "app_name", "KE prod"
+        }
+    }
 }
 
 flutter {
