@@ -82,7 +82,6 @@ class StringRes {
   static var situation = "situation";
   static var revenue = "revenue";
   static var profit = "profit";
-  static var customers = "customers";
   static var hashCustomers = "hashCustomers";
   static var brand = "brand";
   static var learningModule = "learningModule";
@@ -95,12 +94,35 @@ class StringRes {
   static var correct = "correct";
   static var fireEmp = "fireEmp";
   static var hireEmp = "hireEmp";
-  static var alertUserRemovedFromCompany = "alertUserRemovedFromCompany";
   static var alertBailOut = "alertBailOut";
   static var yes = "yes";
   static var no = "no";
   static var choosePhoto = "choosePhoto";
   static var takePhoto = "takePhoto";
+  static var department_ = "department_";
+  static var resets_ = "resets_";
+  static var name_ = "name_";
+  static var comingSoon = "comingSoon";
+  static var close = "close";
+  static var cashAtStartOfPeriod = "cashAtStartOfPeriod";
+  static var cost = "cost";
+  static var employees = "employees";
+  static var salaries = "salaries";
+  static var customers = "customers";
+  static var day = "day";
+  static var month = "month";
+  static var year = "year";
+  static var lastPeriod = "lastPeriod";
+  static var thisPeriod = "thisPeriod";
+  static var alertWantToSubscribe1 = "alertWantToSubscribe1";
+  static var alertWantToSubscribe2 = "alertWantToSubscribe2";
+  static var downloading = "downloading";
+  static var thisModuleWillOccupie = "thisModuleWillOccupie";
+  static var alertWantToBailOut = "alertWantToBailOut";
+  static var alertNoModuleFound = "alertNoModuleFound";
+  static var you = "you";
+  static var world= "world";
+  static var country= "country";
 
   //business sectors
 
@@ -152,22 +174,6 @@ class StringRes {
       'engageSegment': 'Engage Segment',
       'endRel': 'End Rel.',
       'searchForKeywords': 'Search for keywords',
-      'textHr':
-          'Lets hire 10 more employees in HR for X \$ to increase the total employee capacity by Y',
-      'textServices':
-          'If we hire 10 service engineers for X \$ we will be able to increase our customer capacity by Y',
-      'textMarketing':
-          'Lets hire 10 more marketing professionals for X \$ to increasecustomer revenues by Y',
-      'textSales':
-          'We need to hire 10 more Sales Reps for X \$ to increase our capacity to engage new customers by Y',
-      'textOperations':
-          'With 10 more employees in Operations for X \$ wecould reduce the needed Sales resources to win new customers by Y',
-      'textCRM':
-          'n investment of 10 employees and X \$ in CRM will enable us to increase customer loyalty by Y',
-      'textFinance':
-          'f we invest into 10 more Accountants for X \$ we will be able to reduce our cost by Y',
-      'textLegal':
-          'We should hire 10 Lawyers for X \$ to be able to increase the number of opponents we can challenge by Y',
       'somethingWrong': 'Something went wrong',
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
@@ -207,12 +213,35 @@ class StringRes {
       'correct': "%Correct",
       'fireEmp': "Fire 10 employees",
       'hireEmp': "Fire 10 employees",
-      'alertUserRemovedFromCompany': "User is removed from the company",
       'alertBailOut': "Are you sure you want to Bail Out.",
       'yes': "Yes",
       'no': "No",
       'choosePhoto': "Choose photo",
-      'takePhoto': "Take photo"
+      'takePhoto': "Take photo",
+      'department_': "Department:",
+      'resets_': "Resets:",
+      'name_': "Name:",
+      'comingSoon': "Coming Soon..",
+      'close': "Close",
+      'cashAtStartOfPeriod': "Cash at start of Period",
+      'cost': "Cost",
+      'employees': "Employees",
+      'salaries': "Salaries",
+      'customers': "Customers",
+      'day': "Day",
+      'month': "Month",
+      'year': "Year",
+      'lastPeriod': "Last Period",
+      'thisPeriod': "This Period",
+      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
+      'alertWantToSubscribe2': "? You will lose all the questions from the ",
+      'downloading': "Downloading...",
+      'thisModuleWillOccupie ': "This module will occupie ",
+      'alertWantToBailOut': "Are you sure you want to Bail Out.",
+      'alertNoModuleFound': "Oops..No learining module found for this user.",
+      'you': "You",
+      'world': "World",
+      'country': "Country"
     },
     'es': {
       'title': 'Hola Mundo',

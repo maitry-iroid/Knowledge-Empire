@@ -51,7 +51,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
             Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
           arrFinalLearningModules = LearningModuleResponse.fromJson(
-              jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
+                  jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
 
@@ -76,16 +76,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 flex: 1,
                 child: Injector.isBusinessMode
                     ? Card(
-                  color: Colors.transparent,
-                  elevation: 20,
-                  child: showSecondHalf(),
-                )
+                        color: Colors.transparent,
+                        elevation: 20,
+                        child: showSecondHalf(),
+                      )
                     : showSecondHalf(),
               )
             ],
           ),
         ),
-
       ],
     );
   }
@@ -97,11 +96,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius:
-          Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              Injector.isBusinessMode ? null : BorderRadius.circular(20),
           image: Injector.isBusinessMode
               ? DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("business_sec_header")),
-              fit: BoxFit.fill)
+                  image: AssetImage(Utils.getAssetsImg("business_sec_header")),
+                  fit: BoxFit.fill)
               : null),
       child: Row(
         children: <Widget>[
@@ -134,11 +133,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.moduleId ==
-                arrFinalLearningModules[index].moduleId)
+                    arrFinalLearningModules[index].moduleId)
                 ? DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(
-                    Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
-                fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg(
+                        Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
+                    fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -157,9 +156,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           : BorderRadius.circular(20),
                       image: Injector.isBusinessMode
                           ? DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg("bg_bus_sector_item")),
-                          fit: BoxFit.fill)
+                              image: AssetImage(
+                                  Utils.getAssetsImg("bg_bus_sector_item")),
+                              fit: BoxFit.fill)
                           : null),
                   child: Stack(
                     alignment: Alignment.center,
@@ -181,20 +180,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       ),
                       arrFinalLearningModules[index].isAssign == 1
                           ? Positioned(
-                        right: 5,
-                        bottom: Injector.isBusinessMode ? 5 : 2,
-                        child: Text(
-                          Utils.getText(context, StringRes.subscribed),
-                          style: TextStyle(
-                            color: Injector.isBusinessMode
-                                ? ColorRes.bgHeader
-                                : ColorRes.blue,
-                            fontSize: 10,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
+                              right: 5,
+                              bottom: Injector.isBusinessMode ? 5 : 2,
+                              child: Text(
+                                Utils.getText(context, StringRes.subscribed),
+                                style: TextStyle(
+                                  color: Injector.isBusinessMode
+                                      ? ColorRes.bgHeader
+                                      : ColorRes.blue,
+                                  fontSize: 10,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
                           : Container()
                     ],
                   )),
@@ -208,14 +207,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
                     color:
-                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     borderRadius: Injector.isBusinessMode
                         ? null
                         : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("value")),
-                        fit: BoxFit.fill)
+                            image: AssetImage(Utils.getAssetsImg("value")),
+                            fit: BoxFit.fill)
                         : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
@@ -261,7 +260,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
@@ -338,7 +337,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void fetchLearningModules() async {
-   CommonView.showCircularProgress(true, context);
+    CommonView.showCircularProgress(true, context);
 
     GetLearningModuleRequest rq = GetLearningModuleRequest();
     rq.userId = Injector.userId;
@@ -346,7 +345,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetLearningModule, rq.toJson())
         .then((data) async {
-
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
@@ -357,7 +355,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         });
 
         LearningModuleResponse learningModuleResponse =
-        LearningModuleResponse();
+            LearningModuleResponse();
         learningModuleResponse.data = arrData;
 
         await Injector.prefs.setString(PrefKeys.learningModles,
@@ -432,7 +430,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void searchData() {
     var data = arrLearningModules
         .where((module) =>
-        module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
+            module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
 
     arrFinalLearningModules.addAll(data);
@@ -574,10 +572,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   void removeDownloadedQuestion() async {
     List<QuestionData> arrQuestions =
-    Utils.getQuestionsLocally(Const.getNewQueType);
+        Utils.getQuestionsLocally(Const.getNewQueType);
 
     arrQuestions.removeWhere(
-            (question) => question.questionId == selectedModule.moduleId);
+        (question) => question.questionId == selectedModule.moduleId);
 
     QuestionsResponse questionsResponse = QuestionsResponse();
     questionsResponse.data = arrQuestions;
@@ -591,15 +589,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text("Confirm"),
-            content: Text("Are you sure, you want to unsubscribe " +
-                selectedModule.moduleName +
-                "? You will lose all the questions from the " +
-                Utils.getText(context, StringRes.newCustomers)),
+            content: Text(
+                Utils.getText(context, StringRes.alertWantToSubscribe1) +
+                    selectedModule.moduleName +
+                    Utils.getText(context, StringRes.alertWantToSubscribe2) +
+                    Utils.getText(context, StringRes.newCustomers)),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,
-                child: Text("Yes"),
+                child: Text(Utils.getText(context, StringRes.yes)),
                 onPressed: () {
                   performSubscribeUnsubscribe();
 
@@ -607,7 +605,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 },
               ),
               CupertinoDialogAction(
-                child: Text("No"),
+                child: Text(Utils.getText(context, StringRes.no)),
                 onPressed: () => Navigator.pop(context),
               )
             ],
@@ -639,11 +637,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             color:
-            Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+                Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
             margin: EdgeInsets.only(top: 20),
             child: Container(
               padding:
-              EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+                  EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode
                     ? ColorRes.bgDescription
@@ -677,12 +675,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   color:
-                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.circular(20),
                   image: Injector.isBusinessMode
                       ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                      fit: BoxFit.fill)
+                          image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                          fit: BoxFit.fill)
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
@@ -702,39 +700,39 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       children: <Widget>[
         selectedModule.isAssign == 1
             ? InkResponse(
-          child: Text(
-            Utils.getText(context, StringRes.downLoad),
-            style: TextStyle(
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.fontDarkGrey),
-          ),
-          onTap: () {
-            Utils.playClickSound();
-          },
-        )
+                child: Text(
+                  Utils.getText(context, StringRes.downLoad),
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.fontDarkGrey),
+                ),
+                onTap: () {
+                  Utils.playClickSound();
+                },
+              )
             : Container(),
         selectedModule.isAssign == 1
             ? Switch(
-          value: isSwitched,
-          onChanged: (value) {
-            Utils.isInternetConnectedWithAlert().then((isConnected) {
-              if (isConnected) {
-                setState(() {
-                  isSwitched = value;
-                });
-                updatePermission();
-              }
-            });
-          },
-          activeTrackColor: selectedModule.isSubscribedFromBackend == 1
-              ? ColorRes.lightGrey
-              : ColorRes.white,
-          inactiveTrackColor: ColorRes.lightGrey,
-          activeColor: selectedModule.isSubscribedFromBackend == 1
-              ? ColorRes.lightGrey
-              : ColorRes.white,
-        )
+                value: isSwitched,
+                onChanged: (value) {
+                  Utils.isInternetConnectedWithAlert().then((isConnected) {
+                    if (isConnected) {
+                      setState(() {
+                        isSwitched = value;
+                      });
+                      updatePermission();
+                    }
+                  });
+                },
+                activeTrackColor: selectedModule.isSubscribedFromBackend == 1
+                    ? ColorRes.lightGrey
+                    : ColorRes.white,
+                inactiveTrackColor: ColorRes.lightGrey,
+                activeColor: selectedModule.isSubscribedFromBackend == 1
+                    ? ColorRes.lightGrey
+                    : ColorRes.white,
+              )
             : Container(),
       ],
     );
@@ -750,17 +748,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 color: Injector.isBusinessMode
                     ? null
                     : selectedModule.isSubscribedFromBackend == 1
-                    ? ColorRes.greyText
-                    : ColorRes.headerBlue,
+                        ? ColorRes.greyText
+                        : ColorRes.headerBlue,
                 borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        selectedModule.isSubscribedFromBackend == 1
-                            ? "bg_disable_subscribe"
-                            : "bg_subscribe")),
-                    fit: BoxFit.fill)
+                        image: AssetImage(Utils.getAssetsImg(
+                            selectedModule.isSubscribedFromBackend == 1
+                                ? "bg_disable_subscribe"
+                                : "bg_subscribe")),
+                        fit: BoxFit.fill)
                     : null),
             child: Text(
               Utils.getText(
@@ -780,8 +778,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             else
               performSubscribeUnsubscribe();
           } else {
-            Utils.showToast(
-                "Oops..You are now allowed to perform this action!");
+            Utils.showToast(Utils.getText(context, StringRes.alertNoModuleFound));
           }
         });
   }
@@ -806,9 +803,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showDownloadStatus() {
     return Opacity(
       opacity:
-      selectedModule != null ? (selectedModule.isDownloading ? 1 : 0) : 0,
+          selectedModule != null ? (selectedModule.isDownloading ? 1 : 0) : 0,
       child: Text(
-        "Downloading...",
+        Utils.getText(context, StringRes.downloading),
         style: TextStyle(color: ColorRes.white, fontSize: 17),
       ),
     );
@@ -817,11 +814,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-      "This module will occupie " +
-          selectedModule.fileSize.toString() +
-          "",
-      style: TextStyle(color: ColorRes.white, fontSize: 17),
-    )
+            Utils.getText(context, StringRes.thisModuleWillOccupie) +
+                selectedModule.fileSize.toString() +
+                "",
+            style: TextStyle(color: ColorRes.white, fontSize: 17),
+          )
         : Container();
   }
 }

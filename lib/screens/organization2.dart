@@ -442,7 +442,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                                   Border.all(width: 2, color: ColorRes.blue),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: Text("Hire 10 employees",
+                          child: Text(Utils.getText(context, StringRes.hireEmp),
                               style: TextStyle(
                                   color: ColorRes.blue, fontSize: 17)),
                         ),
@@ -473,7 +473,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                                   Border.all(width: 2, color: ColorRes.blue),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: Text("Fire 10 employees",
+                          child: Text(Utils.getText(context, StringRes.fireEmp),
                               style:
                                   TextStyle(color: ColorRes.red, fontSize: 17)),
                         ),

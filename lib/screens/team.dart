@@ -288,7 +288,7 @@ class _TeamPageState extends State<TeamPage> {
       child: Row(
         children: <Widget>[
           showProfileText(
-            "Name:",
+            Utils.getText(context, StringRes.name_),
           ),
           Expanded(
             child: Row(
@@ -332,7 +332,7 @@ class _TeamPageState extends State<TeamPage> {
     return Container(
       child: Row(
         children: <Widget>[
-          showProfileText("Department:"),
+          showProfileText(Utils.getText(context, StringRes.department_)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
             margin: EdgeInsets.only(left: 10, top: 8, bottom: 5),
@@ -353,7 +353,7 @@ class _TeamPageState extends State<TeamPage> {
     return Container(
       child: Row(
         children: <Widget>[
-          showProfileText("Resets:"),
+          showProfileText(Utils.getText(context, StringRes.resets_)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
             margin: EdgeInsets.only(left: 40, top: 8, bottom: 5),
@@ -629,11 +629,10 @@ class _TeamPageState extends State<TeamPage> {
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert', style: TextStyle(color: ColorRes.black)),
-          content: const Text('Are you sure you want to Bail Out.'),
+          content:  Text(Utils.getText(context,StringRes.alertWantToBailOut)),
           actions: <Widget>[
             FlatButton(
-              child: const Text('Yes'),
+              child:  Text(Utils.getText(context, StringRes.yes)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
@@ -641,7 +640,7 @@ class _TeamPageState extends State<TeamPage> {
               },
             ),
             FlatButton(
-              child: const Text('No'),
+              child:   Text(Utils.getText(context, StringRes.no)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

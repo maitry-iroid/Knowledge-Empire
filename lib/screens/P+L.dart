@@ -130,9 +130,9 @@ class _PLPageState extends State<PLPage> {
                   children: <Widget>[
                     showDayLine(),
                     showCashLine(),
-                    showListHeader("Cost", "Employees", "Salaries"),
+                    showListHeader(Utils.getText(context, StringRes.cost), Utils.getText(context, StringRes.employees), Utils.getText(context, StringRes.salaries)),
                     showListView(1),
-                    showListHeader("Revenue", "Customers", "Revenue"),
+                    showListHeader(Utils.getText(context, StringRes.revenue), Utils.getText(context, StringRes.customers), Utils.getText(context, StringRes.revenue)),
                     showListView(2),
                     showOtherRev(),
                     showProfitCash(1),
@@ -261,15 +261,15 @@ class _PLPageState extends State<PLPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text("Day",
+                  child: Text(Utils.getText(context, StringRes.day),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("Month",
+                  child: Text(Utils.getText(context, StringRes.month),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("Year",
+                  child: Text(Utils.getText(context, StringRes.year),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
               ],
@@ -287,7 +287,7 @@ class _PLPageState extends State<PLPage> {
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bgPlPeriod")),
                           fit: BoxFit.fill)),
-                  child: Text("Last Period",
+                  child: Text(Utils.getText(context, StringRes.lastPeriod),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
@@ -298,7 +298,7 @@ class _PLPageState extends State<PLPage> {
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bgPlPeriod")),
                           fit: BoxFit.fill)),
-                  child: Text("This Period",
+                  child: Text(Utils.getText(context, StringRes.thisPeriod),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 )
               ],
@@ -317,7 +317,7 @@ class _PLPageState extends State<PLPage> {
           Container(
             width: 150,
             padding: EdgeInsets.only(left: 10),
-            child: Text("Cash at start of Period",
+            child: Text(Utils.getText(context, StringRes.cashAtStartOfPeriod),
                 style: TextStyle(fontSize: 13, color: ColorRes.white)),
           ),
           Expanded(

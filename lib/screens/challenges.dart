@@ -257,8 +257,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   if (selectedModuleIndex != null && selectedModuleIndex != -1)
                     sendChallenges();
                   else {
-                    Utils.showToast(
-                        "Oops..No learining module found for this user.");
+                    Utils.showToast(Utils.getText(context, StringRes.alertNoModuleFound));
                   }
                 },
               ),

@@ -214,7 +214,7 @@ class _RankingPageState extends State<RankingPage> {
                                       : "bg_pro_you")),
                               fit: BoxFit.fill)),
                       child: Text(
-                        'You',
+                        Utils.getText(context, StringRes.you),
                         style: TextStyle(color: ColorRes.white, fontSize: 15),
                       )),
                   onTap: () {
@@ -443,13 +443,13 @@ class _RankingPageState extends State<RankingPage> {
 
         GetUserGroupData grp1 = GetUserGroupData();
         grp1.groupId = 1;
-        grp1.name = "World";
+        grp1.name = Utils.getText(context, StringRes.world);
         GetUserGroupData grp2 = GetUserGroupData();
         grp2.groupId = 2;
-        grp2.name = "Country";
+        grp2.name = Utils.getText(context, StringRes.country);
         GetUserGroupData grp3 = GetUserGroupData();
         grp3.groupId = 3;
-        grp3.name = "Friends";
+        grp3.name = Utils.getText(context, StringRes.friends);
 
         arrGroups.add(grp1);
         arrGroups.add(grp2);

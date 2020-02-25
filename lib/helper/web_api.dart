@@ -92,7 +92,7 @@ class WebApi {
             if (!isUserRemovedFromCompany(_response.flag, _response.msg))
               return _response.data;
             else {
-              Utils.showToast("User is removed from the company");
+              Utils.showToast(_response.msg);
               return null;
             }
           } else {

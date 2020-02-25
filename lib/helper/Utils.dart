@@ -554,12 +554,12 @@ class Utils {
       builder: (BuildContext context) {
         return AlertDialog(
           content: Text(
-            "Coming Soon..",
+            Utils.getText(context, StringRes.comingSoon),
             style: TextStyle(fontSize: 20),
           ),
           actions: <Widget>[
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text(Utils.getText(context, StringRes.close)),
               onPressed: () {
                 Navigator.of(context).pop();
               },

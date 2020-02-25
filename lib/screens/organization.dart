@@ -314,7 +314,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               : arrOrganization[position].subtractLevelConfirmMessage),
           actions: <Widget>[
             FlatButton(
-              child: Text('Yes'),
+              child: Text(Utils.getText(context, StringRes.yes)),
               onPressed: () {
                 manageLevel(position, action);
                 //alert pop
@@ -322,7 +322,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               },
             ),
             FlatButton(
-              child: Text('No'),
+              child: Text(Utils.getText(context, StringRes.no)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

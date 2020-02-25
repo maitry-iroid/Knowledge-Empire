@@ -214,6 +214,8 @@ class _LoginPageState extends State<LoginPage> {
     CommonView.showCircularProgress(true, context);
 
     WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+
       if (data != null) {
         UserData userData = UserData.fromJson(data);
 
