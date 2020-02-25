@@ -55,7 +55,6 @@ class _RewardsPageState extends State<RewardsPage> {
             children: <Widget>[showFirstHalf(), showSecondHalf()],
           ),
         ),
-        CommonView.showCircularProgress(isLoading)
       ],
     );
   }
@@ -321,23 +320,17 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  bool isLoading = false;
-
 //  GetAchievementResponse getAchievementResponse = GetAchievementResponse();
 
   void getAchievements() {
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     GetAchievementRequest rq = GetAchievementRequest();
     rq.userId = Injector.userId;
 //    rq.categoryId = oneAsString;
 
     WebApi().callAPI(WebApi.rqGetUserAchievement, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         data.forEach((v) {
@@ -350,6 +343,8 @@ class _RewardsPageState extends State<RewardsPage> {
           setState(() {});
         }
       }
+    }).catchError((e) {
+      CommonView.showCircularProgress(false, context);
     });
   }
 

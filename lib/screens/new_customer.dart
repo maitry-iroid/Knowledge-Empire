@@ -19,8 +19,6 @@ class NewCustomerPage extends StatefulWidget {
 }
 
 class _NewCustomerPageState extends State<NewCustomerPage> {
-  bool isLoading = false;
-
   List<QuestionData> arrQuestions = List();
 
   int questionAnswered = 0;
@@ -40,7 +38,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        getQuestions();
+        getQuestions(_scaffoldKey.currentContext);
       } else {
         arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
 
@@ -51,11 +49,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     });
   }
 
-  getQuestions() {
-    setState(() {
-      isLoading = true;
-    });
-
+  getQuestions(BuildContext context) {
+    CommonView.showCircularProgress(true, context);
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
 
@@ -63,9 +58,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     rq.type = Const.getNewQueType;
 
     WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) async {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         data.forEach((v) {
@@ -79,33 +72,25 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
           print(arrQuestions[i].value);
         }
+
+        setState(() {
+
+        });
+
       } else {
 //        Utils.showToast(Utils.getText(
 //            _scaffoldKey?.currentContext, StringRes.somethingWrong));
-        setState(() {
-          isLoading = false;
-        });
+
       }
     }).catchError((e) {
       print("getQuestions_" + e.toString());
       if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
       }
       Utils.showToast(e.toString());
     });
   }
 
-  Widget showCircularProgress() {
-    if (isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
-    return Container(
-      height: 0.0,
-      width: 0.0,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +119,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   ],
                 ),
               ),
-              CommonView.showCircularProgress(isLoading),
             ],
           ),
         ));

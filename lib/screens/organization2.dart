@@ -26,7 +26,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<Organization> arrOrganization = List();
-  bool isLoading = false;
 
   @override
   void initState() {
@@ -90,7 +89,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               )
             ],
           ),
-          CommonView.showCircularProgress(isLoading),
           showBack()
         ],
       ),
@@ -151,18 +149,13 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       ),
                     ],
                   ),
-//                          showConfirmDialog(position, Const.subtract);
-//                  Center(
-//                    child:
                   Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
                       Container(
                         height: 15,
-                        width: Utils.getDeviceWidth(context) / 8.5,
-//                            width: Utils.getDeviceWidth(context) / 16.4,
                         margin:
-                            EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -172,9 +165,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       ),
                       LinearPercentIndicator(
                         alignment: MainAxisAlignment.center,
-//                          margin: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
-//                            padding: EdgeInsets.only(left: 5, right: 5),
-                        width: Utils.getDeviceWidth(context) / 8.6,
                         lineHeight: 15.0,
                         percent: Utils.getProgress(arrOrganization[position]),
                         backgroundColor: Colors.transparent,
@@ -291,24 +281,19 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
 
-      setState(() {
-        isLoading = true;
-      });
+      CommonView.showCircularProgress(true, context);
 
       WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
+        CommonView.showCircularProgress(false, context);
+
         if (data != null) {
           arrOrganization = OrganizationData.fromJson(data).organization;
-
-          setState(() {
-            isLoading = false;
-          });
+          setState(() {});
         }
       });
     }).catchError((e) {
       print("getOrganizations_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
@@ -340,16 +325,12 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       rq.type = arrOrganization[position].type;
       rq.mode = Injector.mode;
 
-      setState(() {
-        isLoading = true;
-      });
+      CommonView.showCircularProgress(true, context);
 
       WebApi()
           .callAPI(WebApi.rqManageOrganization, rq.toJson())
           .then((data) async {
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
 
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
@@ -362,9 +343,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         }
       }).catchError((e) {
         print("manageOrg_" + e.toString());
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
         Utils.showToast(e.toString());
       });
     });

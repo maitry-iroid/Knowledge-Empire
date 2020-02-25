@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   TextEditingController companyController = TextEditingController();
-  bool isLoading = false;
+
 
   FocusNode myFocusNode;
 
@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          CommonView.showCircularProgress(isLoading)
+
         ],
       ),
     );
@@ -447,18 +447,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
   logout() async {
     Utils.playClickSound();
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     LogoutRequest rq = LogoutRequest();
     rq.userId = Injector.userId;
     rq.deviceType = Const.deviceType;
 
     WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {}
       try {
@@ -473,9 +469,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }).catchError((e) {
       print("logout_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
@@ -938,14 +932,9 @@ class _ProfilePageState extends State<ProfilePage> {
       'companyName': companyController.text.trim(),
     };
 
-    setState(() {
-      isLoading = true;
-    });
-
+    CommonView.showCircularProgress(true, context);
     WebApi().updateProfile(req, _image).then((data) async {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         Injector.userData.profileImage = data.profileImage;
@@ -961,9 +950,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }).catchError((e) {
       print("updatePorfile_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }

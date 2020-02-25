@@ -85,7 +85,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ],
           ),
         ),
-        CommonView.showCircularProgress(isLoading)
+
       ],
     );
   }
@@ -338,9 +338,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void fetchLearningModules() async {
-    setState(() {
-      isLoading = true;
-    });
+   CommonView.showCircularProgress(true, context);
 
     GetLearningModuleRequest rq = GetLearningModuleRequest();
     rq.userId = Injector.userId;
@@ -348,9 +346,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetLearningModule, rq.toJson())
         .then((data) async {
-      setState(() {
-        isLoading = false;
-      });
+
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         List<LearningModuleData> arrData = new List<LearningModuleData>();
@@ -384,10 +381,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
-
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }

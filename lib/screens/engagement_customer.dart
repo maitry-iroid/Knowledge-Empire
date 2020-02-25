@@ -47,8 +47,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   List alphaIndex = ['A', 'B', 'C', 'D'];
 
-  bool isLoading = false;
-
   String urlPDFPath = "";
   String assetPDFPath = "";
 
@@ -63,7 +61,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     super.initState();
 
     isChallenge = widget.isChallenge ?? false;
-    if (widget.questionDataEngCustomer!=null) {
+    if (widget.questionDataEngCustomer != null) {
       questionData = widget.questionDataEngCustomer;
       widget.questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = widget.questionDataEngCustomer.answer;
@@ -86,7 +84,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void initVideoController() {
     if (Utils.isVideo(questionData.mediaLink)) {
-      _controller = Injector.cacheManager.getFileFromCache(questionData.mediaLink) != null
+      _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)
           : VideoPlayerController.network(questionData.mediaLink)
@@ -122,7 +120,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               showMainBody(context),
             ],
           ),
-          CommonView.showCircularProgress(isLoading)
         ],
       ),
     );
@@ -296,15 +293,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
         jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     WebApi().callAPI(WebApi.rqSubmitAnswers, rq.toJson()).then((data) async {
-      setState(() {
-        isLoading = false;
-      });
-
+      CommonView.showCircularProgress(false, context);
       if (data != null) {
         Injector.setCustomerValueData(CustomerValueData.fromJson(data));
 
@@ -316,34 +308,26 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       }
     }).catchError((e) {
       print("submitAnswer_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
 
   void callSubmitChallengeApi(
       BuildContext context, SubmitChallengesRequest rq) {
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     WebApi()
         .callAPI(WebApi.rqSubmitChallengeAnswer, rq.toJson())
         .then((data) async {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         navigateToSituation(context, data);
       }
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }

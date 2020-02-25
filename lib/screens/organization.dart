@@ -22,7 +22,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   OrganizationData organizationData;
 
   List<Organization> arrOrganization = List();
-  bool isLoading = false;
+
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               )
             ],
           ),
-          CommonView.showCircularProgress(isLoading)
+
         ],
       ),
     );
@@ -266,26 +266,23 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
-
-      setState(() {
-        isLoading = true;
-      });
+      CommonView.showCircularProgress(true, context);
 
       WebApi().callAPI(WebApi.rqGetOrganization,rq.toJson()).then((data) {
+
+        CommonView.showCircularProgress(false, context);
+
+
         if (data != null) {
           organizationData = OrganizationData.fromJson(data.toJson());
           arrOrganization = organizationData.organization;
 
-          setState(() {
-            isLoading = false;
-          });
+
         }
       });
     }).catchError((e) {
       print("getOrganizations_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
@@ -345,16 +342,12 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       rq.type = arrOrganization[position].type;
       rq.mode = Injector.mode;
 
-      setState(() {
-        isLoading = true;
-      });
+      CommonView.showCircularProgress(true, context);
 
       WebApi()
           .callAPI(WebApi.rqManageOrganization, rq.toJson())
           .then((data) async {
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
 
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
@@ -368,10 +361,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
         }
       }).catchError((e) {
         print("manageOrg_" + e.toString());
-
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
         Utils.showToast(e.toString());
       });
     });

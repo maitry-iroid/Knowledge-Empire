@@ -80,7 +80,7 @@ class _TeamPageState extends State<TeamPage> {
     return Expanded(
         child: Column(
       children: <Widget>[
-        Injector.customerValueData.totalBalance <=0
+        Injector.customerValueData.totalBalance <= 0
             ? InkResponse(
                 child: Container(
 //                  height: 35,
@@ -540,18 +540,28 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   void getTeamUsers() {
-    TeamUserRequest rq = TeamUserRequest();
-    rq.userId = Injector.userId;
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+//        CommonView.showCircularProgress(true, context);
 
-    WebApi().callAPI(WebApi.rqGetTeamUsers, rq.toJson()).then((data) {
-      if (data != null) {
-        teamUserData = TeamUserData.fromJson(data);
+        TeamUserRequest rq = TeamUserRequest();
+        rq.userId = Injector.userId;
 
-        initGraphData();
+        WebApi().callAPI(WebApi.rqGetTeamUsers, rq.toJson()).then((data) {
+//          CommonView.showCircularProgress(false, context);
 
-        setState(() {});
+          if (data != null) {
+            teamUserData = TeamUserData.fromJson(data);
+
+            initGraphData();
+
+            setState(() {});
+          }
+        }).catchError((e) {
+//          CommonView.showCircularProgress(false, context);
+        });
       }
-    }).catchError((e) {});
+    });
   }
 
   void initGraphData() {
@@ -582,21 +592,35 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   void getTeamUserById(int teamUserId) {
-    TeamUserByIdRequest rq = TeamUserByIdRequest();
-    rq.userId = Injector.userId;
-    rq.teamUserId = teamUserId;
 
-    WebApi().callAPI(WebApi.rqGetTeamUserById, rq.toJson()).then((data) {
-      if (data != null) {
-        teamUserByIdData = TeamUserByIdData.fromJson(data);
+    Utils.isInternetConnected().then((isConnected){
 
-        initGraphData();
+//      CommonView.showCircularProgress(true, context);
 
-        setState(() {});
+      if(isConnected){
+        TeamUserByIdRequest rq = TeamUserByIdRequest();
+        rq.userId = Injector.userId;
+        rq.teamUserId = teamUserId;
+
+        WebApi().callAPI(WebApi.rqGetTeamUserById, rq.toJson()).then((data) {
+
+//          CommonView.showCircularProgress(false, context);
+
+          if (data != null) {
+            teamUserByIdData = TeamUserByIdData.fromJson(data);
+
+            initGraphData();
+
+            setState(() {});
+          }
+        }).catchError((e) {
+//          CommonView.showCircularProgress(false, context);
+          Utils.showToast(e.toString());
+        });
       }
-    }).catchError((e) {
-      Utils.showToast(e.toString());
+
     });
+
   }
 
   _asyncConfirmDialog(BuildContext context) async {

@@ -155,7 +155,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         widget.initialPageType != Const.typeEngagement) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
-      if (widget.isChallenge == null || !widget.isChallenge)
+      if (widget.isChallenge != null && widget.isChallenge)
         getPendingChallenges();
     }
   }
@@ -291,8 +291,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           getPage(),
           Container(
             color: ColorRes.white.withOpacity(0.5),
-//            width: double.infinity,
-//            height: double.infinity,
+            width: 0,
+            height: 0,
             child: Container(
               child: Column(
                 children: <Widget>[
@@ -309,7 +309,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             isShowMenu: true,
             openProfile: openProfile,
           ),
-          CommonView.showCircularProgress(isLoading),
+
         ],
       )),
     );

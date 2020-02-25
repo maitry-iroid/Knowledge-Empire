@@ -571,7 +571,7 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) {
-    if (Const.envType == Environment.DEV) {
+    if (Const.envType == Environment.PROD) {
       if (type == Const.typePl ||
           type == Const.typeRanking ||
           type == Const.typeTeam ||

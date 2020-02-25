@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -320,18 +321,42 @@ class CommonView {
       ],
     );
   }
+//
+//  static Widget showCircularProgress(bool isLoading) {
+//    if (isLoading) {
+//      return Center(
+//          child: CircularProgressIndicator(
+//        backgroundColor: ColorRes.white,
+//      ));
+//    }
+//    return Container(
+//      height: 0.0,
+//      width: 0.0,
+//    );
+//  }
 
-  static Widget showCircularProgress(bool isLoading) {
-    if (isLoading) {
-      return Center(
-          child: CircularProgressIndicator(
-        backgroundColor: ColorRes.white,
-      ));
-    }
-    return Container(
-      height: 0.0,
-      width: 0.0,
+  static showCircularProgress(bool isLoading, BuildContext context) {
+    AlertDialog dialog = new AlertDialog(
+      backgroundColor: Colors.transparent,
+      contentPadding: EdgeInsets.zero,
+      elevation: 0.0,
+      content: new Container(
+          height: 40.0,
+          color: Colors.transparent,
+          child: new Center(
+            child: SpinKitThreeBounce(color: Colors.white),
+          )),
     );
+    if (!isLoading) {
+      Navigator.of(context).pop();
+    } else {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return dialog;
+          });
+    }
   }
 
   static showBackground(BuildContext context) {

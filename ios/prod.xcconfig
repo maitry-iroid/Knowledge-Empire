@@ -1,0 +1,15 @@
+//
+//  prod.xcconfig
+//  Runner
+//
+//  Created by iroid on 25/02/20.
+//  Copyright © 2020 The Chromium Authors. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main_prod.dart
+//FLUTTER_BUILD_MODE=debug
+

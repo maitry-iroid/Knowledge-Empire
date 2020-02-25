@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/performance.dart';
+import 'package:ke_employee/screens/organization2.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../commonview/background.dart';
@@ -25,7 +26,7 @@ class _PLPageState extends State<PLPage> {
   Map<String, double> dataMap = Map();
   Map<String, double> openCloseMap = Map();
 
-  PerformanceData performanceData = PerformanceData();
+  PerformanceData performanceData ;
 
   List<Color> colorOpenCloseList = [
     ColorRes.firstColor,
@@ -66,7 +67,7 @@ class _PLPageState extends State<PLPage> {
           child: Column(
             children: <Widget>[
               CommonView.showTitle(context, StringRes.pl),
-              mainBody()
+              performanceData!=null ? mainBody() : Container()
 //             Expanded(
 //               child:  Row(
 //                 children: <Widget>[
@@ -689,24 +690,38 @@ class _PLPageState extends State<PLPage> {
   int selectedType = 1;
 
   void getPerformanceData() {
-    PerformanceRequest rq = PerformanceRequest();
-    rq.userId = Injector.userId;
-    rq.mode = Injector.mode;
-    rq.type = selectedType;
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
 
-    WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
-      if (data != null) {
-        setState(() {
-          performanceData = PerformanceData.fromJson(data);
 
-          performanceData.cost.forEach((cost) {
-            dataMap.putIfAbsent(cost.name, () => cost.currentCost.toDouble());
-          });
 
-          performanceData.revenue.forEach((revenue) {
-            openCloseMap.putIfAbsent(
-                revenue.name, () => revenue.currentRevenue.toDouble());
-          });
+        PerformanceRequest rq = PerformanceRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Const.businessMode;
+        rq.type = selectedType;
+
+        WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
+          if (data != null) {
+            CommonView.showCircularProgress(false, context);
+            setState(() {
+              performanceData = PerformanceData.fromJson(data);
+
+              performanceData.cost.forEach((cost) {
+                dataMap.putIfAbsent(
+                    cost.name, () => cost.currentCost.toDouble());
+              });
+
+              performanceData.revenue.forEach((revenue) {
+                openCloseMap.putIfAbsent(
+                    revenue.name, () => revenue.currentRevenue.toDouble());
+              });
+            });
+          }
+        }).catchError((e) {
+          Utils.showToast(e.toString());
+
+          CommonView.showCircularProgress(false, context);
         });
       }
     });

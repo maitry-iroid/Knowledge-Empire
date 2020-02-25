@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -20,7 +22,7 @@ class PowerUpsPage extends StatefulWidget {
 class _PowerUpsPageState extends State<PowerUpsPage> {
 //  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
-  bool isLoading = false;
+
   TextEditingController searchController = TextEditingController();
   String searchText = "";
   Organization selectedOrg = Organization();
@@ -54,14 +56,10 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
 
-      setState(() {
-        isLoading = true;
-      });
+      CommonView.showCircularProgress(true, context);
 
       WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
         if (data != null) {
           organizationData = OrganizationData.fromJson(data);
           arrOrganization = organizationData.organization;
@@ -71,9 +69,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         }
       }).catchError((e) {
         print("getOrganizations_" + e.toString());
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
         Utils.showToast(e.toString());
       });
     });
@@ -103,7 +99,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
             ],
           ):Container(),
         ),
-        CommonView.showCircularProgress(isLoading)
+
       ],
     );
   }
@@ -459,14 +455,10 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       rq.type = selectedOrg.type;
       rq.mode = Injector.mode;
 
-      setState(() {
-        isLoading = true;
-      });
+      CommonView.showCircularProgress(true, context);
 
       WebApi().callAPI(WebApi.rqManageOrganization, rq.toJson()).then((data) {
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
 
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
@@ -480,9 +472,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         }
       }).catchError((e) {
         print("manageOrg_" + e.toString());
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
         Utils.showToast(e.toString());
       });
     });

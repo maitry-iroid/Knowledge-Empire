@@ -23,7 +23,7 @@ class _RankingPageState extends State<RankingPage> {
   int selectedLeftCategory = 0;
   int selectedGroup = 0;
   int selectedTime = 0;
-  bool isLoading = false;
+
   List<GetFriendsData> arrFriends = List();
   List<GetUserGroupData> arrGroups = List();
 
@@ -39,6 +39,8 @@ class _RankingPageState extends State<RankingPage> {
 
   String searchText = "";
   int lastUserId = 0;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -70,6 +72,7 @@ class _RankingPageState extends State<RankingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: <Widget>[
           CommonView.showBackground(context),
@@ -82,7 +85,6 @@ class _RankingPageState extends State<RankingPage> {
               children: <Widget>[showFirstColumn(), showSecondColumn()],
             ),
           ),
-          CommonView.showCircularProgress(isLoading)
         ],
       ),
     );
@@ -382,16 +384,16 @@ class _RankingPageState extends State<RankingPage> {
           }
         },
         child: Container(
-          width: 90,
+//          width: Utils.getDeviceHeight(context)/5,
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             children: <Widget>[
               Container(
-                height: 60,
-                width: 60,
+                height: Utils.getDeviceHeight(context) / 7,
+                width: Utils.getDeviceHeight(context) / 7,
                 padding: Injector.isBusinessMode
-                    ? EdgeInsets.all(20)
-                    : EdgeInsets.all(20),
+                    ? EdgeInsets.all(15)
+                    : EdgeInsets.all(15),
                 margin: Injector.isBusinessMode
                     ? EdgeInsets.all(0)
                     : EdgeInsets.all(2),
@@ -411,6 +413,7 @@ class _RankingPageState extends State<RankingPage> {
               Text(
                 Utils.getText(context, title),
                 style: TextStyle(color: ColorRes.white, fontSize: 15),
+                overflow: TextOverflow.ellipsis,
               )
             ],
           ),
@@ -434,38 +437,40 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   getUserGroups() {
-    setState(() {
-      isLoading = true;
-    });
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
-    GetUserGroupData grp1 = GetUserGroupData();
-    grp1.groupId = 1;
-    grp1.name = "World";
-    GetUserGroupData grp2 = GetUserGroupData();
-    grp2.groupId = 2;
-    grp2.name = "Country";
-    GetUserGroupData grp3 = GetUserGroupData();
-    grp3.groupId = 3;
-    grp3.name = "Friends";
+        GetUserGroupData grp1 = GetUserGroupData();
+        grp1.groupId = 1;
+        grp1.name = "World";
+        GetUserGroupData grp2 = GetUserGroupData();
+        grp2.groupId = 2;
+        grp2.name = "Country";
+        GetUserGroupData grp3 = GetUserGroupData();
+        grp3.groupId = 3;
+        grp3.name = "Friends";
 
-    arrGroups.add(grp1);
-    arrGroups.add(grp2);
-    arrGroups.add(grp3);
+        arrGroups.add(grp1);
+        arrGroups.add(grp2);
+        arrGroups.add(grp3);
 
-    GetUserGroupRequest rq = GetUserGroupRequest();
-    rq.userId = Injector.userData.userId;
+        GetUserGroupRequest rq = GetUserGroupRequest();
+        rq.userId = Injector.userData.userId;
 
-    WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+        WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
 
-      if (data != null) {
-        data.forEach((v) {
-          arrGroups.add(GetUserGroupData.fromJson(v));
+          if (data != null) {
+            data.forEach((v) {
+              arrGroups.add(GetUserGroupData.fromJson(v));
+            });
+
+            if (arrGroups.isNotEmpty) setState(() {});
+          }
+        }).catchError((e) {
+          CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
         });
-
-        if (arrGroups.isNotEmpty) setState(() {});
       }
     });
   }
@@ -473,9 +478,9 @@ class _RankingPageState extends State<RankingPage> {
   void getFriends(bool isScrollDown, bool isToAddData) {
     print("present__" + present.toString());
 
-    setState(() {
-      isLoading = true;
-    });
+//    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
+
+    if (!isToAddData) arrFriends.clear();
 
     GetFriendsRequest rq = GetFriendsRequest();
     rq.userId = Injector.userData.userId;
@@ -490,10 +495,7 @@ class _RankingPageState extends State<RankingPage> {
         : 0;
 
     WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
-
+//      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
       if (data != null) {
         List<GetFriendsData> arrFriendsData = List();
 
@@ -509,13 +511,13 @@ class _RankingPageState extends State<RankingPage> {
           setState(() {});
         }
       }
+    }).catchError((e) {
+//      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
     });
   }
 
   void friendUnFriendUser(int index, int i) {
-    setState(() {
-      isLoading = true;
-    });
+//    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
     GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
     rq.userId = Injector.userId;
@@ -523,9 +525,7 @@ class _RankingPageState extends State<RankingPage> {
     rq.action = i;
 
     WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((response) {
-      setState(() {
-        isLoading = false;
-      });
+//      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
 
       if (response != null) {
         if (i == 1) {
@@ -534,6 +534,8 @@ class _RankingPageState extends State<RankingPage> {
           Utils.showToast("Unfriend successfully");
         }
       }
+    }).catchError((e) {
+//      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
     });
   }
 

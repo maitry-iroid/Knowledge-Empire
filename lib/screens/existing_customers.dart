@@ -21,7 +21,6 @@ class ExistingCustomerPage extends StatefulWidget {
 
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
-  bool isLoading = false;
 
   @override
   void initState() {
@@ -63,16 +62,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
 //      customerValueBloc?.releaseResource(rq);
 
-      setState(() {
-        isLoading = true;
-      });
-
+      CommonView.showCircularProgress(true, context);
       WebApi().callAPI(WebApi.rqReleaseResource, rq.toJson()).then((data) {
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
 
         if (data != null) {
+
+          CommonView.showCircularProgress(false, context);
+
           CustomerValueData customerValueData =
               CustomerValueData.fromJson(data);
 
@@ -83,45 +80,43 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           setState(() {
             arrQuestions.removeAt(index);
 
-            isLoading = false;
+
           });
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {
         print("releaseResources_" + e.toString());
-        setState(() {
-          isLoading = false;
-        });
+        CommonView.showCircularProgress(false, context);
         Utils.showToast(e.toString());
       });
     });
   }
 
   getQuestions() {
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
     rq.type = Const.getExistingQueTYpe;
 
     WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         data.forEach((v) {
           arrQuestions.add(QuestionData.fromJson(v));
         });
+
+        if(arrQuestions.isNotEmpty)
+          setState(() {
+
+          });
+
       }
     }).catchError((e) {
       print("getQuestions_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
@@ -147,7 +142,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                 ],
               ),
             ),
-            CommonView.showCircularProgress(isLoading)
+
           ],
         ));
   }

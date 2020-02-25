@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -12,7 +11,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/login.dart';
-import '../models/get_customer_value.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
@@ -49,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool isLoading = false;
 
   @override
   void initState() {
@@ -105,97 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                   ))
             ],
           ),
-        )
-
-        /*Container(
-        height: double.infinity,
-        width: double.infinity,
-
-          decoration: BoxDecoration(
-          image: DecorationImage(
-            image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
-            fit: BoxFit.fill,
-//            alignment: Alignment.center,
-          ),
-        ),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text("hello"),
-            ),
-            Expanded(
-                flex: 1,
-                child: Container(
-                  width: Utils.getDeviceWidth(context) / 2.3,
-                  height: Utils.getDeviceHeight(context) / 1.7,
-                  margin: EdgeInsets.only(right: 20,left: 15),
-                  decoration: BoxDecoration(
-                    color: ColorRes.colorBgDark,
-                    border: Border.all(color: ColorRes.white, width: 1),
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: showLoginForm(),
-                ))
-          ],
-        )
-        /*Stack(
-          alignment: Alignment.centerLeft,
-          children: <Widget>[
-
-//            Row(
-//              children: <Widget>[
-//                Expanded(flex: 1,
-//                  child: Image(
-//                  height: Utils.getDeviceHeight(context) / 1.7,
-//                  image: AssetImage(
-//                    Utils.getAssetsImg('logo_login'),
-//                  ),
-//                  width: Utils.getDeviceHeight(context) / 2,
-//                ),),
-//                Expanded(flex: 1,
-//                    child: Container(
-//                      width: Utils.getDeviceWidth(context) / 2.3,
-//                      height: Utils.getDeviceHeight(context) / 1.7,
-//                      margin: EdgeInsets.only(right: 20,left: 15),
-//                      decoration: BoxDecoration(
-//                        color: ColorRes.colorBgDark,
-//                        border: Border.all(color: ColorRes.white, width: 1),
-//                        borderRadius: new BorderRadius.circular(10.0),
-//                      ),
-//                      child: showLoginForm(),
-//                    ))
-//              ],
-//            ),
-
-         /*   Padding(
-              padding: EdgeInsets.only(left: 50),
-              child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg('logo_login'),
-                ),
-                width: Utils.getDeviceHeight(context) / 2,
-              ),
-            ),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: Utils.getDeviceWidth(context) / 2.3,
-                  height: Utils.getDeviceHeight(context) / 1.7,
-                  margin: EdgeInsets.only(right: 20),
-                  decoration: BoxDecoration(
-                    color: ColorRes.colorBgDark,
-                    border: Border.all(color: ColorRes.white, width: 1),
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: showLoginForm(),
-                )),
-            */
-            CommonView.showCircularProgress(isLoading)
-          ],
-        ), */
-      ), */
-        );
+        ));
   }
 
   showLoginForm() {
@@ -304,9 +211,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Utils.hideKeyboard(context);
 
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
       if (data != null) {
@@ -320,9 +225,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }).catchError((e) {
       print("login_" + e.toString());
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }

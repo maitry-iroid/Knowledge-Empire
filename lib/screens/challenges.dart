@@ -25,7 +25,6 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
-  bool isLoading = false;
   List<GetFriendsData> arrFriends = List();
   List<GetFriendsData> arrFriendsToShow = List();
   List<GetFriendsData> arrSearchFriends = List();
@@ -76,7 +75,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
               showMainBody(),
             ],
           ),
-          CommonView.showCircularProgress(isLoading)
         ],
       ),
     );
@@ -420,8 +418,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Text(
-                      arrLearningModules[index].moduleName,
+                  child: Text(arrLearningModules[index].moduleName,
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -448,9 +445,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 3.7,
                   lineHeight: 20.0,
-                  percent: arrLearningModules[index].moduleProgress / 100 ,
+                  percent: arrLearningModules[index].moduleProgress / 100,
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -496,66 +492,57 @@ class _ChallengesPageState extends State<ChallengesPage> {
   int selectedFriendId = 3;
 
   void getFriends() {
-    setState(() {
-      isLoading = true;
-    });
+    Utils.isInternetConnected().then((isConnected) {
+      CommonView.showCircularProgress(true, context);
 
-    GetFriendsRequest rq = GetFriendsRequest();
-    rq.userId = Injector.userData.userId;
-    rq.groupId = 0;
-    rq.category = 0;
-    rq.searchBy = 3;
-    rq.filter = 0;
-    rq.lastUserId = 0;
-    rq.scrollType = 1;
+      GetFriendsRequest rq = GetFriendsRequest();
+      rq.userId = Injector.userData.userId;
+      rq.groupId = 0;
+      rq.category = 0;
+      rq.searchBy = 3;
+      rq.filter = 0;
+      rq.lastUserId = 0;
+      rq.scrollType = 1;
 
-    WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
+        CommonView.showCircularProgress(false, context);
 
-      if (data != null) {
-        List<GetFriendsData> arrFriendsData = List();
-        data.forEach((v) {
-          arrFriendsData.add(GetFriendsData.fromJson(v));
-        });
+        if (data != null) {
+          List<GetFriendsData> arrFriendsData = List();
+          data.forEach((v) {
+            arrFriendsData.add(GetFriendsData.fromJson(v));
+          });
 
-        arrFriendsData
-            .removeWhere((friend) => friend.userId == Injector.userData.userId);
+          arrFriendsData.removeWhere(
+              (friend) => friend.userId == Injector.userData.userId);
 
-        arrFriends = arrFriendsData;
-        arrFriendsToShow = arrFriendsData;
+          arrFriends = arrFriendsData;
+          arrFriendsToShow = arrFriendsData;
 
-        if (arrFriendsToShow.length > 0) {
-          selectedFriendId = arrFriends[0].userId;
-          getBusinessSectors();
-          setState(() {});
+          if (arrFriendsToShow.length > 0) {
+            selectedFriendId = arrFriends[0].userId;
+            getBusinessSectors();
+            setState(() {});
+          }
         }
-      }
-    }).catchError((e) {
-      print("getFriends_" + e.toString());
+      }).catchError((e) {
+        print("getFriends_" + e.toString());
 
-      setState(() {
-        isLoading = false;
+        CommonView.showCircularProgress(false, context);
+        Utils.showToast(e.toString());
       });
-      Utils.showToast(e.toString());
     });
   }
 
   void friendUnFriendUser(int index, int action) {
-    setState(() {
-      isLoading = true;
-    });
-
+    CommonView.showCircularProgress(true, context);
     GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
     rq.userId = Injector.userData.userId;
     rq.requestedTo = arrFriendsToShow[index].userId;
     rq.action = action;
 
     WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         if (action == 1) {
@@ -568,18 +555,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   void getBusinessSectors() {
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     GetLearningModuleRequest rq = GetLearningModuleRequest();
     rq.userId = selectedFriendId;
     rq.isChallenge = 1;
 
     WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         data.forEach((v) {
@@ -593,18 +576,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
       }
     }).catchError((e) {
       print("getLearningModule_" + e.toString());
-
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
 
   void sendChallenges() {
-    setState(() {
-      isLoading = true;
-    });
+    CommonView.showCircularProgress(true, context);
 
     SendChallengesRequest rq = SendChallengesRequest();
     rq.userId = Injector.userData.userId;
@@ -613,34 +591,25 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.rewards = arrRewards[selectedRewardsIndex];
 
     WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) Utils.showToast("Challenge sent successfully!");
     }).catchError((e) {
       print("sendChallenge_" + e.toString());
 
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
 
   void getSearchFriends() {
-    setState(() {
-      isLoading = true;
-    });
-
+    CommonView.showCircularProgress(true, context);
     SearchFriendRequest rq = SearchFriendRequest();
     rq.userId = Injector.userData.userId.toString();
     rq.searchText = searchController.text;
 
     WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         List<GetFriendsData> getFriendsData = List();
@@ -661,9 +630,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     }).catchError((e) {
       print("searchFriends_" + e.toString());
 
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
   }
