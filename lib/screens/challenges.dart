@@ -257,7 +257,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   if (selectedModuleIndex != null && selectedModuleIndex != -1)
                     sendChallenges();
                   else {
-                    Utils.showToast(Utils.getText(context, StringRes.alertNoModuleFound));
+                    Utils.showToast(
+                        Utils.getText(context, StringRes.alertNoModuleFound));
                   }
                 },
               ),
@@ -445,7 +446,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   lineHeight: 20.0,
-                  percent: arrLearningModules[index].moduleProgress / 100,
+                  percent: (arrLearningModules[index].moduleProgress ?? 0 / 100)
+                      .toDouble(),
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -545,9 +547,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
       if (data != null) {
         if (action == 1) {
-          Utils.showToast("friend request send successfully");
+          Utils.showToast(Utils.getText(context, StringRes.alertFriendSuccess));
         } else {
-          Utils.showToast("unfriend successfully");
+          Utils.showToast(
+              Utils.getText(context, StringRes.alertUnFriendSuccess));
         }
       }
     });
@@ -592,7 +595,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
       CommonView.showCircularProgress(false, context);
 
-      if (data != null) Utils.showToast("Challenge sent successfully!");
+      if (data != null) Utils.showToast(Utils.showToast(StringRes.alertUChallengeSent));
     }).catchError((e) {
       print("sendChallenge_" + e.toString());
 

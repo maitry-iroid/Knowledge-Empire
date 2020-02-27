@@ -26,7 +26,7 @@ class _PLPageState extends State<PLPage> {
   Map<String, double> dataMap = Map();
   Map<String, double> openCloseMap = Map();
 
-  PerformanceData performanceData ;
+  PerformanceData performanceData;
 
   List<Color> colorOpenCloseList = [
     ColorRes.firstColor,
@@ -67,7 +67,7 @@ class _PLPageState extends State<PLPage> {
           child: Column(
             children: <Widget>[
               CommonView.showTitle(context, StringRes.pl),
-              performanceData!=null ? mainBody() : Container()
+              performanceData != null ? mainBody() : Container()
 //             Expanded(
 //               child:  Row(
 //                 children: <Widget>[
@@ -130,11 +130,16 @@ class _PLPageState extends State<PLPage> {
                   children: <Widget>[
                     showDayLine(),
                     showCashLine(),
-                    showListHeader(Utils.getText(context, StringRes.cost), Utils.getText(context, StringRes.employees), Utils.getText(context, StringRes.salaries)),
+                    showListHeader(
+                        Utils.getText(context, StringRes.cost),
+                        Utils.getText(context, StringRes.employees),
+                        Utils.getText(context, StringRes.salaries)),
                     showListView(1),
-                    showListHeader(Utils.getText(context, StringRes.revenue), Utils.getText(context, StringRes.customers), Utils.getText(context, StringRes.revenue)),
+                    showListHeader(
+                        Utils.getText(context, StringRes.revenue),
+                        Utils.getText(context, StringRes.customers),
+                        Utils.getText(context, StringRes.revenue)),
                     showListView(2),
-                    showOtherRev(),
                     showProfitCash(1),
                     showProfitCash(2),
 //                  showCashEnd(),
@@ -175,12 +180,12 @@ class _PLPageState extends State<PLPage> {
               height: 30,
               alignment: Alignment.center,
               child: Text(
-                "7 days developments",
+                Utils.getText(context, StringRes.sevenDaysDevelopment),
                 style: TextStyle(color: ColorRes.white),
               ),
             ),
             Expanded(
-              child: OrdinalComboBarLineChart.withSampleData(performanceData),
+              child: Padding(padding: EdgeInsets.all(5),child: OrdinalComboBarLineChart.withSampleData(performanceData),),
             ),
             Container(
               height: 30,
@@ -209,7 +214,7 @@ class _PLPageState extends State<PLPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              "Cost",
+              Utils.getText(context, StringRes.cost),
               style: TextStyle(color: ColorRes.white),
             ),
           ),
@@ -221,19 +226,15 @@ class _PLPageState extends State<PLPage> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              "Revenue",
+              Utils.getText(context, StringRes.revenue),
               style: TextStyle(color: ColorRes.white),
             ),
           ),
-          Container(
-            width: 50,
-            height: 15,
-            color: Colors.amber,
-          ),
+          Image.asset(Utils.getAssetsImg("cash_graph"),height: 15,),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              "Cash",
+              Utils.getText(context, StringRes.cash),
               style: TextStyle(color: ColorRes.white),
             ),
           )
@@ -325,11 +326,12 @@ class _PLPageState extends State<PLPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text("195000",
+                  child: Text(
+                      getValidText(performanceData.cash.oneDayPreviousCash),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
-                  child: Text("215000",
+                  child: Text(getValidText(performanceData.cash.previousCash),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 )
               ],
@@ -418,8 +420,8 @@ class _PLPageState extends State<PLPage> {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
                       type == Const.typeCost
-                          ? performanceData.cost[index].name
-                          : performanceData.revenue[index].name,
+                          ? getValidText(performanceData.cost[index].name)
+                          : getValidText(performanceData.revenue[index].name),
                       style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Expanded(
@@ -430,10 +432,10 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                         type == Const.typeCost
-                            ? performanceData.cost[index].lastEmployee
-                                .toString()
-                            : performanceData.revenue[index].lastTotalCustomer
-                                .toString(),
+                            ? getValidText(
+                                performanceData.cost[index].lastEmployee)
+                            : getValidText(performanceData
+                                .revenue[index].lastTotalCustomer),
                         style: TextStyle(fontSize: 13, color: ColorRes.white),
                         textAlign: TextAlign.right,
                       ),
@@ -442,9 +444,10 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? performanceData.cost[index].lastCost.toString()
-                              : performanceData.revenue[index].lastRevenue
-                                  .toString(),
+                              ? getValidText(
+                                  performanceData.cost[index].lastCost)
+                              : getValidText(
+                                  performanceData.revenue[index].lastRevenue),
                           style: TextStyle(
                             fontSize: 13,
                             color: ColorRes.white,
@@ -455,11 +458,10 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? performanceData.cost[index].currentEmployee
-                                  .toString()
-                              : performanceData
-                                  .revenue[index].currentTotalCustomer
-                                  .toString(),
+                              ? getValidText(
+                                  performanceData.cost[index].currentEmployee)
+                              : getValidText(performanceData
+                                  .revenue[index].currentTotalCustomer),
                           style: TextStyle(fontSize: 13, color: ColorRes.white),
                           textAlign: TextAlign.right),
                     ),
@@ -467,10 +469,10 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? performanceData.cost[index].currentCost
-                                  .toString()
-                              : performanceData.revenue[index].currentRevenue
-                                  .toString(),
+                              ? getValidText(
+                                  performanceData.cost[index].currentCost)
+                              : getValidText(performanceData
+                                  .revenue[index].currentRevenue),
                           style: TextStyle(fontSize: 13, color: ColorRes.white),
                           textAlign: TextAlign.right),
                     )
@@ -482,45 +484,10 @@ class _PLPageState extends State<PLPage> {
     );
   }
 
-  showOtherRev() {
-    return Container(
-      height: 30,
-      child: Row(
-        children: <Widget>[
-//          Container(
-//            width: 180,
-//            padding: EdgeInsets.only(left: 10),
-//            child: Text("Other Revenue(e.g. achievements)",
-//                style: TextStyle(fontSize: 13, color: ColorRes.white)),
-//          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                  child: Text("5000",
-                      style: TextStyle(fontSize: 13, color: ColorRes.white)),
-                ),
-                Container(
-                  child: Text("20",
-                      style: TextStyle(fontSize: 13, color: ColorRes.white)),
-                ),
-                Container(
-                  child: Text("4000",
-                      style: TextStyle(fontSize: 13, color: ColorRes.white)),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   showProfitCash(int type) {
     return Container(
       height: 25,
-      margin: EdgeInsets.only(left: 8, right: 10, bottom: 5, top: 5),
+      margin: EdgeInsets.only(left: 8, right: 0, bottom: 5, top: 5),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
@@ -531,20 +498,45 @@ class _PLPageState extends State<PLPage> {
             width: 160,
             padding: EdgeInsets.only(left: 10),
             child: Text(
-                type == Const.typeCost ? "Profit" : "Cash at end of period",
-                style: TextStyle(fontSize: 13, color: ColorRes.white)),
+
+                Utils.getText(
+                    context,
+                    type == Const.typeCost
+                        ? StringRes.profit
+                        : StringRes.cashAtTheEndOfPeriod),
+                style: TextStyle(fontSize: 13, color: ColorRes.white,),),
           ),
           Expanded(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Container(
-                child: Text("20,000",
-                    style: TextStyle(fontSize: 13, color: ColorRes.white)),
+              Expanded(
+                flex: 1,
+                child: Container(),
               ),
-              Container(
-                child: Text("15,000",
-                    style: TextStyle(fontSize: 13, color: ColorRes.white)),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  child: Text(
+                      getValidText(type == 1
+                          ? getLastProfit()
+                          : performanceData.cash.previousCash),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white),textAlign: TextAlign.right),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  child: Text(
+                      getValidText(type == 1
+                          ? getCurrentProfit()
+                          : performanceData.cash.todayCash),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white),textAlign: TextAlign.right),
+                ),
               )
             ],
           ))
@@ -557,7 +549,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 5),
-      child: pieChart("Cost Split", Const.typeCost),
+      child: pieChart(StringRes.costSplit, Const.typeCost),
     );
   }
 
@@ -565,7 +557,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 0),
-      child: pieChart("Revenue Split", Const.typeRevenue),
+      child: pieChart(StringRes.revenue, Const.typeRevenue),
     );
   }
 
@@ -643,7 +635,7 @@ class _PLPageState extends State<PLPage> {
                           child: Text(
                             type == Const.typeCost
                                 ? performanceData.cost[index].name
-                                : performanceData.revenue[index].name,
+                                : performanceData.revenue[index].name ?? "",
                             style:
                                 TextStyle(fontSize: 12, color: ColorRes.white),
                           ),
@@ -659,42 +651,12 @@ class _PLPageState extends State<PLPage> {
     ]);
   }
 
-  bottomBusinessList() {
-    return Expanded(
-      child: ListView.builder(
-          itemCount: 6,
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Row(
-              children: <Widget>[
-                Container(
-                  height: 15,
-                  width: 15,
-                  margin: EdgeInsets.only(left: 20, bottom: 10),
-                  color: ColorRes.greyText,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 15, bottom: 10),
-                  child: Text(
-                    "<Name of Business Sector>",
-                    style: TextStyle(color: ColorRes.white),
-                  ),
-                )
-              ],
-            );
-          }),
-    );
-  }
-
   int selectedType = 1;
 
   void getPerformanceData() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);
-
-
 
         PerformanceRequest rq = PerformanceRequest();
         rq.userId = Injector.userId;
@@ -725,5 +687,39 @@ class _PLPageState extends State<PLPage> {
         });
       }
     });
+  }
+
+  getValidText(dynamic text) {
+    return (text ?? "").toString();
+  }
+
+  getLastProfit() {
+    var totalCost = 0;
+    var totalProfit = 0;
+
+    performanceData.cost.forEach((cost) {
+      totalCost += cost.lastCost ?? 0;
+    });
+
+    performanceData.revenue.forEach((cost) {
+      totalCost += cost.lastRevenue ?? 0;
+    });
+
+    return (totalCost - totalProfit).abs().toString();
+  }
+
+  getCurrentProfit() {
+    var totalCost = 0;
+    var totalProfit = 0;
+
+    performanceData.cost.forEach((cost) {
+      totalCost += cost.currentCost ?? 0;
+    });
+
+    performanceData.revenue.forEach((cost) {
+      totalCost += cost.currentRevenue ?? 0;
+    });
+
+    return (totalCost - totalProfit).abs().toString();
   }
 }

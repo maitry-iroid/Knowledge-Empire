@@ -147,7 +147,6 @@ class WebApi {
         return null;
       }
 
-      return null;
     } catch (e) {
       print(e);
       return null;

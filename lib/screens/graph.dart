@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:ke_employee/models/performance.dart';
@@ -26,16 +25,38 @@ class OrdinalComboBarLineChart extends StatelessWidget {
         animate: animate,
 
         // Configure the default renderer as a bar renderer.
-//        domainAxis: charts.AxisSpec(tickFormatterSpec: ),
-//        primaryMeasureAxis: ,
+        domainAxis: new charts.OrdinalAxisSpec(
+            renderSpec: new charts.SmallTickRendererSpec(
+
+                // Tick and Label styling here.
+                labelStyle: new charts.TextStyleSpec(
+                    fontSize: 15, // size in Pts.
+                    color: charts.MaterialPalette.white),
+
+                // Change the line colors to match text color.
+                lineStyle: new charts.LineStyleSpec(
+                    color: charts.MaterialPalette.white))),
+        primaryMeasureAxis: new charts.NumericAxisSpec(
+            renderSpec: new charts.GridlineRendererSpec(
+
+              // Tick and Label styling here.
+                labelStyle: new charts.TextStyleSpec(
+                    fontSize: 15, // size in Pts.
+                    color: charts.MaterialPalette.white),
+
+                // Change the line colors to match text color.
+                lineStyle: new charts.LineStyleSpec(
+                    color: charts.MaterialPalette.black))),
         defaultRenderer: new charts.BarRendererConfig(
-            groupingType: charts.BarGroupingType.grouped, ),
+          groupingType: charts.BarGroupingType.grouped,
+        ),
         // Custom renderer configuration for the line series. This will be used for
         // any series that does not define a rendererIdKey.
         customSeriesRenderers: [
           new charts.LineRendererConfig(
-              // ID used to link serieste to this renderer.
-              customRendererId: 'customLine',)
+            // ID used to link serieste to this renderer.
+            customRendererId: 'customLine',
+          )
         ]);
   }
 

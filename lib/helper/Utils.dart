@@ -251,26 +251,6 @@ class Utils {
     return Injector.isBusinessMode ? 35.0 : 30.0;
   }
 
-  static getOrgText(int orgType) {
-    if (orgType == Const.typeHR) {
-      return StringRes.textHr;
-    } else if (orgType == Const.typeServices) {
-      return StringRes.textServices;
-    } else if (orgType == Const.typeMarketing) {
-      return StringRes.textMarketing;
-    } else if (orgType == Const.typeSales) {
-      return StringRes.textSales;
-    } else if (orgType == Const.typeOperations) {
-      return StringRes.textOperations;
-    } else if (orgType == Const.typeLegal) {
-      return StringRes.textLegal;
-    } else if (orgType == Const.typeFinance) {
-      return StringRes.textFinance;
-    } else if (orgType == Const.typeCRM) {
-      return StringRes.textCRM;
-    } else
-      return "";
-  }
 
 //  static checkSound() async {
 //    int maxVol, currentVol;

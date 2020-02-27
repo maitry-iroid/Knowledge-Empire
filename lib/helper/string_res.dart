@@ -1,4 +1,5 @@
 class StringRes {
+  //main options
   static var home = "home";
   static var businessSector = "businessSector";
   static var newCustomers = "newCustomers";
@@ -11,6 +12,8 @@ class StringRes {
   static var team = "team";
   static var profile = "profile";
   static var help = "help";
+
+  //profile
   static var emailId = "emailId";
   static var editProfile = "editProfile";
   static var yourName = "yourName";
@@ -24,6 +27,15 @@ class StringRes {
   static var switchProfMode = "switchProfMode";
   static var switchBusinessMode = "switchBusinessMode";
   static var logout = "logout";
+  static var choosePhoto = "choosePhoto";
+  static var takePhoto = "takePhoto";
+  static var sound = "sound";
+  static var bailout = "bailout";
+  static var requestBailOut = "requestbailout";
+  static var alertBailOut = "alertBailOut";
+  static var successProfileUpdate = "successProfileUpdate";
+
+  //login
   static var login = "login";
   static var enterRegisteredEmail = "enterRegisteredEmail";
   static var password = "password";
@@ -33,30 +45,44 @@ class StringRes {
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
+
+  //organization
+  static var fireEmp = "fireEmp";
+  static var hireEmp = "hireEmp";
+
+  //new customer
   static var sector = "sector";
-  static var size = "size";
-  static var description = "description";
   static var name = "name";
   static var value = "value";
   static var loyalty = "loyalty";
   static var resources = "resources";
   static var engage = "engage";
   static var engageNow = "engageNow";
-  static var engageSegment = "engageSegment";
+
+  //existing customer
   static var endRel = "endRel";
+
+  //challenges
   static var searchForKeywords = "searchForKeywords";
-  static var textHr = "textHr";
-  static var textServices = "textServices";
-  static var textMarketing = "textMarketing";
-  static var textSales = "textSales";
-  static var textOperations = "textOperations";
-  static var textCRM = "textCRM";
-  static var textFinance = "textFinance";
-  static var textLegal = "textLegal";
   static var somethingWrong = "Something went wrong";
+  static var friend = "friend";
+  static var alertFriendSuccess = "alertFriendSuccess";
+  static var alertUnFriendSuccess = "alertUnFriendSuccess";
+  static var alertUChallengeSent = "alertUChallengeSent";
+
+  //learning module
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
   static var subscribed = "subscribed";
+  static var downLoad = "downLoad";
+  static var size = "size";
+  static var description = "description";
+  static var alertWantToSubscribe1 = "alertWantToSubscribe1";
+  static var alertWantToSubscribe2 = "alertWantToSubscribe2";
+  static var downloading = "downloading";
+  static var thisModuleWillOccupie = "thisModuleWillOccupie";
+
+  //engage customer
   static var engagement = "engagement";
   static var debrief = "debrief";
   static var category = "category";
@@ -64,26 +90,20 @@ class StringRes {
   static var nextLevel = "nextLevel";
   static var friends = "friends";
   static var competitor = "competitor";
-  static var friend = "friend";
   static var sendChallenge = "sendChallenge";
   static var next = "next";
+
+//  engage customer
+
   static var answers = "answers";
   static var question = "question";
   static var explanation = "explanation";
-  static var bailout = "bailout";
-  static var requestBailOut = "requestbailout";
-  static var downLoad = "downLoad";
-  static var sound = "sound";
-  static var loremIpsum =
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
-  static var successProfileUpdate = "successProfileUpdate";
-  static var score = "score";
-  static var companyName = "companyName";
+
+  //customer situation
   static var situation = "situation";
-  static var revenue = "revenue";
   static var profit = "profit";
-  static var hashCustomers = "hashCustomers";
-  static var brand = "brand";
+
+  //team
   static var learningModule = "learningModule";
   static var levels = "levels";
   static var complete = "complete";
@@ -92,20 +112,26 @@ class StringRes {
   static var lastLog = "lastLog";
   static var points = "points";
   static var correct = "correct";
-  static var fireEmp = "fireEmp";
-  static var hireEmp = "hireEmp";
-  static var alertBailOut = "alertBailOut";
-  static var yes = "yes";
-  static var no = "no";
-  static var choosePhoto = "choosePhoto";
-  static var takePhoto = "takePhoto";
   static var department_ = "department_";
   static var resets_ = "resets_";
   static var name_ = "name_";
-  static var comingSoon = "comingSoon";
-  static var close = "close";
-  static var cashAtStartOfPeriod = "cashAtStartOfPeriod";
   static var cost = "cost";
+
+  //ranking
+  static var you = "you";
+  static var world = "world";
+  static var country = "country";
+  static var score = "score";
+  static var companyName = "companyName";
+  static var revenue = "revenue";
+  static var hashCustomers = "hashCustomers";
+  static var brand = "brand";
+
+  //pl
+  static var cashAtStartOfPeriod = "cashAtStartOfPeriod";
+  static var cashAtTheEndOfPeriod = "Cash at end of period";
+  static var costSplit = "costSplit";
+  static var revenueSplit = "revenueSplit";
   static var employees = "employees";
   static var salaries = "salaries";
   static var customers = "customers";
@@ -114,17 +140,17 @@ class StringRes {
   static var year = "year";
   static var lastPeriod = "lastPeriod";
   static var thisPeriod = "thisPeriod";
-  static var alertWantToSubscribe1 = "alertWantToSubscribe1";
-  static var alertWantToSubscribe2 = "alertWantToSubscribe2";
-  static var downloading = "downloading";
-  static var thisModuleWillOccupie = "thisModuleWillOccupie";
+  static var sevenDaysDevelopment = "sevenDaysDevelopment";
+  static var cash = "cash";
+
+  //alerts
   static var alertWantToBailOut = "alertWantToBailOut";
   static var alertNoModuleFound = "alertNoModuleFound";
-  static var you = "you";
-  static var world= "world";
-  static var country= "country";
 
-  //business sectors
+  static var yes = "yes";
+  static var no = "no";
+  static var comingSoon = "comingSoon";
+  static var close = "close";
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -171,7 +197,6 @@ class StringRes {
       'resources': 'Resources',
       'engage': 'Engage',
       'engageNow': 'Engage Now',
-      'engageSegment': 'Engage Segment',
       'endRel': 'End Rel.',
       'searchForKeywords': 'Search for keywords',
       'somethingWrong': 'Something went wrong',
@@ -241,10 +266,17 @@ class StringRes {
       'alertNoModuleFound': "Oops..No learining module found for this user.",
       'you': "You",
       'world': "World",
-      'country': "Country"
+      'country': "Country",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'costSplit': "costSplit",
+      'revenueSplit': "revenueSplit",
+      'alertFriendSuccess': "Friend added successfully",
+      'alertUnFriendSuccess': "Unfriend successfully",
+      'alertUChallengeSent': "Challenge sent successfully!"
     },
     'es': {
-      'title': 'Hola Mundo',
+      'home': "Home",
     },
   };
 
@@ -270,7 +302,7 @@ class StringRes {
       'resources': 'Study Points (SP)',
     },
     'es': {
-      'title': 'Hola Mundo',
+      'home': "Home",
     },
   };
 }
