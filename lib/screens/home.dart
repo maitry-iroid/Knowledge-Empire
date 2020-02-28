@@ -139,6 +139,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   int duration = 4;
   bool isCoinViseble = false;
 
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
