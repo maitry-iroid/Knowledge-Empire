@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -26,6 +27,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<Organization> arrOrganization = List();
+
+
 
   @override
   void initState() {
@@ -89,7 +92,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               )
             ],
           ),
-          showBack()
+          showBack(),
+
         ],
       ),
     );

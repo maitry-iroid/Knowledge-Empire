@@ -252,6 +252,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             margin: EdgeInsets.symmetric(vertical: 5),
             padding: EdgeInsets.only(left: 20, right: 10, top: 2, bottom: 2),
 //            color: ColorRes.lightBg,
+
             child: Row(
               children: <Widget>[
                 Expanded(

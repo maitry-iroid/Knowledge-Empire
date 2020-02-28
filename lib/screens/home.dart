@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -134,6 +135,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _selectedDrawerIndex = 0;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  bool startAnim = false;
+  int duration = 4;
+  bool isCoinViseble = false;
+
 
   @override
   void didChangeDependencies() {
@@ -146,9 +151,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     initStreamController();
 
+    startAnimation();
+
     initCheckNetworkConnectivity();
 
     setSelectedIndex();
+
+
 
     if (widget.initialPageType != Const.typeChallenges &&
         widget.initialPageType != Const.typeCustomerSituation &&
@@ -164,6 +173,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void dispose() {
     _connectivitySubscription?.cancel();
     super.dispose();
+  }
+
+  startAnimation() {
+    isCoinViseble = true;
+    if (isCoinViseble) {
+      startAnim = true;
+    } else {
+      startAnim = false;
+    }
+    setState(() {});
   }
 
   @override
@@ -309,7 +328,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             isShowMenu: true,
             openProfile: openProfile,
           ),
-
+          coinWidget(250, 150),
+          coinWidget(310, 50),
+          coinWidget(70, 50),
+          coinWidget(150, 20),
+          coinWidget(350, 320),
+          coinWidget(350, 450),
+          coinWidget(180, 300),
+          coinWidget(200, 550),
+          coinWidget(350, 650),
         ],
       )),
     );
@@ -366,6 +393,27 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             width: 15,
           )
         ],
+      ),
+    );
+  }
+
+  Widget coinWidget(double top, double left) {
+    print("isCoinViseble=====>" +
+        isCoinViseble.toString() +
+        "====>startAnim===>" +
+        startAnim.toString());
+    return AnimatedPositioned(
+      duration: Duration(seconds: duration),
+      top: !isCoinViseble ? top : 20,
+      left: !isCoinViseble ? left : 750,
+      onEnd: () {
+        isCoinViseble = false;
+        setState(() {});
+      },
+      child: Container(
+        child: isCoinViseble ? MyHomePage() : Container(),
+        width: 40,
+        height: 40,
       ),
     );
   }

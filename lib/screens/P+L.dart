@@ -151,8 +151,12 @@ class _PLPageState extends State<PLPage> {
               flex: 5,
               child: Container(
                 height: 500,
+                margin: EdgeInsets.only(right: 20),
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: ColorRes.white)),
+                  border: Border.all(width: 1, color: ColorRes.white),
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: Colors.black45,
+                ),
                 child: Column(
                   children: <Widget>[
                     firstPieChart(),
@@ -168,24 +172,37 @@ class _PLPageState extends State<PLPage> {
 
   showSecondHalf() {
     return Container(
-        height: 300,
-        padding: EdgeInsets.only(top: 10),
-        margin: EdgeInsets.all(10),
-        decoration:
-            BoxDecoration(border: Border.all(width: 1, color: ColorRes.white)),
+        height: 310,
+        padding: EdgeInsets.only(top: 10,left: 10,right: 10,bottom: 10),
+        margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          border: Border.all(width: 1, color: ColorRes.white),
+          borderRadius: BorderRadius.circular(12.0),
+          color: Colors.black45,
+        ),
         width: Utils.getDeviceWidth(context),
         child: Column(
           children: <Widget>[
             Container(
               height: 30,
+              width: Utils.getDeviceWidth(context)/4,
               alignment: Alignment.center,
+              decoration: BoxDecoration(
+                border: Border.all(width: 0.2,color: ColorRes.white),
+                  borderRadius: BorderRadius.circular(5.0),
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
+                      fit: BoxFit.fill)),
               child: Text(
                 Utils.getText(context, StringRes.sevenDaysDevelopment),
                 style: TextStyle(color: ColorRes.white),
               ),
             ),
             Expanded(
-              child: Padding(padding: EdgeInsets.all(5),child: OrdinalComboBarLineChart.withSampleData(performanceData),),
+              child: Padding(
+                padding: EdgeInsets.all(5),
+                child: OrdinalComboBarLineChart.withSampleData(performanceData),
+              ),
             ),
             Container(
               height: 30,
@@ -230,7 +247,10 @@ class _PLPageState extends State<PLPage> {
               style: TextStyle(color: ColorRes.white),
             ),
           ),
-          Image.asset(Utils.getAssetsImg("cash_graph"),height: 15,),
+          Image.asset(
+            Utils.getAssetsImg("cash_graph"),
+            height: 15,
+          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
@@ -498,13 +518,16 @@ class _PLPageState extends State<PLPage> {
             width: 160,
             padding: EdgeInsets.only(left: 10),
             child: Text(
-
-                Utils.getText(
-                    context,
-                    type == Const.typeCost
-                        ? StringRes.profit
-                        : StringRes.cashAtTheEndOfPeriod),
-                style: TextStyle(fontSize: 13, color: ColorRes.white,),),
+              Utils.getText(
+                  context,
+                  type == Const.typeCost
+                      ? StringRes.profit
+                      : StringRes.cashAtTheEndOfPeriod),
+              style: TextStyle(
+                fontSize: 13,
+                color: ColorRes.white,
+              ),
+            ),
           ),
           Expanded(
               child: Row(
@@ -521,7 +544,8 @@ class _PLPageState extends State<PLPage> {
                       getValidText(type == 1
                           ? getLastProfit()
                           : performanceData.cash.previousCash),
-                      style: TextStyle(fontSize: 13, color: ColorRes.white),textAlign: TextAlign.right),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white),
+                      textAlign: TextAlign.right),
                 ),
               ),
               Expanded(
@@ -535,7 +559,8 @@ class _PLPageState extends State<PLPage> {
                       getValidText(type == 1
                           ? getCurrentProfit()
                           : performanceData.cash.todayCash),
-                      style: TextStyle(fontSize: 13, color: ColorRes.white),textAlign: TextAlign.right),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white),
+                      textAlign: TextAlign.right),
                 ),
               )
             ],
