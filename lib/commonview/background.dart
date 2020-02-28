@@ -44,8 +44,8 @@ class CommonView {
           ),
           Container(
             alignment: Alignment.center,
-            height: 30,
-            padding: EdgeInsets.symmetric(horizontal: 20),
+
+            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
             margin: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:

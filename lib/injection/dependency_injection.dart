@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:audioplayers/audio_cache.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -34,6 +35,7 @@ class Injector {
   static bool isSoundEnable;
   static AudioCache player = AudioCache(prefix: 'sounds/');
 
+
 //  factory Injector {
 //    return _singleton;
 //  }
@@ -45,6 +47,7 @@ class Injector {
 
     firebaseMessaging = FirebaseMessaging();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 
     deviceId = await FlutterUdid.udid;
 
@@ -95,7 +98,7 @@ class Injector {
   }
 
   static isManager() {
-    return userData.isManager == 0;
+    return userData.isManager == 1;
   }
 
   static updateIntroType(int introType) async {

@@ -59,8 +59,7 @@ class _RankingPageState extends State<RankingPage> {
       }
     });
 
-    getUserGroups();
-    getFriends(true, false);
+    getData();
   }
 
   @override
@@ -436,49 +435,45 @@ class _RankingPageState extends State<RankingPage> {
     }
   }
 
-  getUserGroups() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
+  getUserGroups() async {
+    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
-        GetUserGroupData grp1 = GetUserGroupData();
-        grp1.groupId = 1;
-        grp1.name = Utils.getText(context, StringRes.world);
-        GetUserGroupData grp2 = GetUserGroupData();
-        grp2.groupId = 2;
-        grp2.name = Utils.getText(context, StringRes.country);
-        GetUserGroupData grp3 = GetUserGroupData();
-        grp3.groupId = 3;
-        grp3.name = Utils.getText(context, StringRes.friends);
+    GetUserGroupData grp1 = GetUserGroupData();
+    grp1.groupId = 1;
+    grp1.name = Utils.getText(context, StringRes.world);
+    GetUserGroupData grp2 = GetUserGroupData();
+    grp2.groupId = 2;
+    grp2.name = Utils.getText(context, StringRes.country);
+    GetUserGroupData grp3 = GetUserGroupData();
+    grp3.groupId = 3;
+    grp3.name = Utils.getText(context, StringRes.friends);
 
-        arrGroups.add(grp1);
-        arrGroups.add(grp2);
-        arrGroups.add(grp3);
+    arrGroups.add(grp1);
+    arrGroups.add(grp2);
+    arrGroups.add(grp3);
 
-        GetUserGroupRequest rq = GetUserGroupRequest();
-        rq.userId = Injector.userData.userId;
+    GetUserGroupRequest rq = GetUserGroupRequest();
+    rq.userId = Injector.userData.userId;
 
-        WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+    WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
+      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
 
-          if (data != null) {
-            data.forEach((v) {
-              arrGroups.add(GetUserGroupData.fromJson(v));
-            });
-
-            if (arrGroups.isNotEmpty) setState(() {});
-          }
-        }).catchError((e) {
-          CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+      if (data != null) {
+        data.forEach((v) {
+          arrGroups.add(GetUserGroupData.fromJson(v));
         });
+
+        if (arrGroups.isNotEmpty) setState(() {});
       }
+    }).catchError((e) {
+      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
     });
   }
 
-  void getFriends(bool isScrollDown, bool isToAddData) {
+  getFriends(bool isScrollDown, bool isToAddData) async {
     print("present__" + present.toString());
 
-//    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
+    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
     if (!isToAddData) arrFriends.clear();
 
@@ -494,8 +489,8 @@ class _RankingPageState extends State<RankingPage> {
         ? isScrollDown ? arrFriends.last.userId : arrFriends.first.userId
         : 0;
 
-    WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
-//      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+    await WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
+      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
       if (data != null) {
         List<GetFriendsData> arrFriendsData = List();
 
@@ -512,7 +507,7 @@ class _RankingPageState extends State<RankingPage> {
         }
       }
     }).catchError((e) {
-//      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
     });
   }
 
@@ -715,5 +710,14 @@ class _RankingPageState extends State<RankingPage> {
   isCurrentUser(int index) {
     return arrFriends.length > 0 &&
         arrFriends[index].userId == Injector.userData.userId;
+  }
+
+  void getData() async {
+    bool isConnected = await Utils.isInternetConnectedWithAlert();
+
+    if (isConnected) {
+      await getUserGroups();
+      await getFriends(true, false);
+    }
   }
 }

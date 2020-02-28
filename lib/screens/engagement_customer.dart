@@ -226,7 +226,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
-      Utils.showToast("Please select at least one option");
+      Utils.showToast(Utils.getText(context, StringRes.alertSelectOneOption));
       return;
     }
 
@@ -246,6 +246,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     if (questionData.isAnsweredCorrect) {
       Injector.customerValueData.totalBalance =
           Injector.customerValueData.totalBalance + questionData.value;
+
+      Injector.customerValueData.remainingSalesPerson =
+          Injector.customerValueData.remainingSalesPerson -
+              questionData.resources;
+      Injector.customerValueData.remainingCustomerCapacity =
+          Injector.customerValueData.remainingCustomerCapacity - 1;
 
       Injector.prefs.setString(PrefKeys.customerValueData,
           jsonEncode(Injector.customerValueData.toJson()));
@@ -267,7 +273,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
-      Utils.showToast("Please select at least one option");
+      Utils.showToast(Utils.getText(context, StringRes.alertSelectOneOption));
       return;
     }
 

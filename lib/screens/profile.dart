@@ -29,7 +29,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   TextEditingController companyController = TextEditingController();
 
-
   FocusNode myFocusNode;
 
   @override
@@ -94,7 +93,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-
         ],
       ),
     );
@@ -452,6 +450,7 @@ class _ProfilePageState extends State<ProfilePage> {
     LogoutRequest rq = LogoutRequest();
     rq.userId = Injector.userId;
     rq.deviceType = Const.deviceType;
+    rq.deviceToken = Injector.prefs.getString(PrefKeys.deviceToken);
 
     WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
       CommonView.showCircularProgress(false, context);
@@ -628,12 +627,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontSize: 13,
                                 ),
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.only(bottom: 5),
+                                    contentPadding: EdgeInsets.only(bottom: 5),
                                     border: InputBorder.none,
 //                                    hintText: Injector.userData?.companyName,
                                     hintStyle:
                                         TextStyle(color: ColorRes.hintColor)),
-                              maxLines: 1,),
+                                maxLines: 1,
+                              ),
                             ),
                           )
                         ],
@@ -724,7 +724,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(
               height: 15,
-            ), Row(
+            ),
+            Row(
               children: <Widget>[
                 Expanded(
                   child: Stack(

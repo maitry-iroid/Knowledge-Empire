@@ -446,7 +446,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   lineHeight: 20.0,
-                  percent: (arrLearningModules[index].moduleProgress ?? 0 / 100)
+                  percent: ((arrLearningModules[index].moduleProgress ?? 0 )/ 100)
                       .toDouble(),
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
@@ -595,7 +595,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
       CommonView.showCircularProgress(false, context);
 
-      if (data != null) Utils.showToast(Utils.showToast(StringRes.alertUChallengeSent));
+      if (data != null) Utils.showToast(Utils.getText(context,StringRes.alertUChallengeSent));
     }).catchError((e) {
       print("sendChallenge_" + e.toString());
 

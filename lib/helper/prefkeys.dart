@@ -10,4 +10,5 @@ class PrefKeys {
   static var isSoundEnable = "isSoundEnable";
   static var isIntroRemaining = "isIntroRemaining";
   static var currentIntroType= "currentIntroType";
+  static var deviceToken= "deviceToken";
 }

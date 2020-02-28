@@ -49,13 +49,15 @@ class MyAppState extends State<MyApp> {
   }
 
   void callRegisterForPush(String token) {
-    Utils.isInternetConnected().then((isConnected) {
+    Utils.isInternetConnected().then((isConnected) async {
       if (isConnected) {
         RegisterForPushRequest rq = RegisterForPushRequest();
         rq.userId = Injector.userId;
         rq.deviceId = Injector.deviceId;
         rq.deviceType = "android";
         rq.deviceToken = token;
+
+        await Injector.prefs.setString(PrefKeys.deviceToken, token);
 
         WebApi().callAPI(WebApi.rqRegisterForPush, rq.toJson()).then((data) {
           if (data != null) {}
@@ -181,7 +183,7 @@ class MyAppState extends State<MyApp> {
       ],
       supportedLocales: [
         const Locale('en', ''),
-        const Locale('es', ''),
+        const Locale('de', ''),
         // ... other locales the app supports
       ],
     );

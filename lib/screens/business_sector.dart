@@ -627,7 +627,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   showDescriptionView() {
     return Container(
-      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Stack(
         fit: StackFit.passthrough,
         children: <Widget>[
@@ -667,11 +668,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             alignment: Alignment.topCenter,
             child: Container(
               alignment: Alignment.center,
-              height: Utils.getTitleHeight(),
               margin: EdgeInsets.only(
                   top: Injector.isBusinessMode ? 3 : 5,
-                  left: Utils.getDeviceWidth(context) / 10,
-                  right: Utils.getDeviceWidth(context) / 10),
+                  left: Utils.getDeviceWidth(context) / 9,
+                  right: Utils.getDeviceWidth(context) / 9),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   color:
