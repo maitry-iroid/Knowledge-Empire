@@ -463,7 +463,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.7;
+				CURRENT_PROJECT_VERSION = 0.1.8;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/iroid/Documents/Software/flutter;
@@ -480,7 +480,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
-				PRODUCT_NAME = KE;
+				PRODUCT_NAME = "KE Prod";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -550,7 +550,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.7;
+				CURRENT_PROJECT_VERSION = 0.1.8;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/iroid/Documents/Software/flutter;
@@ -567,7 +567,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
-				PRODUCT_NAME = KE;
+				PRODUCT_NAME = "KE Prod";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -643,7 +643,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.7;
+				CURRENT_PROJECT_VERSION = 0.1.8;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/iroid/Documents/Software/flutter;
@@ -660,7 +660,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempire.app;
-				PRODUCT_NAME = KE;
+				PRODUCT_NAME = "KE Prod";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -732,7 +732,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.7;
+				CURRENT_PROJECT_VERSION = 0.1.8;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/iroid/Documents/Software/flutter;
@@ -749,7 +749,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempire.app;
-				PRODUCT_NAME = KE;
+				PRODUCT_NAME = "KE Prod";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -876,7 +876,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.7;
+				CURRENT_PROJECT_VERSION = 0.1.8;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/iroid/Documents/Software/flutter;
@@ -893,7 +893,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
-				PRODUCT_NAME = KE;
+				PRODUCT_NAME = "KE Prod";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -914,7 +914,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.1.7;
+				CURRENT_PROJECT_VERSION = 0.1.8;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -930,7 +930,7 @@
 				);
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
-				PRODUCT_NAME = KE;
+				PRODUCT_NAME = "KE Prod";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

@@ -63,7 +63,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //      customerValueBloc?.releaseResource(rq);
 
       CommonView.showCircularProgress(true, context);
-      WebApi().callAPI(WebApi.rqReleaseResource, rq.toJson()).then((data) {
+      WebApi().callAPI(WebApi.rqReleaseResource, rq.toJson()).then((data) async{
         CommonView.showCircularProgress(false, context);
 
         if (data != null) {
@@ -73,13 +73,12 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           CustomerValueData customerValueData =
               CustomerValueData.fromJson(data);
 
-          Injector.setCustomerValueData(customerValueData);
+         await Injector.setCustomerValueData(customerValueData);
 
           Injector.streamController.add("release resources");
 
           setState(() {
             arrQuestions.removeAt(index);
-
 
           });
         } else {

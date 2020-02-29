@@ -449,7 +449,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     LogoutRequest rq = LogoutRequest();
     rq.userId = Injector.userId;
-    rq.deviceType = Const.deviceType;
+    rq.deviceType = Injector.deviceType;
     rq.deviceToken = Injector.prefs.getString(PrefKeys.deviceToken);
 
     WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {

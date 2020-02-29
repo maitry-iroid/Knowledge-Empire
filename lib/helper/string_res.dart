@@ -330,7 +330,7 @@ class StringRes {
       'subscribed': 'abonniert',
       'engagement': 'Debriefing',
       'engagement': 'Nachbesprechung',
-      'situation': 'Situation',
+      'situation': 'Debriefing',
       'category': 'Kategorie',
       'achievement': 'Bereits erreicht',
       'nextLevel': 'Nächste Stufe',

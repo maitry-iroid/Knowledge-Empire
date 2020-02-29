@@ -67,6 +67,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
 //    downloadFile();
     correctWrongImage();
+
+    if (questionData.isAnsweredCorrect == true) {
+      Injector.streamController?.add("${Const.typeMoneyAnim}");
+    }
   }
 
   String error;
@@ -417,7 +421,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             elevation: 10,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(top: 20, bottom: 15, right: 15, left: 8),
+            margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
             child: Container(
               alignment: Alignment.center,
               padding:
@@ -445,7 +449,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               alignment: Alignment.center,
               height: 30,
               margin: EdgeInsets.symmetric(
-                  horizontal: Utils.getDeviceWidth(context) / 6, vertical: 5),
+                  horizontal: Utils.getDeviceWidth(context) / 6),
               padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                   borderRadius: Injector.isBusinessMode
@@ -988,7 +992,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
           ? _controller.setLooping(true)
           : _controller.setLooping(false);
 
-      _controller.pause();
+      _controller.play();
     }
   }
 

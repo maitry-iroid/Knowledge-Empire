@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:audioplayers/audio_cache.dart';
-import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
@@ -30,11 +30,11 @@ class Injector {
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
+  static String deviceType = "";
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
   static AudioCache player = AudioCache(prefix: 'sounds/');
-
 
 //  factory Injector {
 //    return _singleton;
@@ -45,9 +45,10 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
 
+    deviceType = Device.get().isAndroid ? "android" : "ios";
+
     firebaseMessaging = FirebaseMessaging();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
 
     deviceId = await FlutterUdid.udid;
 

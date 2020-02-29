@@ -90,15 +90,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           : VideoPlayerController.network(questionData.mediaLink)
         ..initialize().then((_) {
           setState(() {
-            _controller.pause();
+            _controller.play();
           });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
       questionData.videoLoop == 1
           ? _controller.setLooping(true)
           : _controller.setLooping(false);
-
-      _controller.pause();
     }
   }
 
@@ -681,15 +679,21 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               child: MaterialButton(
                 height: 100,
                 onPressed: () {
-                  questionData.videoPlay == 1
-                      ? setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        })
-                      : setState(() {
-                          _controller.play();
-                        });
+                  _controller.value.isPlaying
+                      ? _controller.pause()
+                      : _controller.play();
+
+                  setState(() {});
+
+//                  questionData.videoPlay == 1
+//                      ? setState(() {
+//                          _controller.value.isPlaying
+//                              ? _controller.pause()
+//                              : _controller.play();
+//                        })
+//                      : setState(() {
+//                          _controller.play();
+//                        });
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 7,

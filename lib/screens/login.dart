@@ -223,7 +223,13 @@ class _LoginPageState extends State<LoginPage> {
 
         if (userData.isFirstTimeLogin)
           Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
-        navigateToDashboard();
+
+        if (Injector.userData.isPasswordChanged == 0) {
+          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
+        }else{
+          navigateToDashboard();
+        }
+
       }
     }).catchError((e) {
       print("login_" + e.toString());

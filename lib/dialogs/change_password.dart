@@ -285,7 +285,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
           Navigator.pop(context);
         } else {
           Navigator.pushAndRemoveUntil(
-              context, FadeRouteIntro(), ModalRoute.withName("/login"));
+              context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {

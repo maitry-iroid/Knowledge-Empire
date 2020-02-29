@@ -139,7 +139,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   int duration = 4;
   bool isCoinViseble = false;
 
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -151,13 +150,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     initStreamController();
 
-    startAnimation();
-
     initCheckNetworkConnectivity();
 
     setSelectedIndex();
-
-
 
     if (widget.initialPageType != Const.typeChallenges &&
         widget.initialPageType != Const.typeCustomerSituation &&
@@ -210,12 +205,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ? Injector.isManager() ? TeamPage() : ChallengesPage()
             : Container();
       case 6:
+
+      return  (Injector.isManager()
+            ? ChallengesPage()
+            : (Injector.isBusinessMode
+            ? OrganizationsPage2()
+            : PowerUpsPage()));
         return Const.envType == Environment.DEV
-            ? Injector.isManager()
+            ? (Injector.isManager()
                 ? ChallengesPage()
                 : (Injector.isBusinessMode
                     ? OrganizationsPage2()
-                    : PowerUpsPage())
+                    : PowerUpsPage()))
             : Container();
       case 7:
         return Const.envType == Environment.DEV
@@ -223,7 +224,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ? Injector.isBusinessMode
                     ? OrganizationsPage2()
                     : PowerUpsPage()
-                : PLPage
+                : PLPage()
             : Container();
       case 8:
         return Const.envType == Environment.DEV
@@ -328,15 +329,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             isShowMenu: true,
             openProfile: openProfile,
           ),
-          coinWidget(250, 150),
-          coinWidget(310, 50),
-          coinWidget(70, 50),
-          coinWidget(150, 20),
-          coinWidget(350, 320),
-          coinWidget(350, 450),
-          coinWidget(180, 300),
-          coinWidget(200, 550),
-          coinWidget(350, 650),
+//          isCoinViseble
+//              ? Stack(
+//                  children: <Widget>[
+//                    coinWidget(250, 150),
+//                    coinWidget(310, 50),
+//                    coinWidget(70, 50),
+//                    coinWidget(150, 20),
+//                    coinWidget(350, 320),
+//                    coinWidget(350, 450),
+//                    coinWidget(180, 300),
+//                    coinWidget(200, 550),
+//                    coinWidget(350, 650),
+//                  ],
+//                )
+//              : Container()
         ],
       )),
     );
@@ -402,7 +409,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         isCoinViseble.toString() +
         "====>startAnim===>" +
         startAnim.toString());
-    return AnimatedPositioned(
+    AnimatedPositioned(
       duration: Duration(seconds: duration),
       top: !isCoinViseble ? top : 20,
       left: !isCoinViseble ? left : 750,
@@ -481,6 +488,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typePl);
           } else if (data == "${Const.openPendingChallengeDialog}") {
             getPendingChallenges();
+          } else if (data == "${Const.typeMoneyAnim}") {
+            isCoinViseble = true;
+            startAnimation();
           }
         });
       }

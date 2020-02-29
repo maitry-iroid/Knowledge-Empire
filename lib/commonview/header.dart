@@ -183,9 +183,15 @@ class HeaderViewState extends State<HeaderView> {
           } else if (type == Const.typeServicesPerson) {
             Injector.streamController?.add("${Const.typeExistingCustomer}");
           } else if (type == Const.typeBrandValue) {
-            Injector.streamController?.add("${Const.typeRanking}");
+            if (Const.envType == Environment.DEV)
+              Injector.streamController?.add("${Const.typeRanking}");
+            else
+              Utils.showComingSoonDialog(context);
           } else if (type == Const.typeMoney) {
-            Injector.streamController?.add("${Const.typePl}");
+            if (Const.envType == Environment.DEV)
+              Injector.streamController?.add("${Const.typePl}");
+            else
+              Utils.showComingSoonDialog(context);
           }
         },
       ),

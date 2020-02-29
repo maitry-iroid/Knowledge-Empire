@@ -71,7 +71,6 @@ class WebApi {
   Future<dynamic> callAPI(String apiReq, Map<String, dynamic> jsonMap) async {
     initDio();
 
-
     print(apiReq + "_" + json.encode(jsonMap));
     try {
       final response = await dio
@@ -139,14 +138,13 @@ class WebApi {
             return null;
           }
         } else {
-          Utils.showToast( StringRes.somethingWrong);
+          Utils.showToast(StringRes.somethingWrong);
           return null;
         }
       } else {
         Utils.showToast(StringRes.somethingWrong);
         return null;
       }
-
     } catch (e) {
       print(e);
       return null;
@@ -159,7 +157,7 @@ class WebApi {
         Injector.userData != null && Injector.userData.accessToken != null
             ? "pig " + Injector.userData.accessToken
             : "";
-    String deviceType = 'android';
+    String deviceType = Injector.deviceType;
     String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
 
     print("contentTypeHeader " + contentTypeHeader);
