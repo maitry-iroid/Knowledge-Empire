@@ -13,6 +13,7 @@ import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/register_for_push.dart';
+import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -41,9 +42,9 @@ class MyAppState extends State<MyApp> {
 
     initPlatformState();
 
-    if (Injector.userId != null) {
-      initPush();
-    }
+//    if (Injector.userId != null) {
+//      PushNotificationHelper(context,"my app").initPush();
+//    }
 
     super.initState();
   }

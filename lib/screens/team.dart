@@ -166,21 +166,26 @@ class _TeamPageState extends State<TeamPage> {
             : EdgeInsets.only(left: 13, right: 15, top: 5, bottom: 5),
         child: secondScreen != true
             ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  listHeaderText(Utils.getText(context, StringRes.name)),
-                  listHeaderText(Utils.getText(context, StringRes.lastLog)),
-                  listHeaderText(Utils.getText(context, StringRes.points)),
-                  listHeaderText(Utils.getText(context, StringRes.correct)),
+                  listHeaderText(
+                      Utils.getText(context, StringRes.name), TextAlign.left),
+                  listHeaderText(Utils.getText(context, StringRes.lastLog),
+                      TextAlign.right),
+                  listHeaderText(Utils.getText(context, StringRes.points),
+                      TextAlign.right),
+                  listHeaderText(Utils.getText(context, StringRes.correct),
+                      TextAlign.right),
                 ],
               )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   listHeaderText(
-                      Utils.getText(context, StringRes.learningModule)),
-                  listHeaderText(Utils.getText(context, StringRes.levels)),
-                  listHeaderText(Utils.getText(context, StringRes.complete)),
+                      Utils.getText(context, StringRes.learningModule),
+                      TextAlign.left),
+                  listHeaderText(Utils.getText(context, StringRes.levels),
+                      TextAlign.right),
+                  listHeaderText(Utils.getText(context, StringRes.complete),
+                      TextAlign.right),
                 ],
               ));
   }
@@ -222,20 +227,18 @@ class _TeamPageState extends State<TeamPage> {
                   fit: BoxFit.fill)),
           child: secondScreen != true
               ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    listTextData(user?.name),
-                    listTextData(user?.lastLog.toString()),
-                    listTextData(user?.points.toString()),
-                    listTextData(user?.correct.toString())
+                    listTextData(user?.name, TextAlign.left),
+                    listTextData(user?.lastLog.toString(), TextAlign.right),
+                    listTextData(user?.points.toString(), TextAlign.right),
+                    listTextData(user?.correct.toString(), TextAlign.right)
                   ],
                 )
               : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    listTextData(module?.name),
-                    listTextData(module?.level.toString()),
-                    listTextData(module?.complete.toString())
+                    listTextData(module?.name, TextAlign.left),
+                    listTextData(module?.level.toString(), TextAlign.right),
+                    listTextData(module?.complete.toString(), TextAlign.right)
                   ],
                 )),
       onTap: () {
@@ -254,21 +257,28 @@ class _TeamPageState extends State<TeamPage> {
         borderRadius: BorderRadius.all(Radius.circular(20)));
   }
 
-  listHeaderText(String title) {
-    return Container(
-      child: Text(
-        title,
-        style: TextStyle(color: ColorRes.white, fontSize: 15),
+  listHeaderText(String title, TextAlign textAlign) {
+    return Expanded(
+      flex: 1,
+      child: Container(
+        child: Text(
+          title,
+          textAlign: textAlign,
+          style: TextStyle(color: ColorRes.white, fontSize: 15),
+        ),
       ),
     );
   }
 
-  listTextData(String text) {
-    return Container(
-      child: Text(
-        text,
-        textAlign: TextAlign.right,
-        style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 15),
+  listTextData(String text, TextAlign textAlign) {
+    return Expanded(
+      flex: 1,
+      child: Container(
+        child: Text(
+          text,
+          textAlign: textAlign,
+          style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 15),
+        ),
       ),
     );
   }
@@ -592,18 +602,15 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   void getTeamUserById(int teamUserId) {
-
-    Utils.isInternetConnected().then((isConnected){
-
+    Utils.isInternetConnected().then((isConnected) {
 //      CommonView.showCircularProgress(true, context);
 
-      if(isConnected){
+      if (isConnected) {
         TeamUserByIdRequest rq = TeamUserByIdRequest();
         rq.userId = Injector.userId;
         rq.teamUserId = teamUserId;
 
         WebApi().callAPI(WebApi.rqGetTeamUserById, rq.toJson()).then((data) {
-
 //          CommonView.showCircularProgress(false, context);
 
           if (data != null) {
@@ -618,9 +625,7 @@ class _TeamPageState extends State<TeamPage> {
           Utils.showToast(e.toString());
         });
       }
-
     });
-
   }
 
   _asyncConfirmDialog(BuildContext context) async {
@@ -629,10 +634,10 @@ class _TeamPageState extends State<TeamPage> {
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {
         return AlertDialog(
-          content:  Text(Utils.getText(context,StringRes.alertWantToBailOut)),
+          content: Text(Utils.getText(context, StringRes.alertWantToBailOut)),
           actions: <Widget>[
             FlatButton(
-              child:  Text(Utils.getText(context, StringRes.yes)),
+              child: Text(Utils.getText(context, StringRes.yes)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
@@ -640,7 +645,7 @@ class _TeamPageState extends State<TeamPage> {
               },
             ),
             FlatButton(
-              child:   Text(Utils.getText(context, StringRes.no)),
+              child: Text(Utils.getText(context, StringRes.no)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

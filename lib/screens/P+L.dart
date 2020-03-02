@@ -607,67 +607,71 @@ class _PLPageState extends State<PLPage> {
       Expanded(
         child: Row(
           children: <Widget>[
-            Container(
-              child: Center(
-                  child: (type == Const.typeCost ? dataMap : openCloseMap) !=
-                          null
-                      ? PieChart(
-                          dataMap:
-                              type == Const.typeCost ? dataMap : openCloseMap,
-                          animationDuration: Duration(milliseconds: 800),
-                          chartLegendSpacing: 32.0,
-                          chartRadius: MediaQuery.of(context).size.width / 5,
-                          showChartValues: false,
-                          showChartValuesOutside: false,
-                          chartValueBackgroundColor: Colors.transparent,
-                          colorList: type == Const.typeCost
-                              ? colorList
-                              : colorOpenCloseList,
-                          legendPosition: LegendPosition.right,
-                          showChartValueLabel: false,
-                          initialAngle: 0,
-                          chartValueStyle: defaultChartValueStyle.copyWith(
-                              color: type == Const.typeCost
-                                  ? ColorRes.white
-                                  : Colors.transparent),
-                          showLegends: false,
-                          chartType: ChartType.disc,
-                        )
-                      : Container()),
-            ),
-            Container(
-              height: 140,
-              width: 80,
-              margin: EdgeInsets.only(left: 00),
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: type == Const.typeCost
-                      ? performanceData?.cost?.length
-                      : performanceData?.revenue?.length,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: <Widget>[
-                        Container(
-                          height: 13,
-                          width: 13,
-                          margin: EdgeInsets.only(right: 5, top: 5),
-                          decoration: BoxDecoration(
-                              color: type == Const.typeCost
-                                  ? colorList[index]
-                                  : colorOpenCloseList[index]),
-                        ),
-                        Expanded(
-                          child: Text(
-                            type == Const.typeCost
-                                ? performanceData.cost[index].name
-                                : performanceData.revenue[index].name ?? "",
-                            style:
-                                TextStyle(fontSize: 12, color: ColorRes.white),
+           Expanded(
+             child:  Container(
+               child: Center(
+                   child: (type == Const.typeCost ? dataMap : openCloseMap) !=
+                       null
+                       ? PieChart(
+                     dataMap:
+                     type == Const.typeCost ? dataMap : openCloseMap,
+                     animationDuration: Duration(milliseconds: 800),
+                     chartLegendSpacing: 32.0,
+                     chartRadius: MediaQuery.of(context).size.width / 5,
+                     showChartValues: false,
+                     showChartValuesOutside: false,
+                     chartValueBackgroundColor: Colors.transparent,
+                     colorList: type == Const.typeCost
+                         ? colorList
+                         : colorOpenCloseList,
+                     legendPosition: LegendPosition.right,
+                     showChartValueLabel: false,
+                     initialAngle: 0,
+                     chartValueStyle: defaultChartValueStyle.copyWith(
+                         color: type == Const.typeCost
+                             ? ColorRes.white
+                             : Colors.transparent),
+                     showLegends: false,
+                     chartType: ChartType.disc,
+                   )
+                       : Container()),
+             ),
+           ),
+            Expanded(
+              child: Container(
+                height: 140,
+                width: 80,
+                margin: EdgeInsets.only(left: 00),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: type == Const.typeCost
+                        ? performanceData?.cost?.length
+                        : performanceData?.revenue?.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: <Widget>[
+                          Container(
+                            height: 13,
+                            width: 13,
+                            margin: EdgeInsets.only(right: 5, top: 5),
+                            decoration: BoxDecoration(
+                                color: type == Const.typeCost
+                                    ? colorList[index]
+                                    : colorOpenCloseList[index]),
                           ),
-                        )
-                      ],
-                    );
-                  }),
+                          Expanded(
+                            child: Text(
+                              type == Const.typeCost
+                                  ? performanceData.cost[index].name
+                                  : performanceData.revenue[index].name ?? "",
+                              style:
+                                  TextStyle(fontSize: 12, color: ColorRes.white),
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+              ),
             )
 //                  : Container()
           ],

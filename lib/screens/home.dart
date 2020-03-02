@@ -7,6 +7,7 @@ import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/dashboard_prof.dart';
@@ -154,12 +155,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
+    PushNotificationHelper(context,"home").initPush();
+
     if (widget.initialPageType != Const.typeChallenges &&
         widget.initialPageType != Const.typeCustomerSituation &&
         widget.initialPageType != Const.typeEngagement) {
       if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
-      if (widget.isChallenge != null && widget.isChallenge)
+      if (widget.isChallenge == null || widget.isChallenge)
         getPendingChallenges();
     }
   }
@@ -205,12 +208,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ? Injector.isManager() ? TeamPage() : ChallengesPage()
             : Container();
       case 6:
-
-      return  (Injector.isManager()
+        return (Injector.isManager()
             ? ChallengesPage()
             : (Injector.isBusinessMode
-            ? OrganizationsPage2()
-            : PowerUpsPage()));
+                ? OrganizationsPage2()
+                : PowerUpsPage()));
         return Const.envType == Environment.DEV
             ? (Injector.isManager()
                 ? ChallengesPage()
@@ -255,26 +257,29 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   _onSelectItem(int index) {
     Utils.playClickSound();
 
-    if (mounted) {
-      setState(() => _selectedDrawerIndex = index);
+    if (_selectedDrawerIndex != index) {
+      if (mounted) {
+        setState(() => _selectedDrawerIndex = index);
 
-      if (Const.envType == Environment.PROD) {
-        if (index == Utils.getHomePageIndex(Const.typePl) ||
-            index == Utils.getHomePageIndex(Const.typeReward) ||
-            index == Utils.getHomePageIndex(Const.typeChallenges) ||
-            index == Utils.getHomePageIndex(Const.typeTeam) ||
-            index == Utils.getHomePageIndex(Const.typeRanking)) {
-          Utils.showComingSoonDialog(context);
+        if (Const.envType == Environment.PROD) {
+          if (index == Utils.getHomePageIndex(Const.typePl) ||
+              index == Utils.getHomePageIndex(Const.typeReward) ||
+              index == Utils.getHomePageIndex(Const.typeChallenges) ||
+              index == Utils.getHomePageIndex(Const.typeTeam) ||
+              index == Utils.getHomePageIndex(Const.typeRanking)) {
+            Utils.showComingSoonDialog(context);
+          } else {
+            Navigator.of(context).pop(); // close the drawer
+            if (_selectedDrawerIndex ==
+                Utils.getHomePageIndex(Const.typeHelp)) {
+              Navigator.push(context, FadeRouteIntro());
+            }
+          }
         } else {
           Navigator.of(context).pop(); // close the drawer
           if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
             Navigator.push(context, FadeRouteIntro());
           }
-        }
-      } else {
-        Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
-          Navigator.push(context, FadeRouteIntro());
         }
       }
     }
@@ -466,33 +471,50 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       Injector.streamController = StreamController.broadcast();
 
     Injector.streamController.stream.listen((data) {
-      if (mounted) {
-        setState(() {
-          print(data);
-
-          if (data == "${Const.typeProfile}") {
+      if (data == "${Const.typeProfile}") {
+        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeProfile))
+          setState(() {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile);
-          } else if (data == "${Const.typeOrg}") {
+          });
+      } else if (data == "${Const.typeOrg}") {
+        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeOrg))
+          setState(() {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeOrg);
-          } else if (data == "${Const.typeTeam}") {
+          });
+      } else if (data == "${Const.typeTeam}") {
+        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeTeam))
+          setState(() {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeTeam);
-          } else if (data == "${Const.typeNewCustomer}") {
+          });
+      } else if (data == "${Const.typeNewCustomer}") {
+        if (_selectedDrawerIndex !=
+            Utils.getHomePageIndex(Const.typeNewCustomer))
+          setState(() {
             _selectedDrawerIndex =
                 Utils.getHomePageIndex(Const.typeNewCustomer);
-          } else if (data == "${Const.typeExistingCustomer}") {
+          });
+      } else if (data == "${Const.typeExistingCustomer}") {
+        if (_selectedDrawerIndex !=
+            Utils.getHomePageIndex(Const.typeExistingCustomer))
+          setState(() {
             _selectedDrawerIndex =
                 Utils.getHomePageIndex(Const.typeExistingCustomer);
-          } else if (data == "${Const.typeRanking}") {
+          });
+      } else if (data == "${Const.typeRanking}") {
+        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeRanking))
+          setState(() {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeRanking);
-          } else if (data == "${Const.typePl}") {
+          });
+      } else if (data == "${Const.typePl}") {
+        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typePl))
+          setState(() {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typePl);
-          } else if (data == "${Const.openPendingChallengeDialog}") {
-            getPendingChallenges();
-          } else if (data == "${Const.typeMoneyAnim}") {
-            isCoinViseble = true;
-            startAnimation();
-          }
-        });
+          });
+      } else if (data == "${Const.openPendingChallengeDialog}") {
+        getPendingChallenges();
+      } else if (data == "${Const.typeMoneyAnim}") {
+        isCoinViseble = true;
+        startAnimation();
       }
     }, onDone: () {}, onError: (error) {});
   }
@@ -514,10 +536,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void getPendingChallenges() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        setState(() {
-          isLoading = true;
-        });
-
         GetChallengesRequest rq = GetChallengesRequest();
         rq.userId = Injector.userData.userId;
 
@@ -530,7 +548,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             QuestionData questionData = QuestionData.fromJson(data);
 
             if (questionData != null && questionData.challengeId != null)
-              Utils.showChallengeQuestionDialog(_scaffoldKey, data);
+              Utils.showChallengeQuestionDialog(_scaffoldKey, questionData);
           }
         }).catchError((e) {
           Utils.showToast(e.toString());

@@ -777,8 +777,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             else
               performSubscribeUnsubscribe();
           } else {
-            Utils.showToast(
-                Utils.getText(context, StringRes.alertNoModuleFound));
+            Utils.showToast(Utils.getText(context, StringRes.alertNotAllowed));
           }
         });
   }

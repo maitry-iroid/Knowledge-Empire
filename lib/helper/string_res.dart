@@ -82,6 +82,7 @@ class StringRes {
   static var alertWantToSubscribe2 = "alertWantToSubscribe2";
   static var downloading = "downloading";
   static var thisModuleWillOccupie = "thisModuleWillOccupie";
+  static var alertNotAllowed = "thisModuleWillOccupie";
 
   //engage customer
   static var engagement = "engagement";
@@ -279,7 +280,8 @@ class StringRes {
       'alertUChallengeSent': "Challenge sent successfully!",
       'alertSelectOneOption': "Please select at least one option.",
       'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
-      'ok': "Ok"
+      'ok': "Ok",
+      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules."
     },
     'de': {
       'home': "Büro",
