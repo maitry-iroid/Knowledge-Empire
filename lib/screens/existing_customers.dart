@@ -63,23 +63,21 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //      customerValueBloc?.releaseResource(rq);
 
       CommonView.showCircularProgress(true, context);
-      WebApi().callAPI(WebApi.rqReleaseResource, rq.toJson()).then((data) async{
+      WebApi()
+          .callAPI(WebApi.rqReleaseResource, rq.toJson())
+          .then((data) async {
         CommonView.showCircularProgress(false, context);
 
         if (data != null) {
-
-          CommonView.showCircularProgress(false, context);
-
           CustomerValueData customerValueData =
               CustomerValueData.fromJson(data);
 
-         await Injector.setCustomerValueData(customerValueData);
+          await Injector.setCustomerValueData(customerValueData);
 
           Injector.streamController.add("release resources");
 
           setState(() {
             arrQuestions.removeAt(index);
-
           });
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
@@ -107,11 +105,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           arrQuestions.add(QuestionData.fromJson(v));
         });
 
-        if(arrQuestions.isNotEmpty)
-          setState(() {
-
-          });
-
+        if (arrQuestions.isNotEmpty) setState(() {});
       }
     }).catchError((e) {
       print("getQuestions_" + e.toString());
@@ -141,7 +135,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                 ],
               ),
             ),
-
           ],
         ));
   }
@@ -305,12 +298,42 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           onTap: () {
             Utils.isInternetConnectedWithAlert().then((isConnected) {
               if (isConnected) {
-                releaseResource(index);
+                _asyncConfirmDialog(context, index);
               }
             });
           },
         )
       ],
+    );
+  }
+
+  _asyncConfirmDialog(BuildContext context, int index) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content:
+              Text(Utils.getText(context, StringRes.alertReleaseResources)),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(Utils.getText(context, StringRes.ok)),
+              onPressed: () {
+                //alert pop
+                Navigator.of(context).pop();
+                releaseResource(index);
+              },
+            ),
+            FlatButton(
+              child: Text(Utils.getText(context, StringRes.cancel)),
+              onPressed: () {
+                //alert pop
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }

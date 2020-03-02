@@ -44,8 +44,7 @@ class CommonView {
           ),
           Container(
             alignment: Alignment.center,
-
-            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             margin: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
@@ -123,113 +122,117 @@ class CommonView {
 
   static questionAndExplanation(
       BuildContext context, String title, bool checking, String content) {
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        Card(
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 10),
-          child: Container(
-            margin: EdgeInsets.only(top: 0),
-            padding: EdgeInsets.only(left: 10, right: 10, top: 20),
-            decoration: BoxDecoration(
-              color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: ColorRes.white, width: 1),
+    return InkResponse(
+      onTap: () {
+        Utils.playClickSound();
+
+        if (checking)
+          showDialog(
+            context: context,
+            builder: (_) => FunkyOverlay(
+              title: title,
+              content: content,
             ),
-            child: SingleChildScrollView(
-              child: Text(
-                content,
-                style: TextStyle(
-                    color: Injector.isBusinessMode
-                        ? ColorRes.white
-                        : ColorRes.textProf,
-                    fontSize: 15),
+          );
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 10),
+            child: Container(
+              margin: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: ColorRes.white, width: 1),
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  content,
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.textProf,
+                      fontSize: 15),
+                ),
               ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            alignment: Alignment.center,
-            height: 30,
-            margin: (checking == true
-                ? EdgeInsets.symmetric(
-                    horizontal: Utils.getDeviceWidth(context) / 7)
-                : EdgeInsets.symmetric(
-                    horizontal: Utils.getDeviceWidth(context) / 3)),
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                border: Injector.isBusinessMode
-                    ? null
-                    : Border.all(width: 1, color: ColorRes.white),
-                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("eddit_profile")),
-                        fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              title,
-              style: TextStyle(color: ColorRes.white, fontSize: 18),
-              textAlign: TextAlign.center,
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              height: 30,
+              margin: (checking == true
+                  ? EdgeInsets.symmetric(
+                      horizontal: Utils.getDeviceWidth(context) / 7)
+                  : EdgeInsets.symmetric(
+                      horizontal: Utils.getDeviceWidth(context) / 3)),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode
+                      ? null
+                      : Border.all(width: 1, color: ColorRes.white),
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image:
+                              AssetImage(Utils.getAssetsImg("eddit_profile")),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                title,
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
-        ),
-        //Full Screen Alert Show
-        Align(
-          alignment:
-              (checking == true ? Alignment.bottomRight : Alignment.topRight),
+          //Full Screen Alert Show
+          Align(
+            alignment:
+                (checking == true ? Alignment.bottomRight : Alignment.topRight),
 //          Alignment.bottomRight,
-          child: InkResponse(
-              onTap: () {
-                Utils.playClickSound();
-
-                if (checking)
-                  showDialog(
-                    context: context,
-                    builder: (_) => FunkyOverlay(
-                      title: title,
-                      content: content,
-                    ),
-                  );
-              },
-              child: (checking == true
-                  ? Container(
-                      alignment: Alignment.center,
-                      height: Utils.getDeviceWidth(context) / 20,
-                      width: Utils.getDeviceWidth(context) / 20,
-                      decoration: BoxDecoration(
-                          image:
+            child: (checking == true
+                ? Container(
+                    alignment: Alignment.center,
+                    height: Utils.getDeviceWidth(context) / 20,
+                    width: Utils.getDeviceWidth(context) / 20,
+                    decoration: BoxDecoration(
+                        image:
 //                          Injector.isBusinessMode ?
-                              DecorationImage(
-                                  image: AssetImage(Injector.isBusinessMode
-                                      ? Utils.getAssetsImg(
-                                          "full_expand_question_answers")
-                                      : Utils.getAssetsImg("expand_pro")),
-                                  fit: BoxFit.fill)
+                            DecorationImage(
+                                image: AssetImage(Injector.isBusinessMode
+                                    ? Utils.getAssetsImg(
+                                        "full_expand_question_answers")
+                                    : Utils.getAssetsImg("expand_pro")),
+                                fit: BoxFit.fill)
 //                              : null
-                          ))
-                  : Container(
-                      alignment: Alignment.center,
-                      height: Utils.getDeviceWidth(context) / 40,
-                      width: Utils.getDeviceWidth(context) / 40,
-                      decoration: BoxDecoration(
-                          image:
+                        ))
+                : Container(
+                    alignment: Alignment.center,
+                    height: Utils.getDeviceWidth(context) / 40,
+                    width: Utils.getDeviceWidth(context) / 40,
+                    decoration: BoxDecoration(
+                        image:
 //                          Injector.isBusinessMode ?
-                              DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("close_dialog")),
-                                  fit: BoxFit.fill)
+                            DecorationImage(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("close_dialog")),
+                                fit: BoxFit.fill)
 //                              : null
-                          )))),
-        )
-      ],
+                        ))),
+          )
+        ],
+      ),
     );
   }
 
@@ -321,6 +324,7 @@ class CommonView {
       ],
     );
   }
+
 //
 //  static Widget showCircularProgress(bool isLoading) {
 //    if (isLoading) {

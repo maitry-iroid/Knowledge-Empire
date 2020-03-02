@@ -597,7 +597,10 @@ class _RankingPageState extends State<RankingPage> {
         margin: EdgeInsets.symmetric(vertical: 2, horizontal: 1),
         decoration: isCurrentUser(index)
             ? BoxDecoration(
-                border: Border.all(color: ColorRes.white),
+                border: Border.all(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : ColorRes.titleBlueProf),
                 borderRadius: BorderRadius.circular(20),
               )
             : null,
@@ -651,7 +654,7 @@ class _RankingPageState extends State<RankingPage> {
                       ),
                     ),
                     Expanded(
-                      child: Text(arrFriends[index].name,
+                      child: Text(arrFriends[index].name ?? "",
                           overflow: TextOverflow.ellipsis,
                           style:
                               TextStyle(color: ColorRes.textBlue, fontSize: 16),
@@ -692,7 +695,9 @@ class _RankingPageState extends State<RankingPage> {
                 ),
                 child: Text(
 //                "0000",
-                  arrFriends[index].score.toString() ?? "",
+                  arrFriends[index].score != null
+                      ? arrFriends[index].score.toString()
+                      : "0",
                   style: TextStyle(
                     color: ColorRes.white,
                     fontSize: 14,

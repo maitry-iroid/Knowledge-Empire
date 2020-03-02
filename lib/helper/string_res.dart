@@ -61,6 +61,7 @@ class StringRes {
 
   //existing customer
   static var endRel = "endRel";
+  static var alertReleaseResources = "alertReleaseResources";
 
   //challenges
   static var searchForKeywords = "searchForKeywords";
@@ -148,6 +149,7 @@ class StringRes {
   static var alertWantToBailOut = "alertWantToBailOut";
   static var alertNoModuleFound = "alertNoModuleFound";
 
+  static var ok = "ok";
   static var yes = "yes";
   static var no = "no";
   static var comingSoon = "comingSoon";
@@ -204,8 +206,8 @@ class StringRes {
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
       'subscribed': 'Subscribed',
-      'engagement': 'Engagement',
-      'situation': 'Situation',
+      'engagement': 'Situation',
+      'situation': 'Debriefing',
       'category': 'Category',
       'achievement': 'Achievement',
       'nextLevel': 'Next Level',
@@ -275,7 +277,9 @@ class StringRes {
       'alertFriendSuccess': "Friend added successfully",
       'alertUnFriendSuccess': "Unfriend successfully",
       'alertUChallengeSent': "Challenge sent successfully!",
-      'alertSelectOneOption': "Please select at least one option."
+      'alertSelectOneOption': "Please select at least one option.",
+      'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+      'ok': "Ok"
     },
     'de': {
       'home': "Büro",
@@ -328,7 +332,6 @@ class StringRes {
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
       'subscribed': 'abonniert',
-      'engagement': 'Debriefing',
       'engagement': 'Nachbesprechung',
       'situation': 'Debriefing',
       'category': 'Kategorie',
@@ -416,6 +419,9 @@ class StringRes {
       'loyalty': 'Repeat in ...',
       'endRel': 'Release',
       'resources': 'Study Points (SP)',
+
+      //challenges
+      'competitor': 'Colleagues'
     },
     'es': {
       'home': "Home",

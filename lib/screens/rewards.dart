@@ -333,6 +333,9 @@ class _RewardsPageState extends State<RewardsPage> {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
+
+        arrAchievementData.clear();
+
         data.forEach((v) {
           arrAchievementData.add(GetAchievementData.fromJson(v));
         });

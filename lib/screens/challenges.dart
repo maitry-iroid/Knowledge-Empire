@@ -298,7 +298,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (selectedRewardsIndex == index) {
         return ColorRes.blue;
       } else {
-        return ColorRes.greyText;
+        return Injector.isBusinessMode ? ColorRes.greyText : ColorRes.white;
       }
     }
   }
@@ -368,20 +368,28 @@ class _ChallengesPageState extends State<ChallengesPage> {
         alignment: Alignment.center,
         width: 40,
         decoration: BoxDecoration(
-          color:
-              Injector.isBusinessMode ? selectedItem(2, index) : ColorRes.white,
+          color: Injector.isBusinessMode
+              ? selectedItem(2, index)
+              : selectedItem(2, index),
           borderRadius: BorderRadius.circular(20),
         ),
         margin: EdgeInsets.symmetric(horizontal: 2),
         child: Text(
           arrRewards[index].toString() + "%",
           style: TextStyle(
-              color:
-                  Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey,
+              color: Injector.isBusinessMode
+                  ? ColorRes.white
+                  : isRewardSelected(index)
+                      ? ColorRes.white
+                      : ColorRes.fontGrey,
               fontSize: 17),
         ),
       ),
     );
+  }
+
+  isRewardSelected(int index) {
+    return selectedRewardsIndex == index;
   }
 
   var selectedModuleIndex = -1;
@@ -446,8 +454,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   lineHeight: 20.0,
-                  percent: ((arrLearningModules[index].moduleProgress ?? 0 )/ 100)
-                      .toDouble(),
+                  percent:
+                      ((arrLearningModules[index].moduleProgress ?? 0) / 100)
+                          .toDouble(),
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -494,44 +503,46 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   void getFriends() {
     Utils.isInternetConnected().then((isConnected) {
-      CommonView.showCircularProgress(true, context);
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
 
-      GetFriendsRequest rq = GetFriendsRequest();
-      rq.userId = Injector.userData.userId;
-      rq.groupId = 0;
-      rq.category = 0;
-      rq.searchBy = 3;
-      rq.filter = 0;
-      rq.lastUserId = 0;
-      rq.scrollType = 1;
+        GetFriendsRequest rq = GetFriendsRequest();
+        rq.userId = Injector.userData.userId;
+        rq.groupId = 0;
+        rq.category = 0;
+        rq.searchBy = 3;
+        rq.filter = 0;
+        rq.lastUserId = 0;
+        rq.scrollType = 1;
 
-      WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
-        CommonView.showCircularProgress(false, context);
+        WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(false, context);
 
-        if (data != null) {
-          List<GetFriendsData> arrFriendsData = List();
-          data.forEach((v) {
-            arrFriendsData.add(GetFriendsData.fromJson(v));
-          });
+          if (data != null) {
+            List<GetFriendsData> arrFriendsData = List();
+            data.forEach((v) {
+              arrFriendsData.add(GetFriendsData.fromJson(v));
+            });
 
-          arrFriendsData.removeWhere(
-              (friend) => friend.userId == Injector.userData.userId);
+            arrFriendsData.removeWhere(
+                (friend) => friend.userId == Injector.userData.userId);
 
-          arrFriends = arrFriendsData;
-          arrFriendsToShow = arrFriendsData;
+            arrFriends = arrFriendsData;
+            arrFriendsToShow = arrFriendsData;
 
-          if (arrFriendsToShow.length > 0) {
-            selectedFriendId = arrFriends[0].userId;
-            getBusinessSectors();
-            setState(() {});
+            if (arrFriendsToShow.length > 0) {
+              selectedFriendId = arrFriends[0].userId;
+              getBusinessSectors();
+              setState(() {});
+            }
           }
-        }
-      }).catchError((e) {
-        print("getFriends_" + e.toString());
+        }).catchError((e) {
+          print("getFriends_" + e.toString());
 
-        CommonView.showCircularProgress(false, context);
-        Utils.showToast(e.toString());
-      });
+          CommonView.showCircularProgress(false, context);
+          Utils.showToast(e.toString());
+        });
+      }
     });
   }
 
@@ -553,87 +564,104 @@ class _ChallengesPageState extends State<ChallengesPage> {
               Utils.getText(context, StringRes.alertUnFriendSuccess));
         }
       }
+    }).catchError(() {
+      CommonView.showCircularProgress(false, context);
     });
   }
 
   void getBusinessSectors() {
-    CommonView.showCircularProgress(true, context);
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
 
-    GetLearningModuleRequest rq = GetLearningModuleRequest();
-    rq.userId = selectedFriendId;
-    rq.isChallenge = 1;
+        GetLearningModuleRequest rq = GetLearningModuleRequest();
+        rq.userId = selectedFriendId;
+        rq.isChallenge = 1;
 
-    WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, context);
+        WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(false, context);
 
-      if (data != null) {
-        data.forEach((v) {
-          arrLearningModules.add(LearningModuleData.fromJson(v));
+          if (data != null) {
+            arrLearningModules.clear();
+            data.forEach((v) {
+              arrLearningModules.add(LearningModuleData.fromJson(v));
+            });
+
+            if (arrLearningModules.length > 0) {
+              selectedModuleIndex = 0;
+            }
+            setState(() {});
+          }
+        }).catchError((e) {
+          print("getLearningModule_" + e.toString());
+          CommonView.showCircularProgress(false, context);
+          Utils.showToast(e.toString());
         });
-
-        if (arrLearningModules.length > 0) {
-          selectedModuleIndex = 0;
-        }
-        setState(() {});
       }
-    }).catchError((e) {
-      print("getLearningModule_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
     });
   }
 
   void sendChallenges() {
-    CommonView.showCircularProgress(true, context);
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
 
-    SendChallengesRequest rq = SendChallengesRequest();
-    rq.userId = Injector.userData.userId;
-    rq.friendId = selectedFriendId;
-    rq.moduleId = arrLearningModules[selectedModuleIndex].moduleId;
-    rq.rewards = arrRewards[selectedRewardsIndex];
+        SendChallengesRequest rq = SendChallengesRequest();
+        rq.userId = Injector.userData.userId;
+        rq.friendId = selectedFriendId;
+        rq.moduleId = arrLearningModules[selectedModuleIndex].moduleId;
+        rq.rewards = arrRewards[selectedRewardsIndex];
 
-    WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, context);
+        WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(false, context);
 
-      if (data != null) Utils.showToast(Utils.getText(context,StringRes.alertUChallengeSent));
-    }).catchError((e) {
-      print("sendChallenge_" + e.toString());
+          if (data != null)
+            Utils.showToast(
+                Utils.getText(context, StringRes.alertUChallengeSent));
+        }).catchError((e) {
+          print("sendChallenge_" + e.toString());
 
-      CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+          CommonView.showCircularProgress(false, context);
+          Utils.showToast(e.toString());
+        });
+      }
     });
   }
 
   void getSearchFriends() {
-    CommonView.showCircularProgress(true, context);
-    SearchFriendRequest rq = SearchFriendRequest();
-    rq.userId = Injector.userData.userId.toString();
-    rq.searchText = searchController.text;
+    Utils.isInternetConnectedWithAlert().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
+        SearchFriendRequest rq = SearchFriendRequest();
+        rq.userId = Injector.userData.userId.toString();
+        rq.searchText = searchController.text;
 
-    WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, context);
+        WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(false, context);
 
-      if (data != null) {
-        List<GetFriendsData> getFriendsData = List();
+          if (data != null) {
+            List<GetFriendsData> getFriendsData = List();
 
-        data.forEach((v) {
-          getFriendsData.add(GetFriendsData.fromJson(v));
+            data.forEach((v) {
+              getFriendsData.add(GetFriendsData.fromJson(v));
+            });
+
+            if (getFriendsData.isNotEmpty) {
+              getFriendsData
+                  .removeWhere((friend) => friend.userId == Injector.userId);
+
+              arrFriendsToShow = getFriendsData;
+
+              setState(() {});
+            }
+          }
+        }).catchError((e) {
+          print("searchFriends_" + e.toString());
+
+          CommonView.showCircularProgress(false, context);
+          Utils.showToast(e.toString());
         });
-
-        if (getFriendsData.isNotEmpty) {
-          getFriendsData
-              .removeWhere((friend) => friend.userId == Injector.userId);
-
-          arrFriendsToShow = getFriendsData;
-
-          setState(() {});
-        }
       }
-    }).catchError((e) {
-      print("searchFriends_" + e.toString());
-
-      CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
     });
   }
 

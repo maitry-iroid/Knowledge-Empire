@@ -145,9 +145,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Expanded(
               flex: 9,
               child: Container(
-                  height: Injector.isBusinessMode ? 33 : 35,
+//                  height: Injector.isBusinessMode ? 33 : 35,
                   margin: EdgeInsets.only(top: Injector.isBusinessMode ? 2 : 0),
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: Injector.isBusinessMode ? null : ColorRes.white,
@@ -160,41 +160,39 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                                   Utils.getAssetsImg("bg_bus_sector_item")),
                               fit: BoxFit.fill)
                           : null),
-                  child: Stack(
-                    alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Positioned(
-                        left: 5,
-                        right: 5,
-                        child: Text(
-                          arrFinalLearningModules[index].moduleName,
-                          style: TextStyle(
-                            color: Injector.isBusinessMode
-                                ? ColorRes.blue
-                                : ColorRes.textProf,
-                            fontSize: 15,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      Text(
+                        arrFinalLearningModules[index].moduleName,
+                        style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.blue
+                              : ColorRes.textProf,
+                          fontSize: 15,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      arrFinalLearningModules[index].isAssign == 1
-                          ? Positioned(
-                              right: 5,
-                              bottom: Injector.isBusinessMode ? 5 : 2,
-                              child: Text(
-                                Utils.getText(context, StringRes.subscribed),
-                                style: TextStyle(
-                                  color: Injector.isBusinessMode
-                                      ? ColorRes.bgHeader
-                                      : ColorRes.blue,
-                                  fontSize: 10,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                      Opacity(
+                        opacity: arrFinalLearningModules[index].isAssign == 1
+                            ? 1.0
+                            : 0.0,
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: Text(
+                              Utils.getText(context, StringRes.subscribed),
+                              style: TextStyle(
+                                color: Injector.isBusinessMode
+                                    ? ColorRes.bgHeader
+                                    : ColorRes.blue,
+                                fontSize: 10,
                               ),
-                            )
-                          : Container()
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                      )
                     ],
                   )),
             ),
@@ -779,7 +777,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             else
               performSubscribeUnsubscribe();
           } else {
-            Utils.showToast(Utils.getText(context, StringRes.alertNoModuleFound));
+            Utils.showToast(
+                Utils.getText(context, StringRes.alertNoModuleFound));
           }
         });
   }
