@@ -34,8 +34,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   void initState() {
     super.initState();
 
-    if(Injector.newCustomerStreamController!=null)
-    Injector.newCustomerStreamController = StreamController.broadcast();
+    if (Injector.newCustomerStreamController != null)
+      Injector.newCustomerStreamController = StreamController.broadcast();
 
     Injector.newCustomerStreamController.stream.listen((data) {
 //      print("DataReceived1: " + data);
@@ -48,7 +48,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       print("Some Error1");
     });
 
-   initData();
+    initData();
   }
 
   getQuestions(BuildContext context) {
@@ -63,7 +63,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
-
         arrQuestions.clear();
 
         data.forEach((v) {
@@ -313,29 +312,31 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             onTap: () {
               Utils.playClickSound();
 
-              if (Injector.customerValueData.remainingSalesPerson >=
-                      arrQuestions[index].resources &&
-                  Injector.customerValueData.remainingCustomerCapacity > 0) {
+//              if (Injector.customerValueData.remainingSalesPerson >=
+//                      arrQuestions[index].resources &&
+//                  Injector.customerValueData.remainingCustomerCapacity > 0) {
 //                Navigator.push(
-//                    _scaffoldKey.currentContext,
-//                    FadeRouteHome(
-//                        initialPageType: Const.typeEngagement,
-//                        questionDataHomeScr: arrQuestions[index],
-//                        value: arrQuestions[index].value));
+//                  _scaffoldKey.currentContext,
+//                  MaterialPageRoute(
+//                      builder: (context) => EngagementCustomer(
+//                            questionDataEngCustomer: arrQuestions[index],
+//                            isChallenge: false,
+//                          )),
+//                );
+//              } else {
+//                Utils.showToast("You need atleast " +
+//                    arrQuestions[index].resources.toString() +
+//                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+//              }
 
-                Navigator.push(
-                  _scaffoldKey.currentContext,
-                  MaterialPageRoute(
-                      builder: (context) => EngagementCustomer(
-                            questionDataEngCustomer: arrQuestions[index],
-                            isChallenge: false,
-                          )),
-                );
-              } else {
-                Utils.showToast("You need atleast " +
-                    arrQuestions[index].resources.toString() +
-                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-              }
+              Navigator.push(
+                _scaffoldKey.currentContext,
+                MaterialPageRoute(
+                    builder: (context) => EngagementCustomer(
+                          questionDataEngCustomer: arrQuestions[index],
+                          isChallenge: false,
+                        )),
+              );
             },
           ),
         ],

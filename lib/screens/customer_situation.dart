@@ -76,25 +76,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   String error;
 
-  downloadFile() {
-    var cacheVideo = correctWrongImage();
-
-    print(cacheVideo);
-    DefaultCacheManager().getFile(cacheVideo).listen((f) {
-      if (mounted) {
-        setState(() {
-          fileInfo = f;
-          print(fileInfo);
-          error = null;
-        });
-      }
-    }).onError((e) {
-      setState(() {
-        fileInfo = null;
-        error = e.toString();
-      });
-    });
-  }
 
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
@@ -906,8 +887,9 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     }
   }
 
-  void initVideoController1() {
+  void initVideoController1() async{
     if (Utils.isVideo(questionData.mediaLink)) {
+
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)

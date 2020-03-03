@@ -631,14 +631,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
   void getSearchFriends() {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) {
-        CommonView.showCircularProgress(true, context);
         SearchFriendRequest rq = SearchFriendRequest();
         rq.userId = Injector.userData.userId.toString();
         rq.searchText = searchController.text;
 
         WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(false, context);
-
           if (data != null) {
             List<GetFriendsData> getFriendsData = List();
 
@@ -658,7 +655,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }).catchError((e) {
           print("searchFriends_" + e.toString());
 
-          CommonView.showCircularProgress(false, context);
           Utils.showToast(e.toString());
         });
       }

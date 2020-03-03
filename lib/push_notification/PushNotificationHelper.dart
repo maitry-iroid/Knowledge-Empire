@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/register_for_push.dart';
@@ -51,18 +53,18 @@ class PushNotificationHelper {
       onMessage: (Map<String, dynamic> message) async {
         print('on message $message');
 
-        Utils.showNotification(message);
+        showNotification(message);
       },
 //      onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');
 
-        Utils.showNotification(message);
+        showNotification(message);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print('on launch $message');
 
-        Utils.showNotification(message);
+        showNotification(message);
       },
     );
   }
@@ -114,5 +116,64 @@ class PushNotificationHelper {
         });
       }
     });
+  }
+
+  Future<void> showNotification(Map<String, dynamic> message) async {
+    Injector.notificationID++;
+
+    String title = "";
+    String body = "";
+
+    print(message);
+
+//    addBadge();
+
+//    if (Platform.isIOS) {
+//      title = message['title'];
+//      body = message['body'];
+//    } else {
+
+    title = message['notification']['title'];
+    body = message['notification']['body'];
+
+    String challengeId = message['data']['challengeId'];
+
+    if (challengeId != null) {
+      Injector.streamController?.add("${Const.openPendingChallengeDialog}");
+    }
+
+//      message.values.forEach((value) {
+//        title = Map.from(value)['title'] ?? "";
+//
+//        body = Map.from(value)['body'] ?? "";
+//      });
+
+    Utils.showToast(title);
+//    }
+
+    print(title);
+    print(body);
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await Injector.flutterLocalNotificationsPlugin.show(
+        Injector.notificationID, title, body, platformChannelSpecifics,
+        payload: 'item x');
+  }
+
+  showLocalNotification(int id,String body) async{
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await Injector.flutterLocalNotificationsPlugin.show(
+        id, Const.appName, body, platformChannelSpecifics,
+        payload: 'item x');
   }
 }

@@ -106,6 +106,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         InkResponse(
           child: Container(
             height: 110,
+            width: 110,
 //            color: Colors.black,
             child: Card(
               margin: EdgeInsets.only(
@@ -238,7 +239,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItems() {
     return Padding(
-      padding: EdgeInsets.only(left: 70, right: 70),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/10, right: Utils.getDeviceWidth(context)/10),
       child: Stack(
         children: <Widget>[
           Positioned(

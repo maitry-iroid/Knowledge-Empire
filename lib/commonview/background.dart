@@ -396,64 +396,70 @@ class CommonView {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(bottom: 40, left: 20),
-                    child: InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          Image(
-                            image: AssetImage(Utils.getAssetsImg("rewards")),
-                            width: Utils.getDeviceHeight(context) / 3.0,
-                          ),
-                          Utils.showUnreadCount(Const.typeReward, 17, 5, data)
-                        ],
-                      ),
-                      onTap: () {
-                        Utils.playClickSound();
-                        Utils.performDashboardItemClick(
-                            context, Const.typeReward);
-                      },
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(bottom: 15, left: 40, right: 10),
-                    child: Opacity(
+                Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: 40, left: 20),
                       child: InkResponse(
                         child: Stack(
                           children: <Widget>[
                             Image(
-                              image: AssetImage(Utils.getAssetsImg("team")),
+                              image: AssetImage(Utils.getAssetsImg("rewards")),
                               width: Utils.getDeviceHeight(context) / 3.0,
                             ),
-                            Utils.showUnreadCount(Const.typeTeam, 18, 20, data)
+                            Utils.showUnreadCount(Const.typeReward, 17, 5, data)
                           ],
                         ),
                         onTap: () {
                           Utils.playClickSound();
                           Utils.performDashboardItemClick(
-                              context, Const.typeTeam);
+                              context, Const.typeReward);
                         },
-                      ),
-                      opacity: Injector.isManager() ? 1 : 0,
-                    )),
-                Padding(
-                  padding:
-                      EdgeInsets.only(bottom: 0, left: 0, right: 10, top: 00),
-                  child: InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          Image(
-                            image: AssetImage(Utils.getAssetsImg("challenges")),
-                            width: Utils.getDeviceHeight(context) / 2.6,
+                      )),
+                ),
+                Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: 15, left: 40, right: 10),
+                      child: Opacity(
+                        child: InkResponse(
+                          child: Stack(
+                            children: <Widget>[
+                              Image(
+                                image: AssetImage(Utils.getAssetsImg("team")),
+                                width: Utils.getDeviceHeight(context) / 3.0,
+                              ),
+                              Utils.showUnreadCount(Const.typeTeam, 18, 20, data)
+                            ],
                           ),
-                          Utils.showUnreadCount(
-                              Const.typeChallenges, 17, 17, data)
-                        ],
-                      ),
-                      onTap: () {
-                        Utils.playClickSound();
-                        Utils.performDashboardItemClick(
-                            context, Const.typeChallenges);
-                      }),
+                          onTap: () {
+                            Utils.playClickSound();
+                            Utils.performDashboardItemClick(
+                                context, Const.typeTeam);
+                          },
+                        ),
+                        opacity: Injector.isManager() ? 1 : 0,
+                      )),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(bottom: 0, left: 0, right: 10, top: 00),
+                    child: InkResponse(
+                        child: Stack(
+                          children: <Widget>[
+                            Image(
+                              image: AssetImage(Utils.getAssetsImg("challenges")),
+                              width: Utils.getDeviceHeight(context) / 2.6,
+                            ),
+                            Utils.showUnreadCount(
+                                Const.typeChallenges, 17, 17, data)
+                          ],
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Utils.performDashboardItemClick(
+                              context, Const.typeChallenges);
+                        }),
+                  ),
                 ),
               ],
             ),

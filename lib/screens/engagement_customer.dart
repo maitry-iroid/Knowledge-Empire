@@ -76,29 +76,35 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   void dispose() {
-    try {
-      _controller?.dispose();
-    } catch (e) {
-      print(e);
+    if (Utils.isVideo(questionData.mediaLink)) {
+      try {
+            _controller?.dispose();
+          } catch (e) {
+            print(e);
+          }
     }
     super.dispose();
   }
 
-  void initVideoController() {
+  void initVideoController() async {
     if (Utils.isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
-          ? VideoPlayerController.file(
-              Utils.getCacheFile(questionData.mediaLink).file)
-          : VideoPlayerController.network(questionData.mediaLink)
-        ..initialize().then((_) {
-          setState(() {
-            _controller.play();
+      await Injector.cacheManager
+          .getFileFromCache(questionData.mediaLink)
+          .then((fileInfo) {
+        _controller = Utils.getCacheFile(questionData.mediaLink) != null
+            ? VideoPlayerController.file(
+                Utils.getCacheFile(questionData.mediaLink).file)
+            : VideoPlayerController.network(questionData.mediaLink)
+          ..initialize().then((_) {
+            setState(() {
+              _controller.play();
+            });
           });
-        });
-      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
+        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+        questionData.videoLoop == 1
+            ? _controller.setLooping(true)
+            : _controller.setLooping(false);
+      });
     }
   }
 
@@ -683,6 +689,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             )),
       );
     } else if (Utils.isVideo(questionData.mediaLink) &&
+        _controller != null &&
         _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
@@ -736,6 +743,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         },
         initialUrl: questionData.mediaLink,
       );
+    } else {
+      return Container();
     }
   }
 

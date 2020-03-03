@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
@@ -399,7 +400,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _selectedDrawerIndex = Utils.getHomePageIndex(widget.initialPageType);
   }
 
-  void initStreamController() {
+  void initStreamController() async {
+    await Injector.getInstance();
+
     if (Injector.streamController == null)
       Injector.streamController = StreamController.broadcast();
 
