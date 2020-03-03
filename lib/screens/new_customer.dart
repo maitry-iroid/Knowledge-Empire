@@ -312,31 +312,23 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             onTap: () {
               Utils.playClickSound();
 
-//              if (Injector.customerValueData.remainingSalesPerson >=
-//                      arrQuestions[index].resources &&
-//                  Injector.customerValueData.remainingCustomerCapacity > 0) {
-//                Navigator.push(
-//                  _scaffoldKey.currentContext,
-//                  MaterialPageRoute(
-//                      builder: (context) => EngagementCustomer(
-//                            questionDataEngCustomer: arrQuestions[index],
-//                            isChallenge: false,
-//                          )),
-//                );
-//              } else {
-//                Utils.showToast("You need atleast " +
-//                    arrQuestions[index].resources.toString() +
-//                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-//              }
+              if (Injector.customerValueData.remainingSalesPerson >=
+                      arrQuestions[index].resources &&
+                  Injector.customerValueData.remainingCustomerCapacity > 0) {
+                Navigator.push(
+                  _scaffoldKey.currentContext,
+                  MaterialPageRoute(
+                      builder: (context) => EngagementCustomer(
+                            questionDataEngCustomer: arrQuestions[index],
+                            isChallenge: false,
+                          )),
+                );
+              } else {
+                Utils.showToast("You need atleast " +
+                    arrQuestions[index].resources.toString() +
+                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+              }
 
-              Navigator.push(
-                _scaffoldKey.currentContext,
-                MaterialPageRoute(
-                    builder: (context) => EngagementCustomer(
-                          questionDataEngCustomer: arrQuestions[index],
-                          isChallenge: false,
-                        )),
-              );
             },
           ),
         ],
