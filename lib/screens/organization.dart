@@ -163,7 +163,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 //                padding: EdgeInsets.symmetric(vertical: 2),
                 ),
                 LinearPercentIndicator(
-                  width: Utils.getDeviceWidth(context) / 12,
+//                  width: Utils.getDeviceWidth(context) / 12,
                   lineHeight: 15.0,
                   percent: Utils.getProgress(arrOrganization[position]),
                   backgroundColor: Colors.transparent,
@@ -354,6 +354,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
           arrOrganization[position] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
+
 
           setState(() {});
 

@@ -16,9 +16,9 @@ import '../models/get_friends.dart';
 
 class ChallengesPage extends StatefulWidget {
   final List<GetFriendsData> arrFriends;
-  final int userId;
+  final int friendId;
 
-  ChallengesPage({Key key, this.arrFriends, this.userId}) : super(key: key);
+  ChallengesPage({Key key, this.arrFriends, this.friendId}) : super(key: key);
 
   @override
   _ChallengesPageState createState() => _ChallengesPageState();
@@ -50,7 +50,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.userId != null) selectedFriendId = widget.userId;
+    if (widget.friendId != null) selectedFriendId = widget.friendId;
 
     return Scaffold(
       body: Stack(

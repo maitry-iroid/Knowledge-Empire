@@ -27,6 +27,7 @@ class Injector {
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
   static StreamController<String> streamController;
+  static StreamController<String> newCustomerStreamController;
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
@@ -35,6 +36,7 @@ class Injector {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
   static AudioCache player = AudioCache(prefix: 'sounds/');
+  static bool isDev = true;
 
 //  factory Injector {
 //    return _singleton;
@@ -46,6 +48,8 @@ class Injector {
     prefs = await SharedPreferences.getInstance();
 
     deviceType = Device.get().isAndroid ? "android" : "ios";
+
+
 
     firebaseMessaging = FirebaseMessaging();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -70,6 +74,7 @@ class Injector {
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
       streamController = StreamController.broadcast();
+      newCustomerStreamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
       mode = prefs.getInt(PrefKeys.mode) ?? Const.businessMode;
@@ -86,16 +91,16 @@ class Injector {
   static setUserData(UserData _user) async {
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
-    Injector.userData = _user;
+    userData = _user;
 
-    Injector.userId = _user.userId;
+    userId = _user.userId;
   }
 
   static setCustomerValueData(CustomerValueData customerValueData) async {
     await Injector.prefs.setString(
         PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
 
-    Injector.customerValueData = customerValueData;
+    customerValueData = customerValueData;
   }
 
   static isManager() {

@@ -321,9 +321,7 @@ class HeaderViewState extends State<HeaderView> {
 
   _buildSearchResults(CustomerValueData data) {
     if (data != null) {
-      Injector.prefs
-          .setString(PrefKeys.customerValueData, jsonEncode(data.toJson()));
-      Injector.customerValueData = data;
+      Injector.setCustomerValueData(data);
     }
 
     return Row(

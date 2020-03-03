@@ -242,7 +242,7 @@ class StringRes {
       'correct': "%Correct",
       'fireEmp': "Fire 10 employees",
       'hireEmp': "Hire 10 employees",
-      'alertBailOut': "Are you sure you want to Bail Out.",
+      'alertBailOut': "Are you sure you want to Bail Out?",
       'yes': "Yes",
       'no': "No",
       'choosePhoto': "Choose photo",

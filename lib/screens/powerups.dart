@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -21,7 +19,6 @@ class PowerUpsPage extends StatefulWidget {
 
 class _PowerUpsPageState extends State<PowerUpsPage> {
 //  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
-
 
   TextEditingController searchController = TextEditingController();
   String searchText = "";
@@ -82,24 +79,25 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         CommonView.showBackground(context),
         Padding(
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-          child: arrOrganization.length>0?Row(
-            children: <Widget>[
-              showFirstHalf(),
-              Expanded(
-                flex: 1,
-                child: Injector.isBusinessMode
-                    ? Card(
-                        color: Colors.transparent,
-                        elevation: 20,
-                        margin: EdgeInsets.all(0),
-                        child: showSecondHalf(),
-                      )
-                    : showSecondHalf(),
-              )
-            ],
-          ):Container(),
+          child: arrOrganization.length > 0
+              ? Row(
+                  children: <Widget>[
+                    showFirstHalf(),
+                    Expanded(
+                      flex: 1,
+                      child: Injector.isBusinessMode
+                          ? Card(
+                              color: Colors.transparent,
+                              elevation: 20,
+                              margin: EdgeInsets.all(0),
+                              child: showSecondHalf(),
+                            )
+                          : showSecondHalf(),
+                    )
+                  ],
+                )
+              : Container(),
         ),
-
       ],
     );
   }
@@ -465,8 +463,11 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
           arrOrganization[selectedIndex] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
+          selectedOrg =  manageOrgData.organization[0];
 
           Utils.performManageLevel(manageOrgData);
+
+          setState(() {});
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }

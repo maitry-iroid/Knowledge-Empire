@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/animation/Particles.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:path/path.dart';
@@ -31,22 +34,21 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   void initState() {
     super.initState();
 
-    questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
-    loyaltyBonus = Injector.customerValueData.loyaltyBonus;
-    resourceBonus = Injector.customerValueData.resourceBonus;
-    valueBonus = Injector.customerValueData.valueBonus;
+    if(Injector.newCustomerStreamController!=null)
+    Injector.newCustomerStreamController = StreamController.broadcast();
 
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        getQuestions(_scaffoldKey.currentContext);
-      } else {
-        arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
+    Injector.newCustomerStreamController.stream.listen((data) {
+//      print("DataReceived1: " + data);
 
-        if (arrQuestions != null && arrQuestions.length > 0) {
-          setState(() {});
-        }
-      }
+      initData();
+      if (mounted) setState(() {});
+    }, onDone: () {
+      print("Task Done1");
+    }, onError: (error) {
+      print("Some Error1");
     });
+
+   initData();
   }
 
   getQuestions(BuildContext context) {
@@ -61,6 +63,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
+
+        arrQuestions.clear();
+
         data.forEach((v) {
           arrQuestions.add(QuestionData.fromJson(v));
         });
@@ -73,10 +78,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           print(arrQuestions[i].value);
         }
 
-        setState(() {
-
-        });
-
+        setState(() {});
       } else {
 //        Utils.showToast(Utils.getText(
 //            _scaffoldKey?.currentContext, StringRes.somethingWrong));
@@ -90,7 +92,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       Utils.showToast(e.toString());
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -315,12 +316,21 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               if (Injector.customerValueData.remainingSalesPerson >=
                       arrQuestions[index].resources &&
                   Injector.customerValueData.remainingCustomerCapacity > 0) {
+//                Navigator.push(
+//                    _scaffoldKey.currentContext,
+//                    FadeRouteHome(
+//                        initialPageType: Const.typeEngagement,
+//                        questionDataHomeScr: arrQuestions[index],
+//                        value: arrQuestions[index].value));
+
                 Navigator.push(
-                    _scaffoldKey.currentContext,
-                    FadeRouteHome(
-                        initialPageType: Const.typeEngagement,
-                        questionDataHomeScr: arrQuestions[index],
-                        value: arrQuestions[index].value));
+                  _scaffoldKey.currentContext,
+                  MaterialPageRoute(
+                      builder: (context) => EngagementCustomer(
+                            questionDataEngCustomer: arrQuestions[index],
+                            isChallenge: false,
+                          )),
+                );
               } else {
                 Utils.showToast("You need atleast " +
                     arrQuestions[index].resources.toString() +
@@ -337,12 +347,21 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           if (Injector.customerValueData.remainingSalesPerson >=
                   arrQuestions[index].resources &&
               Injector.customerValueData.remainingCustomerCapacity > 0) {
+//
+//            Navigator.push(
+//                _scaffoldKey.currentContext,
+//                FadeRouteHome(
+//                    initialPageType: Const.typeEngagement,
+//                    questionDataHomeScr: arrQuestions[index],
+//                    value: arrQuestions[index].value));
+
             Navigator.push(
                 _scaffoldKey.currentContext,
-                FadeRouteHome(
-                    initialPageType: Const.typeEngagement,
-                    questionDataHomeScr: arrQuestions[index],
-                    value: arrQuestions[index].value));
+                MaterialPageRoute(
+                    builder: (context) => EngagementCustomer(
+                          questionDataEngCustomer: arrQuestions[index],
+                          isChallenge: false,
+                        )));
           } else {
             Utils.showToast("You need atleast " +
                 arrQuestions[index].resources.toString() +
@@ -351,5 +370,24 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         }
       },
     );
+  }
+
+  void initData() {
+    questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
+    loyaltyBonus = Injector.customerValueData.loyaltyBonus;
+    resourceBonus = Injector.customerValueData.resourceBonus;
+    valueBonus = Injector.customerValueData.valueBonus;
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        getQuestions(_scaffoldKey.currentContext);
+      } else {
+        arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
+
+        if (arrQuestions != null && arrQuestions.length > 0) {
+          setState(() {});
+        }
+      }
+    });
   }
 }

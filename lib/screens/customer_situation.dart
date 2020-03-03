@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -107,28 +108,35 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          widget.isChallenge
-              ? Container(
-                  color: ColorRes.colorBgDark,
-                )
-              : CommonView.showBackground(context),
-          Column(
-            children: <Widget>[
-              showSubHeader(context),
-              Expanded(
-                  child: Row(
-                children: <Widget>[
-                  showFirstHalf(context),
-                  showSecondHalf(context),
-                ],
-              )),
-            ],
-          ),
-          gifImageShow(),
-        ],
+      body: SafeArea(
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            widget.isChallenge
+                ? Container(
+                    color: ColorRes.colorBgDark,
+                  )
+                : CommonView.showBackground(context),
+            Column(
+              children: <Widget>[
+                HeaderView(
+                  isShowMenu: true,
+                  scaffoldKey: _scaffoldKey,
+                  openProfile: null,
+                ),
+                showSubHeader(context),
+                Expanded(
+                    child: Row(
+                  children: <Widget>[
+                    showFirstHalf(context),
+                    showSecondHalf(context),
+                  ],
+                )),
+              ],
+            ),
+            gifImageShow(),
+          ],
+        ),
       ),
     );
   }
@@ -165,94 +173,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     }
   }
 
-//  showSubHeader(BuildContext context) {
-//    return Container(
-//        margin: EdgeInsets.only(top: 10),
-//        child: Row(
-//          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//          children: <Widget>[
-//            widget.isChallenge
-//                ? Row(
-//                    children: <Widget>[
-//                      Container(
-//                        width: 30,
-//                        height: 30,
-//                        margin: EdgeInsets.only(right: 8),
-//                        decoration: BoxDecoration(
-//                            shape: BoxShape.circle,
-//                            image: DecorationImage(
-//                                image: questionData.profileImage != null &&
-//                                        questionData.profileImage.isNotEmpty
-//                                    ? Utils.getCacheNetworkImage(
-//                                        questionData.profileImage)
-//                                    : AssetImage(
-//                                        Utils.getAssetsImg('user_org')),
-//                                fit: BoxFit.fill),
-//                            border: Border.all(color: ColorRes.textLightBlue)),
-//                      ),
-//                      Text(
-//                        questionData.firstName + " " + questionData.lastName,
-//                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-//                        textAlign: TextAlign.center,
-//                      ),
-//                    ],
-//                  )
-//                : Container(
-//                    width: 100,
-//                  ),
-//            Container(
-//              alignment: Alignment.center,
-//              height: 30,
-//              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-//              decoration: BoxDecoration(
-//                  borderRadius: Injector.isBusinessMode
-//                      ? null
-//                      : BorderRadius.circular(15),
-//                  color: Injector.isBusinessMode
-//                      ? null
-//                      : ColorRes.blueMenuSelected,
-//                  image: Injector.isBusinessMode
-//                      ? (DecorationImage(
-//                          image:
-//                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-//                          fit: BoxFit.fill))
-//                      : null),
-//              child: Text(
-//                Utils.getText(context, StringRes.situation),
-//                style: TextStyle(color: ColorRes.white, fontSize: 16),
-//                textAlign: TextAlign.center,
-//              ),
-//            ),
-//            InkResponse(
-//              child: Container(
-//                  alignment: Alignment.center,
-//                  width: 80,
-//                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-//                  decoration: BoxDecoration(
-//                      image: DecorationImage(
-//                          image:
-//                              AssetImage(Utils.getAssetsImg("bg_engage_now")),
-//                          fit: BoxFit.fill)),
-//                  child: Center(
-//                    child: Text(
-//                      Utils.getText(context, StringRes.next),
-//                      style: TextStyle(color: ColorRes.white, fontSize: 16),
-//                      textAlign: TextAlign.center,
-//                    ),
-//                  )),
-//              onTap: () {
-//                Utils.playClickSound();
-//                gotoMainScreen(context);
-//              },
-//            )
-//          ],
-//        ));
-//  }
+
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(
-            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
+        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -594,14 +519,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             _scaffoldKey, widget.nextChallengeQuestionData);
       }
     } else {
-      Navigator.pushAndRemoveUntil(
-          context, FadeRouteHome(), ModalRoute.withName("home"));
 
-      Navigator.push(
-          context,
-          FadeRouteHome(
-              initialPageType: Const.typeNewCustomer,
-              questionDataSituation: null));
+      Injector.newCustomerStreamController.add("newCustomer");
+
+      Navigator.pop(context);
+
+//      Navigator.pushAndRemoveUntil(
+//          context, FadeRouteHome(), ModalRoute.withName("home"));
+
+//      Navigator.push(
+//          context,
+//          FadeRouteHome(
+//              initialPageType: Const.typeNewCustomer,
+//              questionDataSituation: null));
     }
   }
 
