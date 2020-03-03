@@ -50,57 +50,57 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
 //        key: _scaffoldKey,
       backgroundColor: ColorRes.fontDarkGrey,
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: 400,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  height: Utils.getDeviceHeight(context) / 2.0,
-                  width: Utils.getDeviceWidth(context) / 3.5,
-                  margin: EdgeInsets.only(left: 40),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("logo_login")),
-                  )),
-                ),
-                Expanded(
-                    flex: 5,
-                    child: Container(
-                      width: Utils.getDeviceWidth(context) / 2.3,
-                      height: Utils.getDeviceHeight(context) / 1.7,
-                      margin: EdgeInsets.only(
-                          right: 20, left: Utils.getDeviceWidth(context) / 5.5),
-                      decoration: BoxDecoration(
-                        color: ColorRes.colorBgDark,
-                        border: Border.all(color: ColorRes.white, width: 1),
-                        borderRadius: new BorderRadius.circular(10.0),
-                      ),
-                      child: showLoginForm(),
-                    ))
-              ],
-            ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: ExactAssetImage(Utils.getAssetsImg('bg_login_profesonal')),
+            fit: BoxFit.fill,
+            alignment: Alignment.topCenter,
           ),
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-                size: 40,
-              ),
-              onPressed: () => Navigator.of(context).pop(),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg('logo_login'),
+                    ),
+                    width: Utils.getDeviceHeight(context) / 2,
+                  ),
+                ),
             ),
-          )
-        ],
+            Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: Utils.getDeviceWidth(context) / 2.3,
+                  height: Utils.getDeviceHeight(context) / 2,
+                  margin: EdgeInsets.only(right: 20),
+                  decoration: BoxDecoration(
+//                    color: ColorRes.colorBgDark,
+                    color: ColorRes.loginBg,
+                    border: Border.all(color: ColorRes.white, width: 1),
+                    borderRadius: new BorderRadius.circular(10.0),
+                  ),
+                  child: showLoginForm(),
+                )),
+            SafeArea(
+              child: IconButton(
+                icon: new Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 40,
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+            showCircularProgress()
+          ],
+        ),
       ),
     );
   }
@@ -112,7 +112,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           height: 25,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: ColorRes.borderColor,
+            color: ColorRes.blueMenuSelected,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(9), topRight: Radius.circular(9)),
           ),
@@ -133,7 +133,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 height: 40,
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                    color: ColorRes.bgTextBox,
+                    color: ColorRes.white,
                     border: Border.all(
                       color: ColorRes.white,
                       width: 1,
@@ -143,13 +143,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
-                  style: TextStyle(color: ColorRes.white, fontSize: 15),
+                  style: TextStyle(color: ColorRes.greyText, fontSize: 15),
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText:
-                          Utils.getText(context, StringRes.enterRegisteredEmail)
-                              .toUpperCase(),
-                      hintStyle: TextStyle(color: ColorRes.hintColor)),
+                      Utils.getText(context, StringRes.enterRegisteredEmail)
+                          .toUpperCase(),
+                      hintStyle: TextStyle(color: ColorRes.greyText)),
                 ),
               ),
               SizedBox(
