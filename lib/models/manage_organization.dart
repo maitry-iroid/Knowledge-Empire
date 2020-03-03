@@ -12,6 +12,7 @@ class ManageOrganizationRequest {
     userId = json['userId'];
     type = json['type'];
     action = json['action'];
+    mode = json['mode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +20,7 @@ class ManageOrganizationRequest {
     data['userId'] = this.userId;
     data['type'] = this.type;
     data['action'] = this.action;
+    data['mode'] = this.mode;
     return data;
   }
 }

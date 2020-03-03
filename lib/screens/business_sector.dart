@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +13,8 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
@@ -44,7 +49,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void initState() {
     super.initState();
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert().then((isConnected) async {
       if (isConnected) {
         fetchLearningModules();
       } else {
@@ -521,32 +526,45 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
           for (int i = 0; i < arrQuestions.length; i++) {
             await BackgroundFetch.start().then((int status) async {
-              //            print("===========length=========");
+              await PushNotificationHelper(context, "")
+                  .showLocalNotification(i+1,"Downloading...."+(i+1).toString());
 
-              //            http.Response r = await http.head(arrQuestions[i].mediaLink);
-              //            http.Response r1 =
-              //                await http.head(arrQuestions[i].correctAnswerImage);
-              //            http.Response r2 =
-              //                await http.head(arrQuestions[i].inCorrectAnswerImage);
-              //            print((int.parse(r.headers["content-length"]) +int.parse(r1.headers["content-length"]) +
-              //                int.parse(r2.headers["content-length"])).toString());
+//              setState(() {
+//                arrLearningModules
+//                    .firstWhere((module) => module.moduleId == moduleId)
+//                    .isDownloading = true;
+//              });
 
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].mediaLink);
+              print("complted");
 
-              await Injector.cacheManager
-                  .getSingleFile(arrQuestions[i].correctAnswerImage);
-              await Injector.cacheManager
-                  .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
               if (moduleId != null) {
-                setState(() {
-                  arrLearningModules
-                      .firstWhere((module) => module.moduleId == moduleId)
-                      .isDownloading = false;
-                });
+//                setState(() {
+//                  arrLearningModules
+//                      .firstWhere((module) => module.moduleId == moduleId)
+//                      .isDownloading = false;
+//                });
               }
+            }).whenComplete(() {
+
+              Injector.flutterLocalNotificationsPlugin.cancel(i+1);
+
+//              setState(() {
+//                arrLearningModules
+//                    .firstWhere((module) => module.moduleId == moduleId)
+//                    .isDownloading = false;
+//              });
+            });
+            await BackgroundFetch.start().then((int status) async {
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].inCorrectAnswerImage);
+            });
+            await BackgroundFetch.start().then((int status) async {
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].correctAnswerImage);
             });
           }
 

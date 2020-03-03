@@ -28,8 +28,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   List<Organization> arrOrganization = List();
 
-
-
   @override
   void initState() {
     super.initState();
@@ -93,7 +91,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             ],
           ),
           showBack(),
-
         ],
       ),
     );
@@ -109,6 +106,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         InkResponse(
           child: Container(
             height: 110,
+            width: 110,
 //            color: Colors.black,
             child: Card(
               margin: EdgeInsets.only(
@@ -153,13 +151,16 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                                   : ColorRes.hintColor),
                         ),
                       ),
-                      Text(
-                        getTitle(position),
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Injector.isBusinessMode
-                                ? ColorRes.textBlue
-                                : ColorRes.hintColor),
+                      Expanded(
+                        child: Text(
+                          getTitle(position),
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.textBlue
+                                  : ColorRes.hintColor),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       SizedBox(
                         width: 5,
@@ -238,7 +239,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItems() {
     return Padding(
-      padding: EdgeInsets.only(left: 70, right: 70),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/10, right: Utils.getDeviceWidth(context)/10),
       child: Stack(
         children: <Widget>[
           Positioned(

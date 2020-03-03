@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -11,6 +12,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
+import 'package:ke_employee/screens/customer_situation.dart';
 
 import '../commonview/background.dart';
 
@@ -74,29 +76,35 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   void dispose() {
-    try {
-      _controller?.dispose();
-    } catch (e) {
-      print(e);
+    if (Utils.isVideo(questionData.mediaLink)) {
+      try {
+            _controller?.dispose();
+          } catch (e) {
+            print(e);
+          }
     }
     super.dispose();
   }
 
-  void initVideoController() {
+  void initVideoController() async {
     if (Utils.isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
-          ? VideoPlayerController.file(
-              Utils.getCacheFile(questionData.mediaLink).file)
-          : VideoPlayerController.network(questionData.mediaLink)
-        ..initialize().then((_) {
-          setState(() {
-            _controller.play();
+      await Injector.cacheManager
+          .getFileFromCache(questionData.mediaLink)
+          .then((fileInfo) {
+        _controller = Utils.getCacheFile(questionData.mediaLink) != null
+            ? VideoPlayerController.file(
+                Utils.getCacheFile(questionData.mediaLink).file)
+            : VideoPlayerController.network(questionData.mediaLink)
+          ..initialize().then((_) {
+            setState(() {
+              _controller.play();
+            });
           });
-        });
-      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
+        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+        questionData.videoLoop == 1
+            ? _controller.setLooping(true)
+            : _controller.setLooping(false);
+      });
     }
   }
 
@@ -104,21 +112,28 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          isChallenge
-              ? Container(
-                  color: ColorRes.colorBgDark,
-                )
-              : CommonView.showBackground(context),
-          Column(
-            children: <Widget>[
-              showSubHeader(context),
-              showMainBody(context),
-            ],
-          ),
-        ],
+      body: SafeArea(
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            isChallenge
+                ? Container(
+                    color: ColorRes.colorBgDark,
+                  )
+                : CommonView.showBackground(context),
+            Column(
+              children: <Widget>[
+                HeaderView(
+                  scaffoldKey: _scaffoldKey,
+                  isShowMenu: true,
+                  openProfile: null,
+                ),
+                showSubHeader(context),
+                showMainBody(context),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -338,8 +353,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(
-            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
+        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -492,13 +506,22 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void navigateToSituation(
       BuildContext context, QuestionData nextChallengeQuestionData) {
     if (!isChallenge) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          FadeRouteHome(
-              initialPageType: Const.typeCustomerSituation,
-              questionDataSituation: questionData,
-              isChallenge: isChallenge),
-          ModalRoute.withName("/home"));
+//      Navigator.pushAndRemoveUntil(
+//          context,
+//          FadeRouteHome(
+//              initialPageType: Const.typeCustomerSituation,
+//              questionDataSituation: questionData,
+//              isChallenge: isChallenge),
+//          ModalRoute.withName("/home"));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CustomerSituationPage(
+                  isChallenge: false,
+                  questionDataCustomerSituation: questionData,
+                )),
+      );
     } else {
       Navigator.pop(context);
       Utils.showCustomerSituationDialog(_scaffoldKey,
@@ -527,7 +550,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             elevation: 10,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(top: 12, bottom: 15, right: 15, left: 8),
+            margin: EdgeInsets.only(top: 10, bottom: 15, right: 15, left: 8),
             child: Container(
                 alignment: Alignment.center,
                 padding:
@@ -666,6 +689,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             )),
       );
     } else if (Utils.isVideo(questionData.mediaLink) &&
+        _controller != null &&
         _controller.value.initialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
@@ -719,6 +743,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         },
         initialUrl: questionData.mediaLink,
       );
+    } else {
+      return Container();
     }
   }
 

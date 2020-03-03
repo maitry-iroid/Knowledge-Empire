@@ -74,7 +74,12 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
           await Injector.setCustomerValueData(customerValueData);
 
-          Injector.streamController.add("release resources");
+
+          CustomerValueRequest rq = CustomerValueRequest();
+          rq.userId = Injector.userId;
+          customerValueBloc?.getCustomerValue(rq);
+
+//          Injector.streamController.add("release resources");
 
           setState(() {
             arrQuestions.removeAt(index);

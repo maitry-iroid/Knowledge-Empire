@@ -16,9 +16,9 @@ import '../models/get_friends.dart';
 
 class ChallengesPage extends StatefulWidget {
   final List<GetFriendsData> arrFriends;
-  final int userId;
+  final int friendId;
 
-  ChallengesPage({Key key, this.arrFriends, this.userId}) : super(key: key);
+  ChallengesPage({Key key, this.arrFriends, this.friendId}) : super(key: key);
 
   @override
   _ChallengesPageState createState() => _ChallengesPageState();
@@ -50,7 +50,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.userId != null) selectedFriendId = widget.userId;
+    if (widget.friendId != null) selectedFriendId = widget.friendId;
 
     return Scaffold(
       body: Stack(
@@ -631,14 +631,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
   void getSearchFriends() {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) {
-        CommonView.showCircularProgress(true, context);
         SearchFriendRequest rq = SearchFriendRequest();
         rq.userId = Injector.userData.userId.toString();
         rq.searchText = searchController.text;
 
         WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(false, context);
-
           if (data != null) {
             List<GetFriendsData> getFriendsData = List();
 
@@ -658,7 +655,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }).catchError((e) {
           print("searchFriends_" + e.toString());
 
-          CommonView.showCircularProgress(false, context);
           Utils.showToast(e.toString());
         });
       }

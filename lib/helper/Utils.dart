@@ -339,7 +339,7 @@ class Utils {
   }
 
   static FileInfo getCacheFile(String url) {
-    return DefaultCacheManager().getFileFromMemory(url);
+    return Injector.cacheManager.getFileFromMemory(url);
   }
 
   static getHeaderHeight(BuildContext context) {
@@ -436,52 +436,6 @@ class Utils {
     }
   }
 
-  static Future<void> showNotification(Map<String, dynamic> message) async {
-    Injector.notificationID++;
-
-    String title = "";
-    String body = "";
-
-    print(message);
-
-//    addBadge();
-
-//    if (Platform.isIOS) {
-//      title = message['title'];
-//      body = message['body'];
-//    } else {
-
-    title = message['notification']['title'];
-    body = message['notification']['body'];
-
-    String challengeId = message['data']['challengeId'];
-
-    if (challengeId != null) {
-      Injector.streamController?.add("${Const.openPendingChallengeDialog}");
-    }
-
-//      message.values.forEach((value) {
-//        title = Map.from(value)['title'] ?? "";
-//
-//        body = Map.from(value)['body'] ?? "";
-//      });
-
-    Utils.showToast(title);
-//    }
-
-    print(title);
-    print(body);
-
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await Injector.flutterLocalNotificationsPlugin.show(
-        Injector.notificationID, title, body, platformChannelSpecifics,
-        payload: 'item x');
-  }
 
   static updateAttemptTimeInQuestionDataLocally(
       int questionId, String attemptTime) async {
