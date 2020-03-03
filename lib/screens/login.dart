@@ -17,23 +17,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: LoginPage(),
-          ),
-        );
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: LoginPage(),
+        ),
+  );
 }
 
 class LoginPage extends StatefulWidget {
@@ -62,49 +62,50 @@ class _LoginPageState extends State<LoginPage> {
 //      resizeToAvoidBottomPadding: false,
         backgroundColor: ColorRes.fontDarkGrey,
         body: Container(
-//        height: double.infinity,
 
-          height: 400,
+          height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-//              image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
               image: ExactAssetImage(Utils.getAssetsImg('bg_login_profesonal')),
-              fit: BoxFit.cover,
-//            alignment: Alignment.center,
+              fit: BoxFit.fill,
+              alignment: Alignment.topCenter,
             ),
           ),
-
-          child: Row(
-//            alignment: Alignment.center,
+          child: Stack(
             children: <Widget>[
-              Container(
-                height: Utils.getDeviceHeight(context) / 2.0,
-                width: Utils.getDeviceWidth(context) / 3.5,
-                margin: EdgeInsets.only(left: 40),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("logo_login")),
-                )),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 50),
+                  child: Image(
+                    image: AssetImage(
+                      Utils.getAssetsImg('logo_login'),
+                    ),
+                    width: Utils.getDeviceHeight(context) / 2,
+                  ),
+                ),
               ),
-              Expanded(
-                  flex: 5,
+              Align(
+                  alignment: Alignment.centerRight,
                   child: Container(
                     width: Utils.getDeviceWidth(context) / 2.3,
                     height: Utils.getDeviceHeight(context) / 1.7,
                     margin: EdgeInsets.only(
                         right: 20, left: Utils.getDeviceWidth(context) / 5.5),
                     decoration: BoxDecoration(
+//                    color: ColorRes.colorBgDark,
                       color: ColorRes.loginBg,
-//                      color: ColorRes.colorBgDark,
                       border: Border.all(color: ColorRes.white, width: 1),
                       borderRadius: new BorderRadius.circular(10.0),
                     ),
                     child: showLoginForm(),
-                  ))
+                  )),
+
             ],
           ),
-        ));
+        )
+     );
   }
 
   showLoginForm() {
@@ -274,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.greyText),
+                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     decoration: InputDecoration(
 //                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
@@ -312,7 +313,7 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.greyText),
+                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),

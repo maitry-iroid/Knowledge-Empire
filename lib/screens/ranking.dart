@@ -214,7 +214,7 @@ class _RankingPageState extends State<RankingPage> {
                               fit: BoxFit.fill)),
                       child: Text(
                         Utils.getText(context, StringRes.you),
-                        style: TextStyle(color: ColorRes.white, fontSize: 15),
+                        style: TextStyle(color: ColorRes.white, fontSize: 13),
                       )),
                   onTap: () {
                     int index = arrFriends.indexOf(arrFriends.firstWhere(
@@ -241,23 +241,23 @@ class _RankingPageState extends State<RankingPage> {
                     child: Row(
                       children: <Widget>[
                         Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Padding(
                             padding: EdgeInsets.only(left: 18),
                             child: Text(
                               Utils.getText(context, StringRes.name),
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),
+                                  color: ColorRes.white, fontSize: 13),
                               maxLines: 1,
                             ),
                           ),
                         ),
                         Expanded(
-                          flex: 3,
+                          flex: 4,
                           child: Text(
                               Utils.getText(context, StringRes.companyName),
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),
+                                  color: ColorRes.white, fontSize: 13),
                               maxLines: 1,
                               textAlign: TextAlign.center),
                         ),
@@ -265,7 +265,7 @@ class _RankingPageState extends State<RankingPage> {
                           padding: EdgeInsets.only(right: 10),
                           child: Text(Utils.getText(context, StringRes.score),
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),
+                                  color: ColorRes.white, fontSize: 13),
                               textAlign: TextAlign.right),
                         ),
                       ],
@@ -287,7 +287,7 @@ class _RankingPageState extends State<RankingPage> {
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.challenges),
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      style: TextStyle(color: ColorRes.white, fontSize: 12),
                     ),
                   ),
                 ),
@@ -308,7 +308,7 @@ class _RankingPageState extends State<RankingPage> {
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.friend),
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      style: TextStyle(color: ColorRes.white, fontSize: 12),
                     ),
                   ),
                 ),
@@ -337,7 +337,7 @@ class _RankingPageState extends State<RankingPage> {
         padding: EdgeInsets.all(5),
         child: Image(
           image: AssetImage(Utils.getAssetsImg("back")),
-          width: 30,
+          width: 22,
         ),
       ),
       onTap: () {
@@ -411,7 +411,7 @@ class _RankingPageState extends State<RankingPage> {
               ),
               Text(
                 Utils.getText(context, title),
-                style: TextStyle(color: ColorRes.white, fontSize: 15),
+                style: TextStyle(color: ColorRes.white, fontSize: 13),
                 overflow: TextOverflow.ellipsis,
               )
             ],
@@ -539,6 +539,8 @@ class _RankingPageState extends State<RankingPage> {
       flex: 3,
       child: InkResponse(
         child: Image(
+          height: Utils.getDeviceWidth(context) / 20,
+            width: Utils.getDeviceWidth(context) / 20,
             image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
                 ? "ic_challenge_disable"
                 : (arrFriends[index].isFriend == 0
@@ -581,6 +583,8 @@ class _RankingPageState extends State<RankingPage> {
           }
         },
         child: Image(
+            height: Utils.getDeviceWidth(context) / 20,
+            width: Utils.getDeviceWidth(context) / 20,
             image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
                 ? "add_frnd_disable"
                 : selectedUser != null && arrFriends[index].isFriend == 0
@@ -594,8 +598,11 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 16,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 2, horizontal: 1),
-        decoration: isCurrentUser(index)
+        padding: EdgeInsets.only(top: 0, left: 5),
+        decoration: BoxDecoration(
+          image: isCurrentUser(index)  ? Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_ranking_header"))) : null : null
+        ),
+      /*  decoration: isCurrentUser(index)
             ? BoxDecoration(
                 border: Border.all(
                     color: Injector.isBusinessMode
@@ -603,13 +610,15 @@ class _RankingPageState extends State<RankingPage> {
                         : ColorRes.titleBlueProf),
                 borderRadius: BorderRadius.circular(20),
               )
-            : null,
+            : null,*/
         child: Container(
           width: Utils.getDeviceWidth(context) / 12,
-          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+//          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+//          margin: EdgeInsets.only(top: 2),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: ColorRes.white,
+            color: isCurrentUser(index) ? Injector.isBusinessMode ?   null : ColorRes.titleBlueProf : Injector.isBusinessMode ?   ColorRes.white : ColorRes.white,
+//            image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_ranking_header"))),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
@@ -639,13 +648,13 @@ class _RankingPageState extends State<RankingPage> {
                       child: Text((index + 1).toString() + ".",
                           maxLines: 1,
                           style: TextStyle(
-                            color: ColorRes.textBlue,
-                            fontSize: 20,
+                            color: isCurrentUser(index) ? Injector.isBusinessMode ? ColorRes.white : ColorRes.textBlue :  Injector.isBusinessMode ? ColorRes.white : ColorRes.textBlue ,
+                            fontSize: 14,
                           )),
                     ),
                     Container(
-                      height: 38,
-                      width: 38,
+                      height: 20,
+                      width: 20,
                       margin: EdgeInsets.only(right: 5),
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -657,37 +666,38 @@ class _RankingPageState extends State<RankingPage> {
                       child: Text(arrFriends[index].name ?? "",
                           overflow: TextOverflow.ellipsis,
                           style:
-                              TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                              TextStyle(color: isCurrentUser(index) ? ColorRes.white :ColorRes.textBlue, fontSize: 13),
                           textAlign: TextAlign.left),
                     ),
                   ],
                 ),
               ),
               Container(
-                color: ColorRes.greyText,
+                color: isCurrentUser(index) ? ColorRes.white : ColorRes.greyText,
                 width: 1,
-                margin: EdgeInsets.symmetric(vertical: 5),
+//                margin: EdgeInsets.symmetric(vertical: 7),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
               ),
               Expanded(
                 flex: 3,
                 child: Text(arrFriends[index].companyName ?? "",
                     maxLines: 1,
-                    style: TextStyle(color: ColorRes.textBlue, fontSize: 16),
+                    style: TextStyle(color: isCurrentUser(index) ? ColorRes.white :ColorRes.textBlue, fontSize: 16),
                     textAlign: TextAlign.center),
               ),
               Container(
-                height: 52,
+                height: 60,
                 width: 60,
-                padding: EdgeInsets.only(right: 10, left: 14, top: 1),
-                margin: EdgeInsets.only(right: 1),
+                padding: EdgeInsets.only(right: 0, left: 0, top: 0),
+                margin: EdgeInsets.only(right: 0,top: 5, bottom: 2),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Injector.isBusinessMode
                       ? Colors.transparent
                       : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.all(Radius.circular(18)),
-                  border:
-                      Border.all(width: 1, color: ColorRes.rankingBackGround),
+//                  border:
+//                      Border.all(width: 1, color: isCurrentUser(index) ? ColorRes.whiteTransparent : ColorRes.rankingBackGround),
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg(
                           Injector.isBusinessMode ? 'value' : '')),
@@ -700,7 +710,7 @@ class _RankingPageState extends State<RankingPage> {
                       : "0",
                   style: TextStyle(
                     color: ColorRes.white,
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                   maxLines: 1,
                 ),

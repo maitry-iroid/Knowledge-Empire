@@ -11,23 +11,23 @@ class FadeRouteForgotPassword extends PageRouteBuilder {
 
   FadeRouteForgotPassword({this.page})
       : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: ForgotPasswordPage(),
-          ),
-        );
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: ForgotPasswordPage(),
+        ),
+  );
 }
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -51,6 +51,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 //        key: _scaffoldKey,
       backgroundColor: ColorRes.fontDarkGrey,
       body: Container(
+
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -63,16 +64,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         child: Stack(
           children: <Widget>[
             Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 50),
-                  child: Image(
-                    image: AssetImage(
-                      Utils.getAssetsImg('logo_login'),
-                    ),
-                    width: Utils.getDeviceHeight(context) / 2,
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 50),
+                child: Image(
+                  image: AssetImage(
+                    Utils.getAssetsImg('logo_login'),
                   ),
+                  width: Utils.getDeviceHeight(context) / 2,
                 ),
+              ),
             ),
             Align(
                 alignment: Alignment.centerRight,
@@ -101,7 +102,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             showCircularProgress()
           ],
         ),
-      ),
+      )
     );
   }
 
@@ -143,7 +144,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
-                  style: TextStyle(color: ColorRes.greyText, fontSize: 15),
+                  style: TextStyle(color: ColorRes.titleBlueProf, fontSize: 15),
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText:
@@ -228,3 +229,4 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     });
   }
 }
+

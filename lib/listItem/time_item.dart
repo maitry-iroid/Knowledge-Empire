@@ -48,20 +48,20 @@ class _TimeItemState extends State<TimeItem> {
       },
       child: Container(
         width: Utils.getDeviceWidth(context) / 12,
-        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 11, horizontal: 3) : EdgeInsets.symmetric(vertical: 5, horizontal: 1),
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 0, horizontal: 3) : EdgeInsets.symmetric(vertical: 5, horizontal: 1),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Injector.isBusinessMode ? Colors.transparent : widget.isSelected ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
             borderRadius: Injector.isBusinessMode ? dayBoxCircular1() : dayBoxCircular(),
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? widget.isSelected
-                    ? "ranking_selected"
-                    : "ranking_unselected" : ""
+                    ? "ranking_bg_time_selected"
+                    : "ranking_bg_time_deselected" : ""
                 )),
-                fit: BoxFit.fill)),
+                fit: BoxFit.contain)),
         child: Text(
           widget.title,
-          style: TextStyle(color: ColorRes.white, fontSize: 15),
+          style: TextStyle(color: widget.isSelected ?  ColorRes.white : ColorRes.lightGrey, fontSize: 11,), textAlign: TextAlign.center,
         ),
       ),
     );

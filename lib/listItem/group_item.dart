@@ -29,11 +29,11 @@ class _GroupItemState extends State<GroupItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-        width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode?7.5:9),
+        width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode?7.5:10),
         margin: Injector.isBusinessMode
-            ? EdgeInsets.symmetric(vertical: 8, horizontal: 3)
-            : EdgeInsets.symmetric(vertical: 3, horizontal: 3),
-        padding: EdgeInsets.symmetric(horizontal: 8),
+            ? EdgeInsets.symmetric(vertical: 10 , horizontal: 0)
+            : EdgeInsets.symmetric(vertical: 3, horizontal: 0),
+        padding: EdgeInsets.symmetric(horizontal: 0),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -42,7 +42,7 @@ class _GroupItemState extends State<GroupItem> {
                         ? "ranking_selected"
                         : "ranking_unselected"
                     : "")),
-                fit: BoxFit.fill)),
+                fit: BoxFit.contain)),
         child: Text(
           widget.title,
           maxLines: 1,
@@ -58,7 +58,7 @@ class _GroupItemState extends State<GroupItem> {
                   : widget.isSelected
                       ? ColorRes.titleBlueProf
                       : ColorRes.fontGrey,
-              fontSize: Injector.isBusinessMode ? 15 : 18),
+              fontSize: Injector.isBusinessMode ? 13 : 17),
         ),
       ),
     );
