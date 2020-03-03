@@ -158,11 +158,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ? Injector.isManager() ? TeamPage() : ChallengesPage()
             : Container();
       case 6:
-//        return (Injector.isManager()
-//            ? ChallengesPage()
-//            : (Injector.isBusinessMode
-//                ? OrganizationsPage2()
-//                : PowerUpsPage()));
         return Injector.isDev
             ? (Injector.isManager()
                 ? ChallengesPage()
@@ -264,21 +259,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           child: Stack(
         children: <Widget>[
           getPage(),
-          Container(
-            color: ColorRes.white.withOpacity(0.5),
-            width: 0,
-            height: 0,
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "Welcome to Knowledge Empire",
-                    style: TextStyle(color: ColorRes.black),
-                  )
-                ],
-              ),
-            ),
-          ),
           HeaderView(
             scaffoldKey: _scaffoldKey,
             isShowMenu: true,

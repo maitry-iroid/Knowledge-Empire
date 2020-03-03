@@ -499,11 +499,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
         if (arrQuestions.isNotEmpty) {
           if (moduleId != null) {
-            setState(() {
-              arrLearningModules
-                  .firstWhere((module) => module.moduleId == moduleId)
-                  .isDownloading = true;
-            });
+//            setState(() {
+//              arrLearningModules
+//                  .firstWhere((module) => module.moduleId == moduleId)
+//                  .isDownloading = true;
+//            });
           }
 
           for (int i = 0; i < arrQuestions.length; i++) {
@@ -525,10 +525,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //          Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            await BackgroundFetch.start().then((int status) async {
-              await PushNotificationHelper(context, "")
-                  .showLocalNotification(i+1,"Downloading...."+(i+1).toString());
+            await PushNotificationHelper(context, "").showLocalNotification(
+                101, Utils.getText(context, StringRes.downloading));
 
+            await BackgroundFetch.start().then((int status) async {
 //              setState(() {
 //                arrLearningModules
 //                    .firstWhere((module) => module.moduleId == moduleId)
@@ -538,7 +538,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].mediaLink);
               print("complted");
-
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
               if (moduleId != null) {
@@ -549,8 +548,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                });
               }
             }).whenComplete(() {
-
-              Injector.flutterLocalNotificationsPlugin.cancel(i+1);
+              if (i == arrQuestions.length - 1)
+                Injector.flutterLocalNotificationsPlugin.cancel(101);
 
 //              setState(() {
 //                arrLearningModules
@@ -569,11 +568,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           }
 
           if (moduleId != null) {
-            setState(() {
-              arrLearningModules
-                  .firstWhere((module) => module.moduleId == moduleId)
-                  .isDownloading = false;
-            });
+//            setState(() {
+//              arrLearningModules
+//                  .firstWhere((module) => module.moduleId == moduleId)
+//                  .isDownloading = false;
+//            });
           }
         }
       }
