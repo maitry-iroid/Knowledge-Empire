@@ -273,7 +273,7 @@ class StringRes {
       'country': "Country",
       'sevenDaysDevelopment': "7 days developments",
       'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'costSplit': "costSplit",
+      'costSplit': "CostSplit",
       'revenueSplit': "revenueSplit",
       'alertFriendSuccess': "Friend added successfully",
       'alertUnFriendSuccess': "Unfriend successfully",

@@ -108,10 +108,23 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       children: <Widget>[
         InkResponse(
           child: Container(
-            width: 110,
-            height: 60,
+            height: 110,
+//            color: Colors.black,
             child: Card(
-              margin: EdgeInsets.all(4),
+              margin: EdgeInsets.only(
+                  left: 4,
+                  right: 4,
+                  top: type == Const.typeSales ||
+                          type == Const.typeOperations ||
+                          type == Const.typeLegal
+                      ? 60
+                      : 4,
+                  bottom: type == Const.typeSales ||
+                          type == Const.typeOperations ||
+                          type == Const.typeLegal
+                      ? 4
+                      : 60),
+//              margin: EdgeInsets.all(4),
               elevation: 5,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8)),

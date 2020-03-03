@@ -68,7 +68,8 @@ class _LoginPageState extends State<LoginPage> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
+//              image: ExactAssetImage(Utils.getAssetsImg('bg_login')),
+              image: ExactAssetImage(Utils.getAssetsImg('bg_login_profesonal')),
               fit: BoxFit.cover,
 //            alignment: Alignment.center,
             ),
@@ -94,7 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                     margin: EdgeInsets.only(
                         right: 20, left: Utils.getDeviceWidth(context) / 5.5),
                     decoration: BoxDecoration(
-                      color: ColorRes.colorBgDark,
+                      color: ColorRes.loginBg,
+//                      color: ColorRes.colorBgDark,
                       border: Border.all(color: ColorRes.white, width: 1),
                       borderRadius: new BorderRadius.circular(10.0),
                     ),
@@ -112,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
         Container(
           height: 15,
           decoration: BoxDecoration(
-            color: ColorRes.borderColor,
+            color: ColorRes.blueMenuSelected,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(9), topRight: Radius.circular(9)),
           ),
@@ -252,7 +254,7 @@ class _LoginPageState extends State<LoginPage> {
     return Row(
       children: <Widget>[
         Image(
-          image: AssetImage(Utils.getAssetsImg("email1")),
+          image: AssetImage(Utils.getAssetsImg("email2")),
           width: 50,
           height: 50,
         ),
@@ -260,7 +262,8 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
                 height: 45,
                 decoration: BoxDecoration(
-                    color: ColorRes.bgTextBox,
+                    color: ColorRes.white,
+//                    color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(left: 8),
@@ -271,14 +274,14 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.white),
+                    style: TextStyle(fontSize: 17, color: ColorRes.greyText),
                     decoration: InputDecoration(
 //                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.emailId)
                             .toUpperCase(),
-                        hintStyle: TextStyle(color: ColorRes.hintColor),
+                        hintStyle: TextStyle(color: ColorRes.greyText),
                         border: InputBorder.none),
                   ),
                 )))
@@ -290,7 +293,7 @@ class _LoginPageState extends State<LoginPage> {
     return Row(
       children: <Widget>[
         Image(
-          image: AssetImage(Utils.getAssetsImg("pw")),
+          image: AssetImage(Utils.getAssetsImg("pw1")),
           width: 50,
           height: 50,
         ),
@@ -298,7 +301,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
                 height: 45,
                 decoration: BoxDecoration(
-                    color: ColorRes.bgTextBox,
+                    color: ColorRes.white,
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(left: 8),
@@ -309,13 +312,14 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.white),
+                    style: TextStyle(fontSize: 17, color: ColorRes.greyText),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.password)
                             .toUpperCase(),
-                        hintStyle: TextStyle(color: ColorRes.hintColor),
+                        hintStyle: TextStyle(color: ColorRes.greyText),
+//                        hintStyle: TextStyle(color: ColorRes.hintColor),
                         border: InputBorder.none),
                   ),
                 )))

@@ -574,7 +574,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 5),
-      child: pieChart(StringRes.costSplit, Const.typeCost),
+      child: pieChart(Utils.getText(context, StringRes.costSplit), Const.typeCost),
     );
   }
 
@@ -582,7 +582,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 0),
-      child: pieChart(StringRes.revenue, Const.typeRevenue),
+      child: pieChart(Utils.getText(context, StringRes.revenue), Const.typeRevenue),
     );
   }
 
