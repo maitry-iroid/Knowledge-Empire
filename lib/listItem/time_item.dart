@@ -51,7 +51,7 @@ class _TimeItemState extends State<TimeItem> {
         margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 0, horizontal: 3) : EdgeInsets.symmetric(vertical: 5, horizontal: 1),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Injector.isBusinessMode ? Colors.transparent : widget.isSelected ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
+            color: Injector.isBusinessMode ? Colors.transparent : widget.isSelected ? ColorRes.titleBlueProf : ColorRes.rankingProDeSelectDay,
             borderRadius: Injector.isBusinessMode ? dayBoxCircular1() : dayBoxCircular(),
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? widget.isSelected

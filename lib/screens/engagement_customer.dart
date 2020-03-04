@@ -677,6 +677,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaView(BuildContext context) {
     if (Utils.isImage(questionData.mediaLink)) {
       return Container(
+//        margin: EdgeInsets.all(20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -737,11 +738,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ),
       );
     } else if (Utils.isPdf(questionData.mediaLink)) {
-      return SimplePdfViewerWidget(
-        completeCallback: (bool result) {
-          print("completeCallback,result:$result");
-        },
-        initialUrl: questionData.mediaLink,
+      return Container(
+        padding: EdgeInsets.all(3),
+       /* decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(25))
+        ),*/
+        child: SimplePdfViewerWidget(
+          completeCallback: (bool result) {
+            print("completeCallback,result:$result");
+          },
+          initialUrl: questionData.mediaLink,
+        ),
       );
     } else {
       return Container();

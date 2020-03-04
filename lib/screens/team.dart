@@ -44,8 +44,10 @@ class _TeamPageState extends State<TeamPage> {
 
   Map<String, double> openCloseMap = Map();
   List<Color> colorOpenCloseList = [
-    ColorRes.chartOpen,
     ColorRes.chartClose,
+    ColorRes.chartOpen,
+//    ColorRes.chartClose,
+//    ColorRes.chartOpen,
   ];
 
   @override
@@ -111,7 +113,6 @@ class _TeamPageState extends State<TeamPage> {
                 ),
                 onTap: () async {
                   Utils.playClickSound();
-
                   _asyncConfirmDialog(context);
                 },
               )
@@ -162,7 +163,7 @@ class _TeamPageState extends State<TeamPage> {
                 image: AssetImage(Utils.getAssetsImg("bg_grey_teamheader")),
                 fit: BoxFit.fill)),
         padding: secondScreen != true
-            ? EdgeInsets.only(left: 25, right: 15, top: 5, bottom: 5)
+            ? EdgeInsets.only(left: 30, right: 27, top: 5, bottom: 5)
             : EdgeInsets.only(left: 13, right: 15, top: 5, bottom: 5),
         child: secondScreen != true
             ? Row(
@@ -218,7 +219,7 @@ class _TeamPageState extends State<TeamPage> {
       child: Container(
           height: 30,
           padding: secondScreen != true
-              ? EdgeInsets.only(left: 30, right: 25, top: 5, bottom: 5)
+              ? EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5)
               : EdgeInsets.only(left: 23, right: 0, top: 5, bottom: 5),
           margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
           decoration: BoxDecoration(
@@ -228,10 +229,15 @@ class _TeamPageState extends State<TeamPage> {
           child: secondScreen != true
               ? Row(
                   children: <Widget>[
-                    listTextData(user?.name, TextAlign.left),
+                    listTextData(index == 1 ? "25" : user?.name, TextAlign.left),
+
+                    listTextData(index == 1 ? "25" : user?.lastLog.toString(), TextAlign.center),
+                    listTextData(index == 1 ? "25" : user?.points.toString(), TextAlign.right),
+                    listTextData(index == 1 ? "1" : user?.correct.toString(), TextAlign.right)
+ /*                   listTextData(user?.name, TextAlign.left),
                     listTextData(user?.lastLog.toString(), TextAlign.right),
                     listTextData(user?.points.toString(), TextAlign.right),
-                    listTextData(user?.correct.toString(), TextAlign.right)
+                    listTextData(user?.correct.toString(), TextAlign.right)*/
                   ],
                 )
               : Row(
@@ -259,7 +265,7 @@ class _TeamPageState extends State<TeamPage> {
 
   listHeaderText(String title, TextAlign textAlign) {
     return Expanded(
-      flex: 1,
+//      flex: 1,
       child: Container(
         child: Text(
           title,
@@ -272,7 +278,6 @@ class _TeamPageState extends State<TeamPage> {
 
   listTextData(String text, TextAlign textAlign) {
     return Expanded(
-      flex: 1,
       child: Container(
         child: Text(
           text,
@@ -398,21 +403,21 @@ class _TeamPageState extends State<TeamPage> {
 
   qLevel() {
     return Container(
-        height: 200,
+//        height: 200,
         alignment: Alignment.centerLeft,
         margin: EdgeInsets.only(left: 0),
         child: dataMap != null && dataMap.length > 0
-            ? pieChart(StringRes.qLevel, 1)
+            ? pieChart(Utils.getText(context, StringRes.qLevel), 1)
             : Container());
   }
 
   qStatus() {
     return Container(
-      height: 200,
+//      height: 200,
       width: Utils.getDeviceWidth(context),
 //      color: ColorRes.blackTransparent,
       child: openCloseMap != null && openCloseMap.length > 0
-          ? pieChart(StringRes.qStatus, 2)
+          ? pieChart(Utils.getText(context, StringRes.qStatus), 2)
           : Container(),
     );
   }
@@ -429,14 +434,14 @@ class _TeamPageState extends State<TeamPage> {
                 image: AssetImage(Utils.getAssetsImg("bg_piechart")),
                 fit: BoxFit.fill)),
         child: Center(
-          child: Text(title),
+          child: Text(title, style: TextStyle(color: ColorRes.white),),
         ),
       ),
       Row(
         children: <Widget>[
           Container(
-            child: Center(
-                child: PieChart(
+            alignment: Alignment.center,
+            child: PieChart(
               dataMap: type == 1 ? dataMap : openCloseMap,
               animationDuration: Duration(milliseconds: 800),
               chartLegendSpacing: 32.0,
@@ -451,10 +456,10 @@ class _TeamPageState extends State<TeamPage> {
               initialAngle: 0,
               legendStyle: defaultLegendStyle.copyWith(color: ColorRes.white),
               chartValueStyle:
-                  defaultChartValueStyle.copyWith(color: ColorRes.white),
+              defaultChartValueStyle.copyWith(color: ColorRes.white),
               showLegends: type == 1 ? false : true,
               chartType: ChartType.disc,
-            )),
+            ),
           ),
           type == 1
               ? Container(

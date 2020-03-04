@@ -31,8 +31,8 @@ class _GroupItemState extends State<GroupItem> {
       child: Container(
         width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode?7.5:10),
         margin: Injector.isBusinessMode
-            ? EdgeInsets.symmetric(vertical: 10 , horizontal: 0)
-            : EdgeInsets.symmetric(vertical: 3, horizontal: 0),
+            ? EdgeInsets.symmetric(vertical: 8 , horizontal: 0)
+            : EdgeInsets.symmetric(vertical: 3, horizontal: 2),
         padding: EdgeInsets.symmetric(horizontal: 0),
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class _GroupItemState extends State<GroupItem> {
                   : widget.isSelected
                       ? ColorRes.titleBlueProf
                       : ColorRes.fontGrey,
-              fontSize: Injector.isBusinessMode ? 13 : 17),
+              fontSize: Injector.isBusinessMode ? 13 : 18),
         ),
       ),
     );

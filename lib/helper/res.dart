@@ -50,6 +50,9 @@ class ColorRes {
   static Color borderRewardsName = Color(0xFFf8bb43);
   static Color rankingBackGround = Color(0xFFa5b7cf);
   static Color loginBg = Color(0xFFcdcdcd);
+  static Color rankingProBg = Color(0xFF676767);
+  static Color rankingProValueBg  = Color(0xFFcfe5ff);
+  static Color rankingProDeSelectDay  = Color(0xFFc6ced8);
 
   static Color chartTen = Color(0xFF823d28);
   static Color chartNine = Color(0xFF8e4a35);

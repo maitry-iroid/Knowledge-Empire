@@ -609,7 +609,7 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 16,
       child: Container(
-        padding: EdgeInsets.only(top: 0, left: 5),
+        padding: EdgeInsets.only(top: 0, left: 6),
         decoration: BoxDecoration(
           image: isCurrentUser(index)  ? Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_ranking_header"))) : null : null
         ),
@@ -628,9 +628,9 @@ class _RankingPageState extends State<RankingPage> {
 //          margin: EdgeInsets.only(top: 2),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: isCurrentUser(index) ? Injector.isBusinessMode ?   null : ColorRes.titleBlueProf : Injector.isBusinessMode ?   ColorRes.white : ColorRes.white,
+            color: isCurrentUser(index) ? Injector.isBusinessMode ? null : ColorRes.rankingProBg : Injector.isBusinessMode ? ColorRes.white : ColorRes.white,
 //            image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_ranking_header"))),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(30),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -659,7 +659,7 @@ class _RankingPageState extends State<RankingPage> {
                       child: Text((index + 1).toString() + ".",
                           maxLines: 1,
                           style: TextStyle(
-                            color: isCurrentUser(index) ? Injector.isBusinessMode ? ColorRes.white : ColorRes.textBlue :  Injector.isBusinessMode ? ColorRes.white : ColorRes.textBlue ,
+                            color: isCurrentUser(index) ? ColorRes.white : ColorRes.textBlue,
                             fontSize: 14,
                           )),
                     ),
@@ -693,25 +693,25 @@ class _RankingPageState extends State<RankingPage> {
                 flex: 3,
                 child: Text(arrFriends[index].companyName ?? "",
                     maxLines: 1,
-                    style: TextStyle(color: isCurrentUser(index) ? ColorRes.white :ColorRes.textBlue, fontSize: 16),
+                    style: TextStyle(color: isCurrentUser(index) ? ColorRes.white :ColorRes.greyText, fontSize: 13),
                     textAlign: TextAlign.center),
               ),
               Container(
                 height: 60,
                 width: 60,
                 padding: EdgeInsets.only(right: 0, left: 0, top: 0),
-                margin: EdgeInsets.only(right: 0,top: 5, bottom: 2),
+                margin: EdgeInsets.only(right: 0,top: Injector.isBusinessMode ? 5 : 0, bottom: Injector.isBusinessMode ? 2 : 0),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Injector.isBusinessMode
-                      ? Colors.transparent
+                      ? null
                       : ColorRes.titleBlueProf,
-                  borderRadius: BorderRadius.all(Radius.circular(18)),
-//                  border:
-//                      Border.all(width: 1, color: isCurrentUser(index) ? ColorRes.whiteTransparent : ColorRes.rankingBackGround),
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.all(Radius.circular(25)),
+                  border: Injector.isBusinessMode ? null :
+                      Border.all(width: 2, color: ColorRes.rankingProValueBg) ,
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg(
-                          Injector.isBusinessMode ? 'value' : '')),
+                          Injector.isBusinessMode ? 'value' : "")),
                       fit: BoxFit.fill),
                 ),
                 child: Text(
