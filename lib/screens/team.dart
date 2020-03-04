@@ -229,12 +229,15 @@ class _TeamPageState extends State<TeamPage> {
           child: secondScreen != true
               ? Row(
                   children: <Widget>[
-                    listTextData(index == 1 ? "25" : user?.name, TextAlign.left),
-
-                    listTextData(index == 1 ? "25" : user?.lastLog.toString(), TextAlign.center),
-                    listTextData(index == 1 ? "25" : user?.points.toString(), TextAlign.right),
-                    listTextData(index == 1 ? "1" : user?.correct.toString(), TextAlign.right)
- /*                   listTextData(user?.name, TextAlign.left),
+                    listTextData(
+                        index == 1 ? "25" : user?.name, TextAlign.left),
+                    listTextData(index == 1 ? "25" : user?.lastLog.toString(),
+                        TextAlign.center),
+                    listTextData(index == 1 ? "25" : user?.points.toString(),
+                        TextAlign.right),
+                    listTextData(index == 1 ? "1" : user?.correct.toString(),
+                        TextAlign.right)
+                    /*                   listTextData(user?.name, TextAlign.left),
                     listTextData(user?.lastLog.toString(), TextAlign.right),
                     listTextData(user?.points.toString(), TextAlign.right),
                     listTextData(user?.correct.toString(), TextAlign.right)*/
@@ -434,7 +437,10 @@ class _TeamPageState extends State<TeamPage> {
                 image: AssetImage(Utils.getAssetsImg("bg_piechart")),
                 fit: BoxFit.fill)),
         child: Center(
-          child: Text(title, style: TextStyle(color: ColorRes.white),),
+          child: Text(
+            title,
+            style: TextStyle(color: ColorRes.white),
+          ),
         ),
       ),
       Row(
@@ -456,7 +462,7 @@ class _TeamPageState extends State<TeamPage> {
               initialAngle: 0,
               legendStyle: defaultLegendStyle.copyWith(color: ColorRes.white),
               chartValueStyle:
-              defaultChartValueStyle.copyWith(color: ColorRes.white),
+                  defaultChartValueStyle.copyWith(color: ColorRes.white),
               showLegends: type == 1 ? false : true,
               chartType: ChartType.disc,
             ),

@@ -548,7 +548,7 @@ class _RankingPageState extends State<RankingPage> {
       flex: 3,
       child: InkResponse(
         child: Image(
-          height: Utils.getDeviceWidth(context) / 20,
+            height: Utils.getDeviceWidth(context) / 20,
             width: Utils.getDeviceWidth(context) / 20,
             image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
                 ? "ic_challenge_disable"
@@ -617,11 +617,16 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 16,
       child: Container(
-        padding: EdgeInsets.only(top: 0, left: 6),
+        padding: EdgeInsets.only(top: isCurrentUser(index) ? 0 : 7, left: 6),
+        margin: EdgeInsets.only(top: isCurrentUser(index) ? 0 : 0, left: 0),
         decoration: BoxDecoration(
-          image: isCurrentUser(index)  ? Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_ranking_header"))) : null : null
-        ),
-      /*  decoration: isCurrentUser(index)
+            image: isCurrentUser(index)
+                ? DecorationImage(
+                        image:
+                            AssetImage(Utils.getAssetsImg("bg_ranking_header")))
+
+                : null),
+        /*  decoration: isCurrentUser(index)
             ? BoxDecoration(
                 border: Border.all(
                     color: Injector.isBusinessMode
@@ -632,12 +637,11 @@ class _RankingPageState extends State<RankingPage> {
             : null,*/
         child: Container(
           width: Utils.getDeviceWidth(context) / 12,
-//          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-//          margin: EdgeInsets.only(top: 2),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: isCurrentUser(index) ? Injector.isBusinessMode ? null : ColorRes.rankingProBg : Injector.isBusinessMode ? ColorRes.white : ColorRes.white,
-//            image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_ranking_header"))),
+            color: isCurrentUser(index)
+                ? Injector.isBusinessMode ? null : null
+                : Injector.isBusinessMode ? ColorRes.white : ColorRes.white,
             borderRadius: BorderRadius.circular(30),
           ),
           child: Row(
@@ -667,7 +671,9 @@ class _RankingPageState extends State<RankingPage> {
                       child: Text((index + 1).toString() + ".",
                           maxLines: 1,
                           style: TextStyle(
-                            color: isCurrentUser(index) ? ColorRes.white : ColorRes.textBlue,
+                            color: isCurrentUser(index)
+                                ? ColorRes.white
+                                : ColorRes.textBlue,
                             fontSize: 14,
                           )),
                     ),
@@ -684,46 +690,55 @@ class _RankingPageState extends State<RankingPage> {
                     Expanded(
                       child: Text(arrFriends[index].name ?? "",
                           overflow: TextOverflow.ellipsis,
-                          style:
-                              TextStyle(color: isCurrentUser(index) ? ColorRes.white :ColorRes.textBlue, fontSize: 13),
+                          style: TextStyle(
+                              color: isCurrentUser(index)
+                                  ? ColorRes.white
+                                  : ColorRes.textBlue,
+                              fontSize: 13),
                           textAlign: TextAlign.left),
                     ),
                   ],
                 ),
               ),
               Container(
-                color: isCurrentUser(index) ? ColorRes.white : ColorRes.greyText,
+                color:
+                    isCurrentUser(index) ? ColorRes.white : ColorRes.greyText,
                 width: 1,
-//                margin: EdgeInsets.symmetric(vertical: 7),
-                margin: EdgeInsets.only(top: 10, bottom: 10),
+                margin: EdgeInsets.only(top: isCurrentUser(index) ? 10 : 6, bottom: isCurrentUser(index) ? 10 : 6),
               ),
               Expanded(
                 flex: 3,
                 child: Text(arrFriends[index].companyName ?? "",
                     maxLines: 1,
-                    style: TextStyle(color: isCurrentUser(index) ? ColorRes.white :ColorRes.greyText, fontSize: 13),
+                    style: TextStyle(
+                        color: isCurrentUser(index)
+                            ? ColorRes.white
+                            : ColorRes.greyText,
+                        fontSize: 13),
                     textAlign: TextAlign.center),
               ),
               Container(
                 height: 60,
                 width: 60,
-                padding: EdgeInsets.only(right: 0, left: 0, top: 0),
-                margin: EdgeInsets.only(right: 0,top: Injector.isBusinessMode ? 5 : 0, bottom: Injector.isBusinessMode ? 2 : 0),
+                margin: EdgeInsets.only(
+                    top:  isCurrentUser(index) ? 5 : 0,
+                    bottom:  isCurrentUser(index) ? 2 : 0),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Injector.isBusinessMode
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: Injector.isBusinessMode
                       ? null
-                      : ColorRes.titleBlueProf,
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.all(Radius.circular(25)),
-                  border: Injector.isBusinessMode ? null :
-                      Border.all(width: 2, color: ColorRes.rankingProValueBg) ,
+                      : BorderRadius.all(Radius.circular(25)),
+                  border: Injector.isBusinessMode
+                      ? null
+                      : Border.all(width: 2, color: ColorRes.rankingProValueBg),
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg(
                           Injector.isBusinessMode ? 'value' : "")),
                       fit: BoxFit.fill),
                 ),
                 child: Text(
-//                "0000",
                   arrFriends[index].score != null
                       ? arrFriends[index].score.toString()
                       : "0",
