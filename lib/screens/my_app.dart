@@ -49,7 +49,6 @@ class MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -99,21 +98,20 @@ class MyAppState extends State<MyApp> {
         BackgroundFetchConfig(
             minimumFetchInterval: 15,
             stopOnTerminate: false,
-            enableHeadless: false,
+            enableHeadless: true,
             requiresBatteryNotLow: false,
             requiresCharging: false,
             requiresStorageNotLow: false,
             requiresDeviceIdle: false,
-            requiredNetworkType: BackgroundFetchConfig.NETWORK_TYPE_NONE),
-        () async {
+            requiredNetworkType: NetworkType.NONE), (String taskId) async {
       // This is the fetch-event callback.
-      print('[BackgroundFetch] Event received');
+      print("[BackgroundFetch] Event received $taskId");
       setState(() {
         _events.insert(0, new DateTime.now());
       });
       // IMPORTANT:  You must signal completion of your fetch task or the OS can punish your app
       // for taking too long in the background.
-      BackgroundFetch.finish();
+      BackgroundFetch.finish(taskId);
     }).then((int status) {
       print('[BackgroundFetch] configure success: $status');
       setState(() {

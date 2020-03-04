@@ -437,102 +437,110 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   getUserGroups() async {
-    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
+    if (await Utils.isInternetConnectedWithAlert()) {
+      CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
-    GetUserGroupData grp1 = GetUserGroupData();
-    grp1.groupId = 1;
-    grp1.name = Utils.getText(context, StringRes.world);
-    GetUserGroupData grp2 = GetUserGroupData();
-    grp2.groupId = 2;
-    grp2.name = Utils.getText(context, StringRes.country);
-    GetUserGroupData grp3 = GetUserGroupData();
-    grp3.groupId = 3;
-    grp3.name = Utils.getText(context, StringRes.friends);
+      GetUserGroupData grp1 = GetUserGroupData();
+      grp1.groupId = 1;
+      grp1.name = Utils.getText(context, StringRes.world);
+      GetUserGroupData grp2 = GetUserGroupData();
+      grp2.groupId = 2;
+      grp2.name = Utils.getText(context, StringRes.country);
+      GetUserGroupData grp3 = GetUserGroupData();
+      grp3.groupId = 3;
+      grp3.name = Utils.getText(context, StringRes.friends);
 
-    arrGroups.add(grp1);
-    arrGroups.add(grp2);
-    arrGroups.add(grp3);
+      arrGroups.add(grp1);
+      arrGroups.add(grp2);
+      arrGroups.add(grp3);
 
-    GetUserGroupRequest rq = GetUserGroupRequest();
-    rq.userId = Injector.userData.userId;
+      GetUserGroupRequest rq = GetUserGroupRequest();
+      rq.userId = Injector.userData.userId;
 
-    WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+      WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
+        CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
 
-      if (data != null) {
-        data.forEach((v) {
-          arrGroups.add(GetUserGroupData.fromJson(v));
-        });
+        if (data != null) {
+          data.forEach((v) {
+            arrGroups.add(GetUserGroupData.fromJson(v));
+          });
 
-        if (arrGroups.isNotEmpty) setState(() {});
-      }
-    }).catchError((e) {
-      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
-    });
+          if (arrGroups.isNotEmpty) setState(() {});
+        }
+      }).catchError((e) {
+        CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+      });
+    }
   }
 
   getFriends(bool isScrollDown, bool isToAddData) async {
     print("present__" + present.toString());
 
-    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
+    if (await Utils.isInternetConnectedWithAlert()) {
+      CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
-    if (!isToAddData) arrFriends.clear();
+      if (!isToAddData) arrFriends.clear();
 
-    GetFriendsRequest rq = GetFriendsRequest();
-    rq.userId = Injector.userData.userId;
-    rq.category = selectedLeftCategory + 1;
-    rq.scrollType = isScrollDown ? 1 : 0;
-    rq.searchBy = selectedGroup >= 0 && selectedGroup <= 1
-        ? selectedGroup + 1
-        : arrGroups[selectedGroup].groupId;
-    rq.filter = selectedTime + 1;
-    rq.lastUserId = arrFriends.length > 0
-        ? isScrollDown ? arrFriends.last.userId : arrFriends.first.userId
-        : 0;
+      GetFriendsRequest rq = GetFriendsRequest();
+      rq.userId = Injector.userData.userId;
+      rq.category = selectedLeftCategory + 1;
+      rq.scrollType = isScrollDown ? 1 : 0;
+      rq.searchBy = selectedGroup >= 0 && selectedGroup <= 1
+          ? selectedGroup + 1
+          : arrGroups[selectedGroup].groupId;
+      rq.filter = selectedTime + 1;
+      rq.lastUserId = arrFriends.length > 0
+          ? isScrollDown ? arrFriends.last.userId : arrFriends.first.userId
+          : 0;
 
-    await WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
-      if (data != null) {
-        List<GetFriendsData> arrFriendsData = List();
+      await WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
+        CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+        if (data != null) {
+          List<GetFriendsData> arrFriendsData = List();
 
-        data.forEach((v) {
-          arrFriendsData.add(GetFriendsData.fromJson(v));
-        });
+          data.forEach((v) {
+            arrFriendsData.add(GetFriendsData.fromJson(v));
+          });
 
-        if (arrFriendsData.isNotEmpty) {
-          if (isToAddData) {
-            arrFriends.addAll(arrFriendsData);
-          } else
-            arrFriends = arrFriendsData;
-          setState(() {});
+          if (arrFriendsData.isNotEmpty) {
+            if (isToAddData) {
+              arrFriends.addAll(arrFriendsData);
+            } else
+              arrFriends = arrFriendsData;
+            setState(() {});
+          }
         }
-      }
-    }).catchError((e) {
-      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
-    });
+      }).catchError((e) {
+        CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
+      });
+    }
   }
 
-  void friendUnFriendUser(int index, int i) {
+  void friendUnFriendUser(int index, int i) async {
+    if (await Utils.isInternetConnectedWithAlert()) {
 //    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
-    GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
-    rq.userId = Injector.userId;
-    rq.requestedTo = arrFriends[index].userId;
-    rq.action = i;
+      GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
+      rq.userId = Injector.userId;
+      rq.requestedTo = arrFriends[index].userId;
+      rq.action = i;
 
-    WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((response) {
+      WebApi()
+          .callAPI(WebApi.rqFriendUnFriendUser, rq.toJson())
+          .then((response) {
 //      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
 
-      if (response != null) {
-        if (i == 1) {
-          Utils.showToast("Friend added successfully");
-        } else {
-          Utils.showToast("Unfriend successfully");
+        if (response != null) {
+          if (i == 1) {
+            Utils.showToast("Friend added successfully");
+          } else {
+            Utils.showToast("Unfriend successfully");
+          }
         }
-      }
-    }).catchError((e) {
+      }).catchError((e) {
 //      CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
-    });
+      });
+    }
   }
 
   showChallengeButton(int index) {

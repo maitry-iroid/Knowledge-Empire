@@ -354,8 +354,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       if (data != null) {
         List<LearningModuleData> arrData = new List<LearningModuleData>();
 
+        int i = 0;
         data.forEach((v) {
+          LearningModuleData module = LearningModuleData.fromJson(v);
+          module.index = i;
           arrData.add(LearningModuleData.fromJson(v));
+          i++;
         });
 
         LearningModuleResponse learningModuleResponse =
@@ -458,9 +462,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       if (data != null) {
 //        Utils.showToast(Utils.getText(context, StringRes.alertActionPerformed));
 
-        arrLearningModules
-            .firstWhere((module) => module.moduleId == selectedModule.moduleId)
-            .isDownloadEnable = isSwitched ? 1 : 0;
+        arrLearningModules[selectedModule.index].isDownloadEnable =
+            isSwitched ? 1 : 0;
+        selectedModule.isDownloadEnable = isSwitched ? 1 : 0;
 
         if (rq.type == 0)
           removeDownloadedQuestion();
@@ -475,6 +479,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   List<QuestionData> arrQuestions = List();
 
   downloadQuestions(int moduleId) {
+    CommonView.showCircularProgress(true, context);
+
     setState(() {
       isLoading = true;
     });
@@ -486,9 +492,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetDownloadQuestions, rq.toJson())
         .then((data) async {
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         List<QuestionData> arrQuestions = new List<QuestionData>();
@@ -525,7 +529,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //          Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            await PushNotificationHelper(context, "").showLocalNotification(
+            PushNotificationHelper(context, "").showLocalNotification(
                 101, Utils.getText(context, StringRes.downloading));
 
             await BackgroundFetch.start().then((int status) async {
@@ -579,9 +583,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     }).catchError((e) {
       print("downloadQuestion_" + e.toString());
 
-      setState(() {
-        isLoading = false;
-      });
+      CommonView.showCircularProgress(false, context);
+
       Utils.showToast(e.toString());
     });
   }

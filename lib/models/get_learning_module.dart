@@ -63,6 +63,7 @@ class LearningModuleData {
   int isSubscribedFromBackend;
   var fileSize;
   bool isDownloading = false;
+  int index;
 
 
   LearningModuleData();
