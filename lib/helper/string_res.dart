@@ -82,7 +82,7 @@ class StringRes {
   static var alertWantToSubscribe2 = "alertWantToSubscribe2";
   static var downloading = "downloading";
   static var thisModuleWillOccupie = "thisModuleWillOccupie";
-  static var alertNotAllowed = "thisModuleWillOccupie";
+  static var alertNotAllowed = "alertNotAllowed";
 
   //engage customer
   static var engagement = "engagement";
@@ -265,7 +265,7 @@ class StringRes {
       'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
-      'thisModuleWillOccupie ': "This module will occupie ",
+      'thisModuleWillOccupie': "This module will occupie ",
       'alertWantToBailOut': "Are you sure you want to Bail Out.",
       'alertNoModuleFound': "Oops..No learining module found for this user.",
       'you': "You",
