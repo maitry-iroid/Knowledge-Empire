@@ -373,45 +373,55 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
-                      !Injector.isManager() &&
-                              Injector.customerValueData.totalBalance <= 0
-                          ? InkResponse(
-                              child: Container(
-                                height: 35,
-                                width: 50,
-                                padding: EdgeInsets.only(left: 8, right: 8),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  Utils.getText(
-                                      context,
-                                      Injector.customerValueData == null ||
-                                              Injector.customerValueData
-                                                      ?.manager ==
-                                                  null ||
-                                              Injector.customerValueData.manager
-                                                  .isEmpty
-                                          ? StringRes.bailout
-                                          : StringRes.requestBailOut),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      color: ColorRes.white,
-                                      fontSize: 15,
-                                      letterSpacing: 0.7),
-                                ),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(Utils.getAssetsImg(
-                                            'bg_switch_to_prfsnl')),
-                                        fit: BoxFit.fill)),
-                              ),
-                              onTap: () async {
+                      InkResponse(
+                        child: Container(
+                          height: 35,
+                          padding: EdgeInsets.only(left: 8, right: 8),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(
+                                context,
+                                Injector.customerValueData == null ||
+                                        Injector.customerValueData?.manager ==
+                                            null ||
+                                        Injector
+                                            .customerValueData.manager.isEmpty
+                                    ? StringRes.bailout
+                                    : StringRes.requestBailOut),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                                    ? ColorRes.white:ColorRes.greyText,
+                                fontSize: 15,
+                                letterSpacing: 0.7),
+                          ),
+                          decoration: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                              ? BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(Utils.getAssetsImg(
+                                      'bg_switch_to_prfsnl')),
+                                  fit: BoxFit.fill)):BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg('bg_privacy')))
+                                  : null),
+                        ),
+                        onTap: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                            ? () async {
                                 Utils.playClickSound();
 
                                 _asyncConfirmDialog(context);
-                              },
-                            )
-                          : Container(),
+                              }
+                            : null,
+                      ),
                       InkResponse(
                         child: Container(
                           height: 33,
@@ -500,7 +510,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-
                               Text(
                                 companyList[index].companyName,
                                 textAlign: TextAlign.start,
@@ -970,7 +979,6 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         photoUrl = "";
         _image = tempImage;
-
       });
     }
   }
