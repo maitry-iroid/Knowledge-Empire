@@ -30,7 +30,6 @@ class _PLPageState extends State<PLPage> {
 
   int selectedDay = 0;
 
-
   List<Color> colorOpenCloseList = [
     ColorRes.firstColor,
     ColorRes.secondColor,
@@ -56,8 +55,7 @@ class _PLPageState extends State<PLPage> {
   @override
   void initState() {
     super.initState();
-
-    getPerformanceData();
+    getPerformanceData(Const.plDay);
   }
 
   @override
@@ -275,8 +273,6 @@ class _PLPageState extends State<PLPage> {
     }
   }
 
-
-
   showDayLine() {
     return Container(
       height: 30,
@@ -288,43 +284,51 @@ class _PLPageState extends State<PLPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(3, (index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkResponse(
-                    child: Container(
-//                      width: Utils.getDeviceWidth(context) / 12,
-//                      margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 11, horizontal: 3) : EdgeInsets.symmetric(vertical: 5, horizontal: 1),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                     /*     color: Injector.isBusinessMode ? Colors.transparent : selectedDay == index ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
-                         borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),
-                          image: DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? selectedDay == index
-                                  ? "ranking_bg_time_selected"
-                                  : "ranking_bg_time_deselected" : null
-                              )),
-                              fit: BoxFit.fill)*/),
-                      child: Text(Utils.getText(context, arrTime[index]),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.textProf)),
-                    ),
-                    onTap: () {
-
-                      if(index == 0) {
-                        selectedDay = 0;
-                        print(0);
-                      } else if(index == 1) {
-                        selectedDay = 1;
-                        print(1);
-                      } else if(index == 2) {
-                        selectedDay = 2;
-                      }
-
-                    },
+                return InkResponse(
+                  child: Container(
+                    width: Utils.getDeviceWidth(context) / 14,
+                    margin: Injector.isBusinessMode
+                        ? EdgeInsets.symmetric(vertical: 2, horizontal: 0)
+                        : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+                    padding: Injector.isBusinessMode
+                        ? EdgeInsets.symmetric(vertical: 0, horizontal: 0)
+                        : EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        /*     color: Injector.isBusinessMode ? Colors.transparent : selectedDay == index ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
+                       borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),*/
+                        image: DecorationImage(
+                            image: AssetImage(Utils.getAssetsImg(
+                                selectedDay == index
+                                        ? "ranking_bg_time_selected"
+                                        : "ranking_bg_time_deselected")),
+                            fit: BoxFit.fill)),
+                    child: Text(Utils.getText(context, arrTime[index]),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 13,
+                            color:  selectedDay == index
+                                    ? ColorRes.white
+                                    : ColorRes.rankingProBg)),
                   ),
+                  onTap: () {
+                    if (index == 0) {
+                      selectedDay = 0;
+                      getPerformanceData(Const.plDay);
+                      print(0);
+                    } else if (index == 1) {
+                      selectedDay = 1;
+                      getPerformanceData(Const.plMonth);
+
+                      print(1);
+                    } else if (index == 2) {
+                      selectedDay = 2;
+                      getPerformanceData(Const.plYear);
+
+                    }
+
+                    setState(() {});
+                  },
                 );
               }),
             ),
@@ -767,9 +771,9 @@ class _PLPageState extends State<PLPage> {
     ]);
   }
 
-  int selectedType = 1;
+//  int selectedType = 1;
 
-  void getPerformanceData() {
+  void getPerformanceData(int plDay) {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);
@@ -777,7 +781,7 @@ class _PLPageState extends State<PLPage> {
         PerformanceRequest rq = PerformanceRequest();
         rq.userId = Injector.userId;
         rq.mode = Injector.mode ?? Const.businessMode;
-        rq.type = selectedType;
+        rq.type = plDay;
 
         WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
           if (data != null) {
