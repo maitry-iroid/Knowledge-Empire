@@ -3,6 +3,22 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'constant.dart';
 
 class HeaderUtils {
+
+  static  String getHeadText(String type) {
+    if (type == Const.typeEmployee)
+      return "PU";
+    else if (type == Const.typeSalesPersons)
+      return "SP";
+    else if (type == Const.typeServicesPerson)
+      return "Q";
+    else if (type == Const.typeBrandValue)
+      return "%";
+    else if (type == Const.typeMoney)
+      return "LP";
+    else
+      return "";
+  }
+
   static String getHeaderIcon(String type) {
     if (type == Const.typeSalesPersons)
       return "ic_sales_header";

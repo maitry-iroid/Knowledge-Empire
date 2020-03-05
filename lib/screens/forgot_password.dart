@@ -57,8 +57,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: ExactAssetImage(Utils.getAssetsImg('bg_login_profesonal')),
-            fit: BoxFit.fill,
-            alignment: Alignment.topCenter,
+            fit: BoxFit.cover,
+//            alignment: Alignment.topCenter,
           ),
         ),
         child: Stack(

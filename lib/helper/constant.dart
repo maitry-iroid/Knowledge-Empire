@@ -38,6 +38,7 @@ class Const {
   static var typeHelp = "help";
   static var typeEngagement = "engagement";
   static var typeCustomerSituation = "customerSituation";
+  static var updateProfileBrod = "updateProfileBrod";
 
   static var openPendingChallengeDialog = 101;
 

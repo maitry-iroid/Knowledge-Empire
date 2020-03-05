@@ -71,7 +71,7 @@ android {
         }
 
     }
-    flavorDimensions "default"
+ /*   flavorDimensions "default"
     productFlavors {
         dev {
             dimension "default"
@@ -83,7 +83,7 @@ android {
             applicationId "com.keemployee.app"
             resValue "string", "app_name", "KE prod"
         }
-    }
+    }*/
 }
 
 flutter {

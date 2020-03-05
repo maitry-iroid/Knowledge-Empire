@@ -63,13 +63,14 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: ColorRes.fontDarkGrey,
         body: Container(
 
+//          height: 400,
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: ExactAssetImage(Utils.getAssetsImg('bg_login_profesonal')),
-              fit: BoxFit.fill,
-              alignment: Alignment.topCenter,
+              fit: BoxFit.cover,
+//              alignment: Alignment.topCenter,
             ),
           ),
           child: Stack(
@@ -107,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
         )
      );
   }
+
 
   showLoginForm() {
     return Column(

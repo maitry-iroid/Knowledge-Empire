@@ -44,7 +44,19 @@ class HeaderViewState extends State<HeaderView> {
     }, onError: (error) {
       print("Some Error1");
     });
+
+//    updateProfileBrodCast();
   }
+
+
+  /*updateProfileBrodCast() {
+    Injector.streamController = StreamController.broadcast();
+
+    Injector.streamController.stream.listen((data) {
+      if (data == Const.updateProfileBrod) {
+        showHeaderView(context);
+      }});
+  }*/
 
   @override
   void dispose() {
@@ -115,7 +127,7 @@ class HeaderViewState extends State<HeaderView> {
                         height: 26,
                       )
                     : Text(
-                        getHeadText(type),
+                        HeaderUtils.getHeadText(type),
                         style: TextStyle(fontSize: 15, color: ColorRes.white),
                       ),
               ],
@@ -235,20 +247,7 @@ class HeaderViewState extends State<HeaderView> {
     );
   }
 
-  String getHeadText(String type) {
-    if (type == Const.typeEmployee)
-      return "PU";
-    else if (type == Const.typeSalesPersons)
-      return "SP";
-    else if (type == Const.typeServicesPerson)
-      return "Q";
-    else if (type == Const.typeBrandValue)
-      return "%";
-    else if (type == Const.typeMoney)
-      return "LP";
-    else
-      return "";
-  }
+
 
   showHelpView(BuildContext context) {
     return InkResponse(
