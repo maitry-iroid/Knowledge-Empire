@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:audioplayers/audio_cache.dart';
+import 'package:device_id/device_id.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_udid/flutter_udid.dart';
+
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -55,7 +56,7 @@ class Injector {
     firebaseMessaging = FirebaseMessaging();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-    deviceId = await FlutterUdid.udid;
+    deviceId = await DeviceId.getID;
 
     if (prefs.getBool(PrefKeys.isSoundEnable) == null) {
       await prefs.setBool(PrefKeys.isSoundEnable, true);
