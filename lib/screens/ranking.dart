@@ -622,7 +622,7 @@ class _RankingPageState extends State<RankingPage> {
         decoration: BoxDecoration(
             image: isCurrentUser(index)
                 ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_ranking_header")))
+                    image: AssetImage(Utils.getAssetsImg("bg_ranking_header")), fit: BoxFit.fill)
                 : null),
         /*  decoration: isCurrentUser(index)
             ? BoxDecoration(

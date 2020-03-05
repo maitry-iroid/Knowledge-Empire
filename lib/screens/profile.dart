@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -80,27 +82,31 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+//    SystemChrome.setPreferredOrientations([
+//      DeviceOrientation.landscapeLeft,
+//      DeviceOrientation.landscapeRight,
+//    ]);
     return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor:
-          Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
-      body: Stack(
-        children: <Widget>[
-          CommonView.showBackground(context),
-          Padding(
-            padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  child: Row(
-                    children: <Widget>[showFirstHalf(), showSecondHalf()],
-                  ),
-                )
-              ],
+        key: _scaffoldKey,
+        backgroundColor:
+            Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
+        body: Stack(
+          children: <Widget>[
+            CommonView.showBackground(context),
+            Padding(
+              padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Row(
+                      children: <Widget>[showFirstHalf(), showSecondHalf()],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
     );
   }
 
@@ -975,12 +981,22 @@ class _ProfilePageState extends State<ProfilePage> {
       imageQuality: Const.imgQuality,
     );
 
-    if (tempImage != null) {
+    if (tempImage != null && tempImage.path != null) {
+      tempImage = await FlutterExifRotation.rotateImage(path: tempImage.path);
+
+      if (tempImage != null) {
+        setState(() {
+          _image = tempImage;
+        });
+      }
+    }
+
+/*    if (tempImage != null) {
       setState(() {
         photoUrl = "";
         _image = tempImage;
       });
-    }
+    }*/
   }
 
 //  void compressImage() async {
@@ -1060,7 +1076,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
-        Injector.headerStreamController.add("update_profile");
+//        Injector.streamController.add(Const.updateProfileBrod);
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
