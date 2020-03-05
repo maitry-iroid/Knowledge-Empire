@@ -93,6 +93,11 @@ class Const {
 
   static FlavorConfig _config;
 
+  //pl screen dd_mm_yy
+  static int plDay   = 1;
+  static int plMonth = 2;
+  static int plYear  = 3;
+
   static void setEnvironment(Environment env) {
     envType = env;
     Injector.isDev = envType == Environment.DEV;

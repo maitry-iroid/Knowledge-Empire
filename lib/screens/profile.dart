@@ -8,6 +8,7 @@ import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
+import 'package:ke_employee/models/company.dart';
 import 'package:package_info/package_info.dart';
 
 import '../commonview/background.dart';
@@ -31,6 +32,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   FocusNode myFocusNode;
 
+  List<Company> companyList = new List();
+
+  String getCompany = "Select Company";
+
   @override
   void initState() {
     myFocusNode = FocusNode();
@@ -47,6 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 //    packagesInfo();
     _initPackageInfo();
+    callAPIForComponyName();
   }
 
   File _image;
@@ -263,6 +269,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                 : null),
                       ),
                       InkResponse(
+                        onTap: () {
+                          selectCompanyDialog();
+                        },
+                        child: Container(
+                          height: 30,
+                          margin: EdgeInsets.symmetric(vertical: 1),
+                          alignment: Alignment.center,
+                          child: Text(
+                            getCompany,
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 15,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
+                                  : null),
+                        ),
+                      ),
+                      InkResponse(
                         child: Container(
                           height: 35,
                           margin: EdgeInsets.only(top: 15),
@@ -433,6 +468,77 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       },
     );
+  }
+
+  selectCompanyDialog() {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Center(
+            child: Container(
+                color: Colors.white,
+                width: Utils.getDeviceWidth(context) / 2,
+                height: Utils.getDeviceHeight(context) / 2,
+                child: ListView.builder(
+                    itemCount: companyList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          getCompany = companyList[index].companyName;
+                          Navigator.pop(context);
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+
+                              Text(
+                                companyList[index].companyName,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: ColorRes.black,
+                                    decoration: TextDecoration.none),
+                              ),
+                              Divider(color: ColorRes.greyText),
+                            ],
+                          ),
+                        ),
+                      );
+                    })),
+            /*child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(5, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Divider(color: ColorRes.greyText),
+                          Text(
+                            "tag this ok",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(fontSize: 12,color: ColorRes.black,decoration: TextDecoration.none),
+                          ),
+                          Divider(color: ColorRes.greyText)
+                        ],
+                      ),
+                    );
+                  }),
+                )),*/
+          );
+        });
   }
 
   void performBailOut() {
@@ -946,6 +1052,31 @@ class _ProfilePageState extends State<ProfilePage> {
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
         Injector.headerStreamController.add("update_profile");
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+    }).catchError((e) {
+      print("updatePorfile_" + e.toString());
+      CommonView.showCircularProgress(false, context);
+      Utils.showToast(e.toString());
+    });
+  }
+
+  callAPIForComponyName() {
+    Utils.playClickSound();
+
+    Map<String, dynamic> map = {"userId": Injector.userId};
+
+    WebApi().callAPI(WebApi.rqGetCompany, map).then((data) async {
+      // CommonView.showCircularProgress(false, context);
+
+      if (data != null) {
+        List<Company> arrFriendsData = List();
+        data.forEach((v) {
+          arrFriendsData.add(Company.fromJson(v));
+        });
+        companyList = arrFriendsData;
+        setState(() {});
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
