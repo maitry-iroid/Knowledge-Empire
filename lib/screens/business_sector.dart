@@ -468,8 +468,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
         if (rq.type == 0)
           removeDownloadedQuestion();
-        else
-          downloadQuestions(selectedModule.moduleId);
+//        else
+//          downloadQuestions(selectedModule.moduleId);
 
         setState(() {});
       }

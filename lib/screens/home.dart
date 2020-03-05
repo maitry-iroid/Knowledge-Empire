@@ -193,6 +193,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ? Injector.isManager() ? TeamPage() : ChallengesPage()
             : Container();
       case 6:
+//        return (Injector.isManager()
+//            ? ChallengesPage()
+//            : (Injector.isBusinessMode
+//                ? OrganizationsPage2()
+//                : PowerUpsPage()));
+
         return Injector.isDev
             ? (Injector.isManager()
                 ? ChallengesPage()
