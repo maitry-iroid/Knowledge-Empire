@@ -969,6 +969,7 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         photoUrl = "";
         _image = tempImage;
+
       });
     }
   }
@@ -1050,7 +1051,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
-        Injector.streamController.add("update_profile");
+        Injector.streamController.add(Const.updateProfileBrod);
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
