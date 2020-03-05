@@ -500,6 +500,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
+
                               Text(
                                 companyList[index].companyName,
                                 textAlign: TextAlign.start,
