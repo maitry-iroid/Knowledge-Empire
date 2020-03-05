@@ -144,12 +144,6 @@ class HeaderViewState extends State<HeaderView> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: ColorRes.greyText,
-//                          image: Injector.isBusinessMode
-//                              ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_progress')),
-//                                  fit: BoxFit.fill)
-//                              : null,
                             borderRadius: BorderRadius.circular(12),
                             border: Injector.isBusinessMode
                                 ? null

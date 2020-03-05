@@ -28,7 +28,7 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
-import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
+//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -224,17 +224,6 @@ class Utils {
             isOldPasswordRequired: isOldPasswordRequired));
   }
 
-  static showOrgInfoDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      String description, int position, bool checkUpdate) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => OrgInfoDialog(
-              text: description,
-              position: position,
-              checkUpdate: checkUpdate,
-            ));
-  }
-
   static String generateMd5(String input) {
     return md5.convert(utf8.encode(input)).toString();
   }
@@ -330,7 +319,7 @@ class Utils {
 
         Injector.customerValueData = customerValueData;
         await Injector.prefs.remove(PrefKeys.answerData);
-        Injector.headerStreamController.add("submit answer");
+        customerValueBloc.setCustomerValue(customerValueData);
       }
     }).catchError((e) {
       print("callSubmitAnswerApi" + e.toString());
@@ -538,14 +527,14 @@ class Utils {
   }
 
   static pdfShow() {
-    return Utils.isPdf(questionData.mediaLink)
+    return /*Utils.isPdf(questionData.mediaLink)
         ? SimplePdfViewerWidget(
             completeCallback: (bool result) {
               print("completeCallback,result:$result");
             },
             initialUrl: questionData.mediaLink,
           )
-        : Container();
+        : */Container();
   }
 
   static isImage(String path) {

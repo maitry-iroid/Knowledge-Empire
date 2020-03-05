@@ -358,7 +358,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         data.forEach((v) {
           LearningModuleData module = LearningModuleData.fromJson(v);
           module.index = i;
-          arrData.add(LearningModuleData.fromJson(v));
+          arrData.add(module);
           i++;
         });
 
@@ -383,7 +383,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           }
         });
 
-        downloadQuestions(null);
+//        downloadQuestions(null);
       }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());

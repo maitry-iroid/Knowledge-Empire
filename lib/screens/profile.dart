@@ -374,6 +374,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                       ),
                       !Injector.isManager() &&
+                              Injector.customerValueData != null &&
                               Injector.customerValueData.totalBalance <= 0
                           ? InkResponse(
                               child: Container(
@@ -500,7 +501,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-
                               Text(
                                 companyList[index].companyName,
                                 textAlign: TextAlign.start,

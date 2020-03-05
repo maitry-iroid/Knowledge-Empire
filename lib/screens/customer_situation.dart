@@ -8,7 +8,8 @@ import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
+
+//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
 import '../helper/constant.dart';
@@ -75,7 +76,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   String error;
-
 
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
@@ -154,12 +154,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     }
   }
 
-
-
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(
-            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
+        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -883,9 +880,8 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     }
   }
 
-  void initVideoController1() async{
+  void initVideoController1() async {
     if (Utils.isVideo(questionData.mediaLink)) {
-
       _controller = Utils.getCacheFile(questionData.mediaLink) != null
           ? VideoPlayerController.file(
               Utils.getCacheFile(questionData.mediaLink).file)
@@ -1051,301 +1047,14 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
           ],
         ),
       );
-    } else if (Utils.isPdf(correctWrongImage())) {
-      return SimplePdfViewerWidget(
-        completeCallback: (bool result) {
-          print("completeCallback,result:$result");
-        },
-        initialUrl: questionData.mediaLink,
-      );
+//    } else if (Utils.isPdf(correctWrongImage())) {
+//      return SimplePdfViewerWidget(
+//        completeCallback: (bool result) {
+//          print("completeCallback,result:$result");
+//        },
+//        initialUrl: questionData.mediaLink,
+//      );
+//    }
     }
   }
 }
-
-//======================================
-//image show  in alert
-
-/*
-class ImageCorrectIncorrectAlert extends StatefulWidget {
-//  bool CheckQuestion;
-
-  @override
-  State<StatefulWidget> createState() => ImageCorrectIncorrectAlertState();
-}
-
-class ImageCorrectIncorrectAlertState extends State<ImageCorrectIncorrectAlert>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> scaleAnimation;
-  bool checkimg = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
-
-    controller.addListener(() {
-      setState(() {});
-    });
-
-    controller.forward();
-
-    correctWrongImage();
-  }
-
-  correctWrongImage() {
-    if (questionData.isAnsweredCorrect == true) {
-      return questionDataCustSituation.correctAnswerImage;
-    } else {
-      return questionDataCustSituation.inCorrectAnswerImage;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Material(
-        color: Colors.transparent,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: Container(
-            decoration: ShapeDecoration(
-//                color: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
-            child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Stack(
-                  fit: StackFit.loose,
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.only(
-                          top: 25, bottom: 15, right: 25, left: 25),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: 0, bottom: 0, left: 0, right: 0),
-                        height: Utils.getDeviceHeight(context) / 2.7,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-//                          color: Injector.isBusinessMode ? ColorRes.black : ColorRes.white,
-                          image: DecorationImage(
-                              image: NetworkImage(correctWrongImage()),
-//                              fit: BoxFit.fill
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: InkResponse(
-                          onTap: () {
-                            Utils.playClickSound();
-                            //alert pop
-                            Navigator.pop(context);
-                          },
-                          child: (checkimg == true
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(Utils.getAssetsImg(
-                                              "close_dialog")),
-                                          fit: BoxFit.contain)))
-                              : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 40,
-                                  width: Utils.getDeviceWidth(context) / 40,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(Utils.getAssetsImg(
-                                              "close_dialog")),
-                                          fit: BoxFit.contain))))),
-                    )
-                  ],
-                )),
-          ),
-        ),
-      ),
-    );
-  }
-}*/
-
-/*
-class ParticleBackgroundApp extends StatelessWidget {
-  final QuestionData questionDataCustomerSituation;
-
-  ParticleBackgroundApp({Key key, this.questionDataCustomerSituation})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      Positioned.fill(child: CustomerSituationPage(questionDataCustomerSituation: questionDataCustomerSituation,)),
-//      Positioned.fill(child: AnimatedBackground()),
-//      Positioned.fill(child: AnimatedBackground(questionDataParticles: questionDataCustomerSituation)),
-      Positioned.fill(child: Particles(20)),
-    ]);
-  }
-}
-
-
-// animation code
-class Particles extends StatefulWidget {
-  final int numberOfParticles;
-
-//  final QuestionData questionDataParticles;
-
-  Particles(this.numberOfParticles,);
-
-  @override
-  _ParticlesState createState() => _ParticlesState();
-}
-
-class Login extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        "hello"
-      ),
-    );
-  }
-}
-
-class _ParticlesState extends State<Particles> {
-  final Random random = Random();
-
-  final List<ParticleModel> particles = [];
-
-  @override
-  void initState() {
-    List.generate(widget.numberOfParticles, (index) {
-      particles.add(ParticleModel(random));
-    });
-    super.initState();
-    init();
-
-//    context.current.trim();
-
-//    new Future.delayed(
-//        const Duration(seconds: 5),
-//            () => Navigator.push(context,
-//          MaterialPageRoute(builder: (context) => CustomerSituationPage()),
-//        ));
-      Navigator.of(context).pop();
-  }
-
-  //image show top to bottom
-  ui.Image image;
-  bool isImageloaded = false;
-
-  Future <Null> init() async {
-    final ByteData data = await rootBundle.load('assets/images/add_emplyee.png');
-    image = await loadImage(new Uint8List.view(data.buffer));
-  }
-
-  Future<ui.Image> loadImage(List<int> img) async {
-    final Completer<ui.Image> completer = new Completer();
-    ui.decodeImageFromList(img, (ui.Image img) {
-      setState(() {
-        isImageloaded = true;
-      });
-      return completer.complete(img);
-    });
-    return completer.future;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Rendering(
-      startTime: Duration(seconds: 50),
-      onTick: _simulateParticles,
-      builder: (context, time) {
-        return CustomPaint(
-          painter: ParticlePainter(particles, time, image),
-        );
-      },
-    );
-  }
-
-  _simulateParticles(Duration time) {
-    particles.forEach((particle) => particle.maintainRestart(time));
-  }
-}
-
-class ParticleModel {
-  Animatable tween;
-  double size;
-  AnimationProgress animationProgress;
-  Random random;
-
-  ParticleModel(this.random) {
-    restart();
-  }
-
-  restart({Duration time = Duration.zero}) {
-    //random.nextDouble()
-    final startPosition = Offset(-0.2 + 1.4 * random.nextDouble(), 0.0);
-    final endPosition = Offset(-0.2 + 1.4 * random.nextDouble(), 1.2);
-    final duration = Duration(milliseconds: 300 + random.nextInt(3000));
-
-    tween = MultiTrackTween([
-      Track("x").add(
-          duration, Tween(begin: startPosition.dx, end: endPosition.dx),
-          curve: Curves.easeInOutSine),
-      Track("y").add(
-          duration, Tween(begin: startPosition.dy, end: endPosition.dy),
-          curve: Curves.easeIn),
-    ]);
-    animationProgress = AnimationProgress(duration: duration, startTime: time);
-    size = 0.5 + random.nextDouble() * 0.01;
-  }
-
-  maintainRestart(Duration time) {
-    if (animationProgress.progress(time) == 1.0) {
-      restart(time: time);
-    }
-  }
-}
-
-class ParticlePainter extends CustomPainter {
-  List<ParticleModel> particles;
-  Duration time;
-  ui.Image image;
-  ParticlePainter(this.particles, this.time, this.image);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-//    final paint = Paint()..color = Colors.white.withAlpha(50);
-    final paint = Paint()..color = Colors.cyan;
-//    final paint = paintImage(canvas: null, rect: null, image: null);
-
-
-//    final paint = paintImage(canvas: null, rect: null, image: )
-
-    particles.forEach((particle) {
-      var progress = particle.animationProgress.progress(time);
-      final animation = particle.tween.transform(progress);
-      final position =
-      Offset(animation["x"] * size.width, animation["y"] * size.height);
-//      canvas.drawCircle(position, size.width * 0.2 * particle.size, paint);
-      canvas.drawImage(image, position, new Paint());
-
-    });
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
-}
-*/

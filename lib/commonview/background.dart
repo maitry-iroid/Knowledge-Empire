@@ -388,12 +388,13 @@ class CommonView {
             ),
           ),
           Container(
+            alignment: Alignment.center,
             width: Utils.getDeviceWidth(context),
             margin: EdgeInsets.only(
-              top: Utils.getDeviceHeight(context) / 4.2,
-            ),
+                top: Utils.getDeviceHeight(context) / 4.2,
+                left: Utils.getDeviceWidth(context) / 12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
@@ -427,7 +428,8 @@ class CommonView {
                                 image: AssetImage(Utils.getAssetsImg("team")),
                                 width: Utils.getDeviceHeight(context) / 3.0,
                               ),
-                              Utils.showUnreadCount(Const.typeTeam, 18, 20, data)
+                              Utils.showUnreadCount(
+                                  Const.typeTeam, 18, 20, data)
                             ],
                           ),
                           onTap: () {
@@ -447,7 +449,8 @@ class CommonView {
                         child: Stack(
                           children: <Widget>[
                             Image(
-                              image: AssetImage(Utils.getAssetsImg("challenges")),
+                              image:
+                                  AssetImage(Utils.getAssetsImg("challenges")),
                               width: Utils.getDeviceHeight(context) / 2.6,
                             ),
                             Utils.showUnreadCount(

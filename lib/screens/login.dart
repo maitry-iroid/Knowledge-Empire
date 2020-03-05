@@ -17,23 +17,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: LoginPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: LoginPage(),
+          ),
+        );
 }
 
 class LoginPage extends StatefulWidget {
@@ -62,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
 //      resizeToAvoidBottomPadding: false,
         backgroundColor: ColorRes.fontDarkGrey,
         body: Container(
-
 //          height: 400,
           height: double.infinity,
           width: double.infinity,
@@ -102,13 +101,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     child: showLoginForm(),
                   )),
-
             ],
           ),
-        )
-     );
+        ));
   }
-
 
   showLoginForm() {
     return Column(
@@ -231,10 +227,12 @@ class _LoginPageState extends State<LoginPage> {
 
         if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-        }else{
-          navigateToDashboard();
+        } else {
+          if (userData.isFirstTimeLogin)
+            navigateToIntro();
+          else
+            navigateToDashboard();
         }
-
       }
     }).catchError((e) {
       print("login_" + e.toString());
@@ -277,7 +275,8 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    style:
+                        TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     decoration: InputDecoration(
 //                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
@@ -315,7 +314,8 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    style:
+                        TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),

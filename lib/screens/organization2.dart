@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -34,35 +31,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) getOrganization();
-    });
-//    initStreamControllerProfile();
-  }
-
-  void initStreamControllerProfile() {
-    if (Injector.headerStreamController == null)
-      Injector.headerStreamController = StreamController.broadcast();
-
-    Injector.headerStreamController.stream.listen((data) {
-      if (mounted) {
-        setState(() {
-          print(data);
-
-          if (isCheckLoad == true) {
-            if (data == "update plus") {
-              manageLevel(position1, Const.add);
-              isCheckLoad = false;
-//            showConfirmDialog(position1, Const.add);
-            } else if (data == "update minus") {
-              manageLevel(position1, Const.subtract);
-              isCheckLoad = false;
-            }
-          }
-        });
-      }
-    }, onDone: () {
-      print("Task Done11");
-    }, onError: (error) {
-      print("Some Error11");
     });
   }
 
@@ -98,7 +66,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItem(int type) {
     int position = type - 1;
-    initStreamControllerProfile();
 
     return Stack(
       fit: StackFit.loose,
@@ -195,40 +162,22 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
               ),
             ),
           ),
-          onTap: () {
+          onTap: () async {
 //            showBody(context, arrOrganization[position].description);
-            Utils.showOrgInfoDialog(_scaffoldKey,
-                arrOrganization[position].description, position, true);
+
+            var data = await showDialog(
+                context: _scaffoldKey.currentContext,
+                builder: (BuildContext context) => OrgInfoDialog(
+                      text: arrOrganization[position].description,
+                      position: position,
+                    ));
+
+            print("dialog dissmissed");
+            print(data);
+
+            if (data != null) manageLevel(position, data);
           },
         ),
-        /*  Positioned(
-          right: 2,
-          top: 0,
-          child: Container(
-            padding: EdgeInsets.all(2),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-                color: ColorRes.headerBlue),
-            child: InkResponse(
-              child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg('info'),
-                ),
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.hintColor,
-                fit: BoxFit.fill,
-                width: 14,
-              ),
-              onTap: () {
-                Utils.showOrgInfoDialog(
-                    _scaffoldKey, arrOrganization[position].description);
-              },
-            ),
-          ),
-        )*/
       ],
     );
   }
@@ -239,7 +188,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItems() {
     return Padding(
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/10, right: Utils.getDeviceWidth(context)/10),
+      padding: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 10,
+          right: Utils.getDeviceWidth(context) / 10),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -390,18 +341,16 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 //alert dialog open
 
 class OrgInfoDialog extends StatefulWidget {
-  OrgInfoDialog(
-      {Key key,
-      this.text,
-      this.organizationsPage2,
-      this.position,
-      this.checkUpdate})
-      : super(key: key);
+  OrgInfoDialog({
+    Key key,
+    this.text,
+    this.organizationsPage2,
+    this.position,
+  }) : super(key: key);
 
   final String text;
   final _OrganizationsPage2State organizationsPage2;
   final int position;
-  final bool checkUpdate;
 
   @override
   OrgInfoDialogState createState() => new OrgInfoDialogState();
@@ -444,7 +393,6 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 13)),
-
                     InkResponse(
                       child: Container(
                         padding: EdgeInsets.only(
@@ -452,37 +400,24 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                         margin: EdgeInsets.only(
                             left: 10, right: 10, top: 3, bottom: 3),
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 2, color: ColorRes.blue),
+                            border: Border.all(width: 2, color: ColorRes.blue),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         child: Text(Utils.getText(context, StringRes.hireEmp),
-                            style: TextStyle(
-                                color: ColorRes.blue, fontSize: 17)),
+                            style:
+                                TextStyle(color: ColorRes.blue, fontSize: 17)),
                       ),
                       onTap: () {
-//                            widget.organizationsPage2.showConfirmDialog(widget.position, Const.add);
-//                          widget.organizationsPage2.manageLevel(widget.position, Const.add);
-//                          widget.organizationsPage2.refresh();
-                        Navigator.pop(context);
-                        Injector.headerStreamController.add("update plus");
-                        setState(() {
-                          position1 = widget.position;
-                          isCheckLoad = widget.checkUpdate;
-                        });
-//                          widget.organizationsPage2.reference();
+                        Navigator.pop(context, Const.add);
                       },
                     ),
-
-//                      showTextEmp("Fire 10 employees", "minus", 1)),
                     Padding(padding: EdgeInsets.only(top: 5)),
                     InkResponse(
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 3, bottom: 3),
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 2, color: ColorRes.blue),
+                            border: Border.all(width: 2, color: ColorRes.blue),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         child: Text(Utils.getText(context, StringRes.fireEmp),
@@ -490,12 +425,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                                 TextStyle(color: ColorRes.red, fontSize: 17)),
                       ),
                       onTap: () {
-                        Navigator.pop(context);
-                        Injector.headerStreamController.add("update minus");
-                        setState(() {
-                          position1 = widget.position;
-                          isCheckLoad = widget.checkUpdate;
-                        });
+                        Navigator.pop(context, Const.subtract);
                       },
                     ),
                   ],
@@ -513,7 +443,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                 ),
                 onTap: () {
                   Utils.playClickSound();
-                  Navigator.pop(context);
+                  Navigator.pop(context, null);
                 },
               ))
         ],

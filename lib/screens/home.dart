@@ -147,24 +147,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    initContent();
     super.initState();
-
-    initStreamController();
-
-    initCheckNetworkConnectivity();
-
-    setSelectedIndex();
-
-    PushNotificationHelper(context,"home").initPush();
-
-    if (widget.initialPageType != Const.typeChallenges &&
-        widget.initialPageType != Const.typeCustomerSituation &&
-        widget.initialPageType != Const.typeEngagement) {
-      if (widget.isCameFromDashboard ?? true) getCustomerValues();
-
-      if (widget.isChallenge == null || widget.isChallenge)
-        getPendingChallenges();
-    }
   }
 
   @override
@@ -448,8 +432,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initStreamController() async {
-    await Injector.getInstance();
-
     Injector.headerStreamController.stream.listen((data) {
       if (data == "${Const.typeProfile}") {
         if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeProfile) &&
@@ -603,5 +585,26 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       DrawerItem(Utils.getText(context, StringRes.help),
           Injector.isBusinessMode ? "help_icon" : "ic_pro_help"),
     );
+  }
+
+  void initContent() async {
+    await Injector.getInstance();
+
+    initStreamController();
+
+    getCustomerValues();
+
+    initCheckNetworkConnectivity();
+
+    setSelectedIndex();
+
+    PushNotificationHelper(context, "home").initPush();
+
+    if (widget.initialPageType != Const.typeChallenges &&
+        widget.initialPageType != Const.typeCustomerSituation &&
+        widget.initialPageType != Const.typeEngagement) {
+      if (widget.isChallenge == null || widget.isChallenge)
+        getPendingChallenges();
+    }
   }
 }
