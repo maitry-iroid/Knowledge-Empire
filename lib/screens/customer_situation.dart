@@ -70,7 +70,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
-      Injector.streamController?.add("${Const.typeMoneyAnim}");
+      Injector.headerStreamController?.add("${Const.typeMoneyAnim}");
     }
   }
 
@@ -158,7 +158,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+        margin: EdgeInsets.only(
+            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -500,19 +501,14 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             _scaffoldKey, widget.nextChallengeQuestionData);
       }
     } else {
+      Navigator.pushAndRemoveUntil(
+          context, FadeRouteHome(), ModalRoute.withName("home"));
 
-      Injector.newCustomerStreamController.add("newCustomer");
-
-      Navigator.pop(context);
-
-//      Navigator.pushAndRemoveUntil(
-//          context, FadeRouteHome(), ModalRoute.withName("home"));
-
-//      Navigator.push(
-//          context,
-//          FadeRouteHome(
-//              initialPageType: Const.typeNewCustomer,
-//              questionDataSituation: null));
+      Navigator.push(
+          context,
+          FadeRouteHome(
+              initialPageType: Const.typeNewCustomer,
+              questionDataSituation: null));
     }
   }
 

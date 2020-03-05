@@ -76,12 +76,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   @override
   void dispose() {
-    if (Utils.isVideo(questionData.mediaLink)) {
-      try {
-            _controller?.dispose();
-          } catch (e) {
-            print(e);
-          }
+    try {
+      _controller?.dispose();
+    } catch (e) {
+      print(e);
     }
     super.dispose();
   }
@@ -112,28 +110,21 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            isChallenge
-                ? Container(
-                    color: ColorRes.colorBgDark,
-                  )
-                : CommonView.showBackground(context),
-            Column(
-              children: <Widget>[
-                HeaderView(
-                  scaffoldKey: _scaffoldKey,
-                  isShowMenu: true,
-                  openProfile: null,
-                ),
-                showSubHeader(context),
-                showMainBody(context),
-              ],
-            ),
-          ],
-        ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          isChallenge
+              ? Container(
+                  color: ColorRes.colorBgDark,
+                )
+              : CommonView.showBackground(context),
+          Column(
+            children: <Widget>[
+              showSubHeader(context),
+              showMainBody(context),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -321,7 +312,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
         await Injector.prefs.remove(PrefKeys.answerData);
 
-        Injector.streamController.add("submit answer");
+        Injector.headerStreamController.add("submit answer");
 
         navigateToSituation(context, null);
       }
@@ -353,7 +344,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+        margin: EdgeInsets.only(
+            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -506,22 +498,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void navigateToSituation(
       BuildContext context, QuestionData nextChallengeQuestionData) {
     if (!isChallenge) {
-//      Navigator.pushAndRemoveUntil(
-//          context,
-//          FadeRouteHome(
-//              initialPageType: Const.typeCustomerSituation,
-//              questionDataSituation: questionData,
-//              isChallenge: isChallenge),
-//          ModalRoute.withName("/home"));
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CustomerSituationPage(
-                  isChallenge: false,
-                  questionDataCustomerSituation: questionData,
-                )),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          FadeRouteHome(
+              initialPageType: Const.typeCustomerSituation,
+              questionDataSituation: questionData,
+              isChallenge: isChallenge),
+          ModalRoute.withName("/home"));
     } else {
       Navigator.pop(context);
       Utils.showCustomerSituationDialog(_scaffoldKey,
@@ -677,7 +660,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaView(BuildContext context) {
     if (Utils.isImage(questionData.mediaLink)) {
       return Container(
-//        margin: EdgeInsets.all(20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(10),

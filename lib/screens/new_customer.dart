@@ -34,21 +34,22 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   void initState() {
     super.initState();
 
-    if (Injector.newCustomerStreamController != null)
-      Injector.newCustomerStreamController = StreamController.broadcast();
+    questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
+    loyaltyBonus = Injector.customerValueData.loyaltyBonus;
+    resourceBonus = Injector.customerValueData.resourceBonus;
+    valueBonus = Injector.customerValueData.valueBonus;
 
-    Injector.newCustomerStreamController.stream.listen((data) {
-//      print("DataReceived1: " + data);
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        getQuestions(_scaffoldKey.currentContext);
+      } else {
+        arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
 
-      initData();
-      if (mounted) setState(() {});
-    }, onDone: () {
-      print("Task Done1");
-    }, onError: (error) {
-      print("Some Error1");
+        if (arrQuestions != null && arrQuestions.length > 0) {
+          setState(() {});
+        }
+      }
     });
-
-    initData();
   }
 
   getQuestions(BuildContext context) {
@@ -316,13 +317,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       arrQuestions[index].resources &&
                   Injector.customerValueData.remainingCustomerCapacity > 0) {
                 Navigator.push(
-                  _scaffoldKey.currentContext,
-                  MaterialPageRoute(
-                      builder: (context) => EngagementCustomer(
-                            questionDataEngCustomer: arrQuestions[index],
-                            isChallenge: false,
-                          )),
-                );
+                    _scaffoldKey.currentContext,
+                    FadeRouteHome(
+                        initialPageType: Const.typeEngagement,
+                        questionDataHomeScr: arrQuestions[index],
+                        value: arrQuestions[index].value));
               } else {
                 Utils.showToast("You need atleast " +
                     arrQuestions[index].resources.toString() +
@@ -340,21 +339,12 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           if (Injector.customerValueData.remainingSalesPerson >=
                   arrQuestions[index].resources &&
               Injector.customerValueData.remainingCustomerCapacity > 0) {
-//
-//            Navigator.push(
-//                _scaffoldKey.currentContext,
-//                FadeRouteHome(
-//                    initialPageType: Const.typeEngagement,
-//                    questionDataHomeScr: arrQuestions[index],
-//                    value: arrQuestions[index].value));
-
             Navigator.push(
                 _scaffoldKey.currentContext,
-                MaterialPageRoute(
-                    builder: (context) => EngagementCustomer(
-                          questionDataEngCustomer: arrQuestions[index],
-                          isChallenge: false,
-                        )));
+                FadeRouteHome(
+                    initialPageType: Const.typeEngagement,
+                    questionDataHomeScr: arrQuestions[index],
+                    value: arrQuestions[index].value));
           } else {
             Utils.showToast("You need atleast " +
                 arrQuestions[index].resources.toString() +

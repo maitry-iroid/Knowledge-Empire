@@ -26,7 +26,8 @@ class Injector {
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
-  static StreamController<String> streamController;
+  static StreamController<String> headerStreamController;
+//  static StreamController<String> homeStreamController;
   static StreamController<String> newCustomerStreamController;
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;
@@ -73,8 +74,9 @@ class Injector {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
-      streamController = StreamController.broadcast();
+      headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();
+//      homeStreamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
       mode = prefs.getInt(PrefKeys.mode) ?? Const.businessMode;

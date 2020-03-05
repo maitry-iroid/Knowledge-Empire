@@ -26,6 +26,12 @@ class CustomerValueBloc {
     }
   }
 
+  setCustomerValue(CustomerValueData customerValueData) async {
+    if (customerValueData != null) {
+      _assignModuleSubject.sink.add(customerValueData);
+    }
+  }
+
   bailOut(BailOutRequest rq) async {
     dynamic data = await _repository.bailOut(rq);
 

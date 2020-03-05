@@ -32,10 +32,10 @@ class HeaderViewState extends State<HeaderView> {
   void initState() {
     super.initState();
 
-    if (Injector.streamController == null)
-      Injector.streamController = StreamController.broadcast();
+    if (Injector.headerStreamController == null)
+      Injector.headerStreamController = StreamController.broadcast();
 
-    Injector.streamController.stream.listen((data) {
+    Injector.headerStreamController.stream.listen((data) {
 //      print("DataReceived1: " + data);
 
       if (mounted) setState(() {});
@@ -177,19 +177,19 @@ class HeaderViewState extends State<HeaderView> {
         ),
         onTap: () {
           if (type == Const.typeEmployee) {
-            Injector.streamController?.add("${Const.typeOrg}");
+            Injector.headerStreamController?.add("${Const.typeOrg}");
           } else if (type == Const.typeSalesPersons) {
-            Injector.streamController?.add("${Const.typeNewCustomer}");
+            Injector.headerStreamController?.add("${Const.typeNewCustomer}");
           } else if (type == Const.typeServicesPerson) {
-            Injector.streamController?.add("${Const.typeExistingCustomer}");
+            Injector.headerStreamController?.add("${Const.typeExistingCustomer}");
           } else if (type == Const.typeBrandValue) {
             if (Const.envType == Environment.DEV)
-              Injector.streamController?.add("${Const.typeRanking}");
+              Injector.headerStreamController?.add("${Const.typeRanking}");
             else
               Utils.showComingSoonDialog(context);
           } else if (type == Const.typeMoney) {
             if (Const.envType == Environment.DEV)
-              Injector.streamController?.add("${Const.typePl}");
+              Injector.headerStreamController?.add("${Const.typePl}");
             else
               Utils.showComingSoonDialog(context);
           }
@@ -230,7 +230,7 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            Injector.streamController?.add("${Const.typeProfile}");
+            Injector.headerStreamController?.add("${Const.typeProfile}");
           }),
     );
   }

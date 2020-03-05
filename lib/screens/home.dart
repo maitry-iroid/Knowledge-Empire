@@ -3,14 +3,16 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
+import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/dashboard_prof.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -36,12 +38,30 @@ import '../models/get_friends.dart';
 class FadeRouteHome extends PageRouteBuilder {
   final Widget page;
   final String initialPageType;
+
+  final QuestionData questionDataHomeScr;
+  final QuestionData questionDataSituation;
+  final QuestionData questionDataChallenge;
+
+  final int value;
+  final int friendId;
+  final bool isChallenge;
   final bool isCameFromDashboard;
 
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
 
-  FadeRouteHome({this.page, this.initialPageType, this.isCameFromDashboard})
+  FadeRouteHome(
+      {this.page,
+      this.initialPageType,
+      this.questionDataHomeScr,
+      this.questionDataSituation,
+      this.value,
+      this.arrFriends,
+      this.friendId,
+      this.questionDataChallenge,
+      this.isChallenge,
+      this.isCameFromDashboard})
       : super(
           pageBuilder: (
             BuildContext context,
@@ -59,6 +79,12 @@ class FadeRouteHome extends PageRouteBuilder {
             opacity: animation,
             child: HomePage(
               initialPageType: initialPageType,
+              questionDataHomeScr: questionDataHomeScr,
+              questionDataSituation: questionDataSituation,
+              value: value,
+              arrFriends: arrFriends,
+              friendId: friendId,
+              isChallenge: isChallenge,
             ),
           ),
         );
@@ -67,9 +93,28 @@ class FadeRouteHome extends PageRouteBuilder {
 class HomePage extends StatefulWidget {
   final String initialPageType;
 
+  final QuestionData questionDataHomeScr;
+  final QuestionData questionDataSituation;
+  final QuestionData questionDataChallenge;
+
+  final int value;
+  final int friendId;
+  final bool isChallenge;
   final bool isCameFromDashboard;
 
-  HomePage({Key key, this.initialPageType, this.isCameFromDashboard})
+  final List<GetFriendsData> arrFriends;
+
+  HomePage(
+      {Key key,
+      this.initialPageType,
+      this.questionDataHomeScr,
+      this.questionDataSituation,
+      this.value,
+      this.arrFriends,
+      this.friendId,
+      this.questionDataChallenge,
+      this.isChallenge,
+      this.isCameFromDashboard})
       : super(key: key);
 
   @override
@@ -110,11 +155,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
-    PushNotificationHelper(context, "home").initPush();
+    PushNotificationHelper(context,"home").initPush();
 
-    getCustomerValues();
+    if (widget.initialPageType != Const.typeChallenges &&
+        widget.initialPageType != Const.typeCustomerSituation &&
+        widget.initialPageType != Const.typeEngagement) {
+      if (widget.isCameFromDashboard ?? true) getCustomerValues();
 
-    if (Injector.isDev) getPendingChallenges();
+      if (widget.isChallenge == null || widget.isChallenge)
+        getPendingChallenges();
+    }
   }
 
   @override
@@ -364,6 +414,22 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   getPage() {
     if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeProfile))
       return ProfilePage();
+    else if (_selectedDrawerIndex ==
+        Utils.getHomePageIndex(Const.typeEngagement))
+      return EngagementCustomer(
+          questionDataEngCustomer: widget.questionDataHomeScr,
+          isChallenge: widget.isChallenge);
+    else if (_selectedDrawerIndex ==
+        Utils.getHomePageIndex(Const.typeCustomerSituation))
+      return CustomerSituationPage(
+          questionDataCustomerSituation: widget.questionDataSituation,
+          isChallenge: widget.isChallenge);
+    else if (_selectedDrawerIndex ==
+        Utils.getHomePageIndex(Const.typeChallenges))
+      return ChallengesPage(
+        arrFriends: widget.arrFriends,
+        friendId: widget.friendId,
+      );
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }
@@ -384,10 +450,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initStreamController() async {
     await Injector.getInstance();
 
-    if (Injector.streamController == null)
-      Injector.streamController = StreamController.broadcast();
-
-    Injector.streamController.stream.listen((data) {
+    Injector.headerStreamController.stream.listen((data) {
       if (data == "${Const.typeProfile}") {
         if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeProfile) &&
             mounted)

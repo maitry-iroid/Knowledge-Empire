@@ -39,10 +39,10 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   void initStreamControllerProfile() {
-    if (Injector.streamController == null)
-      Injector.streamController = StreamController.broadcast();
+    if (Injector.headerStreamController == null)
+      Injector.headerStreamController = StreamController.broadcast();
 
-    Injector.streamController.stream.listen((data) {
+    Injector.headerStreamController.stream.listen((data) {
       if (mounted) {
         setState(() {
           print(data);
@@ -408,9 +408,6 @@ class OrgInfoDialog extends StatefulWidget {
 }
 
 class OrgInfoDialogState extends State<OrgInfoDialog> {
-  final pass1Controller = TextEditingController();
-  final pass2Controller = TextEditingController();
-  final pass3Controller = TextEditingController();
   bool isLoading = false;
 
   List<Organization> arrOrganization = List();
@@ -449,61 +446,57 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                     Padding(padding: EdgeInsets.only(top: 13)),
 
                     InkResponse(
-                      child: InkResponse(
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 3, bottom: 3),
-                          margin: EdgeInsets.only(
-                              left: 10, right: 10, top: 3, bottom: 3),
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 2, color: ColorRes.blue),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Text(Utils.getText(context, StringRes.hireEmp),
-                              style: TextStyle(
-                                  color: ColorRes.blue, fontSize: 17)),
-                        ),
-                        onTap: () {
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 3, bottom: 3),
+                        margin: EdgeInsets.only(
+                            left: 10, right: 10, top: 3, bottom: 3),
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(width: 2, color: ColorRes.blue),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Text(Utils.getText(context, StringRes.hireEmp),
+                            style: TextStyle(
+                                color: ColorRes.blue, fontSize: 17)),
+                      ),
+                      onTap: () {
 //                            widget.organizationsPage2.showConfirmDialog(widget.position, Const.add);
 //                          widget.organizationsPage2.manageLevel(widget.position, Const.add);
 //                          widget.organizationsPage2.refresh();
-                          Navigator.pop(context);
-                          Injector.streamController.add("update plus");
-                          setState(() {
-                            position1 = widget.position;
-                            isCheckLoad = widget.checkUpdate;
-                          });
+                        Navigator.pop(context);
+                        Injector.headerStreamController.add("update plus");
+                        setState(() {
+                          position1 = widget.position;
+                          isCheckLoad = widget.checkUpdate;
+                        });
 //                          widget.organizationsPage2.reference();
-                        },
-                      ),
+                      },
                     ),
 
 //                      showTextEmp("Fire 10 employees", "minus", 1)),
                     Padding(padding: EdgeInsets.only(top: 5)),
                     InkResponse(
-                      child: InkResponse(
-                        child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 3, bottom: 3),
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 2, color: ColorRes.blue),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Text(Utils.getText(context, StringRes.fireEmp),
-                              style:
-                                  TextStyle(color: ColorRes.red, fontSize: 17)),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          Injector.streamController.add("update minus");
-                          setState(() {
-                            position1 = widget.position;
-                            isCheckLoad = widget.checkUpdate;
-                          });
-                        },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 3, bottom: 3),
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(width: 2, color: ColorRes.blue),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Text(Utils.getText(context, StringRes.fireEmp),
+                            style:
+                                TextStyle(color: ColorRes.red, fontSize: 17)),
                       ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Injector.headerStreamController.add("update minus");
+                        setState(() {
+                          position1 = widget.position;
+                          isCheckLoad = widget.checkUpdate;
+                        });
+                      },
                     ),
                   ],
                 ),
