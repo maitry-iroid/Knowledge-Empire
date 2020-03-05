@@ -223,8 +223,10 @@ class _TeamPageState extends State<TeamPage> {
               : EdgeInsets.only(left: 23, right: 0, top: 5, bottom: 5),
           margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
           decoration: BoxDecoration(
+              color: Injector.isBusinessMode ? null:  ColorRes.white,
+              borderRadius: BorderRadius.all(Radius.circular(25)),
               image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_white_smalldata")),
+                  image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("bg_white_smalldata") : ""),
                   fit: BoxFit.fill)),
           child: secondScreen != true
               ? Row(
@@ -262,7 +264,7 @@ class _TeamPageState extends State<TeamPage> {
 
   profileBorderShow() {
     return BoxDecoration(
-        border: Border.all(width: 1, color: ColorRes.white),
+        border: Border.all(width: 1, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.bgDescription),
         borderRadius: BorderRadius.all(Radius.circular(20)));
   }
 
@@ -296,7 +298,7 @@ class _TeamPageState extends State<TeamPage> {
       margin: EdgeInsets.only(left: 20, top: 5),
       child: Text(
         title,
-        style: TextStyle(color: ColorRes.white, fontSize: 15),
+        style: TextStyle(color:  Injector.isBusinessMode ? ColorRes.white : ColorRes.bgDescription, fontSize: 15),
       ),
     );
   }
@@ -318,8 +320,8 @@ class _TeamPageState extends State<TeamPage> {
                   decoration: profileBorderShow(),
                   child: Center(
                     child: Text(
-                      teamUserByIdData?.name ?? "",
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      teamUserByIdData?.name ?? "55",
+                      style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue , fontSize: 15),
                     ),
                   ),
                 ),
@@ -357,8 +359,8 @@ class _TeamPageState extends State<TeamPage> {
             decoration: profileBorderShow(),
             child: Center(
               child: Text(
-                teamUserByIdData?.department ?? "",
-                style: TextStyle(color: ColorRes.white, fontSize: 15),
+                teamUserByIdData?.department ?? "55",
+                style: TextStyle(color:  Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue, fontSize: 15),
               ),
             ),
           ),
@@ -378,8 +380,8 @@ class _TeamPageState extends State<TeamPage> {
             decoration: profileBorderShow(),
             child: Center(
               child: Text(
-                teamUserByIdData?.resets?.toString() ?? "",
-                style: TextStyle(color: ColorRes.white, fontSize: 15),
+                teamUserByIdData?.resets?.toString() ?? "55",
+                style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue, fontSize: 15),
               ),
             ),
           ),
@@ -393,12 +395,21 @@ class _TeamPageState extends State<TeamPage> {
   showSecondHalf() {
     return Expanded(
       flex: secondScreen != true ? 6 : 1,
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            qLevel(),
-            qStatus(),
-          ],
+      child: Container(
+        margin: EdgeInsets.only(right: 15, bottom: 8),
+        decoration: BoxDecoration(
+          color: Injector.isBusinessMode ? null : ColorRes.white,
+          borderRadius: BorderRadius.all(Radius.circular(8))
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              qLevel(),
+              qStatus(),
+            ],
+          ),
         ),
       ),
     );
@@ -460,7 +471,7 @@ class _TeamPageState extends State<TeamPage> {
               legendPosition: LegendPosition.right,
               showChartValueLabel: false,
               initialAngle: 0,
-              legendStyle: defaultLegendStyle.copyWith(color: ColorRes.white),
+              legendStyle: defaultLegendStyle.copyWith(color: Injector.isBusinessMode ? Colors.white : ColorRes.textProf),
               chartValueStyle:
                   defaultChartValueStyle.copyWith(color: ColorRes.white),
               showLegends: type == 1 ? false : true,
@@ -490,7 +501,7 @@ class _TeamPageState extends State<TeamPage> {
                             child: Text(
                               indexList[index],
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
+                                  TextStyle(color: Injector.isBusinessMode ? Colors.white : ColorRes.textProf,  fontSize: 15),
                             ),
                           )
                         ],

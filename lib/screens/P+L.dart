@@ -284,51 +284,53 @@ class _PLPageState extends State<PLPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(3, (index) {
-                return InkResponse(
-                  child: Container(
-                    width: Utils.getDeviceWidth(context) / 14,
-                    margin: Injector.isBusinessMode
-                        ? EdgeInsets.symmetric(vertical: 2, horizontal: 0)
-                        : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
-                    padding: Injector.isBusinessMode
-                        ? EdgeInsets.symmetric(vertical: 0, horizontal: 0)
-                        : EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        /*     color: Injector.isBusinessMode ? Colors.transparent : selectedDay == index ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
-                       borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),*/
-                        image: DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg(
-                                selectedDay == index
-                                        ? "ranking_bg_time_selected"
-                                        : "ranking_bg_time_deselected")),
-                            fit: BoxFit.fill)),
-                    child: Text(Utils.getText(context, arrTime[index]),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 13,
-                            color:  selectedDay == index
-                                    ? ColorRes.white
-                                    : ColorRes.rankingProBg)),
+                return Expanded(
+                  child: InkResponse(
+                    child: Container(
+//                    width: Utils.getDeviceWidth(context) / 14,
+                      margin: Injector.isBusinessMode
+                          ? EdgeInsets.symmetric(vertical: 2, horizontal: 5)
+                          : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+                      padding: Injector.isBusinessMode
+                          ? EdgeInsets.symmetric(vertical: 0, horizontal: 0)
+                          : EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          /*     color: Injector.isBusinessMode ? Colors.transparent : selectedDay == index ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
+                         borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),*/
+                          image: DecorationImage(
+                              image: AssetImage(Utils.getAssetsImg(
+                                  selectedDay == index
+                                          ? "ranking_bg_time_selected"
+                                          : "ranking_bg_time_deselected")),
+                              fit: BoxFit.fill)),
+                      child: Text(Utils.getText(context, arrTime[index]),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color:  selectedDay == index
+                                      ? ColorRes.white
+                                      : ColorRes.rankingProBg)),
+                    ),
+                    onTap: () {
+                      if (index == 0) {
+                        selectedDay = 0;
+                        getPerformanceData(Const.plDay);
+                        print(0);
+                      } else if (index == 1) {
+                        selectedDay = 1;
+                        getPerformanceData(Const.plMonth);
+
+                        print(1);
+                      } else if (index == 2) {
+                        selectedDay = 2;
+                        getPerformanceData(Const.plYear);
+
+                      }
+
+                      setState(() {});
+                    },
                   ),
-                  onTap: () {
-                    if (index == 0) {
-                      selectedDay = 0;
-                      getPerformanceData(Const.plDay);
-                      print(0);
-                    } else if (index == 1) {
-                      selectedDay = 1;
-                      getPerformanceData(Const.plMonth);
-
-                      print(1);
-                    } else if (index == 2) {
-                      selectedDay = 2;
-                      getPerformanceData(Const.plYear);
-
-                    }
-
-                    setState(() {});
-                  },
                 );
               }),
             ),

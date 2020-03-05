@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -373,6 +375,49 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
+                      InkResponse(
+                        child: Container(
+                          height: 35,
+                          padding: EdgeInsets.only(left: 8, right: 8),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(
+                                context,
+                                Injector.customerValueData == null ||
+                                        Injector.customerValueData?.manager ==
+                                            null ||
+                                        Injector
+                                            .customerValueData.manager.isEmpty
+                                    ? StringRes.bailout
+                                    : StringRes.requestBailOut),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                                    ? ColorRes.white:ColorRes.greyText,
+                                fontSize: 15,
+                                letterSpacing: 0.7),
+                          ),
+                          decoration: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                              ? BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(Utils.getAssetsImg(
+                                      'bg_switch_to_prfsnl')),
+                                  fit: BoxFit.fill)):BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg('bg_privacy')))
+                                  : null),
+                        ),
+                        onTap: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                            ? () async {
                       !Injector.isManager() &&
                               Injector.customerValueData != null &&
                               Injector.customerValueData.totalBalance <= 0
@@ -410,9 +455,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Utils.playClickSound();
 
                                 _asyncConfirmDialog(context);
-                              },
-                            )
-                          : Container(),
+                              }
+                            : null,
+                      ),
                       InkResponse(
                         child: Container(
                           height: 33,
@@ -966,12 +1011,22 @@ class _ProfilePageState extends State<ProfilePage> {
       imageQuality: Const.imgQuality,
     );
 
-    if (tempImage != null) {
+    if (tempImage != null && tempImage.path != null) {
+      tempImage = await FlutterExifRotation.rotateImage(path: tempImage.path);
+
+      if (tempImage != null) {
+        setState(() {
+          _image = tempImage;
+        });
+      }
+    }
+
+/*    if (tempImage != null) {
       setState(() {
         photoUrl = "";
         _image = tempImage;
       });
-    }
+    }*/
   }
 
 //  void compressImage() async {
@@ -1051,7 +1106,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
-        Injector.headerStreamController.add("update_profile");
+        Injector.streamController.add(Const.updateProfileBrod);
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }

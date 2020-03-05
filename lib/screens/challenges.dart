@@ -26,8 +26,11 @@ class ChallengesPage extends StatefulWidget {
 
 class _ChallengesPageState extends State<ChallengesPage> {
   List<GetFriendsData> arrFriends = List();
+
+
   List<GetFriendsData> arrFriendsToShow = List();
   List<GetFriendsData> arrSearchFriends = List();
+
 
   List<LearningModuleData> arrLearningModules = List();
 
@@ -559,7 +562,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (data != null) {
         if (action == 1) {
           Utils.showToast(Utils.getText(context, StringRes.alertFriendSuccess));
+          getSearchFriends("");
         } else {
+          if (arrSearchFriends.length > 0) arrSearchFriends.removeAt(index);
+          if (arrFriendsToShow.length > 0) arrFriendsToShow.removeAt(index);
+          setState(() {});
           Utils.showToast(
               Utils.getText(context, StringRes.alertUnFriendSuccess));
         }
@@ -628,12 +635,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
     });
   }
 
-  void getSearchFriends() {
+  void getSearchFriends(String searchText) {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) {
         SearchFriendRequest rq = SearchFriendRequest();
         rq.userId = Injector.userData.userId.toString();
-        rq.searchText = searchController.text;
+//        rq.searchText = searchController.text;
+        rq.searchText = searchText;
 
         WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
           if (data != null) {
@@ -646,7 +654,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
             if (getFriendsData.isNotEmpty) {
               getFriendsData
                   .removeWhere((friend) => friend.userId == Injector.userId);
-
               arrFriendsToShow = getFriendsData;
 
               setState(() {});
@@ -677,13 +684,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
             child: TextField(
               onChanged: (text) {
                 searchText = text;
-                setState(() {
-                  if (text.isEmpty) {
-                    arrSearchFriends = arrFriends;
-                    arrFriendsToShow = arrFriends;
-                  } else
-                    getSearchFriends();
-                });
+                if (text.isEmpty) {
+                  arrSearchFriends = arrFriends;
+                  arrFriendsToShow = arrFriends;
+                  setState(() {});
+                } else {
+                  getSearchFriends(searchText);
+                }
               },
               textAlign: TextAlign.left,
               maxLines: 1,
@@ -703,7 +710,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         ),
         InkResponse(
           onTap: () {
-            getSearchFriends();
+            getSearchFriends(searchText);
           },
           child: Icon(
             Icons.search,
