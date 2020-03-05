@@ -387,19 +387,20 @@ class IntroPageState extends State<IntroPage> {
           ),
           onTap: () {
             if (type == Const.typeEmployee) {
-              Injector.streamController?.add("${Const.typeOrg}");
+              Injector.headerStreamController?.add("${Const.typeOrg}");
             } else if (type == Const.typeSalesPersons) {
-              Injector.streamController?.add("${Const.typeNewCustomer}");
+              Injector.headerStreamController?.add("${Const.typeNewCustomer}");
             } else if (type == Const.typeServicesPerson) {
-              Injector.streamController?.add("${Const.typeExistingCustomer}");
+              Injector.headerStreamController
+                  ?.add("${Const.typeExistingCustomer}");
             } else if (type == Const.typeBrandValue) {
               if (Const.envType == Environment.DEV)
-                Injector.streamController?.add("${Const.typeRanking}");
+                Injector.headerStreamController?.add("${Const.typeRanking}");
               else
                 Utils.showComingSoonDialog(context);
             } else if (type == Const.typeMoney) {
               if (Const.envType == Environment.DEV)
-                Injector.streamController?.add("${Const.typePl}");
+                Injector.headerStreamController?.add("${Const.typePl}");
               else
                 Utils.showComingSoonDialog(context);
             }

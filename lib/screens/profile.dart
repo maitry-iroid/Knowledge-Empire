@@ -328,7 +328,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ? Const.professionalMode
                               : Const.businessMode);
 
-                          Injector.streamController.add("chnage mode");
+                          Injector.headerStreamController.add("chnage mode");
                           setState(() {});
                         },
                       ),
@@ -1060,7 +1060,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
-        Injector.streamController.add(Const.updateProfileBrod);
+        Injector.headerStreamController.add("update_profile");
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }

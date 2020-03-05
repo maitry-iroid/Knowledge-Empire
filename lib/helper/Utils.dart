@@ -7,6 +7,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -251,7 +252,6 @@ class Utils {
     return Injector.isBusinessMode ? 35.0 : 30.0;
   }
 
-
 //  static checkSound() async {
 //    int maxVol, currentVol;
 //    maxVol = await Volume.getMaxVol;
@@ -330,7 +330,7 @@ class Utils {
 
         Injector.customerValueData = customerValueData;
         await Injector.prefs.remove(PrefKeys.answerData);
-        Injector.streamController.add("submit answer");
+        Injector.headerStreamController.add("submit answer");
       }
     }).catchError((e) {
       print("callSubmitAnswerApi" + e.toString());
@@ -419,7 +419,8 @@ class Utils {
     await Injector.prefs.setString(
         PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
 
-    Injector.streamController.add("manage level");
+    customerValueBloc?.setCustomerValue(customerValueData);
+//    Injector.streamController.add("manage level");
   }
 
   static getProgress(Organization organization) {
@@ -435,7 +436,6 @@ class Utils {
       return 0.0;
     }
   }
-
 
   static updateAttemptTimeInQuestionDataLocally(
       int questionId, String attemptTime) async {

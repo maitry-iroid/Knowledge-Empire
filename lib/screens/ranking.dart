@@ -617,14 +617,12 @@ class _RankingPageState extends State<RankingPage> {
     return Expanded(
       flex: 16,
       child: Container(
-        padding: EdgeInsets.only(top: isCurrentUser(index) ? 0 : 7, left: 6),
-        margin: EdgeInsets.only(top: isCurrentUser(index) ? 0 : 0, left: 0),
+        padding: EdgeInsets.only(top: isCurrentUser(index) ? 0 : 8, left: 4),
+        margin: EdgeInsets.only(top: isCurrentUser(index) ? 4 : 0, left: 4, bottom: 0),
         decoration: BoxDecoration(
             image: isCurrentUser(index)
                 ? DecorationImage(
-                        image:
-                            AssetImage(Utils.getAssetsImg("bg_ranking_header")))
-
+                    image: AssetImage(Utils.getAssetsImg("bg_ranking_header")))
                 : null),
         /*  decoration: isCurrentUser(index)
             ? BoxDecoration(
@@ -704,7 +702,9 @@ class _RankingPageState extends State<RankingPage> {
                 color:
                     isCurrentUser(index) ? ColorRes.white : ColorRes.greyText,
                 width: 1,
-                margin: EdgeInsets.only(top: isCurrentUser(index) ? 10 : 6, bottom: isCurrentUser(index) ? 10 : 6),
+                margin: EdgeInsets.only(
+                    top: isCurrentUser(index) ? 10 : 6,
+                    bottom: isCurrentUser(index) ? 10 : 6),
               ),
               Expanded(
                 flex: 3,
@@ -721,8 +721,9 @@ class _RankingPageState extends State<RankingPage> {
                 height: 60,
                 width: 60,
                 margin: EdgeInsets.only(
-                    top:  isCurrentUser(index) ? 5 : 0,
-                    bottom:  isCurrentUser(index) ? 2 : 0),
+                  top: isCurrentUser(index) ? 2 : 0,
+                  bottom: isCurrentUser(index) ? 0 : 0,
+                ),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color:
@@ -735,7 +736,7 @@ class _RankingPageState extends State<RankingPage> {
                       : Border.all(width: 2, color: ColorRes.rankingProValueBg),
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg(
-                          Injector.isBusinessMode ? 'value' : "")),
+                          Injector.isBusinessMode ? 'value' : '')),
                       fit: BoxFit.fill),
                 ),
                 child: Text(
