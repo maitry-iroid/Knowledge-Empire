@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array/>
+	<array>
+		<string>com.transistorsoft.fetch</string>
+	</array>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>Bundle display name </key>
