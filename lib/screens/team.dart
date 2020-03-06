@@ -157,25 +157,25 @@ class _TeamPageState extends State<TeamPage> {
         height: 30,
         margin: secondScreen != true
             ? EdgeInsets.only(left: 15, right: 15, top: 8, bottom: 10)
-            : EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+            : EdgeInsets.only(left: 15, right: 10, top: 15, bottom: 10),
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg("bg_grey_teamheader")),
                 fit: BoxFit.fill)),
         padding: secondScreen != true
-            ? EdgeInsets.only(left: 30, right: 27, top: 5, bottom: 5)
-            : EdgeInsets.only(left: 13, right: 15, top: 5, bottom: 5),
+            ? EdgeInsets.only(left: 30, right: 5, top: 5, bottom: 5)
+            : EdgeInsets.only(left: 13, right: 5, top: 5, bottom: 5),
         child: secondScreen != true
             ? Row(
                 children: <Widget>[
                   listHeaderText(
                       Utils.getText(context, StringRes.name), TextAlign.left),
                   listHeaderText(Utils.getText(context, StringRes.lastLog),
-                      TextAlign.right),
+                      TextAlign.center),
                   listHeaderText(Utils.getText(context, StringRes.points),
-                      TextAlign.right),
+                      TextAlign.center),
                   listHeaderText(Utils.getText(context, StringRes.correct),
-                      TextAlign.right),
+                      TextAlign.center),
                 ],
               )
             : Row(
@@ -184,9 +184,9 @@ class _TeamPageState extends State<TeamPage> {
                       Utils.getText(context, StringRes.learningModule),
                       TextAlign.left),
                   listHeaderText(Utils.getText(context, StringRes.levels),
-                      TextAlign.right),
+                      TextAlign.center),
                   listHeaderText(Utils.getText(context, StringRes.complete),
-                      TextAlign.right),
+                      TextAlign.center),
                 ],
               ));
   }
@@ -219,7 +219,7 @@ class _TeamPageState extends State<TeamPage> {
       child: Container(
           height: 30,
           padding: secondScreen != true
-              ? EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5)
+              ? EdgeInsets.only(left: 30, right: 0, top: 5, bottom: 5)
               : EdgeInsets.only(left: 23, right: 0, top: 5, bottom: 5),
           margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
           decoration: BoxDecoration(
@@ -236,9 +236,9 @@ class _TeamPageState extends State<TeamPage> {
                     listTextData(index == 1 ? "25" : user?.lastLog.toString(),
                         TextAlign.center),
                     listTextData(index == 1 ? "25" : user?.points.toString(),
-                        TextAlign.right),
+                        TextAlign.center),
                     listTextData(index == 1 ? "1" : user?.correct.toString(),
-                        TextAlign.right)
+                        TextAlign.center)
                     /*                   listTextData(user?.name, TextAlign.left),
                     listTextData(user?.lastLog.toString(), TextAlign.right),
                     listTextData(user?.points.toString(), TextAlign.right),
@@ -248,8 +248,8 @@ class _TeamPageState extends State<TeamPage> {
               : Row(
                   children: <Widget>[
                     listTextData(module?.name, TextAlign.left),
-                    listTextData(module?.level.toString(), TextAlign.right),
-                    listTextData(module?.complete.toString(), TextAlign.right)
+                    listTextData(module?.level.toString(), TextAlign.center),
+                    listTextData(module?.complete.toString(), TextAlign.center)
                   ],
                 )),
       onTap: () {
@@ -320,7 +320,7 @@ class _TeamPageState extends State<TeamPage> {
                   decoration: profileBorderShow(),
                   child: Center(
                     child: Text(
-                      teamUserByIdData?.name ?? "55",
+                      teamUserByIdData?.name ?? "",
                       style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue , fontSize: 15),
                     ),
                   ),
@@ -359,7 +359,7 @@ class _TeamPageState extends State<TeamPage> {
             decoration: profileBorderShow(),
             child: Center(
               child: Text(
-                teamUserByIdData?.department ?? "55",
+                teamUserByIdData?.department ?? "",
                 style: TextStyle(color:  Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue, fontSize: 15),
               ),
             ),
@@ -380,7 +380,7 @@ class _TeamPageState extends State<TeamPage> {
             decoration: profileBorderShow(),
             child: Center(
               child: Text(
-                teamUserByIdData?.resets?.toString() ?? "55",
+                teamUserByIdData?.resets?.toString() ?? "",
                 style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue, fontSize: 15),
               ),
             ),
@@ -574,13 +574,13 @@ class _TeamPageState extends State<TeamPage> {
   void getTeamUsers() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-//        CommonView.showCircularProgress(true, context);
+        CommonView.showCircularProgress(true, context);
 
         TeamUserRequest rq = TeamUserRequest();
         rq.userId = Injector.userId;
 
         WebApi().callAPI(WebApi.rqGetTeamUsers, rq.toJson()).then((data) {
-//          CommonView.showCircularProgress(false, context);
+          CommonView.showCircularProgress(false, context);
 
           if (data != null) {
             teamUserData = TeamUserData.fromJson(data);
@@ -590,7 +590,7 @@ class _TeamPageState extends State<TeamPage> {
             setState(() {});
           }
         }).catchError((e) {
-//          CommonView.showCircularProgress(false, context);
+          CommonView.showCircularProgress(false, context);
         });
       }
     });
@@ -625,7 +625,7 @@ class _TeamPageState extends State<TeamPage> {
 
   void getTeamUserById(int teamUserId) {
     Utils.isInternetConnected().then((isConnected) {
-//      CommonView.showCircularProgress(true, context);
+      CommonView.showCircularProgress(true, context);
 
       if (isConnected) {
         TeamUserByIdRequest rq = TeamUserByIdRequest();
@@ -633,7 +633,7 @@ class _TeamPageState extends State<TeamPage> {
         rq.teamUserId = teamUserId;
 
         WebApi().callAPI(WebApi.rqGetTeamUserById, rq.toJson()).then((data) {
-//          CommonView.showCircularProgress(false, context);
+          CommonView.showCircularProgress(false, context);
 
           if (data != null) {
             teamUserByIdData = TeamUserByIdData.fromJson(data);
@@ -643,7 +643,7 @@ class _TeamPageState extends State<TeamPage> {
             setState(() {});
           }
         }).catchError((e) {
-//          CommonView.showCircularProgress(false, context);
+          CommonView.showCircularProgress(false, context);
           Utils.showToast(e.toString());
         });
       }
