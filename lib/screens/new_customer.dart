@@ -34,10 +34,10 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   void initState() {
     super.initState();
 
-    questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
-    loyaltyBonus = Injector.customerValueData.loyaltyBonus;
-    resourceBonus = Injector.customerValueData.resourceBonus;
-    valueBonus = Injector.customerValueData.valueBonus;
+    questionAnswered = Injector.customerValueData?.totalAttemptedQuestion;
+    loyaltyBonus = Injector.customerValueData?.loyaltyBonus;
+    resourceBonus = Injector.customerValueData?.resourceBonus;
+    valueBonus = Injector.customerValueData?.valueBonus;
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {

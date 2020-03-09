@@ -32,12 +32,7 @@ class HeaderViewState extends State<HeaderView> {
   void initState() {
     super.initState();
 
-    if (Injector.headerStreamController == null)
-      Injector.headerStreamController = StreamController.broadcast();
-
     Injector.headerStreamController.stream.listen((data) {
-//      print("DataReceived1: " + data);
-
       if (mounted) setState(() {});
     }, onDone: () {
       print("Task Done1");
@@ -47,7 +42,6 @@ class HeaderViewState extends State<HeaderView> {
 
 //    updateProfileBrodCast();
   }
-
 
   /*updateProfileBrodCast() {
     Injector.streamController = StreamController.broadcast();
@@ -183,19 +177,19 @@ class HeaderViewState extends State<HeaderView> {
         ),
         onTap: () {
           if (type == Const.typeEmployee) {
-            Injector.headerStreamController?.add("${Const.typeOrg}");
+            Injector.homeStreamController?.add("${Const.typeOrg}");
           } else if (type == Const.typeSalesPersons) {
-            Injector.headerStreamController?.add("${Const.typeNewCustomer}");
+            Injector.homeStreamController?.add("${Const.typeNewCustomer}");
           } else if (type == Const.typeServicesPerson) {
-            Injector.headerStreamController?.add("${Const.typeExistingCustomer}");
+            Injector.homeStreamController?.add("${Const.typeExistingCustomer}");
           } else if (type == Const.typeBrandValue) {
             if (Const.envType == Environment.DEV)
-              Injector.headerStreamController?.add("${Const.typeRanking}");
+              Injector.homeStreamController?.add("${Const.typeRanking}");
             else
               Utils.showComingSoonDialog(context);
           } else if (type == Const.typeMoney) {
             if (Const.envType == Environment.DEV)
-              Injector.headerStreamController?.add("${Const.typePl}");
+              Injector.homeStreamController?.add("${Const.typePl}");
             else
               Utils.showComingSoonDialog(context);
           }
@@ -236,12 +230,10 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            Injector.headerStreamController?.add("${Const.typeProfile}");
+            Injector.homeStreamController?.add("${Const.typeProfile}");
           }),
     );
   }
-
-
 
   showHelpView(BuildContext context) {
     return InkResponse(
@@ -313,10 +305,6 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   _buildSearchResults(CustomerValueData data) {
-    if (data != null) {
-      Injector.setCustomerValueData(data);
-    }
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[

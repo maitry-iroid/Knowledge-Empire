@@ -313,8 +313,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (data != null) {
         CustomerValueData customerValueData = CustomerValueData.fromJson(data);
 
-        Injector.setCustomerValueData(customerValueData);
-
         await Injector.prefs.remove(PrefKeys.answerData);
 
         customerValueBloc.setCustomerValue(customerValueData);

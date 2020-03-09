@@ -72,9 +72,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           CustomerValueData customerValueData =
               CustomerValueData.fromJson(data);
 
-          await Injector.setCustomerValueData(customerValueData);
 
-          customerValueBloc?.setCustomerValue(customerValueData);
+          customerValueBloc.setCustomerValue(customerValueData);
 
           setState(() {
             arrQuestions.removeAt(index);

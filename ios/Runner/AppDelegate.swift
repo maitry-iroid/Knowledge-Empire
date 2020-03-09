@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 import Firebase
-
+import TSBackgroundFetch
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {

@@ -468,8 +468,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
         if (rq.type == 0)
           removeDownloadedQuestion();
-//        else
-//          downloadQuestions(selectedModule.moduleId);
+        else
+          downloadQuestions(selectedModule.moduleId);
 
         setState(() {});
       }
@@ -538,6 +538,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                    .firstWhere((module) => module.moduleId == moduleId)
 //                    .isDownloading = true;
 //              });
+
+
+            await Injector.prefs.setString("datta","scsdc");
 
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].mediaLink);

@@ -95,24 +95,20 @@ class MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.
     BackgroundFetch.configure(
-        BackgroundFetchConfig(
-            minimumFetchInterval: 15,
-            stopOnTerminate: false,
-            enableHeadless: true,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresStorageNotLow: false,
-            requiresDeviceIdle: false,
-            requiredNetworkType: NetworkType.NONE), (String taskId) async {
-      // This is the fetch-event callback.
-      print("[BackgroundFetch] Event received $taskId");
-      setState(() {
-        _events.insert(0, new DateTime.now());
-      });
-      // IMPORTANT:  You must signal completion of your fetch task or the OS can punish your app
-      // for taking too long in the background.
-      BackgroundFetch.finish(taskId);
-    }).then((int status) {
+            BackgroundFetchConfig(
+              minimumFetchInterval: 15,
+              forceAlarmManager: false,
+              stopOnTerminate: false,
+              startOnBoot: true,
+              enableHeadless: true,
+              requiresBatteryNotLow: false,
+              requiresCharging: false,
+              requiresStorageNotLow: false,
+              requiresDeviceIdle: false,
+              requiredNetworkType: NetworkType.NONE,
+            ),
+            _onBackgroundFetch)
+        .then((int status) {
       print('[BackgroundFetch] configure success: $status');
       setState(() {
         _status = status;
@@ -124,6 +120,14 @@ class MyAppState extends State<MyApp> {
       });
     });
 
+    BackgroundFetch.scheduleTask(TaskConfig(
+        taskId: "com.transistorsoft.customtask",
+        delay: 10000,
+        periodic: false,
+        forceAlarmManager: true,
+        stopOnTerminate: false,
+        enableHeadless: true));
+
     // Optionally query the current BackgroundFetch status.
     int status = await BackgroundFetch.status;
     setState(() {
@@ -134,5 +138,29 @@ class MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
+  }
+
+  void _onBackgroundFetch(String taskId) async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    DateTime timestamp = new DateTime.now();
+    // This is the fetch-event callback.
+    print("[BackgroundFetch] Event received: $taskId");
+//    setState(() {
+//      _events.insert(0, "$taskId@${timestamp.toString()}");
+//    });
+//    // Persist fetch events in SharedPreferences
+//    prefs.setString(EVENTS_KEY, jsonEncode(_events));
+
+    if (taskId == "flutter_background_fetch") {
+      // Schedule a one-shot task when fetch event received (for testing).
+      BackgroundFetch.scheduleTask(TaskConfig(
+          taskId: "com.transistorsoft.customtask",
+          delay: 5000,
+          periodic: false,
+          forceAlarmManager: true,
+          stopOnTerminate: false,
+          enableHeadless: true));
+    }
+    BackgroundFetch.finish(taskId);
   }
 }
