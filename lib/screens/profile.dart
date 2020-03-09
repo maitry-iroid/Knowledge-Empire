@@ -45,15 +45,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
     photoUrl = Injector.userData != null
         ? Injector.userData?.profileImage != null
-        ? Injector.userData?.profileImage
-        : ""
+            ? Injector.userData?.profileImage
+            : ""
         : "";
 
     super.initState();
 
 //    packagesInfo();
     _initPackageInfo();
-    callAPIForComponyName();
+
   }
 
   File _image;
@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor:
-      Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
+          Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.white,
       body: Stack(
         children: <Widget>[
           CommonView.showBackground(context),
@@ -164,8 +164,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 : BorderRadius.circular(20),
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('bg_setting')))
+                                    image: AssetImage(
+                                        Utils.getAssetsImg('bg_setting')))
                                 : null),
                       ),
                       Container(
@@ -218,8 +218,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 : BorderRadius.circular(20),
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('bg_privacy')))
+                                    image: AssetImage(
+                                        Utils.getAssetsImg('bg_privacy')))
                                 : null),
                       ),
                       Container(
@@ -241,8 +241,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 : BorderRadius.circular(20),
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('bg_privacy')))
+                                    image: AssetImage(
+                                        Utils.getAssetsImg('bg_privacy')))
                                 : null),
                       ),
                       Container(
@@ -265,13 +265,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                 : BorderRadius.circular(20),
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('bg_privacy')))
+                                    image: AssetImage(
+                                        Utils.getAssetsImg('bg_privacy')))
                                 : null),
                       ),
                       InkResponse(
-                        onTap: () {
-                          selectCompanyDialog();
+                        onTap: () async {
+                          await callAPIForComponyName();
+
                         },
                         child: Container(
                           height: 30,
@@ -293,8 +294,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : BorderRadius.circular(20),
                               image: Injector.isBusinessMode
                                   ? DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg('bg_privacy')))
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
                                   : null),
                         ),
                       ),
@@ -383,43 +384,50 @@ class _ProfilePageState extends State<ProfilePage> {
                             Utils.getText(
                                 context,
                                 Injector.customerValueData == null ||
-                                    Injector.customerValueData?.manager ==
-                                        null ||
-                                    Injector
-                                        .customerValueData.manager.isEmpty
+                                        Injector.customerValueData?.manager ==
+                                            null ||
+                                        Injector
+                                            .customerValueData.manager.isEmpty
                                     ? StringRes.bailout
                                     : StringRes.requestBailOut),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                color: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
-                                    ? ColorRes.white:ColorRes.greyText,
+                                color: !Injector.isManager() &&
+                                        Injector.customerValueData
+                                                .totalBalance <=
+                                            0
+                                    ? ColorRes.white
+                                    : ColorRes.greyText,
                                 fontSize: 15,
                                 letterSpacing: 0.7),
                           ),
-                          decoration: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                          decoration: !Injector.isManager() &&
+                                  Injector.customerValueData.totalBalance <= 0
                               ? BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      'bg_switch_to_prfsnl')),
-                                  fit: BoxFit.fill)):BoxDecoration(
-                              color: Injector.isBusinessMode
-                                  ? null
-                                  : ColorRes.bgSettings,
-                              borderRadius: Injector.isBusinessMode
-                                  ? null
-                                  : BorderRadius.circular(20),
-                              image: Injector.isBusinessMode
-                                  ? DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg('bg_privacy')))
-                                  : null),
+                                  image: DecorationImage(
+                                      image: AssetImage(Utils.getAssetsImg(
+                                          'bg_switch_to_prfsnl')),
+                                      fit: BoxFit.fill))
+                              : BoxDecoration(
+                                  color: Injector.isBusinessMode
+                                      ? null
+                                      : ColorRes.bgSettings,
+                                  borderRadius: Injector.isBusinessMode
+                                      ? null
+                                      : BorderRadius.circular(20),
+                                  image: Injector.isBusinessMode
+                                      ? DecorationImage(
+                                          image: AssetImage(
+                                              Utils.getAssetsImg('bg_privacy')))
+                                      : null),
                         ),
-                        onTap: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                        onTap: !Injector.isManager() &&
+                                Injector.customerValueData.totalBalance <= 0
                             ? () async {
-                          Utils.playClickSound();
-                          _asyncConfirmDialog(context);
-                        }
+                                Utils.playClickSound();
+                                _asyncConfirmDialog(context);
+                              }
                             : null,
                       ),
                       InkResponse(
@@ -485,43 +493,44 @@ class _ProfilePageState extends State<ProfilePage> {
         context: context,
         barrierDismissible: true,
         barrierLabel:
-        MaterialLocalizations
-            .of(context)
-            .modalBarrierDismissLabel,
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: Colors.black45,
         transitionDuration: const Duration(milliseconds: 200),
         pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
           return Center(
             child: Container(
-                color: Colors.white,
                 width: Utils.getDeviceWidth(context) / 2,
                 height: Utils.getDeviceHeight(context) / 2,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10)),
                 child: ListView.builder(
                     itemCount: companyList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
                           getCompany = companyList[index].companyName;
+                          companyController.text = getCompany;
                           Navigator.pop(context);
                           setState(() {});
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                companyList[index].companyName,
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                (index + 1).toString() +
+                                    "    " +
+                                    companyList[index].companyName,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: ColorRes.black,
                                     decoration: TextDecoration.none),
                               ),
-                              Divider(color: ColorRes.greyText),
-                            ],
+                            ),
                           ),
                         ),
                       );
@@ -617,16 +626,16 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: EdgeInsets.only(top: 2),
               decoration: BoxDecoration(
                   color:
-                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: Injector.isBusinessMode
                       ? null
                       : BorderRadius.circular(20),
                   image: Injector.isBusinessMode
                       ? DecorationImage(
-                      image: AssetImage(
-                        Utils.getAssetsImg("bg_setting"),
-                      ),
-                      fit: BoxFit.fill)
+                          image: AssetImage(
+                            Utils.getAssetsImg("bg_setting"),
+                          ),
+                          fit: BoxFit.fill)
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.editProfile),
@@ -665,10 +674,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   image: _image != null
                       ? FileImage(_image)
                       : photoUrl != null
-                      ? Utils.getCacheNetworkImage(photoUrl)
-                      : AssetImage(
-                    Utils.getAssetsImg("dashboard-background"),
-                  ),
+                          ? Utils.getCacheNetworkImage(photoUrl)
+                          : AssetImage(
+                              Utils.getAssetsImg("dashboard-background"),
+                            ),
                 ),
               ),
             ),
@@ -718,7 +727,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             Utils.getText(context, StringRes.companyName),
                             style:
-                            TextStyle(color: ColorRes.white, fontSize: 12),
+                                TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
                           SizedBox(
                             width: 10,
@@ -748,7 +757,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     border: InputBorder.none,
 //                                    hintText: Injector.userData?.companyName,
                                     hintStyle:
-                                    TextStyle(color: ColorRes.hintColor)),
+                                        TextStyle(color: ColorRes.hintColor)),
                                 maxLines: 1,
                               ),
                             ),
@@ -796,7 +805,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             Utils.getText(context, StringRes.yourName),
                             style:
-                            TextStyle(color: ColorRes.white, fontSize: 12),
+                                TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
                           SizedBox(
                             width: 10,
@@ -824,7 +833,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     border: InputBorder.none,
                                     hintText: Injector.userData?.name,
                                     hintStyle:
-                                    TextStyle(color: ColorRes.hintColor)),
+                                        TextStyle(color: ColorRes.hintColor)),
                               ),
                             ),
                           )
@@ -835,8 +844,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 InkResponse(
                     child: Container(
-                      width: 40,
-                    ))
+                  width: 40,
+                ))
               ],
             ),
             SizedBox(
@@ -865,7 +874,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             Utils.getText(context, StringRes.yourEmail),
                             style:
-                            TextStyle(color: ColorRes.white, fontSize: 12),
+                                TextStyle(color: ColorRes.white, fontSize: 12),
                           ),
                           SizedBox(
                             width: 10,
@@ -893,7 +902,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     border: InputBorder.none,
                                     hintText: Injector.userData?.email,
                                     hintStyle:
-                                    TextStyle(color: ColorRes.hintColor)),
+                                        TextStyle(color: ColorRes.hintColor)),
                               ),
                             ),
                           )
@@ -904,8 +913,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 InkResponse(
                     child: Container(
-                      width: 40,
-                    ))
+                  width: 40,
+                ))
               ],
             ),
             SizedBox(
@@ -927,11 +936,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Utils.getAssetsImg("bg_change_pw")),
                               fit: BoxFit.fill)),
                       child:
-                      Text(Utils.getText(context, StringRes.changePassword),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
-                          )),
+                          Text(Utils.getText(context, StringRes.changePassword),
+                              style: TextStyle(
+                                color: ColorRes.white,
+                                fontSize: 15,
+                              )),
                     ),
                     onTap: () {
                       Utils.playClickSound();
@@ -1077,9 +1086,9 @@ class _ProfilePageState extends State<ProfilePage> {
     Utils.playClickSound();
 
     Map<String, dynamic> map = {"userId": Injector.userId};
-
+    CommonView.showCircularProgress(true, context);
     WebApi().callAPI(WebApi.rqGetCompany, map).then((data) async {
-      // CommonView.showCircularProgress(false, context);
+       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         List<Company> arrFriendsData = List();
@@ -1087,6 +1096,7 @@ class _ProfilePageState extends State<ProfilePage> {
           arrFriendsData.add(Company.fromJson(v));
         });
         companyList = arrFriendsData;
+        selectCompanyDialog();
         setState(() {});
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
