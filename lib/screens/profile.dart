@@ -53,7 +53,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
 //    packagesInfo();
     _initPackageInfo();
-
   }
 
   File _image;
@@ -189,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           child: Center(
                             child: Text(
-                              "App Version: ${_packageInfo.version}",
+                              getVersion(),
                               style: TextStyle(
                                   color: Injector.isBusinessMode
                                       ? ColorRes.white
@@ -272,7 +271,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       InkResponse(
                         onTap: () async {
                           await callAPIForComponyName();
-
                         },
                         child: Container(
                           height: 30,
@@ -1088,7 +1086,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Map<String, dynamic> map = {"userId": Injector.userId};
     CommonView.showCircularProgress(true, context);
     WebApi().callAPI(WebApi.rqGetCompany, map).then((data) async {
-       CommonView.showCircularProgress(false, context);
+      CommonView.showCircularProgress(false, context);
 
       if (data != null) {
         List<Company> arrFriendsData = List();
@@ -1106,5 +1104,27 @@ class _ProfilePageState extends State<ProfilePage> {
       CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
+  }
+
+  String getVersion() {
+    String mode = Injector.isDev ? "D" : "P";
+    String customerSpecificVersion = "BES"; //Blue Elephants Solutions
+    String os = Injector.deviceType == "ios" ? "I" : "A";
+
+    String x = "000";
+    String y = "000";
+    String z = "001";
+
+    return mode +
+        "-" +
+        customerSpecificVersion +
+        "-" +
+        os +
+        " Version: " +
+        x +
+        "." +
+        y +
+        "-" +
+        z;
   }
 }
