@@ -27,6 +27,7 @@ class IntroDailogState extends State<IntroDailog> {
   final pass1Controller = TextEditingController();
   final pass2Controller = TextEditingController();
   final pass3Controller = TextEditingController();
+
   bool isLoading = false;
 
   @override
