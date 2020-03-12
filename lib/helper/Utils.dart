@@ -317,7 +317,7 @@ class Utils {
       if (data != null) {
         CustomerValueData customerValueData = CustomerValueData.fromJson(data);
 
-        Injector.customerValueData = customerValueData;
+
         await Injector.prefs.remove(PrefKeys.answerData);
         customerValueBloc.setCustomerValue(customerValueData);
       }
@@ -403,10 +403,6 @@ class Utils {
     customerValueData.remainingCustomerCapacity =
         organizationData.remainingCustomerCapacity;
 
-    Injector.customerValueData = customerValueData;
-
-    await Injector.prefs.setString(
-        PrefKeys.customerValueData, json.encode(customerValueData.toJson()));
 
     customerValueBloc?.setCustomerValue(customerValueData);
 //    Injector.streamController.add("manage level");
@@ -502,11 +498,17 @@ class Utils {
           type == Const.typeChallenges)
         Utils.showComingSoonDialog(context);
       else
-        Navigator.push(context,
-            FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
+//        Navigator.push(context,
+//            FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
+        Navigator.pushAndRemoveUntil(
+            context,
+            FadeRouteHome(initialPageType: type, isCameFromDashboard: true),
+            ModalRoute.withName("/home"));
     } else {
-      Navigator.push(context,
-          FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
+      Navigator.pushAndRemoveUntil(
+          context,
+          FadeRouteHome(initialPageType: type, isCameFromDashboard: true),
+          ModalRoute.withName("/home"));
     }
   }
 
@@ -534,7 +536,8 @@ class Utils {
             },
             initialUrl: questionData.mediaLink,
           )
-        : */Container();
+        : */
+        Container();
   }
 
   static isImage(String path) {

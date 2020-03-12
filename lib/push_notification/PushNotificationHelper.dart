@@ -139,7 +139,7 @@ class PushNotificationHelper {
     String challengeId = message['data']['challengeId'];
 
     if (challengeId != null) {
-      Injector.headerStreamController?.add("${Const.openPendingChallengeDialog}");
+      Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
     }
 
 //      message.values.forEach((value) {

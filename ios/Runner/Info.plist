@@ -6,8 +6,6 @@
 	<array>
 		<string>com.transistorsoft.fetch</string>
 	</array>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>Bundle display name </key>
 	<string>${APP_DISPLAY_NAME}</string>
 	<key>CFBundleDevelopmentRegion</key>

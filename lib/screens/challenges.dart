@@ -39,7 +39,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   @override
   void initState() {
     super.initState();
-    getFriends();
+    getSearchFriends(searchText);
 //    arrFriends = widget.arrFriends;
 //    selectedFriendId = arrFriends[0].userId;
 //    getBusinessSectors();
@@ -639,7 +639,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) {
         SearchFriendRequest rq = SearchFriendRequest();
-        rq.userId = Injector.userData.userId.toString();
+        rq.userId = Injector.userId.toString();
 //        rq.searchText = searchController.text;
         rq.searchText = searchText;
 

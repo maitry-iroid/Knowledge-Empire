@@ -193,12 +193,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             ? Injector.isManager() ? TeamPage() : ChallengesPage()
             : Container();
       case 6:
-//        return (Injector.isManager()
-//            ? ChallengesPage()
-//            : (Injector.isBusinessMode
-//                ? OrganizationsPage2()
-//                : PowerUpsPage()));
-
+        return (Injector.isManager()
+            ? ChallengesPage()
+            : (Injector.isBusinessMode
+                ? OrganizationsPage2()
+                : PowerUpsPage()));
+//
         return Injector.isDev
             ? (Injector.isManager()
                 ? ChallengesPage()
@@ -438,7 +438,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initStreamController() async {
-    Injector.headerStreamController.stream.listen((data) {
+    Injector.homeStreamController.stream.listen((data) {
       if (data == "${Const.typeProfile}") {
         if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeProfile) &&
             mounted)
@@ -597,7 +597,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     await Injector.getInstance();
 
     initStreamController();
-
     getCustomerValues();
 
     initCheckNetworkConnectivity();
