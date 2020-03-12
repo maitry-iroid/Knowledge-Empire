@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List<Company> companyList = new List();
 
-  String getCompany = "Select Company";
+  List languagesList = [StringRes.english,StringRes.german,StringRes.chinese];
 
   @override
   void initState() {
@@ -269,6 +269,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Utils.getAssetsImg('bg_privacy')))
                                 : null),
                       ),
+
                       InkResponse(
                         onTap: () async {
                           await callAPIForComponyName();
@@ -279,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           margin: EdgeInsets.symmetric(vertical: 1),
                           alignment: Alignment.center,
                           child: Text(
-                            getCompany,
+                            Utils.getText(context, StringRes.selectCompany),
                             style: TextStyle(
                               color: ColorRes.white,
                               fontSize: 15,
@@ -299,6 +300,38 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
+
+                      InkResponse(
+                        onTap: () async {
+                          selectLanguagesDialog();
+                        },
+                        child: Container(
+                          height: 30,
+                          margin: EdgeInsets.only(top: 10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(context, StringRes.selectLanguage),
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 15,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg('bg_privacy')))
+                                  : null),
+                        ),
+                      ),
+
+
                       InkResponse(
                         child: Container(
                           height: 35,
@@ -510,8 +543,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          getCompany = companyList[index].companyName;
-                          companyController.text = getCompany;
+                          StringRes.selectCompany = companyList[index].companyName;
+                          companyController.text = StringRes.selectCompany;
                           Navigator.pop(context);
                           setState(() {});
                         },
@@ -994,6 +1027,58 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+
+  selectLanguagesDialog() {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Center(
+            child: Container(
+                width: Utils.getDeviceWidth(context) / 2,
+                height: Utils.getDeviceHeight(context) / 2,
+                decoration: BoxDecoration(
+                    color: ColorRes.greyText,
+                    borderRadius: BorderRadius.circular(10)),
+                child: ListView.builder(
+                    itemCount: languagesList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+
+
+
+//                          Navigator.pop(context);
+//                          setState(() {});
+
+
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                Utils.getText(context, languagesList[index]),
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: ColorRes.black,
+                                    decoration: TextDecoration.none),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    })),
+          );
+        });
+  }
 //  void compressImage() async {
 //    File imageFile = await ImagePicker.pickImage();
 //    final tempDir = await getTemporaryDirectory();
