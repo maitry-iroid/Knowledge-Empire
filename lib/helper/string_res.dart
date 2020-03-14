@@ -324,6 +324,8 @@ class StringRes {
       'close': "Close",
     },
     'de': {
+      //main options
+
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
       'newCustomers': "Neue Kunden",
@@ -336,6 +338,8 @@ class StringRes {
       'team': "Team",
       'profile': "Profil",
       'help': "Hilfe",
+
+      //profile
       'emailId': 'Email',
       'editProfile': 'Profil bearbeiten',
       'yourName': 'Name',
@@ -349,6 +353,20 @@ class StringRes {
       'switchProfMode': 'Professionelle Version',
       'switchBusinessMode': 'Gamifizierte Version',
       'logout': 'Ausloggen',
+      'choosePhoto': "Foto wählen",
+      'takePhoto': "Foto machen",
+      'sound': 'Ton',
+      'bailout': 'Neustart gewähren',
+      'requestbailout': 'Konkurs anmelden',
+      'alertBailOut': "Wirklich Konkurs anmelden?",
+      'successProfileUpdate': 'Profil erfolgreich gespeichert!',
+      /* 'selectCompany': '',
+  'selectLanguage': '',
+  'english': '',
+  'german': '',
+  'chinese': '',*/
+
+      //login
       'login': 'Einloggen',
       'enterRegisteredEmail': 'Email eingeben',
       'password': 'Passwort',
@@ -358,47 +376,66 @@ class StringRes {
       'cancel': 'Abbrechen',
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
+
+      //organization
+      'fireEmp': "10 Mitarbeiter entlassen",
+      'hireEmp': "10 Mitarbeiter einstellen",
+
+      //new customer
       'sector': 'Geschäftsbereich',
-      'size': 'Größe',
-      'description': 'Beschreibung',
       'name': 'Name',
       'value': 'Umsatz',
       'loyalty': 'Loyalität',
       'resources': 'Vertriebler',
       'engage': 'Ansprechen',
       'engageNow': 'Ansprechen',
-      'engageSegment': 'Segment bearbeiten',
+
+      //existing customer
       'endRel': 'Beziehung beenden',
+//  'alertReleaseResources': '',
+
+      //challenges
       'searchForKeywords': 'Suche',
       'somethingWrong': 'Da ist was schief gegangen',
+      'friends': 'Freunde',
+      'alertFriendSuccess': '',
+      'alertUnFriendSuccess': '',
+      'alertUChallengeSent': '',
+
+      //learning module
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
       'subscribed': 'abonniert',
+      'downLoad': 'Herunterladen',
+      'size': 'Größe',
+      'description': 'Beschreibung',
+      'alertWantToSubscribe1': "Wirklich abmelden ",
+      'alertWantToSubscribe2': "? Alle Fragen gehen verlohren",
+      'downloading': "Daten werden geladen ...",
+      'thisModuleWillOccupie ': "Dieses Modul benötigt ",
+      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
+
+      //engage customer
       'engagement': 'Nachbesprechung',
       'situation': 'Debriefing',
       'category': 'Kategorie',
       'achievement': 'Bereits erreicht',
       'nextLevel': 'Nächste Stufe',
-      'friends': 'Freunde',
-      'competitor': 'Wettbewerber',
       'friend': 'Freund',
+      'competitor': 'Wettbewerber',
+      'sendChallenge': 'Herausfordern',
       'next': 'Weiter',
+
+      //  engage customer
       'answers': 'Antwortn',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
-      'sendChallenge': 'Herausfordern',
-      'bailout': 'Neustart gewähren',
-      'requestbailout': 'Konkurs anmelden',
-      'downLoad': 'Herunterladen',
-      'sound': 'Ton',
-      'successProfileUpdate': 'Profil erfolgreich gespeichert!',
-      'score': 'Punkte',
-      'companyName': 'Firmenname',
-      'revenue': "Umsatz",
+      'alertSelectOneOption': "Please select at least one option.",
+
+      //customer situation
       'profit': "Gewinn",
-      'customers': "Kunden",
-      'hashCustomers': "Anzahl Kunden",
-      'brand': "Marke",
+
+      //team
       'learningModule': "Lernmodule",
       'levels': "Level",
       'complete': "% Abgeschlossen",
@@ -407,20 +444,25 @@ class StringRes {
       'lastLog': "Letzter Login",
       'points': "Punkte",
       'correct': "% Korrekt",
-      'fireEmp': "10 Mitarbeiter entlassen",
-      'hireEmp': "10 Mitarbeiter einstellen",
-      'alertBailOut': "Wirklich Konkurs anmelden?",
-      'yes': "Ja",
-      'no': "Nein",
-      'choosePhoto': "Foto wählen",
-      'takePhoto': "Foto machen",
       'department_': "Abteilung:",
       'resets_': "Neustarts:",
       'name_': "Name:",
-      'comingSoon': "Demnächst verfügbar..",
-      'close': "Schließen",
-      'cashAtStartOfPeriod': "Startvermögen",
       'cost': "Kosten",
+
+      //ranking
+      'you': "Du",
+      'world': "Welt",
+//  'country': "",
+      'score': 'Punkte',
+      'companyName': 'Firmenname',
+      'revenue': "Umsatz",
+      'hashCustomers': "Anzahl Kunden",
+      'brand': "Marke",
+
+      //pl
+      'cashAtStartOfPeriod': "Startvermögen",
+      'engageSegment': 'Segment bearbeiten',
+      'customers': "Kunden",
       'employees': "Mitarbeiter",
       'salaries': "Gehälter",
       'customers': "Kunden",
@@ -429,16 +471,21 @@ class StringRes {
       'year': "Jahr",
       'lastPeriod': "Letzte Periode",
       'thisPeriod': "Aktuelle Periode",
-      'alertWantToSubscribe1': "Wirklich abmelden ",
-      'alertWantToSubscribe2': "? Alle Fragen gehen verlohren",
-      'downloading': "Daten werden geladen ...",
-      'thisModuleWillOccupie ': "Dieses Modul benötigt ",
+
+      //alerts
       'alertWantToBailOut': "Wirklich Konkurs anmelden?",
       'alertNoModuleFound': "Oops..Keine Lernmodule für diesen Nutzer gefunden",
-      'you': "Du",
-      'world': "Welt",
-      'country': "Land"
+//  'ok': '',
+      'yes': "Ja",
+      'no': "Nein",
+      'comingSoon': "Demnächst verfügbar..",
+      'close': "Schließen",
     },
+    'zh': {
+      //main options
+      'home': "家",
+
+    }
     'zh': {
       //main options
       'home': "Home",
