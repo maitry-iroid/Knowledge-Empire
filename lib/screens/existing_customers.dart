@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -13,6 +14,7 @@ import '../helper/web_api.dart';
 import '../injection/dependency_injection.dart';
 import '../models/questions.dart';
 import '../models/releaseResource.dart';
+import 'home.dart';
 
 class ExistingCustomerPage extends StatefulWidget {
   @override
@@ -71,7 +73,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         if (data != null) {
           CustomerValueData customerValueData =
               CustomerValueData.fromJson(data);
-
 
           customerValueBloc.setCustomerValue(customerValueData);
 
@@ -219,68 +220,79 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: Container(
-              height: Injector.isBusinessMode ? 30 : 25,
-              margin: EdgeInsets.symmetric(vertical: 5),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Injector.isBusinessMode ? null : ColorRes.white,
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("bg_record_white")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    flex: 5,
-                    child: Text(
-                      arrQuestions[index].title,
-                      style: TextStyle(
-                        color: ColorRes.blue,
-                        fontSize: 15,
+          child: InkResponse(
+            child: Container(
+                height: Injector.isBusinessMode ? 30 : 25,
+                margin: EdgeInsets.symmetric(vertical: 5),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.white,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image: AssetImage(
+                                Utils.getAssetsImg("bg_record_white")),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        arrQuestions[index].title,
+                        style: TextStyle(
+                          color: ColorRes.blue,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
                     ),
-                  ),
-                  Expanded(
-                    flex: 6,
-                    child: Text(
-                      arrQuestions[index].moduleName,
-                      style: TextStyle(color: ColorRes.blue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      arrQuestions[index].value.toString() + ' \$',
-                      style: TextStyle(
-                        color: ColorRes.blue,
-                        fontSize: 15,
+                    Expanded(
+                      flex: 6,
+                      child: Text(
+                        arrQuestions[index].moduleName,
+                        style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
                     ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      arrQuestions[index].loyalty.toString() + ' d',
-                      style: TextStyle(color: ColorRes.blue, fontSize: 15),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        arrQuestions[index].value.toString() + ' \$',
+                        style: TextStyle(
+                          color: ColorRes.blue,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        arrQuestions[index].loyalty.toString() + ' d',
+                        style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                )),
+            onTap: () {
+              HomeData homeData = HomeData(
+                  initialPageType: Const.typeCustomerSituation,
+                  questionDataSituation: arrQuestions[index],
+                  isCameFromExistingCustomer: true,
+                  isChallenge: false);
+
+              Navigator.push(context, FadeRouteHome(homeData: homeData));
+            },
+          ),
         ),
         InkResponse(
           child: Container(

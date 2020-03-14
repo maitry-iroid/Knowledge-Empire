@@ -13,6 +13,7 @@ class StringRes {
   static var profile = "profile";
   static var help = "help";
 
+
   //profile
   static var emailId = "emailId";
   static var editProfile = "editProfile";
@@ -226,12 +227,12 @@ class StringRes {
       'sound': 'Sound',
       'successProfileUpdate': 'Profile updated successfully!',
       'score': 'Score',
-      'companyName': 'Company Name',
-      'revenue': "Revenue",
       'profit': "Profit",
       'customers': "Customers",
-      'hashCustomers': "#Customers",
+
       'brand': "Brand",
+
+      //team
       'learningModule': "Learning Module",
       'levels': "Levels",
       'complete': "%Complete",
@@ -240,18 +241,9 @@ class StringRes {
       'lastLog': "Last Log",
       'points': "Points",
       'correct': "%Correct",
-      'fireEmp': "Fire 10 employees",
-      'hireEmp': "Hire 10 employees",
-      'alertBailOut': "Are you sure you want to Bail Out?",
-      'yes': "Yes",
-      'no': "No",
-      'choosePhoto': "Choose photo",
-      'takePhoto': "Take photo",
       'department_': "Department:",
       'resets_': "Resets:",
       'name_': "Name:",
-      'comingSoon': "Coming Soon..",
-      'close': "Close",
       'cashAtStartOfPeriod': "Cash at start of Period",
       'cost': "Cost",
       'employees': "Employees",
@@ -262,15 +254,37 @@ class StringRes {
       'year': "Year",
       'lastPeriod': "Last Period",
       'thisPeriod': "This Period",
+
+
+      'fireEmp': "Fire 10 employees",
+      'hireEmp': "Hire 10 employees",
+      'alertBailOut': "Are you sure you want to Bail Out?",
+      'yes': "Yes",
+      'no': "No",
+      'choosePhoto': "Choose photo",
+      'takePhoto': "Take photo",
+
+      'comingSoon': "Coming Soon..",
+      'close': "Close",
+
+
       'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
       'thisModuleWillOccupie': "This module will occupie ",
       'alertWantToBailOut': "Are you sure you want to Bail Out.",
       'alertNoModuleFound': "Oops..No learining module found for this user.",
+
+      //ranking
       'you': "You",
       'world': "World",
       'country': "Country",
+      'score': 'Punkte',
+      'companyName': 'Company Name',
+      'hashCustomers': "#Customers",
+      'revenue': "revenue",
+
+
       'sevenDaysDevelopment': "7 days developments",
       'cashAtTheEndOfPeriod': "Cash at end of Period",
       'costSplit': "CostSplit",
@@ -343,6 +357,8 @@ class StringRes {
       'competitor': 'Wettbewerber',
       'friend': 'Freund',
       'next': 'Weiter',
+
+      //new customer
       'answers': 'Antwortn',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
@@ -352,7 +368,6 @@ class StringRes {
       'downLoad': 'Herunterladen',
       'sound': 'Ton',
       'successProfileUpdate': 'Profil erfolgreich gespeichert!',
-      'score': 'Punkte',
       'companyName': 'Firmenname',
       'revenue': "Umsatz",
       'profit': "Gewinn",

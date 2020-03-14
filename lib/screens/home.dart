@@ -7,6 +7,7 @@ import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -36,39 +37,30 @@ import '../helper/string_res.dart';
 import '../models/get_friends.dart';
 
 class FadeRouteHome extends PageRouteBuilder {
-  final Widget page;
-  final String initialPageType;
-
-  final QuestionData questionDataHomeScr;
-  final QuestionData questionDataSituation;
-  final QuestionData questionDataChallenge;
-
-  final int value;
-  final int friendId;
-  final bool isChallenge;
-  final bool isCameFromDashboard;
+//  final Widget page;
+//  final String initialPageType;
+//
+//  final QuestionData questionDataHomeScr;
+//  final QuestionData questionDataSituation;
+//  final QuestionData questionDataChallenge;
+//
+//  final int value;
+//  final int friendId;
+//  final bool isChallenge;
+//  final bool isCameFromDashboard;
+  final HomeData homeData;
 
 //  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
 
-  FadeRouteHome(
-      {this.page,
-      this.initialPageType,
-      this.questionDataHomeScr,
-      this.questionDataSituation,
-      this.value,
-      this.arrFriends,
-      this.friendId,
-      this.questionDataChallenge,
-      this.isChallenge,
-      this.isCameFromDashboard})
+  FadeRouteHome({this.homeData})
       : super(
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              page,
+              homeData.page,
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -78,44 +70,16 @@ class FadeRouteHome extends PageRouteBuilder {
               FadeTransition(
             opacity: animation,
             child: HomePage(
-              initialPageType: initialPageType,
-              questionDataHomeScr: questionDataHomeScr,
-              questionDataSituation: questionDataSituation,
-              value: value,
-              arrFriends: arrFriends,
-              friendId: friendId,
-              isChallenge: isChallenge,
+              homeData: homeData,
             ),
           ),
         );
 }
 
 class HomePage extends StatefulWidget {
-  final String initialPageType;
+  final HomeData homeData;
 
-  final QuestionData questionDataHomeScr;
-  final QuestionData questionDataSituation;
-  final QuestionData questionDataChallenge;
-
-  final int value;
-  final int friendId;
-  final bool isChallenge;
-  final bool isCameFromDashboard;
-
-  final List<GetFriendsData> arrFriends;
-
-  HomePage(
-      {Key key,
-      this.initialPageType,
-      this.questionDataHomeScr,
-      this.questionDataSituation,
-      this.value,
-      this.arrFriends,
-      this.friendId,
-      this.questionDataChallenge,
-      this.isChallenge,
-      this.isCameFromDashboard})
-      : super(key: key);
+  HomePage({Key key, this.homeData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -407,18 +371,20 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeEngagement))
       return EngagementCustomer(
-          questionDataEngCustomer: widget.questionDataHomeScr,
-          isChallenge: widget.isChallenge);
+          questionDataEngCustomer: widget.homeData.questionDataHomeScr,
+          isChallenge: widget.homeData.isChallenge);
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeCustomerSituation))
       return CustomerSituationPage(
-          questionDataCustomerSituation: widget.questionDataSituation,
-          isChallenge: widget.isChallenge);
+        questionDataCustomerSituation: widget.homeData.questionDataSituation,
+        isChallenge: widget.homeData.isChallenge,
+        isCameFromExistingCustomer: widget.homeData.isCameFromExistingCustomer,
+      );
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeChallenges))
       return ChallengesPage(
-        arrFriends: widget.arrFriends,
-        friendId: widget.friendId,
+        arrFriends: widget.homeData.arrFriends,
+        friendId: widget.homeData.friendId,
       );
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
@@ -434,7 +400,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-    _selectedDrawerIndex = Utils.getHomePageIndex(widget.initialPageType);
+    _selectedDrawerIndex =
+        Utils.getHomePageIndex(widget.homeData.initialPageType);
   }
 
   void initStreamController() async {
@@ -605,10 +572,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     PushNotificationHelper(context, "home").initPush();
 
-    if (widget.initialPageType != Const.typeChallenges &&
-        widget.initialPageType != Const.typeCustomerSituation &&
-        widget.initialPageType != Const.typeEngagement) {
-      if (widget.isChallenge == null || widget.isChallenge)
+    if (widget.homeData.initialPageType != Const.typeChallenges &&
+        widget.homeData.initialPageType != Const.typeCustomerSituation &&
+        widget.homeData.initialPageType != Const.typeEngagement) {
+      if (widget.homeData.isChallenge == null || widget.homeData.isChallenge)
         getPendingChallenges();
     }
   }

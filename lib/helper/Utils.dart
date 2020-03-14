@@ -17,6 +17,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
@@ -317,7 +318,6 @@ class Utils {
       if (data != null) {
         CustomerValueData customerValueData = CustomerValueData.fromJson(data);
 
-
         await Injector.prefs.remove(PrefKeys.answerData);
         customerValueBloc.setCustomerValue(customerValueData);
       }
@@ -402,7 +402,6 @@ class Utils {
         organizationData.totalCustomerCapacity;
     customerValueData.remainingCustomerCapacity =
         organizationData.remainingCustomerCapacity;
-
 
     customerValueBloc?.setCustomerValue(customerValueData);
 //    Injector.streamController.add("manage level");
@@ -498,17 +497,9 @@ class Utils {
           type == Const.typeChallenges)
         Utils.showComingSoonDialog(context);
       else
-//        Navigator.push(context,
-//            FadeRouteHome(initialPageType: type, isCameFromDashboard: true));
-        Navigator.pushAndRemoveUntil(
-            context,
-            FadeRouteHome(initialPageType: type, isCameFromDashboard: true),
-            ModalRoute.withName("/home"));
+        performNavigation(type, context);
     } else {
-      Navigator.pushAndRemoveUntil(
-          context,
-          FadeRouteHome(initialPageType: type, isCameFromDashboard: true),
-          ModalRoute.withName("/home"));
+      performNavigation(type, context);
     }
   }
 
@@ -608,18 +599,18 @@ class Utils {
 
 //TODO comment below code fro prod mode
 
-//        child: getCount(type, data) > 0
-//            ? new DecoratedBox(
-//                decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.circular(20),
-//                    color: ColorRes.greenDot),
-//                child: Center(
-//                  child: Text(
-//                    getCount(type, data).toString(),
-//                    style: TextStyle(color: ColorRes.white),
-//                  ),
-//                ))
-//            : null,
+        child: getCount(type, data) > 0
+            ? new DecoratedBox(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: ColorRes.greenDot),
+                child: Center(
+                  child: Text(
+                    getCount(type, data).toString(),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
+                ))
+            : null,
       ),
     );
   }
@@ -689,5 +680,13 @@ class Utils {
       return Injector.isManager() ? 13 : 12;
     }
     return 0;
+  }
+
+  static void performNavigation(String type, BuildContext context) {
+    HomeData homeData =
+        HomeData(initialPageType: type, isCameFromDashboard: true);
+
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
+        ModalRoute.withName("/home"));
   }
 }

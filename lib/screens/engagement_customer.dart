@@ -12,6 +12,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 
@@ -502,12 +503,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void navigateToSituation(
       BuildContext context, QuestionData nextChallengeQuestionData) {
     if (!isChallenge) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          FadeRouteHome(
-              initialPageType: Const.typeCustomerSituation,
-              questionDataSituation: questionData,
-              isChallenge: isChallenge),
+      HomeData homeData = HomeData(
+          initialPageType: Const.typeCustomerSituation,
+          questionDataSituation: questionData,
+          isChallenge: isChallenge,isCameFromExistingCustomer: false);
+
+      Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
           ModalRoute.withName("/home"));
     } else {
       Navigator.pop(context);

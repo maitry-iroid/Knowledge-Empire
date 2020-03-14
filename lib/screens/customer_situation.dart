@@ -8,6 +8,7 @@ import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/homedata.dart';
 
 //import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
@@ -34,12 +35,14 @@ class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
   final bool isChallenge;
   final QuestionData nextChallengeQuestionData;
+  final bool isCameFromExistingCustomer;
 
   CustomerSituationPage(
       {Key key,
       this.questionDataCustomerSituation,
       this.isChallenge,
-      this.nextChallengeQuestionData})
+      this.nextChallengeQuestionData,
+      this.isCameFromExistingCustomer})
       : super(key: key);
 
   @override
@@ -229,7 +232,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
               onTap: () {
                 Utils.playClickSound();
-                gotoMainScreen(context);
+                if (widget.isCameFromExistingCustomer)
+                  Navigator.pop(context);
+                else
+                  gotoMainScreen(context);
               },
             )
           ],
@@ -501,11 +507,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       Navigator.pushAndRemoveUntil(
           context, FadeRouteHome(), ModalRoute.withName("home"));
 
-      Navigator.push(
-          context,
-          FadeRouteHome(
-              initialPageType: Const.typeNewCustomer,
-              questionDataSituation: null));
+      HomeData homeData = HomeData(
+          initialPageType: Const.typeNewCustomer, questionDataSituation: null);
+
+      Navigator.push(context, FadeRouteHome(homeData: homeData));
     }
   }
 
@@ -881,11 +886,11 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   }
 
   void initVideoController1() async {
-    if (Utils.isVideo(questionData.mediaLink)) {
-      _controller = Utils.getCacheFile(questionData.mediaLink) != null
+    if (Utils.isVideo(correctWrongImage())) {
+      _controller = Utils.getCacheFile(correctWrongImage()) != null
           ? VideoPlayerController.file(
-              Utils.getCacheFile(questionData.mediaLink).file)
-          : VideoPlayerController.network(questionData.mediaLink)
+              Utils.getCacheFile(correctWrongImage()).file)
+          : VideoPlayerController.network(correctWrongImage())
         ..initialize().then((_) {
           setState(() {
             _controller.pause();
@@ -935,7 +940,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                                 ? ColorRes.black
                                 : ColorRes.white,
                             borderRadius: BorderRadius.circular(10),
-                            border: Utils.isImage(questionData.mediaLink)
+                            border: Utils.isImage(correctWrongImage())
                                 ? Border.all(color: ColorRes.white, width: 1)
                                 : null),
                         child: showMediaView(context),
