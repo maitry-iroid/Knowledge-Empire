@@ -483,11 +483,6 @@ class StringRes {
     },
     'zh': {
       //main options
-      'home': "家",
-
-    }
-    'zh': {
-      //main options
       'home': "Home",
       'businessSector': "Business Sector",
       'newCustomers': "New Customers",

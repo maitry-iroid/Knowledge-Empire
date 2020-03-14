@@ -394,12 +394,15 @@ class CommonView {
                 top: Utils.getDeviceHeight(context) / 4.2,
                 left: Utils.getDeviceWidth(context) / 12),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                      padding: EdgeInsets.only(bottom: 40, left: 20),
+                      padding: EdgeInsets.only(
+                          bottom: 40,
+                          left: 20,
+                          right: Utils.getDeviceWidth(context) / 13),
                       child: InkResponse(
                         child: Stack(
                           children: <Widget>[
@@ -419,7 +422,10 @@ class CommonView {
                 ),
                 Expanded(
                   child: Padding(
-                      padding: EdgeInsets.only(bottom: 15, left: 40, right: 10),
+                      padding: EdgeInsets.only(
+                          bottom: 15,
+                          left: Utils.getDeviceWidth(context) / 14,
+                          right: Utils.getDeviceWidth(context) / 14),
                       child: Opacity(
                         child: InkResponse(
                           child: Stack(
@@ -443,8 +449,11 @@ class CommonView {
                 ),
                 Expanded(
                   child: Padding(
-                    padding:
-                        EdgeInsets.only(bottom: 0, left: 0, right: 10, top: 00),
+                    padding: EdgeInsets.only(
+                        bottom: 0,
+                        left: 0,
+                        right: Utils.getDeviceWidth(context) / 10,
+                        top: 00),
                     child: InkResponse(
                         child: Stack(
                           children: <Widget>[
