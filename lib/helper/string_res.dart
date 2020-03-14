@@ -13,7 +13,6 @@ class StringRes {
   static var profile = "profile";
   static var help = "help";
 
-
   //profile
   static var emailId = "emailId";
   static var editProfile = "editProfile";
@@ -35,6 +34,11 @@ class StringRes {
   static var requestBailOut = "requestbailout";
   static var alertBailOut = "alertBailOut";
   static var successProfileUpdate = "successProfileUpdate";
+  static var selectCompany = "selectCompany";
+  static var selectLanguage = "selectLanguage";
+  static var english = "english";
+  static var german  = "german";
+  static var chinese = "chinese";
 
   //login
   static var login = "login";
@@ -159,6 +163,8 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
+
+      //main options
       'home': "Home",
       'businessSector': "Business Sector",
       'newCustomers': "New Customers",
@@ -171,6 +177,8 @@ class StringRes {
       'team': "Team",
       'profile': "Profile",
       'help': "Help",
+
+      //profile
       'emailId': 'Email Id',
       'editProfile': 'Edit Profile',
       'yourName': 'Your Name',
@@ -184,6 +192,20 @@ class StringRes {
       'switchProfMode': 'Switch to Professional Mode',
       'switchBusinessMode': 'Switch to Business Mode',
       'logout': 'Log out',
+      'choosePhoto': "Choose photo",
+      'takePhoto': "Take photo",
+      'sound': 'Sound',
+      'bailout': 'Bail Out',
+      'requestbailout': 'Request Bail Out',
+      'alertBailOut': "Are you sure you want to Bail Out?",
+      'successProfileUpdate': 'Profile updated successfully!',
+      'selectCompany': "Select Company",
+      'selectLanguage': "Select Language",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+
+      //login
       'login': 'Login',
       'enterRegisteredEmail': 'Enter Registered Email Id',
       'password': 'Password',
@@ -193,21 +215,46 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
+
+      //organization
+      'fireEmp': "Fire 10 employees",
+      'hireEmp': "Hire 10 employees",
+
+      //new customer
       'sector': 'Sector',
-      'size': 'Size',
-      'description': 'Description',
       'name': 'Name',
       'value': 'Value',
       'loyalty': 'Loyalty',
       'resources': 'Resources',
       'engage': 'Engage',
       'engageNow': 'Engage Now',
+
+      //existing customer
       'endRel': 'End Rel.',
+      'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+
+      //challenges
       'searchForKeywords': 'Search for keywords',
       'somethingWrong': 'Something went wrong',
+      'friend': 'Friend',
+      'alertFriendSuccess': "Friend added successfully",
+      'alertUnFriendSuccess': "Unfriend successfully",
+      'alertUChallengeSent': "Challenge sent successfully!",
+
+      //learning module
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
       'subscribed': 'Subscribed',
+      'downLoad': 'DownLoad',
+      'size': 'Size',
+      'description': 'Description',
+      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
+      'alertWantToSubscribe2': "? You will lose all the questions from the ",
+      'downloading': "Downloading...",
+      'thisModuleWillOccupie': "This module will occupie ",
+      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
+
+      //engage customer
       'engagement': 'Situation',
       'situation': 'Debriefing',
       'category': 'Category',
@@ -215,22 +262,17 @@ class StringRes {
       'nextLevel': 'Next Level',
       'friends': 'Friends',
       'competitor': 'Competitor',
-      'friend': 'Friend',
+      'sendChallenge': 'Send Challenge',
       'next': 'Next',
+
+      //  engage customer
       'answers': 'Answers',
       'question': 'Question',
       'explanation': 'Explanation',
-      'sendChallenge': 'Send Challenge',
-      'bailout': 'Bail Out',
-      'requestbailout': 'Request Bail Out',
-      'downLoad': 'DownLoad',
-      'sound': 'Sound',
-      'successProfileUpdate': 'Profile updated successfully!',
-      'score': 'Score',
-      'profit': "Profit",
-      'customers': "Customers",
+      'alertSelectOneOption': "Please select at least one option.",
 
-      'brand': "Brand",
+      //customer situation
+      'profit': "Profit",
 
       //team
       'learningModule': "Learning Module",
@@ -244,58 +286,43 @@ class StringRes {
       'department_': "Department:",
       'resets_': "Resets:",
       'name_': "Name:",
-      'cashAtStartOfPeriod': "Cash at start of Period",
       'cost': "Cost",
+
+      //ranking
+      'you': "You",
+      'world': "World",
+      'country': "Country",
+      'score': 'Score',
+      'companyName': 'Company Name',
+      'revenue': "Revenue",
+      'hashCustomers': "#Customers",
+      'brand': "Brand",
+
+      //pl
+      'cashAtStartOfPeriod': "Cash at start of Period",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'costSplit': "CostSplit",
+      'revenueSplit': "revenueSplit",
       'employees': "Employees",
       'salaries': "Salaries",
+      'customers': "Customers",
       'customers': "Customers",
       'day': "Day",
       'month': "Month",
       'year': "Year",
       'lastPeriod': "Last Period",
       'thisPeriod': "This Period",
+      'sevenDaysDevelopment': "7 days developments",
 
-
-      'fireEmp': "Fire 10 employees",
-      'hireEmp': "Hire 10 employees",
-      'alertBailOut': "Are you sure you want to Bail Out?",
+      //alerts
+      'alertWantToBailOut': "Are you sure you want to Bail Out.",
+      'alertNoModuleFound': "Oops..No learining module found for this user.",
+      'ok': "Ok",
       'yes': "Yes",
       'no': "No",
-      'choosePhoto': "Choose photo",
-      'takePhoto': "Take photo",
-
       'comingSoon': "Coming Soon..",
       'close': "Close",
 
-
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
-      'alertWantToSubscribe2': "? You will lose all the questions from the ",
-      'downloading': "Downloading...",
-      'thisModuleWillOccupie': "This module will occupie ",
-      'alertWantToBailOut': "Are you sure you want to Bail Out.",
-      'alertNoModuleFound': "Oops..No learining module found for this user.",
-
-      //ranking
-      'you': "You",
-      'world': "World",
-      'country': "Country",
-      'score': 'Punkte',
-      'companyName': 'Company Name',
-      'hashCustomers': "#Customers",
-      'revenue': "revenue",
-
-
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'costSplit': "CostSplit",
-      'revenueSplit': "revenueSplit",
-      'alertFriendSuccess': "Friend added successfully",
-      'alertUnFriendSuccess': "Unfriend successfully",
-      'alertUChallengeSent': "Challenge sent successfully!",
-      'alertSelectOneOption': "Please select at least one option.",
-      'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
-      'ok': "Ok",
-      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules."
     },
     'de': {
       'home': "Büro",
@@ -357,8 +384,6 @@ class StringRes {
       'competitor': 'Wettbewerber',
       'friend': 'Freund',
       'next': 'Weiter',
-
-      //new customer
       'answers': 'Antwortn',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
@@ -368,6 +393,7 @@ class StringRes {
       'downLoad': 'Herunterladen',
       'sound': 'Ton',
       'successProfileUpdate': 'Profil erfolgreich gespeichert!',
+      'score': 'Punkte',
       'companyName': 'Firmenname',
       'revenue': "Umsatz",
       'profit': "Gewinn",

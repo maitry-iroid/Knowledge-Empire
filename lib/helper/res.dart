@@ -53,6 +53,7 @@ class ColorRes {
   static Color rankingProBg = Color(0xFF676767);
   static Color rankingProValueBg  = Color(0xFFcfe5ff);
   static Color rankingProDeSelectDay  = Color(0xFFc6ced8);
+  static Color blackTransparentColor  = Color(0x73000000);
 
   static Color chartTen = Color(0xFF823d28);
   static Color chartNine = Color(0xFF8e4a35);
