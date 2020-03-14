@@ -45,6 +45,7 @@ class WebApi {
   static String rqGetTeamUserById = "getTeamUserById";
     static String rqGetPerformance = "getPerformance";
     static String rqGetCompany = "getCompany";
+    static String updateLanguage = "updateLanguage";
 
   static getRequest(String req, String data) {
     return {

@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/BLoC/learning_module_bloc.dart';
+
+//import 'package:ke_employee/BLoC/learning_module_bloc.dart';
 import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
+import 'package:ke_employee/models/language.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -1047,9 +1049,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          localeBloc.setLocale(index);
+                          if (index == 0) {
+                            languageChangeAPI(Const.english, index);
+                          } else if (index == 1) {
+                            languageChangeAPI(Const.german, index);
+                          } else if (index == 2) {
+                            languageChangeAPI(Const.chinese, index);
+                          }
 
                           Navigator.pop(context);
+
 //                          setState(() {});
                         },
                         child: Padding(
@@ -1208,5 +1217,33 @@ class _ProfilePageState extends State<ProfilePage> {
         y +
         "-" +
         z;
+  }
+
+  //Update Language API
+
+  languageChangeAPI(String language, int index) {
+    Utils.playClickSound();
+
+    LanguageRequest rq = LanguageRequest();
+    rq.userId = Injector.userId.toString();
+    rq.language = language;
+
+//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
+    CommonView.showCircularProgress(true, context);
+    WebApi().callAPI(WebApi.updateLanguage, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+
+      if (data != null) {
+        localeBloc.setLocale(index);
+        Utils.showToast("Success fully");
+        setState(() {});
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+    }).catchError((e) {
+      print("updatePorfile_" + e.toString());
+      CommonView.showCircularProgress(false, context);
+      Utils.showToast(e.toString());
+    });
   }
 }

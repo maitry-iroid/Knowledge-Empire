@@ -63,6 +63,7 @@ class UserData {
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
   bool isSoundEnable = false;
+  String language ;
 
   UserData();
 
@@ -82,6 +83,7 @@ class UserData {
     manager = json['manager'];
     activeCompany = json['activeCompany'];
     isFirstTimeLogin = json['isFirstTimeLogin'];
+    language = json['language'];
   }
 
   Map<String, dynamic> toJson() {
@@ -101,6 +103,7 @@ class UserData {
     data['manager'] = this.manager;
     data['activeCompany'] = this.activeCompany;
     data['isFirstTimeLogin'] = this.isFirstTimeLogin;
+    data['language'] = this.language;
     return data;
   }
 }

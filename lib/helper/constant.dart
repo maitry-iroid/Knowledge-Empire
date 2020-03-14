@@ -93,6 +93,11 @@ class Const {
 
   static FlavorConfig _config;
 
+  //language
+  static var english = "English";
+  static var german  = "German";
+  static var chinese = "Chinese";
+
   //pl screen dd_mm_yy
   static int plDay   = 1;
   static int plMonth = 2;
