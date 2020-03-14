@@ -85,8 +85,9 @@ class MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en', ''),
-        const Locale('de', ''),
+        const Locale('en', 'US'),
+        const Locale('de', 'DE'),
+        const Locale('zh', 'CN'),
         // ... other locales the app supports
       ],
     );

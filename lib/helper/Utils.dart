@@ -26,10 +26,7 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
-import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
-//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
-
 import 'constant.dart';
 import 'localization.dart';
 
