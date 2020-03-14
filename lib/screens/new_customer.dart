@@ -397,9 +397,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   showValueText(String s) {
-    return Text(
-      s,
-      style: TextStyle(color: ColorRes.white),
-    );
+    return Injector.isDev
+        ? Text(
+            s,
+            style: TextStyle(color: ColorRes.white),
+          )
+        : Container();
   }
 }

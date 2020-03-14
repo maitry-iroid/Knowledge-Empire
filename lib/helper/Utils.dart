@@ -7,7 +7,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:ke_employee/BLoC/learning_module_bloc.dart';
+import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -29,6 +29,7 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
+import 'package:rxdart/rxdart.dart';
 //import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'constant.dart';
@@ -688,5 +689,19 @@ class Utils {
 
     Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
         ModalRoute.withName("/home"));
+  }
+
+ static Stream<Locale> setLocale(int index) {
+    var localeSubject = BehaviorSubject<Locale>();
+
+    if (index == 0)
+      localeSubject.sink.add(Locale('en', ''));
+    else if (index == 1)
+      localeSubject.sink.add(Locale('de', ''));
+    else if (index == 2)
+      localeSubject.sink.add(Locale('zh', ''));
+    else
+      localeSubject.sink.add(Locale('en', ''));
+    return localeSubject.stream.distinct();
   }
 }

@@ -37,7 +37,7 @@ class StringRes {
   static var selectCompany = "selectCompany";
   static var selectLanguage = "selectLanguage";
   static var english = "english";
-  static var german  = "german";
+  static var german = "german";
   static var chinese = "chinese";
 
   //login
@@ -163,7 +163,6 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
-
       //main options
       'home': "Home",
       'businessSector': "Business Sector",
@@ -231,7 +230,8 @@ class StringRes {
 
       //existing customer
       'endRel': 'End Rel.',
-      'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+      'alertReleaseResources':
+          "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
 
       //challenges
       'searchForKeywords': 'Search for keywords',
@@ -322,7 +322,6 @@ class StringRes {
       'no': "No",
       'comingSoon': "Coming Soon..",
       'close': "Close",
-
     },
     'de': {
       'home': "Büro",
@@ -440,6 +439,167 @@ class StringRes {
       'world': "Welt",
       'country': "Land"
     },
+    'zh': {
+      //main options
+      'home': "Home",
+      'businessSector': "Business Sector",
+      'newCustomers': "New Customers",
+      'existingCustomers': "Existing Customers",
+      'organizations': "Organizations",
+      'challenges': "Challenges",
+      'pl': "P+L",
+      'rewards': "Rewards",
+      'ranking': "Ranking",
+      'team': "Team",
+      'profile': "Profile",
+      'help': "Help",
+
+      //profile
+      'emailId': 'Email Id',
+      'editProfile': 'Edit Profile',
+      'yourName': 'Your Name',
+      'yourEmail': 'Your Email',
+      'changePassword': 'Change Password',
+      'save': 'Save',
+      'settings': 'Settings',
+      'privacyPolicy': 'Privacy & Policy',
+      'termsConditions': 'Terms & Conditions',
+      'contactUs': 'Contact Us',
+      'switchProfMode': 'Switch to Professional Mode',
+      'switchBusinessMode': 'Switch to Business Mode',
+      'logout': 'Log out',
+      'choosePhoto': "Choose photo",
+      'takePhoto': "Take photo",
+      'sound': 'Sound',
+      'bailout': 'Bail Out',
+      'requestbailout': 'Request Bail Out',
+      'alertBailOut': "Are you sure you want to Bail Out?",
+      'successProfileUpdate': 'Profile updated successfully!',
+      'selectCompany': "Select Company",
+      'selectLanguage': "Select Language",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+
+      //login
+      'login': 'Login',
+      'enterRegisteredEmail': 'Enter Registered Email Id',
+      'password': 'Password',
+      'newPassword': 'New Password',
+      'currentPassword': 'Current Password',
+      'reEnterPassword': 'Re-enter new Password',
+      'cancel': 'Cancel',
+      'send': 'Send',
+      'forgotPassword': 'Forgot Password?',
+
+      //organization
+      'fireEmp': "Fire 10 employees",
+      'hireEmp': "Hire 10 employees",
+
+      //new customer
+      'sector': 'Sector',
+      'name': 'Name',
+      'value': 'Value',
+      'loyalty': 'Loyalty',
+      'resources': 'Resources',
+      'engage': 'Engage',
+      'engageNow': 'Engage Now',
+
+      //existing customer
+      'endRel': 'End Rel.',
+      'alertReleaseResources':
+      "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+
+      //challenges
+      'searchForKeywords': 'Search for keywords',
+      'somethingWrong': 'Something went wrong',
+      'friend': 'Friend',
+      'alertFriendSuccess': "Friend added successfully",
+      'alertUnFriendSuccess': "Unfriend successfully",
+      'alertUChallengeSent': "Challenge sent successfully!",
+
+      //learning module
+      'subscribe': 'Subscribe',
+      'unSubscribe': 'Unsubscribe',
+      'subscribed': 'Subscribed',
+      'downLoad': 'DownLoad',
+      'size': 'Size',
+      'description': 'Description',
+      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
+      'alertWantToSubscribe2': "? You will lose all the questions from the ",
+      'downloading': "Downloading...",
+      'thisModuleWillOccupie': "This module will occupie ",
+      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
+
+      //engage customer
+      'engagement': 'Situation',
+      'situation': 'Debriefing',
+      'category': 'Category',
+      'achievement': 'Achievement',
+      'nextLevel': 'Next Level',
+      'friends': 'Friends',
+      'competitor': 'Competitor',
+      'sendChallenge': 'Send Challenge',
+      'next': 'Next',
+
+      //  engage customer
+      'answers': 'Answers',
+      'question': 'Question',
+      'explanation': 'Explanation',
+      'alertSelectOneOption': "Please select at least one option.",
+
+      //customer situation
+      'profit': "Profit",
+
+      //team
+      'learningModule': "Learning Module",
+      'levels': "Levels",
+      'complete': "%Complete",
+      'qLevel': "Q Level",
+      'qStatus': "Q Status",
+      'lastLog': "Last Log",
+      'points': "Points",
+      'correct': "%Correct",
+      'department_': "Department:",
+      'resets_': "Resets:",
+      'name_': "Name:",
+      'cost': "Cost",
+
+      //ranking
+      'you': "You",
+      'world': "World",
+      'country': "Country",
+      'score': 'Score',
+      'companyName': 'Company Name',
+      'revenue': "Revenue",
+      'hashCustomers': "#Customers",
+      'brand': "Brand",
+
+      //pl
+      'cashAtStartOfPeriod': "Cash at start of Period",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'costSplit': "CostSplit",
+      'revenueSplit': "revenueSplit",
+      'employees': "Employees",
+      'salaries': "Salaries",
+      'customers': "Customers",
+      'customers': "Customers",
+      'day': "Day",
+      'month': "Month",
+      'year': "Year",
+      'lastPeriod': "Last Period",
+      'thisPeriod': "This Period",
+      'sevenDaysDevelopment': "7 days developments",
+
+      //alerts
+      'alertWantToBailOut': "Are you sure you want to Bail Out.",
+      'alertNoModuleFound': "Oops..No learining module found for this user.",
+      'ok': "Ok",
+      'yes': "Yes",
+      'no': "No",
+      'comingSoon': "Coming Soon..",
+      'close': "Close",
+    }
   };
 
   static Map<String, Map<String, String>> localizedValuesProf = {
@@ -469,5 +629,6 @@ class StringRes {
     'es': {
       'home': "Home",
     },
+    'zh': {}
   };
 }

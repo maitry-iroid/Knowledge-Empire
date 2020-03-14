@@ -5,12 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ke_employee/BLoC/learning_module_bloc.dart';
+import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:package_info/package_info.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -35,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List<Company> companyList = new List();
 
-  List languagesList = [StringRes.english,StringRes.german,StringRes.chinese];
+  List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
   @override
   void initState() {
@@ -268,7 +270,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Utils.getAssetsImg('bg_privacy')))
                                 : null),
                       ),
-
                       InkResponse(
                         onTap: () async {
                           await callAPIForComponyName();
@@ -298,7 +299,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
-
                       InkResponse(
                         onTap: () async {
                           selectLanguagesDialog();
@@ -323,13 +323,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : BorderRadius.circular(20),
                               image: Injector.isBusinessMode
                                   ? DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg('bg_privacy')))
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
                                   : null),
                         ),
                       ),
-
-
                       InkResponse(
                         child: Container(
                           height: 35,
@@ -541,7 +539,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          StringRes.selectCompany = companyList[index].companyName;
+                          StringRes.selectCompany =
+                              companyList[index].companyName;
                           companyController.text = StringRes.selectCompany;
                           Navigator.pop(context);
                           setState(() {});
@@ -1025,13 +1024,12 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-
   selectLanguagesDialog() {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
         barrierLabel:
-        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: ColorRes.blackTransparentColor,
         transitionDuration: const Duration(milliseconds: 200),
         pageBuilder: (BuildContext buildContext, Animation animation,
@@ -1048,13 +1046,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
+                          localeBloc.setLocale(index);
 
-
-
-//                          Navigator.pop(context);
+                          Navigator.pop(context);
 //                          setState(() {});
-
-
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -1077,6 +1072,7 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         });
   }
+
 //  void compressImage() async {
 //    File imageFile = await ImagePicker.pickImage();
 //    final tempDir = await getTemporaryDirectory();

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
@@ -56,39 +58,48 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.landscapeRight,
     ]);
 
-    return MaterialApp(
-      title: Const.appName,
-      theme: ThemeData(
-        accentColor: ColorRes.transparent,
-        fontFamily: 'TrulyMadly',
-        backgroundColor: Injector.mode == Const.businessMode
-            ? ColorRes.colorBgDark
-            : ColorRes.white,
-      ),
-      home: Injector.userId != null
-          ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
-                  Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
-              ? IntroPage()
-              : HomePage())
-          : LoginPage(),
-      routes: <String, WidgetBuilder>{
-        '/login': (BuildContext context) => LoginPage(),
-        '/home': (BuildContext context) => HomePage(),
-        '/engage': (BuildContext ext) => EngagementCustomer(),
-        '/dashboard': (BuildContext context) => DashboardGamePage(),
-        '/intro': (BuildContext context) => IntroPage(),
+    return StreamBuilder(
+      stream: localeBloc.locale,
+      initialData: Locale('en', ''),
+      builder: (context, localeSnapshot) {
+        return MaterialApp(
+          title: Const.appName,
+          locale: localeSnapshot.data,
+          theme: ThemeData(
+            accentColor: ColorRes.transparent,
+            fontFamily: 'TrulyMadly',
+            backgroundColor: Injector.mode == Const.businessMode
+                ? ColorRes.colorBgDark
+                : ColorRes.white,
+          ),
+          home: Injector.userId != null
+              ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
+                      Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
+                  ? IntroPage()
+                  : HomePage())
+              : LoginPage(),
+          routes: <String, WidgetBuilder>{
+            '/login': (BuildContext context) => LoginPage(),
+            '/home': (BuildContext context) => HomePage(),
+            '/engage': (BuildContext ext) => EngagementCustomer(),
+            '/dashboard': (BuildContext context) => DashboardGamePage(),
+            '/intro': (BuildContext context) => IntroPage(),
+          },
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            const AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', ''),
+            const Locale('de', ''),
+            const Locale.fromSubtags(languageCode: 'zh')
+            // ... other locales the app supports
+          ],
+        );
+        ;
       },
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        const AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', ''),
-        const Locale('de', ''),
-        // ... other locales the app supports
-      ],
     );
   }
 
