@@ -14,7 +14,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
-import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
+//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import '../commonview/background.dart';
 
@@ -756,12 +756,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(25))
         ),
-        child: SimplePdfViewerWidget(
-          completeCallback: (bool result) {
-            print("completeCallback,result:$result");
-          },
-          initialUrl: questionData.mediaLink,
-        ),
+//        child: SimplePdfViewerWidget(
+//          completeCallback: (bool result) {
+//            print("completeCallback,result:$result");
+//          },
+//          initialUrl: questionData.mediaLink,
+//        ),
       );
     }
 //    else {

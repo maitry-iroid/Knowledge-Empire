@@ -4,6 +4,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
@@ -112,6 +113,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     initContent();
+
     super.initState();
   }
 
@@ -562,6 +564,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   void initContent() async {
     await Injector.getInstance();
+
+    switch (Injector.userData.language) {
+      case "English":
+        localeBloc.setLocale(0);
+        break;
+      case "German":
+        localeBloc.setLocale(1);
+        break;
+      case "Chinese":
+        localeBloc.setLocale(2);
+        break;
+      default:
+        localeBloc.setLocale(0);
+        break;
+    }
 
     initStreamController();
     getCustomerValues();

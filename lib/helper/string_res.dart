@@ -360,11 +360,11 @@ class StringRes {
       'requestbailout': 'Konkurs anmelden',
       'alertBailOut': "Wirklich Konkurs anmelden?",
       'successProfileUpdate': 'Profil erfolgreich gespeichert!',
-      /* 'selectCompany': '',
-  'selectLanguage': '',
-  'english': '',
-  'german': '',
-  'chinese': '',*/
+      'selectCompany': "Select Company",
+      'selectLanguage': "Select Language",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
 
       //login
       'login': 'Einloggen',
@@ -392,7 +392,7 @@ class StringRes {
 
       //existing customer
       'endRel': 'Beziehung beenden',
-//  'alertReleaseResources': '',
+      'alertReleaseResources': '',
 
       //challenges
       'searchForKeywords': 'Suche',
@@ -452,7 +452,7 @@ class StringRes {
       //ranking
       'you': "Du",
       'world': "Welt",
-//  'country': "",
+      'country': "",
       'score': 'Punkte',
       'companyName': 'Firmenname',
       'revenue': "Umsatz",
@@ -475,21 +475,16 @@ class StringRes {
       //alerts
       'alertWantToBailOut': "Wirklich Konkurs anmelden?",
       'alertNoModuleFound': "Oops..Keine Lernmodule für diesen Nutzer gefunden",
-//  'ok': '',
+      'ok': '',
       'yes': "Ja",
       'no': "Nein",
       'comingSoon': "Demnächst verfügbar..",
       'close': "Schließen",
     },
-  /*  'zh': {
-      //main options
-      'home': "家",
-businessSector
-    } */
     'zh': {
       //main options
       'home': "首页",
-//      'businessSector': "Business Sector",
+      'businessSector': "Business Sector",
       'newCustomers': "新客户",
       'existingCustomers': "现有客户",
       'organizations': "组织",
@@ -504,11 +499,11 @@ businessSector
       //profile
       'emailId': '邮箱账户名会员名',
       'editProfile': '编辑个人主页',
-//      'yourName': 'Your Name',
+      'yourName': 'Your Name',
       'yourEmail': 'Your邮箱',
       'changePassword': 'Change 密码',
-//      'save': 'Save',
-//      'settings': 'Settings',
+      'save': 'Save',
+      'settings': 'Settings',
       'privacyPolicy': '隐私权政策',
       'termsConditions': '法律声明',
       'contactUs': '联系我们',
@@ -522,11 +517,11 @@ businessSector
       'requestbailout': '申请纾困',
       'alertBailOut': "你确定要纾困吗.",
       'successProfileUpdate': '个人主页已更新!',
-//      'selectCompany': "Select Company",
-//      'selectLanguage': "Select Language",
-//      'english': "English",
-//      'german': "German",
-//      'chinese': "Chinese",
+      'selectCompany': "Select Company",
+      'selectLanguage': "Select Language",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
 
       //login
       'login': '登录',
@@ -544,21 +539,22 @@ businessSector
       'hireEmp': "开除解雇 10 名员工",
 
       //new customer
-//      'sector': 'Sector',
+      'sector': 'Sector',
       'name': '名字',
-//      'value': 'Value',
-//      'loyalty': 'Loyalty',
+      'value': 'Value',
+      'loyalty': 'Loyalty',
       'resources': '资源',
       'engage': '经营',
-//      'engageNow': 'Engage Now',
+      'engageNow': 'Engage Now',
 
       //existing customer
-//      'endRel': 'End Rel.',
-      'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+      'endRel': 'End Rel.',
+      'alertReleaseResources':
+          "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
 
       //challenges
       'searchForKeywords': '关键词搜索',
-//      'somethingWrong': 'Something went wrong',
+      'somethingWrong': 'Something went wrong',
       'friend': '夥伴朋友',
       'alertFriendSuccess': "Friend added successfully",
       'alertUnFriendSuccess': "Unfriend successfully",
@@ -569,11 +565,11 @@ businessSector
       'unSubscribe': '取消订阅',
       'subscribed': '已订阅',
       'downLoad': '下载',
-//      'size': 'Size',
-//      'description': 'Description',
+      'size': 'Size',
+      'description': 'Description',
       'alertWantToSubscribe1': "您确定要取消订阅吗",
-//      'alertWantToSubscribe2': "? You will lose all the questions from the ",
-//      'downloading': "Downloading...",
+      'alertWantToSubscribe2': "? You will lose all the questions from the ",
+      'downloading': "Downloading...",
       'thisModuleWillOccupie': "This module will occupy ",
       'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
 
@@ -599,9 +595,9 @@ businessSector
 
       //team
       'learningModule': "学习模块",
-//      'levels': "Levels",
+      'levels': "Levels",
       'complete': "%完成",
-//      'qLevel': "Q Level",
+      'qLevel': "Q Level",
       'qStatus': "Q 状态",
       'lastLog': "上次登录时间",
       'points': "Points",
@@ -643,9 +639,7 @@ businessSector
       'yes': "是",
       'no': "不是",
       'comingSoon': "即将推出..",
-//      'close': "Close",
-
-
+      'close': "Close",
     }
   };
 
@@ -673,9 +667,7 @@ businessSector
       //challenges
       'competitor': 'Colleagues'
     },
-    'es': {
-      'home': "Home",
-    },
+    'de': {},
     'zh': {}
   };
 }

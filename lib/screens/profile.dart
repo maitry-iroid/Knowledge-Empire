@@ -307,7 +307,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           margin: EdgeInsets.only(top: 10),
                           alignment: Alignment.center,
                           child: Text(
-                            Utils.getText(context, StringRes.selectLanguage),
+                            Utils.getText(context, StringRes.selectLanguage) +
+                                "-" +
+                                Injector.userData.language,
                             style: TextStyle(
                               color: ColorRes.white,
                               fontSize: 15,
@@ -1231,7 +1233,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {
         localeBloc.setLocale(index);
-        Utils.showToast("Success fully");
+        Injector.userData.language = language;
         setState(() {});
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
