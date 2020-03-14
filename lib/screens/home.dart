@@ -565,20 +565,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initContent() async {
     await Injector.getInstance();
 
-    switch (Injector.userData.language) {
-      case "English":
-        localeBloc.setLocale(0);
-        break;
-      case "German":
-        localeBloc.setLocale(1);
-        break;
-      case "Chinese":
-        localeBloc.setLocale(2);
-        break;
-      default:
-        localeBloc.setLocale(0);
-        break;
-    }
+    localeBloc.setLocale(Utils.getIndexLocale());
 
     initStreamController();
     getCustomerValues();

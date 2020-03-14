@@ -327,7 +327,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
     GetAchievementRequest rq = GetAchievementRequest();
     rq.userId = Injector.userId;
-//    rq.categoryId = oneAsString;
+    rq.mode = Injector.mode.toString();
 
     WebApi().callAPI(WebApi.rqGetUserAchievement, rq.toJson()).then((data) {
       CommonView.showCircularProgress(false, context);

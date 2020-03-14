@@ -1,18 +1,21 @@
 class GetAchievementRequest {
   int userId;
   String categoryId;
+  String mode;
 
   GetAchievementRequest({this.userId, this.categoryId});
 
   GetAchievementRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     categoryId = json['categoryId'];
+    mode = json['mode'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['categoryId'] = this.categoryId;
+    data['mode'] = this.mode;
     return data;
   }
 }

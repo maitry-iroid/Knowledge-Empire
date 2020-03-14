@@ -702,4 +702,25 @@ class Utils {
       localeSubject.sink.add(Locale('en', ''));
     return localeSubject.stream.distinct();
   }
+
+  static int getIndexLocale() {
+    int index = 0;
+
+    switch (Injector.userData.language) {
+      case "English":
+        index = 0;
+        break;
+      case "German":
+        index = 1;
+        break;
+      case "Chinese":
+        index = 2;
+        break;
+      default:
+        index = 0;
+        break;
+    }
+
+    return index;
+  }
 }
