@@ -7,16 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
-
-//import 'package:ke_employee/BLoC/learning_module_bloc.dart';
-import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/language.dart';
 import 'package:package_info/package_info.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -362,7 +358,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               ? Const.professionalMode
                               : Const.businessMode);
 
-                          Injector.headerStreamController.add("chnage mode");
+                          localeBloc.refreshApp();
+
                           setState(() {});
                         },
                       ),
@@ -1058,7 +1055,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           }
 
                           Navigator.pop(context);
-
 //                          setState(() {});
                         },
                         child: Padding(

@@ -29,6 +29,10 @@ class LocaleBloc {
     return _assignLocaleSubject.stream.distinct();
   }
 
+  refreshApp(){
+    _assignLocaleSubject.sink.add(Locale('en', ''));
+  }
+
   dispose() {
     _assignLocaleSubject.close();
   }

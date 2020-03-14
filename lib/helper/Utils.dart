@@ -589,55 +589,54 @@ class Utils {
   static showUnreadCount(
       String type, double top, double right, List<GetDashboardData> data) {
     return Positioned(
-      right: right,
-      top: top,
-      child: ConstrainedBox(
-        constraints: new BoxConstraints(
-          minHeight: 25.0,
-          minWidth: 25.0,
-        ),
+        right: right,
+        top: top,
+        child: ConstrainedBox(
+          constraints: new BoxConstraints(
+            minHeight: 25.0,
+            minWidth: 25.0,
+          ),
 
 //TODO comment below code fro prod mode
 
-        child: getCount(type, data) > 0
-            ? new DecoratedBox(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: ColorRes.greenDot),
-                child: Center(
-                  child: Text(
-                    getCount(type, data).toString(),
-                    style: TextStyle(color: ColorRes.white),
-                  ),
-                ))
-            : null,
-      ),
-    );
+          child: getCount(type, data) > 0
+              ? new DecoratedBox(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: ColorRes.greenDot),
+                  child: Center(
+                    child: Text(
+                      getCount(type, data).toString(),
+                      style: TextStyle(color: ColorRes.white),
+                    ),
+                  ))
+              : null,
+        ));
   }
 
   static int getCount(String _type, List<GetDashboardData> data) {
     if (data != null) {
       int type = 0;
 
-      if (_type == StringRes.home)
+      if (_type == Const.typeHome)
         type = 0;
-      else if (_type == StringRes.businessSector)
+      else if (_type == Const.typeBusinessSector)
         type = 1;
-      else if (_type == StringRes.newCustomers)
+      else if (_type == Const.typeNewCustomer)
         type = 2;
-      else if (_type == StringRes.existingCustomers)
+      else if (_type == Const.typeExistingCustomer)
         type = 3;
-      else if (_type == StringRes.rewards)
+      else if (_type == Const.typeReward)
         type = 4;
-      else if (_type == StringRes.team)
+      else if (_type == Const.typeTeam)
         type = 5;
-      else if (_type == StringRes.challenges)
+      else if (_type == Const.typeChallenges)
         type = 6;
-      else if (_type == StringRes.organizations)
+      else if (_type == Const.typeOrg)
         type = 7;
-      else if (_type == StringRes.pl)
+      else if (_type == Const.typePl)
         type = 8;
-      else if (_type == StringRes.ranking)
+      else if (_type == Const.typeRanking)
         type = 9;
       else
         type = 0;
@@ -690,7 +689,7 @@ class Utils {
         ModalRoute.withName("/home"));
   }
 
- static Stream<Locale> setLocale(int index) {
+  static Stream<Locale> setLocale(int index) {
     var localeSubject = BehaviorSubject<Locale>();
 
     if (index == 0)

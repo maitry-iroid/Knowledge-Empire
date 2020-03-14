@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -27,10 +29,8 @@ class ChallengesPage extends StatefulWidget {
 class _ChallengesPageState extends State<ChallengesPage> {
   List<GetFriendsData> arrFriends = List();
 
-
   List<GetFriendsData> arrFriendsToShow = List();
   List<GetFriendsData> arrSearchFriends = List();
-
 
   List<LearningModuleData> arrLearningModules = List();
 
@@ -50,6 +50,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   TextEditingController searchController = TextEditingController();
   String searchText = "";
+
+  @override
+  void dispose() {
+    timeHandle.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -579,14 +585,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
   void getBusinessSectors() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        CommonView.showCircularProgress(true, context);
+//        CommonView.showCircularProgress(true, context);
 
         GetLearningModuleRequest rq = GetLearningModuleRequest();
         rq.userId = selectedFriendId;
         rq.isChallenge = 1;
 
         WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(false, context);
+//          CommonView.showCircularProgress(false, context);
 
           if (data != null) {
             arrLearningModules.clear();
@@ -601,7 +607,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           }
         }).catchError((e) {
           print("getLearningModule_" + e.toString());
-          CommonView.showCircularProgress(false, context);
+//          CommonView.showCircularProgress(false, context);
           Utils.showToast(e.toString());
         });
       }
@@ -651,13 +657,18 @@ class _ChallengesPageState extends State<ChallengesPage> {
               getFriendsData.add(GetFriendsData.fromJson(v));
             });
 
-            if (getFriendsData.isNotEmpty) {
-              getFriendsData
-                  .removeWhere((friend) => friend.userId == Injector.userId);
-              arrFriendsToShow = getFriendsData;
+            getFriendsData.removeWhere(
+                (friend) => friend.userId == Injector.userData.userId);
 
-              setState(() {});
+            arrFriends = getFriendsData;
+            arrFriendsToShow = getFriendsData;
+
+            if (arrFriendsToShow.length > 0) {
+              selectedFriendId = arrFriends[0].userId;
+              getBusinessSectors();
             }
+
+            setState(() {});
           }
         }).catchError((e) {
           print("searchFriends_" + e.toString());
@@ -667,6 +678,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
       }
     });
   }
+
+  Timer timeHandle;
 
   showSearchView() {
     return Row(
@@ -684,13 +697,22 @@ class _ChallengesPageState extends State<ChallengesPage> {
             child: TextField(
               onChanged: (text) {
                 searchText = text;
-                if (text.isEmpty) {
-                  arrSearchFriends = arrFriends;
-                  arrFriendsToShow = arrFriends;
-                  setState(() {});
-                } else {
-                  getSearchFriends(searchText);
+                arrSearchFriends.clear();
+
+                if (timeHandle != null) {
+                  timeHandle.cancel();
                 }
+                timeHandle = Timer(Duration(seconds: 1), () {
+                  getSearchFriends(searchText);
+                });
+
+//                if (text.isEmpty) {
+//                  arrSearchFriends = arrFriends;
+//                  arrFriendsToShow = arrFriends;
+//                  setState(() {});
+//                } else {
+//                  getSearchFriends(searchText);
+//                }
               },
               textAlign: TextAlign.left,
               maxLines: 1,

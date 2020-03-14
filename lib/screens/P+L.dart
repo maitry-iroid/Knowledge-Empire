@@ -491,7 +491,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: type == Const.typeCost ? 160 : 120,
       child: ListView.builder(
-//          physics: NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: type == Const.typeCost
               ? performanceData?.cost?.length
               : performanceData?.revenue?.length,
