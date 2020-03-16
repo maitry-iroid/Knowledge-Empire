@@ -152,42 +152,25 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case 3:
         return ExistingCustomerPage();
       case 4:
-        return Injector.isDev ? RewardsPage() : Container();
+        return RewardsPage();
       case 5:
-//        return TeamPage();
-        return Injector.isDev
-            ? Injector.isManager() ? TeamPage() : ChallengesPage()
-            : Container();
+        return Injector.isManager() ? TeamPage() : ChallengesPage();
       case 6:
         return (Injector.isManager()
             ? ChallengesPage()
             : (Injector.isBusinessMode
                 ? OrganizationsPage2()
                 : PowerUpsPage()));
-//
-        return Injector.isDev
-            ? (Injector.isManager()
-                ? ChallengesPage()
-                : (Injector.isBusinessMode
-                    ? OrganizationsPage2()
-                    : PowerUpsPage()))
-            : Container();
+
       case 7:
-        return Injector.isDev
-            ? Injector.isManager()
-                ? Injector.isBusinessMode
-                    ? OrganizationsPage2()
-                    : PowerUpsPage()
-                : PLPage()
-            : Container();
+        return Injector.isManager()
+            ? Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage()
+            : PLPage();
       case 8:
-        return Injector.isDev
-            ? Injector.isManager() ? PLPage() : RankingPage()
-            : Container();
+        return Injector.isManager() ? PLPage() : RankingPage();
 
       case 9:
-        return Injector.isDev ? RankingPage() : Container();
-        return Container();
+        return RankingPage();
 //      case 10:
 //        return ProfilePage();
 //      case 11:
@@ -213,25 +196,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       if (mounted) {
         setState(() => _selectedDrawerIndex = index);
 
-        if (!Injector.isDev) {
-          if (index == Utils.getHomePageIndex(Const.typePl) ||
-              index == Utils.getHomePageIndex(Const.typeReward) ||
-              index == Utils.getHomePageIndex(Const.typeChallenges) ||
-              index == Utils.getHomePageIndex(Const.typeTeam) ||
-              index == Utils.getHomePageIndex(Const.typeRanking)) {
-            Utils.showComingSoonDialog(context);
-          } else {
-            Navigator.of(context).pop(); // close the drawer
-            if (_selectedDrawerIndex ==
-                Utils.getHomePageIndex(Const.typeHelp)) {
-              Navigator.push(context, FadeRouteIntro());
-            }
-          }
-        } else {
-          Navigator.of(context).pop(); // close the drawer
-          if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
-            Navigator.push(context, FadeRouteIntro());
-          }
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+          Navigator.push(context, FadeRouteIntro());
         }
       }
     }
@@ -402,7 +369,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-    _selectedDrawerIndex = Utils.getHomePageIndex(widget.homeData.initialPageType);
+
+
+    _selectedDrawerIndex =
+        Utils.getHomePageIndex(widget.homeData?.initialPageType);
   }
 
   void initStreamController() async {

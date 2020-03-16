@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/listItem/group_item.dart';
 import 'package:ke_employee/listItem/time_item.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -558,21 +559,12 @@ class _RankingPageState extends State<RankingPage> {
         onTap: () {
           if (!isCurrentUser(index)) {
             if (arrFriends[index].isFriend == 1) {
-//              Navigator.push(
-//                  context,
-//                  FadeRouteHome(
-//                      arrFriends: arrFriends,
-//                      initialPageType: Const.typeChallenges,
-//                      friendId: arrFriends[index].userId));
+              HomeData homeData = HomeData(
+                  arrFriends: arrFriends,
+                  initialPageType: Const.typeChallenges,
+                  friendId: arrFriends[index].userId);
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChallengesPage(
-                          arrFriends: arrFriends,
-                          friendId: arrFriends[index].userId,
-                        )),
-              );
+              Navigator.push(context, FadeRouteHome(homeData: homeData));
 
               print(arrFriends[index].isFriend);
             }
@@ -618,11 +610,13 @@ class _RankingPageState extends State<RankingPage> {
       flex: 16,
       child: Container(
         padding: EdgeInsets.only(top: isCurrentUser(index) ? 0 : 8, left: 4),
-        margin: EdgeInsets.only(top: isCurrentUser(index) ? 4 : 0, left: 4, bottom: 0),
+        margin: EdgeInsets.only(
+            top: isCurrentUser(index) ? 4 : 0, left: 4, bottom: 0),
         decoration: BoxDecoration(
             image: isCurrentUser(index)
                 ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_ranking_header")), fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg("bg_ranking_header")),
+                    fit: BoxFit.fill)
                 : null),
         /*  decoration: isCurrentUser(index)
             ? BoxDecoration(

@@ -489,18 +489,7 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) {
-    if (Const.envType == Environment.PROD) {
-      if (type == Const.typePl ||
-          type == Const.typeRanking ||
-          type == Const.typeTeam ||
-          type == Const.typeReward ||
-          type == Const.typeChallenges)
-        Utils.showComingSoonDialog(context);
-      else
-        performNavigation(type, context);
-    } else {
-      performNavigation(type, context);
-    }
+    performNavigation(type, context);
   }
 
   static checkAudio() {
