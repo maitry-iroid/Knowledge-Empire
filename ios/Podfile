@@ -40,7 +40,7 @@ def parse_KV_file(file, separator='=')
 end
 
 target 'Runner' do
-#  use_frameworks!
+  use_frameworks!
   use_modular_headers!
   
   # Flutter Pod
