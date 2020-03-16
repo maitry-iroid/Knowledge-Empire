@@ -17,9 +17,9 @@ class AppLocalizations {
   String text(String text) {
     return Injector.isBusinessMode
         ? StringRes.localizedValues[locale.languageCode][text]
-        : StringRes.localizedValuesProf[locale.languageCode][text] != null
+        : (StringRes.localizedValuesProf[locale.languageCode][text] != null
             ? StringRes.localizedValuesProf[locale.languageCode][text]
-            : StringRes.localizedValues[locale.languageCode][text];
+            : StringRes.localizedValues[locale.languageCode][text]);
   }
 }
 
@@ -27,7 +27,8 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'de','zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      ['en', 'de', 'zh'].contains(locale.languageCode);
 
   @override
   Future<AppLocalizations> load(Locale locale) {

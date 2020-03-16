@@ -402,8 +402,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-    _selectedDrawerIndex =
-        Utils.getHomePageIndex(widget.homeData.initialPageType);
+    _selectedDrawerIndex = Utils.getHomePageIndex(widget.homeData.initialPageType);
   }
 
   void initStreamController() async {
@@ -574,7 +573,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
-    PushNotificationHelper(context, "home").initPush();
+    PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
 
     if (widget.homeData.initialPageType != Const.typeChallenges &&
         widget.homeData.initialPageType != Const.typeCustomerSituation &&
