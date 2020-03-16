@@ -68,7 +68,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     abcdList = alphaIndex;
 
     super.initState();
-    Utils.checkAudio();
+    if (!widget.isCameFromExistingCustomer) Utils.checkAudio();
 
 //    downloadFile();
     correctWrongImage();

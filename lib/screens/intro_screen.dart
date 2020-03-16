@@ -395,15 +395,9 @@ class IntroPageState extends State<IntroPage> {
               Injector.homeStreamController
                   ?.add("${Const.typeExistingCustomer}");
             } else if (type == Const.typeBrandValue) {
-              if (Const.envType == Environment.DEV)
-                Injector.homeStreamController?.add("${Const.typeRanking}");
-              else
-                Utils.showComingSoonDialog(context);
+              Injector.homeStreamController?.add("${Const.typeRanking}");
             } else if (type == Const.typeMoney) {
-              if (Const.envType == Environment.DEV)
-                Injector.homeStreamController?.add("${Const.typePl}");
-              else
-                Utils.showComingSoonDialog(context);
+              Injector.homeStreamController?.add("${Const.typePl}");
             }
           },
         ),

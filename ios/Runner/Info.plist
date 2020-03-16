@@ -85,5 +85,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationAlwaysUsageDescription</key>
+        <string>App would like to access your location to provide your better location related results and enhance your experience.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+        <string>App would like to access your location to provide your better location related results and enhance your experience.</string>
 </dict>
 </plist>
