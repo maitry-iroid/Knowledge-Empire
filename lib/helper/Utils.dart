@@ -45,6 +45,9 @@ class Utils {
   static getAssetsImg(String name) {
     return "assets/images/" + name + ".png";
   }
+  static getAssetsImgJpg(String name) {
+    return "assets/images/" + name + ".jpg";
+  }
 
   static showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
 //    _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -556,6 +559,7 @@ class Utils {
         builder: (BuildContext context) => CustomerSituationPage(
               questionDataCustomerSituation: questionData,
               isChallenge: true,
+              isCameFromExistingCustomer: false,
               nextChallengeQuestionData: nextChallengeQuestionData,
             ));
   }

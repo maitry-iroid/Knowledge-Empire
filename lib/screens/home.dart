@@ -38,8 +38,6 @@ import '../helper/string_res.dart';
 import '../models/get_friends.dart';
 import 'package:flutter/services.dart';
 
-
-
 class FadeRouteHome extends PageRouteBuilder {
 //  final Widget page;
 //  final String initialPageType;
@@ -138,14 +136,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
 
     if (!mounted) return;
-      _appBadgeSupported = appBadgeSupported;
-      if(_appBadgeSupported != null) {
-        _addBadge();
-      }
-    setState(() {
-    });
+    _appBadgeSupported = appBadgeSupported;
+    if (_appBadgeSupported != null) {
+      _addBadge();
+    }
+    setState(() {});
   }
-
 
   void _addBadge() {
     FlutterAppBadger.updateBadgeCount(3);
@@ -177,9 +173,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-    } else if (state == AppLifecycleState.inactive) {
-
-    }
+    } else if (state == AppLifecycleState.inactive) {}
   }
 
   _getDrawerItemWidget(int pos) {
@@ -234,7 +228,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   _onSelectItem(int index) {
     Utils.playClickSound();
-
 
     if (_selectedDrawerIndex != index) {
       if (mounted) {
@@ -362,7 +355,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         isCoinViseble.toString() +
         "====>startAnim===>" +
         startAnim.toString());
-   return AnimatedPositioned(
+    return AnimatedPositioned(
       duration: Duration(seconds: duration),
       top: !isCoinViseble ? top : 20,
       left: !isCoinViseble ? left : 750,
@@ -508,9 +501,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         }).catchError((e) {
           Utils.showToast(e.toString());
           print("getChallenges_" + e.toString());
-          setState(() {
-            isLoading = false;
-          });
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
         });
       }
     });

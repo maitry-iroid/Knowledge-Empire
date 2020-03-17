@@ -71,19 +71,20 @@ android {
         }
 
     }
-//    flavorDimensions "default"
-//    productFlavors {
-//        dev {
-//            dimension "default"
-//            applicationId "com.keemployee.app.dev"
-//            resValue "string", "app_name", "KE dev"
-//        }
-//        prod {
-//            dimension "default"
-//            applicationId "com.keemployee.app"
-//            resValue "string", "app_name", "KE prod"
-//        }
-//    }
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            dimension "default"
+            applicationId "com.keemployee.app.dev"
+            resValue "string", "app_name", "KE dev"
+        }
+        prod {
+            dimension "default"
+            applicationId "com.keemployee.app"
+            resValue "string", "app_name", "KE prod"
+        }
+
+    }
 
 }
 

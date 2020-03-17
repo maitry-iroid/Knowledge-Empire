@@ -130,7 +130,7 @@ class PushNotificationHelper {
     print(message);
 
     Utils.addBadge();
-    CommonView().pushNotificationAlert(context);
+//    CommonView().pushNotificationAlert(context);
 
 //    if (Platform.isIOS) {
 //      title = message['title'];

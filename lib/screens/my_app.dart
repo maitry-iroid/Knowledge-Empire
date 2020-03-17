@@ -66,7 +66,8 @@ class MyAppState extends State<MyApp> {
                 : ColorRes.white,
           ),
           home: Injector.userId != null
-              ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null || Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
+              ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
+                      Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
                   ? IntroPage()
                   : HomePage())
               : LoginPage(),

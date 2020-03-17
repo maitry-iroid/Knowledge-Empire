@@ -810,8 +810,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           showFileSize(),
-          showDownloadStatus(),
-          showDownloadSwitch(),
+//          showDownloadStatus(),
+//          showDownloadSwitch(),
           showSubscribeView()
         ],
       ),
