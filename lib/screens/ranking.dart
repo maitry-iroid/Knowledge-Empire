@@ -758,6 +758,7 @@ class _RankingPageState extends State<RankingPage> {
   isCurrentUser(int index) {
     return arrFriends.length > 0 &&
         arrFriends[index].userId == Injector.userData.userId;
+
   }
 
   void getData() async {
