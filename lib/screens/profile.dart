@@ -1174,6 +1174,9 @@ class _ProfilePageState extends State<ProfilePage> {
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
         Injector.headerStreamController.add(Const.updateProfileBrod);
+
+        localeBloc.setLocale(Utils.getIndexLocale());
+
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
