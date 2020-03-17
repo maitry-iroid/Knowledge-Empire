@@ -620,6 +620,7 @@ class _TeamPageState extends State<TeamPage> {
         CommonView.showCircularProgress(true, context);
 
         TeamUserRequest rq = TeamUserRequest();
+
         rq.userId = Injector.userId;
 
         WebApi().callAPI(WebApi.rqGetTeamUsers, rq.toJson()).then((data) {
