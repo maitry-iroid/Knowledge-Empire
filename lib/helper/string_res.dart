@@ -163,6 +163,7 @@ class StringRes {
 
   //introDialog
   static var gotIt = "gotIt";
+
   static var rewardsDialogContent = "rewardsDialogContent";
 
   static Map<String, Map<String, String>> localizedValues = {
