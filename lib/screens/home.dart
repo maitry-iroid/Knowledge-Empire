@@ -413,8 +413,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-
-
     _selectedDrawerIndex =
         Utils.getHomePageIndex(widget.homeData?.initialPageType);
   }
@@ -591,11 +589,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     initPlatformState();
 
-    if (widget.homeData.initialPageType != Const.typeChallenges &&
-        widget.homeData.initialPageType != Const.typeCustomerSituation &&
-        widget.homeData.initialPageType != Const.typeEngagement) {
-      if (widget.homeData.isChallenge == null || widget.homeData.isChallenge)
-        getPendingChallenges();
+    if (widget.homeData == null ||
+        widget.homeData.page == null ||
+        (widget.homeData.initialPageType != Const.typeChallenges &&
+            widget.homeData.initialPageType != Const.typeCustomerSituation &&
+            widget.homeData.initialPageType != Const.typeEngagement)) {
+      if (widget.homeData == null ||
+          widget.homeData.isChallenge == null ||
+          widget.homeData.isChallenge) getPendingChallenges();
     }
   }
 }
