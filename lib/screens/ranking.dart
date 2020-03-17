@@ -93,20 +93,22 @@ class _RankingPageState extends State<RankingPage> {
 
   selectGroup(index) {
     if (index != selectedGroup) {
-      if (mounted)setState(() {
-        selectedGroup = index;
-        print(selectGroup.toString());
-      });
+      if (mounted)
+        setState(() {
+          selectedGroup = index;
+          print(selectGroup.toString());
+        });
       getFriends(true, false);
     }
   }
 
   selectTime(index) {
     if (selectedTime != index) {
-      if (mounted)setState(() {
-        selectedTime = index;
-        print(selectedTime.toString());
-      });
+      if (mounted)
+        setState(() {
+          selectedTime = index;
+          print(selectedTime.toString());
+        });
       getFriends(true, false);
     }
   }
@@ -376,10 +378,11 @@ class _RankingPageState extends State<RankingPage> {
       child: InkResponse(
         onTap: () {
           if (selectedLeftCategory != index) {
-            if (mounted)setState(() {
-              Utils.playClickSound();
-              selectedLeftCategory = index;
-            });
+            if (mounted)
+              setState(() {
+                Utils.playClickSound();
+                selectedLeftCategory = index;
+              });
 
             getFriends(true, false);
           }
@@ -466,7 +469,7 @@ class _RankingPageState extends State<RankingPage> {
             arrGroups.add(GetUserGroupData.fromJson(v));
           });
 
-          if (arrGroups.isNotEmpty) if (mounted)setState(() {});
+          if (arrGroups.isNotEmpty) if (mounted) setState(() {});
         }
       }).catchError((e) {
         CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
@@ -508,7 +511,7 @@ class _RankingPageState extends State<RankingPage> {
               arrFriends.addAll(arrFriendsData);
             } else
               arrFriends = arrFriendsData;
-            if (mounted)setState(() {});
+            if (mounted) setState(() {});
           }
         }
       }).catchError((e) {
@@ -582,15 +585,16 @@ class _RankingPageState extends State<RankingPage> {
           Utils.playClickSound();
 
           if (!isCurrentUser(index)) {
-            if (mounted)setState(() {
-              if (arrFriends[index].isFriend == 0) {
-                arrFriends[index].isFriend = 1;
-                friendUnFriendUser(index, 1);
-              } else {
-                arrFriends[index].isFriend = 0;
-                friendUnFriendUser(index, 2);
-              }
-            });
+            if (mounted)
+              setState(() {
+                if (arrFriends[index].isFriend == 0) {
+                  arrFriends[index].isFriend = 1;
+                  friendUnFriendUser(index, 1);
+                } else {
+                  arrFriends[index].isFriend = 0;
+                  friendUnFriendUser(index, 2);
+                }
+              });
           }
         },
         child: Image(

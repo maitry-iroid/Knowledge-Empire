@@ -607,7 +607,7 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-    if (Injector.userData.isFirstTimeLogin) {
+    if (!Injector.userData.isFirstTimeLogin) {
       if (Injector.prefs.getBool(Const.introYourTeamsPerformance.toString()) !=
               null &&
           Injector.prefs.getBool(Const.introYourTeamsPerformance.toString())) {

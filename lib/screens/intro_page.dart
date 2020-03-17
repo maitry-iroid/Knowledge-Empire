@@ -14,7 +14,6 @@ class _IntroPageState extends State<IntroPage> {
     Utils.getAssetsImgJpg("001"),
     Utils.getAssetsImgJpg("002"),
     Utils.getAssetsImgJpg("003"),
-    Utils.getAssetsImgJpg("003_1"),
     Utils.getAssetsImgJpg("004"),
     Utils.getAssetsImgJpg("005"),
     Utils.getAssetsImgJpg("006"),
@@ -30,7 +29,6 @@ class _IntroPageState extends State<IntroPage> {
     Utils.getAssetsImgJpg("015"),
     Utils.getAssetsImgJpg("016"),
     Utils.getAssetsImgJpg("017"),
-    Utils.getAssetsImgJpg("017_1"),
     Utils.getAssetsImgJpg("018"),
     Utils.getAssetsImgJpg("019"),
     Utils.getAssetsImgJpg("020"),
@@ -41,6 +39,8 @@ class _IntroPageState extends State<IntroPage> {
     Utils.getAssetsImgJpg("025"),
     Utils.getAssetsImgJpg("026"),
     Utils.getAssetsImgJpg("027"),
+    Utils.getAssetsImgJpg("028"),
+    Utils.getAssetsImgJpg("029"),
   ];
 
   int index;

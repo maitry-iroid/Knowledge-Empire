@@ -165,12 +165,20 @@ class StringRes {
 
   //introDialog
   static var gotIt = "gotIt";
-
   static var rewardsDialogContent = "rewardsDialogContent";
 
-
-
-
+  static var challengesDialogTitle1 = "challengesDialogTitle1";
+  static var challengesDialogContent1 = "challengesDialogContent1";
+  static var strChallanges = "strChallanges";
+  static var strChallangesDialogContent = "strChallangesDialogContent";
+  static var strMarketingCommunications = "strMarketingCommunications";
+  static var strMarketingCommunicationsDialog =
+      "strMarketingCommunicationsDialog";
+  static var strRankingDialogContent = "strRankingDialogContent";
+  static var strYourTeamPerformance = "strYourTeamPerformance";
+  static var strYourTeamPerformanceDialog = "strYourTeamPerformanceDialog";
+  static var strYourTeamPerformanceDialog2 = "strYourTeamPerformanceDialog2";
+  static var strTeamDialog = "strTeamDialog";
 
 //pl screen
   static var plPerson = "plPerson";
@@ -179,11 +187,8 @@ class StringRes {
   static var hereYourMonitor = "hereYourMonitor";
   static var selectPeriod = "selectPeriod";
   static var graphShow = "graphShow";
+
 //  static var selectPeriod = "selectPeriod";
-
-
-
-
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -352,17 +357,36 @@ class StringRes {
       //introDialog
       'gotIt': "Got it",
       'rewardsDialogContent':
-          "Check out the reward categories and click on a trophy to find out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+          "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+      'challengesDialogTitle1': "Your Will is at your command",
+      'challengesDialogContent1':
+          "Dear ${Injector.userData.name},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
+      'strChallanges': "Challenges",
+      'strChallangesDialogContent':
+          "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected sector correctly in order to win the challenge.",
+      'strMarketingCommunications': "Marketing & Communications",
+      'strMarketingCommunicationsDialog':
+          "Hi ${Injector.userData?.name},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
+      'strRankingDialogContent':
+          "Select on the left side the ranking criteria (e.g. cash) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
+      'strYourTeamPerformance': "Your Team's Performance",
+      'strYourTeamPerformanceDialog':
+          "Hi, it's me again, Niki.\n\nThis section is exclusively for team leaders.\nHere you can see the performance of your reports.",
+      'strTeamDialog':
+          "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
 
-      'plPerson':'The person you can count on',
-      'niceMeetYou':'Nice to meet you${Injector.userData?.name}',
-      'plMyName':'\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have more revenue then cost.',
-       'hereYourMonitor':'Here you can monitor the cost and the revenue of your company.',
-       'selectPeriod':'You can also select the period you want to look at and compare the current period with the previous period.',
 
+      'plPerson': 'The person you can count on',
+      'niceMeetYou': 'Nice to meet you${Injector.userData?.name}',
+      'plMyName':
+          '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have more revenue then cost.',
+      'hereYourMonitor':
+          'Here you can monitor the cost and the revenue of your company.',
+      'selectPeriod':
+          'You can also select the period you want to look at and compare the current period with the previous period.',
 
-      'graphShow':'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
-
+      'strYourTeamPerformanceDialog2':
+          'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
     },
     'de': {
       //region german
@@ -530,19 +554,39 @@ class StringRes {
 
       //introDialog
       'gotIt': "Verstanden",
-      'rewardsDialogContent':"",
+      'rewardsDialogContent':
+          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
+      'challengesDialogTitle1': "Dein Will ist mein Befehl",
+      'challengesDialogContent1':
+          "${Injector.userData.name},\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
+      'strChallanges': "Herausforderungen",
+      'strChallangesDialogContent':
+          "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.\nwähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom aktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
+      'strMarketingCommunications': "Marketing",
+      'strMarketingCommunicationsDialog':
+          "Hallo ${Injector.userData.name}, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
+      'strRankingDialogContent':
+          "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
+              "Du"
+              " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Wettbewerber herausfordern.",
+      'strYourTeamPerformance': "Teamperformance",
+      'strYourTeamPerformanceDialog':
+          "Hallo, Ich bin es nochmal, Niki.\n\nDieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
+      'strTeamDialog':
+          "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
 
 
-      'plPerson':'Mit mir kannst du rechnen',
-      'niceMeetYou':'Nett dich kennenzulernen ${Injector.userData?.name}',
-      'plMyName':'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
-      'hereYourMonitor':'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
-      'selectPeriod':'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+      'plPerson': 'Mit mir kannst du rechnen',
+      'niceMeetYou': 'Nett dich kennenzulernen ${Injector.userData?.name}',
+      'plMyName':
+          'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
+      'hereYourMonitor':
+          'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
+      'selectPeriod':
+          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
 
-      'graphShow':'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
-
-
-
+      'strYourTeamPerformanceDialog2':
+          'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
     },
     'zh': {
       //region chinese
@@ -707,21 +751,42 @@ class StringRes {
 
       //introDialog
       'gotIt': "了解",
+      'rewardsDialogContent': "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n"
+          "下一级"
+          "下面的数字是您\n将收到的奖金。",
+      'challengesDialogTitle1': "您是自己的主宰",
+      'challengesDialogContent1':
+          "亲爱的${Injector.userData.name},\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
+      'strChallanges': "挑战",
+      'strChallangesDialogContent':
+          "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
+      'strMarketingCommunications': "营销与传播",
+      'strMarketingCommunicationsDialog':
+          "${Injector.userData.name},您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
+      'strRankingDialogContent': "在左侧选择排名标准（比如现金），并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
+          "您"
+          "滚动到您的位置和挑战以及添加朋友。",
+      'strYourTeamPerformance': "您的团队的表现",
+      'strYourTeamPerformanceDialog':
+          "您好，我是尼基，我又来了。\n这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
+      'strTeamDialog':
+          "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
 
+      'plPerson': '您可以依靠的人',
+      'niceMeetYou': '${Injector.userData?.name}很高兴见到您',
+      'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
+      'hereYourMonitor': '在这里，您可以监控公司的成本和收入。',
+      'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
 
-      'plPerson':'您可以依靠的人',
-      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
-      'plMyName':'我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
-      'hereYourMonitor':'在这里，您可以监控公司的成本和收入。',
-      'selectPeriod':'您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
-
-      'graphShow':'图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+      'strYourTeamPerformanceDialog2':
+          '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
     }
   };
 
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
+      //region english
       'home': "Home",
       'businessSector': "Learning Module",
       'newCustomers': "Open Learnings",
@@ -743,20 +808,44 @@ class StringRes {
 
       //challenges
       'competitor': 'Colleagues',
+      //endregion
 
       //introDialog
       'gotIt': "Got it",
+      'rewardsDialogContent':
+          "Check out the reward categories and click on a trophy to find out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+      'challengesDialogTitle1': "Challenges",
+      'challengesDialogContent1':
+          "Here you will learn how to challenge other colleagues",
+      'strChallanges': "Challenges",
+      'strChallangesDialogContent':
+          "Search or select a Colleague you would like to challenge.\nSelect one of his Learning Modules you would like to challenge\nhim and select the reward (% of current Knowledge Points (KP)) the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected module correctly in order to win the challenge.",
+      'strMarketingCommunications': "Ranking",
+      'strMarketingCommunicationsDialog':
+          "In this section you will learn everything you need to know about the ranking",
+      'strRankingDialogContent':
+          "Select on the left side the ranking criteria (e.g. Knowledge Points (KP)) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
+      'strYourTeamPerformance': "Your Team's Performance",
+      'strYourTeamPerformanceDialog':
+          "This section is exclusively for team leaders.\nHere you can see the performance of your reports.",
+      'strTeamDialog':
+          "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
 
-      'plPerson':'Performance',
+
+      'plPerson': 'Performance',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
-      'plMyName':'In this section you will learn everything you need to know about your performance analysis',
-      'hereYourMonitor':'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
-      'selectPeriod':'You can also select the period you want to look at and compare the current period with the previous period.',
+      'plMyName':
+          'In this section you will learn everything you need to know about your performance analysis',
+      'hereYourMonitor':
+          'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
+      'selectPeriod':
+          'You can also select the period you want to look at and compare the current period with the previous period.',
 
-       'graphShow':'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
-
+      'strYourTeamPerformanceDialog2':
+          'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
     },
     'de': {
+      //region German
       'home': 'Start',
       'businessSector': 'Lernmodule',
       'newCustomers': 'Fragen',
@@ -884,20 +973,45 @@ class StringRes {
       'no': 'Nein',
       'comingSoon': 'Demnächst verfügbar..',
       'close': 'Schließen',
+      //endregion
 
       //introDialog
       'gotIt': "Verstanden",
+      'rewardsDialogContent':
+          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen sind die Wissenspunkte (WP) die du erhältst, wenn du diese Auszeichnung erreichst.",
+      'challengesDialogTitle1': "Herausforderungen",
+      'challengesDialogContent1':
+          "Hier lernst du wie du einen Kollegen zu einem Wissensduell heraus forderst.",
+      'strChallanges': "Herausforderungen",
+      'strChallangesDialogContent':
+          "Suche und wähle Kollegen aus, die du herausfordern möchtest.\nwähle den Lernbereich aus, in dem er herausgefordert werden soll und den Prozentsatz von den aktuellen Wissenspunkte (WP), den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 Fragen aus diesem Lernmodul richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
+      'strMarketingCommunications': "Rangliste",
+      'strMarketingCommunicationsDialog':
+          "In diesem Bereich lernst du alles über die Rangliste",
+      'strRankingDialogContent':
+          "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
+              "Du"
+              " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Kollegen herausfordern.",
+      'strYourTeamPerformance': "Teamperformance",
+      'strYourTeamPerformanceDialog':
+          "Dieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
+      'strTeamDialog':
+          "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und seine Wissenspunkte auf 30.000 zurücksetzen.",
 
 
-      'plPerson':'Entwicklung',
+      'plPerson': 'Entwicklung',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
-      'plMyName':'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
-      'hereYourMonitor':'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
-      'selectPeriod':'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
-       'graphShow':'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
-
+      'plMyName':
+          'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
+      'hereYourMonitor':
+          'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
+      'selectPeriod':
+          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+      'strYourTeamPerformanceDialog2':
+          'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
     },
     'zh': {
+      //region chines
       'home': '首页',
       'businessSector': '学习模块',
       'newCustomers': '开放学习',
@@ -1023,19 +1137,36 @@ class StringRes {
       'no': '即将推出',
       'comingSoon': '关闭',
       'close': '关闭',
+      //endregion
 
       //introDialog
       'gotIt': "了解",
+      'rewardsDialogContent':
+          "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您\n将收到的奖金。",
+      'challengesDialogTitle1': "挑战",
+      'challengesDialogContent1': "在这里，您将学习如何挑战其他同事",
+      'strChallanges': "挑战",
+      'strChallangesDialogContent':
+          "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定模块的3个问题才能赢得挑战。",
+      'strMarketingCommunications': "排名",
+      'strMarketingCommunicationsDialog': "在这一部分，您将了解有关排名的所有信息",
+      'strRankingDialogContent':
+          "在左侧选择排名标准 (比如知识点数 (KP))，并在顶部 \n选择您想对比的分组以及时间范围。\n您也可以点击"
+              "您"
+              "滚动到您的位置和挑战以及添加朋友。",
+      'strYourTeamPerformance': "您的团队的表现",
+      'strYourTeamPerformanceDialog': "这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
+      'strTeamDialog':
+          "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现，并将他的知识点 (KP) 重置为30.000。",
 
 
-      'plPerson':'表现',
+      'plPerson': '表现',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
-      'plMyName':'在这一部分，您将了解有关表现分析的所有信息',
-      'hereYourMonitor':'在这里，您可以监控扣除和增加知识点数 (KP)。',
-      'selectPeriod':'您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
-      'graphShow':'图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
-
-
+      'plMyName': '在这一部分，您将了解有关表现分析的所有信息',
+      'hereYourMonitor': '在这里，您可以监控扣除和增加知识点数 (KP)。',
+      'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
+      'strYourTeamPerformanceDialog2':
+          '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
     }
   };
 }
