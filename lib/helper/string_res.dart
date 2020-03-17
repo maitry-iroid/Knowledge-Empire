@@ -1,3 +1,5 @@
+import 'package:ke_employee/injection/dependency_injection.dart';
+
 class StringRes {
   //main options
   static var home = "home";
@@ -164,6 +166,23 @@ class StringRes {
   //introDialog
   static var gotIt = "gotIt";
 
+
+
+
+
+//pl screen
+  static var plPerson = "plPerson";
+  static var niceMeetYou = "niceMeetYou";
+  static var plMyName = "plMyName";
+  static var hereYourMonitor = "hereYourMonitor";
+  static var selectPeriod = "selectPeriod";
+  static var graphShow = "graphShow";
+//  static var selectPeriod = "selectPeriod";
+
+
+
+
+
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
       //main options
@@ -328,6 +347,16 @@ class StringRes {
 
       //introDialog
       'gotIt': "Got it",
+
+      'plPerson':'The person you can count on',
+      'niceMeetYou':'Nice to meet you${Injector.userData?.name}',
+      'plMyName':'\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have more revenue then cost.',
+       'hereYourMonitor':'Here you can monitor the cost and the revenue of your company.',
+       'selectPeriod':'You can also select the period you want to look at and compare the current period with the previous period.',
+
+
+      'graphShow':'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
+
     },
     'de': {
       //main options
@@ -493,6 +522,18 @@ class StringRes {
 
       //introDialog
       'gotIt': "Verstanden",
+
+
+      'plPerson':'Mit mir kannst du rechnen',
+      'niceMeetYou':'Nett dich kennenzulernen ${Injector.userData?.name}',
+      'plMyName':'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
+      'hereYourMonitor':'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
+      'selectPeriod':'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+
+      'graphShow':'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
+
+
+
     },
     'zh': {
       //main options
@@ -655,6 +696,16 @@ class StringRes {
 
       //introDialog
       'gotIt': "了解",
+
+
+
+      'plPerson':'您可以依靠的人',
+      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
+      'plMyName':'我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
+      'hereYourMonitor':'在这里，您可以监控公司的成本和收入。',
+      'selectPeriod':'您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
+
+      'graphShow':'图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
     }
   };
 
@@ -684,6 +735,15 @@ class StringRes {
 
       //introDialog
       'gotIt': "Got it",
+
+      'plPerson':'Performance',
+//      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
+      'plMyName':'In this section you will learn everything you need to know about your performance analysis',
+      'hereYourMonitor':'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
+      'selectPeriod':'You can also select the period you want to look at and compare the current period with the previous period.',
+
+       'graphShow':'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
+
     },
     'de': {
       'home': 'Start',
@@ -817,6 +877,15 @@ class StringRes {
 
       //introDialog
       'gotIt': "Verstanden",
+
+
+      'plPerson':'Entwicklung',
+//      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
+      'plMyName':'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
+      'hereYourMonitor':'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
+      'selectPeriod':'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+       'graphShow':'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
+
     },
     'zh': {
       'home': '首页',
@@ -947,6 +1016,15 @@ class StringRes {
 
       //introDialog
       'gotIt': "了解",
+
+
+      'plPerson':'表现',
+//      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
+      'plMyName':'在这一部分，您将了解有关表现分析的所有信息',
+      'hereYourMonitor':'在这里，您可以监控扣除和增加知识点数 (KP)。',
+      'selectPeriod':'您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
+      'graphShow':'图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+
 
     }
   };
