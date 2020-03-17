@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
@@ -224,10 +225,12 @@ class _TeamPageState extends State<TeamPage> {
               : EdgeInsets.only(left: 23, right: 0, top: 5, bottom: 5),
           margin: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 5),
           decoration: BoxDecoration(
-              color: Injector.isBusinessMode ? null:  ColorRes.white,
+              color: Injector.isBusinessMode ? null : ColorRes.white,
               borderRadius: BorderRadius.all(Radius.circular(25)),
               image: DecorationImage(
-                  image: AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("bg_white_smalldata") : ""),
+                  image: AssetImage(Injector.isBusinessMode
+                      ? Utils.getAssetsImg("bg_white_smalldata")
+                      : ""),
                   fit: BoxFit.fill)),
           child: secondScreen != true
               ? Row(
@@ -265,7 +268,11 @@ class _TeamPageState extends State<TeamPage> {
 
   profileBorderShow() {
     return BoxDecoration(
-        border: Border.all(width: 1, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.bgDescription),
+        border: Border.all(
+            width: 1,
+            color: Injector.isBusinessMode
+                ? ColorRes.white
+                : ColorRes.bgDescription),
         borderRadius: BorderRadius.all(Radius.circular(20)));
   }
 
@@ -299,7 +306,11 @@ class _TeamPageState extends State<TeamPage> {
       margin: EdgeInsets.only(left: 20, top: 5),
       child: Text(
         title,
-        style: TextStyle(color:  Injector.isBusinessMode ? ColorRes.white : ColorRes.bgDescription, fontSize: 15),
+        style: TextStyle(
+            color: Injector.isBusinessMode
+                ? ColorRes.white
+                : ColorRes.bgDescription,
+            fontSize: 15),
       ),
     );
   }
@@ -322,7 +333,11 @@ class _TeamPageState extends State<TeamPage> {
                   child: Center(
                     child: Text(
                       teamUserByIdData?.name ?? "",
-                      style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue , fontSize: 15),
+                      style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.textRecordBlue,
+                          fontSize: 15),
                     ),
                   ),
                 ),
@@ -330,7 +345,8 @@ class _TeamPageState extends State<TeamPage> {
                   height: 25,
                   width: 75,
                   margin: EdgeInsets.only(left: 0, top: 8, bottom: 5, right: 5),
-                  padding: EdgeInsets.only(left: 4, top: 3, bottom: 0, right: 5),
+                  padding:
+                      EdgeInsets.only(left: 4, top: 3, bottom: 0, right: 5),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bg_change_pw")),
@@ -364,7 +380,11 @@ class _TeamPageState extends State<TeamPage> {
             child: Center(
               child: Text(
                 teamUserByIdData?.department ?? "",
-                style: TextStyle(color:  Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue, fontSize: 15),
+                style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : ColorRes.textRecordBlue,
+                    fontSize: 15),
               ),
             ),
           ),
@@ -385,7 +405,11 @@ class _TeamPageState extends State<TeamPage> {
             child: Center(
               child: Text(
                 teamUserByIdData?.resets?.toString() ?? "",
-                style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textRecordBlue, fontSize: 15),
+                style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : ColorRes.textRecordBlue,
+                    fontSize: 15),
               ),
             ),
           ),
@@ -402,9 +426,8 @@ class _TeamPageState extends State<TeamPage> {
       child: Container(
         margin: EdgeInsets.only(right: 15, bottom: 8),
         decoration: BoxDecoration(
-          color: Injector.isBusinessMode ? null : ColorRes.white,
-          borderRadius: BorderRadius.all(Radius.circular(8))
-        ),
+            color: Injector.isBusinessMode ? null : ColorRes.white,
+            borderRadius: BorderRadius.all(Radius.circular(8))),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -441,82 +464,90 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   pieChart(String title, int type) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-        Widget>[
-      Container(
-        height: 25,
-        width: 100,
-        margin: EdgeInsets.only(left: 25, top: 10),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("bg_piechart")),
-                fit: BoxFit.fill)),
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(color: ColorRes.white),
-          ),
-        ),
-      ),
-      Row(
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            alignment: Alignment.center,
-            child: PieChart(
-              dataMap: type == 1 ? dataMap : openCloseMap,
-              animationDuration: Duration(milliseconds: 800),
-              chartLegendSpacing: 32.0,
-              chartRadius: MediaQuery.of(context).size.width / 5,
-              showChartValuesInPercentage: false,
-              showChartValues: false,
-              showChartValuesOutside: false,
-              chartValueBackgroundColor: Colors.white,
-              colorList: type == 1 ? colorList : colorOpenCloseList,
-              legendPosition: LegendPosition.right,
-              showChartValueLabel: false,
-              initialAngle: 0,
-              legendStyle: defaultLegendStyle.copyWith(color: Injector.isBusinessMode ? Colors.white : ColorRes.textProf),
-              chartValueStyle:
-                  defaultChartValueStyle.copyWith(color: ColorRes.white),
-              showLegends: type == 1 ? false : true,
-              chartType: ChartType.disc,
+            height: 25,
+            width: 100,
+            margin: EdgeInsets.only(left: 25, top: 10),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("bg_piechart")),
+                    fit: BoxFit.fill)),
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(color: ColorRes.white),
+              ),
             ),
           ),
-          type == 1
-              ? Container(
-                  height: 125,
-                  width: 100,
-                  margin: secondScreen == true
-                      ? EdgeInsets.only(left: 30)
-                      : EdgeInsets.only(left: 00),
-                  child: GridView.count(
-                    scrollDirection: Axis.horizontal,
-                    crossAxisCount: 4,
-                    children: List.generate(10, (index) {
-                      return Row(
-                        children: <Widget>[
-                          Container(
-                            height: 13,
-                            width: 13,
-                            margin: EdgeInsets.only(right: 5),
-                            decoration: BoxDecoration(color: colorList[index]),
-                          ),
-                          Container(
-                            child: Text(
-                              indexList[index],
-                              style:
-                                  TextStyle(color: Injector.isBusinessMode ? Colors.white : ColorRes.textProf,  fontSize: 15),
-                            ),
-                          )
-                        ],
-                      );
-                    }),
-                  ),
-                )
-              : Container()
-        ],
-      )
-    ]);
+          Row(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                child: PieChart(
+                  dataMap: type == 1 ? dataMap : openCloseMap,
+                  animationDuration: Duration(milliseconds: 800),
+                  chartLegendSpacing: 32.0,
+                  chartRadius: MediaQuery.of(context).size.width / 5,
+                  showChartValuesInPercentage: false,
+                  showChartValues: false,
+                  showChartValuesOutside: false,
+                  chartValueBackgroundColor: Colors.white,
+                  colorList: type == 1 ? colorList : colorOpenCloseList,
+                  legendPosition: LegendPosition.right,
+                  showChartValueLabel: false,
+                  initialAngle: 0,
+                  legendStyle: defaultLegendStyle.copyWith(
+                      color: Injector.isBusinessMode
+                          ? Colors.white
+                          : ColorRes.textProf),
+                  chartValueStyle:
+                      defaultChartValueStyle.copyWith(color: ColorRes.white),
+                  showLegends: type == 1 ? false : true,
+                  chartType: ChartType.disc,
+                ),
+              ),
+              type == 1
+                  ? Container(
+                      height: 125,
+                      width: 100,
+                      margin: secondScreen == true
+                          ? EdgeInsets.only(left: 30)
+                          : EdgeInsets.only(left: 00),
+                      child: GridView.count(
+                        scrollDirection: Axis.horizontal,
+                        crossAxisCount: 4,
+                        children: List.generate(10, (index) {
+                          return Row(
+                            children: <Widget>[
+                              Container(
+                                height: 13,
+                                width: 13,
+                                margin: EdgeInsets.only(right: 5),
+                                decoration:
+                                    BoxDecoration(color: colorList[index]),
+                              ),
+                              Container(
+                                child: Text(
+                                  indexList[index],
+                                  style: TextStyle(
+                                      color: Injector.isBusinessMode
+                                          ? Colors.white
+                                          : ColorRes.textProf,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
+                          );
+                        }),
+                      ),
+                    )
+                  : Container()
+            ],
+          )
+        ]);
   }
 
   showTitleSecondScreen(BuildContext context, String title) {
@@ -576,17 +607,13 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-
-    switch(Injector.dialogType){
-      case 134:
+    if (Injector.userData.isFirstTimeLogin) {
+      if (Injector.prefs.getBool(Const.introYourTeamsPerformance.toString()) !=
+              null &&
+          Injector.prefs.getBool(Const.introYourTeamsPerformance.toString())) {
+      } else {
         await DisplayDialogs.showYourTeamsPerformance(context);
-        break;
-      case 135:
-        await DisplayDialogs.showYourTeams(context);
-        break;
-      case 136:
-        await DisplayDialogs.showYourTeams2(context);
-        break;
+      }
     }
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {

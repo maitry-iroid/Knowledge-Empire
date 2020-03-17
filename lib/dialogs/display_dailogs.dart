@@ -178,7 +178,8 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Organization screen
-  static Widget showHireHRDialog(BuildContext context,GestureDragCancelCallback onTap) {
+  static Widget showHireHRDialog(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -201,12 +202,13 @@ class DisplayDialogs {
       btnName: "Next",
       btnColor: ColorRes.blue,
       desTextLine:
-      "Hi {{\$user-first-name}},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
+          "Hi {{\$user-first-name}},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
       onTapBtn: onTap,
     );
   }
 
-  static Widget showHireHRBoardDialog(BuildContext context,GestureDragCancelCallback onTap) {
+  static Widget showHireHRBoardDialog(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -226,7 +228,7 @@ class DisplayDialogs {
       titleText: "Hire HR Employees",
       btnName: "Click on HR",
       desTextLine:
-      "To hear yout Team's recommendatons on why you should\nhire more employees in thier team, click on them?\n\nLets start with hiring 10 Hr employees by clicking on HR and then\n\"hire 10 employees\".",
+          "To hear yout Team's recommendatons on why you should\nhire more employees in thier team, click on them?\n\nLets start with hiring 10 Hr employees by clicking on HR and then\n\"hire 10 employees\".",
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -236,7 +238,8 @@ class DisplayDialogs {
     );
   }
 
- static Widget showEmployOMeterDialog(BuildContext context,GestureDragCancelCallback onTap)  {
+  static Widget showEmployOMeterDialog(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -255,7 +258,7 @@ class DisplayDialogs {
       btnName: "Next",
       btnColor: ColorRes.blue,
       desTextLine:
-      "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
+          "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -265,7 +268,8 @@ class DisplayDialogs {
     );
   }
 
-  static Widget showCostOfEmployees(BuildContext context,GestureDragCancelCallback onTap)   {
+  static Widget showCostOfEmployees(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: true,
@@ -284,9 +288,9 @@ class DisplayDialogs {
       btnName: "Next",
       btnColor: ColorRes.blue,
       desTextLine:
-      "Here you see your total cash.\n\nHiring employees will incure hiring cost(increasing over time.)\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increse over time",
+          "Here you see your total cash.\n\nHiring employees will incure hiring cost(increasing over time.)\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increse over time",
       onTapBtn: onTap,
-     /* onTapBtn: () async {
+      /* onTapBtn: () async {
         Navigator.pop(context);
         await Injector.updateIntroDialogType(
             Const.introGetReadyToApproachCustomers);
@@ -295,7 +299,8 @@ class DisplayDialogs {
     );
   }
 
-  static Widget showGetReadyToApproachCustomers(BuildContext context,GestureDragCancelCallback onTap)   {
+  static Widget showGetReadyToApproachCustomers(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -313,7 +318,7 @@ class DisplayDialogs {
       titleText: "Get ready to approach customers",
       btnName: "Click on Sale",
       desTextLine:
-      "In order to win new customer you need to have Sales Reprs.\n\nLet's hire 10 Sales Reps by clicking on Sales and then \"Hire 10 employees.\"",
+          "In order to win new customer you need to have Sales Reprs.\n\nLet's hire 10 Sales Reps by clicking on Sales and then \"Hire 10 employees.\"",
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -323,7 +328,8 @@ class DisplayDialogs {
     );
   }
 
-  static Widget showSalesOMeter(BuildContext context,GestureDragCancelCallback onTap)   {
+  static Widget showSalesOMeter(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -342,7 +348,7 @@ class DisplayDialogs {
       btnName: "next",
       btnColor: ColorRes.blue,
       desTextLine:
-      "Note that your Sale-o-Meter shows 10/10\nThe last number shows your current number of Sales Rep.\nThe first number shows how many of them are currently available.\n\nEngaging customers will keep Sale Reps busy for 8 hours.",
+          "Note that your Sale-o-Meter shows 10/10\nThe last number shows your current number of Sales Rep.\nThe first number shows how many of them are currently available.\n\nEngaging customers will keep Sale Reps busy for 8 hours.",
       onTapBtn: onTap,
       /* onTapBtn: () async {
               Navigator.pop(context);
@@ -353,7 +359,8 @@ class DisplayDialogs {
     );
   }
 
-  static Widget showGetReadyToServeCustomers(BuildContext context,GestureDragCancelCallback onTap)   {
+  static Widget showGetReadyToServeCustomers(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -371,7 +378,7 @@ class DisplayDialogs {
       titleText: "Get ready to serve customer",
       btnName: "Click on  Service",
       desTextLine:
-      "In order to serve/provide serives to existing customers you need to\nhave one Sales Representatives per customer.\n\nLet's hire 10 Service Reps by clicking on Service and then \"Hire 10 employees.\"",
+          "In order to serve/provide serives to existing customers you need to\nhave one Sales Representatives per customer.\n\nLet's hire 10 Service Reps by clicking on Service and then \"Hire 10 employees.\"",
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -382,7 +389,8 @@ class DisplayDialogs {
     );
   }
 
-  static Widget showServiceOMeter(BuildContext context,GestureDragCancelCallback onTap)   {
+  static Widget showServiceOMeter(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
       sixthView: false,
@@ -400,7 +408,7 @@ class DisplayDialogs {
       titleText: "Service-O-Meter",
       btnName: "Click on  Service",
       desTextLine:
-      "Note that your Service-o-meter shows 10/10.\nThe last number shows your current number of Service Rep.\nThe first number shows how many of them are currently available.\n\nEach existing customer will keep 1 service Rep. occupied.",
+          "Note that your Service-o-meter shows 10/10.\nThe last number shows your current number of Service Rep.\nThe first number shows how many of them are currently available.\n\nEach existing customer will keep 1 service Rep. occupied.",
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -411,7 +419,8 @@ class DisplayDialogs {
     );
   }
 
-  static Widget showReadyForSeriousBusiness(BuildContext context,GestureDragCancelCallback onTap)  {
+  static Widget showReadyForSeriousBusiness(
+      BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: true,
       sixthView: false,
@@ -429,7 +438,7 @@ class DisplayDialogs {
       titleText: "Ready for serious business",
       btnName: "Go to \"Business Sectors\"",
       desTextLine:
-      "Great, you are all set for business.\nLets's head over to the newspaper to select the first business sector\nthat you want to engage in.\n\nYou can click on the menu \">\" and then \"Business Sectors\"",
+          "Great, you are all set for business.\nLets's head over to the newspaper to select the first business sector\nthat you want to engage in.\n\nYou can click on the menu \">\" and then \"Business Sectors\"",
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -895,7 +904,10 @@ class DisplayDialogs {
                 "Check out the reward categories and click on a trophy to find out\nwhat you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introYourWillIsAtYourCommand);
+              await Injector.updateIntroDialogType(
+                  Const.introYourWillIsAtYourCommand);
+              await Injector.prefs
+                  .setBool(Const.introRewards.toString(), true);
             },
           );
         });
@@ -929,6 +941,8 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introChallanges);
+              await Injector.prefs
+                  .setBool(Const.introYourWillIsAtYourCommand.toString(), true);
               showIntroChallanges(context);
             },
           );
@@ -996,6 +1010,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introRanking);
+              await Injector.prefs.setBool(Const.introMarketingAndCommunications.toString(), true);
               showRanking(context);
             },
           );
@@ -1063,6 +1078,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introYourTeams);
+              await Injector.prefs.setBool(Const.introYourTeamsPerformance.toString(), true);
               showYourTeams(context);
             },
           );
@@ -1163,6 +1179,8 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
+              await Injector.prefs
+                  .setBool(Const.introThePersonYouCanCountOn.toString(), true);
               showIntroPL(context);
             },
           );

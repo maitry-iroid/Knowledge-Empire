@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -55,17 +56,16 @@ class _PLPageState extends State<PLPage> {
   @override
   void initState() {
     super.initState();
-    openDialog();
+    openIntroDialog();
   }
 
-  Future openDialog() async {
-    switch (Injector.dialogType) {
-      case 137:
+  Future openIntroDialog() async {
+    if (Injector.userData.isFirstTimeLogin) {
+      await Future.delayed(Duration(milliseconds: 50));
+      if (Injector.prefs.getBool(Const.introThePersonYouCanCountOn.toString()) != null && Injector.prefs.getBool(Const.introThePersonYouCanCountOn.toString())) {
+      } else {
         await DisplayDialogs.showThePersonYouCanCountOn(context);
-        break;
-      case 138:
-        await DisplayDialogs.showIntroPL(context);
-        break;
+      }
     }
     getPerformanceData(Const.plDay);
   }
@@ -361,7 +361,8 @@ class _PLPageState extends State<PLPage> {
                           Radius.circular(Injector.isBusinessMode ? 0 : 3)),
                       image: Injector.isBusinessMode
                           ? DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg("bgPlPeriod")),
+                              image:
+                                  AssetImage(Utils.getAssetsImg("bgPlPeriod")),
                               fit: BoxFit.fill)
                           : null),
                   child: Text(Utils.getText(context, StringRes.lastPeriod),
@@ -814,7 +815,6 @@ class _PLPageState extends State<PLPage> {
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
-
           CommonView.showCircularProgress(false, context);
         });
       }

@@ -61,8 +61,6 @@ class _RankingPageState extends State<RankingPage> {
       }
     });
 
-
-
     getData();
   }
 
@@ -759,14 +757,15 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getData() async {
-
-    switch(Injector.dialogType){
-      case 132:
+    if (Injector.userData.isFirstTimeLogin) {
+      if (Injector.prefs
+                  .getBool(Const.introMarketingAndCommunications.toString()) !=
+              null &&
+          Injector.prefs
+              .getBool(Const.introMarketingAndCommunications.toString())) {
+      } else {
         await DisplayDialogs.showMarketingAndCommunications(context);
-        break;
-      case 133:
-        await DisplayDialogs.showRanking(context);
-        break;
+      }
     }
 
     bool isConnected = await Utils.isInternetConnectedWithAlert();

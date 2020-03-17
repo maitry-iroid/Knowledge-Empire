@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
@@ -59,7 +60,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   Future showIntroDialog() async {
     if (Injector.userData.isFirstTimeLogin) {
-      await DisplayDialogs.showYourWillIsAtYourCommand(context);
+      if (Injector.prefs
+                  .getBool(Const.introYourWillIsAtYourCommand.toString()) !=
+              null &&
+          Injector.prefs
+              .getBool(Const.introYourWillIsAtYourCommand.toString())) {
+      } else {
+        await DisplayDialogs.showYourWillIsAtYourCommand(context);
+      }
     }
   }
 
