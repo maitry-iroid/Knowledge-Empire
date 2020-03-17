@@ -196,6 +196,7 @@ class _PLPageState extends State<PLPage> {
           color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
         ),
         width: Utils.getDeviceWidth(context),
+
         child: Column(
           children: <Widget>[
             Container(
