@@ -59,7 +59,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   Future showIntroDialog() async {
-    if (Injector.userData.isFirstTimeLogin) {
+    if (!Injector.userData.isFirstTimeLogin) {
       if (Injector.prefs
                   .getBool(Const.introYourWillIsAtYourCommand.toString()) !=
               null &&

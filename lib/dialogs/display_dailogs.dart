@@ -3,6 +3,7 @@ import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 class DisplayDialogs {
@@ -898,7 +899,7 @@ class DisplayDialogs {
             firstView: true,
             thirdView: false,
             imageName: "john",
-            titleText: "Rewards",
+            titleText: StringRes.rewards,
             btnName: "Got it",
             desTextLine:
                 "Check out the reward categories and click on a trophy to find out\nwhat you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
@@ -937,7 +938,7 @@ class DisplayDialogs {
             titleText: "Your Will is at your command",
             btnName: "Got it",
             desTextLine:
-                "Dear {{\$user-first-name}},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challange other competitors and also to defen\nagainst attacks.",
+                "Dear ${Injector.userData?.name},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challange other competitors and also to defen\nagainst attacks.",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introChallanges);
@@ -1006,7 +1007,7 @@ class DisplayDialogs {
             titleText: "Marketing & Communications",
             btnName: "Got it",
             desTextLine:
-                "Hi {{\$user-first-name}},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
+                "Hi ${Injector.userData?.name},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introRanking);
@@ -1175,7 +1176,7 @@ class DisplayDialogs {
             btnName: "Next",
             btnColor: ColorRes.blue,
             desTextLine:
-                "Nice to meet you {{\$user-first-name}},\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet's make sure to always have more revenue then cost.",
+                "Nice to meet you ${Injector.userData?.name},\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet's make sure to always have more revenue then cost.",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
