@@ -62,7 +62,7 @@ class WebApi {
       'apiSecret': '1a42cc080ef2464a60134473276fe42e',
       'apiRequest': req,
       'data': data,
-      'profile[0]': file != null
+      'profileImage': file != null
           ? await MultipartFile.fromFile(file.path, filename: "image.jpg")
           : null,
     });

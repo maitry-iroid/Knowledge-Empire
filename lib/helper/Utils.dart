@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -29,7 +28,7 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
-//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
+import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -509,29 +508,27 @@ class Utils {
   }
 
   static pdfShow() {
-    return /*Utils.isPdf(questionData.mediaLink)
-        ? SimplePdfViewerWidget(
+    return  SimplePdfViewerWidget(
             completeCallback: (bool result) {
               print("completeCallback,result:$result");
             },
             initialUrl: questionData.mediaLink,
           )
-        : */
-        Container();
+       ;
   }
 
   static isImage(String path) {
-    return extension(path) == ".png" ||
-        extension(path) == ".jpeg" ||
-        extension(path) == ".jpg";
+    return extension(path).toLowerCase() == ".png" .toLowerCase()||
+        extension(path).toLowerCase() == ".jpeg".toLowerCase() ||
+        extension(path).toLowerCase() == ".jpg".toLowerCase();
   }
 
   static isVideo(String path) {
-    return extension(path) == ".mp4";
+    return extension(path).toLowerCase() == ".mp4".toLowerCase();
   }
 
   static isPdf(String path) {
-    return extension(path) == ".pdf";
+    return extension(path).toLowerCase() == ".pdf".toLowerCase();
   }
 
   static getCacheNetworkImage(String url) {
