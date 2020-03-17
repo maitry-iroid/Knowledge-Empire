@@ -761,7 +761,6 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getData() async {
-    if (Injector.userData.isFirstTimeLogin) {
       if (Injector.prefs
                   .getBool(Const.introMarketingAndCommunications.toString()) !=
               null &&
@@ -770,7 +769,6 @@ class _RankingPageState extends State<RankingPage> {
       } else {
         await DisplayDialogs.showMarketingAndCommunications(context);
       }
-    }
 
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 

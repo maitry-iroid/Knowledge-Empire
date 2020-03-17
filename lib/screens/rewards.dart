@@ -42,14 +42,12 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   Future showDialogForCallApi() async {
-    if (Injector.userData.isFirstTimeLogin) {
       await Future.delayed(Duration(milliseconds: 50));
       if (Injector.prefs.getBool(Const.introRewards.toString()) != null &&
           Injector.prefs.getBool(Const.introRewards.toString())) {
       } else {
         await DisplayDialogs.showIntroRewards(context);
       }
-    }
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       getAchievements();
     });

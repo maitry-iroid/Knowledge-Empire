@@ -607,14 +607,12 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-    if (!Injector.userData.isFirstTimeLogin) {
       if (Injector.prefs.getBool(Const.introYourTeamsPerformance.toString()) !=
               null &&
           Injector.prefs.getBool(Const.introYourTeamsPerformance.toString())) {
       } else {
         await DisplayDialogs.showYourTeamsPerformance(context);
       }
-    }
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);

@@ -59,7 +59,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   Future showIntroDialog() async {
-    if (!Injector.userData.isFirstTimeLogin) {
       if (Injector.prefs
                   .getBool(Const.introYourWillIsAtYourCommand.toString()) !=
               null &&
@@ -68,7 +67,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
       } else {
         await DisplayDialogs.showYourWillIsAtYourCommand(context);
       }
-    }
   }
 
   TextEditingController searchController = TextEditingController();
