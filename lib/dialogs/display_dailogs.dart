@@ -900,9 +900,8 @@ class DisplayDialogs {
             thirdView: false,
             imageName: "john",
             titleText: StringRes.rewards,
-            btnName: "Got it",
-            desTextLine:
-                "Check out the reward categories and click on a trophy to find out\nwhat you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+            btnName: StringRes.gotIt,
+            desTextLine: StringRes.rewardsDialogContent,
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
