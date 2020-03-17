@@ -899,15 +899,14 @@ class DisplayDialogs {
             firstView: true,
             thirdView: false,
             imageName: "john",
-            titleText: StringRes.rewards,
-            btnName: StringRes.gotIt,
-            desTextLine: StringRes.rewardsDialogContent,
+            titleText: Utils.getText(context, StringRes.rewards),
+            btnName: Utils.getText(context, StringRes.gotIt),
+            desTextLine: Utils.getText(context, StringRes.rewardsDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
                   Const.introYourWillIsAtYourCommand);
-              await Injector.prefs
-                  .setBool(Const.introRewards.toString(), true);
+              await Injector.prefs.setBool(Const.introRewards.toString(), true);
             },
           );
         });
@@ -934,10 +933,10 @@ class DisplayDialogs {
             imageHeight: willImageHeight,
             imageMoveTop: willImageMoveTop,
             imageMoveRight: willImageMoveRight,
-            titleText: "Your Will is at your command",
-            btnName: "Got it",
+            titleText: Utils.getText(context, StringRes.challengesDialogTitle1),
+            btnName: Utils.getText(context, StringRes.gotIt),
             desTextLine:
-                "Dear ${Injector.userData?.name},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challange other competitors and also to defen\nagainst attacks.",
+                Utils.getText(context, StringRes.challengesDialogContent1),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introChallanges);
@@ -969,10 +968,10 @@ class DisplayDialogs {
             imageHeight: willImageHeight,
             imageMoveTop: willImageMoveTop,
             imageMoveRight: willImageMoveRight,
-            titleText: "Challanges",
-            btnName: "Got it",
+            titleText: Utils.getText(context, StringRes.strChallanges),
+            btnName: Utils.getText(context, StringRes.gotIt),
             desTextLine:
-                "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions\nfrom the selected sector correctly in order to win the challenge",
+                Utils.getText(context, StringRes.strChallangesDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -1003,14 +1002,16 @@ class DisplayDialogs {
             imageHeight: lydiaImageHeight,
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
-            titleText: "Marketing & Communications",
-            btnName: "Got it",
-            desTextLine:
-                "Hi ${Injector.userData?.name},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
+            titleText:
+                Utils.getText(context, StringRes.strMarketingCommunications),
+            btnName: Utils.getText(context, StringRes.gotIt),
+            desTextLine: Utils.getText(
+                context, StringRes.strMarketingCommunicationsDialog),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introRanking);
-              await Injector.prefs.setBool(Const.introMarketingAndCommunications.toString(), true);
+              await Injector.prefs.setBool(
+                  Const.introMarketingAndCommunications.toString(), true);
               showRanking(context);
             },
           );
@@ -1037,10 +1038,10 @@ class DisplayDialogs {
             imageHeight: lydiaImageHeight,
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
-            titleText: "Ranking",
-            btnName: "Got it",
+            titleText: Utils.getText(context, StringRes.ranking),
+            btnName: Utils.getText(context, StringRes.gotIt),
             desTextLine:
-                "Select on the left side the ranking criteria (e.g. cash) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
+                Utils.getText(context, StringRes.strRankingDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -1070,15 +1071,16 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: "Your Team's Performance",
-            btnName: "Next",
+            titleText: Utils.getText(context, StringRes.strYourTeamPerformance),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
-                "Hi, it's me again, Niki.\n\nThis section is exclusively for team leaders.\nHere you can see the performance of your reports.",
+                Utils.getText(context, StringRes.strYourTeamPerformanceDialog),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introYourTeams);
-              await Injector.prefs.setBool(Const.introYourTeamsPerformance.toString(), true);
+              await Injector.prefs
+                  .setBool(Const.introYourTeamsPerformance.toString(), true);
               showYourTeams(context);
             },
           );
@@ -1104,11 +1106,10 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: "Team",
-            btnName: "Next",
+            titleText: Utils.getText(context, StringRes.team),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
+            desTextLine: Utils.getText(context, StringRes.strTeamDialog),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introYourTeams2);
@@ -1137,11 +1138,11 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: StringRes.team,
-            btnName: StringRes.gotIt,
+            titleText: Utils.getText(context, StringRes.team),
+            btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
             desTextLine:
-                "${StringRes.graphShow}",
+                Utils.getText(context, StringRes.strYourTeamPerformanceDialog2),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -1171,11 +1172,11 @@ class DisplayDialogs {
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
-            titleText: StringRes.plPerson ,
-            btnName: StringRes.next,
+            titleText: Utils.getText(context, StringRes.plPerson),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
-                "${StringRes.niceMeetYou} ,${StringRes.plMyName}",
+                "${Utils.getText(context, StringRes.niceMeetYou)} ,${Utils.getText(context, StringRes.plMyName)}",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
@@ -1206,10 +1207,11 @@ class DisplayDialogs {
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
-            titleText: StringRes.pl,
-            btnName: StringRes.gotIt,
+            titleText: Utils.getText(context, StringRes.pl),
+            btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
-            desTextLine: "${StringRes.hereYourMonitor}\n\n${StringRes.selectPeriod}",
+            desTextLine:
+                "${Utils.getText(context, StringRes.hereYourMonitor)}\n\n${Utils.getText(context, StringRes.selectPeriod)}",
             onTapBtn: () async {
               Navigator.pop(context);
             },

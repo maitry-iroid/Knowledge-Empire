@@ -60,13 +60,14 @@ class _PLPageState extends State<PLPage> {
   }
 
   Future openIntroDialog() async {
-    if (Injector.userData.isFirstTimeLogin) {
+    await DisplayDialogs.showThePersonYouCanCountOn(context);
+    /*if (Injector.userData.isFirstTimeLogin) {
       await Future.delayed(Duration(milliseconds: 50));
       if (Injector.prefs.getBool(Const.introThePersonYouCanCountOn.toString()) != null && Injector.prefs.getBool(Const.introThePersonYouCanCountOn.toString())) {
       } else {
         await DisplayDialogs.showThePersonYouCanCountOn(context);
       }
-    }
+    }*/
     getPerformanceData(Const.plDay);
   }
 
