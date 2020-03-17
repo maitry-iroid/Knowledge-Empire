@@ -260,9 +260,10 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       return;
     }
 
-    if (mounted)setState(() {
-      isLoading = true;
-    });
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     ChangePasswordRequest rq = ChangePasswordRequest();
     rq.userId = Injector.userData.userId;
@@ -273,9 +274,10 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     rq.isOldPasswordRequired = widget.isOldPasswordRequired;
 
     WebApi().callAPI(WebApi.rqChangePassword, rq.toJson()).then((data) {
-      if (mounted)setState(() {
-        isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
         Utils.showToast("Password changed Successfully.");
@@ -283,15 +285,17 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
-          Navigator.pushAndRemoveUntil(
-              context, FadeRouteHome(), ModalRoute.withName("/login"));
+          Utils.navigateToIntro(context);
+//          Navigator.pushAndRemoveUntil(
+//              context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {
       print("changePassword_" + e.toString());
-      if (mounted)setState(() {
-        isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       Utils.showToast(e.toString());
     });
   }

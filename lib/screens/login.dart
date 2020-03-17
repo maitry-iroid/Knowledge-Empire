@@ -232,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
           if (userData.isFirstTimeLogin)
-            navigateToIntro();
+            Utils.navigateToIntro(context);
           else
             navigateToDashboard();
         }
@@ -244,10 +244,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void navigateToIntro() {
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-        IntroPage()), (Route<dynamic> route) => false);
-  }
+
 
   void navigateToDashboard() {
     Navigator.pushAndRemoveUntil(

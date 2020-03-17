@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/help_screen.dart';
 
 class IntroPage extends StatefulWidget {
@@ -44,6 +46,7 @@ class _IntroPageState extends State<IntroPage> {
   ];
 
   int index;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,7 +80,7 @@ class _IntroPageState extends State<IntroPage> {
       enableInfiniteScroll: false,
       height: Utils.getDeviceHeight(context),
       onPageChanged: (index) {
-        this.index=index;
+        this.index = index;
       },
     );
     return Stack(
@@ -99,7 +102,7 @@ class _IntroPageState extends State<IntroPage> {
                 basicSlider.nextPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.linear);
-                if (index == imgList.length-1) {
+                if (index == imgList.length - 1) {
                   Navigator.pushAndRemoveUntil(
                       context, FadeRouteIntro(), ModalRoute.withName("/home"));
                 }
@@ -107,7 +110,33 @@ class _IntroPageState extends State<IntroPage> {
               child: Image.asset(Utils.getAssetsImg("next"),
                   width: 70, height: 70)),
         ]),
+//        Positioned(
+//          right: 10,
+//          bottom: 10,
+//          child: showSubscribeView(),
+//        )
       ],
     );
+  }
+
+  showSubscribeView() {
+    return InkResponse(
+        child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("bg_subscribe")),
+                    fit: BoxFit.fill)),
+            child: Text(
+              "Skip Tutorial",
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              textAlign: TextAlign.center,
+            )),
+        onTap: () {
+          Utils.playClickSound();
+
+        });
   }
 }
