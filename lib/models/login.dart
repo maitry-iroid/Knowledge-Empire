@@ -64,6 +64,7 @@ class UserData {
   bool isFirstTimeLogin = false;
   bool isSoundEnable = false;
   String language ;
+  int mode ;
 
   UserData();
 
@@ -84,6 +85,7 @@ class UserData {
     activeCompany = json['activeCompany'];
     isFirstTimeLogin = json['isFirstTimeLogin'];
     language = json['language'];
+    mode = json['mode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -104,6 +106,7 @@ class UserData {
     data['activeCompany'] = this.activeCompany;
     data['isFirstTimeLogin'] = this.isFirstTimeLogin;
     data['language'] = this.language;
+    data['mode'] = this.mode;
     return data;
   }
 }

@@ -46,6 +46,7 @@ class WebApi {
     static String rqGetPerformance = "getPerformance";
     static String rqGetCompany = "getCompany";
     static String updateLanguage = "updateLanguage";
+    static String updateMode = "updateMode";
 
   static getRequest(String req, String data) {
     return {
