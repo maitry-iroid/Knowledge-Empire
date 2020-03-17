@@ -6,7 +6,6 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
-import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/change_password.dart';
 
 class ChangePasswordDialog extends StatefulWidget {

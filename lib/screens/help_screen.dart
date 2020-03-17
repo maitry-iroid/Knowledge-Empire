@@ -36,18 +36,18 @@ class FadeRouteIntro extends PageRouteBuilder {
           ) =>
               FadeTransition(
             opacity: animation,
-            child: IntroPage(),
+            child: HelpPage(),
           ),
         );
 }
 
-class IntroPage extends StatefulWidget {
-  IntroPage({Key key}) : super(key: key);
+class HelpPage extends StatefulWidget {
+  HelpPage({Key key}) : super(key: key);
 
-  IntroPageState createState() => IntroPageState();
+  HelpPageState createState() => HelpPageState();
 }
 
-class IntroPageState extends State<IntroPage> {
+class HelpPageState extends State<HelpPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String selectedType = Const.typeProfile;
 

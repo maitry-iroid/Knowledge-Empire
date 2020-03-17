@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/performance.dart';
-import 'package:ke_employee/screens/organization2.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../commonview/background.dart';
@@ -55,6 +55,18 @@ class _PLPageState extends State<PLPage> {
   @override
   void initState() {
     super.initState();
+    openDialog();
+  }
+
+  Future openDialog() async {
+    switch (Injector.dialogType) {
+      case 137:
+        await DisplayDialogs.showThePersonYouCanCountOn(context);
+        break;
+      case 138:
+        await DisplayDialogs.showIntroPL(context);
+        break;
+    }
     getPerformanceData(Const.plDay);
   }
 
@@ -301,16 +313,16 @@ class _PLPageState extends State<PLPage> {
                           image: DecorationImage(
                               image: AssetImage(Utils.getAssetsImg(
                                   selectedDay == index
-                                          ? "ranking_bg_time_selected"
-                                          : "ranking_bg_time_deselected")),
+                                      ? "ranking_bg_time_selected"
+                                      : "ranking_bg_time_deselected")),
                               fit: BoxFit.fill)),
                       child: Text(Utils.getText(context, arrTime[index]),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 13,
-                              color:  selectedDay == index
-                                      ? ColorRes.white
-                                      : ColorRes.rankingProBg)),
+                              color: selectedDay == index
+                                  ? ColorRes.white
+                                  : ColorRes.rankingProBg)),
                     ),
                     onTap: () {
                       if (index == 0) {
@@ -325,7 +337,6 @@ class _PLPageState extends State<PLPage> {
                       } else if (index == 2) {
                         selectedDay = 2;
                         getPerformanceData(Const.plYear);
-
                       }
 
                       setState(() {});
@@ -775,7 +786,7 @@ class _PLPageState extends State<PLPage> {
 
 //  int selectedType = 1;
 
-  void getPerformanceData(int plDay) {
+  Future getPerformanceData(int plDay) async {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);

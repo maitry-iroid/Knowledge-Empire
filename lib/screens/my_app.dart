@@ -5,22 +5,16 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
-import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/register_for_push.dart';
-import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/screens/intro_screen.dart';
+import 'package:ke_employee/screens/intro_page.dart';
 import 'package:ke_employee/screens/login.dart';
 
 import 'home.dart';
@@ -31,7 +25,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  List<DateTime> _events = [];
   int _status = 0;
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
@@ -73,8 +66,7 @@ class MyAppState extends State<MyApp> {
                 : ColorRes.white,
           ),
           home: Injector.userId != null
-              ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
-                      Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
+              ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null || Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
                   ? IntroPage()
                   : HomePage())
               : LoginPage(),
@@ -90,6 +82,8 @@ class MyAppState extends State<MyApp> {
             const AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate
           ],
           supportedLocales: [
             const Locale('en', ''),
@@ -98,7 +92,6 @@ class MyAppState extends State<MyApp> {
             // ... other locales the app supports
           ],
         );
-        ;
       },
     );
   }

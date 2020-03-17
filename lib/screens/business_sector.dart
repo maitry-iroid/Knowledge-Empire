@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:background_fetch/background_fetch.dart';
@@ -14,14 +12,12 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/getDownloadQuestions.dart';
 import '../models/get_learning_module.dart';
-import 'package:http/http.dart' as http;
 
 class BusinessSectorPage extends StatefulWidget {
   @override

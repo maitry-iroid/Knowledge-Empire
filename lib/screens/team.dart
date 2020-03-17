@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
@@ -571,7 +572,19 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-  void getTeamUsers() {
+  Future getTeamUsers() async {
+
+    switch(Injector.dialogType){
+      case 134:
+        await DisplayDialogs.showYourTeamsPerformance(context);
+        break;
+      case 135:
+        await DisplayDialogs.showYourTeams(context);
+        break;
+      case 136:
+        await DisplayDialogs.showYourTeams2(context);
+        break;
+    }
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);

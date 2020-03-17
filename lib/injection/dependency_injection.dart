@@ -7,7 +7,6 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -39,6 +38,8 @@ class Injector {
   static AudioCache player = AudioCache(prefix: 'sounds/');
   static bool isDev = true;
 
+  static int dialogType = 0;
+
 //  factory Injector {
 //    return _singleton;
 //  }
@@ -67,6 +68,7 @@ class Injector {
       userId = userData.userId;
 
       isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
+      dialogType = prefs.getInt(PrefKeys.dialogTypes);
 
       if (prefs.getString(PrefKeys.customerValueData) != null)
         customerValueData = CustomerValueData.fromJson(
@@ -110,5 +112,11 @@ class Injector {
   static updateIntroType(int introType) async {
     await prefs.setInt(PrefKeys.currentIntroType, introType);
     return currentIntroType == introType;
+  }
+
+  static updateIntroDialogType(int introType) async {
+    await prefs.setInt(PrefKeys.dialogTypes, introType);
+    dialogType = introType;
+    print("----------------->"+Injector.dialogType.toString());
   }
 }

@@ -11,4 +11,5 @@ class PrefKeys {
   static var isIntroRemaining = "isIntroRemaining";
   static var currentIntroType= "currentIntroType";
   static var deviceToken= "deviceToken";
+  static var dialogTypes= "dialogTypes";
 }

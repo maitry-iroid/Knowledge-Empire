@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
@@ -18,7 +17,7 @@ import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/intro_screen.dart';
+import 'package:ke_employee/screens/help_screen.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/screens/new_customer.dart';
@@ -318,7 +317,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         isCoinViseble.toString() +
         "====>startAnim===>" +
         startAnim.toString());
-    AnimatedPositioned(
+   return AnimatedPositioned(
       duration: Duration(seconds: duration),
       top: !isCoinViseble ? top : 20,
       left: !isCoinViseble ? left : 750,
@@ -352,8 +351,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeChallenges))
       return ChallengesPage(
-        arrFriends: widget.homeData.arrFriends,
-        friendId: widget.homeData.friendId,
+        arrFriends: widget.homeData?.arrFriends,
+        friendId: widget.homeData?.friendId,
       );
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);

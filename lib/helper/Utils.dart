@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -29,7 +27,6 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
-//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'constant.dart';
 import 'localization.dart';

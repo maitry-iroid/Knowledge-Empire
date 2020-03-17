@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
@@ -36,11 +38,16 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   void initState() {
     super.initState();
+    showDialogForCallApi();
+  }
 
+  Future showDialogForCallApi() async {
+    if (Injector.userData.isFirstTimeLogin) {
+      await Future.delayed(Duration(milliseconds: 50));
+      await DisplayDialogs.showIntroRewards(context);
+    }
     Utils.isInternetConnectedWithAlert().then((isConnected) {
-      if (isConnected) {
-        getAchievements();
-      }
+      getAchievements();
     });
   }
 
@@ -333,7 +340,6 @@ class _RewardsPageState extends State<RewardsPage> {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
-
         arrAchievementData.clear();
 
         data.forEach((v) {

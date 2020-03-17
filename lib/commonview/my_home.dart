@@ -12,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation flip_anim;
+  Animation flipAnim;
   bool startAnim = false;
   Timer timer;
 
@@ -21,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
     controller = AnimationController(
         duration: Duration(milliseconds: 103500), vsync: this);
-    flip_anim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
+    flipAnim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
         parent: controller, curve: Interval(0.0, 0.5, curve: Curves.linear)));
     controller.forward();
   }
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage>
             child: Transform(
               transform: Matrix4.identity()
                 ..setEntry(3, 2, 0.005)
-                ..rotateY(2 * pi * flip_anim.value),
+                ..rotateY(2 * pi * flipAnim.value),
               alignment: Alignment.center,
               child: Image.asset(
                 Utils.getAssetsImg("coin"),

@@ -18,14 +18,12 @@ class PowerUpsPage extends StatefulWidget {
 }
 
 class _PowerUpsPageState extends State<PowerUpsPage> {
-//  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   TextEditingController searchController = TextEditingController();
   String searchText = "";
   Organization selectedOrg = Organization();
   int selectedIndex = 0;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   OrganizationData organizationData;
 

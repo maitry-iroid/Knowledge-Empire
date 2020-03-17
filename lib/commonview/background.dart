@@ -8,9 +8,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/models/questions.dart';
 
-import '../screens/home.dart';
 
 class CommonView {
   static getBGDecoration(BuildContext context) {

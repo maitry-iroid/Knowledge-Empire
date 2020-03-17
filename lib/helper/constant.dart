@@ -85,11 +85,42 @@ class Const {
 
   static int introTypeProfile = 101;
   static int introTypeProfileUserDetails = 102;
-  static int introTypeSettings = 103;
+  static int introSettings = 103;
   static int introTypeOrg = 104;
-  static int introTypeHireHR = 105;
-  static int introTypeHireHeaderEmployee = 105;
-  static int introTypeHireHeaderTest = 106;
+  static int introHireHR = 105;
+  static int introHireHeaderEmployee = 106;
+  static int introHireHeaderTest = 107;
+  static int introMeetYourTeam = 108;
+  static int introHireHREmployeesBoard = 109;
+  static int introEmployOMeter = 110;
+  static int introCostOfEmployees = 111;
+  static int introGetReadyToApproachCustomers = 112;
+  static int introSalesOMeter = 113;
+  static int introGetReadyToServeCustomers = 114;
+  static int introReadyForSeriousBusiness = 115;
+  static int introCustomerRelationshipManagement = 116;
+  static int introAreaOfCompetency = 117;
+  static int introAccesToYourFirstCustomers = 118;
+  static int introReadyForYourFirstCustomerContact = 119;
+  static int introHeartOfTheBusiness = 120;
+  static int introListOfPotentialCustomers = 121;
+  static int introYourFirstEngegement = 122;
+  static int introImpactOnSalesAndService = 123;
+  static int introImpactOnBrandValueAndCash = 124;
+  static int introCheckYourExistingCustomers = 125;
+  static int introServingYourExistingCustomers = 126;
+  static int introListOfExistingCustomers = 127;
+  static int introReadyForBusiness = 128;
+  static int introRewards = 129;
+  static int introYourWillIsAtYourCommand = 130;
+  static int introChallanges = 131;
+  static int introMarketingAndCommunications = 132;
+  static int introRanking = 133;
+  static int introYourTeamsPerformance = 134;
+  static int introYourTeams = 135;
+  static int introYourTeams2 = 136;
+  static int introThePersonYouCanCountOn = 137;
+  static int introPL= 138;
 
   static FlavorConfig _config;
 

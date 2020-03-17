@@ -10,8 +10,8 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
-import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/screens/intro_page.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
@@ -245,8 +245,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToIntro() {
-    Navigator.pushAndRemoveUntil(
-        context, FadeRouteIntro(), ModalRoute.withName("/login"));
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+        IntroPage()), (Route<dynamic> route) => false);
   }
 
   void navigateToDashboard() {

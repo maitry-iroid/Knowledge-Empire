@@ -1,16 +1,12 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/animation/Particles.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:path/path.dart';
 
 import '../helper/constant.dart';
 import '../helper/string_res.dart';

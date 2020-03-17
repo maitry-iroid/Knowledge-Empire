@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -6,7 +7,6 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/listItem/group_item.dart';
 import 'package:ke_employee/listItem/time_item.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
@@ -60,6 +60,8 @@ class _RankingPageState extends State<RankingPage> {
         getFriends(false, true);
       }
     });
+
+
 
     getData();
   }
@@ -757,6 +759,16 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getData() async {
+
+    switch(Injector.dialogType){
+      case 132:
+        await DisplayDialogs.showMarketingAndCommunications(context);
+        break;
+      case 133:
+        await DisplayDialogs.showRanking(context);
+        break;
+    }
+
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 
     if (isConnected) {

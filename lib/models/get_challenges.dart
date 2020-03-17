@@ -1,4 +1,3 @@
-import 'package:ke_employee/models/questions.dart';
 
 class GetChallengesRequest {
   int userId;

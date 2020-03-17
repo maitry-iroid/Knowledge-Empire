@@ -40,6 +40,7 @@ class StringRes {
   static var german = "german";
   static var chinese = "chinese";
 
+
   //login
   static var login = "login";
   static var enterRegisteredEmail = "enterRegisteredEmail";

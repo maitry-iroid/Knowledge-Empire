@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
@@ -37,15 +38,27 @@ class _ChallengesPageState extends State<ChallengesPage> {
   List<int> arrRewards = [2, 4, 6, 8, 10];
 
   @override
-  void initState() {
+  initState() {
     super.initState();
+
+    showIntroDialog();
+
     getSearchFriends(searchText);
+
 //    arrFriends = widget.arrFriends;
 //    selectedFriendId = arrFriends[0].userId;
 //    getBusinessSectors();
 
-    arrSearchFriends = arrFriends;
-    if (arrSearchFriends.length > 0) setState(() {});
+    if (widget.arrFriends != null) {
+      arrSearchFriends = widget.arrFriends;
+      if (arrSearchFriends.length > 0) setState(() {});
+    }
+  }
+
+  Future showIntroDialog() async {
+    if (Injector.userData.isFirstTimeLogin) {
+      await DisplayDialogs.showYourWillIsAtYourCommand(context);
+    }
   }
 
   TextEditingController searchController = TextEditingController();
