@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -712,4 +713,26 @@ class Utils {
 
     return index;
   }
+
+  static void addBadge() {
+    int count = Injector.badgeCount + 1;
+    print('badge_Count' + count.toString());
+    FlutterAppBadger.updateBadgeCount(count);
+    Injector.prefs.setInt(PrefKeys.badgeCount, count);
+    Injector.badgeCount = Injector.prefs.getInt(PrefKeys.badgeCount);
+  }
+
+  static void removeBadge() {
+    FlutterAppBadger.removeBadge();
+    Injector.badgeCount = 0;
+    Injector.prefs.setInt(PrefKeys.badgeCount, 0);
+  }
+
+//  static void incrementBadge(String userId) async {
+//    await Injector.databaseRef
+//        .collection(Const.usersCollection)
+//        .document(userId)
+//        .updateData({Const.keyBadgeCount: FieldValue.increment(1)});
+//  }
+
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -58,7 +61,6 @@ class PushNotificationHelper {
 //      onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');
-
         showNotification(message);
       },
       onLaunch: (Map<String, dynamic> message) async {
@@ -68,6 +70,7 @@ class PushNotificationHelper {
       },
     );
   }
+
 
   Future<void> onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
@@ -126,7 +129,8 @@ class PushNotificationHelper {
 
     print(message);
 
-//    addBadge();
+    Utils.addBadge();
+    CommonView().pushNotificationAlert(context);
 
 //    if (Platform.isIOS) {
 //      title = message['title'];
@@ -140,6 +144,8 @@ class PushNotificationHelper {
 
     if (challengeId != null) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+      CommonView().pushNotificationAlert(context);
+
     }
 
 //      message.values.forEach((value) {
@@ -176,4 +182,8 @@ class PushNotificationHelper {
         id, Const.appName, body, platformChannelSpecifics,
         payload: 'item x');
   }
+
+
+
+
 }
