@@ -36,6 +36,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
   List<LearningModuleData> arrLearningModules = List();
 
   List<int> arrRewards = [2, 4, 6, 8, 10];
+  var selectedModuleIndex = -1;
+  int selectedRewardsIndex = 0;
 
   @override
   initState() {
@@ -303,8 +305,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     });
   }
 
-  int selectedRewardsIndex = 0;
-
   _onSelectedRewards(int index) {
     setState(() => selectedRewardsIndex = index);
   }
@@ -414,8 +414,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     return selectedRewardsIndex == index;
   }
 
-  var selectedModuleIndex = -1;
-
   _onSelectedSector(int index) {
     setState(() => selectedModuleIndex = index);
   }
@@ -523,51 +521,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   int selectedFriendId = 3;
 
-  void getFriends() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        CommonView.showCircularProgress(true, context);
-
-        GetFriendsRequest rq = GetFriendsRequest();
-        rq.userId = Injector.userData.userId;
-        rq.groupId = 0;
-        rq.category = 0;
-        rq.searchBy = 3;
-        rq.filter = 0;
-        rq.lastUserId = 0;
-        rq.scrollType = 1;
-
-        WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(false, context);
-
-          if (data != null) {
-            List<GetFriendsData> arrFriendsData = List();
-            data.forEach((v) {
-              arrFriendsData.add(GetFriendsData.fromJson(v));
-            });
-
-            arrFriendsData.removeWhere(
-                (friend) => friend.userId == Injector.userData.userId);
-
-            arrFriends = arrFriendsData;
-            arrFriendsToShow = arrFriendsData;
-
-            if (arrFriendsToShow.length > 0) {
-              selectedFriendId = arrFriends[0].userId;
-              getBusinessSectors();
-              setState(() {});
-            }
-          }
-        }).catchError((e) {
-          print("getFriends_" + e.toString());
-
-          CommonView.showCircularProgress(false, context);
-          Utils.showToast(e.toString());
-        });
-      }
-    });
-  }
-
   void friendUnFriendUser(int index, int action) {
     CommonView.showCircularProgress(true, context);
     GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
@@ -659,7 +612,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
       if (isConnected) {
         SearchFriendRequest rq = SearchFriendRequest();
         rq.userId = Injector.userId.toString();
-//        rq.searchText = searchController.text;
         rq.searchText = searchText;
 
         WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
@@ -679,6 +631,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
             if (arrFriendsToShow.length > 0) {
               selectedFriendId = arrFriends[0].userId;
               getBusinessSectors();
+            } else {
+              arrLearningModules.clear();
+              selectedFriendId = null;
+              selectedModuleIndex = -1;
+              selectedRewardsIndex = 0;
             }
 
             setState(() {});

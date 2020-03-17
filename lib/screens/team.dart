@@ -328,8 +328,9 @@ class _TeamPageState extends State<TeamPage> {
                 ),
                 Container(
                   height: 25,
-                  width: 70,
+                  width: 75,
                   margin: EdgeInsets.only(left: 0, top: 8, bottom: 5, right: 5),
+                  padding: EdgeInsets.only(left: 4, top: 3, bottom: 0, right: 5),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(Utils.getAssetsImg("bg_change_pw")),
@@ -338,6 +339,8 @@ class _TeamPageState extends State<TeamPage> {
                     child: Text(
                       Utils.getText(context, StringRes.bailout),
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),

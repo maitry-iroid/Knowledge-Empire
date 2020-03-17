@@ -372,6 +372,8 @@ class CommonView {
                   onTap: () {
                     Utils.playClickSound();
                     Utils.performDashboardItemClick(context, Const.typeRanking);
+//                    CommonView().pushNotificationAlert(context);
+
                   },
                 ),
               ],
@@ -578,5 +580,57 @@ class CommonView {
         ],
       ),
     );
+  }
+
+  //push notification alert
+
+  pushNotificationAlert(BuildContext context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Container(
+                  width: Utils.getDeviceWidth(context) / 2,
+                  height: Utils.getDeviceHeight(context) / 2,
+                  decoration: BoxDecoration(
+                      color: ColorRes.greyText,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 50,
+                        child: Text("Notification Alert"),
+                      ),
+                      Expanded(child: Text("Count of Notification.")),
+                      Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: 100,
+                        padding: EdgeInsets.only(bottom: 0),
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            color: ColorRes.blue,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        child: InkResponse(
+                          child: Text("hello", textAlign: TextAlign.center,),
+                          onTap: () {
+                              Navigator.pop(context);
+                          },
+                        ),
+                      )
+                    ],
+                  )),
+            ),
+          );
+        });
   }
 }

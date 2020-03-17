@@ -38,6 +38,9 @@ class Injector {
   static AudioCache player = AudioCache(prefix: 'sounds/');
   static bool isDev = true;
 
+  static int badgeCount = 0;
+
+
   static int dialogType = 0;
 
 //  factory Injector {
@@ -47,11 +50,17 @@ class Injector {
   Injector._internal();
 
   static getInstance() async {
+
     prefs = await SharedPreferences.getInstance();
 
     deviceType = Device.get().isAndroid ? "android" : "ios";
 
     firebaseMessaging = FirebaseMessaging();
+
+    firebaseMessaging.getToken().then((token){
+      print("Your Device tocken==<>"+token);
+    });
+
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     deviceId = "123456";

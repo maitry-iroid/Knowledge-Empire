@@ -58,7 +58,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Can I use camera please?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow app to access your location for showing you near by friends.</string>
+	<string>App would like to access your location to provide your better location related results and enhance your experience.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App would like to access your location to provide your better location related results and enhance your experience.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Can I use the mic please?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -85,9 +87,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysUsageDescription</key>
-        <string>App would like to access your location to provide your better location related results and enhance your experience.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-        <string>App would like to access your location to provide your better location related results and enhance your experience.</string>
 </dict>
 </plist>

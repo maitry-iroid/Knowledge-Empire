@@ -353,7 +353,7 @@ class _PLPageState extends State<PLPage> {
                 Container(
                   height: 25,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 7, right: 7),
                   decoration: BoxDecoration(
                       color:
                           Injector.isBusinessMode ? null : ColorRes.borderColor,
@@ -361,8 +361,7 @@ class _PLPageState extends State<PLPage> {
                           Radius.circular(Injector.isBusinessMode ? 0 : 3)),
                       image: Injector.isBusinessMode
                           ? DecorationImage(
-                              image:
-                                  AssetImage(Utils.getAssetsImg("bgPlPeriod")),
+                              image: AssetImage(Utils.getAssetsImg("bgPlPeriod")),
                               fit: BoxFit.fill)
                           : null),
                   child: Text(Utils.getText(context, StringRes.lastPeriod),
@@ -371,7 +370,7 @@ class _PLPageState extends State<PLPage> {
                 Container(
                   height: 25,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 7, right: 7),
                   decoration: BoxDecoration(
                       color:
                           Injector.isBusinessMode ? null : ColorRes.borderColor,

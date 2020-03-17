@@ -56,9 +56,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
         multiDexEnabled true
-//        ndk {
-//            abiFilters 'armeabi','armeabi-v7a','arm64-v8a'
-//        }
+        ndk {
+            abiFilters 'armeabi','armeabi-v7a','arm64-v8a'
+        }
     }
 
     buildTypes {
@@ -71,19 +71,19 @@ android {
         }
 
     }
-    flavorDimensions "default"
-    productFlavors {
-        dev {
-            dimension "default"
-            applicationId "com.keemployee.app.dev"
-            resValue "string", "app_name", "KE dev"
-        }
-        prod {
-            dimension "default"
-            applicationId "com.keemployee.app"
-            resValue "string", "app_name", "KE prod"
-        }
-    }
+//    flavorDimensions "default"
+//    productFlavors {
+//        dev {
+//            dimension "default"
+//            applicationId "com.keemployee.app.dev"
+//            resValue "string", "app_name", "KE dev"
+//        }
+//        prod {
+//            dimension "default"
+//            applicationId "com.keemployee.app"
+//            resValue "string", "app_name", "KE prod"
+//        }
+//    }
 
 }
 

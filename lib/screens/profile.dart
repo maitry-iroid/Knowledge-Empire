@@ -151,7 +151,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: TextStyle(
                               color: ColorRes.white,
                               fontSize: 17,
-                              letterSpacing: 0.5),
+                              letterSpacing: 0.5
+                          ),
                         ),
                         decoration: BoxDecoration(
                             color: Injector.isBusinessMode
@@ -163,7 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
                                 image: AssetImage(
-                                    Utils.getAssetsImg('bg_setting')))
+                                    Utils.getAssetsImg(Injector.userData.language == "German" ? 'bg_blue' :'bg_setting')))
                                 : null),
                       ),
                       Container(
@@ -240,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
                                 image: AssetImage(
-                                    Utils.getAssetsImg('bg_privacy')))
+                                    Utils.getAssetsImg('bg_privacy')), fit: Injector.userData.language == "German" ? BoxFit.fill : null)
                                 : null),
                       ),
                       Container(
@@ -663,7 +664,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   image: Injector.isBusinessMode
                       ? DecorationImage(
                       image: AssetImage(
-                        Utils.getAssetsImg("bg_setting"),
+                        Utils.getAssetsImg(Injector.userData.language == "German" ? "bg_blue" : "bg_setting"),
                       ),
                       fit: BoxFit.fill)
                       : null),
@@ -997,7 +998,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             fontSize: 15,
                           )),
                     ),
-                    onTap: updateProfile,
+                    onTap: () {
+                      updateProfile();
+                    },
                   ),
                 ),
                 Container(
@@ -1020,6 +1023,9 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         photoUrl = "";
         _image = tempImage;
+        if(_image != null) {
+          updateProfile();
+        }
       });
     }
   }
@@ -1045,17 +1051,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemCount: languagesList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () {
-                          if (index == 0) {
-                            languageChangeAPI(Const.english, index);
-                          } else if (index == 1) {
-                            languageChangeAPI(Const.german, index);
-                          } else if (index == 2) {
-                            languageChangeAPI(Const.chinese, index);
-                          }
+                        onTap: () async {
+                          try {
+                            if (index == 0) {
+                              await languageChangeAPI(Const.english, index);
+                            } else if (index == 1) {
+                              await languageChangeAPI(Const.german, index);
+                            } else if (index == 2) {
+                              await languageChangeAPI(Const.chinese, index);
+                            }
 
-                          Navigator.pop(context);
-//                          setState(() {});
+
+                          } catch (e) {
+                            print(e);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -1200,7 +1209,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     String x = "000";
     String y = "000";
-    String z = "002";
+    String z = "003";
 
     return mode +
         "-" +
@@ -1233,10 +1242,13 @@ class _ProfilePageState extends State<ProfilePage> {
         localeBloc.setLocale(index);
         Injector.userData.language = language;
         setState(() {});
+        Utils.performBack(context);
       } else {
+        Utils.performBack(context);
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
+      Utils.performBack(context);
       print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());

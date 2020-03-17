@@ -1062,7 +1062,8 @@ class HelpPageState extends State<HelpPage> {
                         } else if (selectedType == Const.typeOrg) {
                           selectedType = Const.typeChallenges;
                         } else if (selectedType == Const.typeChallenges) {
-                          selectedType = Const.typeTeam;
+                          Injector.isManager() ?
+                          selectedType = Const.typeTeam : selectedType = Const.typeReward;
                         } else if (selectedType == Const.typeTeam) {
                           selectedType = Const.typeReward;
                         } else if (selectedType == Const.typeReward) {
@@ -1154,7 +1155,10 @@ class HelpPageState extends State<HelpPage> {
                         } else if (selectedType == Const.typeExistingCustomer) {
                           selectedType = Const.typeReward;
                         } else if (selectedType == Const.typeReward) {
-                          selectedType = Const.typeTeam;
+                         Injector.isManager() ?
+                           selectedType = Const.typeTeam : selectedType = Const.typeChallenges;
+
+
                         } else if (selectedType == Const.typeTeam) {
                           selectedType = Const.typeChallenges;
                         } else if (selectedType == Const.typeChallenges) {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
@@ -35,6 +36,9 @@ import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../helper/string_res.dart';
 import '../models/get_friends.dart';
+import 'package:flutter/services.dart';
+
+
 
 class FadeRouteHome extends PageRouteBuilder {
 //  final Widget page;
@@ -112,9 +116,46 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     initContent();
-
     super.initState();
+    Utils.removeBadge();
   }
+
+//push notification
+
+  String _appBadgeSupported = 'Unknown';
+
+  initPlatformState() async {
+    String appBadgeSupported;
+    try {
+      bool res = await FlutterAppBadger.isAppBadgeSupported();
+      if (res) {
+        appBadgeSupported = 'Supported';
+      } else {
+        appBadgeSupported = 'Not supported';
+      }
+    } on PlatformException {
+      appBadgeSupported = 'Failed to get badge support.';
+    }
+
+    if (!mounted) return;
+      _appBadgeSupported = appBadgeSupported;
+      if(_appBadgeSupported != null) {
+        _addBadge();
+      }
+    setState(() {
+    });
+  }
+
+
+  void _addBadge() {
+    FlutterAppBadger.updateBadgeCount(3);
+  }
+
+  void _removeBadge() {
+    FlutterAppBadger.removeBadge();
+  }
+
+  //--- push
 
   @override
   void dispose() {
@@ -135,7 +176,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-    } else if (state == AppLifecycleState.inactive) {}
+      Utils.removeBadge();
+    } else if (state == AppLifecycleState.inactive) {
+
+    }
   }
 
   _getDrawerItemWidget(int pos) {
@@ -368,8 +412,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void setSelectedIndex() {
-
-
     _selectedDrawerIndex =
         Utils.getHomePageIndex(widget.homeData?.initialPageType);
   }
@@ -542,13 +584,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
-    PushNotificationHelper(context, "home").initPush();
+    PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
 
-    if (widget.homeData.initialPageType != Const.typeChallenges &&
-        widget.homeData.initialPageType != Const.typeCustomerSituation &&
-        widget.homeData.initialPageType != Const.typeEngagement) {
-      if (widget.homeData.isChallenge == null || widget.homeData.isChallenge)
-        getPendingChallenges();
+    initPlatformState();
+
+    if (widget.homeData == null ||
+        widget.homeData.page == null ||
+        (widget.homeData.initialPageType != Const.typeChallenges &&
+            widget.homeData.initialPageType != Const.typeCustomerSituation &&
+            widget.homeData.initialPageType != Const.typeEngagement)) {
+      if (widget.homeData == null ||
+          widget.homeData.isChallenge == null ||
+          widget.homeData.isChallenge) getPendingChallenges();
     }
   }
 }
