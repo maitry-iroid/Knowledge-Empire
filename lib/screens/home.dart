@@ -573,6 +573,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     localeBloc.setLocale(Utils.getIndexLocale());
 
+    Injector.headerStreamController.add("event");
+
     initStreamController();
     getCustomerValues();
 
