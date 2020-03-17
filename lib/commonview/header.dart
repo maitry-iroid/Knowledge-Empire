@@ -8,7 +8,6 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/screens/help_screen.dart';
-import 'package:ke_employee/screens/intro_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatefulWidget {
@@ -233,6 +232,7 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
+
             if (widget.firstView != null && widget.firstView ||
                 widget.secondView != null && widget.secondView ||
                 widget.thirdView != null && widget.thirdView ||

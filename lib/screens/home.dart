@@ -235,6 +235,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   _onSelectItem(int index) {
     Utils.playClickSound();
 
+
     if (_selectedDrawerIndex != index) {
       if (mounted) {
         setState(() => _selectedDrawerIndex = index);
