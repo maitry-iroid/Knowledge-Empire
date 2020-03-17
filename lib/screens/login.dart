@@ -257,6 +257,7 @@ class _LoginPageState extends State<LoginPage> {
   showEmailView() {
     return Row(
       children: <Widget>[
+
         Image(
           image: AssetImage(Utils.getAssetsImg("email2")),
           width: 50,
