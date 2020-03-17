@@ -290,14 +290,14 @@ class HelpPageState extends State<HelpPage> {
       opacity: selectedType == type ? 1 : 0,
       child: Container(
         foregroundDecoration:
-            /*BoxDecoration(color: ColorRes.white.withOpacity(0.5))*/ null,
+        /*BoxDecoration(color: ColorRes.white.withOpacity(0.5))*/ null,
         padding:
-            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 3 : 2),
+        EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 3 : 2),
         decoration: BoxDecoration(
             image: Injector.isBusinessMode
                 ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-                    fit: BoxFit.fill)
+                image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+                fit: BoxFit.fill)
                 : null),
         child: InkResponse(
           child: Row(
@@ -308,25 +308,25 @@ class HelpPageState extends State<HelpPage> {
                   Injector.isBusinessMode
                       ? Container()
                       : Container(
-                          alignment: Alignment.center,
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                              color: ColorRes.titleBlueProf,
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1),
-                              borderRadius: BorderRadius.circular(12.5)),
-                        ),
+                    alignment: Alignment.center,
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                        color: ColorRes.titleBlueProf,
+                        border:
+                        Border.all(color: ColorRes.white, width: 1),
+                        borderRadius: BorderRadius.circular(12.5)),
+                  ),
                   Injector.isBusinessMode
                       ? Image(
-                          image: AssetImage(Utils.getAssetsImg(
-                              HeaderUtils.getHeaderIcon(type))),
-                          height: 26,
-                        )
+                    image: AssetImage(Utils.getAssetsImg(
+                        HeaderUtils.getHeaderIcon(type))),
+                    height: 26,
+                  )
                       : Text(
-                          HeaderUtils.getHeadText(type),
-                          style: TextStyle(fontSize: 15, color: ColorRes.white),
-                        ),
+                    HeaderUtils.getHeadText(type),
+                    style: TextStyle(fontSize: 15, color: ColorRes.white),
+                  ),
                 ],
               ),
               SizedBox(
@@ -334,56 +334,56 @@ class HelpPageState extends State<HelpPage> {
               ),
               type != Const.typeMoney
                   ? Stack(
-                      alignment: Alignment.centerLeft,
-                      children: <Widget>[
-                        Container(
-                          height: Injector.isBusinessMode ? 19 : 21,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: ColorRes.greyText,
+                alignment: Alignment.centerLeft,
+                children: <Widget>[
+                  Container(
+                    height: Injector.isBusinessMode ? 19 : 21,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: ColorRes.greyText,
 //                          image: Injector.isBusinessMode
 //                              ? DecorationImage(
 //                                  image: AssetImage(
 //                                      Utils.getAssetsImg('bg_progress')),
 //                                  fit: BoxFit.fill)
 //                              : null,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Injector.isBusinessMode
-                                  ? null
-                                  : Border.all(
-                                      color: ColorRes.white, width: 1)),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: Injector.isBusinessMode ? 0 : 1),
-                          child: LinearPercentIndicator(
-                            width: Utils.getDeviceWidth(context) / 12,
-                            lineHeight: 19.0,
-                            percent:
-                                HeaderUtils.getProgressInt(type)?.toDouble() ??
-                                    0.toDouble(),
-                            backgroundColor: Colors.transparent,
-                            progressColor: Injector.isBusinessMode
-                                ? Colors.blue
-                                : ColorRes.titleBlueProf,
-                          ),
-                        ),
-                        Positioned(
-                          left: 4,
-                          child: Text(
-                            HeaderUtils.getProgress(type).toString() +
-                                (type == Const.typeBrandValue ? "%" : ""),
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 14),
-                          ),
-                        )
-                      ],
-                    )
-                  : Text(
-                      Injector.customerValueData != null
-                          ? Injector.customerValueData.totalBalance.toString()
-                          : "00.00",
-                      style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Injector.isBusinessMode
+                            ? null
+                            : Border.all(
+                            color: ColorRes.white, width: 1)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 0,
+                        horizontal: Injector.isBusinessMode ? 0 : 1),
+                    child: LinearPercentIndicator(
+                      width: Utils.getDeviceWidth(context) / 12,
+                      lineHeight: 19.0,
+                      percent:
+                      HeaderUtils.getProgressInt(type)?.toDouble() ??
+                          0.toDouble(),
+                      backgroundColor: Colors.transparent,
+                      progressColor: Injector.isBusinessMode
+                          ? Colors.blue
+                          : ColorRes.titleBlueProf,
                     ),
+                  ),
+                  Positioned(
+                    left: 4,
+                    child: Text(
+                      HeaderUtils.getProgress(type).toString() +
+                          (type == Const.typeBrandValue ? "%" : ""),
+                      style:
+                      TextStyle(color: ColorRes.white, fontSize: 14),
+                    ),
+                  )
+                ],
+              )
+                  : Text(
+                Injector.customerValueData != null
+                    ? Injector.customerValueData.totalBalance.toString()
+                    : "00.00",
+                style: TextStyle(color: ColorRes.white, fontSize: 16),
+              ),
             ],
           ),
           onTap: () {
@@ -421,7 +421,7 @@ class HelpPageState extends State<HelpPage> {
               border: Border.all(color: ColorRes.textLightBlue)),
         ),
         onTap: () {}
-        /*openProfile () {
+      /*openProfile () {
         openProfile
 //        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
 //        print(route1.isCurrent);
@@ -429,7 +429,7 @@ class HelpPageState extends State<HelpPage> {
 //          Navigator.push(context, route1);
 //        }
       },*/
-        );
+    );
   }
 
   showSelectedMainView() {
@@ -444,37 +444,37 @@ class HelpPageState extends State<HelpPage> {
             children: <Widget>[
               selectedType == Const.typeOrg
                   ? InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("organization")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
-                      ),
-                      onTap: () {},
-                    )
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("organization")),
+                  width: Utils.getDeviceWidth(context) / 4.5,
+                ),
+                onTap: () {},
+              )
                   : Container(
-                      width: Utils.getDeviceWidth(context) / 4.5,
-                    ),
+                width: Utils.getDeviceWidth(context) / 4.5,
+              ),
               selectedType == Const.typePl
                   ? InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                        width: Utils.getDeviceWidth(context) / 4.4,
-                      ),
-                      onTap: () {},
-                    )
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("profit-loss")),
+                  width: Utils.getDeviceWidth(context) / 4.4,
+                ),
+                onTap: () {},
+              )
                   : Container(
-                      width: Utils.getDeviceWidth(context) / 4.5,
-                    ),
+                width: Utils.getDeviceWidth(context) / 4.5,
+              ),
               selectedType == Const.typeRanking
                   ? InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("ranking")),
-                        width: Utils.getDeviceWidth(context) / 4.3,
-                      ),
-                      onTap: () {},
-                    )
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("ranking")),
+                  width: Utils.getDeviceWidth(context) / 4.3,
+                ),
+                onTap: () {},
+              )
                   : Container(
-                      width: Utils.getDeviceWidth(context) / 4.5,
-                    ),
+                width: Utils.getDeviceWidth(context) / 4.5,
+              ),
             ],
           ),
         ),
@@ -491,41 +491,41 @@ class HelpPageState extends State<HelpPage> {
                 padding: EdgeInsets.only(bottom: 40, left: 20),
                 child: selectedType == Const.typeReward
                     ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("rewards")),
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("rewards")),
 //                      height: Utils.getDeviceHeight(context) / 2.9,
-                          width: Utils.getDeviceHeight(context) / 3.0,
-                        ),
-                      )
+                    width: Utils.getDeviceHeight(context) / 3.0,
+                  ),
+                )
                     : Container(
-                        width: Utils.getDeviceHeight(context) / 3.0,
-                      ),
+                  width: Utils.getDeviceHeight(context) / 3.0,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 15, left: 40, right: 0),
                 child: selectedType == Const.typeTeam
                     ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("team")),
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("team")),
 //                      height: Utils.getDeviceHeight(context) / 2.4,
-                          width: Utils.getDeviceHeight(context) / 3.0,
-                        ),
-                      )
+                    width: Utils.getDeviceHeight(context) / 3.0,
+                  ),
+                )
                     : Container(
-                        width: Utils.getDeviceHeight(context) / 3.0,
-                      ),
+                  width: Utils.getDeviceHeight(context) / 3.0,
+                ),
               ),
               Padding(
                 padding:
-                    EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                 child: selectedType == Const.typeChallenges
                     ? InkResponse(
-                        child: Image(
-                          image: AssetImage(Utils.getAssetsImg("challenges")),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg("challenges")),
 //                      height: Utils.getDeviceHeight(context) / 3.3,
-                          width: Utils.getDeviceHeight(context) / 2.6,
-                        ),
-                        onTap: () {})
+                      width: Utils.getDeviceHeight(context) / 2.6,
+                    ),
+                    onTap: () {})
                     : Container(width: Utils.getDeviceHeight(context) / 2.6),
               ),
             ],
@@ -541,34 +541,34 @@ class HelpPageState extends State<HelpPage> {
             children: <Widget>[
               selectedType == Const.typeBusinessSector
                   ? Image(
-                      image: AssetImage(Utils.getAssetsImg("business_sectors")),
+                image: AssetImage(Utils.getAssetsImg("business_sectors")),
 //                      height: Utils.getDeviceHeight(context) / 2.85,
-                      width: Utils.getDeviceWidth(context) / 3.3,
-                    )
+                width: Utils.getDeviceWidth(context) / 3.3,
+              )
                   : Container(width: Utils.getDeviceWidth(context) / 3.8),
               selectedType == Const.typeNewCustomer
                   ? InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("new-customer")),
-                        width: Utils.getDeviceWidth(context) / 4.3,
-                      ),
-                      onTap: () {
-                        performItemClick(Const.typeNewCustomer);
-                      })
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("new-customer")),
+                    width: Utils.getDeviceWidth(context) / 4.3,
+                  ),
+                  onTap: () {
+                    performItemClick(Const.typeNewCustomer);
+                  })
                   : Container(
-                      width: Utils.getDeviceWidth(context) / 4.2,
-                    ),
+                width: Utils.getDeviceWidth(context) / 4.2,
+              ),
               selectedType == Const.typeExistingCustomer
 //              selectedType == Utils.getHomePageIndex(Const.typeExistingCustomer)
                   ? InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("existing")),
-                        width: Utils.getDeviceWidth(context) / 4.3,
-                      ),
-                      onTap: () {})
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("existing")),
+                    width: Utils.getDeviceWidth(context) / 4.3,
+                  ),
+                  onTap: () {})
                   : Container(
-                      width: Utils.getDeviceWidth(context) / 4.6,
-                    ),
+                width: Utils.getDeviceWidth(context) / 4.6,
+              ),
             ],
           ),
         ),
@@ -654,7 +654,7 @@ class HelpPageState extends State<HelpPage> {
                     )),
                 Padding(
                   padding:
-                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                  EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("challenges")),
@@ -761,7 +761,7 @@ class HelpPageState extends State<HelpPage> {
               context,
               _scaffoldKey,
               Colors.blue,
-              () => popAndNextTutorial(context),
+                  () => popAndNextTutorial(context),
               "MAMA",
               "MAMA IS A LOREM IPSUM",
               "ALRIGHT");
@@ -777,6 +777,7 @@ class HelpPageState extends State<HelpPage> {
   }
 
   popAndNextTutorial(BuildContext context) {}
+
 
   //----------------------
 
@@ -796,386 +797,595 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeProfile
               ? Positioned(
-                  top: 60,
-                  right: Utils.getDeviceWidth(context) / 2.3,
+            top: 60,
+            right: Utils.getDeviceWidth(context) / 2.3,
 //            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg("intro_bub_profile")),
-                      height: Utils.getDeviceHeight(context) / 1.9,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            child: InkResponse(
+              child: Image(
+                image:
+                AssetImage(Utils.getAssetsImg(introShowBubbleProfile())),
+                height: Utils.getDeviceHeight(context) / 1.9,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeName
               ? Positioned(
-                  top: 65,
-                  right: Utils.getDeviceWidth(context) / 2.0,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_companyname")),
-                      height: Utils.getDeviceHeight(context) / 1.8,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            top: 65,
+            right: Utils.getDeviceWidth(context) / 2.0,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleCompanyName())),
+                height: Utils.getDeviceHeight(context) / 1.8,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeEmployee
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 3.9,
-                  child: InkResponse(
-                    child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg("intro_bub_emp_stat")),
-                      height: Utils.getDeviceHeight(context) / 1.4,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            top: 65,
+            left: Utils.getDeviceWidth(context) / 3.9,
+            child: InkResponse(
+              child: Image(
+                image:
+                AssetImage(Utils.getAssetsImg(introShowBubbleEmp())),
+                height: Utils.getDeviceHeight(context) / 1.4,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeSalesPersons
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.8,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_sales_stat")),
-                      height: Utils.getDeviceHeight(context) / 1.35,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            top: 65,
+            left: Utils.getDeviceWidth(context) / 2.8,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleSales())),
+                height: Utils.getDeviceHeight(context) / 1.35,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeServicesPerson
               ? Positioned(
-                  top: 60,
-                  left: Utils.getDeviceWidth(context) / 2.1,
+            top: 60,
+            left: Utils.getDeviceWidth(context) / 2.1,
 //            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_customer_stat")),
-                      height: Utils.getDeviceHeight(context) / 1.4,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleCustomer())),
+                height: Utils.getDeviceHeight(context) / 1.4,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeBrandValue
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.8,
+            top: 65,
+            left: Utils.getDeviceWidth(context) / 2.8,
 //            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_brand_value")),
-                      height: Utils.getDeviceHeight(context) / 1.5,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleBrandValue())),
+                height: Utils.getDeviceHeight(context) / 1.5,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeMoney
               ? Positioned(
-                  top: 60,
-                  left: Utils.getDeviceWidth(context) / 2.6,
+            top: 60,
+            left: Utils.getDeviceWidth(context) / 2.6,
 //            right: Utils.getDeviceWidth(context) / 2.9,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("intro_bub_cash")),
-                      height: Utils.getDeviceHeight(context) / 1.3,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg(introShowBubbleCash())),
+                height: Utils.getDeviceHeight(context) / 1.3,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
 //--------------------------------------------------------------------------------------------------------------
 
           selectedType == Const.typeBusinessSector
               ? Positioned(
-                  bottom: 50,
-                  left: Utils.getDeviceWidth(context) / 3.2,
-                  child: InkResponse(
-                      child: Image(
-                        image: AssetImage(
-                            Utils.getAssetsImg("intro_bub_business_sectors")),
-                        height: Utils.getDeviceHeight(context) / 1.3,
-                      ),
-                      onTap: () {}),
-                )
+            bottom: 50,
+            left: Utils.getDeviceWidth(context) / 3.2,
+            child: InkResponse(
+                child: Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(introShowBubbleBusinessSectors())),
+                  height: Utils.getDeviceHeight(context) / 1.3,
+                ),
+                onTap: () {}),
+          )
               : Container(),
 
           selectedType == Const.typeNewCustomer
               ? Positioned(
-                  bottom: 70,
-                  left: Utils.getDeviceWidth(context) / 3.8,
-                  child: InkResponse(
-                      child: Image(
-                        image: AssetImage(
-                            Utils.getAssetsImg("intro_bub_new_customer")),
-                        height: Utils.getDeviceHeight(context) / 1.4,
-                      ),
-                      onTap: () {}),
-                )
+            bottom: 70,
+            left: Utils.getDeviceWidth(context) / 3.8,
+            child: InkResponse(
+                child: Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(introShowBubbleNewCustomer())),
+                  height: Utils.getDeviceHeight(context) / 1.4,
+                ),
+                onTap: () {}),
+          )
               : Container(),
 
           selectedType == Const.typeExistingCustomer
               ? Positioned(
-                  bottom: 40,
-                  left: Utils.getDeviceWidth(context) / 4.0,
-                  child: InkResponse(
-                      child: Image(
-                        image: AssetImage(
-                            Utils.getAssetsImg("intro_bub_existing_customer")),
-                        height: Utils.getDeviceHeight(context) / 1.35,
-                      ),
-                      onTap: () {}),
-                )
+            bottom: 40,
+            left: Utils.getDeviceWidth(context) / 4.0,
+            child: InkResponse(
+                child: Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(introShowBubbleExistingCustomer())),
+                  height: Utils.getDeviceHeight(context) / 1.35,
+                ),
+                onTap: () {}),
+          )
               : Container(),
 
           selectedType == Const.typeReward
               ? Positioned(
-                  bottom: Utils.getDeviceHeight(context) / 3.0,
-                  left: Utils.getDeviceWidth(context) / 3.5,
-                  child: InkResponse(
-                    child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg("intro_bub_rewards")),
-                      height: Utils.getDeviceHeight(context) / 2.0,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            bottom: Utils.getDeviceHeight(context) / 3.0,
+            left: Utils.getDeviceWidth(context) / 3.5,
+            child: InkResponse(
+              child: Image(
+                image:
+                AssetImage(Utils.getAssetsImg(introShowBubbleRewards())),
+                height: Utils.getDeviceHeight(context) / 2.0,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeTeam
               ? Positioned(
-                  top: 50,
+            top: 50,
 //                  top: Utils.getDeviceHeight(context) / 6.4,
-                  left: Utils.getDeviceWidth(context) / 1.7,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("intro_bub_team")),
-                      height: Utils.getDeviceHeight(context) / 2.4,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            left: Utils.getDeviceWidth(context) / 1.7,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg(introShowBubbleTeam())),
+                height: Utils.getDeviceHeight(context) / 2.4,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeChallenges
               ? Positioned(
-                  top: 40,
+            top: 40,
 //                  left: Utils.getDeviceWidth(context) / 4,
-                  right: Utils.getDeviceWidth(context) / 3.0,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg("intro_bub_challenges")),
-                      height: Utils.getDeviceHeight(context) / 1.8,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            right: Utils.getDeviceWidth(context) / 3.0,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleChallenges())),
+                height: Utils.getDeviceHeight(context) / 1.8,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           selectedType == Const.typeOrg
               ? Positioned(
-                  top: 80,
-                  left: Utils.getDeviceWidth(context) / 2.6,
-                  child: InkResponse(
-                      child: Image(
-                        image: AssetImage(
-                            Utils.getAssetsImg("intro_bub_organization")),
-                        height: Utils.getDeviceHeight(context) / 1.55,
-                      ),
-                      onTap: () {}),
-                )
+            top: 80,
+            left: Utils.getDeviceWidth(context) / 2.6,
+            child: InkResponse(
+                child: Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(introShowBubbleOrganization())),
+                  height: Utils.getDeviceHeight(context) / 1.55,
+                ),
+                onTap: () {}),
+          )
               : Container(),
 
           selectedType == Const.typePl
               ? Positioned(
-                  bottom: 10,
-                  left: Utils.getDeviceWidth(context) / 4.9,
-                  child: InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("intro_bub_pl")),
-                        height: Utils.getDeviceHeight(context) / 1.45,
-                      ),
-                      onTap: () {}),
-                )
+            bottom: 10,
+            left: Utils.getDeviceWidth(context) / 4.9,
+            child: InkResponse(
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg(introShowBubblePl())),
+                  height: Utils.getDeviceHeight(context) / 1.45,
+                ),
+                onTap: () {}),
+          )
               : Container(),
 
           selectedType == Const.typeRanking
               ? Positioned(
-                  bottom: 30,
+            bottom: 30,
 //            left: Utils.getDeviceWidth(context) / 1.9,
-                  right: Utils.getDeviceWidth(context) / 2.6,
-                  child: InkResponse(
-                    child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg("intro_bub_ranking")),
-                      height: Utils.getDeviceHeight(context) / 1.6,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            right: Utils.getDeviceWidth(context) / 2.6,
+            child: InkResponse(
+              child: Image(
+                image:
+                AssetImage(Utils.getAssetsImg(introShowBubbleRanking())),
+                height: Utils.getDeviceHeight(context) / 1.6,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 //-------------------------------------------------------------------------------------------------------
 
           selectedType == Const.typeProfile
               ? Container()
               : Positioned(
-                  top: Utils.getDeviceHeight(context) / 2.35,
-                  left: 10,
+            top: Utils.getDeviceHeight(context) / 2.35,
+            left: 10,
 //            right: Utils.getDeviceWidth(context) / 1.62,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg("intro_bub_back")),
-                      height: Utils.getDeviceHeight(context) / 10,
-                    ),
-                    onTap: () {
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg(introShowBack())),
+                height: Utils.getDeviceHeight(context) / 10,
+              ),
+              onTap: () {
 //                      if(currentVol != 0) {
-                      Utils.playClickSound();
+                Utils.playClickSound();
 //                      }
 
-                      setState(() {
-                        if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeRanking;
-                        } else if (selectedType == Const.typeRanking) {
-                          selectedType = Const.typePl;
-                        } else if (selectedType == Const.typePl) {
-                          selectedType = Const.typeOrg;
-                        } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeChallenges) {
-                          Injector.isManager() ?
-                          selectedType = Const.typeTeam : selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeTeam) {
-                          selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeReward) {
-                          selectedType = Const.typeExistingCustomer;
-                        } else if (selectedType == Const.typeExistingCustomer) {
-                          selectedType = Const.typeNewCustomer;
-                        } else if (selectedType == Const.typeNewCustomer) {
-                          selectedType = Const.typeBusinessSector;
-                        } else if (selectedType == Const.typeBusinessSector) {
+                setState(() {
+                  if (selectedType == Const.typeProfile) {
+                    selectedType = Const.typeRanking;
+                  } else if (selectedType == Const.typeRanking) {
+                    selectedType = Const.typePl;
+                  } else if (selectedType == Const.typePl) {
+                    selectedType = Const.typeOrg;
+                  } else if (selectedType == Const.typeOrg) {
+                    selectedType = Const.typeChallenges;
+                  } else if (selectedType == Const.typeChallenges) {
+                    Injector.isManager() ?
+                    selectedType = Const.typeTeam : selectedType =
+                        Const.typeReward;
+                  } else if (selectedType == Const.typeTeam) {
+                    selectedType = Const.typeReward;
+                  } else if (selectedType == Const.typeReward) {
+                    selectedType = Const.typeExistingCustomer;
+                  } else if (selectedType == Const.typeExistingCustomer) {
+                    selectedType = Const.typeNewCustomer;
+                  } else if (selectedType == Const.typeNewCustomer) {
+                    selectedType = Const.typeBusinessSector;
+                  } else if (selectedType == Const.typeBusinessSector) {
 //                          selectedType = Const.typeProfile;
 //                        } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeMoney;
-                        } else if (selectedType == Const.typeMoney) {
-                          selectedType = Const.typeBrandValue;
-                        } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBrandValue) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeSalesPersons) {
-                          selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeName;
-                        } else if (selectedType == Const.typeName) {
-                          selectedType = Const.typeProfile;
-                        }
-                      });
-                    },
-                  ),
-                ),
+                    selectedType = Const.typeMoney;
+                  } else if (selectedType == Const.typeMoney) {
+                    selectedType = Const.typeBrandValue;
+                  } else if (selectedType == Const.typeServicesPerson) {
+                    selectedType = Const.typeSalesPersons;
+                  } else if (selectedType == Const.typeBrandValue) {
+                    selectedType = Const.typeServicesPerson;
+                  } else if (selectedType == Const.typeSalesPersons) {
+                    selectedType = Const.typeEmployee;
+                  } else if (selectedType == Const.typeEmployee) {
+                    selectedType = Const.typeName;
+                  } else if (selectedType == Const.typeName) {
+                    selectedType = Const.typeProfile;
+                  }
+                });
+              },
+            ),
+          ),
 
           selectedType == Const.typeRanking
               ? Container(
-                  child: Positioned(
-                      top: Utils.getDeviceHeight(context) / 2.35,
-                      right: 10,
-                      child: InkResponse(
-                        child: Image(
-                          image:
-                              AssetImage(Utils.getAssetsImg("intro_bub_enter")),
-                          height: Utils.getDeviceHeight(context) / 10,
-                        ),
-                        onTap: () {
-//                          if(currentVol != 0) {
-                          Utils.playClickSound();
-//                          }
-                          setState(() {
-                            Navigator.pushAndRemoveUntil(context,
-                                FadeRouteHome(), ModalRoute.withName("/home"));
-                          });
-                        },
-                      )))
-              : Positioned(
+              child: Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
                   right: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg("intro_bub_next")),
+                      image:
+                      AssetImage(Utils.getAssetsImg(introShowEnter())),
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
+//                          if(currentVol != 0) {
+                      Utils.playClickSound();
+//                          }
+                      setState(() {
+                        Navigator.pushAndRemoveUntil(context,
+                            FadeRouteHome(), ModalRoute.withName("/home"));
+                      });
+                    },
+                  )))
+              : Positioned(
+            top: Utils.getDeviceHeight(context) / 2.35,
+            right: 10,
+//            right: Utils.getDeviceWidth(context) / 1.62,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg(introShowNext())),
+                height: Utils.getDeviceHeight(context) / 10,
+              ),
+              onTap: () {
 //                      AudioManager.STREAM_SYSTEM;
 
 //                      if(currentVol != 0) {
-                      Utils.playClickSound();
+                Utils.playClickSound();
 //                      }
 
-                      setState(() {
-                        if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeName;
-                        } else if (selectedType == Const.typeName) {
-                          selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeSalesPersons) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBrandValue) {
-                          selectedType = Const.typeMoney;
-                        } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeBrandValue;
-                        } else if (selectedType == Const.typeMoney) {
+                setState(() {
+                  if (selectedType == Const.typeProfile) {
+                    selectedType = Const.typeName;
+                  } else if (selectedType == Const.typeName) {
+                    selectedType = Const.typeEmployee;
+                  } else if (selectedType == Const.typeSalesPersons) {
+                    selectedType = Const.typeServicesPerson;
+                  } else if (selectedType == Const.typeEmployee) {
+                    selectedType = Const.typeSalesPersons;
+                  } else if (selectedType == Const.typeBrandValue) {
+                    selectedType = Const.typeMoney;
+                  } else if (selectedType == Const.typeServicesPerson) {
+                    selectedType = Const.typeBrandValue;
+                  } else if (selectedType == Const.typeMoney) {
 //                          selectedType = Const.typeProfile;
 //                        } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeBusinessSector;
-                        } else if (selectedType == Const.typeBusinessSector) {
-                          selectedType = Const.typeNewCustomer;
-                        } else if (selectedType == Const.typeNewCustomer) {
-                          selectedType = Const.typeExistingCustomer;
-                        } else if (selectedType == Const.typeExistingCustomer) {
-                          selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeReward) {
-                         Injector.isManager() ?
-                           selectedType = Const.typeTeam : selectedType = Const.typeChallenges;
-
-
-                        } else if (selectedType == Const.typeTeam) {
-                          selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeChallenges) {
-                          selectedType = Const.typeOrg;
-                        } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typePl;
-                        } else if (selectedType == Const.typePl) {
-                          selectedType = Const.typeRanking;
-                        } else if (selectedType == Const.typeRanking) {
-                          DashboardGamePage();
-                        }
-                      });
-                    },
-                  ),
-                ),
+                    selectedType = Const.typeBusinessSector;
+                  } else if (selectedType == Const.typeBusinessSector) {
+                    selectedType = Const.typeNewCustomer;
+                  } else if (selectedType == Const.typeNewCustomer) {
+                    selectedType = Const.typeExistingCustomer;
+                  } else if (selectedType == Const.typeExistingCustomer) {
+                    selectedType = Const.typeReward;
+                  } else if (selectedType == Const.typeReward) {
+                    Injector.isManager() ?
+                    selectedType = Const.typeTeam : selectedType =
+                        Const.typeChallenges;
+                  } else if (selectedType == Const.typeTeam) {
+                    selectedType = Const.typeChallenges;
+                  } else if (selectedType == Const.typeChallenges) {
+                    selectedType = Const.typeOrg;
+                  } else if (selectedType == Const.typeOrg) {
+                    selectedType = Const.typePl;
+                  } else if (selectedType == Const.typePl) {
+                    selectedType = Const.typeRanking;
+                  } else if (selectedType == Const.typeRanking) {
+                    DashboardGamePage();
+                  }
+                });
+              },
+            ),
+          ),
         ],
       ),
     );
+  }
+
+
+  //show bubble with name
+
+  introShowBubbleProfile() {
+      if(Injector.userData.language == "English") {
+        return "intro_bub_profile";
+//        return "intro_bub_profile_en";
+      } else if(Injector.userData.language == "German") {
+        return "intro_bub_profile_de";
+      } else if(Injector.userData.language == "Chinese") {
+        return "intro_bub_profile_zh";
+      }
+  }
+
+  introShowBubbleCompanyName() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_companyname";
+//      return "intro_bub_companyname_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_companyname_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_companyname_zh";
+    }
+  }
+
+  introShowBubbleEmp() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_emp_stat";
+//      return "intro_bub_emp_stat_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_emp_stat_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_emp_stat_zh";
+    }
+  }
+
+  introShowBubbleSales() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_sales_stat";
+//      return "intro_bub_sales_stat_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_sales_stat_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_sales_stat_zh";
+    }
+  }
+
+  introShowBubbleCustomer() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_customer_stat";
+//      return "intro_bub_customer_stat_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_customer_stat_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_customer_stat_zh";
+    }
+  }
+
+  introShowBubbleBrandValue() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_brand_value";
+//      return "intro_bub_brand_value_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_brand_value_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_brand_value_zh";
+    }
+  }
+
+  introShowBubbleCash() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_cash";
+//      return "intro_bub_cash_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_cash_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_cash_zh";
+    }
+  }
+
+  introShowBubbleBusinessSectors() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_business_sectors";
+//      return "intro_bub_business_sectors_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_business_sectors_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_business_sectors_zh";
+    }
+  }
+
+  introShowBubbleNewCustomer() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_new_customer";
+//      return "intro_bub_new_customer_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_new_customer_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_new_customer_zh";
+    }
+  }
+
+  introShowBubbleExistingCustomer() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_existing_customer";
+//      return "intro_bub_existing_customer_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_existing_customer_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_existing_customer_zh";
+    }
+  }
+
+  introShowBubbleRewards() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_rewards";
+//      return "intro_bub_rewards_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_rewards_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_rewards_zh";
+    }
+  }
+  introShowBubbleTeam() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_team";
+//      return "intro_bub_team_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_team_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_team_zh";
+    }
+  }
+
+  introShowBubbleChallenges() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_challenges";
+//      return "intro_bub_challenges_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_challenges_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_challenges_zh";
+    }
+  }
+
+  introShowBubbleOrganization() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_organization";
+//      return "intro_bub_organization_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_organization_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_organization_zh";
+    }
+  }
+
+  introShowBubblePl() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_pl";
+//      return "intro_bub_pl_en";
+    } else if(Injector.userData .language == "German") {
+      return "intro_bub_pl_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_pl_zh";
+    }
+  }
+
+  introShowBubbleRanking() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_ranking";
+//      return "intro_bub_ranking_en";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_ranking_de";
+    } else if(Injector.userData.language == "Chinese") {
+      return "intro_bub_ranking_zh";
+    }
+  }
+
+  introShowBack() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_back";
+    } else if(Injector.userData.language == "German") {
+      return "";
+    } else if(Injector.userData.language == "Chinese") {
+      return "";
+    }
+  }
+
+  introShowEnter() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_enter";
+    } else if(Injector.userData.language == "German") {
+      return "";
+    } else if(Injector.userData.language == "Chinese") {
+      return "";
+    }
+  }
+
+  introShowNext() {
+    if(Injector.userData.language == "English") {
+      return "intro_bub_next";
+    } else if(Injector.userData.language == "German") {
+      return "intro_bub_next";
+
+    } else if(Injector.userData.language == "Chinese") {
+       return "";
+    }
   }
 }

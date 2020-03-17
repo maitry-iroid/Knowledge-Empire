@@ -144,7 +144,7 @@ class PushNotificationHelper {
 
     if (challengeId != null) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
-      CommonView().pushNotificationAlert(context);
+//      CommonView().pushNotificationAlert(context);
 
     }
 

@@ -274,6 +274,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: TextField(
                     controller: emailController,
+//                    autocorrect: true,
                     keyboardType: TextInputType.emailAddress,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
@@ -314,6 +315,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: passwordController,
                     obscureText: true,
+//                    autocorrect: true,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
