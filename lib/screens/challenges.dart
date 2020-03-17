@@ -54,7 +54,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     if (widget.arrFriends != null) {
       arrSearchFriends = widget.arrFriends;
-      if (arrSearchFriends.length > 0) setState(() {});
+      if (arrSearchFriends.length > 0) if (mounted)setState(() {});
     }
   }
 
@@ -304,7 +304,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   int selectedIndex = -1;
 
   _onSelectedFriend(int index) {
-    setState(() {
+    if (mounted)setState(() {
       selectedIndex = index;
 
       selectedFriendId = arrFriends[selectedIndex].userId;
@@ -314,7 +314,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
-    setState(() => selectedRewardsIndex = index);
+    if (mounted)setState(() => selectedRewardsIndex = index);
   }
 
   selectedItem(int type, int index) {
@@ -363,7 +363,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             InkResponse(
                 onTap: () {
                   Utils.playClickSound();
-                  setState(() {
+                  if (mounted)setState(() {
                     if (arrFriendsToShow[index].isFriend == 0) {
                       arrFriendsToShow[index].isFriend = 1;
                       friendUnFriendUser(index, 1);
@@ -423,7 +423,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedSector(int index) {
-    setState(() => selectedModuleIndex = index);
+    if (mounted)setState(() => selectedModuleIndex = index);
   }
 
   showSectorItem(int index) {
@@ -546,7 +546,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         } else {
           if (arrSearchFriends.length > 0) arrSearchFriends.removeAt(index);
           if (arrFriendsToShow.length > 0) arrFriendsToShow.removeAt(index);
-          setState(() {});
+          if (mounted)setState(() {});
           Utils.showToast(
               Utils.getText(context, StringRes.alertUnFriendSuccess));
         }
@@ -577,7 +577,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             if (arrLearningModules.length > 0) {
               selectedModuleIndex = 0;
             }
-            setState(() {});
+            if (mounted)setState(() {});
           }
         }).catchError((e) {
           print("getLearningModule_" + e.toString());
@@ -646,7 +646,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               selectedRewardsIndex = 0;
             }
 
-            setState(() {});
+            if (mounted)setState(() {});
           }
         }).catchError((e) {
           print("searchFriends_" + e.toString());
@@ -687,7 +687,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //                if (text.isEmpty) {
 //                  arrSearchFriends = arrFriends;
 //                  arrFriendsToShow = arrFriends;
-//                  setState(() {});
+//                  if (mounted)setState(() {});
 //                } else {
 //                  getSearchFriends(searchText);
 //                }

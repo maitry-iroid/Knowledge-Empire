@@ -104,6 +104,7 @@ class Organization {
   String subtractLevelConfirmMessage;
   String addLevelConfirmMessage;
   int employeeCount;
+  int position;
 
   Organization(
       {this.type,

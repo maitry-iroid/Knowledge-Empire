@@ -203,7 +203,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     }
 
     Utils.hideKeyboard(context);
-    setState(() {
+    if (mounted)setState(() {
       isLoading = true;
     });
 
@@ -211,7 +211,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     rq.email = emailController.text.trim();
 
     WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
 
@@ -222,7 +222,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       }
     }).catchError((e) {
       print("forgotPassword_" + e.toString());
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
       Utils.showToast(e.toString());

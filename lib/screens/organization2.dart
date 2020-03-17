@@ -65,7 +65,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   showItem(int type) {
-    int position = type - 1;
+//    int position = type - 1;
+
+    Organization org = arrOrganization.firstWhere((org) => org.type == type);
 
     return Stack(
       fit: StackFit.loose,
@@ -81,12 +83,12 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                   right: 4,
                   top: type == Const.typeSales ||
                           type == Const.typeOperations ||
-                          type == Const.typeLegal
+                          type == Const.typeFinance
                       ? 60
                       : 4,
                   bottom: type == Const.typeSales ||
                           type == Const.typeOperations ||
-                          type == Const.typeLegal
+                          type == Const.typeFinance
                       ? 4
                       : 60),
 //              margin: EdgeInsets.all(4),
@@ -110,7 +112,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                             ),
                             color: ColorRes.headerBlue),
                         child: Text(
-                          arrOrganization[position].level.toString(),
+                          org.level.toString(),
                           style: TextStyle(
                               fontSize: 14,
                               color: Injector.isBusinessMode
@@ -120,7 +122,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       ),
                       Expanded(
                         child: Text(
-                          getTitle(position),
+                          org.name,
                           style: TextStyle(
                               fontSize: 12,
                               color: Injector.isBusinessMode
@@ -151,7 +153,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       LinearPercentIndicator(
                         alignment: MainAxisAlignment.center,
                         lineHeight: 15.0,
-                        percent: Utils.getProgress(arrOrganization[position]),
+                        percent: Utils.getProgress(org),
                         backgroundColor: Colors.transparent,
                         progressColor: Colors.blue,
                       )
@@ -168,14 +170,13 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             var data = await showDialog(
                 context: _scaffoldKey.currentContext,
                 builder: (BuildContext context) => OrgInfoDialog(
-                      text: arrOrganization[position].description,
-                      position: position,
+                      text: org.description,
                     ));
 
             print("dialog dissmissed");
             print(data);
 
-            if (data != null) manageLevel(position, data);
+            if (data != null) manageLevel(org, data);
           },
         ),
       ],
@@ -201,7 +202,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Positioned(
             right: 5,
             top: 50,
-            child: showItem(Const.typeFinance),
+            child: showItem(Const.typeLegal),
           ),
           Positioned(
             left: Utils.getDeviceWidth(context) / 6.2,
@@ -221,7 +222,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Positioned(
             right: 80,
             bottom: 15,
-            child: showItem(Const.typeLegal),
+            child: showItem(Const.typeFinance),
           ),
           Align(
             alignment: Alignment.topCenter,
@@ -257,7 +258,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
         if (data != null) {
           arrOrganization = OrganizationData.fromJson(data).organization;
-          setState(() {});
+
+          if (mounted)setState(() {});
         }
       });
     }).catchError((e) {
@@ -286,12 +288,12 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     }
   }
 
-  manageLevel(int position, int action) {
+  manageLevel(Organization organization, int action) {
     Utils.isInternetConnectedWithAlert().then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.action = action;
-      rq.type = arrOrganization[position].type;
+      rq.type = organization.type;
       rq.mode = Injector.mode;
 
       CommonView.showCircularProgress(true, context);
@@ -304,8 +306,16 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
 
-          arrOrganization[position] = manageOrgData.organization[0];
-          setState(() {});
+
+
+          for (int i = 0; i < arrOrganization.length; i++) {
+            if (arrOrganization[i].type == organization.type) {
+              arrOrganization[i] = manageOrgData.organization[0];
+              break;
+            }
+          }
+
+          if (mounted)setState(() {});
           Utils.performManageLevel(manageOrgData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);

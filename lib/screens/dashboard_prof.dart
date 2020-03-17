@@ -52,7 +52,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
               arrDashboardData.add(GetDashboardData.fromJson(v));
             });
 
-            if (arrDashboardData.isNotEmpty) setState(() {});
+            if (arrDashboardData.isNotEmpty) if (mounted)setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());

@@ -60,7 +60,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           arrOrganization = organizationData.organization;
           selectedOrg = arrOrganization[0];
 
-          setState(() {});
+          if (mounted)setState(() {});
         }
       }).catchError((e) {
         print("getOrganizations_" + e.toString());
@@ -216,7 +216,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       ),
       onTap: () {
         Utils.playClickSound();
-        setState(() {
+        if (mounted)setState(() {
           selectedOrg = arrOrganization[index];
           selectedIndex = index;
         });
@@ -465,7 +465,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
           Utils.performManageLevel(manageOrgData);
 
-          setState(() {});
+          if (mounted)setState(() {});
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }

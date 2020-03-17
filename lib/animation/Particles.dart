@@ -42,7 +42,7 @@ class _ParticlesState extends State<Particles> {
   Future<ui.Image> loadImage(List<int> img) async {
     final Completer<ui.Image> completer = new Completer();
     ui.decodeImageFromList(img, (ui.Image img) {
-      setState(() {
+      if (mounted)setState(() {
         isImageLoaded = true;
       });
       return completer.complete(img);
@@ -280,7 +280,7 @@ class _RenderingState extends State<Rendering>
     if (widget.onTick != null) {
       widget.onTick(effectiveElapsed);
     }
-    setState(() {
+    if (mounted)setState(() {
       _timeElapsed = effectiveElapsed;
     });
   }

@@ -356,7 +356,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           organizationData.organization = arrOrganization;
 
 
-          setState(() {});
+          if (mounted)setState(() {});
 
           Utils.performManageLevel(data);
         }

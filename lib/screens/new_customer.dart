@@ -43,7 +43,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
 
         if (arrQuestions != null && arrQuestions.length > 0) {
-          setState(() {});
+          if (mounted)setState(() {});
         }
       }
     });
@@ -75,7 +75,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           print(arrQuestions[i].value);
         }
 
-        setState(() {});
+        if (mounted)setState(() {});
       } else {
 //        Utils.showToast(Utils.getText(
 //            _scaffoldKey?.currentContext, StringRes.somethingWrong));
@@ -386,7 +386,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
 
         if (arrQuestions != null && arrQuestions.length > 0) {
-          setState(() {});
+          if (mounted)setState(() {});
         }
       }
     });

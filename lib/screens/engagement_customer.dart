@@ -95,7 +95,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 Utils.getCacheFile(questionData.mediaLink).file)
             : VideoPlayerController.network(questionData.mediaLink)
           ..initialize().then((_) {
-            setState(() {
+            if (mounted)setState(() {
               _controller.play();
             });
           });
@@ -132,14 +132,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   selectItem(index) {
-    setState(() {
+    if (mounted)setState(() {
 //      _selectedItem = index;
       print(selectItem.toString());
     });
   }
 
   refresh() {
-    setState(() {});
+    if (mounted)setState(() {});
   }
 
   pdfShow() {
@@ -157,7 +157,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     return GestureDetector(
         onTap: () {
           Utils.playClickSound();
-          setState(() {
+          if (mounted)setState(() {
             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
           });
         },
@@ -696,10 +696,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       ? _controller.pause()
                       : _controller.play();
 
-                  setState(() {});
+                  if (mounted)setState(() {});
 
 //                  questionData.videoPlay == 1
-//                      ? setState(() {
+//                      ? if (mounted)setState(() {
 //                          _controller.value.isPlaying
 //                              ? _controller.pause()
 //                              : _controller.play();

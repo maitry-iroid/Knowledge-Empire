@@ -129,9 +129,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     if (questionData.isAnsweredCorrect == true) {
       Future.delayed(const Duration(seconds: 5), () {
         if (mounted) {
-          setState(() {
-            isGif = false;
-          });
+          if (mounted)
+            setState(() {
+              isGif = false;
+            });
         }
       });
 
@@ -442,12 +443,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 //                height: 100,
 //                onPressed: () {
 //                  questionData.videoPlay == 1
-//                      ? setState(() {
+//                      ? if (mounted)setState(() {
 //                          _controller.value.isPlaying
 //                              ? _controller.pause()
 //                              : _controller.play();
 //                        })
-//                      : setState(() {
+//                      : if (mounted)setState(() {
 //                          _controller.play();
 //                        });
 //                },
@@ -601,7 +602,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
-      setState(() {});
+      if (mounted) setState(() {});
     });
 
     controller.forward();
@@ -868,7 +869,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
-      setState(() {});
+      if (mounted) setState(() {});
     });
 
     controller.forward();
@@ -892,9 +893,10 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
               Utils.getCacheFile(correctWrongImage()).file)
           : VideoPlayerController.network(correctWrongImage())
         ..initialize().then((_) {
-          setState(() {
-            _controller.pause();
-          });
+          if (mounted)
+            setState(() {
+              _controller.pause();
+            });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
       questionData.videoLoop == 1
@@ -1025,15 +1027,13 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
               child: MaterialButton(
                 height: 100,
                 onPressed: () {
-                  questionData.videoPlay == 1
-                      ? setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        })
-                      : setState(() {
-                          _controller.play();
-                        });
+                  setState(() {
+                    questionData.videoPlay == 1
+                        ? _controller.value.isPlaying
+                            ? _controller.pause()
+                            : _controller.play()
+                        : _controller.play();
+                  });
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 7,
