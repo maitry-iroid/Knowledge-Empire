@@ -65,12 +65,7 @@ class MyAppState extends State<MyApp> {
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home: Injector.userId != null
-              ? (Injector.prefs.getBool(PrefKeys.isLoginFirstTime) == null ||
-                      Injector.prefs.getBool(PrefKeys.isLoginFirstTime)
-                  ? IntroPage()
-                  : HomePage())
-              : LoginPage(),
+          home: Injector.userId != null ? HomePage() : LoginPage(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),
