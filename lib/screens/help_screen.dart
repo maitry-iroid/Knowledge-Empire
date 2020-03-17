@@ -1196,8 +1196,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleCompanyName() {
     if(Injector.userData.language == "English") {
-//      return "intro_bub_companyname";
-      return "intro_bub_companyname_en";
+      return "intro_bub_companyname";
+//      return "intro_bub_companyname_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_companyname_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1362,9 +1362,9 @@ class HelpPageState extends State<HelpPage> {
     if(Injector.userData.language == "English") {
       return "intro_bub_back";
     } else if(Injector.userData.language == "German") {
-      return "";
+      return "intro_bub_back";
     } else if(Injector.userData.language == "Chinese") {
-      return "";
+      return "intro_bub_back";
     }
   }
 
@@ -1372,9 +1372,9 @@ class HelpPageState extends State<HelpPage> {
     if(Injector.userData.language == "English") {
       return "intro_bub_enter";
     } else if(Injector.userData.language == "German") {
-      return "";
+      return "intro_bub_enter";
     } else if(Injector.userData.language == "Chinese") {
-      return "";
+      return "intro_bub_enter";
     }
   }
 
@@ -1385,7 +1385,7 @@ class HelpPageState extends State<HelpPage> {
       return "intro_bub_next";
 
     } else if(Injector.userData.language == "Chinese") {
-       return "";
+      return "intro_bub_next";
     }
   }
 }
