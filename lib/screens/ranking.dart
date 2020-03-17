@@ -759,6 +759,7 @@ class _RankingPageState extends State<RankingPage> {
     return arrFriends.length > 0 &&
         arrFriends[index].userId == Injector.userData.userId;
 
+
   }
 
   void getData() async {
