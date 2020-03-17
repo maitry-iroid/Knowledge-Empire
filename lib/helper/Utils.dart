@@ -703,7 +703,7 @@ class Utils {
       case "German":
         index = 1;
         break;
-      case "Chinese":
+        case "Chinese":
         index = 2;
         break;
       default:

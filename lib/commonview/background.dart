@@ -585,7 +585,102 @@ class CommonView {
   //push notification alert
 
   pushNotificationAlert(BuildContext context) {
+
+
     showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.all(40),
+                      width: Utils.getDeviceWidth(context) / 2.0,
+                      height: Utils.getDeviceHeight(context) / 2.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorRes.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 35,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, "Alert Notification"),
+                                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 13)),
+                            Container(
+                              height: Utils.getDeviceHeight(context)/5.0,
+                              child: Text(
+                                Utils.getText(context, "hello"),
+                                style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 13)),
+                            InkResponse(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 10, right: 10, top: 3, bottom: 3),
+                                margin: EdgeInsets.only(
+                                    left: 10, right: 10, top: 3, bottom: 3),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 2, color: ColorRes.blue),
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                                child: Text(Utils.getText(context, "claim"),
+                                    style:
+                                    TextStyle(color: ColorRes.blue, fontSize: 17)),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context, Const.add);
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                  ),
+                  Positioned(
+                      right: 10,
+                      child: InkResponse(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Image(
+                            image: AssetImage(Utils.getAssetsImg('close_dialog')),
+                            width: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Navigator.pop(context, null);
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+    /*showGeneralDialog(
         context: context,
         barrierDismissible: true,
         barrierLabel:
@@ -631,6 +726,6 @@ class CommonView {
                   )),
             ),
           );
-        });
+        })*/
   }
 }

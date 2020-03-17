@@ -330,7 +330,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" thin";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" thin\n";
 		};
 		7A18F2CFD5AF278F13F18C85 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -458,6 +458,7 @@
 				CURRENT_PROJECT_VERSION = 0.1.7;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
+				FLUTTER_ROOT = /Volumes/Data/Vishal/SDK/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -544,6 +545,7 @@
 				CURRENT_PROJECT_VERSION = 0.1.7;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
+				FLUTTER_ROOT = /Volumes/Data/Vishal/SDK/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -636,6 +638,7 @@
 				CURRENT_PROJECT_VERSION = 0.1.7;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
+				FLUTTER_ROOT = /Volumes/Data/Vishal/SDK/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -724,6 +727,7 @@
 				CURRENT_PROJECT_VERSION = 0.1.7;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
+				FLUTTER_ROOT = /Volumes/Data/Vishal/SDK/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -867,6 +871,7 @@
 				CURRENT_PROJECT_VERSION = 0.1.7;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
+				FLUTTER_ROOT = /Volumes/Data/Vishal/SDK/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -904,6 +909,7 @@
 				CURRENT_PROJECT_VERSION = 0.1.7;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
+				FLUTTER_ROOT = /Volumes/Data/Vishal/SDK/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
