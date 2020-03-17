@@ -947,6 +947,7 @@ class StringRes {
 
       //introDialog
       'gotIt': "了解",
+
     }
   };
 }
