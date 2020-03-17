@@ -1137,11 +1137,11 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: "Team",
-            btnName: "Got it",
+            titleText: StringRes.team,
+            btnName: StringRes.gotIt,
             btnColor: ColorRes.blue,
             desTextLine:
-                "The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)",
+                "${StringRes.graphShow}",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -1171,11 +1171,11 @@ class DisplayDialogs {
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
-            titleText: "The person you can count on",
-            btnName: "Next",
+            titleText: StringRes.plPerson ,
+            btnName: StringRes.next,
             btnColor: ColorRes.blue,
             desTextLine:
-                "Nice to meet you ${Injector.userData?.name},\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet's make sure to always have more revenue then cost.",
+                "${StringRes.niceMeetYou} ,${StringRes.plMyName}",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
@@ -1206,11 +1206,10 @@ class DisplayDialogs {
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
-            titleText: "P+L",
-            btnName: "Got it",
+            titleText: StringRes.pl,
+            btnName: StringRes.gotIt,
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Here you can monitor the cost and the revenue of your company.\n\nYou can also select the period you want to look at and\ncompare the current period with the previous period.",
+            desTextLine: "${StringRes.hereYourMonitor}\n\n${StringRes.selectPeriod}",
             onTapBtn: () async {
               Navigator.pop(context);
             },

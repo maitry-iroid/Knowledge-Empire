@@ -1185,8 +1185,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleProfile() {
       if(Injector.userData.language == "English") {
-        return "intro_bub_profile";
-//        return "intro_bub_profile_en";
+//        return "intro_bub_profile";
+        return "intro_bub_profile_en";
       } else if(Injector.userData.language == "German") {
         return "intro_bub_profile_de";
       } else if(Injector.userData.language == "Chinese") {
@@ -1196,8 +1196,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleCompanyName() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_companyname";
-//      return "intro_bub_companyname_en";
+//      return "intro_bub_companyname";
+      return "intro_bub_companyname_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_companyname_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1207,8 +1207,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleEmp() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_emp_stat";
-//      return "intro_bub_emp_stat_en";
+//      return "intro_bub_emp_stat";
+      return "intro_bub_emp_stat_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_emp_stat_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1218,8 +1218,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleSales() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_sales_stat";
-//      return "intro_bub_sales_stat_en";
+//      return "intro_bub_sales_stat";
+      return "intro_bub_sales_stat_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_sales_stat_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1229,8 +1229,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleCustomer() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_customer_stat";
-//      return "intro_bub_customer_stat_en";
+//      return "intro_bub_customer_stat";
+      return "intro_bub_customer_stat_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_customer_stat_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1240,8 +1240,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleBrandValue() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_brand_value";
-//      return "intro_bub_brand_value_en";
+//      return "intro_bub_brand_value";
+      return "intro_bub_brand_value_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_brand_value_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1251,8 +1251,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleCash() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_cash";
-//      return "intro_bub_cash_en";
+//      return "intro_bub_cash";
+      return "intro_bub_cash_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_cash_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1262,8 +1262,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleBusinessSectors() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_business_sectors";
-//      return "intro_bub_business_sectors_en";
+//      return "intro_bub_business_sectors";
+      return "intro_bub_business_sectors_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_business_sectors_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1273,8 +1273,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleNewCustomer() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_new_customer";
-//      return "intro_bub_new_customer_en";
+//      return "intro_bub_new_customer";
+      return "intro_bub_new_customer_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_new_customer_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1284,8 +1284,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleExistingCustomer() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_existing_customer";
-//      return "intro_bub_existing_customer_en";
+//      return "intro_bub_existing_customer";
+      return "intro_bub_existing_customer_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_existing_customer_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1295,8 +1295,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleRewards() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_rewards";
-//      return "intro_bub_rewards_en";
+//      return "intro_bub_rewards";
+      return "intro_bub_rewards_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_rewards_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1305,8 +1305,8 @@ class HelpPageState extends State<HelpPage> {
   }
   introShowBubbleTeam() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_team";
-//      return "intro_bub_team_en";
+//      return "intro_bub_team";
+      return "intro_bub_team_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_team_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1316,8 +1316,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleChallenges() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_challenges";
-//      return "intro_bub_challenges_en";
+//      return "intro_bub_challenges";
+      return "intro_bub_challenges_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_challenges_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1327,8 +1327,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleOrganization() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_organization";
-//      return "intro_bub_organization_en";
+//      return "intro_bub_organization";
+      return "intro_bub_organization_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_organization_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1338,8 +1338,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubblePl() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_pl";
-//      return "intro_bub_pl_en";
+//      return "intro_bub_pl";
+      return "intro_bub_pl_en";
     } else if(Injector.userData .language == "German") {
       return "intro_bub_pl_de";
     } else if(Injector.userData.language == "Chinese") {
@@ -1349,8 +1349,8 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleRanking() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_ranking";
-//      return "intro_bub_ranking_en";
+//      return "intro_bub_ranking";
+      return "intro_bub_ranking_en";
     } else if(Injector.userData.language == "German") {
       return "intro_bub_ranking_de";
     } else if(Injector.userData.language == "Chinese") {
