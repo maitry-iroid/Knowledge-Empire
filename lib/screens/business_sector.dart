@@ -56,7 +56,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               .data;
           print(arrFinalLearningModules);
 
-          if (arrFinalLearningModules.length > 0) setState(() {});
+          if (arrFinalLearningModules.length > 0) if (mounted)setState(() {});
         }
       }
     });
@@ -230,7 +230,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       ),
       onTap: () {
         Utils.playClickSound();
-        setState(() {
+        if (mounted)setState(() {
           selectedModule = arrFinalLearningModules[index];
           isSwitched = selectedModule.isDownloadEnable == 1;
         });
@@ -271,7 +271,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                             arrFinalLearningModules.clear();
                             searchText = text;
 
-                            setState(() {
+                            if (mounted)setState(() {
                               if (text.isEmpty) {
                                 arrFinalLearningModules
                                     .addAll(arrLearningModules);
@@ -365,7 +365,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         await Injector.prefs.setString(PrefKeys.learningModles,
             jsonEncode(learningModuleResponse.toJson()));
 
-        setState(() {
+        if (mounted)setState(() {
           arrLearningModules.clear();
           arrFinalLearningModules.clear();
 
@@ -390,7 +390,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   //
   void assignUserToModule(int type) async {
-    setState(() {
+    if (mounted)setState(() {
       isLoading = true;
     });
 
@@ -401,7 +401,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.type = type;
 
     WebApi().callAPI(WebApi.rqAssignUserToModule, rq.toJson()).then((data) {
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
 
@@ -414,7 +414,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           selectedModule.isAssign = 0;
         }
 
-        setState(() {
+        if (mounted)setState(() {
           arrLearningModules
               .firstWhere(
                   (module) => module.moduleId == selectedModule.moduleId)
@@ -424,7 +424,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     }).catchError((e) {
       print("assignUserModule_" + e.toString());
 
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
       Utils.showToast(e.toString());
@@ -441,7 +441,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> updatePermission() async {
-    setState(() {
+    if (mounted)setState(() {
       isLoading = true;
     });
 
@@ -451,7 +451,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.moduleId = selectedModule.moduleId;
 
     WebApi().callAPI(WebApi.rqUpdateModulePermission, rq.toJson()).then((data) {
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
 
@@ -467,7 +467,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         else
           downloadQuestions(selectedModule.moduleId);
 
-        setState(() {});
+        if (mounted)setState(() {});
       }
     });
   }
@@ -477,7 +477,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   downloadQuestions(int moduleId) {
     CommonView.showCircularProgress(true, context);
 
-    setState(() {
+    if (mounted)setState(() {
       isLoading = true;
     });
 
@@ -499,7 +499,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
         if (arrQuestions.isNotEmpty) {
           if (moduleId != null) {
-//            setState(() {
+//            if (mounted)setState(() {
 //              arrLearningModules
 //                  .firstWhere((module) => module.moduleId == moduleId)
 //                  .isDownloading = true;
@@ -529,7 +529,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 101, Utils.getText(context, StringRes.downloading));
 
             await BackgroundFetch.start().then((int status) async {
-//              setState(() {
+//              if (mounted)setState(() {
 //                arrLearningModules
 //                    .firstWhere((module) => module.moduleId == moduleId)
 //                    .isDownloading = true;
@@ -544,7 +544,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
               if (moduleId != null) {
-//                setState(() {
+//                if (mounted)setState(() {
 //                  arrLearningModules
 //                      .firstWhere((module) => module.moduleId == moduleId)
 //                      .isDownloading = false;
@@ -554,7 +554,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               if (i == arrQuestions.length - 1)
                 Injector.flutterLocalNotificationsPlugin.cancel(101);
 
-//              setState(() {
+//              if (mounted)setState(() {
 //                arrLearningModules
 //                    .firstWhere((module) => module.moduleId == moduleId)
 //                    .isDownloading = false;
@@ -571,7 +571,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           }
 
           if (moduleId != null) {
-//            setState(() {
+//            if (mounted)setState(() {
 //              arrLearningModules
 //                  .firstWhere((module) => module.moduleId == moduleId)
 //                  .isDownloading = false;
@@ -736,7 +736,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 onChanged: (value) {
                   Utils.isInternetConnectedWithAlert().then((isConnected) {
                     if (isConnected) {
-                      setState(() {
+                      if (mounted)setState(() {
                         isSwitched = value;
                       });
                       updatePermission();

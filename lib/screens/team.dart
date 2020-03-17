@@ -257,7 +257,7 @@ class _TeamPageState extends State<TeamPage> {
                   ],
                 )),
       onTap: () {
-        setState(() {
+        if (mounted)setState(() {
           secondScreen = true;
 
           getTeamUserById(user.userId);
@@ -565,7 +565,7 @@ class _TeamPageState extends State<TeamPage> {
             ),
             onTap: () {
               Utils.playClickSound();
-              setState(() {
+              if (mounted)setState(() {
                 secondScreen = false;
               });
             },
@@ -631,7 +631,7 @@ class _TeamPageState extends State<TeamPage> {
 
             initGraphData();
 
-            setState(() {});
+            if (mounted)setState(() {});
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
@@ -684,7 +684,7 @@ class _TeamPageState extends State<TeamPage> {
 
             initGraphData();
 
-            setState(() {});
+            if (mounted)setState(() {});
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);

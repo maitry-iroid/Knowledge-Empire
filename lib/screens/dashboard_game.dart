@@ -72,7 +72,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
               dashboardData.add(GetDashboardData.fromJson(v));
             });
 
-            if (dashboardData.isNotEmpty) setState(() {});
+            if (dashboardData.isNotEmpty) if (mounted)setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());

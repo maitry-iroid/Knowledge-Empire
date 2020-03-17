@@ -166,6 +166,8 @@ class StringRes {
   //introDialog
   static var gotIt = "gotIt";
 
+  static var rewardsDialogContent = "rewardsDialogContent";
+
 
 
 
@@ -185,6 +187,7 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
+      //region english
       //main options
       'home': "Home",
       'businessSector': "Business Sector",
@@ -344,9 +347,12 @@ class StringRes {
       'no': "No",
       'comingSoon': "Coming Soon..",
       'close': "Close",
+      //endregion
 
       //introDialog
       'gotIt': "Got it",
+      'rewardsDialogContent':
+          "Check out the reward categories and click on a trophy to find out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
 
       'plPerson':'The person you can count on',
       'niceMeetYou':'Nice to meet you${Injector.userData?.name}',
@@ -359,6 +365,7 @@ class StringRes {
 
     },
     'de': {
+      //region german
       //main options
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
@@ -519,9 +526,11 @@ class StringRes {
       'no': "Nein",
       'comingSoon': "Demnächst verfügbar..",
       'close': "Schließen",
+      //endregion
 
       //introDialog
       'gotIt': "Verstanden",
+      'rewardsDialogContent':"",
 
 
       'plPerson':'Mit mir kannst du rechnen',
@@ -536,6 +545,7 @@ class StringRes {
 
     },
     'zh': {
+      //region chinese
       //main options
       'home': "首页",
       'businessSector': "业务部门",
@@ -693,6 +703,7 @@ class StringRes {
       'no': "不是",
       'comingSoon': "即将推出..",
       'close': "关闭",
+      //endregion
 
       //introDialog
       'gotIt': "了解",
@@ -873,7 +884,6 @@ class StringRes {
       'no': 'Nein',
       'comingSoon': 'Demnächst verfügbar..',
       'close': 'Schließen',
-
 
       //introDialog
       'gotIt': "Verstanden",

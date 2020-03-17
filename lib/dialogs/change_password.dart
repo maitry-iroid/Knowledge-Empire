@@ -260,7 +260,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       return;
     }
 
-    setState(() {
+    if (mounted)setState(() {
       isLoading = true;
     });
 
@@ -273,7 +273,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     rq.isOldPasswordRequired = widget.isOldPasswordRequired;
 
     WebApi().callAPI(WebApi.rqChangePassword, rq.toJson()).then((data) {
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
 
@@ -289,7 +289,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       }
     }).catchError((e) {
       print("changePassword_" + e.toString());
-      setState(() {
+      if (mounted)setState(() {
         isLoading = false;
       });
       Utils.showToast(e.toString());

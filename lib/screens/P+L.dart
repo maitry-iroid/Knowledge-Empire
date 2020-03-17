@@ -279,7 +279,7 @@ class _PLPageState extends State<PLPage> {
 
   selectTime(index) {
     if (selectedTime != index) {
-      setState(() {
+      if (mounted)setState(() {
         selectedTime = index;
       });
     }
@@ -339,7 +339,7 @@ class _PLPageState extends State<PLPage> {
                         getPerformanceData(Const.plYear);
                       }
 
-                      setState(() {});
+                      if (mounted)setState(() {});
                     },
                   ),
                 );
@@ -799,7 +799,7 @@ class _PLPageState extends State<PLPage> {
         WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
           if (data != null) {
             CommonView.showCircularProgress(false, context);
-            setState(() {
+            if (mounted)setState(() {
               performanceData = PerformanceData.fromJson(data);
 
               performanceData.cost.forEach((cost) {

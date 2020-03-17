@@ -75,7 +75,7 @@ class _RewardsPageState extends State<RewardsPage> {
   int _subSelectedItem = 0;
 
   selectItem(index) {
-    setState(() {
+    if (mounted)setState(() {
       _selectedItem = index;
       print(selectItem.toString());
       selectedAchievement = arrAchievementData[_selectedItem];
@@ -88,7 +88,7 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   subCatSelectItem(index) {
-    setState(() {
+    if (mounted)setState(() {
       _subSelectedItem = index;
       selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
 //      isSelectSubCat = false;
@@ -353,7 +353,7 @@ class _RewardsPageState extends State<RewardsPage> {
         if (arrAchievementData.isNotEmpty) {
           selectedAchievement = arrAchievementData[0];
           selectedSubCategory = selectedAchievement.subCategory[0];
-          setState(() {});
+          if (mounted)setState(() {});
         }
       }
     }).catchError((e) {
@@ -423,7 +423,7 @@ class _RewardsPageState extends State<RewardsPage> {
   showCategoryItem(int index) {
     return Center(
       child: CategoryItem(
-        selectItem, // callback function, setstate for parent
+        selectItem, // callback function, if (mounted)setState for parent
         index: index,
         isSelected: _selectedItem == index ? true : false,
         title: arrAchievementData[index].achievementCategory,

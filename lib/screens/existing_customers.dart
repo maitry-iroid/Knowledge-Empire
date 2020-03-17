@@ -37,7 +37,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
         if (arrQuestions != null && arrQuestions.length > 0) {
           arrQuestions = arrQuestions;
-          setState(() {});
+          if (mounted)setState(() {});
         }
       }
     });
@@ -76,7 +76,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
           customerValueBloc.setCustomerValue(customerValueData);
 
-          setState(() {
+          if (mounted)setState(() {
             arrQuestions.removeAt(index);
           });
         } else {
@@ -105,7 +105,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           arrQuestions.add(QuestionData.fromJson(v));
         });
 
-        if (arrQuestions.isNotEmpty) setState(() {});
+        if (arrQuestions.isNotEmpty) if (mounted)setState(() {});
       }
     }).catchError((e) {
       print("getQuestions_" + e.toString());

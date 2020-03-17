@@ -140,7 +140,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (_appBadgeSupported != null) {
       _addBadge();
     }
-    setState(() {});
+    if (mounted)setState(() {});
   }
 
   void _addBadge() {
@@ -166,7 +166,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } else {
       startAnim = false;
     }
-    setState(() {});
+    if (mounted)setState(() {});
   }
 
   @override
@@ -221,7 +221,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   openProfile() {
     if (mounted) {
-      setState(() =>
+      if (mounted)setState(() =>
           _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
     }
   }
@@ -361,7 +361,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       left: !isCoinViseble ? left : 750,
       onEnd: () {
         isCoinViseble = false;
-        setState(() {});
+        if (mounted)setState(() {});
       },
       child: Container(
         child: isCoinViseble ? MyHomePage() : Container(),
@@ -488,7 +488,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         rq.userId = Injector.userData.userId;
 
         WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) {
-          setState(() {
+          if (mounted)setState(() {
             isLoading = false;
           });
 
