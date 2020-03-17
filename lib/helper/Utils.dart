@@ -218,6 +218,7 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
+
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
       bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
