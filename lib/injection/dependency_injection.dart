@@ -115,7 +115,7 @@ class Injector {
   }
 
   static isManager() {
-    return userData.isManager == 1;
+    return userData?.isManager == 1;
   }
 
   static updateIntroType(int introType) async {
