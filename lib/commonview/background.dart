@@ -9,7 +9,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 
-
 class CommonView {
   static getBGDecoration(BuildContext context) {
     return Injector.isBusinessMode
@@ -371,9 +370,8 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typeRanking);
-//                    CommonView().pushNotificationAlert(context);
-
+//                    Utils.performDashboardItemClick(context, Const.typeRanking);
+                    CommonView().pushNotificationAlert(context, 1);
                   },
                 ),
               ],
@@ -584,9 +582,7 @@ class CommonView {
 
   //push notification alert
 
-  pushNotificationAlert(BuildContext context) {
-
-
+  pushNotificationAlert(BuildContext context, int type) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -617,56 +613,90 @@ class CommonView {
                               height: 35,
                               width: Utils.getDeviceWidth(context),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
                                 color: ColorRes.blue,
                               ),
                               alignment: Alignment.topCenter,
                               child: Center(
                                 child: Text(
-                                  Utils.getText(context, "Alert Notification"),
-                                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                                  Utils.getText(context, "Reward Notification"),
+                                  style: TextStyle(
+                                      color: ColorRes.white, fontSize: 17),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
                             Padding(padding: EdgeInsets.only(top: 13)),
-                            Container(
-                              height: Utils.getDeviceHeight(context)/5.0,
-                              child: Text(
-                                Utils.getText(context, "hello"),
-                                style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                            Text(
+                              Utils.getText(context, "Claim your reward"),
+                              style: TextStyle(
+                                color: ColorRes.greenDot,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            Padding(padding: EdgeInsets.only(top: 13)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                  "assets/images/coin_reward.gif",
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.fill),
+                            ),
                             InkResponse(
                               child: Container(
+                                width: 100,
+                                height: 30,
                                 padding: EdgeInsets.only(
                                     left: 10, right: 10, top: 3, bottom: 3),
                                 margin: EdgeInsets.only(
                                     left: 10, right: 10, top: 3, bottom: 3),
                                 decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: ColorRes.blue),
+                                    color: ColorRes.borderRewardsName,
+                                    border: Border.all(
+                                        width: 2,
+                                        color: ColorRes.borderRewardsName),
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                                child: Text(Utils.getText(context, "claim"),
-                                    style:
-                                    TextStyle(color: ColorRes.blue, fontSize: 17)),
+                                        BorderRadius.all(Radius.circular(20)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        blurRadius: 5.0,
+                                      ),
+                                    ]),
+                                child: Center(
+                                  child: Text(Utils.getText(context, "CLAIM"),
+                                      style: TextStyle(
+                                          color: ColorRes.white, fontSize: 17)),
+                                ),
                               ),
                               onTap: () {
+                                switch (type) {
+                                  case 0:
+                                    break;
+                                  case 1:
+                                    break;
+                                  case 3:
+                                    break;
+                                  case 8:
+                                    break;
+                                }
                                 Navigator.pop(context, Const.add);
                               },
                             ),
                           ],
                         ),
-                      )
-                  ),
+                      )),
                   Positioned(
                       right: 10,
                       child: InkResponse(
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Image(
-                            image: AssetImage(Utils.getAssetsImg('close_dialog')),
+                            image:
+                                AssetImage(Utils.getAssetsImg('close_dialog')),
                             width: 20,
                           ),
                         ),
