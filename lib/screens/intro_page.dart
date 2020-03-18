@@ -76,7 +76,7 @@ class _IntroPageState extends State<IntroPage> {
       enlargeCenterPage: false,
       viewportFraction: 1.0,
       aspectRatio: 1.0,
-      initialPage: 2,
+      initialPage: 0,
       reverse: false,
       enableInfiniteScroll: false,
       height: Utils.getDeviceHeight(context),
