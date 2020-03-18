@@ -262,6 +262,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Container(
                           height: 30,
                           margin: EdgeInsets.symmetric(vertical: 10),
+
                           alignment: Alignment.center,
                           child: Text(
                             Utils.getText(context, StringRes.contactUs),
