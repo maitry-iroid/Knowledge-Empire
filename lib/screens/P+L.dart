@@ -423,7 +423,7 @@ class _PLPageState extends State<PLPage> {
                               : ColorRes.textProf)),
                 ),
                 Container(
-                  child: Text(getValidText(performanceData.cash.previousCash),
+                  child: Text(getValidText(performanceData.cash.previousCash == 0 ? 50000 : performanceData.cash.previousCash ),
                       style: TextStyle(
                           fontSize: 13,
                           color: Injector.isBusinessMode
