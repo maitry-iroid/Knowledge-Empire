@@ -12,6 +12,7 @@ import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/language.dart';
 import 'package:ke_employee/models/update_mode.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -199,29 +200,34 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.only(top: 0, bottom: 10),
-                        alignment: Alignment.center,
-                        child: Text(
-                          Utils.getText(context, StringRes.privacyPolicy),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
+                      InkResponse(
+                        onTap: ()  {
+                           _launchInWebViewOrVC("https://www.blue-elephants-solutions.com/wp/privacy-policy");
+                        },
+                        child: Container(
+                          height: 30,
+                          margin: EdgeInsets.only(top: 0, bottom: 10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(context, StringRes.privacyPolicy),
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 15,
+                            ),
                           ),
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
+                                  : null),
                         ),
-                        decoration: BoxDecoration(
-                            color: Injector.isBusinessMode
-                                ? null
-                                : ColorRes.bgSettings,
-                            borderRadius: Injector.isBusinessMode
-                                ? null
-                                : BorderRadius.circular(20),
-                            image: Injector.isBusinessMode
-                                ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg('bg_privacy')))
-                                : null),
                       ),
                       Container(
                         height: 30,
@@ -249,29 +255,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                         : null)
                                 : null),
                       ),
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.center,
-                        child: Text(
-                          Utils.getText(context, StringRes.contactUs),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
+                      InkResponse(
+                        onTap: (){
+                          _launchEmail("support@knowledge-empire.com");
+                        },
+                        child: Container(
+                          height: 30,
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(context, StringRes.contactUs),
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 15,
+                            ),
                           ),
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
+                                  : null),
                         ),
-                        decoration: BoxDecoration(
-                            color: Injector.isBusinessMode
-                                ? null
-                                : ColorRes.bgSettings,
-                            borderRadius: Injector.isBusinessMode
-                                ? null
-                                : BorderRadius.circular(20),
-                            image: Injector.isBusinessMode
-                                ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg('bg_privacy')))
-                                : null),
                       ),
                       InkResponse(
                         onTap: () async {
@@ -1037,6 +1048,27 @@ class _ProfilePageState extends State<ProfilePage> {
           updateProfile();
         }
       });
+    }
+  }
+
+  Future<void> _launchInWebViewOrVC(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: true,
+        forceWebView: true,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchEmail(String email) async {
+    if (await canLaunch("mailto:$email")) {
+      await launch("mailto:$email");
+    } else {
+      throw 'Could not launch';
     }
   }
 

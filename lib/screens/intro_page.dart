@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/help_screen.dart';
+import 'package:ke_employee/screens/home.dart';
 
 class IntroPage extends StatefulWidget {
   @override
@@ -103,8 +104,14 @@ class _IntroPageState extends State<IntroPage> {
                     duration: Duration(milliseconds: 300),
                     curve: Curves.linear);
                 if (index == imgList.length - 1) {
-                  Navigator.pushAndRemoveUntil(
-                      context, FadeRouteIntro(), ModalRoute.withName("/home"));
+
+
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+                      ModalRoute.withName('/'));
+
+                  /*Navigator.pushAndRemoveUntil(
+                      context, FadeRouteIntro(), ModalRoute.withName("/home"));*/
                 }
               },
               child: Image.asset(Utils.getAssetsImg("next"),
