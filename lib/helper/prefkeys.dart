@@ -13,4 +13,10 @@ class PrefKeys {
   static var deviceToken= "deviceToken";
   static var badgeCount= "badgeCount";
   static var dialogTypes= "dialogTypes";
+
+  static var introYourWillIsAtYourCommand= "introYourWillIsAtYourCommand";
+  static var introYourTeamsPerformance= "introYourTeamsPerformance";
+  static var introRewards= "introRewards";
+  static var introMarketingAndCommunications= "introMarketingAndCommunications";
+  static var introThePersonYouCanCountOn= "introThePersonYouCanCountOn";
 }

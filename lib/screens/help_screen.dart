@@ -882,6 +882,7 @@ class HelpPageState extends State<HelpPage> {
                 image: AssetImage(
                     Utils.getAssetsImg(introShowBubbleBrandValue())),
                 height: Utils.getDeviceHeight(context) / 1.5,
+                width: Utils.getDeviceHeight(context) / 1.5,
               ),
               onTap: () {},
             ),
@@ -896,7 +897,8 @@ class HelpPageState extends State<HelpPage> {
             child: InkResponse(
               child: Image(
                 image: AssetImage(Utils.getAssetsImg(introShowBubbleCash())),
-                height: Utils.getDeviceHeight(context) / 1.3,
+                height: Utils.getDeviceHeight(context) / 1.5,
+                width: Utils.getDeviceHeight(context) / 1.5,
               ),
               onTap: () {},
             ),
@@ -913,7 +915,8 @@ class HelpPageState extends State<HelpPage> {
                 child: Image(
                   image: AssetImage(
                       Utils.getAssetsImg(introShowBubbleBusinessSectors())),
-                  height: Utils.getDeviceHeight(context) / 1.3,
+                  height: Utils.getDeviceHeight(context) / 1.5,
+                  width: Utils.getDeviceHeight(context) / 1.5,
                 ),
                 onTap: () {}),
           )
@@ -986,7 +989,8 @@ class HelpPageState extends State<HelpPage> {
               child: Image(
                 image: AssetImage(
                     Utils.getAssetsImg(introShowBubbleChallenges())),
-                height: Utils.getDeviceHeight(context) / 1.8,
+                height: Utils.getDeviceHeight(context) / 1.5,
+                width: Utils.getDeviceHeight(context) / 1.5,
               ),
               onTap: () {},
             ),
@@ -1360,32 +1364,35 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBack() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_back";
+//      return "intro_bub_back";
+      return "back_eng";
     } else if(Injector.userData.language == "German") {
-      return "intro_bub_back";
+      return "back_de";
     } else if(Injector.userData.language == "Chinese") {
-      return "intro_bub_back";
+      return "back_zh";
     }
   }
 
   introShowEnter() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_enter";
+//      return "intro_bub_enter";
+      return "enter_eng";
     } else if(Injector.userData.language == "German") {
-      return "intro_bub_enter";
+      return "enter_de";
     } else if(Injector.userData.language == "Chinese") {
-      return "intro_bub_enter";
+      return "enter_zh";
     }
   }
 
   introShowNext() {
     if(Injector.userData.language == "English") {
-      return "intro_bub_next";
+//      return "intro_bub_next";
+      return "next_eng";
     } else if(Injector.userData.language == "German") {
-      return "intro_bub_next";
+      return "next_de";
 
     } else if(Injector.userData.language == "Chinese") {
-      return "intro_bub_next";
+      return "next_zh";
     }
   }
 }

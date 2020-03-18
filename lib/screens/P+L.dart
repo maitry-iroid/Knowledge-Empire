@@ -62,7 +62,7 @@ class _PLPageState extends State<PLPage> {
   Future openIntroDialog() async {
 
       await Future.delayed(Duration(milliseconds: 50));
-      if (Injector.prefs.getBool(Const.introThePersonYouCanCountOn.toString()) != null && Injector.prefs.getBool(Const.introThePersonYouCanCountOn.toString())) {
+      if (Injector.prefs.getBool(PrefKeys.introThePersonYouCanCountOn.toString()) != null && Injector.prefs.getBool(PrefKeys.introThePersonYouCanCountOn.toString())) {
       } else {
         await DisplayDialogs.showThePersonYouCanCountOn(context);
       }

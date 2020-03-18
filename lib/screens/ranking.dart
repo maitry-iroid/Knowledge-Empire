@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -764,10 +765,10 @@ class _RankingPageState extends State<RankingPage> {
 
   void getData() async {
       if (Injector.prefs
-                  .getBool(Const.introMarketingAndCommunications.toString()) !=
+                  .getBool(PrefKeys.introMarketingAndCommunications.toString()) !=
               null &&
           Injector.prefs
-              .getBool(Const.introMarketingAndCommunications.toString())) {
+              .getBool(PrefKeys.introMarketingAndCommunications.toString())) {
       } else {
         await DisplayDialogs.showMarketingAndCommunications(context);
       }

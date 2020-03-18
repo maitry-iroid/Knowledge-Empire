@@ -10,8 +10,10 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/language.dart';
+import 'package:ke_employee/models/switch_company.dart';
 import 'package:ke_employee/models/update_mode.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -199,29 +201,35 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.only(top: 0, bottom: 10),
-                        alignment: Alignment.center,
-                        child: Text(
-                          Utils.getText(context, StringRes.privacyPolicy),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
+                      InkResponse(
+                        onTap: () {
+                          _launchInWebViewOrVC(
+                              "https://www.blue-elephants-solutions.com/wp/privacy-policy");
+                        },
+                        child: Container(
+                          height: 30,
+                          margin: EdgeInsets.only(top: 0, bottom: 10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(context, StringRes.privacyPolicy),
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 15,
+                            ),
                           ),
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
+                                  : null),
                         ),
-                        decoration: BoxDecoration(
-                            color: Injector.isBusinessMode
-                                ? null
-                                : ColorRes.bgSettings,
-                            borderRadius: Injector.isBusinessMode
-                                ? null
-                                : BorderRadius.circular(20),
-                            image: Injector.isBusinessMode
-                                ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg('bg_privacy')))
-                                : null),
                       ),
                       Container(
                         height: 30,
@@ -249,29 +257,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                         : null)
                                 : null),
                       ),
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.center,
-                        child: Text(
-                          Utils.getText(context, StringRes.contactUs),
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 15,
+                      InkResponse(
+                        onTap: () {
+                          _launchEmail("support@knowledge-empire.com");
+                        },
+                        child: Container(
+                          height: 30,
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(context, StringRes.contactUs),
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 15,
+                            ),
                           ),
+                          decoration: BoxDecoration(
+                              color: Injector.isBusinessMode
+                                  ? null
+                                  : ColorRes.bgSettings,
+                              borderRadius: Injector.isBusinessMode
+                                  ? null
+                                  : BorderRadius.circular(20),
+                              image: Injector.isBusinessMode
+                                  ? DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg('bg_privacy')))
+                                  : null),
                         ),
-                        decoration: BoxDecoration(
-                            color: Injector.isBusinessMode
-                                ? null
-                                : ColorRes.bgSettings,
-                            borderRadius: Injector.isBusinessMode
-                                ? null
-                                : BorderRadius.circular(20),
-                            image: Injector.isBusinessMode
-                                ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg('bg_privacy')))
-                                : null),
                       ),
                       InkResponse(
                         onTap: () async {
@@ -551,6 +564,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               companyList[index].companyName;
                           companyController.text = StringRes.selectCompany;
                           Navigator.pop(context);
+                          Injector.userData.companyName = companyList[index].companyName;
+                          switchCompanyList(companyList[index].companyId);
                           setState(() {});
                         },
                         child: Padding(
@@ -621,7 +636,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {}
       try {
-        await Injector.prefs.clear();
+//        await Injector.prefs.clear();
+        await removeKeys();
         Injector.userData = null;
         Injector.userId = null;
         Injector.customerValueData = null;
@@ -1040,6 +1056,27 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> _launchInWebViewOrVC(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: true,
+        forceWebView: true,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchEmail(String email) async {
+    if (await canLaunch("mailto:$email")) {
+      await launch("mailto:$email");
+    } else {
+      throw 'Could not launch';
+    }
+  }
+
   selectLanguagesDialog() {
     showGeneralDialog(
         context: context,
@@ -1176,7 +1213,6 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.headerStreamController.add(Const.updateProfileBrod);
 
         localeBloc.setLocale(Utils.getIndexLocale());
-
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
@@ -1264,7 +1300,9 @@ class _ProfilePageState extends State<ProfilePage> {
       CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
-  } //Update Language API
+  }
+
+  //Update Language API
 
   switchModeApi() {
     Utils.playClickSound();
@@ -1291,4 +1329,50 @@ class _ProfilePageState extends State<ProfilePage> {
       Utils.showToast(e.toString());
     });
   }
+
+  removeKeys() {
+    Injector.prefs.remove(PrefKeys.user);
+    Injector.prefs.remove(PrefKeys.mode);
+    Injector.prefs.remove(PrefKeys.isLoginFirstTime);
+    Injector.prefs.remove(PrefKeys.questionData);
+    Injector.prefs.remove(PrefKeys.answerData);
+    Injector.prefs.remove(PrefKeys.customerValueData);
+    Injector.prefs.remove(PrefKeys.learningModles);
+    Injector.prefs.remove(PrefKeys.download);
+    Injector.prefs.remove(PrefKeys.isSoundEnable);
+    Injector.prefs.remove(PrefKeys.isIntroRemaining);
+    Injector.prefs.remove(PrefKeys.currentIntroType);
+    Injector.prefs.remove(PrefKeys.deviceToken);
+    Injector.prefs.remove(PrefKeys.badgeCount);
+    Injector.prefs.remove(PrefKeys.dialogTypes);
+  }
+
+  //switch Company List
+
+  switchCompanyList(int companyId) {
+    Utils.playClickSound();
+
+    SwitchCompanyRequest rq = SwitchCompanyRequest();
+    rq.userId = Injector.userId.toString();
+    rq.companyId = companyId.toString();
+
+//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
+    CommonView.showCircularProgress(true, context);
+    WebApi().callAPI(WebApi.switchCompanyProfile, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+
+      if (data != null) {
+//        await Injector.setUserData(Injector.userData);
+        setState(() {});
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+//      Utils.performBack(context);
+    }).catchError((e) {
+      print("updatePorfile_" + e.toString());
+      CommonView.showCircularProgress(false, context);
+      Utils.showToast(e.toString());
+    });
+  }
+
 }

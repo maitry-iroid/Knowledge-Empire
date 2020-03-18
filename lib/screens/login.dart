@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
@@ -272,7 +274,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: TextField(
                     controller: emailController,
-//                    autocorrect: true,
+                    autocorrect: Platform.isAndroid ? true :false,
+//                    autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
