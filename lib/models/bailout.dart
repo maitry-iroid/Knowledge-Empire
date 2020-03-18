@@ -15,4 +15,5 @@ class BailOutRequest {
     data['mode'] = this.mode;
     return data;
   }
+
 }
