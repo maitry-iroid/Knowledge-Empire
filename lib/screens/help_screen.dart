@@ -1364,35 +1364,32 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBack() {
     if(Injector.userData.language == "English") {
-//      return "intro_bub_back";
-      return "back_eng";
+      return "intro_bub_back";
     } else if(Injector.userData.language == "German") {
-      return "back_de";
+      return "intro_bub_back";
     } else if(Injector.userData.language == "Chinese") {
-      return "back_zh";
+      return "intro_bub_back";
     }
   }
 
   introShowEnter() {
     if(Injector.userData.language == "English") {
-//      return "intro_bub_enter";
-      return "enter_eng";
+      return "intro_bub_enter";
     } else if(Injector.userData.language == "German") {
-      return "enter_de";
+      return "intro_bub_enter";
     } else if(Injector.userData.language == "Chinese") {
-      return "enter_zh";
+      return "intro_bub_enter";
     }
   }
 
   introShowNext() {
     if(Injector.userData.language == "English") {
-//      return "intro_bub_next";
-      return "next_eng";
+      return "intro_bub_next";
     } else if(Injector.userData.language == "German") {
-      return "next_de";
+      return "intro_bub_next";
 
     } else if(Injector.userData.language == "Chinese") {
-      return "next_zh";
+      return "intro_bub_next";
     }
   }
 }

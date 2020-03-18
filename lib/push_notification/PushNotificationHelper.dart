@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -67,7 +68,6 @@ class PushNotificationHelper {
     );
   }
 
-
   Future<void> onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
     print("onDidReceiveLocalNotification");
@@ -102,7 +102,7 @@ class PushNotificationHelper {
         RegisterForPushRequest rq = RegisterForPushRequest();
         rq.userId = Injector.userId;
         rq.deviceId = Injector.deviceId;
-        rq.deviceType = Injector.deviceType;
+        rq.deviceType = "android";
         rq.deviceToken = token;
 
         await Injector.prefs.setString(PrefKeys.deviceToken, token);
@@ -126,7 +126,6 @@ class PushNotificationHelper {
     print(message);
 
     Utils.addBadge();
-//    CommonView().pushNotificationAlert(context);
 
 //    if (Platform.isIOS) {
 //      title = message['title'];
@@ -136,18 +135,16 @@ class PushNotificationHelper {
     title = message['notification']['title'];
     body = message['notification']['body'];
 
-    if(message['data']!=null){
-
+    if (message['data'] != null) {
       String challengeId = message['data']['challengeId'];
 
       if (challengeId != null) {
-        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
-//      CommonView().pushNotificationAlert(context);
-
+        Injector.homeStreamController
+            ?.add("${Const.openPendingChallengeDialog}");
       }
+
+      CommonView().pushNotificationAlert(context, 1);
     }
-
-
 
 //      message.values.forEach((value) {
 //        title = Map.from(value)['title'] ?? "";
@@ -172,7 +169,7 @@ class PushNotificationHelper {
         payload: 'item x');
   }
 
-  showLocalNotification(int id,String body) async{
+  showLocalNotification(int id, String body) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
@@ -183,8 +180,4 @@ class PushNotificationHelper {
         id, Const.appName, body, platformChannelSpecifics,
         payload: 'item x');
   }
-
-
-
-
 }
