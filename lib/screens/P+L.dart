@@ -464,6 +464,8 @@ class _PLPageState extends State<PLPage> {
                     second,
                     style: TextStyle(fontSize: 13, color: ColorRes.white),
                     textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                   ),
                 ),
                 Expanded(
@@ -472,6 +474,8 @@ class _PLPageState extends State<PLPage> {
                     third,
                     style: TextStyle(fontSize: 13, color: ColorRes.white),
                     textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                   ),
                 ),
                 Expanded(
@@ -480,6 +484,8 @@ class _PLPageState extends State<PLPage> {
                     second,
                     style: TextStyle(fontSize: 13, color: ColorRes.white),
                     textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                   ),
                 ),
                 Expanded(
@@ -488,6 +494,8 @@ class _PLPageState extends State<PLPage> {
                     third,
                     style: TextStyle(fontSize: 13, color: ColorRes.white),
                     textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                   ),
                 ),
               ],

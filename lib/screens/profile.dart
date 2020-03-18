@@ -560,13 +560,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          StringRes.selectCompany =
-                              companyList[index].companyName;
-                          companyController.text = StringRes.selectCompany;
-                          Navigator.pop(context);
+                          companyController.text = companyList[index].companyName;
                           Injector.userData.companyName = companyList[index].companyName;
+
                           switchCompanyList(companyList[index].companyId);
-                          setState(() {});
+
+                          Navigator.pop(context);
+
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -1363,7 +1363,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {
 //        await Injector.setUserData(Injector.userData);
-        setState(() {});
+
+        localeBloc.setLocale(Utils.getIndexLocale());
+
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
