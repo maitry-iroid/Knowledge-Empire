@@ -1210,6 +1210,7 @@ class DisplayDialogs {
                 "${Utils.getText(context, StringRes.hereYourMonitor)}\n\n${Utils.getText(context, StringRes.selectPeriod)}",
             onTapBtn: () async {
               Navigator.pop(context);
+
             },
           );
         });
