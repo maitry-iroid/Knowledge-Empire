@@ -135,6 +135,7 @@ class PushNotificationHelper {
     title = message['notification']['title'];
     body = message['notification']['body'];
 
+
     if (message['data'] != null) {
       String challengeId = message['data']['challengeId'];
 
