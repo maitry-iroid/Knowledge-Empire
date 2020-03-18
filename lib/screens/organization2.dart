@@ -205,7 +205,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             child: showItem(Const.typeLegal),
           ),
           Positioned(
-            left: Utils.getDeviceWidth(context) / 6.2,
+            left: Utils.getDeviceWidth(context) / 7.0,
             top: 20,
             child: showItem(Const.typeHR),
           ),

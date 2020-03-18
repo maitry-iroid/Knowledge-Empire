@@ -10,6 +10,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/language.dart';
+import 'package:ke_employee/models/switch_company.dart';
 import 'package:ke_employee/models/update_mode.dart';
 import 'package:package_info/package_info.dart';
 
@@ -551,6 +552,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               companyList[index].companyName;
                           companyController.text = StringRes.selectCompany;
                           Navigator.pop(context);
+                          Injector.userData.companyName = companyList[index].companyName;
+                          switchCompanyList(companyList[index].companyId);
                           setState(() {});
                         },
                         child: Padding(
@@ -1264,7 +1267,9 @@ class _ProfilePageState extends State<ProfilePage> {
       CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
-  } //Update Language API
+  }
+
+  //Update Language API
 
   switchModeApi() {
     Utils.playClickSound();
@@ -1291,4 +1296,33 @@ class _ProfilePageState extends State<ProfilePage> {
       Utils.showToast(e.toString());
     });
   }
+
+  //switch Company List
+
+  switchCompanyList(int companyId) {
+    Utils.playClickSound();
+
+    SwitchCompanyRequest rq = SwitchCompanyRequest();
+    rq.userId = Injector.userId.toString();
+    rq.companyId = companyId.toString();
+
+//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
+    CommonView.showCircularProgress(true, context);
+    WebApi().callAPI(WebApi.switchCompanyProfile, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+
+      if (data != null) {
+//        await Injector.setUserData(Injector.userData);
+        setState(() {});
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+//      Utils.performBack(context);
+    }).catchError((e) {
+      print("updatePorfile_" + e.toString());
+      CommonView.showCircularProgress(false, context);
+      Utils.showToast(e.toString());
+    });
+  }
+
 }

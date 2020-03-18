@@ -48,7 +48,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.keemployee.app.dev"
+        applicationId "com.keemployee.app.prod"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
@@ -56,9 +56,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
         multiDexEnabled true
-        ndk {
-            abiFilters 'armeabi','armeabi-v7a','arm64-v8a'
-        }
+//        ndk {
+//            abiFilters 'armeabi','armeabi-v7a','arm64-v8a'
+//        }
     }
 
     buildTypes {
@@ -69,7 +69,6 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
     }
     flavorDimensions "default"
     productFlavors {
@@ -83,7 +82,7 @@ android {
             applicationId "com.keemployee.app"
             resValue "string", "app_name", "Knowledge Empire"
         }
-
+       // Privacy - Location When In Use Usage Description
     }
 
 }
