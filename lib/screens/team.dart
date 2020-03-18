@@ -4,6 +4,7 @@ import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
@@ -607,9 +608,9 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-      if (Injector.prefs.getBool(Const.introYourTeamsPerformance.toString()) !=
+      if (Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString()) !=
               null &&
-          Injector.prefs.getBool(Const.introYourTeamsPerformance.toString())) {
+          Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString())) {
       } else {
         await DisplayDialogs.showYourTeamsPerformance(context);
       }

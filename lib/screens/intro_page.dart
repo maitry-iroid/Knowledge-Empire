@@ -66,7 +66,7 @@ class _IntroPageState extends State<IntroPage> {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             child: Image.asset(
               url,
-              fit: BoxFit.fill,
+              fit: BoxFit.contain,
               width: Utils.getDeviceWidth(context),
             ),
           );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -904,9 +905,8 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.rewardsDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introYourWillIsAtYourCommand);
-              await Injector.prefs.setBool(Const.introRewards.toString(), true);
+              await Injector.updateIntroDialogType(Const.introYourWillIsAtYourCommand);
+              await Injector.prefs.setBool(PrefKeys.introRewards, true);
             },
           );
         });
@@ -940,8 +940,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introChallanges);
-              await Injector.prefs
-                  .setBool(Const.introYourWillIsAtYourCommand.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.introYourWillIsAtYourCommand.toString(), true);
               showIntroChallanges(context);
             },
           );
@@ -1010,8 +1009,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introRanking);
-              await Injector.prefs.setBool(
-                  Const.introMarketingAndCommunications.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.introMarketingAndCommunications, true);
               showRanking(context);
             },
           );
@@ -1079,8 +1077,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introYourTeams);
-              await Injector.prefs
-                  .setBool(Const.introYourTeamsPerformance.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.introYourTeamsPerformance, true);
               showYourTeams(context);
             },
           );
@@ -1180,8 +1177,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
-              await Injector.prefs
-                  .setBool(Const.introThePersonYouCanCountOn.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.introThePersonYouCanCountOn, true);
               showIntroPL(context);
             },
           );

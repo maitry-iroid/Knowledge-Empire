@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
@@ -43,8 +44,8 @@ class _RewardsPageState extends State<RewardsPage> {
 
   Future showDialogForCallApi() async {
       await Future.delayed(Duration(milliseconds: 50));
-      if (Injector.prefs.getBool(Const.introRewards.toString()) != null &&
-          Injector.prefs.getBool(Const.introRewards.toString())) {
+      if (Injector.prefs.getBool(PrefKeys.introRewards.toString()) != null &&
+          Injector.prefs.getBool(PrefKeys.introRewards.toString())) {
       } else {
         await DisplayDialogs.showIntroRewards(context);
       }

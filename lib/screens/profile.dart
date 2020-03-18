@@ -201,8 +201,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       InkResponse(
-                        onTap: ()  {
-                           _launchInWebViewOrVC("https://www.blue-elephants-solutions.com/wp/privacy-policy");
+                        onTap: () {
+                          _launchInWebViewOrVC(
+                              "https://www.blue-elephants-solutions.com/wp/privacy-policy");
                         },
                         child: Container(
                           height: 30,
@@ -256,13 +257,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 : null),
                       ),
                       InkResponse(
-                        onTap: (){
+                        onTap: () {
                           _launchEmail("support@knowledge-empire.com");
                         },
                         child: Container(
                           height: 30,
                           margin: EdgeInsets.symmetric(vertical: 10),
-
                           alignment: Alignment.center,
                           child: Text(
                             Utils.getText(context, StringRes.contactUs),
@@ -633,7 +633,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {}
       try {
-        await Injector.prefs.clear();
+//        await Injector.prefs.clear();
+        await removeKeys();
         Injector.userData = null;
         Injector.userId = null;
         Injector.customerValueData = null;
@@ -1209,7 +1210,6 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.headerStreamController.add(Const.updateProfileBrod);
 
         localeBloc.setLocale(Utils.getIndexLocale());
-
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
@@ -1323,5 +1323,22 @@ class _ProfilePageState extends State<ProfilePage> {
       CommonView.showCircularProgress(false, context);
       Utils.showToast(e.toString());
     });
+  }
+
+  removeKeys() {
+    Injector.prefs.remove(PrefKeys.user);
+    Injector.prefs.remove(PrefKeys.mode);
+    Injector.prefs.remove(PrefKeys.isLoginFirstTime);
+    Injector.prefs.remove(PrefKeys.questionData);
+    Injector.prefs.remove(PrefKeys.answerData);
+    Injector.prefs.remove(PrefKeys.customerValueData);
+    Injector.prefs.remove(PrefKeys.learningModles);
+    Injector.prefs.remove(PrefKeys.download);
+    Injector.prefs.remove(PrefKeys.isSoundEnable);
+    Injector.prefs.remove(PrefKeys.isIntroRemaining);
+    Injector.prefs.remove(PrefKeys.currentIntroType);
+    Injector.prefs.remove(PrefKeys.deviceToken);
+    Injector.prefs.remove(PrefKeys.badgeCount);
+    Injector.prefs.remove(PrefKeys.dialogTypes);
   }
 }
