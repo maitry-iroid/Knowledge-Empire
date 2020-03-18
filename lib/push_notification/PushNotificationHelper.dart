@@ -106,7 +106,7 @@ class PushNotificationHelper {
         RegisterForPushRequest rq = RegisterForPushRequest();
         rq.userId = Injector.userId;
         rq.deviceId = Injector.deviceId;
-        rq.deviceType = "android";
+        rq.deviceType = Injector.deviceType;
         rq.deviceToken = token;
 
         await Injector.prefs.setString(PrefKeys.deviceToken, token);
@@ -140,13 +140,18 @@ class PushNotificationHelper {
     title = message['notification']['title'];
     body = message['notification']['body'];
 
-    String challengeId = message['data']['challengeId'];
+    if(message['data']!=null){
 
-    if (challengeId != null) {
-      Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+      String challengeId = message['data']['challengeId'];
+
+      if (challengeId != null) {
+        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
 //      CommonView().pushNotificationAlert(context);
 
+      }
     }
+
+
 
 //      message.values.forEach((value) {
 //        title = Map.from(value)['title'] ?? "";

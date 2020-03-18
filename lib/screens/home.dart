@@ -556,7 +556,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
     drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.ranking),
-          Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking"),
+          Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking")
     );
     drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.profile),
