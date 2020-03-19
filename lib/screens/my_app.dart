@@ -120,13 +120,13 @@ class MyAppState extends State<MyApp> {
       });
     });
 
-    BackgroundFetch.scheduleTask(TaskConfig(
-        taskId: "com.transistorsoft.customtask",
-        delay: 10000,
-        periodic: false,
-        forceAlarmManager: true,
-        stopOnTerminate: false,
-        enableHeadless: true));
+//    BackgroundFetch.scheduleTask(TaskConfig(
+//        taskId: "com.transistorsoft.customtask",
+//        delay: 10000,
+//        periodic: false,
+//        forceAlarmManager: true,
+//        stopOnTerminate: false,
+//        enableHeadless: true));
 
     // Optionally query the current BackgroundFetch status.
     int status = await BackgroundFetch.status;

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -135,39 +136,52 @@ class PushNotificationHelper {
     title = message['notification']['title'];
     body = message['notification']['body'];
 
-
     if (message['data'] != null) {
       String challengeId = message['data']['challengeId'];
+      String type = message['data']['type'];
+      String level = message['data']['level'];
+      String bonus = message['data']['bonus'];
+      String achievementType = message['data']['achievementType'];
 
       if (challengeId != null) {
         Injector.homeStreamController
             ?.add("${Const.openPendingChallengeDialog}");
       }
 
-      CommonView().pushNotificationAlert(context, 1);
+      if (achievementType != null) {
+        if (bonus != null)
+          Injector.customerValueData.totalBalance = int.parse(bonus);
+
+        if (type != null && type == "1" && bonus != null) {
+          Injector.customerValueData.totalEmployeeCapacity += int.parse(bonus);
+          Injector.customerValueData.remainingEmployeeCapacity +=
+              int.parse(bonus);
+        }
+        if (type != null && type == "3" && bonus != null) {
+          Injector.customerValueData.totalSalesPerson += int.parse(bonus);
+          Injector.customerValueData.remainingSalesPerson += int.parse(bonus);
+        }
+        if (type != null && type == "8" && bonus != null) {
+          Injector.customerValueData.totalCustomerCapacity += int.parse(bonus);
+          Injector.customerValueData.remainingCustomerCapacity +=
+              int.parse(bonus);
+        }
+        if (type != null && type == "0" && bonus != null) {
+          Injector.customerValueData.totalBalance += int.parse(bonus);
+        }
+
+        Injector.setCustomerValueData(Injector.customerValueData);
+        customerValueBloc.setCustomerValue(Injector.customerValueData);
+
+        CommonView().pushNotificationAlert(
+            context, bonus, level, type, achievementType);
+      } else {
+        showLocalNotification(Injector.notificationID, body);
+      }
     }
-
-//      message.values.forEach((value) {
-//        title = Map.from(value)['title'] ?? "";
-//
-//        body = Map.from(value)['body'] ?? "";
-//      });
-
-    Utils.showToast(title);
-//    }
 
     print(title);
     print(body);
-
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await Injector.flutterLocalNotificationsPlugin.show(
-        Injector.notificationID, title, body, platformChannelSpecifics,
-        payload: 'item x');
   }
 
   showLocalNotification(int id, String body) async {
