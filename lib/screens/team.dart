@@ -258,11 +258,12 @@ class _TeamPageState extends State<TeamPage> {
                   ],
                 )),
       onTap: () {
-        if (mounted)setState(() {
-          secondScreen = true;
+        if (mounted)
+          setState(() {
+            secondScreen = true;
 
-          getTeamUserById(user.userId);
-        });
+            getTeamUserById(user.userId);
+          });
       },
     );
   }
@@ -489,6 +490,7 @@ class _TeamPageState extends State<TeamPage> {
                 alignment: Alignment.center,
                 child: PieChart(
                   dataMap: type == 1 ? dataMap : openCloseMap,
+//                  dataMap: type == 1 ? dataMap != null ? dataMap : Container()  : openCloseMap != null ? openCloseMap : Container(),
                   animationDuration: Duration(milliseconds: 800),
                   chartLegendSpacing: 32.0,
                   chartRadius: MediaQuery.of(context).size.width / 5,
@@ -499,7 +501,7 @@ class _TeamPageState extends State<TeamPage> {
                   colorList: type == 1 ? colorList : colorOpenCloseList,
                   legendPosition: LegendPosition.right,
                   showChartValueLabel: false,
-                  initialAngle: 0,
+                  initialAngle: 0.0,
                   legendStyle: defaultLegendStyle.copyWith(
                       color: Injector.isBusinessMode
                           ? Colors.white
@@ -566,9 +568,10 @@ class _TeamPageState extends State<TeamPage> {
             ),
             onTap: () {
               Utils.playClickSound();
-              if (mounted)setState(() {
-                secondScreen = false;
-              });
+              if (mounted)
+                setState(() {
+                  secondScreen = false;
+                });
             },
           ),
           Container(
@@ -608,12 +611,12 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-      if (Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString()) !=
-              null &&
-          Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString())) {
-      } else {
-        await DisplayDialogs.showYourTeamsPerformance(context);
-      }
+    if (Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString()) !=
+            null &&
+        Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString())) {
+    } else {
+      await DisplayDialogs.showYourTeamsPerformance(context);
+    }
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);
@@ -630,7 +633,7 @@ class _TeamPageState extends State<TeamPage> {
 
             initGraphData();
 
-            if (mounted)setState(() {});
+            if (mounted) setState(() {});
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
@@ -659,10 +662,19 @@ class _TeamPageState extends State<TeamPage> {
             element.level.toString(), () => element.questionCount.toDouble());
       });
 
-      openCloseMap.putIfAbsent(
-          "Open", () => teamUserByIdData?.qStatus?.open?.toDouble());
-      openCloseMap.putIfAbsent(
-          "Close", () => teamUserByIdData?.qStatus?.closed?.toDouble());
+      if (teamUserByIdData?.qStatus?.open?.toDouble() != null) {
+        openCloseMap.putIfAbsent(
+            "Open", () => teamUserByIdData?.qStatus?.open?.toDouble());
+      } else {
+        openCloseMap.putIfAbsent("Open", () => 0.0);
+      }
+
+      if (teamUserByIdData?.qStatus?.closed?.toDouble() != null) {
+        openCloseMap.putIfAbsent(
+            "Close", () => teamUserByIdData?.qStatus?.closed?.toDouble());
+      } else {
+        openCloseMap.putIfAbsent("Close", () => 0.0);
+      }
     }
   }
 
@@ -683,7 +695,7 @@ class _TeamPageState extends State<TeamPage> {
 
             initGraphData();
 
-            if (mounted)setState(() {});
+            if (mounted) setState(() {});
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);

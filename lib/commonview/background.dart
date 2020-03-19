@@ -370,8 +370,8 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-//                    Utils.performDashboardItemClick(context, Const.typeRanking);
-                    CommonView().pushNotificationAlert(context, 1);
+                    Utils.performDashboardItemClick(context, Const.typeRanking);
+//                    CommonView().pushNotificationAlert(context, 1);
                   },
                 ),
               ],

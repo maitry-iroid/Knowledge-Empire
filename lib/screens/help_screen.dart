@@ -798,14 +798,16 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeProfile
               ? Positioned(
-                  top: 60,
+                  top: 30,
                   right: Utils.getDeviceWidth(context) / 2.4,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
-                          Utils.getAssetsImg(introShowBubbleProfile())),
-                      height: Utils.getDeviceHeight(context) / 1.7,
+                          Utils.getAssetsImg(introShowBubbleProfile())), fit: BoxFit.fitWidth,
+//                      height: Utils.getDeviceHeight(context) / 1.3,
+                      height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -814,13 +816,15 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeName
               ? Positioned(
-                  top: 65,
+                  top: 45,
                   right: Utils.getDeviceWidth(context) / 2.3,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleCompanyName())),
-                      height: Utils.getDeviceHeight(context) / 1.7,
+//                      height: Utils.getDeviceHeight(context) / 1.6,
+                      height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -829,13 +833,16 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeEmployee
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 3.9,
+                  top: 45,
+                  left: Utils.getDeviceWidth(context) / 3.0,
                   child: InkResponse(
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg(introShowBubbleEmp())),
-                      height: Utils.getDeviceHeight(context) / 1.4,
+//                      height: Utils.getDeviceHeight(context) / 1.4,
+                      height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
+
                     ),
                     onTap: () {},
                   ),
@@ -844,13 +851,15 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeSalesPersons
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.6,
+                  top: 45,
+                  left: Utils.getDeviceWidth(context) / 2.4,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleSales())),
-                      height: Utils.getDeviceHeight(context) / 1.4,
+//                      height: Utils.getDeviceHeight(context) / 1.35,
+                      height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -859,14 +868,16 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeServicesPerson
               ? Positioned(
-                  top: 60,
-                  left: Utils.getDeviceWidth(context) / 2.2,
+                  top: 45,
+                  left: Utils.getDeviceWidth(context) / 2.0,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleCustomer())),
+//                      height: Utils.getDeviceHeight(context) / 1.3,
                       height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -875,14 +886,16 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeBrandValue
               ? Positioned(
-                  top: 65,
-                  left: Utils.getDeviceWidth(context) / 2.8,
+                  top: 30,
+                  left: Utils.getDeviceWidth(context) / 2.4,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleBrandValue())),
-                      height: Utils.getDeviceHeight(context) / 1.6,
+//                      height: Utils.getDeviceHeight(context) / 1.2,
+                      height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -891,14 +904,16 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeMoney
               ? Positioned(
-                  top: 60,
-                  left: Utils.getDeviceWidth(context) / 2.6,
+                  top: 40,
+                  left: Utils.getDeviceWidth(context) / 2.1,
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg(introShowBubbleCash())),
-                      height: Utils.getDeviceHeight(context) / 1.4,
+//                      height: Utils.getDeviceHeight(context) / 1.2,
+                      height: Utils.getDeviceHeight(context) / 1.3,
+                      width: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -909,13 +924,13 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeBusinessSector
               ? Positioned(
-                  bottom: 50,
+                  bottom: 30,
                   left: Utils.getDeviceWidth(context) / 3.2,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg(
                             introShowBubbleBusinessSectors())),
-                        height: Utils.getDeviceHeight(context) / 1.5,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -923,13 +938,15 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeNewCustomer
               ? Positioned(
-                  bottom: 70,
-                  left: Utils.getDeviceWidth(context) / 3.8,
+                  bottom: 50,
+                  left: Utils.getDeviceWidth(context) / 3.4,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
-                            Utils.getAssetsImg(introShowBubbleNewCustomer())),
-                        height: Utils.getDeviceHeight(context) / 1.6,
+                            Utils.getAssetsImg(introShowBubbleNewCustomer())
+                        ),
+//                        height: Utils.getDeviceHeight(context) / 1.4,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -937,13 +954,13 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeExistingCustomer
               ? Positioned(
-                  bottom: 40,
-                  left: Utils.getDeviceWidth(context) / 4.3,
+                  bottom: 15,
+                  left: Utils.getDeviceWidth(context) / 3.6,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg(
                             introShowBubbleExistingCustomer())),
-                        height: Utils.getDeviceHeight(context) / 1.45,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -951,13 +968,13 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeReward
               ? Positioned(
-                  bottom: Utils.getDeviceHeight(context) / 3.0,
+                  bottom: Utils.getDeviceHeight(context) / 4.2,
                   left: Utils.getDeviceWidth(context) / 3.5,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleRewards())),
-                      height: Utils.getDeviceHeight(context) / 2.0,
+                      height: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -966,14 +983,14 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeTeam
               ? Positioned(
-                  top: 50,
+                  bottom: 80,
 //                  top: Utils.getDeviceHeight(context) / 6.4,
-                  left: Utils.getDeviceWidth(context) / 1.7,
+                  left: Utils.getDeviceWidth(context) / 1.8,
                   child: InkResponse(
                     child: Image(
                       image:
                           AssetImage(Utils.getAssetsImg(introShowBubbleTeam())),
-                      height: Utils.getDeviceHeight(context) / 2.4,
+                      height: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -989,7 +1006,7 @@ class HelpPageState extends State<HelpPage> {
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleChallenges())),
-                      height: Utils.getDeviceHeight(context) / 1.25,
+                      height: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),
@@ -998,13 +1015,13 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeOrg
               ? Positioned(
-                  top: 80,
+                  top: 60,
                   left: Utils.getDeviceWidth(context) / 2.7,
                   child: InkResponse(
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg(introShowBubbleOrganization())),
-                        height: Utils.getDeviceHeight(context) / 1.75,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -1012,13 +1029,13 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typePl
               ? Positioned(
-                  top: 80,
-                  left: Utils.getDeviceWidth(context) / 4.5,
+                  top: 40,
+                  left: Utils.getDeviceWidth(context) / 3.8,
                   child: InkResponse(
                       child: Image(
                         image:
                             AssetImage(Utils.getAssetsImg(introShowBubblePl())),
-                        height: Utils.getDeviceHeight(context) / 1.9,
+                        height: Utils.getDeviceHeight(context) / 1.3,
                       ),
                       onTap: () {}),
                 )
@@ -1026,14 +1043,14 @@ class HelpPageState extends State<HelpPage> {
 
           selectedType == Const.typeRanking
               ? Positioned(
-                  bottom: 40,
+                  top: 50,
 //            left: Utils.getDeviceWidth(context) / 1.9,
                   right: Utils.getDeviceWidth(context) / 2.7,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
                           Utils.getAssetsImg(introShowBubbleRanking())),
-                      height: Utils.getDeviceHeight(context) / 1.7,
+                      height: Utils.getDeviceHeight(context) / 1.3,
                     ),
                     onTap: () {},
                   ),

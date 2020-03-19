@@ -21,7 +21,7 @@ class TeamUserByIdData {
   String name;
   String department;
   int resets;
-  List<Modules> modules;
+  List<Modules> modules = List<Modules>();
   QStatus qStatus;
   List<QLevel> qLevel;
 
@@ -39,17 +39,20 @@ class TeamUserByIdData {
     resets = json['resets'];
     if (json['modules'] != null) {
       modules = new List<Modules>();
-      json['modules'].forEach((v) {
-        modules.add(new Modules.fromJson(v));
-      });
+      List dataList = json['modules'];
+      if (dataList != null && dataList.length > 0)
+        modules = dataList.map((c) => new Modules.fromJson(c)).toList();
     }
-    qStatus =
-        json['qStatus'] != null ? new QStatus.fromJson(json['qStatus']) : null;
+
+    qStatus = json['qStatus'] != null ? new QStatus.fromJson(json['qStatus']) : null;
+//    Map data = json['qStatus'];
+//    qStatus = new QStatus.fromJson(data);
+
     if (json['qLevel'] != null) {
       qLevel = new List<QLevel>();
-      json['qLevel'].forEach((v) {
-        qLevel.add(new QLevel.fromJson(v));
-      });
+      List dataList = json['qLevel'];
+      if (dataList != null && dataList.length > 0)
+        qLevel = dataList.map((c) => new QLevel.fromJson(c)).toList();
     }
   }
 
