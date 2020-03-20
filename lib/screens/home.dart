@@ -39,20 +39,7 @@ import '../models/get_friends.dart';
 import 'package:flutter/services.dart';
 
 class FadeRouteHome extends PageRouteBuilder {
-//  final Widget page;
-//  final String initialPageType;
-//
-//  final QuestionData questionDataHomeScr;
-//  final QuestionData questionDataSituation;
-//  final QuestionData questionDataChallenge;
-//
-//  final int value;
-//  final int friendId;
-//  final bool isChallenge;
-//  final bool isCameFromDashboard;
   final HomeData homeData;
-
-//  final GetFriendsData friendsData;
   List<GetFriendsData> arrFriends = List();
 
   FadeRouteHome({this.homeData})
@@ -134,21 +121,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } on PlatformException {
       appBadgeSupported = 'Failed to get badge support.';
     }
-
-    if (!mounted) return;
-    _appBadgeSupported = appBadgeSupported;
-    if (_appBadgeSupported != null) {
-      _addBadge();
-    }
-    if (mounted)setState(() {});
-  }
-
-  void _addBadge() {
-    FlutterAppBadger.updateBadgeCount(3);
-  }
-
-  void _removeBadge() {
-    FlutterAppBadger.removeBadge();
+//    if (!mounted) return;
+//    _appBadgeSupported = appBadgeSupported;
+//    if (_appBadgeSupported != null) {
+//      _addBadge();
+//    }
+//    if (mounted)setState(() {});
   }
 
   //--- push
@@ -166,7 +144,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } else {
       startAnim = false;
     }
-    if (mounted)setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override
@@ -221,14 +199,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   openProfile() {
     if (mounted) {
-      if (mounted)setState(() =>
-          _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
+      if (mounted)
+        setState(() =>
+            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
     }
   }
 
   _onSelectItem(int index) {
     Utils.playClickSound();
-
     if (_selectedDrawerIndex != index) {
       if (mounted) {
         setState(() => _selectedDrawerIndex = index);
@@ -238,11 +216,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Navigator.push(context, FadeRouteIntro());
         }
       }
+    }else{
+      if (_scaffoldKey.currentState.isDrawerOpen) {
+
+        _scaffoldKey.currentState.openEndDrawer();
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
     initDrawerItems();
 
     var drawerOptions = <Widget>[];
@@ -361,7 +345,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       left: !isCoinViseble ? left : 750,
       onEnd: () {
         isCoinViseble = false;
-        if (mounted)setState(() {});
+        if (mounted) setState(() {});
       },
       child: Container(
         child: isCoinViseble ? MyHomePage() : Container(),
@@ -488,9 +472,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         rq.userId = Injector.userData.userId;
 
         WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) {
-          if (mounted)setState(() {
-            isLoading = false;
-          });
+          if (mounted)
+            setState(() {
+              isLoading = false;
+            });
 
           if (data != null) {
             QuestionData questionData = QuestionData.fromJson(data);
@@ -554,10 +539,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       DrawerItem(Utils.getText(context, StringRes.pl),
           Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl"),
     );
-    drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.ranking),
-          Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking")
-    );
+    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.ranking),
+        Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking"));
     drawerItems.add(
       DrawerItem(Utils.getText(context, StringRes.profile),
           Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile"),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -24,6 +25,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
   AnimationController rotationController;
 
   List<GetDashboardData> dashboardData = List();
+  bool startAnim = false;
+  int duration = 4;
+  bool isCoinViseble = false;
 
   @override
   void initState() {
@@ -52,9 +56,49 @@ class DashboardGamePageState extends State<DashboardGamePage>
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: RaisedButton(
+                    onPressed: () {
+                      isCoinViseble = true;
+                      setState(() {});
+                    },
+                    child: Text("press here")),
+              ),
+              Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  coinWidget(250, 150),
+                  coinWidget(310, 50),
+                  coinWidget(70, 50),
+                  coinWidget(150, 20),
+                  coinWidget(350, 320),
+                  coinWidget(350, 450),
+                  coinWidget(180, 300),
+                  coinWidget(200, 550),
+                  coinWidget(350, 650),
+                ],
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget coinWidget(double top, double left) {
+    return AnimatedPositioned(
+      duration: Duration(seconds: duration),
+      top: !isCoinViseble ? top : 20,
+      left: !isCoinViseble ? left : 750,
+      onEnd: () {
+        isCoinViseble = false;
+        if (mounted) setState(() {});
+      },
+      child: Container(
+        child: isCoinViseble ? MyHomePage() : Container(),
+        width: 40,
+        height: 40,
       ),
     );
   }
@@ -72,7 +116,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
               dashboardData.add(GetDashboardData.fromJson(v));
             });
 
-            if (dashboardData.isNotEmpty) if (mounted)setState(() {});
+            if (dashboardData.isNotEmpty) if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());

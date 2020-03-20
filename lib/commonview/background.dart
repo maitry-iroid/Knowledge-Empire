@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
@@ -582,7 +583,7 @@ class CommonView {
 
   //push notification alert
 
-  pushNotificationAlert(BuildContext context, int type) {
+  pushNotificationAlert(BuildContext context, String bonus, String level, String type, String achievementType) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -621,7 +622,7 @@ class CommonView {
                               alignment: Alignment.topCenter,
                               child: Center(
                                 child: Text(
-                                  Utils.getText(context, "Reward Notification"),
+                                  Utils.getText(context, StringRes.achievement),
                                   style: TextStyle(
                                       color: ColorRes.white, fontSize: 17),
                                   textAlign: TextAlign.center,
@@ -630,7 +631,7 @@ class CommonView {
                             ),
                             Padding(padding: EdgeInsets.only(top: 13)),
                             Text(
-                              Utils.getText(context, "Claim your reward"),
+                              Utils.getText(context, "Congratulations!, You earned "/*+bonus.toString()!="null"?bonus.toString():""+*/" rewards!"),
                               style: TextStyle(
                                 color: ColorRes.greenDot,
                                 fontSize: 20,
@@ -645,47 +646,47 @@ class CommonView {
                                   height: 50,
                                   fit: BoxFit.fill),
                             ),
-                            InkResponse(
-                              child: Container(
-                                width: 100,
-                                height: 30,
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, top: 3, bottom: 3),
-                                margin: EdgeInsets.only(
-                                    left: 10, right: 10, top: 3, bottom: 3),
-                                decoration: BoxDecoration(
-                                    color: ColorRes.borderRewardsName,
-                                    border: Border.all(
-                                        width: 2,
-                                        color: ColorRes.borderRewardsName),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey,
-                                        blurRadius: 5.0,
-                                      ),
-                                    ]),
-                                child: Center(
-                                  child: Text(Utils.getText(context, "CLAIM"),
-                                      style: TextStyle(
-                                          color: ColorRes.white, fontSize: 17)),
-                                ),
-                              ),
-                              onTap: () {
-                                switch (type) {
-                                  case 0:
-                                    break;
-                                  case 1:
-                                    break;
-                                  case 3:
-                                    break;
-                                  case 8:
-                                    break;
-                                }
-                                Navigator.pop(context, Const.add);
-                              },
-                            ),
+//                            InkResponse(
+//                              child: Container(
+//                                width: 100,
+//                                height: 30,
+//                                padding: EdgeInsets.only(
+//                                    left: 10, right: 10, top: 3, bottom: 3),
+//                                margin: EdgeInsets.only(
+//                                    left: 10, right: 10, top: 3, bottom: 3),
+//                                decoration: BoxDecoration(
+//                                    color: ColorRes.borderRewardsName,
+//                                    border: Border.all(
+//                                        width: 2,
+//                                        color: ColorRes.borderRewardsName),
+//                                    borderRadius:
+//                                        BorderRadius.all(Radius.circular(20)),
+//                                    boxShadow: [
+//                                      BoxShadow(
+//                                        color: Colors.grey,
+//                                        blurRadius: 5.0,
+//                                      ),
+//                                    ]),
+//                                child: Center(
+//                                  child: Text(Utils.getText(context, "CLAIM"),
+//                                      style: TextStyle(
+//                                          color: ColorRes.white, fontSize: 17)),
+//                                ),
+//                              ),
+//                              onTap: () {
+//                                switch (type) {
+//                                  case 0:
+//                                    break;
+//                                  case 1:
+//                                    break;
+//                                  case 3:
+//                                    break;
+//                                  case 8:
+//                                    break;
+//                                }
+//                                Navigator.pop(context, Const.add);
+//                              },
+//                            ),
                           ],
                         ),
                       )),
