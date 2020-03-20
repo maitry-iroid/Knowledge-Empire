@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/models/language.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -50,6 +52,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
   @override
   void initState() {
@@ -158,6 +162,28 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
+                 /* SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkResponse(
+                      child: Text(
+                        Utils.getText(context, StringRes.selectLanguages)
+                            .toUpperCase(),
+                        style: TextStyle(color: ColorRes.white),
+                      ),
+                      onTap: () {
+                        Utils.playClickSound();
+//                        Navigator.push(context, FadeRouteForgotPassword());
+//                        selectLanguagesDialog();
+                        selectLanguagesAlert(context);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),*/
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: Utils.getDeviceWidth(context) / 8),
@@ -193,6 +219,227 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
+
+
+  selectLanguagesAlert(BuildContext context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.all(40),
+                      width: Utils.getDeviceWidth(context) / 3.0,
+                      height: Utils.getDeviceHeight(context) / 1.9,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorRes.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 35,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, "Select Your Language"),
+                                  style: TextStyle(
+                                      color: ColorRes.white, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 13)),
+
+
+                            languageSelectCell(StringRes.english, 0),
+                            languageSelectCell(StringRes.german, 1),
+                            languageSelectCell(StringRes.chinese, 2),
+
+
+                          ],
+                        ),
+                      )),
+                  Positioned(
+                      right: 10,
+                      child: InkResponse(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Image(
+                            image:
+                            AssetImage(Utils.getAssetsImg('close_dialog')),
+                            width: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Navigator.pop(context, null);
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+
+
+    /*showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Container(
+                  width: Utils.getDeviceWidth(context) / 2,
+                  height: Utils.getDeviceHeight(context) / 2,
+                  decoration: BoxDecoration(
+                      color: ColorRes.greyText,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 50,
+                        child: Text("Notification Alert"),
+                      ),
+                      Expanded(child: Text("Count of Notification.")),
+                      Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: 100,
+                        padding: EdgeInsets.only(bottom: 0),
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                            color: ColorRes.blue,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        child: InkResponse(
+                          child: Text("hello", textAlign: TextAlign.center,),
+                          onTap: () {
+                              Navigator.pop(context);
+                          },
+                        ),
+                      )
+                    ],
+                  )),
+            ),
+          );
+        })*/
+  }
+
+  languageSelectCell(String language, int index) {
+    return  InkResponse(
+      child: Container(
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+        padding: EdgeInsets.only(top: 5, bottom: 5, left: 0, right: 0),
+        decoration: BoxDecoration(
+            color: ColorRes.rankingProValueBg,
+            borderRadius: BorderRadius.all(Radius.circular(8))
+        ),
+        width: Utils.getDeviceWidth(context),
+        child: Text(Utils.getText(context, language), textAlign: TextAlign.center,),
+      ),
+      onTap: () async {
+
+        if(index == 0) {
+          await languageChangeAPI(Const.english, index);
+        } else if(index == 1){
+          await languageChangeAPI(Const.german, index);
+        } else if(index == 2) {
+          await languageChangeAPI(Const.chinese, index);
+        }
+
+      },
+    );
+  }
+
+  selectLanguagesDialog() {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Center(
+            child: Container(
+                width: Utils.getDeviceWidth(context) / 3,
+                height: Utils.getDeviceHeight(context) / 2,
+                decoration: BoxDecoration(
+//                    color: ColorRes.greyText,
+                    color: ColorRes.loginBg,
+                    borderRadius: BorderRadius.circular(10)),
+                child:
+
+
+                    ListView.builder(
+                        itemCount: languagesList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () async {
+                              try {
+                                if (index == 0) {
+                                  await languageChangeAPI(Const.english, index);
+                                } else if (index == 1) {
+                                  await languageChangeAPI(Const.german, index);
+                                } else if (index == 2) {
+                                  await languageChangeAPI(Const.chinese, index);
+                                }
+                              } catch (e) {
+                                print(e);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    Utils.getText(context, languagesList[index]),
+                                    textAlign: TextAlign.center,
+
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: ColorRes.black,
+                                        decoration: TextDecoration.none),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        })
+
+            ),
+          );
+        });
+  }
+
 
   validateForm() async {
     Utils.playClickSound();
@@ -334,5 +581,36 @@ class _LoginPageState extends State<LoginPage> {
                 )))
       ],
     );
+  }
+
+
+  //language select API
+  languageChangeAPI(String language, int index) {
+    Utils.playClickSound();
+
+    LanguageRequest rq = LanguageRequest();
+    rq.userId = Injector.userId.toString();
+    rq.language = language;
+
+//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
+    CommonView.showCircularProgress(true, context);
+    WebApi().callAPI(WebApi.updateLanguage, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+
+      if (data != null) {
+        localeBloc.setLocale(index);
+        Injector.userData.language = language;
+        await Injector.setUserData(Injector.userData);
+        setState(() {});
+      } else {
+        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
+      }
+      Utils.performBack(context);
+    }).catchError((e) {
+      Utils.performBack(context);
+      print("updatePorfile_" + e.toString());
+      CommonView.showCircularProgress(false, context);
+      Utils.showToast(e.toString());
+    });
   }
 }

@@ -282,6 +282,7 @@ class _RankingPageState extends State<RankingPage> {
                   child: Container(
                     height: 30,
                     margin: EdgeInsets.only(left: 0),
+                    padding: EdgeInsets.only(left: 3, right: 3),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -293,6 +294,8 @@ class _RankingPageState extends State<RankingPage> {
                     child: Text(
                       Utils.getText(context, StringRes.challenges),
                       style: TextStyle(color: ColorRes.white, fontSize: 12),
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -679,9 +682,13 @@ class _RankingPageState extends State<RankingPage> {
                       width: 20,
                       margin: EdgeInsets.only(right: 5),
                       decoration: BoxDecoration(
+                        shape: BoxShape.circle,
                         image: DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('add_emplyee'))),
+                            image: currentUserProfileShow(index),
+                            fit: BoxFit.cover
+//                                AssetImage(Utils.getAssetsImg('add_emplyee'))
+
+                            ),
                       ),
                     ),
                     Expanded(
@@ -756,22 +763,44 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
-  isCurrentUser(int index) {
-    return arrFriends.length > 0 &&
-        arrFriends[index].userId == Injector.userData.userId;
+  currentUserProfileShow(int index) {
+   /* if (isCurrentUser(index)) {
+      if (Injector.userData == null ||
+          Injector.userData.profileImage == null ||
+          Injector.userData.profileImage.isEmpty) {
+        return AssetImage(Utils.getAssetsImg('add_emplyee'));
+      } else {
+        return Utils.getCacheNetworkImage(Injector.userData.profileImage);
+      }
+    } else {
+      return AssetImage(Utils.getAssetsImg('add_emplyee'));
+    }*/
 
+//    arrFriends
+
+    if (Injector.userData == null ||
+        Injector.userData.profileImage.isEmpty || arrFriends[index].profileImage == null || arrFriends[index].profileImage.isEmpty ) {
+      return AssetImage(Utils.getAssetsImg('add_emplyee'));
+    } else {
+      return Utils.getCacheNetworkImage(arrFriends[index].profileImage);
+    }
 
   }
 
+  isCurrentUser(int index) {
+    return arrFriends.length > 0 &&
+        arrFriends[index].userId == Injector.userData.userId;
+  }
+
   void getData() async {
-      if (Injector.prefs
-                  .getBool(PrefKeys.introMarketingAndCommunications.toString()) !=
-              null &&
-          Injector.prefs
-              .getBool(PrefKeys.introMarketingAndCommunications.toString())) {
-      } else {
-        await DisplayDialogs.showMarketingAndCommunications(context);
-      }
+    if (Injector.prefs
+                .getBool(PrefKeys.introMarketingAndCommunications.toString()) !=
+            null &&
+        Injector.prefs
+            .getBool(PrefKeys.introMarketingAndCommunications.toString())) {
+    } else {
+      await DisplayDialogs.showMarketingAndCommunications(context);
+    }
 
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 

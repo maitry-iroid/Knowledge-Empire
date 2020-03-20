@@ -140,14 +140,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 flex: 15,
                 child: Container(
                   color: Colors.transparent,
+
                   margin: EdgeInsets.symmetric(
                       horizontal: Utils.getDeviceWidth(context) / 20),
                   child: ListView(
                     children: <Widget>[
                       Container(
                         width: 150,
+//                        padding: EdgeInsets.symmetric(horizontal: 15),
                         height: Injector.isBusinessMode ? 30 : 30,
-                        margin: EdgeInsets.only(top: 15, left: 0, right: 0),
+                        margin: EdgeInsets.only(top: 15, left: 65, right: 65),
                         alignment: Alignment.center,
                         child: Text(
                           Utils.getText(context, StringRes.settings),
@@ -342,7 +344,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               image: Injector.isBusinessMode
                                   ? DecorationImage(
                                       image: AssetImage(
-                                          Utils.getAssetsImg('bg_privacy')))
+                                          Utils.getAssetsImg('bg_privacy'))
+                              )
                                   : null),
                         ),
                       ),

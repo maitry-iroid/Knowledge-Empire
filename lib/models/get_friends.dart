@@ -40,9 +40,11 @@ class GetFriendsData {
   int score;
   int isFriend;
   String rate;
+  String profileImage;
+
 //  bool isFriends = false;
 
-  GetFriendsData({this.userId, this.name, this.score, this.isFriend});
+  GetFriendsData({this.userId, this.name, this.score, this.isFriend, this.profileImage});
 
   GetFriendsData.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -51,6 +53,7 @@ class GetFriendsData {
     score = json['score'];
     isFriend = json['isFriend'];
     rate = json['rate'];
+    profileImage = json['profileImage'];
 //    isFriends = json['isFriends'];
   }
 
@@ -62,6 +65,7 @@ class GetFriendsData {
     data['score'] = this.score;
     data['isFriend'] = this.isFriend;
     data['rate'] = this.rate;
+    data['profileImage'] = this.profileImage;
 //    data['isFriends'] = this.isFriends;
     return data;
   }

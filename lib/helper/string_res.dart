@@ -52,6 +52,7 @@ class StringRes {
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
+  static var selectLanguages = "selectLanguages"; //onlu define english
 
   //organization
   static var fireEmp = "fireEmp";
@@ -244,6 +245,7 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
+      'selectLanguages':'Select Language',
 
       //organization
       'fireEmp': "Fire 10 employees",

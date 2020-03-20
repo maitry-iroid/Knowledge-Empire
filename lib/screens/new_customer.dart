@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -12,6 +11,7 @@ import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../helper/web_api.dart';
 import '../models/questions.dart';
+
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -189,6 +189,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.loyalty),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
+              maxLines: 1,
             ),
           ),
           Expanded(

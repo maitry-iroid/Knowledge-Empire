@@ -144,7 +144,7 @@ class PushNotificationHelper {
             ?.add("${Const.openPendingChallengeDialog}");
       }
 
-      CommonView().pushNotificationAlert(context, 1);
+//      CommonView().pushNotificationAlert(context, 1);
     }
 
 //      message.values.forEach((value) {
