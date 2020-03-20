@@ -56,7 +56,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
               ),
-              Padding(
+           /*   Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: RaisedButton(
                     onPressed: () {
@@ -78,7 +78,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
                   coinWidget(200, 550),
                   coinWidget(350, 650),
                 ],
-              )
+              )*/
             ],
           ),
         ),
