@@ -79,7 +79,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
-      
+
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
       isCoinViseble=true;
     }
