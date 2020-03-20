@@ -218,6 +218,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     }else{
       if (_scaffoldKey.currentState.isDrawerOpen) {
+
         _scaffoldKey.currentState.openEndDrawer();
       }
     }
