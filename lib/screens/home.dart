@@ -121,7 +121,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } on PlatformException {
       appBadgeSupported = 'Failed to get badge support.';
     }
-//
 //    if (!mounted) return;
 //    _appBadgeSupported = appBadgeSupported;
 //    if (_appBadgeSupported != null) {
@@ -208,7 +207,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   _onSelectItem(int index) {
     Utils.playClickSound();
-
     if (_selectedDrawerIndex != index) {
       if (mounted) {
         setState(() => _selectedDrawerIndex = index);
@@ -217,6 +215,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
           Navigator.push(context, FadeRouteIntro());
         }
+      }
+    }else{
+      if (_scaffoldKey.currentState.isDrawerOpen) {
+        _scaffoldKey.currentState.openEndDrawer();
       }
     }
   }

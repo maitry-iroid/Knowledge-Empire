@@ -65,10 +65,40 @@ class DashboardGamePageState extends State<DashboardGamePage>
                     },
                     child: Text("press here")),
               ),
-
+              Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  coinWidget(250, 150),
+                  coinWidget(310, 50),
+                  coinWidget(70, 50),
+                  coinWidget(150, 20),
+                  coinWidget(350, 320),
+                  coinWidget(350, 450),
+                  coinWidget(180, 300),
+                  coinWidget(200, 550),
+                  coinWidget(350, 650),
+                ],
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget coinWidget(double top, double left) {
+    return AnimatedPositioned(
+      duration: Duration(seconds: duration),
+      top: !isCoinViseble ? top : 20,
+      left: !isCoinViseble ? left : 750,
+      onEnd: () {
+        isCoinViseble = false;
+        if (mounted) setState(() {});
+      },
+      child: Container(
+        child: isCoinViseble ? MyHomePage() : Container(),
+        width: 40,
+        height: 40,
       ),
     );
   }

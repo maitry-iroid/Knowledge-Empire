@@ -79,9 +79,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
-
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-      isCoinViseble=true;
+      isCoinViseble = true;
+      setState(() {});
     }
   }
 
@@ -101,8 +101,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
-
           children: <Widget>[
+
             widget.isChallenge
                 ? Container(
                     color: ColorRes.colorBgDark,
@@ -125,16 +125,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 )),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: RaisedButton(
-                  onPressed: () {
-                    isCoinViseble = true;
-                    setState(() {});
-                  },
-                  child: Text("press here")),
-            ),
             Stack(
+              fit: StackFit.expand,
               children: <Widget>[
                 coinWidget(250, 150),
                 coinWidget(310, 50),
@@ -146,7 +138,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 coinWidget(200, 550),
                 coinWidget(350, 650),
               ],
-            )
+            ),
+
+
+
 //            gifImageShow(),
           ],
         ),
@@ -157,8 +152,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   Widget coinWidget(double top, double left) {
     return AnimatedPositioned(
       duration: Duration(seconds: duration),
-      top: !isCoinViseble ? top : 20,
-      left: !isCoinViseble ? left : 750,
+      top: !isCoinViseble ? top : 5,
+      left: !isCoinViseble ? left : Utils.getDeviceWidth(context)/1.1,
       onEnd: () {
         isCoinViseble = false;
         if (mounted) setState(() {});
