@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/header.dart';
+import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -60,6 +61,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   selectItem(index) {}
 
+  bool startAnim = false;
+  int duration = 4;
+  bool isCoinViseble = false;
+
   @override
   void initState() {
     questionDataCustSituation = widget.questionDataCustomerSituation;
@@ -75,6 +80,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     if (questionData.isAnsweredCorrect == true) {
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
+      isCoinViseble=true;
     }
   }
 
@@ -94,7 +100,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
-          fit: StackFit.expand,
+
           children: <Widget>[
             widget.isChallenge
                 ? Container(
@@ -118,9 +124,48 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 )),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: RaisedButton(
+                  onPressed: () {
+                    isCoinViseble = true;
+                    setState(() {});
+                  },
+                  child: Text("press here")),
+            ),
+            Stack(
+              children: <Widget>[
+                coinWidget(250, 150),
+                coinWidget(310, 50),
+                coinWidget(70, 50),
+                coinWidget(150, 20),
+                coinWidget(350, 320),
+                coinWidget(350, 450),
+                coinWidget(180, 300),
+                coinWidget(200, 550),
+                coinWidget(350, 650),
+              ],
+            )
 //            gifImageShow(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget coinWidget(double top, double left) {
+    return AnimatedPositioned(
+      duration: Duration(seconds: duration),
+      top: !isCoinViseble ? top : 20,
+      left: !isCoinViseble ? left : 750,
+      onEnd: () {
+        isCoinViseble = false;
+        if (mounted) setState(() {});
+      },
+      child: Container(
+        child: isCoinViseble ? MyHomePage() : Container(),
+        width: 40,
+        height: 40,
       ),
     );
   }

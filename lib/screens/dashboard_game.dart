@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -24,6 +25,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
   AnimationController rotationController;
 
   List<GetDashboardData> dashboardData = List();
+  bool startAnim = false;
+  int duration = 4;
+  bool isCoinViseble = false;
 
   @override
   void initState() {
@@ -52,6 +56,16 @@ class DashboardGamePageState extends State<DashboardGamePage>
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: RaisedButton(
+                    onPressed: () {
+                      isCoinViseble = true;
+                      setState(() {});
+                    },
+                    child: Text("press here")),
+              ),
+
             ],
           ),
         ),
@@ -72,7 +86,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
               dashboardData.add(GetDashboardData.fromJson(v));
             });
 
-            if (dashboardData.isNotEmpty) if (mounted)setState(() {});
+            if (dashboardData.isNotEmpty) if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
