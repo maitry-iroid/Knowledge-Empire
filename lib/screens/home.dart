@@ -226,6 +226,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+
     initDrawerItems();
 
     var drawerOptions = <Widget>[];
