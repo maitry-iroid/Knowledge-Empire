@@ -20,13 +20,7 @@ class IntroScreenDialog extends StatefulWidget {
   final GestureDragCancelCallback onTapBtn;
 
   final bool menuView;
-  final bool firstView;
-  final bool secondView;
-  final bool thirdView;
-  final bool forthView;
-  final bool fifthView;
-  final bool sixthView;
-  final bool seventhView;
+
 
   final AlignmentGeometry cardAlignment;
 
@@ -43,13 +37,6 @@ class IntroScreenDialog extends StatefulWidget {
       this.imageMoveRight,
       this.imageMoveTop,
       @required this.imageName,
-      @required this.firstView,
-      @required this.secondView,
-      @required this.thirdView,
-      @required this.forthView,
-      @required this.fifthView,
-      @required this.sixthView,
-      @required this.seventhView,
       this.onTapBtn,
       this.imageHeight,
       this.imageWidth,
@@ -286,15 +273,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                 margin: EdgeInsets.all(15),
                 child: HeaderView(
                   scaffoldKey: _scaffoldKey,
-                  isShowMenu: true,
-                  menuView: widget.menuView ? true : false,
-                  firstView: widget.firstView ? true : false,
-                  fifthView: widget.fifthView ? true : false,
-                  forthView: widget.forthView ? true : false,
-                  secondView: widget.secondView ? true : false,
-                  seventhView: widget.seventhView ? true : false,
-                  sixthView: widget.sixthView ? true : false,
-                  thirdView: widget.thirdView ? true : false,
+                  isShowMenu: true
                 ),
               ),
             ],

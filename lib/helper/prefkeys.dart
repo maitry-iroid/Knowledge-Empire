@@ -14,6 +14,12 @@ class PrefKeys {
   static var badgeCount= "badgeCount";
   static var dialogTypes= "dialogTypes";
 
+  static var introAreaOfCompetency= "introAreaOfCompetency";
+  static var introImpactOnBrandValueAndCash= "introImpactOnBrandValueAndCash";
+  static var introSettings= "introSettings";
+  static var introHireHREmployeesBoard= "introHireHREmployeesBoard";
+  static var introListOfExistingCustomers= "introListOfExistingCustomers";
+  static var introListOfPotentialCustomers= "introListOfPotentialCustomers";
   static var introYourWillIsAtYourCommand= "introYourWillIsAtYourCommand";
   static var introYourTeamsPerformance= "introYourTeamsPerformance";
   static var introRewards= "introRewards";

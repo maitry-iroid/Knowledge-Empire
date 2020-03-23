@@ -5,6 +5,7 @@ import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -45,6 +46,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void initState() {
     super.initState();
 
+    showIntroDialog();
+  }
+
+  Future<void> showIntroDialog() async {
+    if (Injector.prefs.getBool(PrefKeys.introAreaOfCompetency.toString()) != null &&
+        Injector.prefs.getBool(PrefKeys.introAreaOfCompetency.toString())) {
+    } else {
+      await DisplayDialogs.showCustomerRelationshipManagement(context);
+    }
     Utils.isInternetConnectedWithAlert().then((isConnected) async {
       if (isConnected) {
         fetchLearningModules();
@@ -56,11 +66,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               .data;
           print(arrFinalLearningModules);
 
-          if (arrFinalLearningModules.length > 0) if (mounted)setState(() {});
+          if (arrFinalLearningModules.length > 0) if (mounted) setState(() {});
         }
       }
     });
-//    isSwitched = Global.shared.isInstructionView;
   }
 
   @override
@@ -230,10 +239,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       ),
       onTap: () {
         Utils.playClickSound();
-        if (mounted)setState(() {
-          selectedModule = arrFinalLearningModules[index];
-          isSwitched = selectedModule.isDownloadEnable == 1;
-        });
+        if (mounted)
+          setState(() {
+            selectedModule = arrFinalLearningModules[index];
+            isSwitched = selectedModule.isDownloadEnable == 1;
+          });
       },
     );
   }
@@ -271,15 +281,16 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                             arrFinalLearningModules.clear();
                             searchText = text;
 
-                            if (mounted)setState(() {
-                              if (text.isEmpty) {
-                                arrFinalLearningModules
-                                    .addAll(arrLearningModules);
-                              } else {
+                            if (mounted)
+                              setState(() {
+                                if (text.isEmpty) {
+                                  arrFinalLearningModules
+                                      .addAll(arrLearningModules);
+                                } else {
 //                              present = 0;
-                                searchData();
-                              }
-                            });
+                                  searchData();
+                                }
+                              });
                           },
 //                          textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.left,
@@ -365,19 +376,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         await Injector.prefs.setString(PrefKeys.learningModles,
             jsonEncode(learningModuleResponse.toJson()));
 
-        if (mounted)setState(() {
-          arrLearningModules.clear();
-          arrFinalLearningModules.clear();
+        if (mounted)
+          setState(() {
+            arrLearningModules.clear();
+            arrFinalLearningModules.clear();
 
-          arrLearningModules.addAll(arrData);
-          arrFinalLearningModules.addAll(arrData);
+            arrLearningModules.addAll(arrData);
+            arrFinalLearningModules.addAll(arrData);
 
-          if (arrLearningModules.length > 0 &&
-              (selectedModule.moduleId == null)) {
-            selectedModule = arrLearningModules[0];
-            isSwitched = selectedModule.isDownloadEnable == 1;
-          }
-        });
+            if (arrLearningModules.length > 0 &&
+                (selectedModule.moduleId == null)) {
+              selectedModule = arrLearningModules[0];
+              isSwitched = selectedModule.isDownloadEnable == 1;
+            }
+          });
 
 //        downloadQuestions(null);
       }
@@ -390,9 +402,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   //
   void assignUserToModule(int type) async {
-    if (mounted)setState(() {
-      isLoading = true;
-    });
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     AssignModuleRequest rq = AssignModuleRequest();
     rq.userId = Injector.userId;
@@ -401,9 +414,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.type = type;
 
     WebApi().callAPI(WebApi.rqAssignUserToModule, rq.toJson()).then((data) {
-      if (mounted)setState(() {
-        isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
         if (type == Const.subscribe) {
@@ -414,19 +428,21 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           selectedModule.isAssign = 0;
         }
 
-        if (mounted)setState(() {
-          arrLearningModules
-              .firstWhere(
-                  (module) => module.moduleId == selectedModule.moduleId)
-              .isAssign = selectedModule.isAssign;
-        });
+        if (mounted)
+          setState(() {
+            arrLearningModules
+                .firstWhere(
+                    (module) => module.moduleId == selectedModule.moduleId)
+                .isAssign = selectedModule.isAssign;
+          });
       }
     }).catchError((e) {
       print("assignUserModule_" + e.toString());
 
-      if (mounted)setState(() {
-        isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       Utils.showToast(e.toString());
     });
   }
@@ -441,9 +457,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> updatePermission() async {
-    if (mounted)setState(() {
-      isLoading = true;
-    });
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     ManageModulePermissionRequest rq = ManageModulePermissionRequest();
     rq.userId = Injector.userData.userId;
@@ -451,9 +468,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.moduleId = selectedModule.moduleId;
 
     WebApi().callAPI(WebApi.rqUpdateModulePermission, rq.toJson()).then((data) {
-      if (mounted)setState(() {
-        isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
 //        Utils.showToast(Utils.getText(context, StringRes.alertActionPerformed));
@@ -467,7 +485,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         else
           downloadQuestions(selectedModule.moduleId);
 
-        if (mounted)setState(() {});
+        if (mounted) setState(() {});
       }
     });
   }
@@ -477,9 +495,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   downloadQuestions(int moduleId) {
     CommonView.showCircularProgress(true, context);
 
-    if (mounted)setState(() {
-      isLoading = true;
-    });
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     DownloadQuestionsRequest rq = DownloadQuestionsRequest();
     rq.userId = Injector.userData.userId;
@@ -535,8 +554,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                    .isDownloading = true;
 //              });
 
-
-            await Injector.prefs.setString("datta","scsdc");
+              await Injector.prefs.setString("datta", "scsdc");
 
               await Injector.cacheManager
                   .getSingleFile(arrQuestions[i].mediaLink);
@@ -736,9 +754,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 onChanged: (value) {
                   Utils.isInternetConnectedWithAlert().then((isConnected) {
                     if (isConnected) {
-                      if (mounted)setState(() {
-                        isSwitched = value;
-                      });
+                      if (mounted)
+                        setState(() {
+                          isSwitched = value;
+                        });
                       updatePermission();
                     }
                   });

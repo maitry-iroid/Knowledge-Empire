@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -26,9 +28,16 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   List<Organization> arrOrganization = List();
 
   @override
-  void initState() {
+  initState(){
     super.initState();
+    showIntroDialog();
+  }
 
+  Future showIntroDialog() async {
+    if (Injector.prefs.getBool(PrefKeys.introHireHREmployeesBoard.toString()) != null && Injector.prefs.getBool(PrefKeys.introHireHREmployeesBoard.toString())) {
+    } else {
+      await DisplayDialogs.showHireHRDialog(context);
+    }
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) getOrganization();
     });
