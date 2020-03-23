@@ -96,6 +96,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                             ? Expanded(
                                 child: Scrollbar(
                                   child: SingleChildScrollView(
+
                                     child: Column(
                                       children: <Widget>[
                                         Align(
