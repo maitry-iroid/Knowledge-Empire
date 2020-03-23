@@ -1,22 +1,22 @@
 class IntroRequest {
   int userId;
   int type;
-  IntroData id;
+  IntroData data;
 
-  IntroRequest({this.userId, this.type, this.id});
+  IntroRequest({this.userId, this.type, this.data});
 
   IntroRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     type = json['type'];
-    id = json['id'] != null ? new IntroData.fromJson(json['id']) : null;
+    data = json['data'] != null ? new IntroData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['type'] = this.type;
-    if (this.id != null) {
-      data['id'] = this.id.toJson();
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
     }
     return data;
   }

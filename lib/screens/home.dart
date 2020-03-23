@@ -593,7 +593,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         IntroRequest rq = IntroRequest();
         rq.userId = Injector.userId;
         rq.type = 2;
-        rq.id = Injector.introData;
+        rq.data = Injector.introData;
 
         WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
           if (data != null) {
