@@ -163,6 +163,8 @@ class StringRes {
   static var no = "no";
   static var comingSoon = "comingSoon";
   static var close = "close";
+  static var alert = "alert";
+  static var alertUnFriend = "alertUnFriend";
 
   //introDialog
   static var gotIt = "gotIt";
@@ -354,6 +356,10 @@ class StringRes {
       'no': "No",
       'comingSoon': "Coming Soon..",
       'close': "Close",
+      'alert': "Alert",
+      'alertUnFriend': "Are sure want to unfriend this user?",
+
+
       //endregion
 
       //introDialog

@@ -816,13 +816,13 @@ class _RankingPageState extends State<RankingPage> {
 
     // set up the buttons
     Widget cancelButton = FlatButton(
-      child: Text("No"),
+      child: Text(Utils.getText(context, StringRes.no)),
       onPressed:  () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
-      child: Text("Yes"),
+      child: Text(Utils.getText(context, StringRes.yes)),
       onPressed:  () {
 
         arrFriends[index].isFriend = 0;
@@ -836,8 +836,8 @@ class _RankingPageState extends State<RankingPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Alert"),
-      content: Text("Are sure want to unfriend this user?", style: TextStyle(color: ColorRes.textProf),),
+      title: Text(Utils.getText(context, StringRes.alert)),
+      content: Text(Utils.getText(context, StringRes.alertUnFriend), style: TextStyle(color: ColorRes.textProf),),
       actions: [
         cancelButton,
         continueButton,

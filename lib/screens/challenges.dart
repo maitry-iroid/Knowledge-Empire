@@ -388,14 +388,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
   _showUnFriend(BuildContext context, int index) {
     // set up the buttons
     Widget cancelButton = FlatButton(
-      child: Text("No"),
-      onPressed: () {
+      child: Text(Utils.getText(context, StringRes.no)),
+      onPressed:  () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
-      child: Text("Yes"),
-      onPressed: () {
+      child: Text(Utils.getText(context, StringRes.yes)),
+      onPressed:  () {
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
         Navigator.pop(context);
@@ -404,9 +404,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Alert"),
-      content: Text("Are sure want to unfriend this user?",
-          style: TextStyle(color: ColorRes.textProf)),
+      title: Text(Utils.getText(context, StringRes.alert)),
+      content: Text(Utils.getText(context, StringRes.alertUnFriend), style: TextStyle(color: ColorRes.textProf)),
       actions: [
         cancelButton,
         continueButton,
