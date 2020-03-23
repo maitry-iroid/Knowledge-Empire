@@ -156,6 +156,7 @@ class Injector {
             Injector.setIntroData(introData);
           }
         }).catchError((e) {
+          print("getIntro"+e.toString());
           Utils.showToast(e.toString());
         });
       }
@@ -175,6 +176,7 @@ class Injector {
 
           }
         }).catchError((e) {
+          print("updateIntroData");
           Utils.showToast(e.toString());
         });
       }
