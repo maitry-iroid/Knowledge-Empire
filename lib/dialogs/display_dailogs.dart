@@ -155,7 +155,7 @@ class DisplayDialogs {
                 "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
             onTapBtn: () async {
               try {
-                await Injector.prefs.setBool(PrefKeys.profile2.toString(), true);
+                await Injector.prefs.setBool(PrefKeys.profile1.toString(), true);
                 showSettingsDialog(context);
                 Navigator.of(context).pop();
               } catch (e) {
@@ -182,6 +182,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               try {
                 print(Const.introMeetYourTeam);
+                await Injector.prefs.setBool(PrefKeys.profile2.toString(), true);
                 await Injector.updateIntroDialogType(Const.introMeetYourTeam);
                 Navigator.of(context).pop();
               } catch (e) {
