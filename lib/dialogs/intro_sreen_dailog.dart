@@ -104,7 +104,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                               textAlign: TextAlign.start,
                                               maxLines: null,
                                               style:
-                                                  TextStyle(fontSize: size.width / 53.5)),
+                                                  TextStyle(fontSize: size.width / 48.5)),
                                         ),
                                       ],
                                     ),
