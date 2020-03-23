@@ -372,6 +372,7 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
+
                     //Utils.performDashboardItemClick(context, Const.typeRanking);
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
                     CommonView()
