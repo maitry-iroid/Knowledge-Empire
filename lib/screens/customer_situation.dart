@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
@@ -67,18 +69,28 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   void initState() {
+    showIntroDialog();
+    super.initState();
+  }
+
+  Future<void> showIntroDialog() async {
     questionDataCustSituation = widget.questionDataCustomerSituation;
     arrAnswerSituation = widget.questionDataCustomerSituation.answer;
 
     abcdList = alphaIndex;
 
-    super.initState();
     if (!widget.isCameFromExistingCustomer) Utils.checkAudio();
-
-//    downloadFile();
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
+      if (Injector.prefs.getBool(
+                  PrefKeys.introImpactOnBrandValueAndCash.toString()) !=
+              null &&
+          Injector.prefs
+              .getBool(PrefKeys.introImpactOnBrandValueAndCash.toString())) {
+      } else {
+        await DisplayDialogs.showImpactOnSalesAndService(context);
+      }
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
       isCoinViseble = true;
       setState(() {});
@@ -102,7 +114,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-
             widget.isChallenge
                 ? Container(
                     color: ColorRes.colorBgDark,
@@ -140,8 +151,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ],
             ),
 
-
-
 //            gifImageShow(),
           ],
         ),
@@ -153,7 +162,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     return AnimatedPositioned(
       duration: Duration(seconds: duration),
       top: !isCoinViseble ? top : 5,
-      left: !isCoinViseble ? left : Utils.getDeviceWidth(context)/1.1,
+      left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
         isCoinViseble = false;
         if (mounted) setState(() {});

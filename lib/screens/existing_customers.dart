@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 
@@ -29,12 +31,26 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     // TODO: implement initState
     super.initState();
 
+
+      showIntroDialog();
+  }
+
+  Future showIntroDialog() async {
+     if (Injector.prefs.getBool(
+        PrefKeys.introListOfExistingCustomers.toString()) !=
+        null &&
+        Injector.prefs
+            .getBool(PrefKeys.introListOfExistingCustomers.toString())) {
+    } else {
+      await DisplayDialogs.showServingYourExistingCustomers(context);
+    }
+    
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         getQuestions();
       } else {
         arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueTYpe);
-
+    
         if (arrQuestions != null && arrQuestions.length > 0) {
           arrQuestions = arrQuestions;
           if (mounted)setState(() {});

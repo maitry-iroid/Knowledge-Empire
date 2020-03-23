@@ -18,8 +18,7 @@ class DashboardGamePage extends StatefulWidget {
   DashboardGamePageState createState() => DashboardGamePageState();
 }
 
-class DashboardGamePageState extends State<DashboardGamePage>
-    with TickerProviderStateMixin {
+class DashboardGamePageState extends State<DashboardGamePage> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   AnimationController rotationController;
@@ -48,37 +47,11 @@ class DashboardGamePageState extends State<DashboardGamePage>
       body: SafeArea(
         child: Container(
           height: double.infinity,
-          width: double.infinity,
+          width : double.infinity,
           child: Stack(
             children: <Widget>[
               CommonView.showDashboardView(context, dashboardData),
-              HeaderView(
-                scaffoldKey: _scaffoldKey,
-                isShowMenu: true,
-              ),
-           /*   Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: RaisedButton(
-                    onPressed: () {
-                      isCoinViseble = true;
-                      setState(() {});
-                    },
-                    child: Text("press here")),
-              ),
-              Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  coinWidget(250, 150),
-                  coinWidget(310, 50),
-                  coinWidget(70, 50),
-                  coinWidget(150, 20),
-                  coinWidget(350, 320),
-                  coinWidget(350, 450),
-                  coinWidget(180, 300),
-                  coinWidget(200, 550),
-                  coinWidget(350, 650),
-                ],
-              )*/
+              HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
         ),
@@ -86,22 +59,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
     );
   }
 
-  Widget coinWidget(double top, double left) {
-    return AnimatedPositioned(
-      duration: Duration(seconds: duration),
-      top: !isCoinViseble ? top : 20,
-      left: !isCoinViseble ? left : 750,
-      onEnd: () {
-        isCoinViseble = false;
-        if (mounted) setState(() {});
-      },
-      child: Container(
-        child: isCoinViseble ? MyHomePage() : Container(),
-        width: 40,
-        height: 40,
-      ),
-    );
-  }
+
 
   void getDashboardConfig() {
     Utils.isInternetConnected().then((isConnected) {

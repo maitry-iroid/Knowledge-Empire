@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/home.dart';
@@ -31,17 +33,26 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   void initState() {
     super.initState();
 
+    showIntroDialog();
+  }
+
+  Future<void> showIntroDialog() async {
+    if (Injector.prefs.getBool(PrefKeys.introListOfPotentialCustomers.toString()) != null &&
+        Injector.prefs.getBool(PrefKeys.introListOfPotentialCustomers.toString())) {
+    } else {
+      await DisplayDialogs.showIntroHeartOfTheBusiness(context);
+    }
     questionAnswered = Injector.customerValueData?.totalAttemptedQuestion;
     loyaltyBonus = Injector.customerValueData?.loyaltyBonus;
     resourceBonus = Injector.customerValueData?.resourceBonus;
     valueBonus = Injector.customerValueData?.valueBonus;
-
+    
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         getQuestions(_scaffoldKey.currentContext);
       } else {
         arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
-
+    
         if (arrQuestions != null && arrQuestions.length > 0) {
           if (mounted)setState(() {});
         }

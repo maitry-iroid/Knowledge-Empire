@@ -57,13 +57,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: true,
-            thirdView: false,
             imageName: "john",
             titleText: "Wellcome to Knowledge Empire",
             btnName: "Click on your Profile",
@@ -85,13 +78,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "john",
             titleText: "Meet your team",
             btnName: "Click the Org Chart",
@@ -111,38 +97,31 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Profile screen
-  static Widget showIntroDialog(BuildContext context) {
-    return IntroScreenDialog(
-      menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
-      imageName: "john",
-      cardWidth: 2.25,
-      cardMoveLeft: 9,
-      cardMoveBottom: 4,
-      imageMoveRight: 80,
-      imageMoveTop: 5.6,
-      imageWidth: 2.85,
-      imageHeight: 2,
-      titleText: "Customize your company",
-      btnName: "Make changes & click \"save\"",
-      desTextLine:
-          "Upload a profile picture and edit your company name then click \"save\"",
-      onTapBtn: () async {
-        try {
-          await Injector.updateIntroDialogType(Const.introSettings);
-          showSettingsDialog(context);
-          Navigator.of(context).pop();
-        } catch (e) {
-          print(e);
-        }
-      },
-    );
+  static Future<Widget> showIntroDialog(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "john",
+            titleText: "Customize your company",
+            btnName: "Next",
+            btnColor: ColorRes.blue,
+            desTextLine:
+                "Dear {{\$user-first-name}},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
+            onTapBtn: () async {
+              try {
+                await Injector.prefs
+                    .setBool(PrefKeys.introSettings.toString(), true);
+                showSettingsDialog(context);
+                Navigator.of(context).pop();
+              } catch (e) {
+                print(e);
+              }
+            },
+          );
+        });
   }
 
   static showSettingsDialog(BuildContext context) async {
@@ -152,16 +131,9 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "john",
-            titleText: "Setttings",
-            btnName: "Next",
+            titleText: "Settings",
+            btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
             desTextLine:
                 "You can switch to a professional mode (no virtual company)\nand turn the sound on and off.\n\nIn case your company has negitive cash you can request\na bail out which will needto be approved by your manager.",
@@ -170,7 +142,6 @@ class DisplayDialogs {
                 print(Const.introMeetYourTeam);
                 await Injector.updateIntroDialogType(Const.introMeetYourTeam);
                 Navigator.of(context).pop();
-                Utils.performBack(context);
               } catch (e) {
                 print(e);
               }
@@ -180,167 +151,135 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Organization screen
-  static Widget showHireHRDialog(
-      BuildContext context, GestureDragCancelCallback onTap) {
-    return IntroScreenDialog(
-      menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
-      cardWidth: 1.8,
-      cardHeight: 1.8,
-      cardMoveLeft: 9,
-      cardMoveBottom: 3,
-      imageMoveRight: 110,
-      imageMoveTop: 28.6,
-      imageWidth: 1.85,
-      imageHeight: 2,
-      imageName: "hr_niki",
-      titleText: "Hire HR Employees",
-      btnName: "Next",
-      btnColor: ColorRes.blue,
-      desTextLine:
-          "Hi {{\$user-first-name}},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
-      onTapBtn: onTap,
-    );
+  static Future<Widget> showHireHRDialog(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "hr_niki",
+            titleText: "Hire HR Employees",
+            btnName: "Next",
+            btnColor: ColorRes.blue,
+            desTextLine:
+                "Hi {{\$user-first-name}},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
+            onTapBtn: () async {
+              Navigator.pop(context);
+              await Injector.prefs
+                  .setBool(PrefKeys.introHireHREmployeesBoard.toString(), true);
+              showHireHRBoardDialog(context);
+            },
+          );
+        });
   }
 
-  static Widget showHireHRBoardDialog(
-      BuildContext context, GestureDragCancelCallback onTap) {
-    return IntroScreenDialog(
-      menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
-      imageName: "hr_niki",
-      cardMoveBottom: 2.8,
-      cardMoveLeft: 8,
-      imageMoveTop: 100,
-      imageMoveRight: 15,
-      imageHeight: 2,
-      imageWidth: hrNikiImageWidth,
-      titleText: "Hire HR Employees",
-      btnName: "Click on HR",
-      desTextLine:
-          "To hear yout Team's recommendatons on why you should\nhire more employees in thier team, click on them?\n\nLets start with hiring 10 Hr employees by clicking on HR and then\n\"hire 10 employees\".",
-      onTapBtn: onTap,
-      /*onTapBtn: () async {
-        Navigator.pop(context);
-        await Injector.updateIntroDialogType(Const.introEmployOMeter);
-        showEmployOMeterDialog(context);
-      },*/
-    );
+  static Future<Widget> showHireHRBoardDialog(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "hr_niki",
+            imageWidth: hrNikiImageWidth,
+            titleText: "Hire HR Employees",
+            btnName: StringRes.next,
+            btnColor: ColorRes.blue,
+            desTextLine:
+                "To hear yout Team's recommendatons on why you should\nhire more employees in thier team, click on them?\n\nLets start with hiring 10 Hr employees by clicking on HR and then\n\"hire 10 employees\".",
+            onTapBtn: () async {
+              Navigator.pop(context);
+              await Injector.updateIntroDialogType(Const.introEmployOMeter);
+              showEmployOMeterDialog(context);
+            },
+          );
+        });
   }
 
-  static Widget showEmployOMeterDialog(
-      BuildContext context, GestureDragCancelCallback onTap) {
-    return IntroScreenDialog(
-      menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: true,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
-      imageName: "hr_niki",
-      imageMoveTop: hrNikiImageMoveTop,
-      imageMoveRight: hrNikiImageMoveRight,
-      imageHeight: hrNikiImageHeight,
-      imageWidth: hrNikiImageWidth,
-      titleText: "Employ-o-Meter",
-      btnName: "Next",
-      btnColor: ColorRes.blue,
-      desTextLine:
-          "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
-      onTapBtn: onTap,
-      /*onTapBtn: () async {
-        Navigator.pop(context);
-        await Injector.updateIntroDialogType(Const.introCostOfEmployees);
-        showCostOfEmployees(context);
-      },*/
-    );
+  static Future<Widget> showEmployOMeterDialog(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "hr_niki",
+            imageMoveTop: hrNikiImageMoveTop,
+            imageMoveRight: hrNikiImageMoveRight,
+            imageHeight: hrNikiImageHeight,
+            imageWidth: hrNikiImageWidth,
+            titleText: "Employ-o-Meter",
+            btnName: "Next",
+            btnColor: ColorRes.blue,
+            desTextLine:
+                "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
+            onTapBtn: () async {
+              Navigator.pop(context);
+              await Injector.updateIntroDialogType(Const.introCostOfEmployees);
+              showCostOfEmployees(context);
+            },
+          );
+        });
   }
 
-  static Widget showCostOfEmployees(
-      BuildContext context, GestureDragCancelCallback onTap) {
-    return IntroScreenDialog(
-      menuView: false,
-      sixthView: true,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
-      imageName: "hr_niki",
-      imageMoveTop: hrNikiImageMoveTop,
-      imageMoveRight: hrNikiImageMoveRight,
-      imageHeight: hrNikiImageHeight,
-      imageWidth: hrNikiImageWidth,
-      titleText: "Cost of employees",
-      btnName: "Next",
-      btnColor: ColorRes.blue,
-      desTextLine:
-          "Here you see your total cash.\n\nHiring employees will incure hiring cost(increasing over time.)\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increse over time",
-      onTapBtn: onTap,
-      /* onTapBtn: () async {
-        Navigator.pop(context);
-        await Injector.updateIntroDialogType(
-            Const.introGetReadyToApproachCustomers);
-        showGetReadyToApproachCustomers(context);
-      },*/
-    );
+  static Future<Widget> showCostOfEmployees(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "hr_niki",
+            imageMoveTop: hrNikiImageMoveTop,
+            imageMoveRight: hrNikiImageMoveRight,
+            imageHeight: hrNikiImageHeight,
+            imageWidth: hrNikiImageWidth,
+            titleText: "Cost of employees",
+            btnName: Utils.getText(context, StringRes.gotIt),
+            btnColor: ColorRes.blue,
+            desTextLine:
+                "Here you see your total cash.\n\nHiring employees will incure hiring cost(increasing over time.)\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increse over time",
+            onTapBtn: () async {
+              Navigator.pop(context);
+              await Injector.updateIntroDialogType(
+                  Const.introGetReadyToApproachCustomers);
+            },
+          );
+        });
   }
 
-  static Widget showGetReadyToApproachCustomers(
-      BuildContext context, GestureDragCancelCallback onTap) {
-    return IntroScreenDialog(
-      menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
-      imageName: "hr_niki",
-      imageMoveTop: hrNikiImageMoveTop,
-      imageMoveRight: hrNikiImageMoveRight,
-      imageHeight: hrNikiImageHeight,
-      imageWidth: hrNikiImageWidth,
-      titleText: "Get ready to approach customers",
-      btnName: "Click on Sale",
-      desTextLine:
-          "In order to win new customer you need to have Sales Reprs.\n\nLet's hire 10 Sales Reps by clicking on Sales and then \"Hire 10 employees.\"",
-      onTapBtn: onTap,
-      /*onTapBtn: () async {
+  static Future<Widget> showGetReadyToApproachCustomers(
+      BuildContext context, GestureDragCancelCallback onTap) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "hr_niki",
+            imageMoveTop: hrNikiImageMoveTop,
+            imageMoveRight: hrNikiImageMoveRight,
+            imageHeight: hrNikiImageHeight,
+            imageWidth: hrNikiImageWidth,
+            titleText: "Get ready to approach customers",
+            btnName: "Click on Sale",
+            desTextLine:
+                "In order to win new customer you need to have Sales Reprs.\n\nLet's hire 10 Sales Reps by clicking on Sales and then \"Hire 10 employees.\"",
+            onTapBtn: onTap,
+            /*onTapBtn: () async {
         Navigator.pop(context);
         await Injector.updateIntroDialogType(Const.introSalesOMeter);
         showSalesOMeter(context);
       },*/
-    );
+          );
+        });
   }
 
   static Widget showSalesOMeter(
       BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: true,
       imageName: "hr_niki",
       imageMoveTop: hrNikiImageMoveTop,
       imageMoveRight: hrNikiImageMoveRight,
@@ -365,13 +304,6 @@ class DisplayDialogs {
       BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
       imageName: "hr_niki",
       imageMoveTop: hrNikiImageMoveTop,
       imageMoveRight: hrNikiImageMoveRight,
@@ -395,13 +327,6 @@ class DisplayDialogs {
       BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: false,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: true,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
       imageName: "hr_niki",
       imageMoveTop: hrNikiImageMoveTop,
       imageMoveRight: hrNikiImageMoveRight,
@@ -425,13 +350,6 @@ class DisplayDialogs {
       BuildContext context, GestureDragCancelCallback onTap) {
     return IntroScreenDialog(
       menuView: true,
-      sixthView: false,
-      seventhView: false,
-      secondView: false,
-      forthView: false,
-      fifthView: false,
-      firstView: false,
-      thirdView: false,
       imageName: "hr_niki",
       imageMoveTop: hrNikiImageMoveTop,
       imageMoveRight: hrNikiImageMoveRight,
@@ -458,13 +376,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "li_wei",
             imageMoveRight: liWeiImageMoveRight,
             imageMoveTop: liWeiImageMoveTop,
@@ -477,7 +388,8 @@ class DisplayDialogs {
                 "Hi {{\$user-first-name}},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introAreaOfCompetency);
+              await Injector.prefs
+                  .setBool(PrefKeys.introAreaOfCompetency.toString(), true);
               showAreaOfCompetency(context);
             },
           );
@@ -491,20 +403,13 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "li_wei",
             imageMoveRight: liWeiImageMoveRight,
             imageMoveTop: liWeiImageMoveTop,
             imageHeight: liWeiImageHeight,
             imageWidth: liWeiImageWidth,
             titleText: "Area of competency",
-            btnName: "Next",
+            btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
             desTextLine:
                 "Each Business Sector will test specific knowledge to win\ncustomers. \"Size\" is the number of customers per Sector.\nYou can click pn a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
@@ -512,7 +417,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
                   Const.introAccesToYourFirstCustomers);
-              showIntroAccesToYourFirstCustomers(context);
+              //     showIntroAccesToYourFirstCustomers(context);
             },
           );
         });
@@ -525,13 +430,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "li_wei",
             imageMoveRight: liWeiImageMoveRight,
             imageMoveTop: liWeiImageMoveTop,
@@ -558,13 +456,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: true,
-            firstView: false,
-            secondView: false,
-            thirdView: true,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "li_wei",
             imageMoveRight: liWeiImageMoveRight,
             imageMoveTop: liWeiImageMoveTop,
@@ -591,13 +482,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
             imageMoveTop: tinaImageMoveTop,
@@ -610,8 +494,8 @@ class DisplayDialogs {
                 "Hi Boss,\n\nthis is where the rubber hits the road, where only the best\nsurvive and where we earn the money for our company.\nI am Tina, your Senior Vice President of Global Sales.\nLet's get to work without any further due.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introListOfPotentialCustomers);
+              await Injector.prefs.setBool(
+                  PrefKeys.introListOfPotentialCustomers.toString(), true);
               showListOfPotentialCustomers(context);
             },
           );
@@ -625,46 +509,32 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
             titleText: "List of potential Customers",
-            btnName: "Click on “Engage Now”",
+            btnName: Utils.getText(context, StringRes.gotIt),
+            btnColor: ColorRes.blue,
             desTextLine:
                 "Each customer has a name and belongs to a sector.\nValue is the cash you will recieve every day while the\ncustomer is loyal to you. Loyalty of customers will\nincrease when you master the customer situation.\nResources indicate how many Sales Reps you willneed to engage this customer. Click on “Engage Now”.",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
                   Const.introYourFirstEngegement);
-              showYourFirstEngegement(context);
             },
           );
         });
   }
 
-  static showYourFirstEngegement(BuildContext context) async {
+  static showYourFirstEngagement(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
             imageMoveTop: tinaImageMoveTop,
@@ -678,12 +548,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
                   Const.introImpactOnSalesAndService);
-              showImpactOnSalesAndService(context);
+              //showImpactOnSalesAndService(context);
             },
           );
         });
   }
 
+  //todo  customer situation
   static showImpactOnSalesAndService(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
@@ -691,13 +562,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: true,
-            forthView: true,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
             imageMoveTop: tinaImageMoveTop,
@@ -710,9 +574,10 @@ class DisplayDialogs {
                 "Congratulations! You just won your first customer.\nYour Sales-o-Meter shows now 8/10 as this custome\nrequired 2 Sales Reps and your Service-o-Meter shows\n9/10 as one Service Rep is busy with this customer.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introImpactOnBrandValueAndCash);
-              showImpactOnBrandValueAndCash(context);
+//              await Injector.updateIntroDialogType(Const.introImpactOnBrandValueAndCash);
+              await Injector.prefs.setBool(
+                  PrefKeys.introImpactOnBrandValueAndCash.toString(), true);
+//              showImpactOnBrandValueAndCash(context);
             },
           );
         });
@@ -725,13 +590,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: true,
-            sixthView: true,
-            seventhView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
             imageMoveTop: tinaImageMoveTop,
@@ -759,13 +617,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: true,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
             imageMoveTop: tinaImageMoveTop,
@@ -792,13 +643,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "bob",
             imageMoveRight: bobImageMoveRight,
             imageMoveTop: bobImageMoveTop,
@@ -811,8 +655,9 @@ class DisplayDialogs {
                 "Hi {{\$user-first-name}},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introListOfExistingCustomers);
+              await Injector.prefs.setBool(
+                  PrefKeys.introListOfExistingCustomers.toString(), true);
+//              await Injector.updateIntroDialogType(Const.introListOfExistingCustomers);
               showListOfExistingCustomers(context);
             },
           );
@@ -826,27 +671,20 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "bob",
             imageMoveRight: bobImageMoveRight,
             imageMoveTop: bobImageMoveTop,
             imageHeight: bobImageHeight,
             imageWidth: bobImageWidth,
             titleText: "List of existing Customers",
-            btnName: "Next",
+            btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
             desTextLine:
                 "Here you see all customers and contracts that you are currently\nengaged with. How much cash they generate each day and\nhow many days they will be loyal to you.\nYou can click the “X” if you want to end the contract.\nThis customer will no longer generate cash but you will\nwin back 1 Service Rep",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introReadyForBusiness);
-              showReadyForBusiness(context);
+              //showReadyForBusiness(context);
             },
           );
         });
@@ -859,13 +697,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            firstView: false,
-            secondView: false,
-            thirdView: false,
-            forthView: false,
-            fifthView: false,
-            sixthView: false,
-            seventhView: false,
             imageName: "bob",
             imageMoveRight: bobImageMoveRight,
             imageMoveTop: bobImageMoveTop,
@@ -892,20 +723,15 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: true,
-            thirdView: false,
             imageName: "john",
             titleText: Utils.getText(context, StringRes.rewards),
             btnName: Utils.getText(context, StringRes.gotIt),
             desTextLine: Utils.getText(context, StringRes.rewardsDialogContent),
+            btnColor: ColorRes.blue,
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introYourWillIsAtYourCommand);
+              await Injector.updateIntroDialogType(
+                  Const.introYourWillIsAtYourCommand);
               await Injector.prefs.setBool(PrefKeys.introRewards, true);
             },
           );
@@ -920,13 +746,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "will",
             btnColor: ColorRes.blue,
             imageWidth: willImageWidth,
@@ -934,33 +753,27 @@ class DisplayDialogs {
             imageMoveTop: willImageMoveTop,
             imageMoveRight: willImageMoveRight,
             titleText: Utils.getText(context, StringRes.challengesDialogTitle1),
-            btnName: Utils.getText(context, StringRes.gotIt),
+            btnName: Utils.getText(context, StringRes.next),
             desTextLine:
                 Utils.getText(context, StringRes.challengesDialogContent1),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introChallanges);
-              await Injector.prefs.setBool(PrefKeys.introYourWillIsAtYourCommand.toString(), true);
-              showIntroChallanges(context);
+              await Injector.prefs.setBool(
+                  PrefKeys.introYourWillIsAtYourCommand.toString(), true);
+              showIntroChallenge(context);
             },
           );
         });
   }
 
-  static showIntroChallanges(BuildContext context) async {
+  static showIntroChallenge(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "will",
             btnColor: ColorRes.blue,
             imageWidth: willImageWidth,
@@ -988,24 +801,15 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "lydia",
             btnColor: ColorRes.blue,
             imageWidth: lydiaImageWidth,
             imageHeight: lydiaImageHeight,
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
-            titleText:
-                Utils.getText(context, StringRes.strMarketingCommunications),
-            btnName: Utils.getText(context, StringRes.gotIt),
-            desTextLine: Utils.getText(
-                context, StringRes.strMarketingCommunicationsDialog),
+            titleText: Utils.getText(context, StringRes.strMarketingCommunications),
+            btnName: Utils.getText(context, StringRes.next),
+            desTextLine: Utils.getText(context, StringRes.strMarketingCommunicationsDialog),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introRanking);
@@ -1023,13 +827,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "lydia",
             btnColor: ColorRes.blue,
             imageWidth: lydiaImageWidth,
@@ -1038,8 +835,7 @@ class DisplayDialogs {
             imageMoveRight: lydiaImageMoveRight,
             titleText: Utils.getText(context, StringRes.ranking),
             btnName: Utils.getText(context, StringRes.gotIt),
-            desTextLine:
-                Utils.getText(context, StringRes.strRankingDialogContent),
+            desTextLine: Utils.getText(context, StringRes.strRankingDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -1049,21 +845,14 @@ class DisplayDialogs {
         });
   }
 
-  //todo This dialogs only for Team screen
-  static showYourTeamsPerformance(BuildContext context) async {
-    await Future.delayed(Duration(milliseconds: 50));
-    showDialog(
+     //todo This dialogs only for Team screen
+     static showYourTeamsPerformance(BuildContext context) async {
+     await Future.delayed(Duration(milliseconds: 50));
+     showDialog(
         context: context,
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "hr_niki",
             imageMoveTop: hrNikiImageMoveTop,
             imageMoveRight: hrNikiImageMoveRight,
@@ -1077,7 +866,8 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introYourTeams);
-              await Injector.prefs.setBool(PrefKeys.introYourTeamsPerformance, true);
+              await Injector.prefs
+                  .setBool(PrefKeys.introYourTeamsPerformance, true);
               showYourTeams(context);
             },
           );
@@ -1091,13 +881,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "hr_niki",
             imageMoveTop: hrNikiImageMoveTop,
             imageMoveRight: hrNikiImageMoveRight,
@@ -1123,13 +906,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "hr_niki",
             imageMoveTop: hrNikiImageMoveTop,
             imageMoveRight: hrNikiImageMoveRight,
@@ -1157,13 +933,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "akiko",
             imageMoveTop: akikoImageMoveTop,
             imageMoveRight: akikoImageMoveRight,
@@ -1177,7 +946,8 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
-              await Injector.prefs.setBool(PrefKeys.introThePersonYouCanCountOn, true);
+              await Injector.prefs
+                  .setBool(PrefKeys.introThePersonYouCanCountOn, true);
               showIntroPL(context);
             },
           );
@@ -1191,13 +961,6 @@ class DisplayDialogs {
         builder: (BuildContext context) {
           return IntroScreenDialog(
             menuView: false,
-            sixthView: false,
-            seventhView: false,
-            secondView: false,
-            forthView: false,
-            fifthView: false,
-            firstView: false,
-            thirdView: false,
             imageName: "akiko",
             imageMoveTop: akikoImageMoveTop,
             imageMoveRight: akikoImageMoveRight,
@@ -1210,7 +973,6 @@ class DisplayDialogs {
                 "${Utils.getText(context, StringRes.hereYourMonitor)}\n\n${Utils.getText(context, StringRes.selectPeriod)}",
             onTapBtn: () async {
               Navigator.pop(context);
-
             },
           );
         });

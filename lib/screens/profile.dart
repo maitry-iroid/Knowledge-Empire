@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
@@ -41,19 +42,26 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
+    showIntroDialog();
+    super.initState(); 
+  }
+
+  Future<void> showIntroDialog() async {
+    if (Injector.prefs.getBool(PrefKeys.introSettings.toString()) != null && Injector.prefs.getBool(PrefKeys.introSettings.toString())) {
+    } else {
+      await DisplayDialogs.showIntroDialog(context);
+    }
+
     myFocusNode = FocusNode();
-
+    
     companyController.text = Injector.userData?.companyName;
-
+    
     photoUrl = Injector.userData != null
         ? Injector.userData?.profileImage != null
             ? Injector.userData?.profileImage
             : ""
         : "";
-
-    super.initState();
-
-//    packagesInfo();
+    
     _initPackageInfo();
   }
 
