@@ -611,12 +611,11 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-    if (Injector.prefs.getBool(PrefKeys.team1.toString()) !=
-            null &&
-        Injector.prefs.getBool(PrefKeys.team1.toString())) {
-    } else {
+
+    if (Injector.introData == null || Injector.introData.team1 == 0)
       await DisplayDialogs.showYourTeamsPerformance(context);
-    }
+
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);

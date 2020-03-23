@@ -63,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
 
     localeBloc.setLocale(0);
 //    localeBloc.setLocale(Utils.getIndexLocale());
-
   }
 
   //Sound Is mute
@@ -173,9 +172,9 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringRes.selectLanguages)
-                            .toUpperCase(),
-                        style: TextStyle(color: ColorRes.white),
+                        Utils.getText(context, StringRes.selectLanguage) +
+                            " - " +
+                            tempLanguage,
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -224,13 +223,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   selectLanguagesAlert(BuildContext context) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
         barrierLabel:
-        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: ColorRes.blackTransparentColor,
         transitionDuration: const Duration(milliseconds: 200),
         pageBuilder: (BuildContext buildContext, Animation animation,
@@ -264,7 +262,8 @@ class _LoginPageState extends State<LoginPage> {
                               alignment: Alignment.topCenter,
                               child: Center(
                                 child: Text(
-                                  Utils.getText(context, "Select Your Language"),
+                                  Utils.getText(
+                                      context, StringRes.selectLanguage),
                                   style: TextStyle(
                                       color: ColorRes.white, fontSize: 17),
                                   textAlign: TextAlign.center,
@@ -272,13 +271,9 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             Padding(padding: EdgeInsets.only(top: 13)),
-
-
                             languageSelectCell(StringRes.english, 0),
                             languageSelectCell(StringRes.german, 1),
                             languageSelectCell(StringRes.chinese, 2),
-
-
                           ],
                         ),
                       )),
@@ -289,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(10),
                           child: Image(
                             image:
-                            AssetImage(Utils.getAssetsImg('close_dialog')),
+                                AssetImage(Utils.getAssetsImg('close_dialog')),
                             width: 20,
                           ),
                         ),
@@ -303,35 +298,32 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         });
-
-
-
   }
 
   languageSelectCell(String language, int index) {
-    return  InkResponse(
+    return InkResponse(
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         padding: EdgeInsets.only(top: 5, bottom: 5, left: 0, right: 0),
         decoration: BoxDecoration(
             color: ColorRes.rankingProValueBg,
-            borderRadius: BorderRadius.all(Radius.circular(8))
-        ),
+            borderRadius: BorderRadius.all(Radius.circular(8))),
         width: Utils.getDeviceWidth(context),
-        child: Text(Utils.getText(context, language), textAlign: TextAlign.center,),
+        child: Text(
+          Utils.getText(context, language),
+          textAlign: TextAlign.center,
+        ),
       ),
       onTap: () async {
-
-        if(index == 0) {
+        if (index == 0) {
           tempLanguage = Const.english;
-//          await languageChangeAPI(Const.english, index);
-        } else if(index == 1){
+        } else if (index == 1) {
           tempLanguage = Const.german;
-//          await languageChangeAPI(Const.german, index);
-        } else if(index == 2) {
+        } else if (index == 2) {
           tempLanguage = Const.chinese;
-//          await languageChangeAPI(Const.chinese, index);
         }
+
+        localeBloc.setLocale(Utils.getIndexLocale(tempLanguage));
 
         Navigator.pop(context);
       },
@@ -392,8 +384,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-
-
   void navigateToDashboard() {
     Navigator.pushAndRemoveUntil(
         context, FadeRouteHome(), ModalRoute.withName("/login"));
@@ -402,7 +392,6 @@ class _LoginPageState extends State<LoginPage> {
   showEmailView() {
     return Row(
       children: <Widget>[
-
         Image(
           image: AssetImage(Utils.getAssetsImg("email2")),
           width: 50,
@@ -420,7 +409,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Center(
                   child: TextField(
                     controller: emailController,
-                    autocorrect: Platform.isAndroid ? true :false,
+                    autocorrect: Platform.isAndroid ? true : false,
 //                    autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     textAlignVertical: TextAlignVertical.center,
@@ -481,5 +470,4 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-
 }

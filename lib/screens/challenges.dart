@@ -60,14 +60,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   Future showIntroDialog() async {
-    if (Injector.prefs
-                .getBool(PrefKeys.challenge1.toString()) !=
-            null &&
-        Injector.prefs
-            .getBool(PrefKeys.challenge1.toString())) {
-    } else {
+    if (Injector.introData == null || Injector.introData.challenge1 == 0)
       await DisplayDialogs.showYourWillIsAtYourCommand(context);
-    }
   }
 
   TextEditingController searchController = TextEditingController();
@@ -391,19 +385,17 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-
   _showUnFriend(BuildContext context, int index) {
-
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("No"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
       child: Text("Yes"),
-      onPressed:  () {
+      onPressed: () {
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
         Navigator.pop(context);
@@ -413,7 +405,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Alert"),
-      content: Text("Are sure want to unfriend this user?", style: TextStyle(color: ColorRes.textProf)),
+      content: Text("Are sure want to unfriend this user?",
+          style: TextStyle(color: ColorRes.textProf)),
       actions: [
         cancelButton,
         continueButton,
@@ -428,7 +421,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
       },
     );
   }
-
 
 /*
   unFriend(BuildContext context, int index) {

@@ -36,14 +36,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   }
 
   Future showIntroDialog() async {
-     if (Injector.prefs.getBool(
-        PrefKeys.existingCustomer1.toString()) !=
-        null &&
-        Injector.prefs
-            .getBool(PrefKeys.existingCustomer1.toString())) {
-    } else {
+    if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
       await DisplayDialogs.showServingYourExistingCustomers(context);
-    }
+
+
     
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {

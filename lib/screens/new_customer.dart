@@ -37,11 +37,12 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.newCustomer1.toString()) != null &&
-        Injector.prefs.getBool(PrefKeys.newCustomer1.toString())) {
-    } else {
+
+
+    if (Injector.introData == null || Injector.introData.newCustomer1 == 0)
       await DisplayDialogs.showIntroHeartOfTheBusiness(context);
-    }
+
+
     questionAnswered = Injector.customerValueData?.totalAttemptedQuestion;
     loyaltyBonus = Injector.customerValueData?.loyaltyBonus;
     resourceBonus = Injector.customerValueData?.resourceBonus;

@@ -796,14 +796,12 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getData() async {
-    if (Injector.prefs
-                .getBool(PrefKeys.ranking1.toString()) !=
-            null &&
-        Injector.prefs
-            .getBool(PrefKeys.ranking1.toString())) {
-    } else {
+
+
+    if (Injector.introData == null || Injector.introData.ranking1 == 0)
       await DisplayDialogs.showMarketingAndCommunications(context);
-    }
+
+
 
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 

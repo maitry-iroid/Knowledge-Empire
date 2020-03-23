@@ -44,11 +44,11 @@ class _RewardsPageState extends State<RewardsPage> {
 
   Future showDialogForCallApi() async {
       await Future.delayed(Duration(milliseconds: 50));
-      if (Injector.prefs.getBool(PrefKeys.rewards.toString()) != null &&
-          Injector.prefs.getBool(PrefKeys.rewards.toString())) {
-      } else {
+
+      if (Injector.introData == null || Injector.introData.rewards == 0)
         await DisplayDialogs.showIntroRewards(context);
-      }
+
+
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       getAchievements();
     });

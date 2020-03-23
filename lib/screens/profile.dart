@@ -47,10 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.profile1.toString()) != null && Injector.prefs.getBool(PrefKeys.profile1.toString())) {
-    } else {
+
+    if (Injector.introData == null || Injector.introData.profile1 == 0)
       await DisplayDialogs.showIntroDialog(context);
-    }
+
 
     myFocusNode = FocusNode();
     
@@ -390,7 +390,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           switchModeApi();
 
-                          localeBloc.setLocale(Utils.getIndexLocale());
+                          localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
                           setState(() {});
                         },
@@ -1223,7 +1223,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
         Injector.headerStreamController.add(Const.updateProfileBrod);
 
-        localeBloc.setLocale(Utils.getIndexLocale());
+        localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
@@ -1375,7 +1375,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (data != null) {
 //        await Injector.setUserData(Injector.userData);
 
-        localeBloc.setLocale(Utils.getIndexLocale());
+        localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));

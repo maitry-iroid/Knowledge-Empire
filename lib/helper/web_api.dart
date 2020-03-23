@@ -48,6 +48,7 @@ class WebApi {
     static String updateLanguage = "updateLanguage";
     static String updateMode = "updateMode";
     static String switchCompanyProfile = "switchCompanyProfile";
+    static String rqGameIntro = "gameIntro";
 
   static getRequest(String req, String data) {
     return {

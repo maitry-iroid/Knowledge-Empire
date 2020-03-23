@@ -34,10 +34,10 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   Future showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.org1.toString()) != null && Injector.prefs.getBool(PrefKeys.org1.toString())) {
-    } else {
+
+    if (Injector.introData == null || Injector.introData.org1 == 0)
       await DisplayDialogs.showHireHRDialog(context);
-    }
+
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) getOrganization();
     });

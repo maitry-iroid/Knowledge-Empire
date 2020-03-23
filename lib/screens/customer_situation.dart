@@ -83,14 +83,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
-      if (Injector.prefs.getBool(
-                  PrefKeys.customerSituation.toString()) !=
-              null &&
-          Injector.prefs
-              .getBool(PrefKeys.customerSituation.toString())) {
-      } else {
-        await DisplayDialogs.showImpactOnSalesAndService(context);
-      }
+
+      if (Injector.introData == null || Injector.introData.customerSituation == 0)
+        await DisplayDialogs.showYourWillIsAtYourCommand(context);
+
+      await DisplayDialogs.showImpactOnSalesAndService(context);
+
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
       isCoinViseble = true;
       setState(() {});

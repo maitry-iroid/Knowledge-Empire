@@ -10,6 +10,7 @@ import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -152,7 +153,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-    } else if (state == AppLifecycleState.inactive) {}
+    } else if (state == AppLifecycleState.inactive) {
+      updateIntroData();
+      print("=========inactive==========");
+    }else if (state == AppLifecycleState.paused) {
+      print("=========paused==========");
+    }
   }
 
   _getDrawerItemWidget(int pos) {
@@ -217,9 +223,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Navigator.push(context, FadeRouteIntro());
         }
       }
-    }else{
+    } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {
-
         _scaffoldKey.currentState.openEndDrawer();
       }
     }
@@ -227,8 +232,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-
-
     initDrawerItems();
 
     var drawerOptions = <Widget>[];
@@ -483,7 +486,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             QuestionData questionData = QuestionData.fromJson(data);
 
             if (questionData != null && questionData.challengeId != null)
-              DisplayDialogs.showChallengeDialog(context,"Ravi",questionData);
+              DisplayDialogs.showChallengeDialog(context, "Ravi", questionData);
 //              Utils.showChallengeQuestionDialog(_scaffoldKey, questionData);
           }
         }).catchError((e) {
@@ -557,7 +560,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initContent() async {
     await Injector.getInstance();
 
-    localeBloc.setLocale(Utils.getIndexLocale());
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
     Injector.headerStreamController.add("event");
 
@@ -567,6 +570,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     initCheckNetworkConnectivity();
 
     setSelectedIndex();
+
 
     PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
 
@@ -582,4 +586,25 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           widget.homeData.isChallenge) getPendingChallenges();
     }
   }
+
+  static updateIntroData() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 2;
+        rq.id = Injector.introData;
+
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+          if (data != null) {
+            IntroData introData = IntroData.fromJson(data);
+            Injector.setIntroData(introData);
+          }
+        }).catchError((e) {
+          Utils.showToast(e.toString());
+        });
+      }
+    });
+  }
+
 }

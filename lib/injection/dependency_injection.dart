@@ -6,10 +6,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/helper/Utils.dart';
 
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,8 +43,8 @@ class Injector {
 
   static int badgeCount = 0;
 
-
   static int dialogType = 0;
+  static IntroData introData;
 
 //  factory Injector {
 //    return _singleton;
@@ -50,15 +53,14 @@ class Injector {
   Injector._internal();
 
   static getInstance() async {
-
     prefs = await SharedPreferences.getInstance();
 
     deviceType = Device.get().isAndroid ? "android" : "ios";
 
     firebaseMessaging = FirebaseMessaging();
 
-    firebaseMessaging.getToken().then((token){
-      print("Your Device tocken==<>"+token);
+    firebaseMessaging.getToken().then((token) {
+      print("Your Device tocken==<>" + token);
     });
 
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -83,6 +85,10 @@ class Injector {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
+      if (prefs.getString(PrefKeys.introData) != null)
+      introData =
+          IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+
       headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();
       homeStreamController = StreamController.broadcast();
@@ -90,6 +96,8 @@ class Injector {
 
       mode = prefs.getInt(PrefKeys.mode) ?? Const.businessMode;
       isBusinessMode = mode == Const.businessMode;
+
+      getIntroData();
     }
   }
 
@@ -114,6 +122,13 @@ class Injector {
     customerValueData = _customerValueData;
   }
 
+  static setIntroData(IntroData _introData) async {
+    await Injector.prefs
+        .setString(PrefKeys.introData, json.encode(_introData.toJson()));
+
+    introData = _introData;
+  }
+
   static isManager() {
     return userData?.isManager == 1;
   }
@@ -126,6 +141,26 @@ class Injector {
   static updateIntroDialogType(int introType) async {
     await prefs.setInt(PrefKeys.dialogTypes, introType);
     dialogType = introType;
-    print("----------------->"+Injector.dialogType.toString());
+    print("----------------->" + Injector.dialogType.toString());
+  }
+
+
+  static getIntroData() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 1;
+
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+          if (data != null) {
+            IntroData introData = IntroData.fromJson(data);
+            Injector.setIntroData(introData);
+          }
+        }).catchError((e) {
+          Utils.showToast(e.toString());
+        });
+      }
+    });
   }
 }

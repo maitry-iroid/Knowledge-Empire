@@ -55,33 +55,33 @@ class ColorRes {
   static Color rankingProDeSelectDay  = Color(0xFFc6ced8);
   static Color blackTransparentColor  = Color(0x73000000);
 
-  static Color chartTen = Color(0xFF823d28);
-  static Color chartNine = Color(0xFF8e4a35);
-  static Color chartEight = Color(0xFF9f5842);
-  static Color chartSeven = Color(0xFFa86753);
-  static Color chartSix = Color(0xFFbc7b67);
-  static Color chartFive = Color(0xFFc78977);
-  static Color chartFour = Color(0xFFdca595);
-  static Color chartThree = Color(0xFFe6b8aa);
-  static Color chartTwo = Color(0xFFf3ccc0);
-  static Color chartOne = Color(0xFFf9d2c6);
+  static Color chartTen = Color(0xFF5CA793);
+  static Color chartNine = Color(0xFF1395BA);
+  static Color chartEight = Color(0xFF117899);
+  static Color chartSeven = Color(0xFF0F5B78);
+  static Color chartSix = Color(0xFF0D3C55);
+  static Color chartFive = Color(0xFFC02E1D);
+  static Color chartFour = Color(0xFFD94E1F);
+  static Color chartThree = Color(0xFFF16C20);
+  static Color chartTwo = Color(0xFFECAA38);
+  static Color chartOne = Color(0xFFEBC844);
 
   static Color chartOpen = Color(0xFF6fac46);
   static Color chartClose = Color(0xFFc4d8bc);
 
 
 
-  static Color crmColor = Color(0xFFa4551f);
-  static Color financeColor = Color(0xFFba6124);
-  static Color legalColor = Color(0xFFde752d);
-  static Color operationColor = Color(0xFFed7d31);
-  static Color salesColor = Color(0xFFf2af95);
-  static Color marketingColor = Color(0xFFf5c2b1);
-  static Color hrColor = Color(0xFFf7d3c7);
+  static Color crmColor = Color(0xFF003F5C);
+  static Color financeColor = Color(0xFF2F4B7C);
+  static Color legalColor = Color(0xFF665191);
+  static Color operationColor = Color(0xFFA05195);
+  static Color salesColor = Color(0xFFD45087);
+  static Color marketingColor = Color(0xFFF95D6A);
+  static Color hrColor = Color(0xFFFF7C43);
 
-  static Color firstColor = Color(0xFF70ad47);
-  static Color secondColor = Color(0xFFa1c491);
-  static Color thirdColor = Color(0xFFc4d8bc);
+  static Color firstColor = Color(0xFF003F5C);
+  static Color secondColor = Color(0xFF2F4B7C);
+  static Color thirdColor = Color(0xFF665191);
 
 
 

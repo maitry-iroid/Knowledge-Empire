@@ -698,10 +698,10 @@ static  void navigateToIntro(BuildContext context) {
     return localeSubject.stream.distinct();
   }
 
-  static int getIndexLocale() {
+  static int getIndexLocale(String language) {
     int index = 0;
 
-    switch (Injector.userData.language) {
+    switch (language) {
       case "English":
         index = 0;
         break;

@@ -32,25 +32,25 @@ class _PLPageState extends State<PLPage> {
   int selectedDay = 0;
 
   List<Color> colorOpenCloseList = [
-    ColorRes.firstColor,
-    ColorRes.secondColor,
-    ColorRes.thirdColor,
-    ColorRes.thirdColor,
-    ColorRes.thirdColor,
-    ColorRes.thirdColor,
-    ColorRes.thirdColor,
+    ColorRes.chartOne,
+    ColorRes.chartTwo,
+    ColorRes.chartThree,
+    ColorRes.chartFour,
+    ColorRes.chartFive,
+    ColorRes.chartSix,
+    ColorRes.chartSeven,
   ];
 
   List<Color> colorList = [
-    ColorRes.crmColor,
-    ColorRes.financeColor,
-    ColorRes.legalColor,
-    ColorRes.operationColor,
-    ColorRes.salesColor,
-    ColorRes.marketingColor,
-    ColorRes.hrColor,
-    ColorRes.hrColor,
-    ColorRes.hrColor,
+    ColorRes.chartOne,
+    ColorRes.chartTwo,
+    ColorRes.chartThree,
+    ColorRes.chartFour,
+    ColorRes.chartFive,
+    ColorRes.chartSix,
+    ColorRes.chartSeven,
+    ColorRes.chartEight,
+    ColorRes.chartNine,
   ];
 
   @override
@@ -60,12 +60,11 @@ class _PLPageState extends State<PLPage> {
   }
 
   Future openIntroDialog() async {
+    await Future.delayed(Duration(milliseconds: 50));
 
-      await Future.delayed(Duration(milliseconds: 50));
-      if (Injector.prefs.getBool(PrefKeys.pl1.toString()) != null && Injector.prefs.getBool(PrefKeys.pl1.toString())) {
-      } else {
-        await DisplayDialogs.showThePersonYouCanCountOn(context);
-      }
+    if (Injector.introData == null || Injector.introData.pl1 == 0)
+      await DisplayDialogs.showThePersonYouCanCountOn(context);
+
     getPerformanceData(Const.plDay);
   }
 
@@ -194,7 +193,6 @@ class _PLPageState extends State<PLPage> {
           color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
         ),
         width: Utils.getDeviceWidth(context),
-
         child: Column(
           children: <Widget>[
             Container(
@@ -279,9 +277,10 @@ class _PLPageState extends State<PLPage> {
 
   selectTime(index) {
     if (selectedTime != index) {
-      if (mounted)setState(() {
-        selectedTime = index;
-      });
+      if (mounted)
+        setState(() {
+          selectedTime = index;
+        });
     }
   }
 
@@ -339,7 +338,7 @@ class _PLPageState extends State<PLPage> {
                         getPerformanceData(Const.plYear);
                       }
 
-                      if (mounted)setState(() {});
+                      if (mounted) setState(() {});
                     },
                   ),
                 );
@@ -423,7 +422,10 @@ class _PLPageState extends State<PLPage> {
                               : ColorRes.textProf)),
                 ),
                 Container(
-                  child: Text(getValidText(performanceData.cash.previousCash == 0 ? 50000 : performanceData.cash.previousCash ),
+                  child: Text(
+                      getValidText(performanceData.cash.previousCash == 0
+                          ? 50000
+                          : performanceData.cash.previousCash),
                       style: TextStyle(
                           fontSize: 13,
                           color: Injector.isBusinessMode
@@ -807,19 +809,20 @@ class _PLPageState extends State<PLPage> {
         WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
           if (data != null) {
             CommonView.showCircularProgress(false, context);
-            if (mounted)setState(() {
-              performanceData = PerformanceData.fromJson(data);
+            if (mounted)
+              setState(() {
+                performanceData = PerformanceData.fromJson(data);
 
-              performanceData.cost.forEach((cost) {
-                dataMap.putIfAbsent(
-                    cost.name, () => cost.currentCost.toDouble());
-              });
+                performanceData.cost.forEach((cost) {
+                  dataMap.putIfAbsent(
+                      cost.name, () => cost.currentCost.toDouble());
+                });
 
-              performanceData.revenue.forEach((revenue) {
-                openCloseMap.putIfAbsent(
-                    revenue.name, () => revenue.currentRevenue.toDouble());
+                performanceData.revenue.forEach((revenue) {
+                  openCloseMap.putIfAbsent(
+                      revenue.name, () => revenue.currentRevenue.toDouble());
+                });
               });
-            });
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
