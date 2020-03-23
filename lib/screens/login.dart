@@ -55,11 +55,15 @@ class _LoginPageState extends State<LoginPage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
+  String tempLanguage = Const.english;
+
   @override
   void initState() {
     super.initState();
 
     localeBloc.setLocale(0);
+//    localeBloc.setLocale(Utils.getIndexLocale());
+
   }
 
   //Sound Is mute
@@ -162,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                 /* SizedBox(
+                  SizedBox(
                     height: 5,
                   ),
                   Align(
@@ -183,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(
                     height: 2,
-                  ),*/
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: Utils.getDeviceWidth(context) / 8),
@@ -365,13 +369,17 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () async {
 
         if(index == 0) {
-          await languageChangeAPI(Const.english, index);
+          tempLanguage = Const.english;
+//          await languageChangeAPI(Const.english, index);
         } else if(index == 1){
-          await languageChangeAPI(Const.german, index);
+          tempLanguage = Const.german;
+//          await languageChangeAPI(Const.german, index);
         } else if(index == 2) {
-          await languageChangeAPI(Const.chinese, index);
+          tempLanguage = Const.chinese;
+//          await languageChangeAPI(Const.chinese, index);
         }
 
+        Navigator.pop(context);
       },
     );
   }
@@ -459,6 +467,8 @@ class _LoginPageState extends State<LoginPage> {
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret =
         Utils.getSecret(loginRequest.email, loginRequest.password);
+    loginRequest.language = tempLanguage;
+//    tempLanguage
 
 //    String udid = await FlutterUdid.udid;
 
