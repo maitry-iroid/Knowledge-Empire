@@ -62,6 +62,7 @@ class DashboardGamePageState extends State<DashboardGamePage> with TickerProvide
 
 
   void getDashboardConfig() {
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         DashboardRequest rq = DashboardRequest();
