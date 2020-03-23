@@ -38,8 +38,8 @@ class _RewardsPageState extends State<RewardsPage> {
 
   @override
   void initState() {
-    super.initState();
     showDialogForCallApi();
+    super.initState();
   }
 
   Future showDialogForCallApi() async {

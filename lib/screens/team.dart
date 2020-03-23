@@ -55,9 +55,8 @@ class _TeamPageState extends State<TeamPage> {
 
   @override
   void initState() {
-    super.initState();
-
     getTeamUsers();
+    super.initState();
   }
 
   @override
@@ -614,7 +613,6 @@ class _TeamPageState extends State<TeamPage> {
     if (Injector.introData == null || Injector.introData.team1 == 0)
       await DisplayDialogs.showYourTeamsPerformance(context);
 
-    CommonView.showCircularProgress(true, context);
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -638,7 +636,7 @@ class _TeamPageState extends State<TeamPage> {
           //CommonView.showCircularProgress(false, context);
         });
       }
-    });ri dyo
+    });
   }
 
   void initGraphData() {
