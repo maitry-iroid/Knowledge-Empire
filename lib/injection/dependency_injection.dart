@@ -133,10 +133,7 @@ class Injector {
     return userData?.isManager == 1;
   }
 
-  static updateIntroType(int introType) async {
-    await prefs.setInt(PrefKeys.currentIntroType, introType);
-    return currentIntroType == introType;
-  }
+
 
   static updateIntroDialogType(int introType) async {
     await prefs.setInt(PrefKeys.dialogTypes, introType);
