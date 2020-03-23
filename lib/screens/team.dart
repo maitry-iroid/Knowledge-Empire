@@ -613,6 +613,7 @@ class _TeamPageState extends State<TeamPage> {
     if (Injector.introData == null || Injector.introData.team1 == 0)
       await DisplayDialogs.showYourTeamsPerformance(context);
 
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);
