@@ -797,10 +797,10 @@ class _RankingPageState extends State<RankingPage> {
 
   void getData() async {
     if (Injector.prefs
-                .getBool(PrefKeys.introMarketingAndCommunications.toString()) !=
+                .getBool(PrefKeys.ranking1.toString()) !=
             null &&
         Injector.prefs
-            .getBool(PrefKeys.introMarketingAndCommunications.toString())) {
+            .getBool(PrefKeys.ranking1.toString())) {
     } else {
       await DisplayDialogs.showMarketingAndCommunications(context);
     }

@@ -570,11 +570,11 @@ static  void navigateToIntro(BuildContext context) {
   }
 
   static showChallengeQuestionDialog(
-    GlobalKey<ScaffoldState> _scaffoldKey,
+    BuildContext context,
     QuestionData questionData,
   ) async {
     await showDialog(
-        context: _scaffoldKey.currentContext,
+        context: context,
         builder: (BuildContext context) => EngagementCustomer(
               questionDataEngCustomer: questionData,
               isChallenge: true,

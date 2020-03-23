@@ -37,10 +37,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Future showIntroDialog() async {
      if (Injector.prefs.getBool(
-        PrefKeys.introListOfExistingCustomers.toString()) !=
+        PrefKeys.existingCustomer1.toString()) !=
         null &&
         Injector.prefs
-            .getBool(PrefKeys.introListOfExistingCustomers.toString())) {
+            .getBool(PrefKeys.existingCustomer1.toString())) {
     } else {
       await DisplayDialogs.showServingYourExistingCustomers(context);
     }

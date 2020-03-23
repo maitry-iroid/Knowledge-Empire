@@ -34,7 +34,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   Future showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.introHireHREmployeesBoard.toString()) != null && Injector.prefs.getBool(PrefKeys.introHireHREmployeesBoard.toString())) {
+    if (Injector.prefs.getBool(PrefKeys.org1.toString()) != null && Injector.prefs.getBool(PrefKeys.org1.toString())) {
     } else {
       await DisplayDialogs.showHireHRDialog(context);
     }

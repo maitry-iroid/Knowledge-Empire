@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -371,8 +372,8 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typeRanking);
-//                    CommonView().pushNotificationAlert(context, 1);
+                    //Utils.performDashboardItemClick(context, Const.typeRanking);
+                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
                   },
                 ),
               ],

@@ -61,10 +61,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   Future showIntroDialog() async {
     if (Injector.prefs
-                .getBool(PrefKeys.introYourWillIsAtYourCommand.toString()) !=
+                .getBool(PrefKeys.challenge1.toString()) !=
             null &&
         Injector.prefs
-            .getBool(PrefKeys.introYourWillIsAtYourCommand.toString())) {
+            .getBool(PrefKeys.challenge1.toString())) {
     } else {
       await DisplayDialogs.showYourWillIsAtYourCommand(context);
     }

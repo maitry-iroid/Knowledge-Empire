@@ -84,10 +84,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     if (questionData.isAnsweredCorrect == true) {
       if (Injector.prefs.getBool(
-                  PrefKeys.introImpactOnBrandValueAndCash.toString()) !=
+                  PrefKeys.customerSituation.toString()) !=
               null &&
           Injector.prefs
-              .getBool(PrefKeys.introImpactOnBrandValueAndCash.toString())) {
+              .getBool(PrefKeys.customerSituation.toString())) {
       } else {
         await DisplayDialogs.showImpactOnSalesAndService(context);
       }
@@ -552,7 +552,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (widget.nextChallengeQuestionData != null &&
           widget.nextChallengeQuestionData.challengeId != null) {
         Utils.showChallengeQuestionDialog(
-            _scaffoldKey, widget.nextChallengeQuestionData);
+            context, widget.nextChallengeQuestionData);
       }
     } else {
       Navigator.pushAndRemoveUntil(

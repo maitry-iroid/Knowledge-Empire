@@ -611,9 +611,9 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-    if (Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString()) !=
+    if (Injector.prefs.getBool(PrefKeys.team1.toString()) !=
             null &&
-        Injector.prefs.getBool(PrefKeys.introYourTeamsPerformance.toString())) {
+        Injector.prefs.getBool(PrefKeys.team1.toString())) {
     } else {
       await DisplayDialogs.showYourTeamsPerformance(context);
     }

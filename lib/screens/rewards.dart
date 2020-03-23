@@ -44,8 +44,8 @@ class _RewardsPageState extends State<RewardsPage> {
 
   Future showDialogForCallApi() async {
       await Future.delayed(Duration(milliseconds: 50));
-      if (Injector.prefs.getBool(PrefKeys.introRewards.toString()) != null &&
-          Injector.prefs.getBool(PrefKeys.introRewards.toString())) {
+      if (Injector.prefs.getBool(PrefKeys.rewards.toString()) != null &&
+          Injector.prefs.getBool(PrefKeys.rewards.toString())) {
       } else {
         await DisplayDialogs.showIntroRewards(context);
       }

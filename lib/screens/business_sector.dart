@@ -50,8 +50,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.introAreaOfCompetency.toString()) != null &&
-        Injector.prefs.getBool(PrefKeys.introAreaOfCompetency.toString())) {
+    if (Injector.prefs.getBool(PrefKeys.learningModule1.toString()) != null &&
+        Injector.prefs.getBool(PrefKeys.learningModule1.toString())) {
     } else {
       await DisplayDialogs.showCustomerRelationshipManagement(context);
     }
@@ -544,8 +544,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //          Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            PushNotificationHelper(context, "").showLocalNotification(
-                101, Utils.getText(context, StringRes.downloading));
+            PushNotificationHelper(context, "").showLocalNotification(101, Utils.getText(context, StringRes.downloading));
 
             await BackgroundFetch.start().then((int status) async {
 //              if (mounted)setState(() {
@@ -829,8 +828,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           showFileSize(),
-//          showDownloadStatus(),
-//          showDownloadSwitch(),
+          showDownloadStatus(),
+          showDownloadSwitch(),
           showSubscribeView()
         ],
       ),

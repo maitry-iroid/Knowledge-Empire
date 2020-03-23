@@ -6,6 +6,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/questions.dart';
 
 class DisplayDialogs {
   //todo li_wei  image configuration
@@ -51,6 +52,48 @@ class DisplayDialogs {
   static double akikoImageMoveTop = 18.0;
 
   //todo  This dialogs only for Dashboard Game screen
+  static showChallengeDialog(
+      BuildContext context, String userName, QuestionData questionData) {
+    showDialog(
+        context: context,
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            width: Utils.getDeviceWidth(context) / 2.25,
+            height: Utils.getDeviceHeight(context) / 2.25,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Your are challenged by $userName",
+                      style: Theme.of(context).textTheme.title),
+                  SizedBox(height: 45),
+                  RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Utils.showChallengeQuestionDialog(
+                            context, questionData);
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: ColorRes.colorPrimary,
+                      child: Text("Next",
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(color: ColorRes.white)))
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
   static showIntroKnowledgeEmpire(BuildContext context) {
     showDialog(
         context: context,
@@ -61,7 +104,7 @@ class DisplayDialogs {
             titleText: "Wellcome to Knowledge Empire",
             btnName: "Click on your Profile",
             desTextLine:
-                "Dear {{\$user-first-name}}, \n\nMy name is Mike, your Head of Operations.\nAre you ready to becom CEO of your own virtual company?\nClick on your name \"\profile\" in the\nnavigation menu(\">\""
+                "Dear ${Injector.userData?.name}, \n\nMy name is Mike, your Head of Operations.\nAre you ready to becom CEO of your own virtual company?\nClick on your name \"\profile\" in the\nnavigation menu(\">\""
                 ").",
             onTapBtn: () {
               Navigator.pop(context);
@@ -109,11 +152,10 @@ class DisplayDialogs {
             btnName: "Next",
             btnColor: ColorRes.blue,
             desTextLine:
-                "Dear {{\$user-first-name}},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
+                "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
             onTapBtn: () async {
               try {
-                await Injector.prefs
-                    .setBool(PrefKeys.introSettings.toString(), true);
+                await Injector.prefs.setBool(PrefKeys.profile2.toString(), true);
                 showSettingsDialog(context);
                 Navigator.of(context).pop();
               } catch (e) {
@@ -163,11 +205,10 @@ class DisplayDialogs {
             btnName: "Next",
             btnColor: ColorRes.blue,
             desTextLine:
-                "Hi {{\$user-first-name}},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
+                "Hi ${Injector.userData?.name},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.prefs
-                  .setBool(PrefKeys.introHireHREmployeesBoard.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.org1.toString(), true);
               showHireHRBoardDialog(context);
             },
           );
@@ -190,7 +231,7 @@ class DisplayDialogs {
                 "To hear yout Team's recommendatons on why you should\nhire more employees in thier team, click on them?\n\nLets start with hiring 10 Hr employees by clicking on HR and then\n\"hire 10 employees\".",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introEmployOMeter);
+              await Injector.prefs.setBool(PrefKeys.org2.toString(), true);
               showEmployOMeterDialog(context);
             },
           );
@@ -216,7 +257,7 @@ class DisplayDialogs {
                 "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introCostOfEmployees);
+              await Injector.prefs.setBool(PrefKeys.org3.toString(), true);
               showCostOfEmployees(context);
             },
           );
@@ -242,8 +283,7 @@ class DisplayDialogs {
                 "Here you see your total cash.\n\nHiring employees will incure hiring cost(increasing over time.)\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increse over time",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introGetReadyToApproachCustomers);
+              await Injector.prefs.setBool(PrefKeys.org4.toString(), true);
             },
           );
         });
@@ -385,11 +425,11 @@ class DisplayDialogs {
             btnName: "Next",
             btnColor: ColorRes.blue,
             desTextLine:
-                "Hi {{\$user-first-name}},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+                "Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.prefs
-                  .setBool(PrefKeys.introAreaOfCompetency.toString(), true);
+                  .setBool(PrefKeys.learningModule1.toString(), true);
               showAreaOfCompetency(context);
             },
           );
@@ -415,8 +455,8 @@ class DisplayDialogs {
                 "Each Business Sector will test specific knowledge to win\ncustomers. \"Size\" is the number of customers per Sector.\nYou can click pn a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introAccesToYourFirstCustomers);
+              await Injector.prefs
+                  .setBool(PrefKeys.learningModule2.toString(), true);
               //     showIntroAccesToYourFirstCustomers(context);
             },
           );
@@ -494,8 +534,7 @@ class DisplayDialogs {
                 "Hi Boss,\n\nthis is where the rubber hits the road, where only the best\nsurvive and where we earn the money for our company.\nI am Tina, your Senior Vice President of Global Sales.\nLet's get to work without any further due.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.prefs.setBool(
-                  PrefKeys.introListOfPotentialCustomers.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.newCustomer1.toString(), true);
               showListOfPotentialCustomers(context);
             },
           );
@@ -521,8 +560,7 @@ class DisplayDialogs {
                 "Each customer has a name and belongs to a sector.\nValue is the cash you will recieve every day while the\ncustomer is loyal to you. Loyalty of customers will\nincrease when you master the customer situation.\nResources indicate how many Sales Reps you willneed to engage this customer. Click on “Engage Now”.",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introYourFirstEngegement);
+              await Injector.prefs.setBool(PrefKeys.newCustomer2.toString(), true);
             },
           );
         });
@@ -576,7 +614,7 @@ class DisplayDialogs {
               Navigator.pop(context);
 //              await Injector.updateIntroDialogType(Const.introImpactOnBrandValueAndCash);
               await Injector.prefs.setBool(
-                  PrefKeys.introImpactOnBrandValueAndCash.toString(), true);
+                  PrefKeys.customerSituation.toString(), true);
 //              showImpactOnBrandValueAndCash(context);
             },
           );
@@ -652,11 +690,11 @@ class DisplayDialogs {
             btnName: "Next",
             btnColor: ColorRes.blue,
             desTextLine:
-                "Hi {{\$user-first-name}},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.",
+                "Hi ${Injector.userData?.name},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.",
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.prefs.setBool(
-                  PrefKeys.introListOfExistingCustomers.toString(), true);
+                  PrefKeys.existingCustomer1.toString(), true);
 //              await Injector.updateIntroDialogType(Const.introListOfExistingCustomers);
               showListOfExistingCustomers(context);
             },
@@ -683,7 +721,7 @@ class DisplayDialogs {
                 "Here you see all customers and contracts that you are currently\nengaged with. How much cash they generate each day and\nhow many days they will be loyal to you.\nYou can click the “X” if you want to end the contract.\nThis customer will no longer generate cash but you will\nwin back 1 Service Rep",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introReadyForBusiness);
+              await Injector.prefs.setBool(PrefKeys.existingCustomer2.toString(), true);
               //showReadyForBusiness(context);
             },
           );
@@ -732,7 +770,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
                   Const.introYourWillIsAtYourCommand);
-              await Injector.prefs.setBool(PrefKeys.introRewards, true);
+              await Injector.prefs.setBool(PrefKeys.rewards, true);
             },
           );
         });
@@ -758,9 +796,7 @@ class DisplayDialogs {
                 Utils.getText(context, StringRes.challengesDialogContent1),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introChallanges);
-              await Injector.prefs.setBool(
-                  PrefKeys.introYourWillIsAtYourCommand.toString(), true);
+              await Injector.prefs.setBool(PrefKeys.challenge1.toString(), true);
               showIntroChallenge(context);
             },
           );
@@ -786,8 +822,7 @@ class DisplayDialogs {
                 Utils.getText(context, StringRes.strChallangesDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introMarketingAndCommunications);
+              await Injector.prefs.setBool(PrefKeys.challenge2.toString(), true);
             },
           );
         });
@@ -807,13 +842,14 @@ class DisplayDialogs {
             imageHeight: lydiaImageHeight,
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
-            titleText: Utils.getText(context, StringRes.strMarketingCommunications),
+            titleText:
+                Utils.getText(context, StringRes.strMarketingCommunications),
             btnName: Utils.getText(context, StringRes.next),
-            desTextLine: Utils.getText(context, StringRes.strMarketingCommunicationsDialog),
+            desTextLine: Utils.getText(
+                context, StringRes.strMarketingCommunicationsDialog),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introRanking);
-              await Injector.prefs.setBool(PrefKeys.introMarketingAndCommunications, true);
+              await Injector.prefs.setBool(PrefKeys.ranking1, true);
               showRanking(context);
             },
           );
@@ -835,20 +871,20 @@ class DisplayDialogs {
             imageMoveRight: lydiaImageMoveRight,
             titleText: Utils.getText(context, StringRes.ranking),
             btnName: Utils.getText(context, StringRes.gotIt),
-            desTextLine: Utils.getText(context, StringRes.strRankingDialogContent),
+            desTextLine:
+                Utils.getText(context, StringRes.strRankingDialogContent),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introYourTeamsPerformance);
+              await Injector.prefs.setBool(PrefKeys.ranking2, true);
             },
           );
         });
   }
 
-     //todo This dialogs only for Team screen
-     static showYourTeamsPerformance(BuildContext context) async {
-     await Future.delayed(Duration(milliseconds: 50));
-     showDialog(
+  //todo This dialogs only for Team screen
+  static showYourTeamsPerformance(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
         context: context,
         builder: (BuildContext context) {
           return IntroScreenDialog(
@@ -867,7 +903,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introYourTeams);
               await Injector.prefs
-                  .setBool(PrefKeys.introYourTeamsPerformance, true);
+                  .setBool(PrefKeys.team1, true);
               showYourTeams(context);
             },
           );
@@ -892,7 +928,8 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.strTeamDialog),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introYourTeams2);
+              await Injector.prefs
+                  .setBool(PrefKeys.team2, true);
               showYourTeams2(context);
             },
           );
@@ -918,8 +955,8 @@ class DisplayDialogs {
                 Utils.getText(context, StringRes.strYourTeamPerformanceDialog2),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introThePersonYouCanCountOn);
+              await Injector.prefs
+                  .setBool(PrefKeys.team3, true);
             },
           );
         });
@@ -946,8 +983,7 @@ class DisplayDialogs {
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introPL);
-              await Injector.prefs
-                  .setBool(PrefKeys.introThePersonYouCanCountOn, true);
+              await Injector.prefs.setBool(PrefKeys.pl1, true);
               showIntroPL(context);
             },
           );
@@ -972,6 +1008,7 @@ class DisplayDialogs {
             desTextLine:
                 "${Utils.getText(context, StringRes.hereYourMonitor)}\n\n${Utils.getText(context, StringRes.selectPeriod)}",
             onTapBtn: () async {
+              await Injector.prefs.setBool(PrefKeys.pl2, true);
               Navigator.pop(context);
             },
           );

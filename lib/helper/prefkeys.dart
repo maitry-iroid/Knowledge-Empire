@@ -14,15 +14,28 @@ class PrefKeys {
   static var badgeCount= "badgeCount";
   static var dialogTypes= "dialogTypes";
 
-  static var introAreaOfCompetency= "introAreaOfCompetency";
-  static var introImpactOnBrandValueAndCash= "introImpactOnBrandValueAndCash";
-  static var introSettings= "introSettings";
-  static var introHireHREmployeesBoard= "introHireHREmployeesBoard";
-  static var introListOfExistingCustomers= "introListOfExistingCustomers";
-  static var introListOfPotentialCustomers= "introListOfPotentialCustomers";
-  static var introYourWillIsAtYourCommand= "introYourWillIsAtYourCommand";
-  static var introYourTeamsPerformance= "introYourTeamsPerformance";
-  static var introRewards= "introRewards";
-  static var introMarketingAndCommunications= "introMarketingAndCommunications";
-  static var introThePersonYouCanCountOn= "introThePersonYouCanCountOn";
+  static var learningModule1= "learningModule1";
+  static var learningModule2= "learningModule2";
+  static var customerSituation= "customerSituation";
+  static var profile1= "profile1";
+  static var profile2= "profile2";
+  static var org1= "org1";
+  static var org2= "org2";
+  static var org3= "org3";
+  static var org4= "org4";
+  static var existingCustomer1= "existingCustomer1";
+  static var existingCustomer2= "existingCustomer2";
+
+  static var newCustomer1= "newCustomer1";
+  static var newCustomer2= "newCustomer2";
+  static var challenge1= "challenge1";
+  static var challenge2= "challenge2";
+  static var team1= "team1";
+  static var team2= "team2";
+  static var team3= "team3";
+  static var rewards= "rewards";
+  static var ranking1= "ranking1";
+  static var ranking2= "ranking2";
+  static var pl1= "pl1";
+  static var pl2= "pl2";
 }
