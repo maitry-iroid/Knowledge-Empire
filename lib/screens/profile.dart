@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.introSettings.toString()) != null && Injector.prefs.getBool(PrefKeys.introSettings.toString())) {
+    if (Injector.prefs.getBool(PrefKeys.profile1.toString()) != null && Injector.prefs.getBool(PrefKeys.profile1.toString())) {
     } else {
       await DisplayDialogs.showIntroDialog(context);
     }

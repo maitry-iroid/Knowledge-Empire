@@ -37,8 +37,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.prefs.getBool(PrefKeys.introListOfPotentialCustomers.toString()) != null &&
-        Injector.prefs.getBool(PrefKeys.introListOfPotentialCustomers.toString())) {
+    if (Injector.prefs.getBool(PrefKeys.newCustomer1.toString()) != null &&
+        Injector.prefs.getBool(PrefKeys.newCustomer1.toString())) {
     } else {
       await DisplayDialogs.showIntroHeartOfTheBusiness(context);
     }

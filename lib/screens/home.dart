@@ -7,6 +7,7 @@ import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
@@ -226,6 +227,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+
 
     initDrawerItems();
 
@@ -481,7 +483,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             QuestionData questionData = QuestionData.fromJson(data);
 
             if (questionData != null && questionData.challengeId != null)
-              Utils.showChallengeQuestionDialog(_scaffoldKey, questionData);
+              DisplayDialogs.showChallengeDialog(context,"Ravi",questionData);
+//              Utils.showChallengeQuestionDialog(_scaffoldKey, questionData);
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
