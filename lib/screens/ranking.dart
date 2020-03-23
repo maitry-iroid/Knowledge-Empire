@@ -595,8 +595,11 @@ class _RankingPageState extends State<RankingPage> {
                   arrFriends[index].isFriend = 1;
                   friendUnFriendUser(index, 1);
                 } else {
-                  arrFriends[index].isFriend = 0;
-                  friendUnFriendUser(index, 2);
+
+//                  unFriend(context, index);
+
+                  _showUnFriend(context, index);
+
                 }
               });
           }
@@ -809,4 +812,201 @@ class _RankingPageState extends State<RankingPage> {
       await getFriends(true, false);
     }
   }
+
+
+  _showUnFriend(BuildContext context, int index) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("No"),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Yes"),
+      onPressed:  () {
+
+        arrFriends[index].isFriend = 0;
+        friendUnFriendUser(index, 2);
+        setState(() {
+        });
+        Navigator.pop(context);
+
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Are sure want to unfriend this user?", style: TextStyle(color: ColorRes.textProf),),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+/*
+  unFriend(BuildContext context, int index) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.all(40),
+                      width: Utils.getDeviceWidth(context) / 3.0,
+                      height: Utils.getDeviceHeight(context) / 2.7,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorRes.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 35,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, "Alert"),
+                                  style: TextStyle(
+                                      color: ColorRes.white, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 13)),
+
+                            Container(
+                              height: 50,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+//                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, "Are sure want to unfriend this user?"),
+                                  style: TextStyle(
+                                      color: ColorRes.textProf, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 13)),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+//                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                InkResponse(
+                                  child: Container(
+                                    height: 33,
+                                    width: 65,
+                                    decoration: BoxDecoration(
+//                                    color: ColorRes.blue,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                        border: Border.all(
+                                            color: ColorRes.blue, width: 1)),
+                                    padding: EdgeInsets.only(
+                                        top: 8, bottom: 10, left: 10, right: 10),
+                                    margin: EdgeInsets.only(
+                                        top: 0, bottom: 25, left: 0, right: 10),
+                                    child: Center(child: Text('No', style: TextStyle(color: ColorRes.blue),)),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                InkResponse(
+                                  child: Container(
+                                    height: 35,
+                                    width: 65,
+                                    decoration: BoxDecoration(
+                                        color: ColorRes.blue,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                        border: Border.all(
+                                            color: ColorRes.white, width: 1)),
+                                    padding: EdgeInsets.only(
+                                        top: 8, bottom: 10, left: 10, right: 10),
+                                    margin: EdgeInsets.only(
+                                        top: 0, bottom: 25, left: 0, right: 10),
+                                    child: Center(
+                                      child: Text(
+                                        'Yes',
+                                        style: TextStyle(color: ColorRes.white),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    arrFriends[index].isFriend = 0;
+                                    friendUnFriendUser(index, 2);
+                                    setState(() {
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+//                            Padding(padding: EdgeInsets.only(top: 13)),
+                          ],
+                        ),
+                      )),
+                  Positioned(
+                      right: 10,
+                      child: InkResponse(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Image(
+                            image:
+                            AssetImage(Utils.getAssetsImg('close_dialog')),
+                            width: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Navigator.pop(context, null);
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+  }
+*/
+
 }

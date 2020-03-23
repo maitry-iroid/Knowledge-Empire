@@ -55,15 +55,19 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
     if (widget.arrFriends != null) {
       arrSearchFriends = widget.arrFriends;
-      if (arrSearchFriends.length > 0) if (mounted)setState(() {});
+      if (arrSearchFriends.length > 0) if (mounted) setState(() {});
     }
   }
 
   Future showIntroDialog() async {
-      if (Injector.prefs.getBool(PrefKeys.introYourWillIsAtYourCommand.toString()) != null && Injector.prefs.getBool(PrefKeys.introYourWillIsAtYourCommand.toString())) {
-      } else {
-        await DisplayDialogs.showYourWillIsAtYourCommand(context);
-      }
+    if (Injector.prefs
+                .getBool(PrefKeys.introYourWillIsAtYourCommand.toString()) !=
+            null &&
+        Injector.prefs
+            .getBool(PrefKeys.introYourWillIsAtYourCommand.toString())) {
+    } else {
+      await DisplayDialogs.showYourWillIsAtYourCommand(context);
+    }
   }
 
   TextEditingController searchController = TextEditingController();
@@ -281,6 +285,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   ),
                 ),
                 onTap: () {
+//                  unFriend(context);
                   if (selectedModuleIndex != null && selectedModuleIndex != -1)
                     sendChallenges();
                   else {
@@ -299,17 +304,18 @@ class _ChallengesPageState extends State<ChallengesPage> {
   int selectedIndex = -1;
 
   _onSelectedFriend(int index) {
-    if (mounted)setState(() {
-      selectedIndex = index;
+    if (mounted)
+      setState(() {
+        selectedIndex = index;
 
-      selectedFriendId = arrFriends[selectedIndex].userId;
+        selectedFriendId = arrFriends[selectedIndex].userId;
 
-      getBusinessSectors();
-    });
+        getBusinessSectors();
+      });
   }
 
   _onSelectedRewards(int index) {
-    if (mounted)setState(() => selectedRewardsIndex = index);
+    if (mounted) setState(() => selectedRewardsIndex = index);
   }
 
   selectedItem(int type, int index) {
@@ -358,15 +364,17 @@ class _ChallengesPageState extends State<ChallengesPage> {
             InkResponse(
                 onTap: () {
                   Utils.playClickSound();
-                  if (mounted)setState(() {
-                    if (arrFriendsToShow[index].isFriend == 0) {
-                      arrFriendsToShow[index].isFriend = 1;
-                      friendUnFriendUser(index, 1);
-                    } else {
-                      arrFriendsToShow[index].isFriend = 0;
-                      friendUnFriendUser(index, 2);
-                    }
-                  });
+
+                  if (mounted)
+                    setState(() {
+                      if (arrFriendsToShow[index].isFriend == 0) {
+                        arrFriendsToShow[index].isFriend = 1;
+                        friendUnFriendUser(index, 1);
+                      } else {
+//                        unFriend(context, index);
+                        _showUnFriend(context, index);
+                      }
+                    });
                 },
                 child: Image(
                   image: AssetImage(
@@ -382,6 +390,203 @@ class _ChallengesPageState extends State<ChallengesPage> {
       ),
     );
   }
+
+
+  _showUnFriend(BuildContext context, int index) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("No"),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Yes"),
+      onPressed:  () {
+        arrFriendsToShow[index].isFriend = 0;
+        friendUnFriendUser(index, 2);
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Are sure want to unfriend this user?", style: TextStyle(color: ColorRes.textProf)),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
+/*
+  unFriend(BuildContext context, int index) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.all(40),
+                      width: Utils.getDeviceWidth(context) / 3.0,
+                      height: Utils.getDeviceHeight(context) / 2.7,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorRes.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 35,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, "Alert"),
+                                  style: TextStyle(
+                                      color: ColorRes.white, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 13)),
+
+                            Container(
+                              height: 50,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+//                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, "Are sure want to unfriend this user?"),
+                                  style: TextStyle(
+                                      color: ColorRes.textProf, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 13)),
+
+                            Row(
+
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                InkResponse(
+                                  child: Container(
+                                    height: 33,
+                                    width: 65,
+                                    decoration: BoxDecoration(
+//                                    color: ColorRes.blue,
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(5)),
+                                        border: Border.all(
+                                            color: ColorRes.blue, width: 1)),
+                                    padding: EdgeInsets.only(
+                                        top: 8, bottom: 10, left: 10, right: 10),
+                                    margin: EdgeInsets.only(
+                                        top: 0, bottom: 25, left: 0, right: 10),
+                                    child: Center(child: Text('No', style: TextStyle(color: ColorRes.blue),)),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                InkResponse(
+                                  child: Container(
+                                    height: 35,
+                                    width: 65,
+                                    decoration: BoxDecoration(
+                                        color: ColorRes.blue,
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(5)),
+                                        border: Border.all(
+                                            color: ColorRes.white, width: 1)),
+                                    padding: EdgeInsets.only(
+                                        top: 8, bottom: 10, left: 10, right: 10),
+                                    margin: EdgeInsets.only(
+                                        top: 0, bottom: 25, left: 0, right: 10),
+                                    child: Center(
+                                      child: Text(
+                                        'Yes',
+                                        style: TextStyle(color: ColorRes.white),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    arrFriendsToShow[index].isFriend = 0;
+                                    friendUnFriendUser(index, 2);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+
+                            Padding(padding: EdgeInsets.only(top: 13)),
+
+//                            languageSelectCell(StringRes.english, 0),
+//                            languageSelectCell(StringRes.german, 1),
+//                            languageSelectCell(StringRes.chinese, 2),
+                          ],
+                        ),
+                      )),
+                  Positioned(
+                      right: 10,
+                      child: InkResponse(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Image(
+                            image:
+                                AssetImage(Utils.getAssetsImg('close_dialog')),
+                            width: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Navigator.pop(context, null);
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+  }
+*/
 
   showRewardItem(int index) {
     return GestureDetector(
@@ -418,7 +623,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedSector(int index) {
-    if (mounted)setState(() => selectedModuleIndex = index);
+    if (mounted) setState(() => selectedModuleIndex = index);
   }
 
   showSectorItem(int index) {
@@ -541,7 +746,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         } else {
           if (arrSearchFriends.length > 0) arrSearchFriends.removeAt(index);
           if (arrFriendsToShow.length > 0) arrFriendsToShow.removeAt(index);
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
           Utils.showToast(
               Utils.getText(context, StringRes.alertUnFriendSuccess));
         }
@@ -572,7 +777,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             if (arrLearningModules.length > 0) {
               selectedModuleIndex = 0;
             }
-            if (mounted)setState(() {});
+            if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("getLearningModule_" + e.toString());
@@ -641,7 +846,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               selectedRewardsIndex = 0;
             }
 
-            if (mounted)setState(() {});
+            if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("searchFriends_" + e.toString());
