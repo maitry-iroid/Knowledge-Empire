@@ -373,10 +373,10 @@ class CommonView {
                   onTap: () {
                     Utils.playClickSound();
 
-                    //Utils.performDashboardItemClick(context, Const.typeRanking);
+                    Utils.performDashboardItemClick(context, Const.typeRanking);
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-                    CommonView()
-                        .pushNotificationAlert2(context, "20", "3", "1", "1");
+//                    CommonView()
+//                        .pushNotificationAlert2(context, "20", "3", "1", "1");
                   },
                 ),
               ],

@@ -154,11 +154,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
     } else if (state == AppLifecycleState.inactive) {
-      updateIntroData();
-      print("=========inactive==========");
-    }else if (state == AppLifecycleState.paused) {
-      print("=========paused==========");
-    }
+    } else if (state == AppLifecycleState.paused) {}
   }
 
   _getDrawerItemWidget(int pos) {
@@ -571,7 +567,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     setSelectedIndex();
 
-
     PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
 
     initPlatformState();
@@ -586,25 +581,4 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           widget.homeData.isChallenge) getPendingChallenges();
     }
   }
-
-  static updateIntroData() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        IntroRequest rq = IntroRequest();
-        rq.userId = Injector.userId;
-        rq.type = 2;
-        rq.data = Injector.introData;
-
-        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
-          if (data != null) {
-            IntroData introData = IntroData.fromJson(data);
-            Injector.setIntroData(introData);
-          }
-        }).catchError((e) {
-          Utils.showToast(e.toString());
-        });
-      }
-    });
-  }
-
 }

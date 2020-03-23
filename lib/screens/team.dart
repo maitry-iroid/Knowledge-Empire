@@ -611,10 +611,10 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-
     if (Injector.introData == null || Injector.introData.team1 == 0)
       await DisplayDialogs.showYourTeamsPerformance(context);
 
+    CommonView.showCircularProgress(true, context);
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -635,10 +635,10 @@ class _TeamPageState extends State<TeamPage> {
             if (mounted) setState(() {});
           }
         }).catchError((e) {
-          CommonView.showCircularProgress(false, context);
+          //CommonView.showCircularProgress(false, context);
         });
       }
-    });
+    });ri dyo
   }
 
   void initGraphData() {
