@@ -175,6 +175,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "john",
             titleText: "Settings",
+
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
             desTextLine:
