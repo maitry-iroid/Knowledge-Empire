@@ -155,7 +155,7 @@ class DisplayDialogs {
                 "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
             onTapBtn: () async {
               try {
-                Injector.introData.profile2 = 1;
+                Injector.introData.profile1 = 1;
                 await Injector.setIntroData(Injector.introData);
                 showSettingsDialog(context);
                 Navigator.of(context).pop();
@@ -176,6 +176,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "john",
             titleText: "Settings",
+
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
             desTextLine:
@@ -183,6 +184,8 @@ class DisplayDialogs {
             onTapBtn: () async {
               try {
                 print(Const.introMeetYourTeam);
+                Injector.introData.profile2 = 1;
+                await Injector.setIntroData(Injector.introData);
                 await Injector.updateIntroDialogType(Const.introMeetYourTeam);
                 Navigator.of(context).pop();
               } catch (e) {
