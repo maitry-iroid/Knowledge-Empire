@@ -59,7 +59,7 @@ class LearningModuleData {
   int isAssign;
   int companyId;
   int isDownloadEnable;
-  int moduleProgress;
+  var moduleProgress;
   int isSubscribedFromBackend;
   var fileSize;
   bool isDownloading = false;

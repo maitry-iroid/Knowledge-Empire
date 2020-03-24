@@ -183,7 +183,7 @@ class StringRes {
   static var strYourTeamPerformanceDialog2 = "strYourTeamPerformanceDialog2";
   static var strTeamDialog = "strTeamDialog";
 
-//pl screen
+  //pl screen
   static var plPerson = "plPerson";
   static var niceMeetYou = "niceMeetYou";
   static var plMyName = "plMyName";
@@ -191,7 +191,15 @@ class StringRes {
   static var selectPeriod = "selectPeriod";
   static var graphShow = "graphShow";
 
-//  static var selectPeriod = "selectPeriod";
+  // dashboard intro popup
+  static var dashboardProfile = "dashboardProfile";
+  static var dashboardSales = "dashboardSales";
+  static var dashboardServices = "dashboardServices";
+  static var dashboardBalance = "dashboardBalance";
+  static var dashboardBusiness = "dashboardBusiness";
+  static var dashboardNewCustomer = "dashboardNewCustomer";
+  static var dashboardExistingCustomer = "dashboardExistingCustomer";
+
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -360,7 +368,6 @@ class StringRes {
       'alertUnFriend': "Are sure want to unfriend this user?",
 
 
-      //endregion
 
       //introDialog
       'gotIt': "Got it",
@@ -395,6 +402,17 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
+
+      // dashboard intro popup
+
+      'dashboardProfile':'Change Profile\n name, Language',
+      'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
+      'dashboardServices':'services-o-meter"\navailable Services Reps',
+      'dashboardBalance':'Answering your question\n increases your cash',
+      'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
+      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions'
+
     },
     'de': {
       //region german
@@ -595,6 +613,15 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
+
+
+      'dashboardProfile':'Change Profile\n name, Language',
+      'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
+      'dashboardServices':'services-o-meter"\navailable Services Reps',
+      'dashboardBalance':'Answering your question\n increases your cash',
+      'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
+      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions'
     },
     'zh': {
       //region chinese
@@ -789,6 +816,17 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+
+
+      // dashboard intro popup
+
+      'dashboardProfile':'Change Profile\n name, Language',
+      'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
+      'dashboardServices':'services-o-meter"\navailable Services Reps',
+      'dashboardBalance':'Answering your question\n increases your cash',
+      'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
+      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions'
     }
   };
 

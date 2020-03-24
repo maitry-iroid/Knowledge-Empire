@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         Utils.getText(context, StringRes.selectLanguage) +
                             " - " +
-                            tempLanguage,
+                            tempLanguage.toString()??Const.english.toString(),
                       ),
                       onTap: () {
                         Utils.playClickSound();

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -154,7 +155,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
     } else if (state == AppLifecycleState.inactive) {
-    } else if (state == AppLifecycleState.paused) {}
+      print("====== inactive ======");
+    } else if (state == AppLifecycleState.paused) {
+      print("====== paused ======");
+    }
   }
 
   _getDrawerItemWidget(int pos) {
@@ -554,31 +558,37 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initContent() async {
-    await Injector.getInstance();
+    BackgroundFetch.start().then((int status) async {
+      print('[BackgroundFetch] start success: $status');
+      await Injector.getInstance();
 
-    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
-    Injector.headerStreamController.add("event");
+      Injector.headerStreamController.add("event");
 
-    initStreamController();
-    getCustomerValues();
+      initStreamController();
+      getCustomerValues();
 
-    initCheckNetworkConnectivity();
+      initCheckNetworkConnectivity();
 
-    setSelectedIndex();
+      setSelectedIndex();
 
-    PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
+      PushNotificationHelper(context, Utils.getText(context, "home"))
+          .initPush();
 
-    initPlatformState();
+      initPlatformState();
 
-    if (widget.homeData == null ||
-        widget.homeData.page == null ||
-        (widget.homeData.initialPageType != Const.typeChallenges &&
-            widget.homeData.initialPageType != Const.typeCustomerSituation &&
-            widget.homeData.initialPageType != Const.typeEngagement)) {
       if (widget.homeData == null ||
-          widget.homeData.isChallenge == null ||
-          widget.homeData.isChallenge) getPendingChallenges();
-    }
+          widget.homeData.page == null ||
+          (widget.homeData.initialPageType != Const.typeChallenges &&
+              widget.homeData.initialPageType != Const.typeCustomerSituation &&
+              widget.homeData.initialPageType != Const.typeEngagement)) {
+        if (widget.homeData == null ||
+            widget.homeData.isChallenge == null ||
+            widget.homeData.isChallenge) getPendingChallenges();
+      }
+    }).catchError((e) {
+      print('[BackgroundFetch] start FAILURE: $e');
+    });
   }
 }

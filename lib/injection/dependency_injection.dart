@@ -126,7 +126,7 @@ class Injector {
     await Injector.prefs
         .setString(PrefKeys.introData, json.encode(_introData.toJson()));
 
-    updateIntroData();
+//    updateIntroData();
     introData = _introData;
   }
 

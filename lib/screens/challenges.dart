@@ -69,7 +69,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   void dispose() {
-    timeHandle.cancel();
+    timeHandle?.cancel();
     super.dispose();
   }
 
