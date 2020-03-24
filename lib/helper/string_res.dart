@@ -180,8 +180,8 @@ class StringRes {
   static var strRankingDialogContent = "strRankingDialogContent";
   static var strYourTeamPerformance = "strYourTeamPerformance";
   static var strYourTeamPerformanceDialog = "strYourTeamPerformanceDialog";
-  static var strYourTeamPerformanceDialog2 = "strYourTeamPerformanceDialog2";
   static var strTeamDialog = "strTeamDialog";
+  static var strYourTeamPerformanceDialog2 = "strYourTeamPerformanceDialog2";
 
   //pl screen
   static var plPerson = "plPerson";
@@ -191,6 +191,53 @@ class StringRes {
   static var selectPeriod = "selectPeriod";
   static var graphShow = "graphShow";
 
+  //existing customer dialog
+  static var servingYourExisting = "servingYourExisting";
+  static var servingYourExistingDialog = "servingYourExistingDialog";
+  static var listOfExisting = "listOfExisting";
+  static var listOfExistingDetails = "listOfExistingDetails";
+
+  static var readyForBusiness = "readyForBusiness";
+  static var readyForBusinessDeatils = "readyForBusinessDeatils";
+  static var finishTutorial = "finishTutorial";
+
+
+  //customer situation dialog
+  static var impactOnSales = "impactOnSales";
+  static var impactOnSalesDetails = "impactOnSalesDetails";
+  static var impactOnBrand = "impactOnBrand";
+  static var impactOnBrandDetails = "impactOnBrandDetails";
+  static var checkYourCustomer = "checkYourCustomer";
+  static var checkYourCustomerDetails = "checkYourCustomerDetails";
+  static var clickServiceBtn = "clickServiceBtn";
+
+  //engagement dialog
+  static var yourFirstEngagement = "yourFirstEngagement";
+  static var yourFirstEngagementDetails = "yourFirstEngagementDetails";
+  static var yourFirstEngagementBtn = "yourFirstEngagementBtn";
+
+  //New Customer screen dialog
+  static var heartBusiness = "heartBusiness";
+  static var heartBusinessDetails = "heartBusinessDetails";
+  static var listOfPotential = "listOfPotential";
+  static var listOfPotentialDetails = "listOfPotentialDetails";
+  static var listOfPotentialBtn = "listOfPotentialBtn";
+
+  //Business sector screen dialog
+  static var customerRelation = "customerRelation";
+  static var customerRelationDetails = "customerRelationDetails";
+  static var areaOfComp = "areaOfComp";
+  static var areaOfCompDetails = "areaOfCompDetails";
+  static var accessToFirst = "accessToFirst";
+  static var accessToFirstDetails = "accessToFirstDetails";
+  static var accessToFirstBtn = "accessToFirstBtn";
+  static var readyForCustomer = "readyForCustomer";
+  static var readyForCustomerDetails = "readyForCustomerDetails";
+  static var readyForCustomerBtn = "readyForCustomerBtn";
+
+
+
+//  static var selectPeriod = "selectPeriod";
   // dashboard intro popup
   static var dashboardProfile = "dashboardProfile";
   static var dashboardSales = "dashboardSales";
@@ -260,7 +307,7 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
-      'selectLanguages': 'Select Language',
+      'selectLanguages':'Select Language',
 
       //organization
       'fireEmp': "Fire 10 employees",
@@ -373,6 +420,7 @@ class StringRes {
       'alertUnFriend': "Are sure want to unfriend this user?",
 
 
+      //endregion
 
       //introDialog
       'gotIt': "Got it",
@@ -406,6 +454,52 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
+      //endregion
+
+      //existing customer
+
+      'servingYourExisting': 'Serving your existing customers',
+      'servingYourExistingDialog': 'Hi ${Injector.userData?.name},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
+
+      'listOfExisting': 'List of existing Customers',
+      'listOfExistingDetails': 'Here you see all customers and contracts that you are currently engaged with. How much cash they generate each day and\nhow many days they will be loyal to you.\nYou can click the “X” if you want to end the contract.\nThis customer will no longer generate cash but you will\nwin back 1 Service Rep',
+
+      'readyForBusiness': 'Ready for business',
+      'readyForBusinessDeatils': "Why don't you check out more business sectors and engage\na few more customers.\n\nOr explore the other area of your company where you can\nearn rewards, challenge other players, see your financial\nperformance and compare your ranking.",
+      'finishTutorial': 'Finish Tutorial',
+
+      //customer situation
+      'impactOnSales': 'Impact on Sales and Service',
+      'impactOnSalesDetails': 'Congratulations! You just won your first customer.\nYour Sales-o-Meter shows now 8/10 as this customer\nrequired 2 Sales Reps and your Service-o-Meter shows\n9/10 as one Service Rep is busy with this customer.',
+      'impactOnBrand': 'Impact on Brand Value and Cash',
+      'impactOnBrandDetails': 'Also your Brand Value is now 100% as you answered 100% of all customer situations correct.\n\nIndependent of your Brand Value, your cash increased\nby the value of the customer.',
+      'checkYourCustomer': 'Check your existing customers',
+      'checkYourCustomerDetails': 'You can check on your existing customer in the notepad at\nthe main screen.\n\nYou can reach your notepad by clicking on your\nService-o-Meter, selecting “Existing customers” from\nthe menu or by going to the main screen and\nselecting the notepad.',
+      'clickServiceBtn': 'Click on Service-O-Meter',
+
+      //engagement
+      'yourFirstEngagement': 'Your first engagement',
+      'yourFirstEngagementDetails': 'In order to win this customer, you will need to answer this\nquestion correctly. You can click on the expand button to\nenlarge the picture, question and answer option.\n\nSelect the right answer and click on “Next”',
+      'yourFirstEngagementBtn': 'Select answer & click “Next”',
+
+      //New Customer screen
+      'heartBusiness': 'The heart of the business',
+      'heartBusinessDetails': "Hi Boss,\n\nthis is where the rubber hits the road, where only the best\nsurvive and where we earn the money for our company.\nI am Tina, your Senior Vice President of Global Sales.\nLet's get to work without any further due.",
+      'listOfPotential': 'List of potential Customers',
+      'listOfPotentialDetails': 'Each customer has a name and belongs to a sector.\nValue is the cash you will receive every day while the\ncustomer is loyal to you. Loyalty of customers will\nincrease when you master the customer situation.\nResources indicate how many Sales Reps you will\nneed to engage this customer. Click on “Engage Now”.',
+      'listOfPotentialBtn': 'Click on “Engage Now”',
+
+      //Business sector screen dialog
+      'customerRelation':'Customer Relationship Management',
+      'customerRelationDetails':'Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
+      'areaOfComp':'Area of competency',
+      'areaOfCompDetails':'Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.',
+      'accessToFirst':'Access to your first customers',
+      'accessToFirstDetails':'Why don\'t you subscribe to the first business sector to\ngain access to your first customers.\n\nClick on the Business Segment “Getting Started” and then on “Subscribe”.',
+      'accessToFirstBtn':'Click on “Getting Started”',
+      'readyForCustomer':'Ready for your first customer contact?',
+      'readyForCustomerDetails':'Let\'s head over to the laptop which contains a list of new\ncustomers you can engage.\n\nYou can click on your Sales-o-Meter, use the navigation\nmenu “>”, or click the back button and select the laptop.',
+      'readyForCustomerBtn':'Click on your Sales-o-Meter',
       'customersRelationShip':"Customer Relationship Management",
       //endregion
 
@@ -429,7 +523,6 @@ class StringRes {
       //main options
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
-
       'newCustomers': "Neue Kunden",
       'existingCustomers': "Bestandskunden",
       'organizations': "Organisation",
@@ -611,6 +704,7 @@ class StringRes {
       'strTeamDialog':
           "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
 
+
       'plPerson': 'Mit mir kannst du rechnen',
       'niceMeetYou': 'Nett dich kennenzulernen ${Injector.userData?.name}',
       'plMyName':
@@ -622,6 +716,52 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
+      //endregion
+//existing customer
+
+      'servingYourExisting': 'Kundenservice',
+      'servingYourExistingDialog': 'Hi ${Injector.userData?.name},\n\nIch bin Bob und kümmere mich um den Kundenservice.',
+
+      'listOfExisting': 'Bestandskundenliste',
+      'listOfExistingDetails': 'Hier siehst du die Liste der Bestandskunden, ihren täglichen Umsatz und wieviel Tage sie noch loyal zu uns sind.\nMit "x" kannst du die Kundenbeziehung beenden. Dann generiert der Kunde keinen Umsatz mehr, wir gewinnen aber einen freien Servicemitarbeiter zurück.',
+
+      'readyForBusiness': 'Ab ins Abenteuer ...',
+      'readyForBusinessDeatils': 'Hier endet die Einführung.\nDu kannst weitere Kundensegmente abonnieren und Fragen beantworten.\nOder du entdeckst die anderen Bereiche in denen du z.B. deine Auszeichnungen sehen, andere Wettbewerber herausfordern , deine Finanzen analysieren und dein Platz in der Rangliste einsehen kannst.',
+      'finishTutorial': 'Einführung beenden',
+
+      //customer situation
+      'impactOnSales': 'Einfluss auf Vertrieb und Service',
+      'impactOnSalesDetails': 'Herzlichen Glückwunsch! Du hast gerade deinen ersten Kunden gewonnen.\nDeine Vertriebskapazitäten zeigt nun 8/10 da dieser Kunde 2 Vertriebsmitarbeiter benötigte um ihn zu gewinnen. Die Servicekapazitäten zeigen nun 9/10 da ein Servicemitarbeiter mit diesem Kunden beschäftigt ist.',
+      'impactOnBrand': 'Einfluss auf Markenwert und Vermögen',
+      'impactOnBrandDetails': 'Der Markenwert liegt jetzt bei 100% da du 100% aller Fragen richtig beantwortet hast.\n\nDein Vermögen ist auch schon um den täglichen Umsatz dieses Kunden gestiegen.',
+      'checkYourCustomer': 'Schau in die Liste der Bestandskunden',
+      'checkYourCustomerDetails': 'Deine Bestandskunden findest du im Notizblock im Hauptbildschirm.\n\nDu kannst aber auch auf die Servicekapazitätenanzeige klicken oder den Punkt "Bestandskunden" im Menü auswählen.',
+      'clickServiceBtn': 'Klick auf Servicekapazitäten',
+
+      //engagement
+      'yourFirstEngagement': 'Erste Kundensituation',
+      'yourFirstEngagementDetails': 'Um den Kunden zu gewinnen muss die Frage richtig beantwortet werden.\nUm das Bild, die Frage oder die Antwortmöglichkeiten vergrößert dargestellt zu bekommen bitte auf das Vergrößerungssymbol klicken.\n\nBitte richtige Antwort auswählen und dann auf "Weiter" klicken.',
+      'yourFirstEngagementBtn': 'Antwort auswählen und auf "Weiter" klicken',
+
+      //New Customer screen
+      'heartBusiness': 'willkommen im Vertrieb',
+      'heartBusinessDetails': 'Hallo Chef,\n\nwillkommen im Vertrieb, dem Herzen unseres Unternehmens. Hier verdienen wir das Geld.\nIch bin Tina, Vice Präsidentin für unseren globalen Vertrieb.\nLass uns ohne weiter Umschweife starten und Geld verdienen.',
+      'listOfPotential': 'Liste potentieller Kunden',
+      'listOfPotentialDetails': 'Jeder Kunde hat einen Namen und gehört zu einem Geschäftsbereich.Umsatz ist der tägliche Umsatz den der Kunde uns einbringen wird, so lange er uns loyal ist.Die Kundenloyalität steigt, wenn wir die Fragen dieses Kunden richtig beantworten.\nIn der Spalte Vertriebler ist zu ersehen wieviel Vertriebler wir benötigen um den Kunden anzusprechen.\nUm den Kunden anzusprechen bitte auf "Ansprechen" klicken',
+      'listOfPotentialBtn': 'Klick auf "Ansprechen"',
+
+      //Business sector screen dialog
+      'customerRelation':'Kundenbeziehungsmanagement (CRM)',
+      'customerRelationDetails':'Hallo ${Injector.userData?.name},\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.',
+      'areaOfComp':'Geschäftsbereiche',
+      'areaOfCompDetails':'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n"Groesse" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+      'accessToFirst':"Geschäftsbereich abonnieren",
+      'accessToFirstDetails':'Lass uns den ersten Geschäftsbereich abonnieren um Zugang zu den ersten Kunden zu erlangen.\n\nDazu klick bitte auf den Geschäftsbereich "Los geht\'s" und dann auf abonnieren.',
+      'accessToFirstBtn':'Klick auf "Los geht\'s"',
+      'readyForCustomer':'Bereit für den ersten Kunden?',
+      'readyForCustomerDetails':'Auf zur Liste der Neukunden.\n\nDazu bitte entweder auf die Vertriebskapazitätenanzeige klicken, im Menü den Punkt "NeuKunden" klicken oder im Hauptbildschirm den Laptop anklicken.',
+      'readyForCustomerBtn':'Klick auf Vertriebskapazitäten',
+
       'customersRelationShip':"Kundenbeziehungsmanagement (CRM)",
       //endregion
 
@@ -640,6 +780,7 @@ class StringRes {
     'zh': {
       //region chinese
       //main options
+
       'home': "首页",
       'businessSector': "业务部门",
       'newCustomers': "新客户",
@@ -796,6 +937,7 @@ class StringRes {
       'no': "不是",
       'comingSoon': "即将推出..",
       'close': "关闭",
+      //endregion
 
       //introDialog
       'gotIt': "了解",
@@ -820,6 +962,7 @@ class StringRes {
       'strTeamDialog':
           "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
+
       'plPerson': '您可以依靠的人',
       'niceMeetYou': '${Injector.userData?.name}很高兴见到您',
       'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
@@ -828,6 +971,52 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+
+      //endregion
+//existing customer
+      'servingYourExisting': '服务现有客户',
+      'servingYourExistingDialog': '${Injector.userData?.name}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
+
+      'listOfExisting': '现有客户名单',
+      'listOfExistingDetails': '在这里，您可以看到您目前正在联络的所有客户和合同。他们每天产生多少现金\n以及他们在多少天内会对您忠诚。\n如果您想结束合同，您可以点击"X"。\n这个客户将不再产生现金，但您会收回1位服务代表。',
+
+      'readyForBusiness': '准备开展业务',
+      'readyForBusinessDeatils': '您现在可以查看更多的业务部门，然后联络更多的客户。\n\n或者探索您公司的其他领域，可以赚取奖励，挑战其他玩家，查看您的财务绩效\n和比较您的排名。',
+      'finishTutorial': '完成教程',
+
+      //customer situation
+      'impactOnSales': '对销售和服务的影响',
+      'impactOnSalesDetails': '恭喜！您刚刚赢得了您的第一个客户。\n您的销售代表指示图现在显示8/10，因为这个客户需要2个销售代表，而您的服务代表指示图显示9/10，因为您需要1名服务代表为这个客户服务。',
+      'impactOnBrand': '对品牌价值和现金的影响',
+      'impactOnBrandDetails': '您的品牌价值现在是100％，因为您关于所有客户情况的回答100％正确。\n\n独立于您的品牌价值，您的现金增长取决于\n客户价值。',
+      'checkYourCustomer': '查看您的现有客户',
+      'checkYourCustomerDetails': '您可以在主界面的记事本中查看您现有的客户。\n\n您可以通过点击您的服务代表指示图，选择菜单中的“现有客户”或者前往主页面选择“已完成的学习”\n来访问您的记事本。',
+      'clickServiceBtn': '点击服务代表指示图',
+
+      //engagement
+      'yourFirstEngagement': '您的第一次联络',
+      'yourFirstEngagementDetails': '为了赢得这个客户，您需要\n准确地回到这个问题。您可以点击展开按钮放大图片、问题和答案选项。\n\n选择正确的答案，然后单击"下一页”',
+      'yourFirstEngagementBtn': '选择答案并单击"下一页”',
+
+      //New Customer screen
+      'heartBusiness': '业务的核心',
+      'heartBusinessDetails': '老板您好，\n\n现在到了关键时刻，只有最后的公司才能生存下来，但也是我们为公司赚钱的时机。\n我是蒂娜，您的全球销售高级副总裁。\n我们开始工作吧，不要再拖延了。',
+      'listOfPotential': '潜在客户名单',
+      'listOfPotentialDetails': '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚。当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。点击"立即联络"。',
+      'listOfPotentialBtn': '点击"立即联络"',
+
+      //Business sector screen dialog
+      'customerRelation':'客户关系管理',
+      'customerRelationDetails':'${Injector.userData?.name}您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！',
+      'areaOfComp':'能力领域',
+      'areaOfCompDetails':'每个业务部门将测试特定的知识来赢得客户。"大小"是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。',
+      'accessToFirst':'访问您的第一个客户',
+      'accessToFirstDetails':'您可以加入第一个商业部门从而访问您的第一个客户。\n点击业务板块的"开始"，然后点击"加入"。',
+      'accessToFirstBtn':'点击"开始”',
+      'readyForCustomer':'准备好接触您的第一个客户了吗？',
+      'readyForCustomerDetails':'让我们前往笔记本电脑中您可以联络的新客户列表页面。\n\n您可以使用导航菜单“>”，点击您的销售代表指示图，\n或者点击后退然后选择笔记本电脑。',
+      'readyForCustomerBtn':'点击您的销售代表指示图',
+
 
 
       // dashboard intro popup
@@ -873,7 +1062,6 @@ class StringRes {
       //challenges
       'competitor': 'Colleagues',
 
-
       //introDialog
       'gotIt': "Got it",
       'rewardsDialogContent':
@@ -895,6 +1083,7 @@ class StringRes {
       'strTeamDialog':
           "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
 
+
       'plPerson': 'Performance',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
       'plMyName':
@@ -912,6 +1101,52 @@ class StringRes {
 
       'customersRelationShipContent':"Here you can search for Learning Modules,\nsubscribe and unsubscribe to them and also\ndecide if you want to download the content for\nfuture offline usage.",
       'areaOfCompetency':"",
+      //endregion
+
+      //existing customer
+      'servingYourExisting': 'List of Completed Learnings',
+      'servingYourExistingDialog': 'In this part of the tutorial you will learn all relevant information about your completed learnings',
+      'listOfExisting': 'List of Completed Learnings',
+      'listOfExistingDetails': 'Here you see all questions that you currently have memorized. How much Knowledge Points (KP) you receive from them each day and\nhow many days they will stay in this list.\nYou can click the “X” if you want to remove a question.\nThis question will then not generate any more Knowledge Points for you but you will regain 1 free Memory Point (MP).',
+
+      'readyForBusiness': 'Ready to get started',
+      'readyForBusinessDeatils': "Why don't you check out more Learning Modules and answer a few more questions.\n\nOr explore the other area of this app where you can\nearn rewards, challenge other players, see your\nperformance and compare your ranking.",
+      'finishTutorial': 'Finish Tutorial',
+
+
+      //customer situation
+      'impactOnSales': 'Impact on Learning Points (LP) and Memory Points (MP)',
+      'impactOnSalesDetails': 'Congratulations! You just answered your first question correctly.\nYour Learning Point (LP) Bar shows now 8/10 as this question\nrequired 2 Learning Points and your Memory Point (MP) Bar shows\n9/10 as one Memory Point (MP) is occupied while you have this question in the list of completed learnings.',
+      'impactOnBrand': 'Impact on Knowledge Score (KS)',
+      'impactOnBrandDetails': 'Also your Knowledge Score (KS) is now 100% as you answered 100% of all questions correct.\n\nIndependent of your Knowledge Score (KS), also your Knowledge Points (KP) increased\nby the Knowledge Points (KP) offered for this question.',
+      'checkYourCustomer': 'Check the list of complete learnings',
+      'checkYourCustomerDetails': 'You can find a list with all completed questions in the "Completed Learnings" section.\n\nYou can reach your "Completed Learnings" by clicking on your\nMemory Point (MP) Bar, selecting "Completed Learnings" from\nthe menu or by going to the main screen and\nselecting "Completed Learnings"',
+      'clickServiceBtn': 'Click on you Memory Points (MP) Bar',
+
+      //engagement
+      'yourFirstEngagement': 'Your first Question',
+      'yourFirstEngagementDetails': 'In order to win this question, you will need to answer this\nit correctly. You can click on the expand button to\nenlarge the picture, question and answer option.\n\nSelect the right answer and click on “Next”',
+      'yourFirstEngagementBtn': 'Select answer & click “Next”',
+
+      //New Customer screen
+      'heartBusiness': 'List of Open Learnings',
+      'heartBusinessDetails': 'In this part of the tutorial you will learn all relevant information needed to select and answer questions',
+      'listOfPotential': 'List of Questions',
+      'listOfPotentialDetails': 'Each question has a name and belongs to a Learning Module.\nKnowledge are the Knowledge Points (KP) you can earn every day you have this question in your completed Learning lsit.\n"Repeat in ..." tells you in how many days you need to repeat the question if you now answer it correctly. The more often you answer a question correctly the less often you will need to repeat it.\nStudy Points (SP) indicate how many Study Points (SP) you will need to answer this question. Click on “Answer Now”.',
+      'listOfPotentialBtn': 'Click on “Answer Now”',
+
+      //Business sector screen dialog
+      'customerRelation':'Learning Modules introduction',
+      'customerRelationDetails':'Here you can search for Learning Modules, subscribe and unsubscribe to them and also decide if you want to download the content for future offline usage.',
+      'areaOfComp':'Learning Modules introduction',
+      'areaOfCompDetails':'Each Learning Module will test specific areas of knowledge. "Size" indicated the number of Questions in each Module. You can click on a Learning Module to read a description and decide if you want to subscribe to them. Some Learning Modules are already assigned to you by your company and cannot be unsubscribed.',
+      'accessToFirst':'Subscribe to the first Module',
+      'accessToFirstDetails':'Why don\'t you subscribe to the first business sector to\ngain access to your first questions.\n\nClick on the Learning Module “Getting Started” and then on “Subscribe”.',
+      'accessToFirstBtn':'Click on “Getting Started”',
+      'readyForCustomer':'Ready for your first Questions',
+      'readyForCustomerDetails':'Let\'s head over to the Open Learnings which contains a list of new\nquestions you can answer.\n\nYou can click on your Study Point (SP) Bar, use the navigation\nmenu “>”, or click the back button and select Open Learnings.',
+      'readyForCustomerBtn':'Click on the Study Point (SP) Bar',
+
     },
     'de': {
       //region German
@@ -1076,6 +1311,52 @@ class StringRes {
           'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
+      //endregion
+      //existing customer
+      'servingYourExisting': 'Liste der Bestandsfragen',
+      'servingYourExistingDialog':'In diesem Teil der Einführung lernst du alles Wissenswerte über die Bestandsfragen',
+
+  'listOfExisting': 'Liste der Bestandsfragen',
+  'listOfExistingDetails': 'Hier siehst du die Liste der Bestandsfragen, die täglichen Wissenspunkte und wieviel Tage sie noch in der Liste bleiben.\nMit "x" kannst du die Frage aus dieser Liste löschen. Dann generiert sie keine Wissenspunkte mehr, du hast aber eine Bestandsfragenkapazität mehr.',
+
+      'readyForBusiness': 'Und los geht\'s ...',
+      'readyForBusinessDeatils': 'Hier endet die Einführung.\nDu kannst weitere Lernmodule abonnieren und Fragen beantworten.\nOder du entdeckst die anderen Bereiche in denen du z.B. deine Auszeichnungen sehen, andere Kollegen herausfordern , deine Finanzen analysieren und dein Platz in der Rangliste einsehen kannst.',
+      'finishTutorial': 'Einführung beenden',
+
+      //customer situation
+      'impactOnSales': 'Einfluss auf Lernpunkte und Bestandsfragen',
+      'impactOnSalesDetails': 'Herzlichen Glückwunsch! Du hast gerade deinen erste Frage richtig beantwortet.\nDeine Lernpunkteanzeige zeigt nun 8/10 da diese Frage 2 Lernpunkte benötigte um sie zu beantworten. Die Bestandsfragenanzeige zeigen nun 9/10 da du eine von 10 möglichen Fragen in deinem Bestand hast .',
+      'impactOnBrand': 'Einfluss auf Wissensscore (WP) und Wissenspunkte (WP)',
+      'impactOnBrandDetails': 'Dein Wissensscore (WS) liegt jetzt bei 100% da du 100% aller Fragen richtig beantwortet hast.\n\nDeine Wissenspunkte (WP) sind auch schon um die täglichen Punkte dieser Frage gestiegen',
+      'checkYourCustomer': 'Schau in die Liste der Bestandsfragen',
+      'checkYourCustomerDetails': 'Deine Bestandsfragen findest du in der Kachel "Bestandsfragen" im Hauptbildschirm.\n\nDu kannst aber auch auf die Bestandsfragenanzeige klicken oder den Punkt "Bestandsfragen" im Menü auswählen.',
+      'clickServiceBtn': 'Klick auf die Bestandsfragenanzeige',
+
+      //engagement
+      'yourFirstEngagement': 'Erste Frage',
+      'yourFirstEngagementDetails': 'Um diese Frage zu gewinnen musst du diese Frage richtig beantworten.\nUm das Bild, die Frage oder die Antwortmöglichkeiten vergrößert dargestellt zu bekommen bitte auf das Vergrößerungssymbol klicken.\n\nBitte richtige Antwort auswählen und dann auf "Weiter" klicken.',
+      'yourFirstEngagementBtn': 'Antwort auswählen und auf "Weiter" klicken',
+
+      //New Customer screen
+      'heartBusiness': 'Liste der offenen Fragen',
+      'heartBusinessDetails': 'In diesem Teil der Einführung lernst du alles Wissenswerte über die Fragenliste und die Fragen',
+      'listOfPotential': 'Liste der offenen Fragen',
+      'listOfPotentialDetails': 'Jeder Frage hat einen Namen und gehört zu einem Lernmodul. Wissenspunkte (WP) sind die täglichen Punkte die dir diese Frage einbringen wird, so lange sie in der Bestandsfragenliste bleibt.\n"Wiederholen in..." zeigt die Anzahl Tage wann die Frage wiederholt werden muss. Je häufiger du sie richtig beantwortest, je grösser wird der Abstand.\nIn der Spalte Lernpunkte (LP) siehst du wieviel Lernpunkte (LP) du benötigst um die Frage zu beantworten.\nUm eine Frage zu beantworten bitte auf "Beantworten" klicken',
+      'listOfPotentialBtn': 'Klick auf "Beantworten"',
+
+      //Business sector screen dialog
+      'customerRelation':'Einführung in Lernmodule',
+      'customerRelationDetails':'Hier kannst du nach Lernmodulen suchen, diese abonnieren und auch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.',
+      'areaOfComp':'Einführung in Lernmodule',
+      'areaOfCompDetails':'Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten.\n"Grösse" zeigt an, wieviele Fragen es in einem Lernmodul gibt.\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht.\nDu kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+      'accessToFirst':'Lernmodul abonnieren',
+      'accessToFirstDetails':'Lass uns ein erstes Lernmodul abonnieren um Zugang zu den ersten Fragen zu erlangen.\n\nDazu klick bitte auf das Lernmodul "Los geht\'s" und dann auf abonnieren.',
+      'accessToFirstBtn':'Klick auf "Los geht\'s"',
+      'readyForCustomer':'Bereit für die erste Frage?',
+      'readyForCustomerDetails':'Auf zur Liste der Fragen.\n\nDazu bitte entweder auf die Lernkapazitätenanzeige klicken, im Menü den Punkt "Fragen" anklicken oder im Hauptbildschirm die Kachel "Fragen" anklicken.',
+      'readyForCustomerBtn':'Klick auf die "Lernkapazitätenanzeige"',
+
+},
 
       'customersRelationShip':"Einführung in Lernmodule",
       //endregion
@@ -1238,6 +1519,51 @@ class StringRes {
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
       'strYourTeamPerformanceDialog2':
           '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+      //endregion
+      //existing customer
+      'servingYourExisting': '已完成的学习列表',
+      'servingYourExistingDialog':'在本教程的这一部分，您将学习有关您已完成的学习的所有相关信息',
+      'listOfExisting': '已完成的学习列表',
+      'listOfExistingDetails': '在这里，您可以看到您目前已经记住的所有问题。您每天从这些问题那里获得多少知识点 (KP) 以及这些问题会在列表中存在多少天。\n如果您想删除一个问题，您可以点击"X"。\n然后，这个问题将不会为您生成更多的知识点数，但您将重新获得1个可用记忆点数 (MP)。',
+      'readyForBusiness': '准备开始',
+      'readyForBusinessDeatils': '您可以进一步查看学习模块，回答更多的问题。\n\n或者探索这个应用程序的其他区域，您可以赚取奖励，挑战其他玩家，查看您的表现和比较您的排名。',
+      'finishTutorial': '完成教程',
+
+      //customer situation
+      'impactOnSales': '对学习点数 (SP) 和记忆点数 (MP) 的影响',
+      'impactOnSalesDetails': '恭喜！您正确地回答了您的第一个问题。\n您的学习点数 (SP) 条现在显示8/10，因为这个问题\n需要2个学习点数。您的记忆力点数 (MP) 条显示\n9/10，因为这个问题会在您的已完成学习列表中占用1个记忆点数。',
+      'impactOnBrand': '对知识分数 (KS) 的影响',
+      'impactOnBrandDetails': '您的知识分数 (KS) 现在是100％，因您100%正确回答了所有问题。\n\n独立于您的知识分数 (KS)，您的知识点数 (KP) 也因为\n获得这个问题提供的知识点数而增加。',
+      'checkYourCustomer': '查看完整的学习列表',
+      'checkYourCustomerDetails': '您可以在"已完成的学习"部分找到包含所有已完成的问题的列表。\n\n您可以通过点击您的记忆力点数 (MP) 条，\n从菜单选择“已完成的学习”，或者前往主页面选择“已完成的学习”进入您的“已完成的学习”页面。',
+      'clickServiceBtn': '点击您的记忆点数 (MP) 条',
+
+      //engagement
+      'yourFirstEngagement': '您的第一个问题',
+      'yourFirstEngagementDetails': '为了赢得这个问题，您需要\n正确回答这个问题。您可以点击展开按钮放大图片、问题和答案选项。\n\n选择正确的答案，然后单击"下一页”',
+      'yourFirstEngagementBtn': '选择答案并单击"下一页”',
+
+      //New Customer screen
+      'heartBusiness': '开放学习列表',
+      'heartBusinessDetails': '在本教程的这一部分，您将学习选择和回答问题所需的所有相关信息',
+      'listOfPotential': '问题列表',
+      'listOfPotentialDetails': '每个问题都有一个名称，属于对应的学习模块。\n知识是您每天可以在已完成学习列表中通过这个问题可以赚取的知识点数 (KP)。\n“重复...”表示您如果现在回答正确，在多少天后您需要重复回答这个问题。您越经常正确地回答一个问题，您就越不经常需要重复。\n学习点数 (SP) 表示您需要多少学习点数 (SP) 来回答这个问题。点击"立即回答"。',
+      'listOfPotentialBtn': '点击"立即回答"',
+
+      //Business sector screen dialog
+      'customerRelation':'学习模块介绍',
+      'customerRelationDetails':'在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。',
+      'areaOfComp':'学习模块介绍',
+      'areaOfCompDetails':'每个学习模块将测试特定的知识领域。"大小"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。',
+      'accessToFirst':'加入第一个模块',
+      'accessToFirstDetails':'您可以加入第一个商业部门从而\n访问您的第一个问题。\n\n点击学习模块"开始"，然后点击"加入"。',
+      'accessToFirstBtn':'点击"开始”',
+      'readyForCustomer':'准备好您的第一个问题',
+      'readyForCustomerDetails':'让我们前往开放学习板块，其中包含一个\n您可以回答的新问题列表。\n\n您可以点击您的学习点数 (SP) 条，使用导航\n菜单“>”，或者单击后退按钮，然后选择“开放学习”。',
+      'readyForCustomerBtn':'点击学习点数 (SP) 条',
+
+
+
 
       'customersRelationShip':"学习模块介绍",
       //endregion

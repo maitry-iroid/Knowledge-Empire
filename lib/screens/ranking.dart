@@ -787,7 +787,6 @@ class _RankingPageState extends State<RankingPage> {
     } else {
       return Utils.getCacheNetworkImage(arrFriends[index].profileImage);
     }
-
   }
 
   isCurrentUser(int index) {
@@ -824,13 +823,11 @@ class _RankingPageState extends State<RankingPage> {
     Widget continueButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.yes)),
       onPressed:  () {
-
         arrFriends[index].isFriend = 0;
         friendUnFriendUser(index, 2);
         setState(() {
         });
         Navigator.pop(context);
-
       },
     );
 
