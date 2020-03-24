@@ -69,12 +69,12 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
         Positioned(
           right: 50,
           bottom: 50,
-          child: showBottomItem(Const.typeNewCustomer),
+          child: showBottomItem(Const.typeExistingCustomer),
         ),
         Positioned(
           left: Utils.getDeviceWidth(context) / 2.5,
           bottom: 70,
-          child: showBottomItem(Const.typeExistingCustomer),
+          child: showBottomItem(Const.typeNewCustomer),
         ),
         Positioned(
           right: 0,

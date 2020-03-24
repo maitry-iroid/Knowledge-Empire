@@ -461,7 +461,7 @@ class StringRes {
       "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
 
       'plPerson': 'The person you can count on',
-      'niceMeetYou': 'Nice to meet you${Injector.userData?.name}',
+      'niceMeetYou': 'Nice to meet you${Injector.userData?.name??""}',
       'plMyName':
       '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have\nmore revenue then cost.',
       'hereYourMonitor':
@@ -519,7 +519,7 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': 'Customer Relationship Management',
       'customerRelationDetails':
-          'Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
+          'Hi ${Injector.userData?.name??""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
       'areaOfComp': 'Area of competency',
       'areaOfCompDetails':
           'Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.',
@@ -534,7 +534,7 @@ class StringRes {
       'customersRelationShip': "Customer Relationship Management",
 
       'customersRelationShipContent':
-          "Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+          "Hi ${Injector.userData?.name??""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
       'areaOfCompetency': "",
 
       'customersRelationShipContent':
@@ -549,7 +549,7 @@ class StringRes {
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
       'dashboardServices': 'services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering your question\n increases your cash',
+      'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
       'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
@@ -558,7 +558,7 @@ class StringRes {
       //Organization screen Dialog
       'hireHrEmp': 'Hire HR Employees',
       'hireHrEmpDetails':
-          'Hi ${Injector.userData?.name},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR I will introduce you to the team and how you\ncan hire new employees to strengthen the team.',
+          'Hi ${Injector.userData?.name??""},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR I will introduce you to the team and how you\ncan hire new employees to strengthen the team.',
 
       'hireHrEmpDetailsSeconds':"To hear your Team's' recommendations on why you should\nhire more employees in their team, click on them? \n\nLet's start with hiring 10 HR employees by clicking on HR and then\n“Hire 10 employees”.",
 
@@ -566,10 +566,12 @@ class StringRes {
       'empOMasterDetails':'Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your free capacity.\nYou can increase your maximum by hiring more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.',
       'costOfEmp':'Cost of employees',
       'costOfEmpDetails':'Here you see your total cash.\n\nHiring employees will incur hiring cost (increasing over time).\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increase over time.',
+      // dashboard intro popup
+
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
       'dashboardServices': 'services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering your question\n increases your cash',
+      'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
       'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
@@ -577,7 +579,7 @@ class StringRes {
       //endregion
 
       'customizeYourCompany':"Customize your company",
-      'customizeYourCompanyContent':"Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      'customizeYourCompanyContent':"Dear ${Injector.userData?.name??""},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
     },
     'de': {
@@ -769,7 +771,7 @@ class StringRes {
       "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
 
       'plPerson': 'Mit mir kannst du rechnen',
-      'niceMeetYou': 'Nett dich kennenzulernen ${Injector.userData?.name}',
+      'niceMeetYou': 'Nett dich kennenzulernen ${Injector.userData?.name??""}',
       'plMyName':
       'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
       'hereYourMonitor':
@@ -784,7 +786,7 @@ class StringRes {
        //existing customer
 
       'servingYourExisting': 'Kundenservice',
-      'servingYourExistingDialog': 'Hi ${Injector.userData?.name},\n\nIch bin Bob und kümmere mich um den Kundenservice.',
+      'servingYourExistingDialog': 'Hi ${Injector.userData?.name??""},\n\nIch bin Bob und kümmere mich um den Kundenservice.',
 
       'listOfExisting': 'Bestandskundenliste',
       'listOfExistingDetails':
@@ -825,7 +827,7 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': 'Kundenbeziehungsmanagement (CRM)',
       'customerRelationDetails':
-          'Hallo ${Injector.userData?.name},\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.',
+          'Hallo ${Injector.userData?.name??""},\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.',
       'areaOfComp': 'Geschäftsbereiche',
       'areaOfCompDetails':
           'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n"Groesse" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
@@ -843,25 +845,26 @@ class StringRes {
 
       'customersRelationShipContent':
       "Hi ${Injector.userData
-          ?.name}\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
+          ?.name??""}\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
       'areaOfCompetency': "Geschäftsbereiche",
       'areaOfCompetenceContent':
       "Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n\"Groesse\" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.",
 
+      // dashboard intro popup
 
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
       'dashboardServices': 'services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering your question\n increases your cash',
-      'dashboardBusiness': '1.Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer': '1.New Customer\nAnswer Questions',
-      'dashboardExistingCustomer': '1.Existing Customer\nReview Questions',
+      'dashboardBalance': 'Answering Questions\n increases your Cash',
+      'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
+      'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
 
       //endregion
 
       //Organization screen Dialog
       'hireHrEmp': 'Personaler einstellen',
-      'hireHrEmpDetails': 'Hallo ${Injector.userData?.name},\n\nwillkommen im Unternehmen und willkommen im Management Team.\nMein Name ist Nikita aber bitte nenne mich Niki.\nAls Personalchef werde ich dir eine kurze Einführung geben, wie du neue Mitarbeiter einstellen kannst.',
+      'hireHrEmpDetails': 'Hallo ${Injector.userData?.name??""},\n\nwillkommen im Unternehmen und willkommen im Management Team.\nMein Name ist Nikita aber bitte nenne mich Niki.\nAls Personalchef werde ich dir eine kurze Einführung geben, wie du neue Mitarbeiter einstellen kannst.',
 
       'hireHrEmpDetailsSeconds':'Um die Empfehlungen deiner Mitarbeiter zu hören, warum du in eine Abteilung investieren solltest, klicke einfach auf die Mitarbeiter.\n\nLass uns zu Anfang 10 neue Mitarbeiter in der Personalabteilung einstellen. Klicke dazu bitte auf "Personal" und dann auf "10 Mitarbeiter einstellen"',
 
@@ -1056,7 +1059,7 @@ class StringRes {
       "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
       'plPerson': '您可以依靠的人',
-      'niceMeetYou': '${Injector.userData?.name}很高兴见到您',
+      'niceMeetYou': '${Injector.userData?.name??""}很高兴见到您',
       'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
       'hereYourMonitor': '在这里，您可以监控公司的成本和收入。',
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
@@ -1067,7 +1070,7 @@ class StringRes {
       //endregion
 //existing customer
       'servingYourExisting': '服务现有客户',
-      'servingYourExistingDialog': '${Injector.userData?.name}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
+      'servingYourExistingDialog': '${Injector.userData?.name??""}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
 
       'listOfExisting': '现有客户名单',
       'listOfExistingDetails':
@@ -1107,7 +1110,7 @@ class StringRes {
 
       //Business sector screen dialog
       'customerRelation':'客户关系管理',
-      'customerRelationDetails':'${Injector.userData?.name}您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！',
+      'customerRelationDetails':'${Injector.userData?.name??""}您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！',
       'areaOfComp':'能力领域',
       'areaOfCompDetails':'每个业务部门将测试特定的知识来赢得客户。"大小"是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。',
       'accessToFirst':'访问您的第一个客户',
@@ -1123,10 +1126,10 @@ class StringRes {
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
       'dashboardServices': 'services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering your question\n increases your cash',
-      'dashboardBusiness': '1.Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer': '1.New Customer\nAnswer Questions',
-      'dashboardExistingCustomer': '1.Existing Customer\nReview Questions',
+      'dashboardBalance': 'Answering Questions\n increases your Cash',
+      'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
+      'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
 
       'customersRelationShip': "客户关系管理",
       //endregion
@@ -1139,12 +1142,12 @@ class StringRes {
           "大小"
           "是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。",
       'customizeYourCompany':"自定义您的公司",
-      'customizeYourCompanyContent':"亲爱的${Injector.userData?.name}\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。\n",
+      'customizeYourCompanyContent':"亲爱的${Injector.userData?.name??""}\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。\n",
 
 
       //Organization screen Dialog
       'hireHrEmp': '招聘HR员工',
-      'hireHrEmpDetails': '${Injector.userData?.name}您好，\n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，我将向您介绍我们的团队以及指导您如何招聘员工，让我们的团队发展壮大。',
+      'hireHrEmpDetails': '${Injector.userData?.name??""}您好，\n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，我将向您介绍我们的团队以及指导您如何招聘员工，让我们的团队发展壮大。',
 
       'hireHrEmpDetailsSeconds':'听听您的团队的建议，为什么您应该招聘更多的员工，点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后\n选择“雇用10名员工”。',
 
@@ -1202,7 +1205,7 @@ class StringRes {
       "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
 
       'plPerson': 'Performance',
-//      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
+//      'niceMeetYou':'${Injector.userData?.name??""}很高兴见到您',
       'plMyName':
       'In this section you will learn everything you need to know about your performance analysis',
       'hereYourMonitor':
@@ -1278,7 +1281,7 @@ class StringRes {
       'readyForCustomerBtn': 'Click on the Study Point (SP) Bar',
 
       'customizeYourCompany':"Customize your profile",
-      'customizeYourCompanyContent':"Dear ${Injector.userData?.name}\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      'customizeYourCompanyContent':"Dear ${Injector.userData?.name??""}\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
       'hireHrEmpDetailsSeconds':'To get recommendations and understand why you should improve certain Power-Ups (PU), click on them.\nLet\'s start with spending 10 Power-Up (PU) Points and 1000 Knowledge Points (KP) to improve "Max. Power-Ups (PU)" to level 1\nClick on "Max. Power-Ups (PU)" and then on "Increase Level"',
 
@@ -1441,7 +1444,7 @@ class StringRes {
       "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und seine Wissenspunkte auf 30.000 zurücksetzen.",
 
       'plPerson': 'Entwicklung',
-//      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
+//      'niceMeetYou':'${Injector.userData?.name??""}很高兴见到您',
       'plMyName':
       'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
       'hereYourMonitor':
@@ -1513,7 +1516,7 @@ class StringRes {
       'areaOfCompetenceContent':
       "Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten.\"Grösse\" zeigt an, wieviele Fragen es in einem Lernmodul gibt\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht.\nDu kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.",
       'customizeYourCompany':"Profil bearbeiten",
-      'customizeYourCompanyContent':"Hallo ${Injector.userData?.name}\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
+      'customizeYourCompanyContent':"Hallo ${Injector.userData?.name??""}\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
 
 
       //Organization screen Dialog
@@ -1743,7 +1746,7 @@ class StringRes {
       'areaOfCompetenceContent':
       "每个学习模块将测试特定的知识领域。\"大小\"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。",
       'customizeYourCompany':"自定义您的个人资料",
-      'customizeYourCompanyContent':"亲爱的${Injector.userData?.name}，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。 ",
+      'customizeYourCompanyContent':"亲爱的${Injector.userData?.name??""}，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。 ",
 
 
       //Organization screen Dialog
