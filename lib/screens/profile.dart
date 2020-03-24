@@ -43,25 +43,23 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     showIntroDialog();
-    super.initState(); 
+    super.initState();
   }
 
   Future<void> showIntroDialog() async {
-
     if (Injector.introData == null || Injector.introData.profile1 == 0)
       await DisplayDialogs.showIntroDialog(context);
 
-
     myFocusNode = FocusNode();
-    
+
     companyController.text = Injector.userData?.companyName;
-    
+
     photoUrl = Injector.userData != null
         ? Injector.userData?.profileImage != null
             ? Injector.userData?.profileImage
             : ""
         : "";
-    
+
     _initPackageInfo();
   }
 
@@ -121,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: ListView(
           children: <Widget>[
             SizedBox(
-              height: 15,
+              height: 8,
             ),
             showTitle(),
             SizedBox(
@@ -148,7 +146,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 flex: 15,
                 child: Container(
                   color: Colors.transparent,
-
                   margin: EdgeInsets.symmetric(
                       horizontal: Utils.getDeviceWidth(context) / 20),
                   child: ListView(
@@ -352,8 +349,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               image: Injector.isBusinessMode
                                   ? DecorationImage(
                                       image: AssetImage(
-                                          Utils.getAssetsImg('bg_privacy'))
-                              )
+                                          Utils.getAssetsImg('bg_privacy')))
                                   : null),
                         ),
                       ),
@@ -390,7 +386,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           switchModeApi();
 
-                          localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+                          localeBloc.setLocale(
+                              Utils.getIndexLocale(Injector.userData.language));
 
                           setState(() {});
                         },
@@ -571,13 +568,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          companyController.text = companyList[index].companyName;
-                          Injector.userData.companyName = companyList[index].companyName;
+                          companyController.text =
+                              companyList[index].companyName;
+                          Injector.userData.companyName =
+                              companyList[index].companyName;
 
                           switchCompanyList(companyList[index].companyId);
 
                           Navigator.pop(context);
-
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -1369,14 +1367,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
 //    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
     CommonView.showCircularProgress(true, context);
-    WebApi().callAPI(WebApi.switchCompanyProfile, rq.toJson()).then((data) async {
+    WebApi()
+        .callAPI(WebApi.switchCompanyProfile, rq.toJson())
+        .then((data) async {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
 //        await Injector.setUserData(Injector.userData);
 
         localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
-
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
@@ -1387,5 +1386,4 @@ class _ProfilePageState extends State<ProfilePage> {
       Utils.showToast(e.toString());
     });
   }
-
 }

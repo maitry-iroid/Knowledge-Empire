@@ -82,7 +82,7 @@ class DisplayDialogs {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       color: ColorRes.colorPrimary,
-                      child: Text("Next",
+                      child: Text(Utils.getText(context, StringRes.next),
                           style: Theme.of(context)
                               .textTheme
                               .title
@@ -149,7 +149,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "john",
             titleText: "Customize your company",
-            btnName: "Next",
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
                 "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
@@ -205,7 +205,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "hr_niki",
             titleText: "Hire HR Employees",
-            btnName: "Next",
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
                 "Hi ${Injector.userData?.name},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
@@ -256,7 +256,7 @@ class DisplayDialogs {
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
             titleText: "Employ-o-Meter",
-            btnName: "Next",
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
                 "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
@@ -428,11 +428,10 @@ class DisplayDialogs {
             imageMoveTop: liWeiImageMoveTop,
             imageHeight: liWeiImageHeight,
             imageWidth: liWeiImageWidth,
-            titleText: "Customer Relationship Management",
-            btnName: "Next",
+            titleText: Utils.getText(context, StringRes.customerRelation),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+            desTextLine: Utils.getText(context, StringRes.customerRelationDetails),
             onTapBtn: () async {
               Navigator.pop(context);
 
@@ -457,11 +456,10 @@ class DisplayDialogs {
             imageMoveTop: liWeiImageMoveTop,
             imageHeight: liWeiImageHeight,
             imageWidth: liWeiImageWidth,
-            titleText: "Area of competency",
-            btnName: Utils.getText(context, StringRes.gotIt),
+            titleText: Utils.getText(context, StringRes.areaOfComp),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Each Business Sector will test specific knowledge to win\ncustomers. \"Size\" is the number of customers per Sector.\nYou can click pn a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
+            desTextLine: Utils.getText(context, StringRes.areaOfCompDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.learningModule2 = 1;
@@ -484,10 +482,9 @@ class DisplayDialogs {
             imageMoveTop: liWeiImageMoveTop,
             imageHeight: liWeiImageHeight,
             imageWidth: liWeiImageWidth,
-            titleText: "Access to your first customers",
-            btnName: "Click on \"Getting Started\"",
-            desTextLine:
-                "Why don't you subscribe to the first business sector to\ngain access to your first customers.\n\nClick on the Business Segment “Getting Started” and then on “Subscribe”.",
+            titleText: Utils.getText(context, StringRes.accessToFirst),
+            btnName: Utils.getText(context, StringRes.accessToFirstBtn),
+            desTextLine: Utils.getText(context, StringRes.accessToFirstDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -510,10 +507,9 @@ class DisplayDialogs {
             imageMoveTop: liWeiImageMoveTop,
             imageHeight: liWeiImageHeight,
             imageWidth: liWeiImageWidth,
-            titleText: "Ready for your first customer contact?",
-            btnName: "Click on your Sales-o-Meter",
-            desTextLine:
-                "Let's head over to the laptop which contains a list of new\ncustomers you can engage.\n\nYou can click on your Sales-o-Meter, use the navigation\nmenu “>”, or click the back button and select the laptop.",
+            titleText: Utils.getText(context, StringRes.readyForCustomer),
+            btnName: Utils.getText(context, StringRes.readyForCustomerBtn),
+            desTextLine: Utils.getText(context, StringRes.readyForCustomerDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -536,11 +532,10 @@ class DisplayDialogs {
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
-            titleText: "The heart of the business",
+            titleText: Utils.getText(context, StringRes.heartBusiness),
             btnColor: ColorRes.blue,
-            btnName: "Next",
-            desTextLine:
-                "Hi Boss,\n\nthis is where the rubber hits the road, where only the best\nsurvive and where we earn the money for our company.\nI am Tina, your Senior Vice President of Global Sales.\nLet's get to work without any further due.",
+            btnName: Utils.getText(context, StringRes.next),
+            desTextLine: Utils.getText(context, StringRes.heartBusinessDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.newCustomer1 = 1;
@@ -563,11 +558,10 @@ class DisplayDialogs {
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
-            titleText: "List of potential Customers",
-            btnName: Utils.getText(context, StringRes.gotIt),
+            titleText: Utils.getText(context, StringRes.listOfPotential),
+            btnName: Utils.getText(context, StringRes.listOfPotentialBtn),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Each customer has a name and belongs to a sector.\nValue is the cash you will recieve every day while the\ncustomer is loyal to you. Loyalty of customers will\nincrease when you master the customer situation.\nResources indicate how many Sales Reps you willneed to engage this customer. Click on “Engage Now”.",
+            desTextLine: Utils.getText(context, StringRes.listOfPotentialDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.newCustomer2 = 1;
@@ -576,6 +570,8 @@ class DisplayDialogs {
           );
         });
   }
+
+  //todo  This dialogs only for engagement screen
 
   static showYourFirstEngagement(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
@@ -589,10 +585,9 @@ class DisplayDialogs {
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
-            titleText: "Your first engegement",
-            btnName: "Select answer & click “Next”",
-            desTextLine:
-                "In order to win this customer, you will need to answer this\nquestion correctly. You can click on the expand button to\nenlarge the picture, question and answer option.\n\nSelect the right answer and click on “Next”",
+            titleText: Utils.getText(context, StringRes.yourFirstEngagement),
+            btnName: Utils.getText(context, StringRes.yourFirstEngagementBtn),
+            desTextLine: Utils.getText(context, StringRes.yourFirstEngagementDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -616,11 +611,10 @@ class DisplayDialogs {
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
-            titleText: "Impact on Sales and Service",
-            btnName: "Next",
+            titleText: Utils.getText(context, StringRes.impactOnSales),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Congratulations! You just won your first customer.\nYour Sales-o-Meter shows now 8/10 as this custome\nrequired 2 Sales Reps and your Service-o-Meter shows\n9/10 as one Service Rep is busy with this customer.",
+            desTextLine: Utils.getText(context, StringRes.impactOnSalesDetails),
             onTapBtn: () async {
               Navigator.pop(context);
 //              await Injector.updateIntroDialogType(Const.introImpactOnBrandValueAndCash);
@@ -644,11 +638,10 @@ class DisplayDialogs {
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
-            titleText: "Impact on Brand Value and Cash",
-            btnName: "Next",
+            titleText: Utils.getText(context, StringRes.impactOnBrand),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Also your Brand Value is now 100% as you answered 100% of all\ncustomer situations correct. \n\nIndependent of your Brand Value, your cash increased\nby the value of the customer.",
+            desTextLine: Utils.getText(context, StringRes.impactOnBrandDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -671,10 +664,9 @@ class DisplayDialogs {
             imageMoveTop: tinaImageMoveTop,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
-            titleText: "Check your existing customers",
-            btnName: "Select on Service-O-Meter",
-            desTextLine:
-                "You can check on your existing customer in the notepad at\nthe main screen.\n\nYou can reach your notepad by clicking on your\nSerice-o-Meter, selecting “Existing customers” from\nthe menu or by going to the main screen and\nselecting the notepad.",
+            titleText: Utils.getText(context, StringRes.checkYourCustomer),
+            btnName: Utils.getText(context, StringRes.clickServiceBtn),
+            desTextLine: Utils.getText(context, StringRes.checkYourCustomerDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(
@@ -697,11 +689,10 @@ class DisplayDialogs {
             imageMoveTop: bobImageMoveTop,
             imageHeight: bobImageHeight,
             imageWidth: bobImageWidth,
-            titleText: "Serving your existing customers",
-            btnName: "Next",
+            titleText: Utils.getText(context, StringRes.servingYourExisting),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Hi ${Injector.userData?.name},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.",
+            desTextLine: Utils.getText(context, StringRes.servingYourExistingDialog),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.existingCustomer1 = 1;
@@ -725,11 +716,10 @@ class DisplayDialogs {
             imageMoveTop: bobImageMoveTop,
             imageHeight: bobImageHeight,
             imageWidth: bobImageWidth,
-            titleText: "List of existing Customers",
-            btnName: Utils.getText(context, StringRes.gotIt),
+            titleText: Utils.getText(context, StringRes.listOfExisting),
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Here you see all customers and contracts that you are currently\nengaged with. How much cash they generate each day and\nhow many days they will be loyal to you.\nYou can click the “X” if you want to end the contract.\nThis customer will no longer generate cash but you will\nwin back 1 Service Rep",
+            desTextLine: Utils.getText(context, StringRes.listOfExistingDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.existingCustomer2 = 1;
@@ -752,11 +742,10 @@ class DisplayDialogs {
             imageMoveTop: bobImageMoveTop,
             imageHeight: bobImageHeight,
             imageWidth: bobImageWidth,
-            titleText: "Ready for business",
-            btnName: "Finish Tutorial",
+            titleText: Utils.getText(context, StringRes.readyForBusiness),
+            btnName: Utils.getText(context, StringRes.finishTutorial),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Why don't you check out more business sectors and engage\na few more customers.\n\nOr explore the other area of your company where you can\nearn rewards, challenge other players, see your financial\nperformance and compare your ranking.",
+            desTextLine: Utils.getText(context, StringRes.readyForBusinessDeatils),
             onTapBtn: () async {
               Navigator.pop(context);
               await Injector.updateIntroDialogType(Const.introRewards);
@@ -988,18 +977,16 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "akiko",
-            imageMoveTop: akikoImageMoveTop,
+            imageMoveTop: 25,
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
             titleText: Utils.getText(context, StringRes.plPerson),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "${Utils.getText(context, StringRes.niceMeetYou)} ,${Utils.getText(context, StringRes.plMyName)}",
+            desTextLine: "${Utils.getText(context, StringRes.niceMeetYou)} ,${Utils.getText(context, StringRes.plMyName)}",
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introPL);
               Injector.introData.pl1 = 1;
               await Injector.setIntroData(Injector.introData);
               showIntroPL(context);
@@ -1016,7 +1003,7 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "akiko",
-            imageMoveTop: akikoImageMoveTop,
+            imageMoveTop: 25,
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
