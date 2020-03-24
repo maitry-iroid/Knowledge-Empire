@@ -375,8 +375,7 @@ class CommonView {
 
                     //Utils.performDashboardItemClick(context, Const.typeRanking);
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-                    CommonView()
-                        .pushNotificationAlert2(context, "20", "3", "1", "1");
+
                   },
                 ),
               ],
@@ -784,7 +783,47 @@ class CommonView {
                 decoration: BoxDecoration(
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: showRewardItem(context),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: Utils.getDeviceWidth(context) / 8,
+                        height: Utils.getDeviceHeight(context) / 15,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), border: Border.all(color: ColorRes.borderRewardsName, width: 1)),
+                        child: Center(
+                            child: Text(
+                              "Collector",
+                              style: TextStyle(fontSize: 18, color: ColorRes.white),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            )),
+                      ),
+                      SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(Utils.getAssetsImg("won"),
+                            height: Utils.getDeviceHeight(context) / 5,
+                            width: Utils.getDeviceWidth(context) / 6),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "5 Business Segments subscribed to” then we say “Bonus: ${1500}",
+                        style: TextStyle(fontSize: 18, color: ColorRes.white),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      SizedBox(height: 12),
+                      Image.asset(Utils.getAssetsImg("next_prof"),
+                          width: Utils.getDeviceWidth(context) / 5,
+                          height: Utils.getDeviceHeight(context) / 12)
+                    ],
+                  ),
+                ),
               ),
             ),
           );
@@ -838,47 +877,4 @@ class CommonView {
         })*/
   }
 
-  Widget showRewardItem(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: Utils.getDeviceWidth(context) / 8,
-            height: Utils.getDeviceHeight(context) / 15,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), border: Border.all(color: ColorRes.borderRewardsName, width: 1)),
-            child: Center(
-                child: Text(
-              "Collector",
-              style: TextStyle(fontSize: 18, color: ColorRes.white),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            )),
-          ),
-          SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(Utils.getAssetsImg("won"),
-                height: Utils.getDeviceHeight(context) / 5,
-                width: Utils.getDeviceWidth(context) / 6),
-          ),
-          SizedBox(height: 8),
-          Text(
-            "5 Business Segments subscribed to” then we say “Bonus: \$ 10000",
-            style: TextStyle(fontSize: 18, color: ColorRes.white),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          SizedBox(height: 12),
-          Image.asset(Utils.getAssetsImg("next_prof"),
-            width: Utils.getDeviceWidth(context) / 5,
-            height: Utils.getDeviceHeight(context) / 12)
-        ],
-      ),
-    );
-  }
 }
