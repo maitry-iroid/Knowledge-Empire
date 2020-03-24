@@ -172,6 +172,7 @@ class StringRes {
 
   static var challengesDialogTitle1 = "challengesDialogTitle1";
   static var challengesDialogContent1 = "challengesDialogContent1";
+
   static var strChallanges = "strChallanges";
   static var strChallangesDialogContent = "strChallangesDialogContent";
   static var strMarketingCommunications = "strMarketingCommunications";
@@ -236,7 +237,6 @@ class StringRes {
   static var readyForCustomerBtn = "readyForCustomerBtn";
 
 
-
 //  static var selectPeriod = "selectPeriod";
   // dashboard intro popup
   static var dashboardProfile = "dashboardProfile";
@@ -247,11 +247,18 @@ class StringRes {
   static var dashboardNewCustomer = "dashboardNewCustomer";
   static var dashboardExistingCustomer = "dashboardExistingCustomer";
 
-
-  //business sectoer
+  //business sector
   static var customersRelationShip = "customersRelationShip";
   static var customersRelationShipContent = "customersRelationShipContent";
   static var areaOfCompetency = "areaOfCompetency";
+  static var areaOfCompetenceContent = "areaOfCompetenceContent";
+
+  //newCustomer
+  static var theHeartOfTheBusiness = "customersRelationShip";
+
+  //profile
+  static var customizeYourCompany = "customizeYourCompany";
+  static var customizeYourCompanyContent = "customizeYourCompanyContent";
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -307,7 +314,7 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
-      'selectLanguages':'Select Language',
+      'selectLanguages': 'Select Language',
 
       //organization
       'fireEmp': "Fire 10 employees",
@@ -325,7 +332,7 @@ class StringRes {
       //existing customer
       'endRel': 'End Rel.',
       'alertReleaseResources':
-          "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+      "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
 
       //challenges
       'searchForKeywords': 'Search for keywords',
@@ -419,47 +426,48 @@ class StringRes {
       'alert': "Alert",
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
 
-
-      //endregion
-
       //introDialog
       'gotIt': "Got it",
       'rewardsDialogContent':
-          "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+      "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
       'challengesDialogTitle1': "Your Will is at your command",
       'challengesDialogContent1':
-          "Dear ${Injector.userData?.name},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
+      "Dear ${Injector.userData
+          ?.name},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
-          "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected sector correctly in order to win the challenge.",
+      "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected sector correctly in order to win the challenge.",
       'strMarketingCommunications': "Marketing & Communications",
       'strMarketingCommunicationsDialog':
-          "Hi ${Injector.userData?.name},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
+      "Hi ${Injector.userData
+          ?.name},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
       'strRankingDialogContent':
-          "Select on the left side the ranking criteria (e.g. cash) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
+      "Select on the left side the ranking criteria (e.g. cash) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
       'strYourTeamPerformance': "Your Team's Performance",
       'strYourTeamPerformanceDialog':
-          "Hi, it's me again, Niki.\n\nThis section is exclusively for team leaders.\nHere you can see the performance of your reports.",
+      "Hi, it's me again, Niki.\n\nThis section is exclusively for team leaders.\nHere you can see the performance of your reports.",
       'strTeamDialog':
-          "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
+      "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
 
       'plPerson': 'The person you can count on',
       'niceMeetYou': 'Nice to meet you${Injector.userData?.name}',
       'plMyName':
-          '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have\nmore revenue then cost.',
+      '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have\nmore revenue then cost.',
       'hereYourMonitor':
-          'Here you can monitor the cost\nand the revenue of your company.',
+      'Here you can monitor the cost\nand the revenue of your company.',
       'selectPeriod':
-          'You can also select the period you want to look\nat and compare the current period with the previous period.',
+      'You can also select the period you want to look\nat and compare the current period with the previous period.',
 
       'strYourTeamPerformanceDialog2':
-          'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
-      //endregion
+      'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
+      'customersRelationShip': "Customer Relationship Management",
+
 
       //existing customer
 
       'servingYourExisting': 'Serving your existing customers',
-      'servingYourExistingDialog': 'Hi ${Injector.userData?.name},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
+      'servingYourExistingDialog': 'Hi ${Injector.userData
+          ?.name},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
 
       'listOfExisting': 'List of existing Customers',
       'listOfExistingDetails': 'Here you see all customers and contracts that you are currently engaged with. How much cash they generate each day and\nhow many days they will be loyal to you.\nYou can click the “X” if you want to end the contract.\nThis customer will no longer generate cash but you will\nwin back 1 Service Rep',
@@ -490,32 +498,40 @@ class StringRes {
       'listOfPotentialBtn': 'Click on “Engage Now”',
 
       //Business sector screen dialog
-      'customerRelation':'Customer Relationship Management',
-      'customerRelationDetails':'Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
-      'areaOfComp':'Area of competency',
-      'areaOfCompDetails':'Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.',
-      'accessToFirst':'Access to your first customers',
-      'accessToFirstDetails':'Why don\'t you subscribe to the first business sector to\ngain access to your first customers.\n\nClick on the Business Segment “Getting Started” and then on “Subscribe”.',
-      'accessToFirstBtn':'Click on “Getting Started”',
-      'readyForCustomer':'Ready for your first customer contact?',
-      'readyForCustomerDetails':'Let\'s head over to the laptop which contains a list of new\ncustomers you can engage.\n\nYou can click on your Sales-o-Meter, use the navigation\nmenu “>”, or click the back button and select the laptop.',
-      'readyForCustomerBtn':'Click on your Sales-o-Meter',
-      'customersRelationShip':"Customer Relationship Management",
-      //endregion
+      'customerRelation': 'Customer Relationship Management',
+      'customerRelationDetails': 'Hi ${Injector.userData
+          ?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
+      'areaOfComp': 'Area of competency',
+      'areaOfCompDetails': 'Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.',
+      'accessToFirst': 'Access to your first customers',
+      'accessToFirstDetails': 'Why don\'t you subscribe to the first business sector to\ngain access to your first customers.\n\nClick on the Business Segment “Getting Started” and then on “Subscribe”.',
+      'accessToFirstBtn': 'Click on “Getting Started”',
+      'readyForCustomer': 'Ready for your first customer contact?',
+      'readyForCustomerDetails': 'Let\'s head over to the laptop which contains a list of new\ncustomers you can engage.\n\nYou can click on your Sales-o-Meter, use the navigation\nmenu “>”, or click the back button and select the laptop.',
+      'readyForCustomerBtn': 'Click on your Sales-o-Meter',
+      'customersRelationShip': "Customer Relationship Management",
 
-      'customersRelationShipContent':"Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
-      'areaOfCompetency':"",
-
+      'customersRelationShipContent':
+      "Hi ${Injector.userData
+          ?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+      'areaOfCompetency': "Area of competency",
+      'areaOfCompetenceContent':
+      "Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
 
       // dashboard intro popup
 
-      'dashboardProfile':'Change Profile\n name, Language',
-      'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices':'services-o-meter"\navailable Services Reps',
-      'dashboardBalance':'Answering your question\n increases your cash',
-      'dashboardBusiness':'1. Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer':'2. New Customer\nAnswer Questions',
-      'dashboardExistingCustomer':'3. Existing Customer\nReview Questions'
+      'dashboardProfile': 'Change Profile\n name, Language',
+      'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
+      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardBalance': 'Answering your question\n increases your cash',
+      'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
+      'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
+
+      //endregion
+
+      'customizeYourCompany':"Customize your company",
+      'customizeYourCompanyContent':"Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
     },
     'de': {
@@ -588,7 +604,7 @@ class StringRes {
       //existing customer
       'endRel': 'Beziehung beenden',
       'alertReleaseResources':
-          'Dieser Kunde wird entfernt, generiert keinen Umsatz mehr und ist erst nach der Treuefrist wieder erreichbar',
+      'Dieser Kunde wird entfernt, generiert keinen Umsatz mehr und ist erst nach der Treuefrist wieder erreichbar',
 
       //challenges
       'searchForKeywords': 'Suche',
@@ -684,43 +700,47 @@ class StringRes {
       //introDialog
       'gotIt': "Verstanden",
       'rewardsDialogContent':
-          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
+      "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Dein Will ist mein Befehl",
       'challengesDialogContent1':
-          "${Injector.userData?.name},\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
+      "${Injector.userData
+          ?.name},\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
-          "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.\nwähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom aktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
+      "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.\nwähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom aktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
       'strMarketingCommunications': "Marketing",
       'strMarketingCommunicationsDialog':
-          "Hallo ${Injector.userData?.name}, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
+      "Hallo ${Injector.userData
+          ?.name}, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
       'strRankingDialogContent':
-          "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
-              "Du"
-              " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Wettbewerber herausfordern.",
+      "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
+          "Du"
+          " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Wettbewerber herausfordern.",
       'strYourTeamPerformance': "Teamperformance",
       'strYourTeamPerformanceDialog':
-          "Hallo, Ich bin es nochmal, Niki.\n\nDieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
+      "Hallo, Ich bin es nochmal, Niki.\n\nDieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
       'strTeamDialog':
-          "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
+      "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
 
 
       'plPerson': 'Mit mir kannst du rechnen',
       'niceMeetYou': 'Nett dich kennenzulernen ${Injector.userData?.name}',
       'plMyName':
-          'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
+      'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
       'hereYourMonitor':
-          'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
+      'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
       'selectPeriod':
-          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+      'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
 
       'strYourTeamPerformanceDialog2':
-          'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
+      'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
       //endregion
-//existing customer
+
+       //existing customer
 
       'servingYourExisting': 'Kundenservice',
-      'servingYourExistingDialog': 'Hi ${Injector.userData?.name},\n\nIch bin Bob und kümmere mich um den Kundenservice.',
+      'servingYourExistingDialog': 'Hi ${Injector.userData
+          ?.name},\n\nIch bin Bob und kümmere mich um den Kundenservice.',
 
       'listOfExisting': 'Bestandskundenliste',
       'listOfExistingDetails': 'Hier siehst du die Liste der Bestandskunden, ihren täglichen Umsatz und wieviel Tage sie noch loyal zu uns sind.\nMit "x" kannst du die Kundenbeziehung beenden. Dann generiert der Kunde keinen Umsatz mehr, wir gewinnen aber einen freien Servicemitarbeiter zurück.',
@@ -751,31 +771,39 @@ class StringRes {
       'listOfPotentialBtn': 'Klick auf "Ansprechen"',
 
       //Business sector screen dialog
-      'customerRelation':'Kundenbeziehungsmanagement (CRM)',
-      'customerRelationDetails':'Hallo ${Injector.userData?.name},\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.',
-      'areaOfComp':'Geschäftsbereiche',
-      'areaOfCompDetails':'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n"Groesse" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
-      'accessToFirst':"Geschäftsbereich abonnieren",
-      'accessToFirstDetails':'Lass uns den ersten Geschäftsbereich abonnieren um Zugang zu den ersten Kunden zu erlangen.\n\nDazu klick bitte auf den Geschäftsbereich "Los geht\'s" und dann auf abonnieren.',
-      'accessToFirstBtn':'Klick auf "Los geht\'s"',
-      'readyForCustomer':'Bereit für den ersten Kunden?',
-      'readyForCustomerDetails':'Auf zur Liste der Neukunden.\n\nDazu bitte entweder auf die Vertriebskapazitätenanzeige klicken, im Menü den Punkt "NeuKunden" klicken oder im Hauptbildschirm den Laptop anklicken.',
-      'readyForCustomerBtn':'Klick auf Vertriebskapazitäten',
+      'customerRelation': 'Kundenbeziehungsmanagement (CRM)',
+      'customerRelationDetails': 'Hallo ${Injector.userData
+          ?.name},\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.',
+      'areaOfComp': 'Geschäftsbereiche',
+      'areaOfCompDetails': 'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n"Groesse" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+      'accessToFirst': "Geschäftsbereich abonnieren",
+      'accessToFirstDetails': 'Lass uns den ersten Geschäftsbereich abonnieren um Zugang zu den ersten Kunden zu erlangen.\n\nDazu klick bitte auf den Geschäftsbereich "Los geht\'s" und dann auf abonnieren.',
+      'accessToFirstBtn': 'Klick auf "Los geht\'s"',
+      'readyForCustomer': 'Bereit für den ersten Kunden?',
+      'readyForCustomerDetails': 'Auf zur Liste der Neukunden.\n\nDazu bitte entweder auf die Vertriebskapazitätenanzeige klicken, im Menü den Punkt "NeuKunden" klicken oder im Hauptbildschirm den Laptop anklicken.',
+      'readyForCustomerBtn': 'Klick auf Vertriebskapazitäten',
 
-      'customersRelationShip':"Kundenbeziehungsmanagement (CRM)",
+      'customersRelationShip': "Kundenbeziehungsmanagement (CRM)",
+      'customersRelationShip': "Kundenbeziehungsmanagement (CRM)",
+
+
+      'customersRelationShipContent':
+      "Hi ${Injector.userData
+          ?.name}\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
+      'areaOfCompetency': "Geschäftsbereiche",
+      'areaOfCompetenceContent':
+      "Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n\"Groesse\" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.",
+
+      'dashboardProfile': 'Change Profile\n name, Language',
+      'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
+      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardBalance': 'Answering your question\n increases your cash',
+      'dashboardBusiness': '1.Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer': '1.New Customer\nAnswer Questions',
+      'dashboardExistingCustomer': '1.Existing Customer\nReview Questions',
+  'customizeYourCompany':"Profil bearbeiten",
+      'customizeYourCompanyContent':"Hallo ${Injector.userData?.name}\n\nMein Name ist Mike und ich arbeite in der Verwaltung.\nBist du bereit die Geschäftsführung deines eigenen kleinen Unternehmens zu übernehmen?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
       //endregion
-
-      'customersRelationShipContent':"Hi ${Injector.userData?.name}\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
-      'areaOfCompetency':"",
-
-
-      'dashboardProfile':'Change Profile\n name, Language',
-      'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices':'services-o-meter"\navailable Services Reps',
-      'dashboardBalance':'Answering your question\n increases your cash',
-      'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
-      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions'
     },
     'zh': {
       //region chinese
@@ -946,21 +974,23 @@ class StringRes {
           "下面的数字是您\n将收到的奖金。",
       'challengesDialogTitle1': "您是自己的主宰",
       'challengesDialogContent1':
-          "亲爱的${Injector.userData?.name},\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
+      "亲爱的${Injector.userData
+          ?.name},\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
       'strChallanges': "挑战",
       'strChallangesDialogContent':
-          "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
+      "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
       'strMarketingCommunications': "营销与传播",
       'strMarketingCommunicationsDialog':
-          "${Injector.userData?.name},您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
+      "${Injector.userData
+          ?.name},您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
       'strRankingDialogContent': "在左侧选择排名标准（比如现金），并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
           "您"
           "滚动到您的位置和挑战以及添加朋友。",
       'strYourTeamPerformance': "您的团队的表现",
       'strYourTeamPerformanceDialog':
-          "您好，我是尼基，我又来了。\n这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
+      "您好，我是尼基，我又来了。\n这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
       'strTeamDialog':
-          "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
+      "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
 
       'plPerson': '您可以依靠的人',
@@ -970,12 +1000,13 @@ class StringRes {
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
 
       'strYourTeamPerformanceDialog2':
-          '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+      '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
 
       //endregion
-//existing customer
+    //existing customer
       'servingYourExisting': '服务现有客户',
-      'servingYourExistingDialog': '${Injector.userData?.name}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
+      'servingYourExistingDialog': '${Injector.userData
+          ?.name}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
 
       'listOfExisting': '现有客户名单',
       'listOfExistingDetails': '在这里，您可以看到您目前正在联络的所有客户和合同。他们每天产生多少现金\n以及他们在多少天内会对您忠诚。\n如果您想结束合同，您可以点击"X"。\n这个客户将不再产生现金，但您会收回1位服务代表。',
@@ -1006,34 +1037,41 @@ class StringRes {
       'listOfPotentialBtn': '点击"立即联络"',
 
       //Business sector screen dialog
-      'customerRelation':'客户关系管理',
-      'customerRelationDetails':'${Injector.userData?.name}您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！',
-      'areaOfComp':'能力领域',
-      'areaOfCompDetails':'每个业务部门将测试特定的知识来赢得客户。"大小"是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。',
-      'accessToFirst':'访问您的第一个客户',
-      'accessToFirstDetails':'您可以加入第一个商业部门从而访问您的第一个客户。\n点击业务板块的"开始"，然后点击"加入"。',
-      'accessToFirstBtn':'点击"开始”',
-      'readyForCustomer':'准备好接触您的第一个客户了吗？',
-      'readyForCustomerDetails':'让我们前往笔记本电脑中您可以联络的新客户列表页面。\n\n您可以使用导航菜单“>”，点击您的销售代表指示图，\n或者点击后退然后选择笔记本电脑。',
-      'readyForCustomerBtn':'点击您的销售代表指示图',
-
+      'customerRelation': '客户关系管理',
+      'customerRelationDetails': '${Injector.userData
+          ?.name}您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！',
+      'areaOfComp': '能力领域',
+      'areaOfCompDetails': '每个业务部门将测试特定的知识来赢得客户。"大小"是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。',
+      'accessToFirst': '访问您的第一个客户',
+      'accessToFirstDetails': '您可以加入第一个商业部门从而访问您的第一个客户。\n点击业务板块的"开始"，然后点击"加入"。',
+      'accessToFirstBtn': '点击"开始”',
+      'readyForCustomer': '准备好接触您的第一个客户了吗？',
+      'readyForCustomerDetails': '让我们前往笔记本电脑中您可以联络的新客户列表页面。\n\n您可以使用导航菜单“>”，点击您的销售代表指示图，\n或者点击后退然后选择笔记本电脑。',
+      'readyForCustomerBtn': '点击您的销售代表指示图',
 
 
       // dashboard intro popup
 
-      'dashboardProfile':'Change Profile\n name, Language',
-      'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices':'services-o-meter"\navailable Services Reps',
-      'dashboardBalance':'Answering your question\n increases your cash',
-      'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
-      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions',
+      'dashboardProfile': 'Change Profile\n name, Language',
+      'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
+      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardBalance': 'Answering your question\n increases your cash',
+      'dashboardBusiness': '1.Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer': '1.New Customer\nAnswer Questions',
+      'dashboardExistingCustomer': '1.Existing Customer\nReview Questions',
 
-      'customersRelationShip':"客户关系管理",
+      'customersRelationShip': "客户关系管理",
       //endregion
 
-      'customersRelationShipContent':"${Injector.userData?.name}您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
-      'areaOfCompetency':"",
+      'customersRelationShipContent':
+      "${Injector.userData
+          ?.name}您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
+      'areaOfCompetency': "能力领域",
+      'areaOfCompetenceContent': "每个业务部门将测试特定的知识来赢得客户。"
+          "大小"
+          "是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。",
+      'customizeYourCompany':"自定义您的公司",
+      'customizeYourCompanyContent':"亲爱的${Injector.userData?.name}\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。\n",
     }
   };
 
@@ -1065,42 +1103,47 @@ class StringRes {
       //introDialog
       'gotIt': "Got it",
       'rewardsDialogContent':
-          "Check out the reward categories and click on a trophy to find out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+      "Check out the reward categories and click on a trophy to find out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
       'challengesDialogTitle1': "Challenges",
       'challengesDialogContent1':
-          "Here you will learn how to challenge other colleagues",
+      "Here you will learn how to challenge other colleagues",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
-          "Search or select a Colleague you would like to challenge.\nSelect one of his Learning Modules you would like to challenge\nhim and select the reward (% of current Knowledge Points (KP)) the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected module correctly in order to win the challenge.",
+      "Search or select a Colleague you would like to challenge.\nSelect one of his Learning Modules you would like to challenge\nhim and select the reward (% of current Knowledge Points (KP)) the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected module correctly in order to win the challenge.",
       'strMarketingCommunications': "Ranking",
       'strMarketingCommunicationsDialog':
-          "In this section you will learn everything you need to know about the ranking",
+      "In this section you will learn everything you need to know about the ranking",
       'strRankingDialogContent':
-          "Select on the left side the ranking criteria (e.g. Knowledge Points (KP)) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
+      "Select on the left side the ranking criteria (e.g. Knowledge Points (KP)) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
       'strYourTeamPerformance': "Your Team's Performance",
       'strYourTeamPerformanceDialog':
-          "This section is exclusively for team leaders.\nHere you can see the performance of your reports.",
+      "This section is exclusively for team leaders.\nHere you can see the performance of your reports.",
       'strTeamDialog':
-          "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
+      "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
 
 
       'plPerson': 'Performance',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
       'plMyName':
-          'In this section you will learn everything you need to know about your performance analysis',
+      'In this section you will learn everything you need to know about your performance analysis',
       'hereYourMonitor':
-          'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
+      'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
       'selectPeriod':
-          'You can also select the period you want to look at and compare the current period with the previous period.',
+      'You can also select the period you want to look at and compare the current period with the previous period.',
 
       'strYourTeamPerformanceDialog2':
-          'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
+      'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
 
-      'customersRelationShip':"Learning Modules introduction",
+      'customersRelationShip': "Learning Modules introduction",
       //endregion
 
-      'customersRelationShipContent':"Here you can search for Learning Modules,\nsubscribe and unsubscribe to them and also\ndecide if you want to download the content for\nfuture offline usage.",
-      'areaOfCompetency':"",
+      'customersRelationShipContent':
+      "Here you can search for Learning Modules,\nsubscribe and unsubscribe to them and also\ndecide if you want to download the content for\nfuture offline usage.",
+      'areaOfCompetency': "Learning Modules introduction",
+      'areaOfCompetenceContent':
+      "Each Learning Module will test specific areas of knowledge. \"Size\"\nindicated the number of Questions in each Module. You can click on a Learning Module to read a description and decide if you want to subscribe to them.\nSome Learning Modules are already assigned\nto you by your company and cannot be unsubscribed.",
+      'customersRelationShipContent': "Here you can search for Learning Modules,\nsubscribe and unsubscribe to them and also\ndecide if you want to download the content for\nfuture offline usage.",
+      'areaOfCompetency': "",
       //endregion
 
       //existing customer
@@ -1136,16 +1179,19 @@ class StringRes {
       'listOfPotentialBtn': 'Click on “Answer Now”',
 
       //Business sector screen dialog
-      'customerRelation':'Learning Modules introduction',
-      'customerRelationDetails':'Here you can search for Learning Modules, subscribe and unsubscribe to them and also decide if you want to download the content for future offline usage.',
-      'areaOfComp':'Learning Modules introduction',
-      'areaOfCompDetails':'Each Learning Module will test specific areas of knowledge. "Size" indicated the number of Questions in each Module. You can click on a Learning Module to read a description and decide if you want to subscribe to them. Some Learning Modules are already assigned to you by your company and cannot be unsubscribed.',
-      'accessToFirst':'Subscribe to the first Module',
-      'accessToFirstDetails':'Why don\'t you subscribe to the first business sector to\ngain access to your first questions.\n\nClick on the Learning Module “Getting Started” and then on “Subscribe”.',
-      'accessToFirstBtn':'Click on “Getting Started”',
-      'readyForCustomer':'Ready for your first Questions',
-      'readyForCustomerDetails':'Let\'s head over to the Open Learnings which contains a list of new\nquestions you can answer.\n\nYou can click on your Study Point (SP) Bar, use the navigation\nmenu “>”, or click the back button and select Open Learnings.',
-      'readyForCustomerBtn':'Click on the Study Point (SP) Bar',
+      'customerRelation': 'Learning Modules introduction',
+      'customerRelationDetails': 'Here you can search for Learning Modules, subscribe and unsubscribe to them and also decide if you want to download the content for future offline usage.',
+      'areaOfComp': 'Learning Modules introduction',
+      'areaOfCompDetails': 'Each Learning Module will test specific areas of knowledge. "Size" indicated the number of Questions in each Module. You can click on a Learning Module to read a description and decide if you want to subscribe to them. Some Learning Modules are already assigned to you by your company and cannot be unsubscribed.',
+      'accessToFirst': 'Subscribe to the first Module',
+      'accessToFirstDetails': 'Why don\'t you subscribe to the first business sector to\ngain access to your first questions.\n\nClick on the Learning Module “Getting Started” and then on “Subscribe”.',
+      'accessToFirstBtn': 'Click on “Getting Started”',
+      'readyForCustomer': 'Ready for your first Questions',
+      'readyForCustomerDetails': 'Let\'s head over to the Open Learnings which contains a list of new\nquestions you can answer.\n\nYou can click on your Study Point (SP) Bar, use the navigation\nmenu “>”, or click the back button and select Open Learnings.',
+      'readyForCustomerBtn': 'Click on the Study Point (SP) Bar',
+
+      'customizeYourCompany':"Customize your profile",
+      'customizeYourCompanyContent':"Dear ${Injector.userData?.name}\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
     },
     'de': {
@@ -1207,7 +1253,7 @@ class StringRes {
       'engageNow': 'Beantworten',
       'endRel': 'Entfernen',
       'alertReleaseResources':
-          'Dieser Frage wird entfert. Sie wird keinen Punkte mehr generieren und erst nach der Wiederholungsperiode wieder verfügbar sein.',
+      'Dieser Frage wird entfert. Sie wird keinen Punkte mehr generieren und erst nach der Wiederholungsperiode wieder verfügbar sein.',
       'searchForKeywords': 'Suche',
       'somethingWrong': 'Da ist was schief gegangen',
       'friend': 'Freund',
@@ -1225,7 +1271,7 @@ class StringRes {
       'downloading': 'Daten werden geladen ...',
       'thisModuleWillOccupie': 'Dieses Modul benötigt',
       'alertNotAllowed':
-          'Zugeordnete Lernbereiche können nicht abgemeldet werden',
+      'Zugeordnete Lernbereiche können nicht abgemeldet werden',
       'engagement': 'Situation',
       'debrief': 'Nachbesprechung',
       'category': 'Kategorie',
@@ -1281,43 +1327,43 @@ class StringRes {
       //introDialog
       'gotIt': "Verstanden",
       'rewardsDialogContent':
-          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen sind die Wissenspunkte (WP) die du erhältst, wenn du diese Auszeichnung erreichst.",
+      "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen sind die Wissenspunkte (WP) die du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Herausforderungen",
       'challengesDialogContent1':
-          "Hier lernst du wie du einen Kollegen zu einem Wissensduell heraus forderst.",
+      "Hier lernst du wie du einen Kollegen zu einem Wissensduell heraus forderst.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
-          "Suche und wähle Kollegen aus, die du herausfordern möchtest.\nwähle den Lernbereich aus, in dem er herausgefordert werden soll und den Prozentsatz von den aktuellen Wissenspunkte (WP), den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 Fragen aus diesem Lernmodul richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
+      "Suche und wähle Kollegen aus, die du herausfordern möchtest.\nwähle den Lernbereich aus, in dem er herausgefordert werden soll und den Prozentsatz von den aktuellen Wissenspunkte (WP), den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 Fragen aus diesem Lernmodul richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
       'strMarketingCommunications': "Rangliste",
       'strMarketingCommunicationsDialog':
-          "In diesem Bereich lernst du alles über die Rangliste",
+      "In diesem Bereich lernst du alles über die Rangliste",
       'strRankingDialogContent':
-          "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
-              "Du"
-              " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Kollegen herausfordern.",
+      "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
+          "Du"
+          " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Kollegen herausfordern.",
       'strYourTeamPerformance': "Teamperformance",
       'strYourTeamPerformanceDialog':
-          "Dieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
+      "Dieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
       'strTeamDialog':
-          "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und seine Wissenspunkte auf 30.000 zurücksetzen.",
+      "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und seine Wissenspunkte auf 30.000 zurücksetzen.",
 
       'plPerson': 'Entwicklung',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
       'plMyName':
-          'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
+      'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
       'hereYourMonitor':
-          'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
+      'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
       'selectPeriod':
-          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+      'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
       'strYourTeamPerformanceDialog2':
-          'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
+      'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
       //endregion
       //existing customer
       'servingYourExisting': 'Liste der Bestandsfragen',
-      'servingYourExistingDialog':'In diesem Teil der Einführung lernst du alles Wissenswerte über die Bestandsfragen',
+      'servingYourExistingDialog': 'In diesem Teil der Einführung lernst du alles Wissenswerte über die Bestandsfragen',
 
-  'listOfExisting': 'Liste der Bestandsfragen',
-  'listOfExistingDetails': 'Hier siehst du die Liste der Bestandsfragen, die täglichen Wissenspunkte und wieviel Tage sie noch in der Liste bleiben.\nMit "x" kannst du die Frage aus dieser Liste löschen. Dann generiert sie keine Wissenspunkte mehr, du hast aber eine Bestandsfragenkapazität mehr.',
+      'listOfExisting': 'Liste der Bestandsfragen',
+      'listOfExistingDetails': 'Hier siehst du die Liste der Bestandsfragen, die täglichen Wissenspunkte und wieviel Tage sie noch in der Liste bleiben.\nMit "x" kannst du die Frage aus dieser Liste löschen. Dann generiert sie keine Wissenspunkte mehr, du hast aber eine Bestandsfragenkapazität mehr.',
 
       'readyForBusiness': 'Und los geht\'s ...',
       'readyForBusinessDeatils': 'Hier endet die Einführung.\nDu kannst weitere Lernmodule abonnieren und Fragen beantworten.\nOder du entdeckst die anderen Bereiche in denen du z.B. deine Auszeichnungen sehen, andere Kollegen herausfordern , deine Finanzen analysieren und dein Platz in der Rangliste einsehen kannst.',
@@ -1357,9 +1403,27 @@ class StringRes {
       'readyForCustomerBtn':'Klick auf die "Lernkapazitätenanzeige"',
       'customersRelationShip':"Einführung in Lernmodule",
       //endregion
+      'customerRelation': 'Einführung in Lernmodule',
+      'customerRelationDetails': 'Hier kannst du nach Lernmodulen suchen, diese abonnieren und auch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.',
+      'areaOfComp': 'Einführung in Lernmodule',
+      'areaOfCompDetails': 'Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten.\n"Grösse" zeigt an, wieviele Fragen es in einem Lernmodul gibt.\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht.\nDu kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+      'accessToFirst': 'Lernmodul abonnieren',
+      'accessToFirstDetails': 'Lass uns ein erstes Lernmodul abonnieren um Zugang zu den ersten Fragen zu erlangen.\n\nDazu klick bitte auf das Lernmodul "Los geht\'s" und dann auf abonnieren.',
+      'accessToFirstBtn': 'Klick auf "Los geht\'s"',
+      'readyForCustomer': 'Bereit für die erste Frage?',
+      'readyForCustomerDetails': 'Auf zur Liste der Fragen.\n\nDazu bitte entweder auf die Lernkapazitätenanzeige klicken, im Menü den Punkt "Fragen" anklicken oder im Hauptbildschirm die Kachel "Fragen" anklicken.',
+      'readyForCustomerBtn': 'Klick auf die "Lernkapazitätenanzeige"',
 
-      'customersRelationShipContent':"Hier kannst du nach Lernmodulen suchen, diese abonnieren und auch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.",
-      'areaOfCompetency':"",
+
+      'customersRelationShip': "Einführung in Lernmodule",
+
+      'customersRelationShipContent':
+      "Hier kannst du nach Lernmodulen suchen, diese abonnieren und auch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.",
+      'areaOfCompetency': "Einführung in Lernmodule",
+      'areaOfCompetenceContent':
+      "Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten.\"Grösse\" zeigt an, wieviele Fragen es in einem Lernmodul gibt\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht.\nDu kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.",
+      'customizeYourCompany':"Profil bearbeiten",
+      'customizeYourCompanyContent':"Hallo ${Injector.userData?.name}\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
     },
     'zh': {
       //region chines
@@ -1492,22 +1556,22 @@ class StringRes {
       //introDialog
       'gotIt': "了解",
       'rewardsDialogContent':
-          "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您\n将收到的奖金。",
+      "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您\n将收到的奖金。",
       'challengesDialogTitle1': "挑战",
       'challengesDialogContent1': "在这里，您将学习如何挑战其他同事",
       'strChallanges': "挑战",
       'strChallangesDialogContent':
-          "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定模块的3个问题才能赢得挑战。",
+      "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定模块的3个问题才能赢得挑战。",
       'strMarketingCommunications': "排名",
       'strMarketingCommunicationsDialog': "在这一部分，您将了解有关排名的所有信息",
       'strRankingDialogContent':
-          "在左侧选择排名标准 (比如知识点数 (KP))，并在顶部 \n选择您想对比的分组以及时间范围。\n您也可以点击"
-              "您"
-              "滚动到您的位置和挑战以及添加朋友。",
+      "在左侧选择排名标准 (比如知识点数 (KP))，并在顶部 \n选择您想对比的分组以及时间范围。\n您也可以点击"
+          "您"
+          "滚动到您的位置和挑战以及添加朋友。",
       'strYourTeamPerformance': "您的团队的表现",
       'strYourTeamPerformanceDialog': "这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
       'strTeamDialog':
-          "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现，并将他的知识点 (KP) 重置为30.000。",
+      "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现，并将他的知识点 (KP) 重置为30.000。",
 
       'plPerson': '表现',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
@@ -1515,11 +1579,11 @@ class StringRes {
       'hereYourMonitor': '在这里，您可以监控扣除和增加知识点数 (KP)。',
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
       'strYourTeamPerformanceDialog2':
-          '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+      '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
       //endregion
       //existing customer
       'servingYourExisting': '已完成的学习列表',
-      'servingYourExistingDialog':'在本教程的这一部分，您将学习有关您已完成的学习的所有相关信息',
+      'servingYourExistingDialog': '在本教程的这一部分，您将学习有关您已完成的学习的所有相关信息',
       'listOfExisting': '已完成的学习列表',
       'listOfExistingDetails': '在这里，您可以看到您目前已经记住的所有问题。您每天从这些问题那里获得多少知识点 (KP) 以及这些问题会在列表中存在多少天。\n如果您想删除一个问题，您可以点击"X"。\n然后，这个问题将不会为您生成更多的知识点数，但您将重新获得1个可用记忆点数 (MP)。',
       'readyForBusiness': '准备开始',
@@ -1548,25 +1612,28 @@ class StringRes {
       'listOfPotentialBtn': '点击"立即回答"',
 
       //Business sector screen dialog
-      'customerRelation':'学习模块介绍',
-      'customerRelationDetails':'在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。',
-      'areaOfComp':'学习模块介绍',
-      'areaOfCompDetails':'每个学习模块将测试特定的知识领域。"大小"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。',
-      'accessToFirst':'加入第一个模块',
-      'accessToFirstDetails':'您可以加入第一个商业部门从而\n访问您的第一个问题。\n\n点击学习模块"开始"，然后点击"加入"。',
-      'accessToFirstBtn':'点击"开始”',
-      'readyForCustomer':'准备好您的第一个问题',
-      'readyForCustomerDetails':'让我们前往开放学习板块，其中包含一个\n您可以回答的新问题列表。\n\n您可以点击您的学习点数 (SP) 条，使用导航\n菜单“>”，或者单击后退按钮，然后选择“开放学习”。',
-      'readyForCustomerBtn':'点击学习点数 (SP) 条',
+      'customerRelation': '学习模块介绍',
+      'customerRelationDetails': '在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。',
+      'areaOfComp': '学习模块介绍',
+      'areaOfCompDetails': '每个学习模块将测试特定的知识领域。"大小"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。',
+      'accessToFirst': '加入第一个模块',
+      'accessToFirstDetails': '您可以加入第一个商业部门从而\n访问您的第一个问题。\n\n点击学习模块"开始"，然后点击"加入"。',
+      'accessToFirstBtn': '点击"开始”',
+      'readyForCustomer': '准备好您的第一个问题',
+      'readyForCustomerDetails': '让我们前往开放学习板块，其中包含一个\n您可以回答的新问题列表。\n\n您可以点击您的学习点数 (SP) 条，使用导航\n菜单“>”，或者单击后退按钮，然后选择“开放学习”。',
+      'readyForCustomerBtn': '点击学习点数 (SP) 条',
 
 
-
-
-      'customersRelationShip':"学习模块介绍",
+      'customersRelationShip': "学习模块介绍",
       //endregion
 
-      'customersRelationShipContent':"在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。",
-      'areaOfCompetency':"",
+      'customersRelationShipContent':
+      "在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。",
+      'areaOfCompetency': "学习模块介绍",
+      'areaOfCompetenceContent':
+      "每个学习模块将测试特定的知识领域。\"大小\"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。",
+      'customizeYourCompany':"自定义您的个人资料",
+      'customizeYourCompanyContent':"亲爱的${Injector.userData?.name}，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。 ",
     }
   };
 }
