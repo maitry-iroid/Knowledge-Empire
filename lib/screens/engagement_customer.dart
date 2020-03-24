@@ -245,7 +245,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
 
     await Injector.prefs
-        .setString(PrefKeys.answerData, json.encode(rqFinal.toJson()));
+        .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
 
     if (questionData.isAnsweredCorrect) {
       Injector.customerValueData.totalBalance =

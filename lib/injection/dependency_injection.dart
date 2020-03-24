@@ -117,17 +117,19 @@ class Injector {
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
     await Injector.prefs.setString(
-        PrefKeys.customerValueData, json.encode(_customerValueData.toJson()));
+        PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
   }
 
   static setIntroData(IntroData _introData) async {
-    await Injector.prefs
-        .setString(PrefKeys.introData, json.encode(_introData.toJson()));
+    if (_introData!=null) {
+      await Injector.prefs
+              .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
 
 //    updateIntroData();
-    introData = _introData;
+      introData = _introData;
+    }
   }
 
   static isManager() {

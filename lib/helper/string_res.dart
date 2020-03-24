@@ -409,9 +409,9 @@ class StringRes {
       'dashboardSales':'"Sales-o-meter"\navailable Sales Reps',
       'dashboardServices':'services-o-meter"\navailable Services Reps',
       'dashboardBalance':'Answering your question\n increases your cash',
-      'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
-      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions'
+      'dashboardBusiness':'1. Business Segment\nSelect Learning Module',
+      'dashboardNewCustomer':'2. New Customer\nAnswer Questions',
+      'dashboardExistingCustomer':'3. Existing Customer\nReview Questions'
 
     },
     'de': {

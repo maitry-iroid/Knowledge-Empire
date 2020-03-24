@@ -30,6 +30,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
   int duration = 4;
   bool isCoinViseble = false;
 
+  bool makeIntroVisible = true;
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,13 @@ class DashboardGamePageState extends State<DashboardGamePage>
     }
 
     getDashboardConfig();
+  }
+
+  @override
+  void dispose() {
+    print("dispose=======");
+
+    super.dispose();
   }
 
   @override
@@ -54,7 +63,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             children: <Widget>[
               CommonView.showDashboardView(context, dashboardData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
-              showIntroView()
+              makeIntroVisible?showIntroView():Container()
             ],
           ),
         ),
@@ -69,7 +78,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
         rq.userId = Injector.userId;
         rq.mode = Injector.mode ?? Const.businessMode;
 
-        WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqUnreadBubbleCount, rq.toJson()).then((data) {
           if (data != null) {
             data.forEach((v) {
               dashboardData.add(GetDashboardData.fromJson(v));
@@ -126,7 +135,12 @@ class DashboardGamePageState extends State<DashboardGamePage>
           left: Utils.getDeviceWidth(context) / 2.5,
           bottom: 70,
           child: showBottomItem(Const.typeExistingCustomer),
-        )
+        ),
+       Positioned(
+         right: 0,
+         bottom: 0,
+         child: showGotIt(),
+       )
       ],
     );
   }
@@ -162,8 +176,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
                   fit: BoxFit.contain),
             ),
             child: Text(
-              Utils.getText(context, getText(type)),
-              style: TextStyle(color: ColorRes.white),
+              Utils.getText(context, getText(type)),textAlign: TextAlign.center,
+              style: TextStyle(color: ColorRes.white,fontSize: 17),
             ),
           ),
         ),
@@ -171,13 +185,13 @@ class DashboardGamePageState extends State<DashboardGamePage>
     );
   }
 
-  showBottomItem(String typeProfile) {
+  showBottomItem(String type) {
     return Stack(
       fit: StackFit.loose,
       children: <Widget>[
         Positioned(
           left: 50,
-          bottom: 5,
+          bottom: 0,
           child: RotatedBox(
             quarterTurns: 2,
             child: Image(
@@ -189,9 +203,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
         Align(
           alignment: Alignment.center,
           child: Container(
-            height: 100,
-            width: 150,
-            margin: EdgeInsets.only(bottom: 40),
+            height: 110,
+            width: 160,
+            margin: EdgeInsets.only(bottom: 30),
             padding: EdgeInsets.all(5),
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -200,8 +214,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
                   fit: BoxFit.contain),
             ),
             child: Text(
-              Utils.getText(context, StringRes.dashboardProfile),
-              style: TextStyle(color: ColorRes.white),
+              Utils.getText(context, getText(type),),textAlign: TextAlign.center,
+              style: TextStyle(color: ColorRes.white,fontSize: 17,),
             ),
           ),
         ),
@@ -226,5 +240,31 @@ class DashboardGamePageState extends State<DashboardGamePage>
       return StringRes.dashboardBalance;
     }
     return "";
+  }
+
+  showGotIt() {
+    return  InkResponse(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 15),
+        alignment: Alignment.center,
+        child: Text(
+          Utils.getText(context, StringRes.gotIt),
+          style: TextStyle(
+            color: ColorRes.white,
+            fontSize: 20,
+          ),
+        ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                    Utils.getAssetsImg('bg_log_out')))),
+      ),
+      onTap:(){
+        setState(() {
+          makeIntroVisible = false;
+        });
+      },
+    );
   }
 }

@@ -46,7 +46,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
         rq.userId = Injector.userData.userId;
         rq.mode = Injector.mode ?? Injector.isBusinessMode;
 
-        WebApi().callAPI(WebApi.rqDashboard, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqUnreadBubbleCount, rq.toJson()).then((data) {
           if (data != null) {
             data.forEach((v) {
               arrDashboardData.add(GetDashboardData.fromJson(v));

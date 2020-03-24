@@ -443,7 +443,7 @@ static  void navigateToIntro(BuildContext context) {
     questionsResponse.data = arrQuestions;
 
     await Injector.prefs.setString(
-        PrefKeys.questionData, json.encode(questionsResponse.toJson()));
+        PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
   }
 
   static List<QuestionData> getQuestionsLocally(int type) {
