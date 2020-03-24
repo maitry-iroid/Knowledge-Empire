@@ -429,6 +429,7 @@ class StringRes {
       //main options
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
+
       'newCustomers': "Neue Kunden",
       'existingCustomers': "Bestandskunden",
       'organizations': "Organisation",
