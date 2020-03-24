@@ -172,6 +172,7 @@ class StringRes {
 
   static var challengesDialogTitle1 = "challengesDialogTitle1";
   static var challengesDialogContent1 = "challengesDialogContent1";
+
   static var strChallanges = "strChallanges";
   static var strChallangesDialogContent = "strChallangesDialogContent";
   static var strMarketingCommunications = "strMarketingCommunications";
