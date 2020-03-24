@@ -447,14 +447,14 @@ class StringRes {
       'challengesDialogTitle1': "Your Will is at your command",
       'challengesDialogContent1':
       "Dear ${Injector.userData
-          ?.name},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
+          ?.name??""},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
       "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected sector correctly in order to win the challenge.",
       'strMarketingCommunications': "Marketing & Communications",
       'strMarketingCommunicationsDialog':
       "Hi ${Injector.userData
-          ?.name},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
+          ?.name??""},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
       'strRankingDialogContent':
       "Select on the left side the ranking criteria (e.g. cash) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
       'strYourTeamPerformance': "Your Team's Performance",
@@ -481,7 +481,7 @@ class StringRes {
 
       'servingYourExisting': 'Serving your existing customers',
       'servingYourExistingDialog': 'Hi ${Injector.userData
-          ?.name},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
+          ?.name??""},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
 
       'listOfExisting': 'List of existing Customers',
       'listOfExistingDetails':
@@ -543,7 +543,7 @@ class StringRes {
 
       'customersRelationShipContent':
       "Hi ${Injector.userData
-          ?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+          ?.name??""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
       'areaOfCompetency': "Area of competency",
       'areaOfCompetenceContent':
       "Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
@@ -760,14 +760,14 @@ class StringRes {
       'challengesDialogTitle1': "Dein Will ist mein Befehl",
       'challengesDialogContent1':
       "${Injector.userData
-          ?.name},\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
+          ?.name??""},\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
       "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.\nwähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom aktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
       'strMarketingCommunications': "Marketing",
       'strMarketingCommunicationsDialog':
       "Hallo ${Injector.userData
-          ?.name}, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
+          ?.name??""}, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
       'strRankingDialogContent':
       "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
           "Du"
@@ -1053,14 +1053,14 @@ class StringRes {
       'challengesDialogTitle1': "您是自己的主宰",
       'challengesDialogContent1':
       "亲爱的${Injector.userData
-          ?.name},\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
+          ?.name??""},\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
       'strChallanges': "挑战",
       'strChallangesDialogContent':
       "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
       'strMarketingCommunications': "营销与传播",
       'strMarketingCommunicationsDialog':
       "${Injector.userData
-          ?.name},您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
+          ?.name??""},您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
       'strRankingDialogContent': "在左侧选择排名标准（比如现金），并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
           "您"
           "滚动到您的位置和挑战以及添加朋友。",
@@ -1147,7 +1147,7 @@ class StringRes {
 
       'customersRelationShipContent':
       "${Injector.userData
-          ?.name}您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
+          ?.name??""}您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
       'areaOfCompetency': "能力领域",
       'areaOfCompetenceContent': "每个业务部门将测试特定的知识来赢得客户。"
           "大小"
