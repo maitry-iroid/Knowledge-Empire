@@ -765,8 +765,7 @@ class CommonView {
         })*/
   }
 
-  pushNotificationAlert2(BuildContext context, String bonus, String level,
-      String type, String achievementType) {
+  pushNotificationAlert2(BuildContext context, String bonus, String level, String type, String achievementType) {
     showDialog(
         context: context,
         builder: (BuildContext buildContext) {
@@ -811,7 +810,7 @@ class CommonView {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "5 Business Segments subscribed to” then we say “Bonus: ${1500}",
+                        "5 Business Segments subscribed to” then we say “Bonus: $bonus",
                         style: TextStyle(fontSize: 18, color: ColorRes.white),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
