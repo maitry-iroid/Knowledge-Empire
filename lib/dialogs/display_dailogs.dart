@@ -203,11 +203,10 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            titleText: "Hire HR Employees",
+            titleText: Utils.getText(context, StringRes.hireHrEmp),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Hi ${Injector.userData?.name},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR i will introduce you to the team and how you\ncan hire new employees to strengthen the team.",
+            desTextLine: Utils.getText(context, StringRes.hireHrEmpDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org1 = 1;
@@ -227,11 +226,10 @@ class DisplayDialogs {
             menuView: false,
             imageName: "hr_niki",
             imageWidth: hrNikiImageWidth,
-            titleText: "Hire HR Employees",
-            btnName: StringRes.next,
+            titleText: Utils.getText(context, StringRes.hireHrEmp),
+//            btnName: StringRes.next,
             btnColor: ColorRes.blue,
-            desTextLine:
-                "To hear yout Team's recommendatons on why you should\nhire more employees in thier team, click on them?\n\nLets start with hiring 10 Hr employees by clicking on HR and then\n\"hire 10 employees\".",
+            desTextLine: Utils.getText(context, StringRes.hireHrEmpDetailsSeconds),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org2 = 1;
@@ -254,11 +252,11 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: "Employ-o-Meter",
+            titleText: Utils.getText(context, StringRes.empOMaster),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
-                "Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your fee capacity.\nYou can increase your maximum by hiering more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.",
+            Utils.getText(context, StringRes.empOMasterDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org3 = 1;
@@ -281,11 +279,10 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: "Cost of employees",
+            titleText: Utils.getText(context, StringRes.costOfEmp),
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Here you see your total cash.\n\nHiring employees will incure hiring cost(increasing over time.)\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increse over time",
+            desTextLine: Utils.getText(context, StringRes.costOfEmpDetails),
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org4 = 1;
