@@ -1355,9 +1355,6 @@ class StringRes {
       'readyForCustomer':'Bereit für die erste Frage?',
       'readyForCustomerDetails':'Auf zur Liste der Fragen.\n\nDazu bitte entweder auf die Lernkapazitätenanzeige klicken, im Menü den Punkt "Fragen" anklicken oder im Hauptbildschirm die Kachel "Fragen" anklicken.',
       'readyForCustomerBtn':'Klick auf die "Lernkapazitätenanzeige"',
-
-},
-
       'customersRelationShip':"Einführung in Lernmodule",
       //endregion
 
