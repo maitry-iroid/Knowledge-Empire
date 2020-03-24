@@ -87,7 +87,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (Injector.introData == null || Injector.introData.customerSituation == 0)
         await DisplayDialogs.showYourWillIsAtYourCommand(context);
 
-      await DisplayDialogs.showImpactOnSalesAndService(context);
+//      await DisplayDialogs.showImpactOnSalesAndService(context);
 
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
       isCoinViseble = true;

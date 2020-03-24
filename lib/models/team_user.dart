@@ -61,7 +61,7 @@ class Users {
   String name;
   int points;
   int correct;
-  int lastLog;
+  String lastLog;
 
   Users({this.userId, this.name, this.points, this.correct, this.lastLog});
 

@@ -365,7 +365,7 @@ class StringRes {
       'comingSoon': "Coming Soon..",
       'close': "Close",
       'alert': "Alert",
-      'alertUnFriend': "Are sure want to unfriend this user?",
+      'alertUnFriend': "Are you sure, you want to unfriend this user?",
 
 
 

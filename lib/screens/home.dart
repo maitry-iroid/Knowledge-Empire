@@ -558,8 +558,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initContent() async {
-    BackgroundFetch.start().then((int status) async {
-      print('[BackgroundFetch] start success: $status');
+//    BackgroundFetch.start().then((int status) async {
+//      print('[BackgroundFetch] start success: $status');
       await Injector.getInstance();
 
       localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
@@ -587,8 +587,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             widget.homeData.isChallenge == null ||
             widget.homeData.isChallenge) getPendingChallenges();
       }
-    }).catchError((e) {
-      print('[BackgroundFetch] start FAILURE: $e');
-    });
+//    }).catchError((e) {
+//      print('[BackgroundFetch] start FAILURE: $e');
+//    });
   }
 }

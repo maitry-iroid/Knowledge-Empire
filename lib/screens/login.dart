@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.centerRight,
                   child: Container(
                     width: Utils.getDeviceWidth(context) / 2.3,
-                    height: Utils.getDeviceHeight(context) / 1.7,
+                    height: Utils.getDeviceHeight(context) / 1.5,
                     margin: EdgeInsets.only(
                         right: 20, left: Utils.getDeviceWidth(context) / 5.5),
                     decoration: BoxDecoration(
@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         Utils.getText(context, StringRes.forgotPassword)
                             .toUpperCase(),
-                        style: TextStyle(color: ColorRes.white),
+                        style: TextStyle(color: ColorRes.white,fontSize: 17),
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -175,6 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                         Utils.getText(context, StringRes.selectLanguage) +
                             " - " +
                             tempLanguage,
+                        style: TextStyle(color: ColorRes.white,fontSize: 17),
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -189,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: Utils.getDeviceWidth(context) / 8),
+                        horizontal: Utils.getDeviceWidth(context) / 9),
                     child: InkResponse(
                       child: Container(
                         height: 30,
@@ -204,8 +205,8 @@ class _LoginPageState extends State<LoginPage> {
                               fit: BoxFit.fill),
                         ),
                         child: Text(
-                          Utils.getText(context, StringRes.login).toUpperCase(),
-                          style: TextStyle(color: ColorRes.white, fontSize: 15),
+                          Utils.getText(context, StringRes.login).toUpperCase(),textAlign: TextAlign.center,
+                          style: TextStyle(color: ColorRes.white, fontSize: 16,),
                         ),
                       ),
                       onTap: () {

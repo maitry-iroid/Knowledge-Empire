@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -26,6 +28,8 @@ class HeaderViewState extends State<HeaderView> {
   @override
   void initState() {
     super.initState();
+    if (Injector.headerStreamController == null)
+      Injector.headerStreamController = StreamController.broadcast();
 
     Injector.headerStreamController.stream.listen((data) {
       if (mounted) setState(() {});
@@ -171,6 +175,10 @@ class HeaderViewState extends State<HeaderView> {
           ],
         ),
         onTap: () {
+
+          if(Injector.homeStreamController==null)
+            Injector.homeStreamController = StreamController.broadcast();
+
           if (type == Const.typeEmployee) {
             Injector.homeStreamController?.add("${Const.typeOrg}");
           } else if (type == Const.typeSalesPersons) {

@@ -285,9 +285,9 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
-          Utils.navigateToIntro(context);
-//          Navigator.pushAndRemoveUntil(
-//              context, FadeRouteHome(), ModalRoute.withName("/login"));
+//          Utils.navigateToIntro(context);
+          Navigator.pushAndRemoveUntil(
+              context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {
