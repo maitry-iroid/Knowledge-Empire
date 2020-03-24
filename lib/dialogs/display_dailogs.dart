@@ -148,11 +148,11 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "john",
-            titleText: "Customize your company",
+            titleText: Utils.getText(context, StringRes.customizeYourCompany),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
+            desTextLine: Utils.getText(context, StringRes.customizeYourCompanyContent),
+//            desTextLine: "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
             onTapBtn: () async {
               try {
                 Injector.introData.profile1 = 1;
@@ -175,11 +175,10 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "john",
-            titleText: "Settings",
+            titleText: Utils.getText(context, StringRes.settings),
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
-            desTextLine:
-                "You can switch to a professional mode (no virtual company)\nand turn the sound on and off.\n\nIn case your company has negitive cash you can request\na bail out which will needto be approved by your manager.",
+            desTextLine: "You can switch to a professional mode (no virtual company)\nand turn the sound on and off.\n\nIn case your company has negitive cash you can request\na bail out which will needto be approved by your manager.",
             onTapBtn: () async {
               try {
                 print(Const.introMeetYourTeam);
