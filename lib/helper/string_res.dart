@@ -201,6 +201,11 @@ class StringRes {
   static var dashboardExistingCustomer = "dashboardExistingCustomer";
 
 
+  //business sectoer
+  static var customersRelationShip = "customersRelationShip";
+  static var customersRelationShipContent = "customersRelationShipContent";
+  static var areaOfCompetency = "areaOfCompetency";
+
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
       //region english
@@ -255,7 +260,7 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
-      'selectLanguages':'Select Language',
+      'selectLanguages': 'Select Language',
 
       //organization
       'fireEmp': "Fire 10 employees",
@@ -390,18 +395,23 @@ class StringRes {
       'strTeamDialog':
           "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
 
-
       'plPerson': 'The person you can count on',
       'niceMeetYou': 'Nice to meet you${Injector.userData?.name}',
       'plMyName':
-          '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have more revenue then cost.',
+          '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have\nmore revenue then cost.',
       'hereYourMonitor':
-          'Here you can monitor the cost and the revenue of your company.',
+          'Here you can monitor the cost\nand the revenue of your company.',
       'selectPeriod':
-          'You can also select the period you want to look at and compare the current period with the previous period.',
+          'You can also select the period you want to look\nat and compare the current period with the previous period.',
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
+      'customersRelationShip':"Customer Relationship Management",
+      //endregion
+
+      'customersRelationShipContent':"Hi ${Injector.userData?.name},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+      'areaOfCompetency':"",
+
 
       // dashboard intro popup
 
@@ -576,7 +586,6 @@ class StringRes {
       'no': "Nein",
       'comingSoon': "Demnächst verfügbar..",
       'close': "Schließen",
-      //endregion
 
       //introDialog
       'gotIt': "Verstanden",
@@ -601,7 +610,6 @@ class StringRes {
       'strTeamDialog':
           "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
 
-
       'plPerson': 'Mit mir kannst du rechnen',
       'niceMeetYou': 'Nett dich kennenzulernen ${Injector.userData?.name}',
       'plMyName':
@@ -613,6 +621,11 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
+      'customersRelationShip':"Kundenbeziehungsmanagement (CRM)",
+      //endregion
+
+      'customersRelationShipContent':"Hi ${Injector.userData?.name}\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
+      'areaOfCompetency':"",
 
 
       'dashboardProfile':'Change Profile\n name, Language',
@@ -782,7 +795,6 @@ class StringRes {
       'no': "不是",
       'comingSoon': "即将推出..",
       'close': "关闭",
-      //endregion
 
       //introDialog
       'gotIt': "了解",
@@ -807,7 +819,6 @@ class StringRes {
       'strTeamDialog':
           "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
-
       'plPerson': '您可以依靠的人',
       'niceMeetYou': '${Injector.userData?.name}很高兴见到您',
       'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
@@ -826,7 +837,13 @@ class StringRes {
       'dashboardBalance':'Answering your question\n increases your cash',
       'dashboardBusiness':'1.Business Segment\nSelect Learning Module',
       'dashboardNewCustomer':'1.New Customer\nAnswer Questions',
-      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions'
+      'dashboardExistingCustomer':'1.Existing Customer\nReview Questions',
+
+      'customersRelationShip':"客户关系管理",
+      //endregion
+
+      'customersRelationShipContent':"${Injector.userData?.name}您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
+      'areaOfCompetency':"",
     }
   };
 
@@ -854,7 +871,7 @@ class StringRes {
 
       //challenges
       'competitor': 'Colleagues',
-      //endregion
+
 
       //introDialog
       'gotIt': "Got it",
@@ -877,7 +894,6 @@ class StringRes {
       'strTeamDialog':
           "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
 
-
       'plPerson': 'Performance',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
       'plMyName':
@@ -889,6 +905,12 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
+
+      'customersRelationShip':"Learning Modules introduction",
+      //endregion
+
+      'customersRelationShipContent':"Here you can search for Learning Modules,\nsubscribe and unsubscribe to them and also\ndecide if you want to download the content for\nfuture offline usage.",
+      'areaOfCompetency':"",
     },
     'de': {
       //region German
@@ -1019,7 +1041,6 @@ class StringRes {
       'no': 'Nein',
       'comingSoon': 'Demnächst verfügbar..',
       'close': 'Schließen',
-      //endregion
 
       //introDialog
       'gotIt': "Verstanden",
@@ -1044,7 +1065,6 @@ class StringRes {
       'strTeamDialog':
           "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und seine Wissenspunkte auf 30.000 zurücksetzen.",
 
-
       'plPerson': 'Entwicklung',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
       'plMyName':
@@ -1055,6 +1075,12 @@ class StringRes {
           'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
+
+      'customersRelationShip':"Einführung in Lernmodule",
+      //endregion
+
+      'customersRelationShipContent':"Hier kannst du nach Lernmodulen suchen, diese abonnieren und auch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.",
+      'areaOfCompetency':"",
     },
     'zh': {
       //region chines
@@ -1183,7 +1209,6 @@ class StringRes {
       'no': '即将推出',
       'comingSoon': '关闭',
       'close': '关闭',
-      //endregion
 
       //introDialog
       'gotIt': "了解",
@@ -1205,7 +1230,6 @@ class StringRes {
       'strTeamDialog':
           "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现，并将他的知识点 (KP) 重置为30.000。",
 
-
       'plPerson': '表现',
 //      'niceMeetYou':'${Injector.userData?.name}很高兴见到您',
       'plMyName': '在这一部分，您将了解有关表现分析的所有信息',
@@ -1213,6 +1237,12 @@ class StringRes {
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
       'strYourTeamPerformanceDialog2':
           '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+
+      'customersRelationShip':"学习模块介绍",
+      //endregion
+
+      'customersRelationShipContent':"在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。",
+      'areaOfCompetency':"",
     }
   };
 }
