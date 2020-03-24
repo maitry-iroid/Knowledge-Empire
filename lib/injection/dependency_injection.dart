@@ -126,6 +126,7 @@ class Injector {
     await Injector.prefs
         .setString(PrefKeys.introData, json.encode(_introData.toJson()));
 
+    updateIntroData();
     introData = _introData;
   }
 
@@ -155,6 +156,27 @@ class Injector {
             Injector.setIntroData(introData);
           }
         }).catchError((e) {
+          print("getIntro"+e.toString());
+          Utils.showToast(e.toString());
+        });
+      }
+    });
+  }
+
+  static updateIntroData() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 2;
+        rq.data = Injector.introData;
+
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+          if (data != null) {
+
+          }
+        }).catchError((e) {
+          print("updateIntroData");
           Utils.showToast(e.toString());
         });
       }

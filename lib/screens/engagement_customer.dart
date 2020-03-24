@@ -370,7 +370,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             border: Border.all(color: ColorRes.textLightBlue)),
                       ),
                       Text(
-                        questionData.firstName + " " + questionData.lastName,
+                        questionData.firstName.toString() + " " + questionData.lastName.toString(),
                         style: TextStyle(color: ColorRes.white, fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
