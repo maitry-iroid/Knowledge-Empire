@@ -645,8 +645,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {}
       try {
-//        await Injector.prefs.clear();
-        await removeKeys();
+        await Injector.prefs.clear();
+//        await removeKeys();
         Injector.userData = null;
         Injector.userId = null;
         Injector.customerValueData = null;
@@ -1340,6 +1340,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   removeKeys() {
+
+//    Injector.prefs.clear();
+
     Injector.prefs.remove(PrefKeys.user);
     Injector.prefs.remove(PrefKeys.mode);
     Injector.prefs.remove(PrefKeys.isLoginFirstTime);

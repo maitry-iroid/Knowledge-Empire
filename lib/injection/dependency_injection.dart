@@ -85,9 +85,12 @@ class Injector {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
-      if (prefs.getString(PrefKeys.introData) != null)
-      introData =
-          IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+      if (prefs.getString(PrefKeys.introData) != null) {
+        introData =
+            IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+
+        updateIntroData();
+      }
 
       headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();
@@ -123,11 +126,11 @@ class Injector {
   }
 
   static setIntroData(IntroData _introData) async {
-    if (_introData!=null) {
+    if (_introData != null) {
       await Injector.prefs
-              .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
+          .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
 
-    updateIntroData();
+      updateIntroData();
       introData = _introData;
     }
   }
@@ -136,14 +139,11 @@ class Injector {
     return userData?.isManager == 1;
   }
 
-
-
   static updateIntroDialogType(int introType) async {
     await prefs.setInt(PrefKeys.dialogTypes, introType);
     dialogType = introType;
     print("----------------->" + Injector.dialogType.toString());
   }
-
 
   static getIntroData() {
     Utils.isInternetConnected().then((isConnected) {
@@ -158,7 +158,7 @@ class Injector {
             Injector.setIntroData(introData);
           }
         }).catchError((e) {
-          print("getIntro"+e.toString());
+          print("getIntro" + e.toString());
           Utils.showToast(e.toString());
         });
       }
@@ -174,9 +174,7 @@ class Injector {
         rq.data = Injector.introData;
 
         WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
-          if (data != null) {
-
-          }
+          if (data != null) {}
         }).catchError((e) {
           print("updateIntroData");
           Utils.showToast(e.toString());

@@ -226,10 +226,10 @@ class DisplayDialogs {
             menuView: false,
             imageName: "hr_niki",
             imageWidth: hrNikiImageWidth,
-            titleText: Utils.getText(context, StringRes.hireHrEmp),
+            titleText: Utils.getText(context, StringRes.hireHrEmp)??"",
 //            btnName: StringRes.next,
             btnColor: ColorRes.blue,
-            desTextLine: Utils.getText(context, StringRes.hireHrEmpDetailsSeconds),
+            desTextLine: Utils.getText(context, StringRes.hireHrEmpDetailsSeconds)??"",
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org2 = 1;
@@ -252,11 +252,11 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: Utils.getText(context, StringRes.empOMaster),
+            titleText: Utils.getText(context, StringRes.empOMaster)??"",
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
-            Utils.getText(context, StringRes.empOMasterDetails),
+            Utils.getText(context, StringRes.empOMasterDetails)??"",
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org3 = 1;
@@ -279,10 +279,10 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: Utils.getText(context, StringRes.costOfEmp),
+            titleText: Utils.getText(context, StringRes.costOfEmp)??"",
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
-            desTextLine: Utils.getText(context, StringRes.costOfEmpDetails),
+            desTextLine: Utils.getText(context, StringRes.costOfEmpDetails)??"",
             onTapBtn: () async {
               Navigator.pop(context);
               Injector.introData.org4 = 1;

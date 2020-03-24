@@ -5,6 +5,7 @@ import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 
 class IntroScreenDialog extends StatefulWidget {
   final String titleText, desTextLine, btnName, imageName;
@@ -128,7 +129,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                   borderRadius: BorderRadius.circular(5)),
                               child: Center(
                                 //  child: Text("",
-                                child: Text(widget.btnName,
+                                child: Text(Utils.getText(context, StringRes.next),
                                     style: TextStyle(
                                         fontSize: size.width / 46.5,
                                         color: ColorRes.white)),

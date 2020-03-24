@@ -448,7 +448,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             _selectedDrawerIndex = Utils.getHomePageIndex(Const.typePl);
           });
       } else if (data == "${Const.openPendingChallengeDialog}") {
-        getPendingChallenges();d
+        getPendingChallenges();
       } else if (data == "${Const.typeMoneyAnim}") {
         isCoinViseble = true;
 //        startAnimation();
