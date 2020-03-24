@@ -41,9 +41,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
     }
 
+    if (Injector.introData.dashboard == 0) showIntroDialog();
     getDashboardConfig();
 
-    if (Injector.introData.dashboard == 0) showIntroDialog();
   }
 
   Future showIntroDialog() async {

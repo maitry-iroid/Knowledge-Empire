@@ -552,7 +552,7 @@ class StringRes {
 
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardServices': '"Services-o-meter"\navailable Services Reps',
       'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
@@ -574,7 +574,7 @@ class StringRes {
 
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardServices': 'Services-o-meter"\navailable Services Reps',
       'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
@@ -862,7 +862,7 @@ class StringRes {
 
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardServices': '"Services-o-meter"\navailable Services Reps',
       'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
@@ -1136,7 +1136,7 @@ class StringRes {
 
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': 'services-o-meter"\navailable Services Reps',
+      'dashboardServices': '"services-o-meter"\navailable Services Reps',
       'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
