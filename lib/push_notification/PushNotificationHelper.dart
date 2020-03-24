@@ -149,6 +149,7 @@ class PushNotificationHelper {
       }
 
       if (achievementType != null) {
+
         if (bonus != null)
           Injector.customerValueData.totalBalance = int.parse(bonus);
 
