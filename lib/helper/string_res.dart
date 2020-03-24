@@ -267,6 +267,9 @@ class StringRes {
   static var costOfEmp = "costOfEmp";
   static var costOfEmpDetails = "costOfEmpDetails";
 
+  //setting screen Dialog
+  static var settingDetails = "settingDetails";
+
 
 
 //  static var empOMasterDetails = "empOMasterDetails";
@@ -580,6 +583,9 @@ class StringRes {
       'customizeYourCompany':"Customize your company",
       'customizeYourCompanyContent':"Dear ${Injector.userData?.name??""},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
+      //setting screen Dialog
+      'settingDetails':'You can switch to a professional mode (no virtual company)\nand turn the sound on and off.\n\nIn case your company has negative cash you can request\na bail out which will need to be approved by your manager.',
+
     },
     'de': {
       //region german
@@ -780,7 +786,7 @@ class StringRes {
 
       'strYourTeamPerformanceDialog2':
       'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
-      //endregion
+
 
        //existing customer
 
@@ -870,6 +876,10 @@ class StringRes {
       'empOMasterDetails':'Deine Mitarbeiterkapazitäten sind jetzt 40/50.\n50 ist die gesamte Mitarbeiterkapazität und 40 die noch verfügbare, da du ja schon 10 Mitarbeiter in der Personalabteilung hast.\nDu kannst die Mitarbeiterkapazität weiter erhöhen, indem du neue Personalmitarbeiter einstellst.\nEin klick auf deine Mitarbeiter Kapazitäten bringt dich auch zu diesem Bildschirm.',
       'costOfEmp':'Mitarbeiter Kosten',
       'costOfEmpDetails':'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld (Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag (Gehaelter steigen mit der Zeit).',
+
+      //setting screen Dialog
+      'settingDetails':'Du kannst zur professionellen Ansicht wechseln (kein virtuelles Unternehmen) und den Ton ein und aus schalten.',
+
     },
     'zh': {
       //region chinese
@@ -1065,8 +1075,7 @@ class StringRes {
       'strYourTeamPerformanceDialog2':
       '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
 
-      //endregion
-//existing customer
+      //existing customer
       'servingYourExisting': '服务现有客户',
       'servingYourExistingDialog': '${Injector.userData?.name??""}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
 
@@ -1153,6 +1162,10 @@ class StringRes {
       'empOMasterDetails':'您的雇员指示图显示40/50。\n50是最大可雇用员工的数量，40是当前员工数量。\n您可以通过雇用更多的HR员工来增加最大可雇用员工的数量。\n点击您的雇员指示图也将进入该组织页面。',
       'costOfEmp':'员工成本',
       'costOfEmpDetails':'在这里，您可以看到您的总现金。\n\n招聘员工会增加雇用成本（随着时间的推移增加）。\n费用将从您的现金中扣除。\n每个员工每天会收到工资，每日起薪是200。\n工资水平将随着时间的推移而增加。',
+
+      //setting screen Dialog
+      'settingDetails':'您可以切换到专业模式（没有虚拟公司)，您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金，您的经理会进行审批。',
+
     }
   };
 
@@ -1224,7 +1237,6 @@ class StringRes {
       'customersRelationShipContent': "Here you can search for Learning Modules,\nsubscribe and unsubscribe to them and also\ndecide if you want to download the content for\nfuture offline usage.",
       'areaOfCompetency': "",
 
-      //endregion
 
       //existing customer
       'servingYourExisting': 'List of Completed Learnings',
@@ -1287,6 +1299,12 @@ class StringRes {
       'empOMasterDetails':'Note that your Power-Up (PU) Bar shows 40/50.\n50 is your maximum number of Power-Up Points (PU) and 40 your free capacity.\nYou can increase your maximum by improving the Power-Up (PU) Level.\nA click on your Power-Up (PU) Bar will also bring you to this screen.',
       'costOfEmp':'Cost for improvements',
       'costOfEmpDetails':'Here you see your Knowledge Points (KP).\n\nImproving Power-Ups will cost Knowledge Points (KP). This one time cost will increase with the level.\nEvery Power-Up Point (PU) spend will also incur recurring cost which will start with 200 Knowledge Points (KP) per Power-Up (PU) point and day. This cost will increase over time.',
+
+      //endregion
+
+      //setting screen Dialog
+      'settingDetails': 'You can switch to a game mode (virtual company)\nand turn the sound on and off.\n\nIn case your points become negative, you can request\na new start which will need to be approved by your manager.',
+
     },
     'de': {
       //region German
@@ -1527,6 +1545,9 @@ class StringRes {
       'empOMasterDetails':'Deine Bonuskapazität ist jetzt 40/50.\n50 ist die gesamte Bonuskapazität und 40 die noch verfuegbare, da du ja schon 10 Bonuspunkte für die Verbesserung der Max. Bonuspunkte investiert hast.\nDu kannst die Bonuskapazität weiter erhöhen, indem du weitere Bonuspunkte in die "Max. Bonuspunkte" investierst.\nEin klick auf deine Bonuskapazitaeten bringt dich auch zu diesem Bildschirm.',
       'costOfEmp':'Bonuspunkte Kosten',
       'costOfEmpDetails':'Hier kannst du deine Wissenspunkte (WP) sehen.\n\nBonuspunkte zu investieren kostet Wissenspunkte (Kosten steigen mit der Zeit). Diese Kosten werden von deinen Wissenspunkten (WP) abgezogen.\nJeder Bonuspunkt kostet außerdem 200 Wissenspunkte pro investiertem Bonuspunkt und Tag (Kosten steigen mit der Zeit).',
+
+      //setting screen Dialog
+      'settingDetails':'Du kannst zum wissensspiel wechseln (virtuelles Unternehmen) und den Ton ein und aus schalten.',
     },
     'zh': {
       //region chines
@@ -1757,6 +1778,10 @@ class StringRes {
       'empOMasterDetails':'您的威力升级点数 (PU) 条显示40/50。\n50是您最大的威力升级点数 (PU)，40是您当前可用的点数。\n您可以通过提高威力升级点数 (PU) 级别来增加您的最大值。\n点击您的威力升级点数 (PU) 条，您将前往此界面。',
       'costOfEmp':'进步的成本',
       'costOfEmpDetails':'在这里，您可以看到您的知识点数 (KP)。\n\n提高威力升级点数 (PU) 会花费知识点数 (KP)。随着等级的提升，这种一次性的花费成本会增加。\n每花费一个威力升级点数 (PU) 会不断产生费用，一开始是每天每个威力升级点数 (PU) 消耗200个知识点数 (KP)。这种成本将随着时间的推移而增加。',
+
+
+      //setting screen Dialog
+      'settingDetails':'您可以切换到游戏模式（有虚拟公司),您可以打开或关闭声音。\n\n如果您的点数变为负数，您可以请求重新开始，您的经理会进行审批。',
     }
   };
 }

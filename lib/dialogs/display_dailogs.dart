@@ -178,7 +178,7 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.settings),
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
-            desTextLine: "You can switch to a professional mode (no virtual company)\nand turn the sound on and off.\n\nIn case your company has negitive cash you can request\na bail out which will needto be approved by your manager.",
+            desTextLine: Utils.getText(context, StringRes.settingDetails),
             onTapBtn: () async {
               try {
                 print(Const.introMeetYourTeam);
