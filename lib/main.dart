@@ -9,6 +9,7 @@ import 'screens/my_app.dart';
 
 void backgroundFetchHeadlessTask(String taskId) async {
   print('[BackgroundFetch] Headless event received.');
+
   BackgroundFetch.finish(taskId);
 }
 
