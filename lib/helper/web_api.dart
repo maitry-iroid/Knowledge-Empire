@@ -43,12 +43,13 @@ class WebApi {
   static String rqUnreadBubbleCount = "unreadBubbleCount";
   static String rqGetTeamUsers = "getTeamUsers";
   static String rqGetTeamUserById = "getTeamUserById";
-    static String rqGetPerformance = "getPerformance";
-    static String rqGetCompany = "getCompany";
-    static String updateLanguage = "updateLanguage";
-    static String updateMode = "updateMode";
-    static String switchCompanyProfile = "switchCompanyProfile";
-    static String rqGameIntro = "gameIntro";
+  static String rqGetPerformance = "getPerformance";
+  static String rqGetCompany = "getCompany";
+  static String updateLanguage = "updateLanguage";
+  static String updateMode = "updateMode";
+  static String switchCompanyProfile = "switchCompanyProfile";
+  static String rqGameIntro = "gameIntro";
+  static String rqDashboardLockStatus = "dashboardLockStatus";
 
   static getRequest(String req, String data) {
     return {
@@ -72,7 +73,6 @@ class WebApi {
   }
 
   Dio dio = Dio();
-
 
   Future<dynamic> callAPI(String apiReq, Map<String, dynamic> jsonMap) async {
     initDio();

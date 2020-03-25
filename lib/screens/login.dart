@@ -372,10 +372,11 @@ class _LoginPageState extends State<LoginPage> {
         if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
-          if (userData.isFirstTimeLogin)
-            Utils.navigateToIntro(context);
-          else
-            navigateToDashboard();
+          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
+//          if (userData.isFirstTimeLogin)
+//            Utils.navigateToIntro(context);
+//          else
+//            navigateToDashboard();
         }
       }
     }).catchError((e) {

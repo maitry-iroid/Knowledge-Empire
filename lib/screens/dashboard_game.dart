@@ -10,6 +10,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/intro.dart';
 
@@ -32,6 +33,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
+  DashboardLockStatusData dashboardLockStatusData;
 
   @override
   void initState() {
@@ -41,9 +43,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
     }
 
-    if (Injector.introData.dashboard == 0) showIntroDialog();
-    getDashboardConfig();
-
+    if (Injector.introData == null || Injector.introData.dashboard == 0)
+      showIntroDialog();
+    getUnreadBubbleCount();
   }
 
   Future showIntroDialog() async {
@@ -81,7 +83,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
     );
   }
 
-  void getDashboardConfig() {
+  void getUnreadBubbleCount() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         DashboardRequest rq = DashboardRequest();
@@ -95,6 +97,30 @@ class DashboardGamePageState extends State<DashboardGamePage>
             });
 
             if (dashboardData.isNotEmpty) if (mounted) setState(() {});
+          }
+          getLockStatus();
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+          getLockStatus();
+        });
+      }
+    });
+  }
+
+  void getLockStatus() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Const.businessMode;
+
+        WebApi()
+            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
+            .then((data) {
+          if (data != null) {
+            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+
+            if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
