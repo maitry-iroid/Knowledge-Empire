@@ -193,7 +193,7 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
     return InkResponse(
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         alignment: Alignment.center,
         child: Text(
           Utils.getText(context, StringRes.gotIt),
@@ -204,7 +204,7 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
         ),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg('bg_log_out')))),
+                image: AssetImage(Utils.getAssetsImg('got_it')))),
       ),
       onTap: () async {
         Injector.introData.dashboard = 1;
