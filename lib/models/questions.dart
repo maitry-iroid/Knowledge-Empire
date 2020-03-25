@@ -80,6 +80,7 @@ class QuestionData {
   String attemptTime;
   int videoPlay;
   int videoLoop;
+  int winningAmount;
 
   QuestionData(
       {this.questionId,
@@ -104,6 +105,7 @@ class QuestionData {
       this.inCorrectAnswerImage,
       this.videoPlay,
       this.videoLoop,
+      this.winningAmount,
       this.attemptTime});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
@@ -125,6 +127,7 @@ class QuestionData {
     value = json['value'];
     resources = json['resources'];
     mediaLink = json['mediaLink'];
+    winningAmount = json['winningAmount'];
     if (json['answer'] != null) {
       answer = new List<Answer>();
       json['answer'].forEach((v) {
@@ -152,6 +155,7 @@ class QuestionData {
     data['companyId'] = this.companyId;
     data['daysInlist'] = this.daysInList;
     data['counter'] = this.counter;
+    data['winningAmount'] = this.winningAmount;
     data['description'] = this.description;
     data['correctAnswerId'] = this.correctAnswerId;
     data['loyalty'] = this.loyalty;
