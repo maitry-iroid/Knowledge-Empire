@@ -124,6 +124,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+            Injector.dashboardLockStatusData  = dashboardLockStatusData;
             print(dashboardLockStatusData);
             if (mounted) setState(() {});
           }
@@ -241,43 +242,44 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   _onSelectItem(int index) {
+
     Utils.playClickSound();
     if (_selectedDrawerIndex != index) {
-      switch (drawerItems[index].title) {
-        case "Organizations":
-          if (mounted) {
-            if (dashboardLockStatusData != null && dashboardLockStatusData.organization != null && dashboardLockStatusData.organization != 1) {
-              if (_scaffoldKey.currentState.isDrawerOpen) {
-                _scaffoldKey.currentState.openEndDrawer();
-              }
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => OrgInfoDialog(
-                        text: Utils.getText(context, StringRes.unLockOrg),
-                        isForIntroDialog: true,
-                      ));
-            } else {
-              setState(() => _selectedDrawerIndex = index);
+      if (index == Utils.getHomePageIndex(Const.typeOrg) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.organization != 1) {
+        Utils.showLockReasonDialog(Const.typeOrg,context);
+      } else if (index == Utils.getHomePageIndex(Const.typePl) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.challenge != 1) {
+        Utils.showLockReasonDialog(Const.typePl,context);
+      } else if (index ==
+              Utils.getHomePageIndex(Const.typeRanking) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.challenge != 1) {
+        Utils.showLockReasonDialog(Const.typeRanking,context);
+      } else if (index ==
+              Utils.getHomePageIndex(Const.typeReward) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.challenge != 1) {
+        Utils.showLockReasonDialog(Const.typeReward,context);
+      } else if (index ==
+              Utils.getHomePageIndex(Const.typeChallenges) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.challenge != 1) {
+        Utils.showLockReasonDialog(Const.typeChallenges,context);
+      } else {
+        setState(() => _selectedDrawerIndex = index);
 
-              Navigator.of(context).pop(); // close the drawer
-              if (_selectedDrawerIndex ==
-                  Utils.getHomePageIndex(Const.typeHelp)) {
-                Navigator.push(context, FadeRouteIntro());
-              }
-            }
-          }
-          break;
-        default:
-          if (mounted) {
-            setState(() => _selectedDrawerIndex = index);
-
-            Navigator.of(context).pop(); // close the drawer
-            if (_selectedDrawerIndex ==
-                Utils.getHomePageIndex(Const.typeHelp)) {
-              Navigator.push(context, FadeRouteIntro());
-            }
-          }
-          break;
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+          Navigator.push(context, FadeRouteIntro());
+        }
       }
     } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -647,4 +649,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //      print('[BackgroundFetch] start FAILURE: $e');
 //    });
   }
+
+
 }

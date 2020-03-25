@@ -11,6 +11,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
@@ -26,6 +27,7 @@ class Injector {
   static int userId;
   static CustomerValueData customerValueData;
   static IntroData introData;
+  static DashboardLockStatusData dashboardLockStatusData;
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
