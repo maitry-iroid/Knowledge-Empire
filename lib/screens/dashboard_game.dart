@@ -105,12 +105,15 @@ class DashboardGamePageState extends State<DashboardGamePage>
               CommonView.showDashboardView(
                   context, dashboardData, dashboardLockStatusData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+
             ],
           ),
         ),
       ),
     );
   }
+
+
 
   void getUnreadBubbleCount() {
     Utils.isInternetConnected().then((isConnected) {

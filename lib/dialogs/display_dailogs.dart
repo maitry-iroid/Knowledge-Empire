@@ -75,8 +75,7 @@ class DisplayDialogs {
                   RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        Utils.showChallengeQuestionDialog(
-                            context, questionData);
+                        Utils.showChallengeQuestionDialog(context, questionData);
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

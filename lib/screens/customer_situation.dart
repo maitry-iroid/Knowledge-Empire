@@ -12,6 +12,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 
 //import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
@@ -39,13 +40,14 @@ class CustomerSituationPage extends StatefulWidget {
   final bool isChallenge;
   final QuestionData nextChallengeQuestionData;
   final bool isCameFromExistingCustomer;
+  final RefreshAnimation mRefreshAnimation;
 
   CustomerSituationPage(
       {Key key,
       this.questionDataCustomerSituation,
       this.isChallenge,
       this.nextChallengeQuestionData,
-      this.isCameFromExistingCustomer})
+      this.isCameFromExistingCustomer, this.mRefreshAnimation})
       : super(key: key);
 
   @override
@@ -83,12 +85,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
-      if (Injector.introData == null ||
-          Injector.introData.customerSituation == 0||Injector.introData.customerSituation == 1)
+      if (Injector.introData == null || Injector.introData.customerSituation == 0||Injector.introData.customerSituation == 1)
         await DisplayDialogs.showImpactOnSalesAndService(context);
 
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-      isCoinViseble = true;
+      widget.mRefreshAnimation.onRefresh();
       setState(() {});
     }
   }
@@ -97,6 +98,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
+
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;
@@ -132,20 +134,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 )),
               ],
             ),
-            Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                coinWidget(250, 150),
-                coinWidget(310, 50),
-                coinWidget(70, 50),
-                coinWidget(150, 20),
-                coinWidget(350, 320),
-                coinWidget(350, 450),
-                coinWidget(180, 300),
-                coinWidget(200, 550),
-                coinWidget(350, 650),
-              ],
-            ),
 
 //            gifImageShow(),
           ],
@@ -154,22 +142,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     );
   }
 
-  Widget coinWidget(double top, double left) {
-    return AnimatedPositioned(
-      duration: Duration(seconds: duration),
-      top: !isCoinViseble ? top : 5,
-      left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
-      onEnd: () {
-        isCoinViseble = false;
-        if (mounted) setState(() {});
-      },
-      child: Container(
-        child: isCoinViseble ? MyHomePage() : Container(),
-        width: 40,
-        height: 40,
-      ),
-    );
-  }
 
   gifImageShow() {
     if (questionData.isAnsweredCorrect == true) {

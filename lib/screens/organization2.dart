@@ -28,13 +28,12 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   List<Organization> arrOrganization = List();
 
   @override
-  initState(){
+  initState() {
     super.initState();
     showIntroDialog();
   }
 
   Future showIntroDialog() async {
-
     if (Injector.introData == null || Injector.introData.org1 == 0)
       await DisplayDialogs.showHireHRDialog(context);
 
@@ -180,6 +179,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                 context: _scaffoldKey.currentContext,
                 builder: (BuildContext context) => OrgInfoDialog(
                       text: org.description,
+                      isForIntroDialog: false,
                     ));
 
             print("dialog dissmissed");
@@ -268,7 +268,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         if (data != null) {
           arrOrganization = OrganizationData.fromJson(data).organization;
 
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
         }
       });
     }).catchError((e) {
@@ -315,8 +315,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
 
-
-
           for (int i = 0; i < arrOrganization.length; i++) {
             if (arrOrganization[i].type == organization.type) {
               arrOrganization[i] = manageOrgData.organization[0];
@@ -324,7 +322,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             }
           }
 
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
           Utils.performManageLevel(manageOrgData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
@@ -364,7 +362,8 @@ class OrgInfoDialog extends StatefulWidget {
     Key key,
     this.text,
     this.organizationsPage2,
-    this.position, this.isForIntroDialog,
+    this.position,
+    this.isForIntroDialog,
   }) : super(key: key);
 
   final String text;
@@ -397,8 +396,13 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
               padding: EdgeInsets.all(15),
               margin: EdgeInsets.all(40),
               alignment: Alignment.center,
-              width: widget.isForIntroDialog!=null && !widget.isForIntroDialog?Utils.getDeviceWidth(context) / 1.8:Utils.getDeviceWidth(context) / 2.5,
-              height: widget.isForIntroDialog!=null && !widget.isForIntroDialog?Utils.getDeviceHeight(context) / 1.8:Utils.getDeviceHeight(context) / 2.1,
+              width: widget.isForIntroDialog != null && !widget.isForIntroDialog
+                  ? Utils.getDeviceWidth(context) / 1.8
+                  : Utils.getDeviceWidth(context) / 2.5,
+              height:
+                  widget.isForIntroDialog != null && !widget.isForIntroDialog
+                      ? Utils.getDeviceHeight(context) / 1.8
+                      : Utils.getDeviceHeight(context) / 2.1,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: ColorRes.white,
@@ -408,47 +412,55 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                   children: <Widget>[
                     Container(
                       child: Text(
-                        Utils.getText(context, widget.text),textAlign: TextAlign.center,
+                        Utils.getText(context, widget.text),
+                        textAlign: TextAlign.center,
                         style: TextStyle(color: ColorRes.blue, fontSize: 18),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 13)),
-                    widget.isForIntroDialog!=null && !widget.isForIntroDialog?InkResponse(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            left: 10, right: 10, top: 3, bottom: 3),
-                        margin: EdgeInsets.only(
-                            left: 10, right: 10, top: 3, bottom: 3),
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 2, color: ColorRes.blue),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Text(Utils.getText(context, StringRes.hireEmp),
-                            style:
-                                TextStyle(color: ColorRes.blue, fontSize: 17)),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context, Const.add);
-                      },
-                    ):Container(),
+                    widget.isForIntroDialog != null && !widget.isForIntroDialog
+                        ? InkResponse(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 3, bottom: 3),
+                              margin: EdgeInsets.only(
+                                  left: 10, right: 10, top: 3, bottom: 3),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 2, color: ColorRes.blue),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Text(
+                                  Utils.getText(context, StringRes.hireEmp),
+                                  style: TextStyle(
+                                      color: ColorRes.blue, fontSize: 17)),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context, Const.add);
+                            },
+                          )
+                        : Container(),
                     Padding(padding: EdgeInsets.only(top: 5)),
-                    widget.isForIntroDialog!=null && !widget.isForIntroDialog?InkResponse(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            left: 10, right: 10, top: 3, bottom: 3),
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 2, color: ColorRes.blue),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Text(Utils.getText(context, StringRes.fireEmp),
-                            style:
-                                TextStyle(color: ColorRes.red, fontSize: 17)),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context, Const.subtract);
-                      },
-                    ):Container(),
-
+                    widget.isForIntroDialog != null && !widget.isForIntroDialog
+                        ? InkResponse(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 3, bottom: 3),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 2, color: ColorRes.blue),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Text(
+                                  Utils.getText(context, StringRes.fireEmp),
+                                  style: TextStyle(
+                                      color: ColorRes.red, fontSize: 17)),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context, Const.subtract);
+                            },
+                          )
+                        : Container(),
                   ],
                 ),
               )),
