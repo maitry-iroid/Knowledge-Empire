@@ -542,9 +542,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             QuestionData questionData = QuestionData.fromJson(data);
 
             if (questionData != null && questionData.challengeId != null)
-//              DisplayDialogs.showChallengeDialog(context, "Ravi", questionData);
-              Utils.showChallengeQuestionDialog(
-                  _scaffoldKey.currentContext, questionData);
+              DisplayDialogs.showChallengeDialog(context, questionData.firstName, questionData);
+            /*  Utils.showChallengeQuestionDialog(
+                  _scaffoldKey.currentContext, questionData);*/
           }
         }).catchError((e) {
           Utils.showToast(e.toString());

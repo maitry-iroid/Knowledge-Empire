@@ -69,9 +69,9 @@ class DisplayDialogs {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("Your are challenged by $userName",
-                      style: Theme.of(context).textTheme.title),
-                  SizedBox(height: 45),
+                  Text("Your are challenged by $userName in module\nYou have to attempt all 3 challenges to win ${questionData.winningAmount}",
+                      style: Theme.of(context).textTheme.title,textAlign: TextAlign.center,),
+                  SizedBox(height: 20),
                   RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
