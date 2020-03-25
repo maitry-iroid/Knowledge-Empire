@@ -79,6 +79,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     questionDataCustSituation = widget.questionDataCustomerSituation;
     arrAnswerSituation = widget.questionDataCustomerSituation.answer;
 
+
     abcdList = alphaIndex;
 
     if (!widget.isCameFromExistingCustomer) Utils.checkAudio();
