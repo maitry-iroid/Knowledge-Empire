@@ -232,6 +232,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   openProfile() {
 
+
     if (mounted) {
       if (mounted)
         setState(() =>
