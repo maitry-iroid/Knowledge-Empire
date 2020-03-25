@@ -78,42 +78,36 @@ class WebApi {
     initDio();
 
     print(apiReq + "_" + json.encode(jsonMap));
-    try {
-      final response = await dio
-          .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
-          .catchError((e) {
-        Utils.showToast(apiReq + "_" + e.toString());
-        return null;
-      });
+    final response = await dio
+        .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
+        .catchError((e) {
+      Utils.showToast(apiReq + "_" + e.toString());
+      return null;
+    });
 
-      print(apiReq + "_" + response?.data);
+    print(apiReq + "_" + response?.data);
 
-      if (response.statusCode == 200) {
-        BaseResponse _response =
-            BaseResponse.fromJson(jsonDecode(response.data));
+    if (response.statusCode == 200) {
+      BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
 
-        if (_response != null) {
-          if (_response.flag == "true") {
-            if (!isUserRemovedFromCompany(_response.flag, _response.msg))
-              return _response.data;
-            else {
-              Utils.showToast(_response.msg);
-              return null;
-            }
-          } else {
-            Utils.showToast(_response.msg ?? StringRes.somethingWrong);
+      if (_response != null) {
+        if (_response.flag == "true") {
+          if (!isUserRemovedFromCompany(_response.flag, _response.msg))
+            return _response.data;
+          else {
+            Utils.showToast(_response.msg);
             return null;
           }
         } else {
-          Utils.showToast(StringRes.somethingWrong);
+          Utils.showToast(_response.msg ?? StringRes.somethingWrong);
           return null;
         }
+      } else {
+        Utils.showToast(StringRes.somethingWrong);
+        return null;
       }
-      return null;
-    } catch (e) {
-      print(e);
-      return null;
     }
+    return null;
   }
 
   Future<UserData> updateProfile(

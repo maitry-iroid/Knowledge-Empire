@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         Utils.getText(context, StringRes.forgotPassword)
                             .toUpperCase(),
-                        style: TextStyle(color: ColorRes.white,fontSize: 17),
+                        style: TextStyle(color: ColorRes.white, fontSize: 17),
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                         Utils.getText(context, StringRes.selectLanguage) +
                             " - " +
                             tempLanguage,
-                        style: TextStyle(color: ColorRes.white,fontSize: 17),
+                        style: TextStyle(color: ColorRes.white, fontSize: 17),
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -205,8 +205,12 @@ class _LoginPageState extends State<LoginPage> {
                               fit: BoxFit.fill),
                         ),
                         child: Text(
-                          Utils.getText(context, StringRes.login).toUpperCase(),textAlign: TextAlign.center,
-                          style: TextStyle(color: ColorRes.white, fontSize: 16,),
+                          Utils.getText(context, StringRes.login).toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: ColorRes.white,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       onTap: () {
@@ -373,10 +377,10 @@ class _LoginPageState extends State<LoginPage> {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
 //          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-          if (userData.isFirstTimeLogin)
-            Utils.navigateToIntro(context);
-          else
-            navigateToDashboard();
+//          if (userData.isFirstTimeLogin)
+//            Utils.navigateToIntro(context);
+//          else
+          navigateToDashboard();
         }
       }
     }).catchError((e) {

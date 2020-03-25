@@ -163,10 +163,10 @@ class Injector {
         rq.userId = Injector.userId;
         rq.type = 1;
 
-        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) async{
           if (data != null) {
             IntroData introData = IntroData.fromJson(data);
-            Injector.setIntroData(introData);
+           await Injector.setIntroData(introData);
           }
         }).catchError((e) {
           print("getIntro" + e.toString());
