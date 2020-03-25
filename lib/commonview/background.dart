@@ -8,10 +8,14 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
+import 'package:ke_employee/screens/organization2.dart';
 
 class CommonView {
+  static bool isShowLayout = false;
+
   static getBGDecoration(BuildContext context) {
     return Injector.isBusinessMode
         ?
@@ -277,7 +281,7 @@ class CommonView {
     return Injector.isBusinessMode
         ? Stack(
             children: <Widget>[
-              showDashboardView(context, null),
+              showDashboardView(context, null, null),
               Container(
                 color: ColorRes.black.withOpacity(0.75),
               )
@@ -313,7 +317,10 @@ class CommonView {
   List<GetDashboardData> data = List();
 
   static Widget showDashboardView(
-      BuildContext context, List<GetDashboardData> data) {
+      BuildContext context,
+      List<GetDashboardData> data,
+      DashboardLockStatusData dashboardLockStatusData) {
+    print(dashboardLockStatusData);
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -337,12 +344,36 @@ class CommonView {
                         image: AssetImage(Utils.getAssetsImg("organization")),
                         width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-                      Utils.showUnreadCount(Const.typeOrg, 17, 5, data)
+                      dashboardLockStatusData != null &&
+                              dashboardLockStatusData.organization != null &&
+                              dashboardLockStatusData.organization != 1
+                          ? Utils.showUnreadCount(Const.typeOrg, 17, 5, data)
+                          : Container(),
+                      dashboardLockStatusData != null &&
+                              dashboardLockStatusData.organization != null &&
+                              dashboardLockStatusData.organization != 1
+                          ? Image(
+                              image: AssetImage(Utils.getAssetsImg("lock_org")),
+                              width: Utils.getDeviceWidth(context) / 4.5,
+                            )
+                          : Container(),
                     ],
                   ),
                   onTap: () {
-                    Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typeOrg);
+                    if (dashboardLockStatusData != null &&
+                        dashboardLockStatusData.organization != null &&
+                        dashboardLockStatusData.organization != 1) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => OrgInfoDialog(
+                                text:
+                                    Utils.getText(context, StringRes.unLockOrg),
+                                isForIntroDialog: true,
+                              ));
+                    } else {
+                      Utils.playClickSound();
+                      Utils.performDashboardItemClick(context, Const.typeOrg);
+                    }
                   },
                 ),
                 InkResponse(
@@ -352,12 +383,36 @@ class CommonView {
                         image: AssetImage(Utils.getAssetsImg("profit-loss")),
                         width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-                      Utils.showUnreadCount(Const.typePl, 17, 5, data)
+                      dashboardLockStatusData != null &&
+                              dashboardLockStatusData.pl != null &&
+                              dashboardLockStatusData.pl != 1
+                          ? Utils.showUnreadCount(Const.typePl, 17, 5, data)
+                          : Container(),
+                      dashboardLockStatusData != null &&
+                              dashboardLockStatusData.pl != null &&
+                              dashboardLockStatusData.pl != 1
+                          ? Image(
+                              image: AssetImage(Utils.getAssetsImg("lock_pl")),
+                              width: Utils.getDeviceWidth(context) / 4.5,
+                            )
+                          : Container(),
                     ],
                   ),
                   onTap: () {
-                    Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typePl);
+                    if (dashboardLockStatusData != null &&
+                        dashboardLockStatusData.pl != null &&
+                        dashboardLockStatusData.pl != 1) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => OrgInfoDialog(
+                                text:
+                                    Utils.getText(context, StringRes.unLockPl),
+                                isForIntroDialog: true,
+                              ));
+                    } else {
+                      Utils.playClickSound();
+                      Utils.performDashboardItemClick(context, Const.typePl);
+                    }
                   },
                 ),
                 InkResponse(
@@ -367,15 +422,40 @@ class CommonView {
                         image: AssetImage(Utils.getAssetsImg("ranking")),
                         width: Utils.getDeviceWidth(context) / 4.5,
                       ),
-                      Utils.showUnreadCount(Const.typeRanking, 17, 5, data)
+                      dashboardLockStatusData != null &&
+                              dashboardLockStatusData.ranking != null &&
+                              dashboardLockStatusData.ranking != 1
+                          ? Utils.showUnreadCount(
+                              Const.typeRanking, 17, 5, data)
+                          : Container(),
+                      dashboardLockStatusData != null &&
+                              dashboardLockStatusData.ranking != null &&
+                              dashboardLockStatusData.ranking != 1
+                          ? Image(
+                              image: AssetImage(
+                                  Utils.getAssetsImg("lock_ranking")),
+                              width: Utils.getDeviceWidth(context) / 4.5,
+                            )
+                          : Container(),
                     ],
                   ),
                   onTap: () {
-                    Utils.playClickSound();
-
-                    Utils.performDashboardItemClick(context, Const.typeRanking);
+                    if (dashboardLockStatusData != null &&
+                        dashboardLockStatusData.ranking != null &&
+                        dashboardLockStatusData.ranking != 1) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => OrgInfoDialog(
+                                text: Utils.getText(
+                                    context, StringRes.unLockRanking),
+                                isForIntroDialog: true,
+                              ));
+                    } else {
+                      Utils.playClickSound();
+                      Utils.performDashboardItemClick(
+                          context, Const.typeRanking);
+                    }
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-
                   },
                 ),
               ],
@@ -412,13 +492,53 @@ class CommonView {
                               image: AssetImage(Utils.getAssetsImg("rewards")),
                               width: Utils.getDeviceHeight(context) / 3.0,
                             ),
-                            Utils.showUnreadCount(Const.typeReward, 17, 5, data)
+                            dashboardLockStatusData != null &&
+                                    dashboardLockStatusData.achievement !=
+                                        null &&
+                                    dashboardLockStatusData.achievement != 1
+                                ? Utils.showUnreadCount(
+                                    Const.typeReward, 17, 5, data)
+                                : ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                    minHeight: 25.0,
+                                    minWidth: 25.0,
+                                  )),
+                            dashboardLockStatusData != null &&
+                                    dashboardLockStatusData.achievement !=
+                                        null &&
+                                    dashboardLockStatusData.achievement != 1
+                                ? Center(
+                                    child: Image(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg("lock_rewards")),
+                                      width:
+                                          Utils.getDeviceHeight(context) / 3.0,
+                                    ),
+                                  )
+                                : ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                    minHeight: 25.0,
+                                    minWidth: 25.0,
+                                  )),
                           ],
                         ),
                         onTap: () {
-                          Utils.playClickSound();
-                          Utils.performDashboardItemClick(
-                              context, Const.typeReward);
+                          if (dashboardLockStatusData != null &&
+                              dashboardLockStatusData.achievement != null &&
+                              dashboardLockStatusData.achievement != 1) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    OrgInfoDialog(
+                                      text: Utils.getText(
+                                          context, StringRes.unLockReward),
+                                      isForIntroDialog: true,
+                                    ));
+                          } else {
+                            Utils.playClickSound();
+                            Utils.performDashboardItemClick(
+                                context, Const.typeReward);
+                          }
                         },
                       )),
                 ),
@@ -464,14 +584,48 @@ class CommonView {
                                   AssetImage(Utils.getAssetsImg("challenges")),
                               width: Utils.getDeviceHeight(context) / 2.6,
                             ),
-                            Utils.showUnreadCount(
-                                Const.typeChallenges, 17, 17, data)
+                            dashboardLockStatusData != null &&
+                                    dashboardLockStatusData.challenge != null &&
+                                    dashboardLockStatusData.challenge != 1
+                                ? Utils.showUnreadCount(
+                                    Const.typeChallenges, 17, 17, data)
+                                : ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                    minHeight: 25.0,
+                                    minWidth: 25.0,
+                                  )),
+                            dashboardLockStatusData != null &&
+                                    dashboardLockStatusData.challenge != null &&
+                                    dashboardLockStatusData.challenge != 1
+                                ? Image(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("lock_challenges")),
+                                    width: Utils.getDeviceHeight(context) / 2.6,
+                                  )
+                                : ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                    minHeight: 25.0,
+                                    minWidth: 25.0,
+                                  )),
                           ],
                         ),
                         onTap: () {
-                          Utils.playClickSound();
-                          Utils.performDashboardItemClick(
-                              context, Const.typeChallenges);
+                          if (dashboardLockStatusData != null &&
+                              dashboardLockStatusData.challenge != null &&
+                              dashboardLockStatusData.challenge != 1) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    OrgInfoDialog(
+                                      text: Utils.getText(
+                                          context, StringRes.unLockChallenge),
+                                      isForIntroDialog: true,
+                                    ));
+                          } else {
+                            Utils.playClickSound();
+                            Utils.performDashboardItemClick(
+                                context, Const.typeChallenges);
+                          }
                         }),
                   ),
                 ),
@@ -765,7 +919,8 @@ class CommonView {
         })*/
   }
 
-  pushNotificationAlert2(BuildContext context, String bonus, String level, String type, String achievementType) {
+  pushNotificationAlert2(BuildContext context, String bonus, String level,
+      String type, String achievementType) {
     showDialog(
         context: context,
         builder: (BuildContext buildContext) {
@@ -775,7 +930,7 @@ class CommonView {
             ),
             child: Container(
               color: ColorRes.colorBgDark,
-              height: Utils.getDeviceHeight(context) /1.6,
+              height: Utils.getDeviceHeight(context) / 1.6,
               width: Utils.getDeviceWidth(context) / 2,
               child: Container(
                 alignment: Alignment.center,
@@ -791,15 +946,18 @@ class CommonView {
                         width: Utils.getDeviceWidth(context) / 8,
                         height: Utils.getDeviceHeight(context) / 15,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), border: Border.all(color: ColorRes.borderRewardsName, width: 1)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                                color: ColorRes.borderRewardsName, width: 1)),
                         child: Center(
                             child: Text(
-                              "Collector",
-                              style: TextStyle(fontSize: 18, color: ColorRes.white),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            )),
+                          "Collector",
+                          style: TextStyle(fontSize: 18, color: ColorRes.white),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        )),
                       ),
                       SizedBox(height: 8),
                       Padding(
@@ -875,5 +1033,4 @@ class CommonView {
           );
         })*/
   }
-
 }

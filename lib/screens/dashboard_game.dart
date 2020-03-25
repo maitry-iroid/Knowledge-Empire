@@ -74,7 +74,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, dashboardData),
+              CommonView.showDashboardView(context, dashboardData,dashboardLockStatusData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -119,7 +119,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-
+            print(dashboardLockStatusData);
             if (mounted) setState(() {});
           }
         }).catchError((e) {

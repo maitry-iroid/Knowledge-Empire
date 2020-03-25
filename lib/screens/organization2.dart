@@ -364,12 +364,13 @@ class OrgInfoDialog extends StatefulWidget {
     Key key,
     this.text,
     this.organizationsPage2,
-    this.position,
+    this.position, this.isForIntroDialog,
   }) : super(key: key);
 
   final String text;
   final _OrganizationsPage2State organizationsPage2;
   final int position;
+  final bool isForIntroDialog;
 
   @override
   OrgInfoDialogState createState() => new OrgInfoDialogState();
@@ -396,8 +397,8 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
               padding: EdgeInsets.all(15),
               margin: EdgeInsets.all(40),
               alignment: Alignment.center,
-              width: Utils.getDeviceWidth(context) / 1.8,
-              height: Utils.getDeviceHeight(context) / 1.8,
+              width: widget.isForIntroDialog!=null && !widget.isForIntroDialog?Utils.getDeviceWidth(context) / 1.8:Utils.getDeviceWidth(context) / 2.5,
+              height: widget.isForIntroDialog!=null && !widget.isForIntroDialog?Utils.getDeviceHeight(context) / 1.8:Utils.getDeviceHeight(context) / 2.1,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: ColorRes.white,
@@ -412,7 +413,7 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 13)),
-                    InkResponse(
+                    widget.isForIntroDialog!=null && !widget.isForIntroDialog?InkResponse(
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 3, bottom: 3),
@@ -429,9 +430,9 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                       onTap: () {
                         Navigator.pop(context, Const.add);
                       },
-                    ),
+                    ):Container(),
                     Padding(padding: EdgeInsets.only(top: 5)),
-                    InkResponse(
+                    widget.isForIntroDialog!=null && !widget.isForIntroDialog?InkResponse(
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 3, bottom: 3),
@@ -446,7 +447,8 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                       onTap: () {
                         Navigator.pop(context, Const.subtract);
                       },
-                    ),
+                    ):Container(),
+
                   ],
                 ),
               )),
