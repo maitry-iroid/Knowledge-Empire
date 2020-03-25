@@ -538,6 +538,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           if (mounted)
             setState(() {
               isLoading = false;
+
             });
 
           if (data != null) {
