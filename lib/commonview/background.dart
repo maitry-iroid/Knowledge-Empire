@@ -17,10 +17,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:flutter/services.dart';
-import 'package:simple_animations/simple_animations/controlled_animation.dart';
-
-import 'package:animated_background/animated_background.dart';
 import 'package:ke_employee/screens/organization2.dart';
 
 class CommonView {
