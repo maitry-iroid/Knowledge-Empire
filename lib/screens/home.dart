@@ -9,7 +9,9 @@ import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
@@ -95,6 +97,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
+  DashboardLockStatusData dashboardLockStatusData;
 
   @override
   void didChangeDependencies() {
@@ -104,8 +107,31 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     initContent();
+    getLockStatus();
     super.initState();
     Utils.removeBadge();
+  }
+
+  void getLockStatus() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Const.businessMode;
+
+        WebApi()
+            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
+            .then((data) {
+          if (data != null) {
+            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+            print(dashboardLockStatusData);
+            if (mounted) setState(() {});
+          }
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+        });
+      }
+    });
   }
 
 //push notification
@@ -215,13 +241,41 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   _onSelectItem(int index) {
     Utils.playClickSound();
     if (_selectedDrawerIndex != index) {
-      if (mounted) {
-        setState(() => _selectedDrawerIndex = index);
+      switch (drawerItems[index].title) {
+        case "Organizations":
+          if (mounted) {
+            if (dashboardLockStatusData != null && dashboardLockStatusData.organization != null && dashboardLockStatusData.organization != 1) {
+              if (_scaffoldKey.currentState.isDrawerOpen) {
+                _scaffoldKey.currentState.openEndDrawer();
+              }
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => OrgInfoDialog(
+                        text: Utils.getText(context, StringRes.unLockOrg),
+                        isForIntroDialog: true,
+                      ));
+            } else {
+              setState(() => _selectedDrawerIndex = index);
 
-        Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
-          Navigator.push(context, FadeRouteIntro());
-        }
+              Navigator.of(context).pop(); // close the drawer
+              if (_selectedDrawerIndex ==
+                  Utils.getHomePageIndex(Const.typeHelp)) {
+                Navigator.push(context, FadeRouteIntro());
+              }
+            }
+          }
+          break;
+        default:
+          if (mounted) {
+            setState(() => _selectedDrawerIndex = index);
+
+            Navigator.of(context).pop(); // close the drawer
+            if (_selectedDrawerIndex ==
+                Utils.getHomePageIndex(Const.typeHelp)) {
+              Navigator.push(context, FadeRouteIntro());
+            }
+          }
+          break;
       }
     } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -487,7 +541,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
             if (questionData != null && questionData.challengeId != null)
 //              DisplayDialogs.showChallengeDialog(context, "Ravi", questionData);
-              Utils.showChallengeQuestionDialog(_scaffoldKey.currentContext, questionData);
+              Utils.showChallengeQuestionDialog(
+                  _scaffoldKey.currentContext, questionData);
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
@@ -560,33 +615,32 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initContent() async {
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
-      await Injector.getInstance();
+    await Injector.getInstance();
 
-      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
-      Injector.headerStreamController.add("event");
+    Injector.headerStreamController.add("event");
 
-      initStreamController();
-      getCustomerValues();
+    initStreamController();
+    getCustomerValues();
 
-      initCheckNetworkConnectivity();
+    initCheckNetworkConnectivity();
 
-      setSelectedIndex();
+    setSelectedIndex();
 
-      PushNotificationHelper(context, Utils.getText(context, "home"))
-          .initPush();
+    PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
 
-      initPlatformState();
+    initPlatformState();
 
+    if (widget.homeData == null ||
+        widget.homeData.page == null ||
+        (widget.homeData.initialPageType != Const.typeChallenges &&
+            widget.homeData.initialPageType != Const.typeCustomerSituation &&
+            widget.homeData.initialPageType != Const.typeEngagement)) {
       if (widget.homeData == null ||
-          widget.homeData.page == null ||
-          (widget.homeData.initialPageType != Const.typeChallenges &&
-              widget.homeData.initialPageType != Const.typeCustomerSituation &&
-              widget.homeData.initialPageType != Const.typeEngagement)) {
-        if (widget.homeData == null ||
-            widget.homeData.isChallenge == null ||
-            widget.homeData.isChallenge) getPendingChallenges();
-      }
+          widget.homeData.isChallenge == null ||
+          widget.homeData.isChallenge) getPendingChallenges();
+    }
 //    }).catchError((e) {
 //      print('[BackgroundFetch] start FAILURE: $e');
 //    });

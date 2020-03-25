@@ -8,7 +8,9 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -54,6 +56,7 @@ class HelpPageState extends State<HelpPage> {
   AnimationController controller;
   Animation<double> animation;
 
+  DashboardLockStatusData dashboardLockStatusData;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -66,6 +69,7 @@ class HelpPageState extends State<HelpPage> {
     super.initState();
 
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
+    getLockStatus();
 
 //    controller = AnimationController(
 //      duration: const Duration(milliseconds: 1000),
@@ -94,7 +98,7 @@ class HelpPageState extends State<HelpPage> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, null),
+              CommonView.showDashboardView(context, null,dashboardLockStatusData),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -1399,5 +1403,27 @@ class HelpPageState extends State<HelpPage> {
     } else if (Injector.userData.language == "Chinese") {
       return "next_zh";
     }
+  }
+
+  void getLockStatus() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Const.businessMode;
+
+        WebApi()
+            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
+            .then((data) {
+          if (data != null) {
+            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+
+            if (mounted) setState(() {});
+          }
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+        });
+      }
+    });
   }
 }

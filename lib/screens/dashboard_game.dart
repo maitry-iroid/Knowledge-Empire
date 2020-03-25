@@ -86,9 +86,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
   }
 
   @override
-  void dispose() async {
+  void dispose() {
     print("dispose=======");
-
     super.dispose();
   }
 
@@ -103,7 +102,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, dashboardData),
+              CommonView.showDashboardView(context, dashboardData,dashboardLockStatusData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -148,12 +147,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-
-            dashboardLockStatusData.achievement = 1;
-            dashboardLockStatusData.organization = 1;
-            dashboardLockStatusData.challenge = 1;
-            dashboardLockStatusData.ranking = 1;
-
+            print(dashboardLockStatusData);
             if (mounted) setState(() {});
           }
         }).catchError((e) {

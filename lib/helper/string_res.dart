@@ -270,6 +270,15 @@ class StringRes {
   //setting screen Dialog
   static var settingDetails = "settingDetails";
 
+  //lockdialof
+
+  static var unLockOrg = "unLockOrg";
+  static var unLockPl = "unLockPl";
+  static var unLockRanking = "unLockRanking";
+  static var unLockReward = "unLockReward";
+  static var unLockChallenge = "unLockChallenge";
+
+
 // change password
   static var alertChangePassword = "alertChangePassword";
 
@@ -543,8 +552,7 @@ class StringRes {
       'areaOfCompetency': "",
 
       'customersRelationShipContent':
-      "Hi ${Injector.userData
-          ?.name??""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+      "Hi ${Injector.userData?.name??""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
       'areaOfCompetency': "Area of competency",
       'areaOfCompetenceContent':
       "Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
@@ -580,6 +588,11 @@ class StringRes {
 
       //setting screen Dialog
       'settingDetails':'You can switch to a professional mode (no virtual company)\nand turn the sound on and off.\n\nIn case your company has negative cash you can request\na bail out which will need to be approved by your manager.',
+      'unLockOrg':'Unlocks when Sales or Service capacities\nempty first time.',
+      'unLockPl':'Unlocks 1 week after 1st login.',
+      'unLockRanking':'Unlocks after three days in row login',
+      'unLockReward':'Unlocks if first Achievement is\nreached',
+      'unLockChallenge':'Unlocks when first lawyer hired',
 
 
       //change password
