@@ -185,7 +185,6 @@ class WebApi {
         headers: headers);
 
     dio.options = options;
-
     return dio;
   }
 

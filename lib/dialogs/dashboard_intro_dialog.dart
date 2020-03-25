@@ -40,7 +40,6 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
   showIntroView() {
     return Stack(
       children: <Widget>[
-
         Positioned(
           left: 0,
           top: 50,
@@ -210,6 +209,9 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
       onTap: () async {
         Injector.introData.dashboard = 1;
         await Injector.setIntroData(Injector.introData);
+
+        await Injector.updateIntroData();
+
         Navigator.pop(context);
       },
     );

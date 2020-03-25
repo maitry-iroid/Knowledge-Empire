@@ -31,16 +31,15 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     // TODO: implement initState
     super.initState();
 
+    initContent();
 
-      showIntroDialog();
+
   }
 
-  Future showIntroDialog() async {
+  Future initContent() async {
     if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
       await DisplayDialogs.showServingYourExistingCustomers(context);
 
-
-    
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         getQuestions();

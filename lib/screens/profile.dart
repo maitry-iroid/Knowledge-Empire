@@ -645,11 +645,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {}
       try {
-        await Injector.prefs.clear();
-//        await removeKeys();
-        Injector.userData = null;
-        Injector.userId = null;
-        Injector.customerValueData = null;
+        await Injector.logout();
+
         Navigator.pushAndRemoveUntil(
             context, FadeRouteLogin(), ModalRoute.withName("/home"));
       } catch (e) {
@@ -1340,7 +1337,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   removeKeys() {
-
 //    Injector.prefs.clear();
 
     Injector.prefs.remove(PrefKeys.user);

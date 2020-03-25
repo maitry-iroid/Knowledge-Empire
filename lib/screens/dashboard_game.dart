@@ -43,9 +43,36 @@ class DashboardGamePageState extends State<DashboardGamePage>
       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
     }
 
-    if (Injector.introData == null || Injector.introData.dashboard == 0)
-      showIntroDialog();
+    if (Injector.introData == null) {
+      getIntroData();
+    } else if (Injector.introData.dashboard == 0) showIntroDialog();
     getUnreadBubbleCount();
+  }
+
+  getIntroData() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
+
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 1;
+
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(true, context);
+          if (data != null) {
+            IntroData introData = IntroData.fromJson(data);
+            Injector.setIntroData(introData);
+
+            if (Injector.introData.dashboard == 0) showIntroDialog();
+          }
+        }).catchError((e) {
+          CommonView.showCircularProgress(true, context);
+          print("getIntro" + e.toString());
+          Utils.showToast(e.toString());
+        });
+      }
+    });
   }
 
   Future showIntroDialog() async {
@@ -58,8 +85,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     print("dispose=======");
+
     super.dispose();
   }
 
@@ -119,6 +147,11 @@ class DashboardGamePageState extends State<DashboardGamePage>
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+
+            dashboardLockStatusData.achievement = 1;
+            dashboardLockStatusData.organization = 1;
+            dashboardLockStatusData.challenge = 1;
+            dashboardLockStatusData.ranking = 1;
 
             if (mounted) setState(() {});
           }
