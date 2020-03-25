@@ -56,7 +56,6 @@ class HelpPageState extends State<HelpPage> {
   AnimationController controller;
   Animation<double> animation;
 
-  DashboardLockStatusData dashboardLockStatusData;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -69,7 +68,7 @@ class HelpPageState extends State<HelpPage> {
     super.initState();
 
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
-    getLockStatus();
+
 
 //    controller = AnimationController(
 //      duration: const Duration(milliseconds: 1000),
@@ -98,7 +97,7 @@ class HelpPageState extends State<HelpPage> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, null,dashboardLockStatusData),
+              CommonView.showDashboardView(context, null,Injector.dashboardLockStatusData),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -1405,25 +1404,4 @@ class HelpPageState extends State<HelpPage> {
     }
   }
 
-  void getLockStatus() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
-
-        WebApi()
-            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) {
-          if (data != null) {
-            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-
-            if (mounted) setState(() {});
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
-  }
 }

@@ -408,8 +408,8 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                   children: <Widget>[
                     Container(
                       child: Text(
-                        Utils.getText(context, widget.text),
-                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                        Utils.getText(context, widget.text),textAlign: TextAlign.center,
+                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 13)),

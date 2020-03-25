@@ -15,6 +15,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
@@ -27,6 +28,7 @@ import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/intro_page.dart';
+import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
@@ -46,6 +48,7 @@ class Utils {
   static getAssetsImg(String name) {
     return "assets/images/" + name + ".png";
   }
+
   static getAssetsImgJpg(String name) {
     return "assets/images/" + name + ".jpg";
   }
@@ -219,10 +222,12 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
-static  void navigateToIntro(BuildContext context) {
-  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-      IntroPage()), (Route<dynamic> route) => false);
-}
+  static void navigateToIntro(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => IntroPage()),
+        (Route<dynamic> route) => false);
+  }
+
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
       bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
@@ -496,7 +501,37 @@ static  void navigateToIntro(BuildContext context) {
   }
 
   static performDashboardItemClick(BuildContext context, String type) {
-    performNavigation(type, context);
+    DashboardLockStatusData dashboardLockStatusData =
+        Injector.dashboardLockStatusData;
+
+    if (type == Const.typeOrg &&
+        dashboardLockStatusData != null &&
+        dashboardLockStatusData.organization != null &&
+        dashboardLockStatusData.organization != 1) {
+      showLockReasonDialog(type, context);
+    } else if (type == Const.typePl &&
+        dashboardLockStatusData != null &&
+        dashboardLockStatusData.organization != null &&
+        dashboardLockStatusData.challenge != 1) {
+      showLockReasonDialog(type, context);
+    } else if (type == Const.typeRanking &&
+        dashboardLockStatusData != null &&
+        dashboardLockStatusData.organization != null &&
+        dashboardLockStatusData.challenge != 1) {
+      showLockReasonDialog(type, context);
+    } else if (type == Const.typeReward &&
+        dashboardLockStatusData != null &&
+        dashboardLockStatusData.organization != null &&
+        dashboardLockStatusData.challenge != 1) {
+      showLockReasonDialog(type, context);
+    } else if (type == Const.typeChallenges &&
+        dashboardLockStatusData != null &&
+        dashboardLockStatusData.organization != null &&
+        dashboardLockStatusData.challenge != 1) {
+      showLockReasonDialog(type, context);
+    } else {
+      performNavigation(type, context);
+    }
   }
 
   static checkAudio() {
@@ -516,17 +551,16 @@ static  void navigateToIntro(BuildContext context) {
   }
 
   static pdfShow() {
-    return  SimplePdfViewerWidget(
-            completeCallback: (bool result) {
-              print("completeCallback,result:$result");
-            },
-            initialUrl: questionData.mediaLink,
-          )
-       ;
+    return SimplePdfViewerWidget(
+      completeCallback: (bool result) {
+        print("completeCallback,result:$result");
+      },
+      initialUrl: questionData.mediaLink,
+    );
   }
 
   static isImage(String path) {
-    return extension(path).toLowerCase() == ".png" .toLowerCase()||
+    return extension(path).toLowerCase() == ".png".toLowerCase() ||
         extension(path).toLowerCase() == ".jpeg".toLowerCase() ||
         extension(path).toLowerCase() == ".jpg".toLowerCase();
   }
@@ -708,7 +742,7 @@ static  void navigateToIntro(BuildContext context) {
       case "German":
         index = 1;
         break;
-        case "Chinese":
+      case "Chinese":
         index = 2;
         break;
       default:
@@ -739,5 +773,27 @@ static  void navigateToIntro(BuildContext context) {
 //        .document(userId)
 //        .updateData({Const.keyBadgeCount: FieldValue.increment(1)});
 //  }
+  static void showLockReasonDialog(String typeOrg, BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => OrgInfoDialog(
+              text: Utils.getText(context, getLockReasonText(typeOrg)),
+              isForIntroDialog: true,
+            ));
+  }
 
+  static String getLockReasonText(String type) {
+    if (type == Const.typeOrg)
+      return StringRes.unLockOrg;
+    else if (type == Const.typeChallenges)
+      return StringRes.unLockChallenge;
+    else if (type == Const.typePl)
+      return StringRes.unLockPl;
+    else if (type == Const.typeRanking)
+      return StringRes.unLockRanking;
+    else if (type == Const.typeReward)
+      return StringRes.unLockReward;
+    else
+      return "";
+  }
 }

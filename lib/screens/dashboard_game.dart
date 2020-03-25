@@ -147,6 +147,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+            Injector.dashboardLockStatusData  = dashboardLockStatusData;
             print(dashboardLockStatusData);
             if (mounted) setState(() {});
           }
