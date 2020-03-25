@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:math';
+import 'dart:typed_data';
+
+import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ke_employee/animation/Particles.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
@@ -10,6 +16,10 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
+import 'package:flutter/services.dart';
+import 'package:simple_animations/simple_animations/controlled_animation.dart';
+
+import 'package:animated_background/animated_background.dart';
 
 class CommonView {
   static getBGDecoration(BuildContext context) {
@@ -375,7 +385,7 @@ class CommonView {
 
                     Utils.performDashboardItemClick(context, Const.typeRanking);
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-
+//                    CommonView().collectorDialog(context);
                   },
                 ),
               ],
@@ -765,7 +775,8 @@ class CommonView {
         })*/
   }
 
-  pushNotificationAlert2(BuildContext context, String bonus, String level, String type, String achievementType) {
+  pushNotificationAlert2(BuildContext context, String bonus, String level,
+      String type, String achievementType) {
     showDialog(
         context: context,
         builder: (BuildContext buildContext) {
@@ -775,7 +786,7 @@ class CommonView {
             ),
             child: Container(
               color: ColorRes.colorBgDark,
-              height: Utils.getDeviceHeight(context) /1.6,
+              height: Utils.getDeviceHeight(context) / 1.6,
               width: Utils.getDeviceWidth(context) / 2,
               child: Container(
                 alignment: Alignment.center,
@@ -791,15 +802,18 @@ class CommonView {
                         width: Utils.getDeviceWidth(context) / 8,
                         height: Utils.getDeviceHeight(context) / 15,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), border: Border.all(color: ColorRes.borderRewardsName, width: 1)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(
+                                color: ColorRes.borderRewardsName, width: 1)),
                         child: Center(
                             child: Text(
-                              "Collector",
-                              style: TextStyle(fontSize: 18, color: ColorRes.white),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            )),
+                          "Collector",
+                          style: TextStyle(fontSize: 18, color: ColorRes.white),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        )),
                       ),
                       SizedBox(height: 8),
                       Padding(
@@ -876,4 +890,95 @@ class CommonView {
         })*/
   }
 
+  collectorDialog(BuildContext context, String bonus, String level, String type, String achievementType) {
+    showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.75),
+//        barrierColor: Colors.white.withOpacity(1.0),
+
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: Dialog(
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(200),
+                ),
+                child: Container(
+                  padding: EdgeInsets.only(top: 25),
+//                  width: Utils.getDeviceWidth(context),
+                  width: Utils.getDeviceWidth(context) / 2.25,
+                  height: Utils.getDeviceHeight(context) / 1.4,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 30,
+                          width: 100,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("bg_achivement1")),
+                                  fit: BoxFit.fill)),
+                          child: Text("Collector",
+                              style: TextStyle(color: ColorRes.white)),
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: 220,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_collector")),
+                                    fit: BoxFit.fill)),
+                            //trophy3
+                            child: Image(
+                                image:
+                                    AssetImage(Utils.getAssetsImg("trophy3"))),
+                          ),
+//                      child: Text("hello")
+                        ),
+                        Container(
+                          height: 40,
+                          child: Text(
+                              "5 Business Segments subscribed to \n Bonus: $bonus",
+//                              "5 Business Segments subscribed to” then we say “Bonus: $bonus"
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: ColorRes.white)),
+                        ),
+                        InkResponse(
+                          child: Container(
+                            height: 30,
+                            width: 80,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_save")),
+                                    fit: BoxFit.fill)),
+                            child: Text("Next",
+                                style: TextStyle(color: ColorRes.white)),
+                          ),
+                          onTap: () {},
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 300),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {});
+  }
 }
