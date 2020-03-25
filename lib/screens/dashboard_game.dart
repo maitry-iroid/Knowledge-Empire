@@ -1,3 +1,4 @@
+import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -16,6 +17,7 @@ import 'package:ke_employee/models/intro.dart';
 
 import '../commonview/header.dart';
 import '../helper/constant.dart';
+
 
 class DashboardGamePage extends StatefulWidget {
   DashboardGamePage({Key key}) : super(key: key);
@@ -162,3 +164,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
     });
   }
 }
+
+
+
