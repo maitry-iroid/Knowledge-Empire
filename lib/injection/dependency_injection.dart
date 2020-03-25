@@ -25,6 +25,7 @@ class Injector {
   static UserData userData;
   static int userId;
   static CustomerValueData customerValueData;
+  static IntroData introData;
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
@@ -44,7 +45,6 @@ class Injector {
   static int badgeCount = 0;
 
   static int dialogType = 0;
-  static IntroData introData;
 
 //  factory Injector {
 //    return _singleton;
@@ -104,6 +104,15 @@ class Injector {
     }
   }
 
+  static logout() async{
+    await Injector.prefs.clear();
+    userData = null;
+    userId = null;
+    customerValueData = null;
+    customerValueData = null;
+    introData = null;
+  }
+
   static updateMode(int _mode) async {
     mode = _mode;
     prefs.setInt(PrefKeys.mode, _mode);
@@ -130,7 +139,7 @@ class Injector {
       await Injector.prefs
           .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
 
-      updateIntroData();
+//      updateIntroData();
       introData = _introData;
     }
   }

@@ -1,3 +1,4 @@
+import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -16,6 +17,7 @@ import 'package:ke_employee/models/intro.dart';
 
 import '../commonview/header.dart';
 import '../helper/constant.dart';
+
 
 class DashboardGamePage extends StatefulWidget {
   DashboardGamePage({Key key}) : super(key: key);
@@ -43,9 +45,36 @@ class DashboardGamePageState extends State<DashboardGamePage>
       Injector.prefs.setInt(PrefKeys.mode, Const.businessMode);
     }
 
-    if (Injector.introData == null || Injector.introData.dashboard == 0)
-      showIntroDialog();
+    if (Injector.introData == null) {
+      getIntroData();
+    } else if (Injector.introData.dashboard == 0) showIntroDialog();
     getUnreadBubbleCount();
+  }
+
+  getIntroData() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
+
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 1;
+
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+          CommonView.showCircularProgress(true, context);
+          if (data != null) {
+            IntroData introData = IntroData.fromJson(data);
+            Injector.setIntroData(introData);
+
+            if (Injector.introData.dashboard == 0) showIntroDialog();
+          }
+        }).catchError((e) {
+          CommonView.showCircularProgress(true, context);
+          print("getIntro" + e.toString());
+          Utils.showToast(e.toString());
+        });
+      }
+    });
   }
 
   Future showIntroDialog() async {

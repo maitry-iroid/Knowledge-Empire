@@ -279,6 +279,8 @@ class StringRes {
   static var unLockChallenge = "unLockChallenge";
 
 
+// change password
+  static var alertChangePassword = "alertChangePassword";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -555,16 +557,7 @@ class StringRes {
       'areaOfCompetenceContent':
       "Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
 
-      // dashboard intro popup
 
-      'dashboardProfile': 'Change Profile\n name, Language',
-      'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': '"Services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering Questions\n increases your Cash',
-      'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
-      'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
-      //endregion
 
       //Organization screen Dialog
       'hireHrEmp': 'Hire HR Employees',
@@ -577,17 +570,17 @@ class StringRes {
       'empOMasterDetails':'Note that your Employ-o-Meter shows 40/50.\n50 is your maximum number employees and 40 your free capacity.\nYou can increase your maximum by hiring more HR employees.\nA click on your Employ-o-Meter will also bring you to this organizational screen.',
       'costOfEmp':'Cost of employees',
       'costOfEmpDetails':'Here you see your total cash.\n\nHiring employees will incur hiring cost (increasing over time).\nThe cost will be deducted from your cash.\nEvery employee also recieves a daily salary which starts at 200.\nSalary levels will increase over time.',
+
       // dashboard intro popup
 
       'dashboardProfile': 'Change Profile\n name, Language',
       'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': 'Services-o-meter"\navailable Services Reps',
+      'dashboardServices': '"Services-o-meter"\navailable Services Reps',
       'dashboardBalance': 'Answering Questions\n increases your Cash',
       'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
       'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
 
-      //endregion
 
       'customizeYourCompany':"Customize your company",
       'customizeYourCompanyContent':"Dear ${Injector.userData?.name??""},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
@@ -600,6 +593,11 @@ class StringRes {
       'unLockRanking':'Unlocks after three days in row login',
       'unLockReward':'Unlocks if first Achievement is\nreached',
       'unLockChallenge':'Unlocks when first lawyer hired',
+
+
+      //change password
+      'alertChangePassword':'Password changed Successfully.'
+
 
     },
     'de': {
@@ -896,6 +894,9 @@ class StringRes {
       //setting screen Dialog
       'settingDetails':'Du kannst zur professionellen Ansicht wechseln (kein virtuelles Unternehmen) und den Ton ein und aus schalten.',
 
+      //change password
+      'alertChangePassword':'Password changed Successfully.'
+
     },
     'zh': {
       //region chinese
@@ -1181,6 +1182,9 @@ class StringRes {
 
       //setting screen Dialog
       'settingDetails':'您可以切换到专业模式（没有虚拟公司)，您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金，您的经理会进行审批。',
+
+      //change password
+      'alertChangePassword':'Password changed Successfully.'
 
     }
   };

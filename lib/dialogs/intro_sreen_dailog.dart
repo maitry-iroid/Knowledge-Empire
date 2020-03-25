@@ -118,22 +118,27 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                         GestureDetector(
                           onTap: widget.onTapBtn,
                           child: Container(
-                              width: size.width / 3.5,
-                              height: size.height / 16,
-                              decoration: BoxDecoration(
-                                  color: widget.btnColor != null
-                                      ? widget.btnColor
-                                      : Colors.grey,
-                                  border: Border.all(
-                                      color: ColorRes.header, width: 1),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Center(
-                                //  child: Text("",
-                                child: Text(Utils.getText(context, StringRes.next),
-                                    style: TextStyle(
-                                        fontSize: size.width / 46.5,
-                                        color: ColorRes.white)),
-                              )),
+                            height: size.height / 11,
+//                            color: ColorRes.black,
+                            child: Container(
+                                width: size.width / 3.5,
+                                height: size.height / 14,
+                                margin: EdgeInsets.only(top: 6),
+                                decoration: BoxDecoration(
+                                    color: widget.btnColor != null
+                                        ? widget.btnColor
+                                        : Colors.grey,
+                                    border: Border.all(
+                                        color: ColorRes.header, width: 1),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Center(
+                                  //  child: Text("",
+                                  child: Text(Utils.getText(context, StringRes.next),
+                                      style: TextStyle(
+                                          fontSize: size.width / 46.5,
+                                          color: ColorRes.white)),
+                                )),
+                          ),
                         )
                       ],
                     ),

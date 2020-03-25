@@ -280,7 +280,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         });
 
       if (data != null) {
-        Utils.showToast("Password changed Successfully.");
+        Utils.showToast(Utils.getText(context, StringRes.alertChangePassword));
 
         if (widget.isFromProfile) {
           Navigator.pop(context);
