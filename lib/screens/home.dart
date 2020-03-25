@@ -130,7 +130,6 @@ class HomePageState extends State<HomePage>
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
             Injector.dashboardLockStatusData = dashboardLockStatusData;
-            print(dashboardLockStatusData);
             if (mounted) setState(() {});
           }
         }).catchError((e) {

@@ -48,6 +48,8 @@ class Injector {
 
   static int dialogType = 0;
 
+  static WebApi webApi;
+
 //  factory Injector {
 //    return _singleton;
 //  }
@@ -60,6 +62,8 @@ class Injector {
     deviceType = Device.get().isAndroid ? "android" : "ios";
 
     firebaseMessaging = FirebaseMessaging();
+
+    webApi = WebApi();
 
     firebaseMessaging.getToken().then((token) {
       print("Your Device tocken==<>" + token);
