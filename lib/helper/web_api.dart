@@ -89,8 +89,7 @@ class WebApi {
       print(apiReq + "_" + response?.data);
 
       if (response.statusCode == 200) {
-        BaseResponse _response =
-            BaseResponse.fromJson(jsonDecode(response.data));
+        BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
 
         if (_response != null) {
           if (_response.flag == "true") {

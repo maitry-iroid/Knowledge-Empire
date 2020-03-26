@@ -48,6 +48,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
       getIntroData();
     } else if (Injector.introData.dashboard == 0) showIntroDialog();
     getUnreadBubbleCount();
+
+    Utils.gameBackgroundMusic();
   }
 
   getIntroData() {

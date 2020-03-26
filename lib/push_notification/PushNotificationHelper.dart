@@ -175,6 +175,7 @@ class PushNotificationHelper {
         customerValueBloc.setCustomerValue(Injector.customerValueData);
 
 //        CommonView().pushNotificationAlert2(context, bonus, level, type, achievementType);
+        Utils.achievement();
         CommonView().collectorDialog(context, bonus, level, type, achievementType);
 
       } else {

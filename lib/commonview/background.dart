@@ -460,8 +460,11 @@ class CommonView {
                       Utils.playClickSound();
                       Utils.performDashboardItemClick(
                           context, Const.typeRanking);
+//                      Utils.achievement();
+//                      CommonView().collectorDialog(context, '1000');
                     }
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
+
                   },
                 ),
               ],
@@ -1041,6 +1044,7 @@ class CommonView {
   }
 
   collectorDialog(BuildContext context, String bonus, String level, String type, String achievementType) {
+//  collectorDialog(BuildContext context, String bonus) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
 //        barrierColor: Colors.white.withOpacity(1.0),
@@ -1102,7 +1106,7 @@ class CommonView {
                               textAlign: TextAlign.center,
                               style: TextStyle(color: ColorRes.white)),
                         ),
-                        InkResponse(
+                        /*InkResponse(
                           child: Container(
                             height: 30,
                             width: 80,
@@ -1116,7 +1120,7 @@ class CommonView {
                                 style: TextStyle(color: ColorRes.white)),
                           ),
                           onTap: () {},
-                        )
+                        )*/
                       ],
                     ),
                   ),

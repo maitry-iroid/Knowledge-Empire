@@ -256,6 +256,18 @@ static  void navigateToIntro(BuildContext context) {
 //    currentVol = await Volume.getVol;
 //  }
 
+  static gameBackgroundMusic() async {
+    if(Injector.isBusinessMode) {
+      if (Injector.isSoundEnable) Injector.player.play("game_bg_music.mp3");
+    } else {
+      Injector.isSoundEnable = false;
+    }
+  }
+
+  static achievement() async {
+    if (Injector.isSoundEnable) Injector.player.play("achievement_music.mp3");
+  }
+
   static playClickSound() async {
     if (Injector.isSoundEnable) Injector.player.play("all_button_clicks.wav");
 //    if (Injector.isSoundEnable)
