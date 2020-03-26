@@ -148,6 +148,40 @@ class _LoginPageState extends State<LoginPage> {
                     height: 10,
                   ),
                   showPassword(),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Utils.getDeviceWidth(context) / 9),
+                    child: InkResponse(
+                      child: Container(
+                        height: 30,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: ExactAssetImage(
+                                  Utils.getAssetsImg('btn_login')),
+                              alignment: Alignment.topCenter,
+                              fit: BoxFit.fill),
+                        ),
+                        child: Text(
+                          Utils.getText(context, StringRes.login).toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: ColorRes.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        Utils.isInternetConnectedWithAlert()
+                            .then((isConnected) {
+                          if (isConnected) validateForm();
+                        });
+                      },
+                    ),
+                  ),
                   SizedBox(
                     height: 5,
                   ),
@@ -185,42 +219,6 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Utils.getDeviceWidth(context) / 9),
-                    child: InkResponse(
-                      child: Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: ExactAssetImage(
-                                  Utils.getAssetsImg('btn_login')),
-                              alignment: Alignment.topCenter,
-                              fit: BoxFit.fill),
-                        ),
-                        child: Text(
-                          Utils.getText(context, StringRes.login).toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Utils.isInternetConnectedWithAlert()
-                            .then((isConnected) {
-                          if (isConnected) validateForm();
-                        });
-                      },
-                    ),
-                  )
                 ],
               )),
         ),

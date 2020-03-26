@@ -61,7 +61,7 @@ class _TimeItemState extends State<TimeItem> {
                 fit: BoxFit.contain)),
         child: Text(
           widget.title,
-          style: TextStyle(color: widget.isSelected ?  ColorRes.white : ColorRes.lightGrey, fontSize: 11,), textAlign: TextAlign.center,
+          style: TextStyle(color: widget.isSelected ?  ColorRes.white : ColorRes.lightGrey, fontSize: 15,), textAlign: TextAlign.center,
         ),
       ),
     );
