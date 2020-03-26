@@ -22,8 +22,6 @@ import '../models/getDownloadQuestions.dart';
 import '../models/get_learning_module.dart';
 
 class BusinessSectorPage extends StatefulWidget {
-
-
   const BusinessSectorPage({Key key}) : super(key: key);
 
   @override
@@ -47,7 +45,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   bool isSwitched = false;
 
-
   @override
   void initState() {
     super.initState();
@@ -64,12 +61,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         fetchLearningModules();
       } else {
         if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
-            Injector.prefs
-                .getString(PrefKeys.learningModles)
-                .isNotEmpty) {
-          arrFinalLearningModules = LearningModuleResponse
-              .fromJson(
-              jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
+            Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
+          arrFinalLearningModules = LearningModuleResponse.fromJson(
+                  jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
 
@@ -93,16 +87,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 flex: 1,
                 child: Injector.isBusinessMode
                     ? Card(
-                  color: Colors.transparent,
-                  elevation: 20,
-                  child: showSecondHalf(),
-                )
+                        color: Colors.transparent,
+                        elevation: 20,
+                        child: showSecondHalf(),
+                      )
                     : showSecondHalf(),
               )
             ],
           ),
         ),
-
       ],
     );
   }
@@ -114,11 +107,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius:
-          Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              Injector.isBusinessMode ? null : BorderRadius.circular(20),
           image: Injector.isBusinessMode
               ? DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("business_sec_header")),
-              fit: BoxFit.fill)
+                  image: AssetImage(Utils.getAssetsImg("business_sec_header")),
+                  fit: BoxFit.fill)
               : null),
       child: Row(
         children: <Widget>[
@@ -151,11 +144,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.moduleId ==
-                arrFinalLearningModules[index].moduleId)
+                    arrFinalLearningModules[index].moduleId)
                 ? DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(
-                    Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
-                fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg(
+                        Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
+                    fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -174,9 +167,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           : BorderRadius.circular(20),
                       image: Injector.isBusinessMode
                           ? DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg("bg_bus_sector_item")),
-                          fit: BoxFit.fill)
+                              image: AssetImage(
+                                  Utils.getAssetsImg("bg_bus_sector_item")),
+                              fit: BoxFit.fill)
                           : null),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -223,14 +216,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
                     color:
-                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     borderRadius: Injector.isBusinessMode
                         ? null
                         : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("value")),
-                        fit: BoxFit.fill)
+                            image: AssetImage(Utils.getAssetsImg("value")),
+                            fit: BoxFit.fill)
                         : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
@@ -278,7 +271,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
@@ -378,7 +371,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         });
 
         LearningModuleResponse learningModuleResponse =
-        LearningModuleResponse();
+            LearningModuleResponse();
         learningModuleResponse.data = arrData;
 
         await Injector.prefs.setString(PrefKeys.learningModles,
@@ -458,7 +451,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void searchData() {
     var data = arrLearningModules
         .where((module) =>
-        module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
+            module.moduleName.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
 
     arrFinalLearningModules.addAll(data);
@@ -485,7 +478,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //        Utils.showToast(Utils.getText(context, StringRes.alertActionPerformed));
 
         arrLearningModules[selectedModule.index].isDownloadEnable =
-        isSwitched ? 1 : 0;
+            isSwitched ? 1 : 0;
         selectedModule.isDownloadEnable = isSwitched ? 1 : 0;
 
         if (rq.type == 0)
@@ -616,10 +609,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   void removeDownloadedQuestion() async {
     List<QuestionData> arrQuestions =
-    Utils.getQuestionsLocally(Const.getNewQueType);
+        Utils.getQuestionsLocally(Const.getNewQueType);
 
     arrQuestions.removeWhere(
-            (question) => question.questionId == selectedModule.moduleId);
+        (question) => question.questionId == selectedModule.moduleId);
 
     QuestionsResponse questionsResponse = QuestionsResponse();
     questionsResponse.data = arrQuestions;
@@ -682,11 +675,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             color:
-            Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+                Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
             margin: EdgeInsets.only(top: 20),
             child: Container(
               padding:
-              EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+                  EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode
                     ? ColorRes.bgDescription
@@ -719,12 +712,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   color:
-                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.circular(20),
                   image: Injector.isBusinessMode
                       ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                      fit: BoxFit.fill)
+                          image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                          fit: BoxFit.fill)
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
@@ -744,40 +737,40 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       children: <Widget>[
         selectedModule.isAssign == 1
             ? InkResponse(
-          child: Text(
-            Utils.getText(context, StringRes.downLoad),
-            style: TextStyle(
-                color: Injector.isBusinessMode
-                    ? ColorRes.white
-                    : ColorRes.fontDarkGrey),
-          ),
-          onTap: () {
-            Utils.playClickSound();
-          },
-        )
+                child: Text(
+                  Utils.getText(context, StringRes.downLoad),
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.fontDarkGrey),
+                ),
+                onTap: () {
+                  Utils.playClickSound();
+                },
+              )
             : Container(),
         selectedModule.isAssign == 1
             ? Switch(
-          value: isSwitched,
-          onChanged: (value) {
-            Utils.isInternetConnectedWithAlert().then((isConnected) {
-              if (isConnected) {
-                if (mounted)
-                  setState(() {
-                    isSwitched = value;
+                value: isSwitched,
+                onChanged: (value) {
+                  Utils.isInternetConnectedWithAlert().then((isConnected) {
+                    if (isConnected) {
+                      if (mounted)
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      updatePermission();
+                    }
                   });
-                updatePermission();
-              }
-            });
-          },
-          activeTrackColor: selectedModule.isSubscribedFromBackend == 1
-              ? ColorRes.lightGrey
-              : ColorRes.white,
-          inactiveTrackColor: ColorRes.lightGrey,
-          activeColor: selectedModule.isSubscribedFromBackend == 1
-              ? ColorRes.lightGrey
-              : ColorRes.white,
-        )
+                },
+                activeTrackColor: selectedModule.isSubscribedFromBackend == 1
+                    ? ColorRes.lightGrey
+                    : ColorRes.white,
+                inactiveTrackColor: ColorRes.lightGrey,
+                activeColor: selectedModule.isSubscribedFromBackend == 1
+                    ? ColorRes.lightGrey
+                    : ColorRes.white,
+              )
             : Container(),
       ],
     );
@@ -793,17 +786,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 color: Injector.isBusinessMode
                     ? null
                     : selectedModule.isSubscribedFromBackend == 1
-                    ? ColorRes.greyText
-                    : ColorRes.headerBlue,
+                        ? ColorRes.greyText
+                        : ColorRes.headerBlue,
                 borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        selectedModule.isSubscribedFromBackend == 1
-                            ? "bg_disable_subscribe"
-                            : "bg_subscribe")),
-                    fit: BoxFit.fill)
+                        image: AssetImage(Utils.getAssetsImg(
+                            selectedModule.isSubscribedFromBackend == 1
+                                ? "bg_disable_subscribe"
+                                : "bg_subscribe")),
+                        fit: BoxFit.fill)
                     : null),
             child: Text(
               Utils.getText(
@@ -848,7 +841,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showDownloadStatus() {
     return Opacity(
       opacity:
-      selectedModule != null ? (selectedModule.isDownloading ? 1 : 0) : 0,
+          selectedModule != null ? (selectedModule.isDownloading ? 1 : 0) : 0,
       child: Text(
         Utils.getText(context, StringRes.downloading),
         style: TextStyle(color: ColorRes.white, fontSize: 17),
@@ -859,11 +852,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-      Utils.getText(context, StringRes.thisModuleWillOccupie) +
-          selectedModule.fileSize.toString() +
-          "",
-      style: TextStyle(color: ColorRes.white, fontSize: 17),
-    )
+            Utils.getText(context, StringRes.thisModuleWillOccupie) +
+                selectedModule.fileSize.toString() +
+                "",
+            style: TextStyle(color: ColorRes.white, fontSize: 17),
+          )
         : Container();
   }
 }

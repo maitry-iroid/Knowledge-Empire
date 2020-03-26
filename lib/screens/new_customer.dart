@@ -412,5 +412,4 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       },
     );
   }
-
 }
