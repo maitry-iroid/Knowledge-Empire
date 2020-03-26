@@ -144,13 +144,11 @@ class PushNotificationHelper {
       String bonus = message['data']['bonus'];
       String achievementType = message['data']['achievementType'];
 
-      if (challengeId != null) {
+      if (notificationType == Const.pushTypeChallenge.toString() &&
+          challengeId != null) {
         Injector.homeStreamController
             ?.add("${Const.openPendingChallengeDialog}");
-      }
-
-      if (notificationType == Const.pushTypeAchievement.toString()) {
-
+      } else if (notificationType == Const.pushTypeAchievement.toString()) {
         if (bonus != null)
           Injector.customerValueData.totalBalance = int.parse(bonus);
 
@@ -176,8 +174,8 @@ class PushNotificationHelper {
         customerValueBloc.setCustomerValue(Injector.customerValueData);
 
 //        CommonView().pushNotificationAlert2(context, bonus, level, type, achievementType);
-        CommonView().collectorDialog(context, bonus, level, type, achievementType);
-
+        CommonView()
+            .collectorDialog(context, bonus, level, type, achievementType);
       } else {
         showLocalNotification(Injector.notificationID, body);
       }

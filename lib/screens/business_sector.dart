@@ -126,7 +126,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             flex: 8,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: ColorRes.white),
+              style: TextStyle(color: ColorRes.white,fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ),
@@ -134,7 +134,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.size),
-              style: TextStyle(color: ColorRes.white),
+              style: TextStyle(color: ColorRes.white,fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ),
@@ -274,11 +274,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               children: <Widget>[
                 Expanded(
                     child: Container(
-                        height: 30,
+                        height: 33,
 //                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
@@ -305,7 +305,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           maxLines: 1,
                           controller: searchController,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 17,
                             color: ColorRes.hintColor,
                           ),
                           decoration: InputDecoration(
@@ -703,7 +703,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   style: TextStyle(
                       color: Injector.isBusinessMode
                           ? ColorRes.white
-                          : ColorRes.textProf),
+                          : ColorRes.textProf,fontSize: 17),
                 ),
               ),
             ),
@@ -728,7 +728,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
-                style: TextStyle(color: ColorRes.white, fontSize: 17),
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -811,7 +811,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   selectedModule.isAssign == 0
                       ? StringRes.subscribe
                       : StringRes.unSubscribe),
-              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              style: TextStyle(color: ColorRes.white, fontSize: 20),
               textAlign: TextAlign.center,
             )),
         onTap: () {

@@ -45,7 +45,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     await getQuestionsBloc?.getQuestion(rq);
   }
 
-
   void releaseResource(int index) {
     Utils.isInternetConnectedWithAlert().then((_) {
       QuestionData questionData = arrQuestions[index];
@@ -162,7 +161,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Container showSubHeader() {
     return Container(
-      height: Injector.isBusinessMode ? 30 : 25,
+      height: Injector.isBusinessMode ? 35 : 30,
       margin: EdgeInsets.only(top: 8, bottom: 5),
       padding: EdgeInsets.only(right: 3),
       decoration: BoxDecoration(
@@ -180,7 +179,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -189,7 +188,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -198,7 +197,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -207,7 +206,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -216,7 +215,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -232,8 +231,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         Expanded(
           child: InkResponse(
             child: Container(
-                height: Injector.isBusinessMode ? 30 : 25,
-                margin: EdgeInsets.symmetric(vertical: 5),
+                height: Injector.isBusinessMode ? 35 : 30,
+                margin: EdgeInsets.symmetric(vertical: 3),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
@@ -255,7 +254,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         arrQuestions[index].title,
                         style: TextStyle(
                           color: ColorRes.blue,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 1,
@@ -265,7 +264,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       flex: 6,
                       child: Text(
                         arrQuestions[index].moduleName,
-                        style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
@@ -276,7 +275,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         arrQuestions[index].value.toString() + ' \$',
                         style: TextStyle(
                           color: ColorRes.blue,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 1,
@@ -286,7 +285,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       flex: 3,
                       child: Text(
                         arrQuestions[index].loyalty.toString() + ' d',
-                        style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
@@ -334,11 +333,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {
         return AlertDialog(
-          content:
-              Text(Utils.getText(context, StringRes.alertReleaseResources)),
+          content: Text(
+            Utils.getText(context, StringRes.alertReleaseResources),
+            style: TextStyle(fontSize: 20),
+          ),
           actions: <Widget>[
             FlatButton(
-              child: Text(Utils.getText(context, StringRes.ok)),
+              child: Text(Utils.getText(context, StringRes.ok),
+                  style: TextStyle(fontSize: 20)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
@@ -346,7 +348,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
               },
             ),
             FlatButton(
-              child: Text(Utils.getText(context, StringRes.cancel)),
+              child: Text(
+                Utils.getText(context, StringRes.cancel),
+                style: TextStyle(fontSize: 20),
+              ),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

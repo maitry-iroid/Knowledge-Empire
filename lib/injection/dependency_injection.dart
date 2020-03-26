@@ -156,7 +156,6 @@ class Injector {
     return userData?.isManager == 1;
   }
 
-
   static getIntroData() {
     if (Injector.introData != null) return;
 
@@ -180,6 +179,8 @@ class Injector {
   }
 
   static updateIntroData() {
+    if (Injector.introData == null) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         IntroRequest rq = IntroRequest();

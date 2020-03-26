@@ -5,10 +5,6 @@ class StringRes {
 
   static String username = Injector.userData?.name??"";
 
-  static updateUserName(String _username){
-    username = _username;
-  }
-
   //main options
   static var home = "home";
   static var businessSector = "businessSector";
