@@ -216,7 +216,7 @@ class _RankingPageState extends State<RankingPage> {
                               fit: BoxFit.fill)),
                       child: Text(
                         Utils.getText(context, StringRes.you),
-                        style: TextStyle(color: ColorRes.white, fontSize: 13),
+                        style: TextStyle(color: ColorRes.white, fontSize: 15),
                       )),
                   onTap: () {
                     int index = arrFriends.indexOf(arrFriends.firstWhere(
@@ -249,7 +249,7 @@ class _RankingPageState extends State<RankingPage> {
                             child: Text(
                               Utils.getText(context, StringRes.name),
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 13),
+                                  color: ColorRes.white, fontSize: 15),
                               maxLines: 1,
                             ),
                           ),
@@ -259,7 +259,7 @@ class _RankingPageState extends State<RankingPage> {
                           child: Text(
                               Utils.getText(context, StringRes.companyName),
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 13),
+                                  color: ColorRes.white, fontSize: 15),
                               maxLines: 1,
                               textAlign: TextAlign.center),
                         ),
@@ -267,7 +267,7 @@ class _RankingPageState extends State<RankingPage> {
                           padding: EdgeInsets.only(right: 10),
                           child: Text(Utils.getText(context, StringRes.score),
                               style: TextStyle(
-                                  color: ColorRes.white, fontSize: 13),
+                                  color: ColorRes.white, fontSize: 15),
                               textAlign: TextAlign.right),
                         ),
                       ],
@@ -290,7 +290,7 @@ class _RankingPageState extends State<RankingPage> {
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.challenges),
-                      style: TextStyle(color: ColorRes.white, fontSize: 12),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
                       maxLines: 1,
                       textAlign: TextAlign.center,
                     ),
@@ -313,7 +313,7 @@ class _RankingPageState extends State<RankingPage> {
                             fit: BoxFit.fill)),
                     child: Text(
                       Utils.getText(context, StringRes.friend),
-                      style: TextStyle(color: ColorRes.white, fontSize: 12),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
                     ),
                   ),
                 ),
@@ -634,12 +634,12 @@ class _RankingPageState extends State<RankingPage> {
                             color: isCurrentUser(index)
                                 ? ColorRes.white
                                 : ColorRes.textBlue,
-                            fontSize: 14,
+                            fontSize: 17,
                           )),
                     ),
                     Container(
-                      height: 20,
-                      width: 20,
+                      height: 25,
+                      width: 25,
                       margin: EdgeInsets.only(right: 5),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -658,7 +658,7 @@ class _RankingPageState extends State<RankingPage> {
                               color: isCurrentUser(index)
                                   ? ColorRes.white
                                   : ColorRes.textBlue,
-                              fontSize: 13),
+                              fontSize: 17),
                           textAlign: TextAlign.left),
                     ),
                   ],
@@ -680,7 +680,7 @@ class _RankingPageState extends State<RankingPage> {
                         color: isCurrentUser(index)
                             ? ColorRes.white
                             : ColorRes.greyText,
-                        fontSize: 13),
+                        fontSize: 17),
                     textAlign: TextAlign.center),
               ),
               Container(
@@ -711,7 +711,7 @@ class _RankingPageState extends State<RankingPage> {
                       : "0",
                   style: TextStyle(
                     color: ColorRes.white,
-                    fontSize: 13,
+                    fontSize: 17,
                   ),
                   maxLines: 1,
                 ),

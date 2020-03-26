@@ -58,7 +58,7 @@ class _GroupItemState extends State<GroupItem> {
                   : widget.isSelected
                       ? ColorRes.titleBlueProf
                       : ColorRes.fontGrey,
-              fontSize: Injector.isBusinessMode ? 13 : 18),
+              fontSize: Injector.isBusinessMode ? 15 : 18),
         ),
       ),
     );
