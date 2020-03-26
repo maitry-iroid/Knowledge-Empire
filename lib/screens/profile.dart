@@ -480,7 +480,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: !Injector.isManager() &&
                                 Injector.customerValueData.totalBalance <= 0
                             ? () async {
-                                Injector.player.clearCache();
+//                                Injector.player.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
                                 Utils.playClickSound();
                                 _asyncConfirmDialog(context);

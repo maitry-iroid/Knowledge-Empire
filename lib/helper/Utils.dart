@@ -261,13 +261,13 @@ class Utils {
 //    currentVol = await Volume.getVol;
 //  }
 
-  static gameBackgroundMusic() async {
+/*  static gameBackgroundMusic() async {
     if(Injector.isBusinessMode) {
       if (Injector.isSoundEnable) Injector.player.play("game_bg_music.mp3");
     } else {
       Injector.isSoundEnable = false;
     }
-  }
+  }*/
 
   static achievement() async {
     if (Injector.isSoundEnable) Injector.player.play("achievement_music.mp3");
