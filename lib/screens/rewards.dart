@@ -384,7 +384,7 @@ class _RewardsPageState extends State<RewardsPage> {
                 child: Center(
                     child: Text(
                   selectedAchievement.subCategory[index].achievementName,
-                  style: TextStyle(fontSize: 12, color: ColorRes.white),
+                  style: TextStyle(fontSize: 15, color: ColorRes.white),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -504,7 +504,7 @@ class _CategoryItemState extends State<CategoryItem> {
                   color: Injector.isBusinessMode
                       ? ColorRes.white
                       : widget.isSelected ? ColorRes.white : ColorRes.textBlue,
-                  fontSize: 15),
+                  fontSize: 17),
               textAlign: TextAlign.center,
             ),
           )),

@@ -72,7 +72,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                   child: Container(
                     height: widget.cardHeight != null
                         ? size.height / widget.cardHeight
-                        : size.height / 1.8,
+                        : size.height / 1.6,
                     width: widget.cardWidth != null
                         ? size.width / widget.cardWidth
                         : size.width / 1.7,
@@ -151,7 +151,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                       : size.width / 10.0,
                   bottom: widget.imageMoveTop != null
                       ? size.height / widget.imageMoveTop
-                      : size.height / 5.2,
+                      : size.height / 7,
                   child: Image.asset(Utils.getAssetsImg(widget.imageName),
                       height: widget.imageHeight != null
                           ? size.height / widget.imageHeight
