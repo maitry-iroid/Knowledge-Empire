@@ -284,7 +284,7 @@ class _TeamPageState extends State<TeamPage> {
         child: Text(
           title,
           textAlign: textAlign,
-          style: TextStyle(color: ColorRes.white, fontSize: 15),
+          style: TextStyle(color: ColorRes.white, fontSize: 17),
         ),
       ),
     );
@@ -296,7 +296,7 @@ class _TeamPageState extends State<TeamPage> {
         child: Text(
           text,
           textAlign: textAlign,
-          style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 15),
+          style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 16),
         ),
       ),
     );
@@ -479,7 +479,7 @@ class _TeamPageState extends State<TeamPage> {
             child: Center(
               child: Text(
                 title,
-                style: TextStyle(color: ColorRes.white),
+                style: TextStyle(color: ColorRes.white,fontSize: 17),
               ),
             ),
           ),
