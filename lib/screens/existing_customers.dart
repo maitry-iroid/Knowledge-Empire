@@ -39,32 +39,12 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
       await DisplayDialogs.showServingYourExistingCustomers(context);
 
-    Utils.isInternetConnected().then((isConnected) async {
-      if (isConnected) {
-//        getQuestions();
-
-        QuestionRequest rq = QuestionRequest();
-        rq.userId = Injector.userData.userId;
-        rq.type = Const.getExistingQueType;
-        await getQuestionsBloc?.getQuestion(rq);
-      } else {
-        arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
-
-        if (arrQuestions != null && arrQuestions.length > 0) {
-          getQuestionsBloc.updateQuestions(arrQuestions);
-//          if (mounted)setState(() {});
-        }
-      }
-    });
+    QuestionRequest rq = QuestionRequest();
+    rq.userId = Injector.userData.userId;
+    rq.type = Const.getExistingQueType;
+    await getQuestionsBloc?.getQuestion(rq);
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-
-//    _notifier.dispose();
-    super.dispose();
-  }
 
   void releaseResource(int index) {
     Utils.isInternetConnectedWithAlert().then((_) {

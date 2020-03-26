@@ -110,7 +110,7 @@ class Injector {
     }
   }
 
-  static logout() async{
+  static logout() async {
     await Injector.prefs.clear();
     userData = null;
     userId = null;
@@ -161,16 +161,18 @@ class Injector {
   }
 
   static getIntroData() {
+    if (Injector.introData != null) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         IntroRequest rq = IntroRequest();
         rq.userId = Injector.userId;
         rq.type = 1;
 
-        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) async{
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) async {
           if (data != null) {
             IntroData introData = IntroData.fromJson(data);
-           await Injector.setIntroData(introData);
+            await Injector.setIntroData(introData);
           }
         }).catchError((e) {
           print("getIntro" + e.toString());

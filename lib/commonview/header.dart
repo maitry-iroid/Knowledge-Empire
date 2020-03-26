@@ -175,20 +175,28 @@ class HeaderViewState extends State<HeaderView> {
           ],
         ),
         onTap: () {
-
-          if(Injector.homeStreamController==null)
+          if (Injector.homeStreamController == null)
             Injector.homeStreamController = StreamController.broadcast();
 
           if (type == Const.typeEmployee) {
-            Injector.homeStreamController?.add("${Const.typeOrg}");
+            if (Injector.dashboardLockStatusData.organization == 1)
+              Injector.homeStreamController?.add("${Const.typeOrg}");
+            else
+              Utils.showLockReasonDialog(Const.typeOrg, context);
           } else if (type == Const.typeSalesPersons) {
             Injector.homeStreamController?.add("${Const.typeNewCustomer}");
           } else if (type == Const.typeServicesPerson) {
             Injector.homeStreamController?.add("${Const.typeExistingCustomer}");
           } else if (type == Const.typeBrandValue) {
-            Injector.homeStreamController?.add("${Const.typeRanking}");
+            if (Injector.dashboardLockStatusData.ranking == 1)
+              Injector.homeStreamController?.add("${Const.typeRanking}");
+            else
+              Utils.showLockReasonDialog(Const.typeRanking, context);
           } else if (type == Const.typeMoney) {
-            Injector.homeStreamController?.add("${Const.typePl}");
+            if (Injector.dashboardLockStatusData.pl == 1)
+              Injector.homeStreamController?.add("${Const.typePl}");
+            else
+              Utils.showLockReasonDialog(Const.typePl, context);
           }
         },
       ),

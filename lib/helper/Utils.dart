@@ -511,22 +511,22 @@ class Utils {
       showLockReasonDialog(type, context);
     } else if (type == Const.typePl &&
         dashboardLockStatusData != null &&
-        dashboardLockStatusData.organization != null &&
-        dashboardLockStatusData.challenge != 1) {
+        dashboardLockStatusData.pl != null &&
+        dashboardLockStatusData.pl != 1) {
       showLockReasonDialog(type, context);
     } else if (type == Const.typeRanking &&
         dashboardLockStatusData != null &&
-        dashboardLockStatusData.organization != null &&
-        dashboardLockStatusData.challenge != 1) {
+        dashboardLockStatusData.ranking != null &&
+        dashboardLockStatusData.ranking != 1) {
       showLockReasonDialog(type, context);
     } else if (type == Const.typeReward &&
         dashboardLockStatusData != null &&
-        dashboardLockStatusData.organization != null &&
-        dashboardLockStatusData.challenge != 1) {
+        dashboardLockStatusData.achievement != null &&
+        dashboardLockStatusData.achievement != 1) {
       showLockReasonDialog(type, context);
     } else if (type == Const.typeChallenges &&
         dashboardLockStatusData != null &&
-        dashboardLockStatusData.organization != null &&
+        dashboardLockStatusData.challenge != null &&
         dashboardLockStatusData.challenge != 1) {
       showLockReasonDialog(type, context);
     } else {

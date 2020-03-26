@@ -19,27 +19,30 @@ class GetQuestionsBloc {
   Observable<List<QuestionData>> get getQuestions => _getQuestionSubject.stream;
 
   getQuestion(QuestionRequest rq) async {
-    dynamic data =
-        await Injector.webApi.callAPI(WebApi.rqGetQuestions, rq.toJson());
+    bool isInternetConnected = await Utils.isInternetConnected();
+    List<QuestionData> arrQuestions = List();
+    if (isInternetConnected) {
+      dynamic data =
+          await Injector.webApi.callAPI(WebApi.rqGetQuestions, rq.toJson());
 
-    if (data != null) {
-      List<QuestionData> arrQuestions = List();
+      if (data != null) {
+        data.forEach((v) {
+          arrQuestions.add(QuestionData.fromJson(v));
+        });
 
-      data.forEach((v) {
-        arrQuestions.add(QuestionData.fromJson(v));
-      });
-
-      if (rq.type == Const.getNewQueType) {
-        for (int i = 0; i < arrQuestions.length; i++) {
-          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
-
-          print(arrQuestions[i].value);
+        if (rq.type == Const.getNewQueType) {
+          for (int i = 0; i < arrQuestions.length; i++) {
+            arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+            arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+            arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+          }
         }
+      } else {
+        arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
       }
 
-      _getQuestionSubject.sink.add(arrQuestions);
+      if (arrQuestions != null && arrQuestions.isNotEmpty)
+        _getQuestionSubject.sink.add(arrQuestions);
     }
   }
 

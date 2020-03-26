@@ -46,11 +46,16 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
     if (Injector.introData == null) {
       getIntroData();
-    } else if (Injector.introData.dashboard == 0) showIntroDialog();
+    } else if (Injector.introData.dashboard == 0) {
+      showIntroDialog();
+    }
     getUnreadBubbleCount();
+    Injector.updateIntroData();
   }
 
   getIntroData() {
+    if (Injector.getIntroData() != null) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);
@@ -65,7 +70,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
             IntroData introData = IntroData.fromJson(data);
             await Injector.setIntroData(introData);
 
-            if ( Injector.introData == null||Injector.introData.dashboard == 0) showIntroDialog();
+            if (Injector.introData == null || Injector.introData.dashboard == 0)
+              showIntroDialog();
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
@@ -105,15 +111,12 @@ class DashboardGamePageState extends State<DashboardGamePage>
               CommonView.showDashboardView(
                   context, dashboardData, dashboardLockStatusData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
-
             ],
           ),
         ),
       ),
     );
   }
-
-
 
   void getUnreadBubbleCount() {
     Utils.isInternetConnected().then((isConnected) {

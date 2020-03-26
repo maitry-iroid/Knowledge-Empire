@@ -367,20 +367,8 @@ class CommonView {
                     ],
                   ),
                   onTap: () {
-                    if (dashboardLockStatusData != null &&
-                        dashboardLockStatusData.organization != null &&
-                        dashboardLockStatusData.organization != 1) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => OrgInfoDialog(
-                                text:
-                                    Utils.getText(context, StringRes.unLockOrg),
-                                isForIntroDialog: true,
-                              ));
-                    } else {
-                      Utils.playClickSound();
-                      Utils.performDashboardItemClick(context, Const.typeOrg);
-                    }
+                    Utils.playClickSound();
+                    Utils.performDashboardItemClick(context, Const.typeOrg);
                   },
                 ),
                 InkResponse(
@@ -406,65 +394,41 @@ class CommonView {
                     ],
                   ),
                   onTap: () {
-                    if (dashboardLockStatusData != null &&
-                        dashboardLockStatusData.pl != null &&
-                        dashboardLockStatusData.pl != 1) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => OrgInfoDialog(
-                                text:
-                                    Utils.getText(context, StringRes.unLockPl),
-                                isForIntroDialog: true,
-                              ));
-                    } else {
-                      Utils.playClickSound();
-                      Utils.performDashboardItemClick(context, Const.typePl);
-                    }
+                    Utils.playClickSound();
+                    Utils.performDashboardItemClick(context, Const.typePl);
                   },
                 ),
                 InkResponse(
-                  child: Stack(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getAssetsImg("ranking")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
-                      ),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.ranking != null &&
-                              dashboardLockStatusData.ranking != 1
-                          ? Utils.showUnreadCount(
-                              Const.typeRanking, 17, 5, data)
-                          : Container(),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.ranking != null &&
-                              dashboardLockStatusData.ranking != 1
-                          ? Image(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("lock_ranking")),
-                              width: Utils.getDeviceWidth(context) / 4.5,
-                            )
-                          : Container(),
-                    ],
-                  ),
-                  onTap: () {
-                    if (dashboardLockStatusData != null &&
-                        dashboardLockStatusData.ranking != null &&
-                        dashboardLockStatusData.ranking != 1) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => OrgInfoDialog(
-                                text: Utils.getText(
-                                    context, StringRes.unLockRanking),
-                                isForIntroDialog: true,
-                              ));
-                    } else {
+                    child: Stack(
+                      children: <Widget>[
+                        Image(
+                          image: AssetImage(Utils.getAssetsImg("ranking")),
+                          width: Utils.getDeviceWidth(context) / 4.5,
+                        ),
+                        dashboardLockStatusData != null &&
+                                dashboardLockStatusData.ranking != null &&
+                                dashboardLockStatusData.ranking != 1
+                            ? Utils.showUnreadCount(
+                                Const.typeRanking, 17, 5, data)
+                            : Container(),
+                        dashboardLockStatusData != null &&
+                                dashboardLockStatusData.ranking != null &&
+                                dashboardLockStatusData.ranking != 1
+                            ? Image(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("lock_ranking")),
+                                width: Utils.getDeviceWidth(context) / 4.5,
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    onTap: () {
                       Utils.playClickSound();
                       Utils.performDashboardItemClick(
                           context, Const.typeRanking);
                     }
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-                  },
-                ),
+                    ),
               ],
             ),
           ),
@@ -530,22 +494,9 @@ class CommonView {
                           ],
                         ),
                         onTap: () {
-                          if (dashboardLockStatusData != null &&
-                              dashboardLockStatusData.achievement != null &&
-                              dashboardLockStatusData.achievement != 1) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    OrgInfoDialog(
-                                      text: Utils.getText(
-                                          context, StringRes.unLockReward),
-                                      isForIntroDialog: true,
-                                    ));
-                          } else {
-                            Utils.playClickSound();
-                            Utils.performDashboardItemClick(
-                                context, Const.typeReward);
-                          }
+                          Utils.playClickSound();
+                          Utils.performDashboardItemClick(
+                              context, Const.typeReward);
                         },
                       )),
                 ),
@@ -617,22 +568,9 @@ class CommonView {
                           ],
                         ),
                         onTap: () {
-                          if (dashboardLockStatusData != null &&
-                              dashboardLockStatusData.challenge != null &&
-                              dashboardLockStatusData.challenge != 1) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    OrgInfoDialog(
-                                      text: Utils.getText(
-                                          context, StringRes.unLockChallenge),
-                                      isForIntroDialog: true,
-                                    ));
-                          } else {
-                            Utils.playClickSound();
-                            Utils.performDashboardItemClick(
-                                context, Const.typeChallenges);
-                          }
+                          Utils.playClickSound();
+                          Utils.performDashboardItemClick(
+                              context, Const.typeChallenges);
                         }),
                   ),
                 ),
@@ -1041,7 +979,8 @@ class CommonView {
         })*/
   }
 
-  collectorDialog(BuildContext context, String bonus, String level, String type, String achievementType) {
+  collectorDialog(BuildContext context, String bonus, String level, String type,
+      String achievementType) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
 //        barrierColor: Colors.white.withOpacity(1.0),
@@ -1132,7 +1071,6 @@ class CommonView {
         context: context,
         pageBuilder: (context, animation1, animation2) {});
   }
-
 
   static showShimmer() {
     return Container(
