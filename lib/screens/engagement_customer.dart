@@ -14,17 +14,13 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
-
 import '../commonview/background.dart';
-
 import 'package:video_player/video_player.dart';
-
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import 'home.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
-
 import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 List<Answer> arrAnswer = List();
