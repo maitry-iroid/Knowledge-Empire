@@ -174,8 +174,9 @@ class PushNotificationHelper {
         customerValueBloc.setCustomerValue(Injector.customerValueData);
 
 //        CommonView().pushNotificationAlert2(context, bonus, level, type, achievementType);
-        CommonView()
-            .collectorDialog(context, bonus, level, type, achievementType);
+//        CommonView()
+//            .collectorDialog(context, bonus, level, type, achievementType);
+        showLocalNotification(Injector.notificationID, body);
       } else {
         showLocalNotification(Injector.notificationID, body);
       }
