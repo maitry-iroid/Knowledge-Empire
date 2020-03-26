@@ -855,9 +855,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
       children: <Widget>[
         Expanded(
           child: Container(
-            height: 25,
+            height: 30,
             alignment: Alignment.center,
-            padding: EdgeInsets.only(top: 10, left: 10),
+            padding: EdgeInsets.only(left: 10),
             margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -887,13 +887,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
               maxLines: 1,
               controller: searchController,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 color: ColorRes.hintColor,
               ),
               decoration: InputDecoration(
 //                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
                 hintText: Utils.getText(context, StringRes.searchForKeywords),
-                hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 14),
+                hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 16),
                 border: InputBorder.none,
               ),
             ),

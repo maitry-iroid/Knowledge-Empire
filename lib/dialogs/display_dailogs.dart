@@ -127,7 +127,6 @@ class DisplayDialogs {
                 "Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service\nemployees",
             onTapBtn: () async {
               try {
-                await Injector.updateIntroDialogType(Const.introHireHR);
                 Navigator.of(context).pop();
                 Utils.performDashboardItemClick(context, Const.typeOrg);
               } catch (e) {
@@ -180,10 +179,9 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.settingDetails),
             onTapBtn: () async {
               try {
-                print(Const.introMeetYourTeam);
                 Injector.introData.profile2 = 1;
                 await Injector.setIntroData(Injector.introData);
-                await Injector.updateIntroDialogType(Const.introMeetYourTeam);
+
                 Navigator.of(context).pop();
               } catch (e) {
                 print(e);
@@ -481,8 +479,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.accessToFirstDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introReadyForYourFirstCustomerContact);
+
               showReadyForYourFirstCustomerContact(context);
             },
           );
@@ -506,8 +503,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.readyForCustomerDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introHeartOfTheBusiness);
+
             },
           );
         });
@@ -584,9 +580,6 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.yourFirstEngagementDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introImpactOnSalesAndService);
-              //showImpactOnSalesAndService(context);
             },
           );
         });
@@ -638,8 +631,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.impactOnBrandDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introCheckYourExistingCustomers);
+
               showCheckYourExistingCustomers(context);
             },
           );
@@ -663,8 +655,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.checkYourCustomerDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introServingYourExistingCustomers);
+
             },
           );
         });
@@ -742,7 +733,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.readyForBusinessDeatils),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introRewards);
+
             },
           );
         });
@@ -763,8 +754,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introYourWillIsAtYourCommand);
+
               Injector.introData.rewards = 1;
               await Injector.setIntroData(Injector.introData);
             },
@@ -901,7 +891,7 @@ class DisplayDialogs {
                 Utils.getText(context, StringRes.strYourTeamPerformanceDialog),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introYourTeams);
+
               Injector.introData.team1 = 1;
               await Injector.setIntroData(Injector.introData);
               showYourTeams(context);
