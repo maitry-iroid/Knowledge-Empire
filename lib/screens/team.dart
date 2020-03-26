@@ -467,6 +467,7 @@ class _TeamPageState extends State<TeamPage> {
   pieChart(String title, int type) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+
         children: <Widget>[
           Container(
             height: 25,
