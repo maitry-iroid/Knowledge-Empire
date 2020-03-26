@@ -138,6 +138,7 @@ class PushNotificationHelper {
 
     if (message['data'] != null) {
       String challengeId = message['data']['challengeId'];
+      String notificationType = message['data']['notificationType'];
       String type = message['data']['type'];
       String level = message['data']['level'];
       String bonus = message['data']['bonus'];
@@ -148,7 +149,7 @@ class PushNotificationHelper {
             ?.add("${Const.openPendingChallengeDialog}");
       }
 
-      if (achievementType != null) {
+      if (notificationType == Const.pushTypeAchievement.toString()) {
 
         if (bonus != null)
           Injector.customerValueData.totalBalance = int.parse(bonus);

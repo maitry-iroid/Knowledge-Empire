@@ -47,7 +47,8 @@ class CustomerSituationPage extends StatefulWidget {
       this.questionDataCustomerSituation,
       this.isChallenge,
       this.nextChallengeQuestionData,
-      this.isCameFromExistingCustomer, this.mRefreshAnimation})
+      this.isCameFromExistingCustomer,
+      this.mRefreshAnimation})
       : super(key: key);
 
   @override
@@ -79,15 +80,20 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     questionDataCustSituation = widget.questionDataCustomerSituation;
     arrAnswerSituation = widget.questionDataCustomerSituation.answer;
 
-
     abcdList = alphaIndex;
 
     if (!widget.isCameFromExistingCustomer) Utils.checkAudio();
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
-      if (Injector.introData == null || Injector.introData.customerSituation == 0||Injector.introData.customerSituation == 1)
+      if (Injector.introData == null ||
+          Injector.introData.customerSituation == 0 ||
+          Injector.introData.customerSituation == 1) {
         await DisplayDialogs.showImpactOnSalesAndService(context);
+        Injector.introData.customerSituation = 1;
+        await Injector.setIntroData(Injector.introData);
+
+      }
 
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
       widget.mRefreshAnimation.onRefresh();
@@ -99,7 +105,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   correctWrongImage() {
     if (questionData.isAnsweredCorrect == true) {
-
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;
@@ -142,7 +147,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       ),
     );
   }
-
 
   gifImageShow() {
     if (questionData.isAnsweredCorrect == true) {

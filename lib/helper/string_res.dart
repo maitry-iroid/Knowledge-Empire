@@ -1,6 +1,14 @@
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 class StringRes {
+
+
+  static String username = Injector.userData?.name??"";
+
+  static updateUserName(String _username){
+    username = _username;
+  }
+
   //main options
   static var home = "home";
   static var businessSector = "businessSector";
@@ -454,13 +462,13 @@ class StringRes {
           "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will\nneed to achieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
       'challengesDialogTitle1': "Your Will is at your command",
       'challengesDialogContent1':
-          "Dear ${Injector.userData?.name ?? ""},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
+          "Dear $username,\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
           "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected sector correctly in order to win the challenge.",
       'strMarketingCommunications': "Marketing & Communications",
       'strMarketingCommunicationsDialog':
-          "Hi ${Injector.userData?.name ?? ""},\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
+          "Hi $username,\n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
       'strRankingDialogContent':
           "Select on the left side the ranking criteria (e.g. cash) and at the\ntop which group you would like to compare it with and in which\ntime frame.\nYou can also click in “You” to scroll to your position and\nchallenge and add friends.",
       'strYourTeamPerformance': "Your Team's Performance",
@@ -470,7 +478,7 @@ class StringRes {
           "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
 
       'plPerson': 'The person you can count on',
-      'niceMeetYou': 'Nice to meet you${Injector.userData?.name ?? ""}',
+      'niceMeetYou': 'Nice to meet you$username',
       'plMyName':
           '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have\nmore revenue then cost.',
       'hereYourMonitor':
@@ -486,7 +494,7 @@ class StringRes {
 
       'servingYourExisting': 'Serving your existing customers',
       'servingYourExistingDialog':
-          'Hi ${Injector.userData?.name ?? ""},\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
+          'Hi $username,\n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
 
       'listOfExisting': 'List of existing Customers',
       'listOfExistingDetails':
@@ -527,7 +535,7 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': 'Customer Relationship Management',
       'customerRelationDetails':
-          'Hi ${Injector.userData?.name ?? ""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
+          'Hi $username,\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
       'areaOfComp': 'Area of competency',
       'areaOfCompDetails':
           'Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.',
@@ -542,11 +550,11 @@ class StringRes {
       'customersRelationShip': "Customer Relationship Management",
 
       'customersRelationShipContent':
-          "Hi ${Injector.userData?.name ?? ""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+          "Hi $username,\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
       'areaOfCompetency': "",
 
       'customersRelationShipContent':
-          "Hi ${Injector.userData?.name ?? ""},\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
+          "Hi $username,\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM)\nin your company. Shall we have a look at the different business\nsectors to find potential customers?",
       'areaOfCompetency': "Area of competency",
       'areaOfCompetenceContent':
           "Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.",
@@ -554,7 +562,7 @@ class StringRes {
       //Organization screen Dialog
       'hireHrEmp': 'Hire HR Employees',
       'hireHrEmpDetails':
-          'Hi ${Injector.userData?.name ?? ""},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR I will introduce you to the team and how you\ncan hire new employees to strengthen the team.',
+          'Hi $username,\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR I will introduce you to the team and how you\ncan hire new employees to strengthen the team.',
 
       'hireHrEmpDetailsSeconds':
           "To hear your Team's' recommendations on why you should\nhire more employees in their team, click on them? \n\nLet's start with hiring 10 HR employees by clicking on HR\nand then “Hire 10 employees”.",
@@ -578,9 +586,9 @@ class StringRes {
 
       'customizeYourCompany': "Customize your company",
       'customizeYourCompanyContent':
-          "Dear ${Injector.userData?.name ?? ""},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+          "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
       'customizeYourCompanyContent':
-          "Dear ${Injector.userData?.name ?? ""},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+          "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
       //setting screen Dialog
       'settingDetails':
@@ -765,13 +773,13 @@ class StringRes {
           "Schau dir die unterschiedlichen Kategorien von Auszeichnungen\nan um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen.Die\nZahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Dein Will ist mein Befehl",
       'challengesDialogContent1':
-          "${Injector.userData?.name ?? ""},\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
+          "$username,\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
           "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.wähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom \naktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen.\nAnsonsten gewinnst du.",
       'strMarketingCommunications': "Marketing",
       'strMarketingCommunicationsDialog':
-          "Hallo ${Injector.userData?.name ?? ""}, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
+          "Hallo $username, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
       'strRankingDialogContent':
           "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
               "Du"
@@ -784,7 +792,7 @@ class StringRes {
 
       'plPerson': 'Mit mir kannst du rechnen',
       'niceMeetYou':
-          'Nett dich kennenzulernen ${Injector.userData?.name ?? ""}\n',
+          'Nett dich kennenzulernen $username\n',
       'plMyName':
           'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer\nmehr Einnahmen als Ausgaben haben.',
       'hereYourMonitor':
@@ -799,7 +807,7 @@ class StringRes {
 
       'servingYourExisting': 'Kundenservice',
       'servingYourExistingDialog':
-          'Hi ${Injector.userData?.name ?? ""},\n\nIch bin Bob und kümmere mich um den Kundenservice.',
+          'Hi $username,\n\nIch bin Bob und kümmere mich um den Kundenservice.',
 
       'listOfExisting': 'Bestandskundenliste',
       'listOfExistingDetails':
@@ -840,7 +848,7 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': 'Kundenbeziehungsmanagement (CRM)',
       'customerRelationDetails':
-          'Hallo ${Injector.userData?.name ?? ""},\n\nMein Name ist Li Wei.Ich leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.Lass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche\nwerfen, die uns zur Verfuegung stehen.',
+          'Hallo $username,\n\nMein Name ist Li Wei.Ich leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.Lass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche\nwerfen, die uns zur Verfuegung stehen.',
       'areaOfComp': 'Geschäftsbereiche',
       'areaOfCompDetails':
           'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen."Groesse" zeigt an, wieviele Kunden (Fragen) es in\neinem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
@@ -857,7 +865,7 @@ class StringRes {
       //endregion
 
       'customersRelationShipContent':
-          "Hi ${Injector.userData?.name ?? ""}\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
+          "Hi $username\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
       'areaOfCompetency': "Geschäftsbereiche",
       'areaOfCompetenceContent':
           "Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n\"Groesse\" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.",
@@ -877,7 +885,7 @@ class StringRes {
       //Organization screen Dialog
       'hireHrEmp': 'Personaler einstellen',
       'hireHrEmpDetails':
-          'Hallo ${Injector.userData?.name ?? ""},\n\nwillkommen im Unternehmen und willkommen im Management\nTeam.Mein Name ist Nikita aber bitte nenne mich Niki.Als\nPersonalchef werde ich dir eine kurze Einführung geben, wie du\nneue Mitarbeiter einstellen kannst.',
+          'Hallo $username,\n\nwillkommen im Unternehmen und willkommen im Management\nTeam.Mein Name ist Nikita aber bitte nenne mich Niki.Als\nPersonalchef werde ich dir eine kurze Einführung geben, wie du\nneue Mitarbeiter einstellen kannst.',
 
       'hireHrEmpDetailsSeconds':
           'Um die Empfehlungen deiner Mitarbeiter zu hören, warum du in eine Abteilung investieren solltest, klicke einfach auf die Mitarbeiter.\n\nLass uns zu Anfang 10 neue Mitarbeiter in der Personalabteilung einstellen. Klicke dazu bitte auf "Personal" und dann auf "10 Mitarbeiter einstellen"',
@@ -1070,13 +1078,13 @@ class StringRes {
           "下面的数字是您\n将收到的奖金。",
       'challengesDialogTitle1': "您是自己的主宰",
       'challengesDialogContent1':
-          "亲爱的${Injector.userData?.name ?? ""},\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
+          "亲爱的$username,\n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
       'strChallanges': "挑战",
       'strChallangesDialogContent':
           "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
       'strMarketingCommunications': "营销与传播",
       'strMarketingCommunicationsDialog':
-          "${Injector.userData?.name ?? ""},您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
+          "$username,您好，\n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
       'strRankingDialogContent': "在左侧选择排名标准（比如现金），并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
           "您"
           "滚动到您的位置和挑战以及添加朋友。",
@@ -1087,7 +1095,7 @@ class StringRes {
           "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
       'plPerson': '您可以依靠的人',
-      'niceMeetYou': '${Injector.userData?.name ?? ""}很高兴见到您',
+      'niceMeetYou': '$username很高兴见到您',
       'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
       'hereYourMonitor': '在这里，您可以监控公司的成本和收入。',
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前\n周期与上一个周期',
@@ -1098,7 +1106,7 @@ class StringRes {
       //existing customer
       'servingYourExisting': '服务现有客户',
       'servingYourExistingDialog':
-          '${Injector.userData?.name ?? ""}您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
+          '$username您好，\n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
 
       'listOfExisting': '现有客户名单',
       'listOfExistingDetails':
@@ -1139,7 +1147,7 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': '客户关系管理',
       'customerRelationDetails':
-          '${Injector.userData?.name ?? ""}您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM).\n我们看看不同的业务部门来\n寻找潜在的客户吧！',
+          '$username您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM).\n我们看看不同的业务部门来\n寻找潜在的客户吧！',
       'areaOfComp': '能力领域',
       'areaOfCompDetails':
           '每个业务部门将测试特定的知识来赢得客户.\n"大小"是每个部门的客户数量.您可以点击业务板块阅读说明,\n加入并下载问题以便离线使用.某些业务部门可能已经分配给您。',
@@ -1165,21 +1173,21 @@ class StringRes {
       //endregion
 
       'customersRelationShipContent':
-          "${Injector.userData?.name ?? ""}您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
+          "$username您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
       'areaOfCompetency': "能力领域",
       'areaOfCompetenceContent': "每个业务部门将测试特定的知识来赢得客户。"
           "大小"
           "是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。",
       'customizeYourCompany': "自定义您的公司",
       'customizeYourCompanyContent':
-          "亲爱的${Injector.userData?.name ?? ""}\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+          "亲爱的$username\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
               "个人资料"
               "。\n",
 
       //Organization screen Dialog
       'hireHrEmp': '招聘HR员工',
       'hireHrEmpDetails':
-          '${Injector.userData?.name ?? ""}您好，\n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，我将向您介绍我们的团队以及指导您如何招聘员工，让我们的团队发展壮大。',
+          '$username您好，\n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，我将向您介绍我们的团队以及指导您如何招聘员工，让我们的团队发展壮大。',
 
       'hireHrEmpDetailsSeconds':
           '听听您的团队的建议，为什么您应该招聘更多的员工，点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后\n选择“雇用10名员工”。',
@@ -1334,7 +1342,7 @@ class StringRes {
 
       'customizeYourCompany': "Customize your profile",
       'customizeYourCompanyContent':
-          "Dear ${Injector.userData?.name ?? ""}\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+          "Dear $username\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
 
       'hireHrEmpDetailsSeconds':
           'To get recommendations and understand why you should improve certain Power-Ups (PU), click on them.\nLet\'s start with spending 10 Power-Up (PU) Points and 1000 Knowledge Points (KP) to improve "Max. Power-Ups (PU)" to level 1\nClick on "Max. Power-Ups (PU)" and then on "Increase Level"',
@@ -1583,7 +1591,7 @@ class StringRes {
           "Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten.\"Grösse\" zeigt an, wieviele Fragen es in einem Lernmodul gibt\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht.\nDu kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.",
       'customizeYourCompany': "Profil bearbeiten",
       'customizeYourCompanyContent':
-          "Hallo ${Injector.userData?.name ?? ""}\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder "
+          "Hallo $username\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder "
               "Profil"
               " im Menü (“>”).",
 
@@ -1823,7 +1831,7 @@ class StringRes {
           "每个学习模块将测试特定的知识领域。\"大小\"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。",
       'customizeYourCompany': "自定义您的个人资料",
       'customizeYourCompanyContent':
-          "亲爱的${Injector.userData?.name ?? ""}，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+          "亲爱的$username，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
               "个人资料"
               "。 ",
 
