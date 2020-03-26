@@ -262,37 +262,35 @@ class Utils {
 //  }
 
   static gameBackgroundMusic() async {
-    if(Injector.isBusinessMode) {
-      if (Injector.isSoundEnable) Injector.player.play("game_bg_music.mp3");
-    } else {
-      Injector.isSoundEnable = false;
-    }
+//    if(Injector.isBusinessMode) {
+//      if (Injector.isSoundEnable) Injector.audioPlayerBg.play("game_bg_music.mp3");
+//    }
   }
 
-  static achievement() async {
-    if (Injector.isSoundEnable) Injector.player.play("achievement_music.mp3");
+  static playAchievementSound() async {
+    if (Injector.isSoundEnable) Injector.audioPlayer.play("achievement_music.mp3");
   }
 
   static playClickSound() async {
-    if (Injector.isSoundEnable) Injector.player.play("all_button_clicks.wav");
+    if (Injector.isSoundEnable) Injector.audioPlayer.play("all_button_clicks.wav");
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.player.play("right_answer.wav");
+    if (Injector.isSoundEnable) Injector.audioPlayer.play("right_answer.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.player.play("wrong_answer.wav");
+    if (Injector.isSoundEnable) Injector.audioPlayer.play("wrong_answer.wav");
   }
 
   static procorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.player.play("pro_right_answer.mp3");
+    if (Injector.isSoundEnable) Injector.audioPlayer.play("pro_right_answer.mp3");
   }
 
   static proincorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.player.play("pro_wrong_answer.mp3");
+    if (Injector.isSoundEnable) Injector.audioPlayer.play("pro_wrong_answer.mp3");
   }
 
 //  static audioPlay(String path) async {

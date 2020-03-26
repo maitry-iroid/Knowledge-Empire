@@ -80,7 +80,7 @@ class QuestionData {
   String attemptTime;
   int videoPlay;
   int videoLoop;
-  int winningAmount;
+  var winningAmount;
 
   QuestionData(
       {this.questionId,

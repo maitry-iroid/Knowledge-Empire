@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -42,7 +43,9 @@ class Injector {
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
-  static AudioCache player = AudioCache(prefix: 'sounds/');
+  static AudioCache audioPlayer = AudioCache(prefix: 'sounds/');
+//  static AudioCache audioPlayerBg = AudioCache(prefix: 'sounds/');
+ static AudioPlayer audioPlayerBg ;
   static bool isDev = true;
 
   static int badgeCount = 0;
@@ -81,6 +84,9 @@ class Injector {
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
     if (prefs.getString(PrefKeys.user) != null) {
+
+//      audioPlayerBg = await audioPlayer.loop('game_bg_music.mp3');
+
       userData = UserData.fromJson(jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;

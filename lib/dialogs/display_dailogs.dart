@@ -61,16 +61,17 @@ class DisplayDialogs {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
-            width: Utils.getDeviceWidth(context) / 2.25,
-            height: Utils.getDeviceHeight(context) / 2.25,
+            width: Utils.getDeviceWidth(context) / 2,
+            height: Utils.getDeviceHeight(context) -100,
+//            margin: EdgeInsets.symmetric(vertical: 150),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("Your are challenged by $userName in module\nYou have to attempt all 3 challenges to win ${questionData.winningAmount}",
-                      style: Theme.of(context).textTheme.title,textAlign: TextAlign.center,),
+                  Text("Your are challenged by $userName in module ${questionData.moduleName}\nYou have to attempt all 3 challenges to win ${questionData.winningAmount}.",
+                      style: TextStyle(fontSize: 20),textAlign: TextAlign.center),
                   SizedBox(height: 20),
                   RaisedButton(
                       onPressed: () {

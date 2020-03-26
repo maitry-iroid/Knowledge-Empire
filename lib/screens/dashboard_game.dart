@@ -51,7 +51,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
     }
     getUnreadBubbleCount();
 
-    Utils.gameBackgroundMusic();
+//    Utils.gameBackgroundMusic();
 
     Injector.updateIntroData();
   }

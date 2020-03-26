@@ -177,7 +177,7 @@ class PushNotificationHelper {
 //        CommonView()
 //            .collectorDialog(context, bonus, level, type, achievementType);
         showLocalNotification(Injector.notificationID, body);
-        Utils.achievement();
+        Utils.playAchievementSound();
 //        CommonView().collectorDialog(context, bonus, level, type, achievementType);
 
       } else {

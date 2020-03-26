@@ -406,17 +406,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Switch(
                             value: Injector.isSoundEnable,
-                            onChanged: (value) {
-                              Utils.isInternetConnectedWithAlert()
-                                  .then((isConnected) {
-                                if (isConnected) {
-                                  setState(() {
-                                    Injector.isSoundEnable = value;
-                                    Injector.prefs
-                                        .setBool(PrefKeys.isSoundEnable, value);
-                                  });
-                                }
-                              });
+                            onChanged: (value) async{
+                              Injector.isSoundEnable = value;
+                             await Injector.prefs
+                                  .setBool(PrefKeys.isSoundEnable, value);
+//                              if (Injector.isSoundEnable)
+//                                Injector.audioPlayerBg.resume();
+//                              else
+//                                Injector.audioPlayerBg.pause();
+                              setState(() {});
                             },
                             activeTrackColor: Injector.isBusinessMode
                                 ? ColorRes.white
@@ -480,8 +478,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: !Injector.isManager() &&
                                 Injector.customerValueData.totalBalance <= 0
                             ? () async {
-                                Injector.player.clearCache();
+                                Injector.audioPlayer.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
+//                                Injector.audioPlayerBg.pause();
                                 Utils.playClickSound();
                                 _asyncConfirmDialog(context);
                               }
@@ -798,8 +797,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 38,
-                              padding: EdgeInsets.only(
-                                  left: 20,right: 20),
+                              padding: EdgeInsets.only(left: 20, right: 20),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
