@@ -21,7 +21,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   @override
   void initState() {
     super.initState();
-
     getDashboardConfig();
 
       Injector.isSoundEnable = false;
