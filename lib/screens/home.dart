@@ -253,22 +253,22 @@ class HomePageState extends State<HomePage>
         Utils.showLockReasonDialog(Const.typeOrg, context);
       } else if (index == Utils.getHomePageIndex(Const.typePl) &&
           dashboardLockStatusData != null &&
-          dashboardLockStatusData.organization != null &&
-          dashboardLockStatusData.challenge != 1) {
+          dashboardLockStatusData.pl != null &&
+          dashboardLockStatusData.pl != 1) {
         Utils.showLockReasonDialog(Const.typePl, context);
-      } else if (index == Utils.getHomePageIndex(Const.typeRanking) &&
+      } else if (index == Utils.  getHomePageIndex(Const.typeRanking) &&
           dashboardLockStatusData != null &&
-          dashboardLockStatusData.organization != null &&
-          dashboardLockStatusData.challenge != 1) {
+          dashboardLockStatusData.ranking != null &&
+          dashboardLockStatusData.ranking != 1) {
         Utils.showLockReasonDialog(Const.typeRanking, context);
       } else if (index == Utils.getHomePageIndex(Const.typeReward) &&
           dashboardLockStatusData != null &&
-          dashboardLockStatusData.organization != null &&
-          dashboardLockStatusData.challenge != 1) {
+          dashboardLockStatusData.achievement != null &&
+          dashboardLockStatusData.achievement != 1) {
         Utils.showLockReasonDialog(Const.typeReward, context);
       } else if (index == Utils.getHomePageIndex(Const.typeChallenges) &&
           dashboardLockStatusData != null &&
-          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.challenge != null &&
           dashboardLockStatusData.challenge != 1) {
         Utils.showLockReasonDialog(Const.typeChallenges, context);
       } else {

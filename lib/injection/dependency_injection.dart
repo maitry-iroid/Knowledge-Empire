@@ -10,6 +10,7 @@ import 'package:ke_employee/helper/Utils.dart';
 
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -117,6 +118,7 @@ class Injector {
     customerValueData = null;
     customerValueData = null;
     introData = null;
+    StringRes.username = "";
   }
 
   static updateMode(int _mode) async {

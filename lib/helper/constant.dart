@@ -6,22 +6,6 @@ enum Environment { DEV, PROD }
 
 class Const {
   static var deviceType = "android";
-
-//  static var typeHome = 0;
-//  static var typeBusinessSector = 1;
-//  static var typeNewCustomer = 2;
-//  static var typeExistingCustomer = 3;
-//  static var typeReward = 4;
-//  static var typeTeam = 5;
-//  static var typeChallenges = Injector.isManager() == 1 ? 6 : 5;
-//  static var typeOrg = Injector.isManager() == 1 ? 7 : 6;
-//  static var typePL = Injector.isManager() == 1 ? 8 : 7;
-//  static var typeRanking = Injector.isManager() == 1 ? 9 : 8;
-//  static var typeProfile = 10;
-//  static var typeHelp = 11;
-//  static var typeEngagement = 12;
-//  static var typeCustomerSituation = 13;
-
   static Environment envType;
 
   static var typeHome = "home";
@@ -39,6 +23,18 @@ class Const {
   static var typeEngagement = "engagement";
   static var typeCustomerSituation = "customerSituation";
   static var updateProfileBrod = "updateProfileBrod";
+
+
+  // push type
+
+
+  static var pushTypeAll = 1;
+  static var pushTypeChallenge = 2;
+  static var pushTypeWinChallenge = 3;
+  static var pushTypeAddFriend = 4;
+  static var pushTypeAchievement = 5;
+  static var pushTypeUnansweredQuestion = 6;
+  static var pushTypeModule = 7;
 
   static var openPendingChallengeDialog = 101;
 
@@ -82,6 +78,7 @@ class Const {
 
   static int typeCost = 1;
   static int typeRevenue = 2;
+
 
   static FlavorConfig _config;
 
