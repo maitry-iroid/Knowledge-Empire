@@ -389,13 +389,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.no)),
-      onPressed:  () {
+      onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.yes)),
-      onPressed:  () {
+      onPressed: () {
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
         Navigator.pop(context);
@@ -405,7 +405,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(Utils.getText(context, StringRes.alert)),
-      content: Text(Utils.getText(context, StringRes.alertUnFriend), style: TextStyle(color: ColorRes.textProf)),
+      content: Text(Utils.getText(context, StringRes.alertUnFriend),
+          style: TextStyle(color: ColorRes.textProf)),
       actions: [
         cancelButton,
         continueButton,

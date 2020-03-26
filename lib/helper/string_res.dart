@@ -480,7 +480,7 @@ class StringRes {
       'hereYourMonitor':
           'Here you can monitor the cost\nand the revenue of your company.',
       'selectPeriod':
-          'You can also select the period you want to look\nat and compare the current period with the previous period.',
+          'You can also select the period you want to look at and\ncompare the current period with the\nprevious period.',
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”\n“Retention Level” indicates how many questions are retained\n(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered\n(open = open for answering, completed = correctly answered)',
@@ -766,13 +766,13 @@ class StringRes {
       //introDialog
       'gotIt': "Verstanden",
       'rewardsDialogContent':
-          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
+          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen\nan um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen.Die\nZahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Dein Will ist mein Befehl",
       'challengesDialogContent1':
           "$username,\n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
-          "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.\nwähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom aktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
+          "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.wähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom \naktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen.\nAnsonsten gewinnst du.",
       'strMarketingCommunications': "Marketing",
       'strMarketingCommunicationsDialog':
           "Hallo $username, \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
@@ -788,13 +788,13 @@ class StringRes {
 
       'plPerson': 'Mit mir kannst du rechnen',
       'niceMeetYou':
-          'Nett dich kennenzulernen $username',
+          'Nett dich kennenzulernen $username\n',
       'plMyName':
-          'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer mehr Einnahmen als Ausgaben haben.',
+          'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer\nmehr Einnahmen als Ausgaben haben.',
       'hereYourMonitor':
           'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
       'selectPeriod':
-          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+          'Dazu kannst du unterschiedliche Zeithorizonte\nauswählen und immer die aktuelle Periode mit der\nPerioden davor vergleichen.',
 
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
@@ -835,19 +835,19 @@ class StringRes {
       //New Customer screen
       'heartBusiness': 'willkommen im Vertrieb',
       'heartBusinessDetails':
-          'Hallo Chef,\n\nwillkommen im Vertrieb, dem Herzen unseres Unternehmens. Hier verdienen wir das Geld.\nIch bin Tina, Vice Präsidentin für unseren globalen Vertrieb.\nLass uns ohne weiter Umschweife starten und Geld verdienen.',
+          'Hallo Chef,\n\nwillkommen im Vertrieb, dem Herzen unseres Unternehmens.\nHier verdienen wir das Geld.Ich bin Tina, Vice Präsidentin\nfür unseren globalen Vertrieb.Lass uns ohne weiter\nUmschweife starten und Geld verdienen.',
       'listOfPotential': 'Liste potentieller Kunden',
       'listOfPotentialDetails':
-          'Jeder Kunde hat einen Namen und gehört zu einem Geschäftsbereich.Umsatz ist der tägliche Umsatz den der Kunde uns einbringen wird, so lange er uns loyal ist.Die Kundenloyalität steigt, wenn wir die Fragen dieses Kunden richtig beantworten.\nIn der Spalte Vertriebler ist zu ersehen wieviel Vertriebler wir benötigen um den Kunden anzusprechen.\nUm den Kunden anzusprechen bitte auf "Ansprechen" klicken',
+          'Jeder Kunde hat einen Namen und gehört zu einem Geschäftsbereich.Umsatz ist der tägliche Umsatz den der Kunde uns einbringen wird, so lange er uns loyal ist.Die Kundenloyalität steigt, wenn wir die Fragen dieses Kunden richtig\nbeantworten.In der Spalte Vertriebler ist zu ersehen\nwieviel Vertriebler wir benötigen um den Kunden\nanzusprechen.Um den Kunden anzusprechen bitte\n.auf "Ansprechen" klicken',
       'listOfPotentialBtn': 'Klick auf "Ansprechen"',
 
       //Business sector screen dialog
       'customerRelation': 'Kundenbeziehungsmanagement (CRM)',
       'customerRelationDetails':
-          'Hallo $username,\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.',
+          'Hallo $username,\n\nMein Name ist Li Wei.Ich leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.Lass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche\nwerfen, die uns zur Verfuegung stehen.',
       'areaOfComp': 'Geschäftsbereiche',
       'areaOfCompDetails':
-          'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen.\n"Groesse" zeigt an, wieviele Kunden (Fragen) es in einem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+          'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen."Groesse" zeigt an, wieviele Kunden (Fragen) es in\neinem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
       'accessToFirst': "Geschäftsbereich abonnieren",
       'accessToFirstDetails':
           'Lass uns den ersten Geschäftsbereich abonnieren um Zugang zu den ersten Kunden zu erlangen.\n\nDazu klick bitte auf den Geschäftsbereich "Los geht\'s" und dann auf abonnieren.',
@@ -881,14 +881,14 @@ class StringRes {
       //Organization screen Dialog
       'hireHrEmp': 'Personaler einstellen',
       'hireHrEmpDetails':
-          'Hallo $username,\n\nwillkommen im Unternehmen und willkommen im Management Team.\nMein Name ist Nikita aber bitte nenne mich Niki.\nAls Personalchef werde ich dir eine kurze Einführung geben, wie du neue Mitarbeiter einstellen kannst.',
+          'Hallo $username,\n\nwillkommen im Unternehmen und willkommen im Management\nTeam.Mein Name ist Nikita aber bitte nenne mich Niki.Als\nPersonalchef werde ich dir eine kurze Einführung geben, wie du\nneue Mitarbeiter einstellen kannst.',
 
       'hireHrEmpDetailsSeconds':
           'Um die Empfehlungen deiner Mitarbeiter zu hören, warum du in eine Abteilung investieren solltest, klicke einfach auf die Mitarbeiter.\n\nLass uns zu Anfang 10 neue Mitarbeiter in der Personalabteilung einstellen. Klicke dazu bitte auf "Personal" und dann auf "10 Mitarbeiter einstellen"',
 
       'empOMaster': 'Mitarbeiterkapazitäten',
       'empOMasterDetails':
-          'Deine Mitarbeiterkapazitäten sind jetzt 40/50.\n50 ist die gesamte Mitarbeiterkapazität und 40 die noch verfügbare, da du ja schon 10 Mitarbeiter in der Personalabteilung hast.\nDu kannst die Mitarbeiterkapazität weiter erhöhen, indem du neue Personalmitarbeiter einstellst.\nEin klick auf deine Mitarbeiter Kapazitäten bringt dich auch zu diesem Bildschirm.',
+          'Deine Mitarbeiterkapazitäten sind jetzt 40/50.50 ist die gesamte Mitarbeiterkapazität und 40 die noch verfügbare, da du ja schon\n10 Mitarbeiter in der Personalabteilung hast.\nDu kannst die Mitarbeiterkapazität weiter erhöhen, indem du\nneue Personalmitarbeiter einstellst.Ein klick auf deine Mitarbeiter Kapazitäten bringt dich auch zu diesem Bildschirm.',
       'costOfEmp': 'Mitarbeiter Kosten',
       'costOfEmpDetails':
           'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld (Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag (Gehaelter steigen mit der Zeit).',
@@ -1069,7 +1069,7 @@ class StringRes {
 
       //introDialog
       'gotIt': "了解",
-      'rewardsDialogContent': "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n"
+      'rewardsDialogContent': "查看奖励类别,\n点击奖杯查看您目前的成就以及您需要取得多\n少成就才能升到下一级别.\n\n"
           "下一级"
           "下面的数字是您\n将收到的奖金。",
       'challengesDialogTitle1': "您是自己的主宰",
@@ -1094,7 +1094,7 @@ class StringRes {
       'niceMeetYou': '$username很高兴见到您',
       'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
       'hereYourMonitor': '在这里，您可以监控公司的成本和收入。',
-      'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
+      'selectPeriod': '您还可以选择您想要查看的时间段和比较当前\n周期与上一个周期',
 
       'strYourTeamPerformanceDialog2':
           '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
@@ -1134,19 +1134,19 @@ class StringRes {
       //New Customer screen
       'heartBusiness': '业务的核心',
       'heartBusinessDetails':
-          '老板您好，\n\n现在到了关键时刻，只有最后的公司才能生存下来，但也是我们为公司赚钱的时机。\n我是蒂娜，您的全球销售高级副总裁。\n我们开始工作吧，不要再拖延了。',
+          '老板您好，\n\n现在到了关键时刻，只有最后的公司才能生存下来,\n但也是我们为公司赚钱的时机。我是蒂娜,\n您的全球销售高级副总裁。\n我们开始工作吧，不要再拖延了。',
       'listOfPotential': '潜在客户名单',
       'listOfPotentialDetails':
-          '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚。当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。点击"立即联络"。',
+          '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚。当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。\n点击"立即联络"。',
       'listOfPotentialBtn': '点击"立即联络"',
 
       //Business sector screen dialog
       'customerRelation': '客户关系管理',
       'customerRelationDetails':
-          '$username您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！',
+          '$username您好，\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM).\n我们看看不同的业务部门来\n寻找潜在的客户吧！',
       'areaOfComp': '能力领域',
       'areaOfCompDetails':
-          '每个业务部门将测试特定的知识来赢得客户。"大小"是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。',
+          '每个业务部门将测试特定的知识来赢得客户.\n"大小"是每个部门的客户数量.您可以点击业务板块阅读说明,\n加入并下载问题以便离线使用.某些业务部门可能已经分配给您。',
       'accessToFirst': '访问您的第一个客户',
       'accessToFirstDetails': '您可以加入第一个商业部门从而访问您的第一个客户。\n点击业务板块的"开始"，然后点击"加入"。',
       'accessToFirstBtn': '点击"开始”',
@@ -1197,7 +1197,7 @@ class StringRes {
 
       //setting screen Dialog
       'settingDetails':
-          '您可以切换到专业模式（没有虚拟公司)，您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金，您的经理会进行审批。',
+          '您可以切换到专业模式（没有虚拟公司),\n您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金,\n您的经理会进行审批。',
 
       //lock feature
       'unLockOrg': 'Unlocks when Sales or Service capacities empty first time.',

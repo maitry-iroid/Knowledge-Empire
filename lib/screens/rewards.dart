@@ -43,11 +43,10 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   Future showDialogForCallApi() async {
-      await Future.delayed(Duration(milliseconds: 50));
+    await Future.delayed(Duration(milliseconds: 50));
 
-      if (Injector.introData == null || Injector.introData.rewards == 0)
-        await DisplayDialogs.showIntroRewards(context);
-
+    if (Injector.introData == null || Injector.introData.rewards == 0)
+      await DisplayDialogs.showIntroRewards(context);
 
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       getAchievements();
@@ -74,24 +73,27 @@ class _RewardsPageState extends State<RewardsPage> {
   int _subSelectedItem = 0;
 
   selectItem(index) {
-    if (mounted)setState(() {
-      _selectedItem = index;
-      print(selectItem.toString());
-      selectedAchievement = arrAchievementData[_selectedItem];
+    if (mounted)
+      setState(() {
+        _selectedItem = index;
+        print(selectItem.toString());
+        selectedAchievement = arrAchievementData[_selectedItem];
 
-      if (selectedAchievement.subCategory.isNotEmpty) {
-        _subSelectedItem = 0;
-        selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
-      }
-    });
+        if (selectedAchievement.subCategory.isNotEmpty) {
+          _subSelectedItem = 0;
+          selectedSubCategory =
+              selectedAchievement.subCategory[_subSelectedItem];
+        }
+      });
   }
 
   subCatSelectItem(index) {
-    if (mounted)setState(() {
-      _subSelectedItem = index;
-      selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
+    if (mounted)
+      setState(() {
+        _subSelectedItem = index;
+        selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
 //      isSelectSubCat = false;
-    });
+      });
   }
 
   showFirstHalf() {
@@ -352,7 +354,7 @@ class _RewardsPageState extends State<RewardsPage> {
         if (arrAchievementData.isNotEmpty) {
           selectedAchievement = arrAchievementData[0];
           selectedSubCategory = selectedAchievement.subCategory[0];
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
         }
       }
     }).catchError((e) {
