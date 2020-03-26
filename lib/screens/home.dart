@@ -278,6 +278,7 @@ class HomePageState extends State<HomePage>
         if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
           Navigator.push(context, FadeRouteIntro());
         }
+
       }
     } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {

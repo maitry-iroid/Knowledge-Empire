@@ -13,7 +13,7 @@ class DisplayDialogs {
   static double liWeiImageHeight = 2.10;
   static double liWeiImageWidth = 2.7;
   static double liWeiImageMoveRight = 8.5;
-  static double liWeiImageMoveTop = 4.2;
+  static double liWeiImageMoveTop = 5.2;
 
   //todo hrNiki  image configuration
   static double hrNikiImageHeight = 1.25;
@@ -25,31 +25,31 @@ class DisplayDialogs {
   static double tinaImageHeight = 2.10;
   static double tinaImageWidth = 2.5;
   static double tinaImageMoveRight = 7.5;
-  static double tinaImageMoveTop = 4.2;
+  static double tinaImageMoveTop = 5.2;
 
   //todo tina image configuration
   static double bobImageHeight = 2.10;
   static double bobImageWidth = 2.5;
   static double bobImageMoveRight = 9.5;
-  static double bobImageMoveTop = 5.0;
+  static double bobImageMoveTop = 6.3;
 
   //todo tina image configuration
   static double willImageHeight = 2.10;
   static double willImageWidth = 2.5;
   static double willImageMoveRight = 7.5;
-  static double willImageMoveTop = 4.2;
+  static double willImageMoveTop = 5.2;
 
   //todo lydia image configuration
   static double lydiaImageHeight = 1.25;
   static double lydiaImageWidth = 2.5;
   static double lydiaImageMoveRight = 8.0;
-  static double lydiaImageMoveTop = 16.0;
+  static double lydiaImageMoveTop = 70.0;
 
   //todo lydia akiki configuration
   static double akikoImageHeight = 1.25;
   static double akikoImageWidth = 2.9;
   static double akikoImageMoveRight = 6.3;
-  static double akikoImageMoveTop = 18.0;
+  static double akikoImageMoveTop = 80.0;
 
   //todo  This dialogs only for Dashboard Game screen
   static showChallengeDialog(
@@ -205,6 +205,8 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.hireHrEmp),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             desTextLine: Utils.getText(context, StringRes.hireHrEmpDetails),
             onTapBtn: () async {
               Navigator.pop(context);
@@ -224,7 +226,8 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            imageWidth: hrNikiImageWidth,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             titleText: Utils.getText(context, StringRes.hireHrEmp)??"",
 //            btnName: StringRes.next,
             btnColor: ColorRes.blue,
@@ -247,10 +250,8 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            imageMoveTop: hrNikiImageMoveTop,
-            imageMoveRight: hrNikiImageMoveRight,
-            imageHeight: hrNikiImageHeight,
-            imageWidth: hrNikiImageWidth,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             titleText: Utils.getText(context, StringRes.empOMaster)??"",
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
@@ -274,10 +275,8 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            imageMoveTop: hrNikiImageMoveTop,
-            imageMoveRight: hrNikiImageMoveRight,
-            imageHeight: hrNikiImageHeight,
-            imageWidth: hrNikiImageWidth,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             titleText: Utils.getText(context, StringRes.costOfEmp)??"",
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
@@ -524,7 +523,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
-            imageMoveTop: tinaImageMoveTop,
+            imageMoveTop: 5.2,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
             titleText: Utils.getText(context, StringRes.heartBusiness),
@@ -972,7 +971,7 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "akiko",
-            imageMoveTop: 25,
+            imageMoveTop: akikoImageMoveTop,
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
@@ -998,7 +997,7 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "akiko",
-            imageMoveTop: 25,
+            imageMoveTop: akikoImageMoveTop,
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,

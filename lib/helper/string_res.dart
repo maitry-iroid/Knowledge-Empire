@@ -451,7 +451,7 @@ class StringRes {
       //introDialog
       'gotIt': "Got it",
       'rewardsDialogContent':
-          "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will need to\nachieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
+          "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will\nneed to achieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
       'challengesDialogTitle1': "Your Will is at your command",
       'challengesDialogContent1':
           "Dear ${Injector.userData?.name ?? ""},\n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
@@ -518,7 +518,7 @@ class StringRes {
       //New Customer screen
       'heartBusiness': 'The heart of the business',
       'heartBusinessDetails':
-          "Hi Boss,\n\nthis is where the rubber hits the road, where only the best\nsurvive and where we earn the money for our company.\nI am Tina, your Senior Vice President of Global Sales.\nLet's get to work without any further due.",
+          "Hi Boss,\n\nthis is where the rubber hits the road, where only\nthe best survive and where we earn the money for\nour company. I am Tina, your Senior Vice President of\nGlobal Sales. Let's get to work without any further due.",
       'listOfPotential': 'List of potential Customers',
       'listOfPotentialDetails':
           'Each customer has a name and belongs to a sector.\nValue is the cash you will receive every day while the\ncustomer is loyal to you. Loyalty of customers will\nincrease when you master the customer situation.\nResources indicate how many Sales Reps you will\nneed to engage this customer. Click on “Engage Now”.',
@@ -557,7 +557,7 @@ class StringRes {
           'Hi ${Injector.userData?.name ?? ""},\n\nWelcome on board and welcome to the board room.\nMy name is Nikita but please call me Niki.\nAs Head of HR I will introduce you to the team and how you\ncan hire new employees to strengthen the team.',
 
       'hireHrEmpDetailsSeconds':
-          "To hear your Team's' recommendations on why you should\nhire more employees in their team, click on them? \n\nLet's start with hiring 10 HR employees by clicking on HR and then\n“Hire 10 employees”.",
+          "To hear your Team's' recommendations on why you should\nhire more employees in their team, click on them? \n\nLet's start with hiring 10 HR employees by clicking on HR\nand then “Hire 10 employees”.",
 
       'empOMaster': 'Employ-o-Meter',
       'empOMasterDetails':

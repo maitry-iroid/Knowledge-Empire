@@ -246,7 +246,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             arrQuestions[index].title,
                             style: TextStyle(
                               color: ColorRes.textRecordBlue,
-                              fontSize: 15,
+                              fontSize: 17,
                             ),
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -257,7 +257,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             arrQuestions[index].moduleName,
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 17),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -267,7 +267,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             ("${arrQuestions[index].value.toString()} \$"),
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 17),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -277,7 +277,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             ("${arrQuestions[index].loyalty.toString()} d"),
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 17),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -287,7 +287,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             arrQuestions[index].resources.toString(),
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 17),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -317,7 +317,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     child: Text(
                       Utils.getText(
                           _scaffoldKey.currentContext, StringRes.engageNow),
-                      style: TextStyle(color: ColorRes.white, fontSize: 14),
+                      style: TextStyle(color: ColorRes.white, fontSize: 16),
                     )),
                 onTap: () {
                   Utils.playClickSound();

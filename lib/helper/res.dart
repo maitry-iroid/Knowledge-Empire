@@ -98,6 +98,6 @@ class DimenRes {
   static double drawerWidth = 0.8;
   static double closeIconSize = 0.1;
   static double closeIconPadding = 0.045;
-  static double titleTextSize = 17;
+  static double titleTextSize = 19;
   static double inputFieldHeight = 42;
 }
