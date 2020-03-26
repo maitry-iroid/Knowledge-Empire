@@ -66,7 +66,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
-
           if (arrFinalLearningModules.length > 0) if (mounted) setState(() {});
         }
       }
