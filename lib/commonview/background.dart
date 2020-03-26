@@ -18,6 +18,7 @@ import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/organization2.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CommonView {
   static bool isShowLayout = false;
@@ -366,20 +367,8 @@ class CommonView {
                     ],
                   ),
                   onTap: () {
-                    if (dashboardLockStatusData != null &&
-                        dashboardLockStatusData.organization != null &&
-                        dashboardLockStatusData.organization != 1) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => OrgInfoDialog(
-                                text:
-                                    Utils.getText(context, StringRes.unLockOrg),
-                                isForIntroDialog: true,
-                              ));
-                    } else {
-                      Utils.playClickSound();
-                      Utils.performDashboardItemClick(context, Const.typeOrg);
-                    }
+                    Utils.playClickSound();
+                    Utils.performDashboardItemClick(context, Const.typeOrg);
                   },
                 ),
                 InkResponse(
@@ -405,58 +394,35 @@ class CommonView {
                     ],
                   ),
                   onTap: () {
-                    if (dashboardLockStatusData != null &&
-                        dashboardLockStatusData.pl != null &&
-                        dashboardLockStatusData.pl != 1) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => OrgInfoDialog(
-                                text:
-                                    Utils.getText(context, StringRes.unLockPl),
-                                isForIntroDialog: true,
-                              ));
-                    } else {
-                      Utils.playClickSound();
-                      Utils.performDashboardItemClick(context, Const.typePl);
-                    }
+                    Utils.playClickSound();
+                    Utils.performDashboardItemClick(context, Const.typePl);
                   },
                 ),
                 InkResponse(
-                  child: Stack(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getAssetsImg("ranking")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
-                      ),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.ranking != null &&
-                              dashboardLockStatusData.ranking != 1
-                          ? Utils.showUnreadCount(
-                              Const.typeRanking, 17, 5, data)
-                          : Container(),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.ranking != null &&
-                              dashboardLockStatusData.ranking != 1
-                          ? Image(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("lock_ranking")),
-                              width: Utils.getDeviceWidth(context) / 4.5,
-                            )
-                          : Container(),
-                    ],
-                  ),
-                  onTap: () {
-                    if (dashboardLockStatusData != null &&
-                        dashboardLockStatusData.ranking != null &&
-                        dashboardLockStatusData.ranking != 1) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => OrgInfoDialog(
-                                text: Utils.getText(
-                                    context, StringRes.unLockRanking),
-                                isForIntroDialog: true,
-                              ));
-                    } else {
+                    child: Stack(
+                      children: <Widget>[
+                        Image(
+                          image: AssetImage(Utils.getAssetsImg("ranking")),
+                          width: Utils.getDeviceWidth(context) / 4.5,
+                        ),
+                        dashboardLockStatusData != null &&
+                                dashboardLockStatusData.ranking != null &&
+                                dashboardLockStatusData.ranking != 1
+                            ? Utils.showUnreadCount(
+                                Const.typeRanking, 17, 5, data)
+                            : Container(),
+                        dashboardLockStatusData != null &&
+                                dashboardLockStatusData.ranking != null &&
+                                dashboardLockStatusData.ranking != 1
+                            ? Image(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("lock_ranking")),
+                                width: Utils.getDeviceWidth(context) / 4.5,
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    onTap: () {
                       Utils.playClickSound();
                       Utils.performDashboardItemClick(
                           context, Const.typeRanking);
@@ -464,9 +430,7 @@ class CommonView {
 //                      CommonView().collectorDialog(context, '1000');
                     }
 //                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-
-                  },
-                ),
+                    ),
               ],
             ),
           ),
@@ -532,22 +496,9 @@ class CommonView {
                           ],
                         ),
                         onTap: () {
-                          if (dashboardLockStatusData != null &&
-                              dashboardLockStatusData.achievement != null &&
-                              dashboardLockStatusData.achievement != 1) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    OrgInfoDialog(
-                                      text: Utils.getText(
-                                          context, StringRes.unLockReward),
-                                      isForIntroDialog: true,
-                                    ));
-                          } else {
-                            Utils.playClickSound();
-                            Utils.performDashboardItemClick(
-                                context, Const.typeReward);
-                          }
+                          Utils.playClickSound();
+                          Utils.performDashboardItemClick(
+                              context, Const.typeReward);
                         },
                       )),
                 ),
@@ -619,22 +570,9 @@ class CommonView {
                           ],
                         ),
                         onTap: () {
-                          if (dashboardLockStatusData != null &&
-                              dashboardLockStatusData.challenge != null &&
-                              dashboardLockStatusData.challenge != 1) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    OrgInfoDialog(
-                                      text: Utils.getText(
-                                          context, StringRes.unLockChallenge),
-                                      isForIntroDialog: true,
-                                    ));
-                          } else {
-                            Utils.playClickSound();
-                            Utils.performDashboardItemClick(
-                                context, Const.typeChallenges);
-                          }
+                          Utils.playClickSound();
+                          Utils.performDashboardItemClick(
+                              context, Const.typeChallenges);
                         }),
                   ),
                 ),
@@ -1134,5 +1072,71 @@ class CommonView {
         barrierLabel: '',
         context: context,
         pageBuilder: (context, animation1, animation2) {});
+  }
+
+  static showShimmer() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Expanded(
+            child: Shimmer.fromColors(
+              baseColor: ColorRes.lightGrey.withOpacity(0.5),
+              highlightColor: Colors.grey[100],
+              enabled: true,
+              child: ListView.builder(
+                itemBuilder: (_, __) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 48.0,
+                        height: 48.0,
+                        color: Colors.white,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              width: double.infinity,
+                              height: 8.0,
+                              color: Colors.white,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 2.0),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 8.0,
+                              color: Colors.white,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 2.0),
+                            ),
+                            Container(
+                              width: 40.0,
+                              height: 8.0,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                itemCount: 6,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

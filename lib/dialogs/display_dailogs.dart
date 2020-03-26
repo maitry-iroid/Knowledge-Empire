@@ -13,7 +13,7 @@ class DisplayDialogs {
   static double liWeiImageHeight = 2.10;
   static double liWeiImageWidth = 2.7;
   static double liWeiImageMoveRight = 8.5;
-  static double liWeiImageMoveTop = 4.2;
+  static double liWeiImageMoveTop = 5.2;
 
   //todo hrNiki  image configuration
   static double hrNikiImageHeight = 1.25;
@@ -25,31 +25,31 @@ class DisplayDialogs {
   static double tinaImageHeight = 2.10;
   static double tinaImageWidth = 2.5;
   static double tinaImageMoveRight = 7.5;
-  static double tinaImageMoveTop = 4.2;
+  static double tinaImageMoveTop = 5.2;
 
   //todo tina image configuration
   static double bobImageHeight = 2.10;
   static double bobImageWidth = 2.5;
   static double bobImageMoveRight = 9.5;
-  static double bobImageMoveTop = 5.0;
+  static double bobImageMoveTop = 6.3;
 
   //todo tina image configuration
   static double willImageHeight = 2.10;
   static double willImageWidth = 2.5;
   static double willImageMoveRight = 7.5;
-  static double willImageMoveTop = 4.2;
+  static double willImageMoveTop = 5.2;
 
   //todo lydia image configuration
   static double lydiaImageHeight = 1.25;
   static double lydiaImageWidth = 2.5;
   static double lydiaImageMoveRight = 8.0;
-  static double lydiaImageMoveTop = 16.0;
+  static double lydiaImageMoveTop = 70.0;
 
   //todo lydia akiki configuration
   static double akikoImageHeight = 1.25;
   static double akikoImageWidth = 2.9;
   static double akikoImageMoveRight = 6.3;
-  static double akikoImageMoveTop = 18.0;
+  static double akikoImageMoveTop = 80.0;
 
   //todo  This dialogs only for Dashboard Game screen
   static showChallengeDialog(
@@ -69,14 +69,13 @@ class DisplayDialogs {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("Your are challenged by $userName",
-                      style: Theme.of(context).textTheme.title),
-                  SizedBox(height: 45),
+                  Text("Your are challenged by $userName in module\nYou have to attempt all 3 challenges to win ${questionData.winningAmount}",
+                      style: Theme.of(context).textTheme.title,textAlign: TextAlign.center,),
+                  SizedBox(height: 20),
                   RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        Utils.showChallengeQuestionDialog(
-                            context, questionData);
+                        Utils.showChallengeQuestionDialog(context, questionData);
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -128,7 +127,6 @@ class DisplayDialogs {
                 "Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service\nemployees",
             onTapBtn: () async {
               try {
-                await Injector.updateIntroDialogType(Const.introHireHR);
                 Navigator.of(context).pop();
                 Utils.performDashboardItemClick(context, Const.typeOrg);
               } catch (e) {
@@ -181,10 +179,9 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.settingDetails),
             onTapBtn: () async {
               try {
-                print(Const.introMeetYourTeam);
                 Injector.introData.profile2 = 1;
                 await Injector.setIntroData(Injector.introData);
-                await Injector.updateIntroDialogType(Const.introMeetYourTeam);
+
                 Navigator.of(context).pop();
               } catch (e) {
                 print(e);
@@ -206,6 +203,8 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.hireHrEmp),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             desTextLine: Utils.getText(context, StringRes.hireHrEmpDetails),
             onTapBtn: () async {
               Navigator.pop(context);
@@ -225,7 +224,8 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            imageWidth: hrNikiImageWidth,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             titleText: Utils.getText(context, StringRes.hireHrEmp)??"",
 //            btnName: StringRes.next,
             btnColor: ColorRes.blue,
@@ -248,10 +248,8 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            imageMoveTop: hrNikiImageMoveTop,
-            imageMoveRight: hrNikiImageMoveRight,
-            imageHeight: hrNikiImageHeight,
-            imageWidth: hrNikiImageWidth,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             titleText: Utils.getText(context, StringRes.empOMaster)??"",
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
@@ -275,10 +273,8 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "hr_niki",
-            imageMoveTop: hrNikiImageMoveTop,
-            imageMoveRight: hrNikiImageMoveRight,
-            imageHeight: hrNikiImageHeight,
-            imageWidth: hrNikiImageWidth,
+            imageMoveTop: 8.5,
+            imageMoveRight: 8,
             titleText: Utils.getText(context, StringRes.costOfEmp)??"",
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
@@ -483,8 +479,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.accessToFirstDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introReadyForYourFirstCustomerContact);
+
               showReadyForYourFirstCustomerContact(context);
             },
           );
@@ -508,8 +503,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.readyForCustomerDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introHeartOfTheBusiness);
+
             },
           );
         });
@@ -525,7 +519,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "tina",
             imageMoveRight: tinaImageMoveRight,
-            imageMoveTop: tinaImageMoveTop,
+            imageMoveTop: 5.2,
             imageHeight: tinaImageHeight,
             imageWidth: tinaImageWidth,
             titleText: Utils.getText(context, StringRes.heartBusiness),
@@ -586,9 +580,6 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.yourFirstEngagementDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introImpactOnSalesAndService);
-              //showImpactOnSalesAndService(context);
             },
           );
         });
@@ -640,8 +631,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.impactOnBrandDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introCheckYourExistingCustomers);
+
               showCheckYourExistingCustomers(context);
             },
           );
@@ -665,8 +655,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.checkYourCustomerDetails),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introServingYourExistingCustomers);
+
             },
           );
         });
@@ -744,7 +733,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.readyForBusinessDeatils),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introRewards);
+
             },
           );
         });
@@ -765,8 +754,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(
-                  Const.introYourWillIsAtYourCommand);
+
               Injector.introData.rewards = 1;
               await Injector.setIntroData(Injector.introData);
             },
@@ -903,7 +891,7 @@ class DisplayDialogs {
                 Utils.getText(context, StringRes.strYourTeamPerformanceDialog),
             onTapBtn: () async {
               Navigator.pop(context);
-              await Injector.updateIntroDialogType(Const.introYourTeams);
+
               Injector.introData.team1 = 1;
               await Injector.setIntroData(Injector.introData);
               showYourTeams(context);
@@ -973,7 +961,7 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "akiko",
-            imageMoveTop: 25,
+            imageMoveTop: akikoImageMoveTop,
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,
@@ -999,7 +987,7 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "akiko",
-            imageMoveTop: 25,
+            imageMoveTop: akikoImageMoveTop,
             imageMoveRight: akikoImageMoveRight,
             imageHeight: akikoImageHeight,
             imageWidth: akikoImageWidth,

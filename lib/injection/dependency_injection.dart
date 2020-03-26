@@ -10,7 +10,9 @@ import 'package:ke_employee/helper/Utils.dart';
 
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
@@ -26,6 +28,7 @@ class Injector {
   static int userId;
   static CustomerValueData customerValueData;
   static IntroData introData;
+  static DashboardLockStatusData dashboardLockStatusData;
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
@@ -46,6 +49,8 @@ class Injector {
 
   static int dialogType = 0;
 
+  static WebApi webApi;
+
 //  factory Injector {
 //    return _singleton;
 //  }
@@ -58,6 +63,8 @@ class Injector {
     deviceType = Device.get().isAndroid ? "android" : "ios";
 
     firebaseMessaging = FirebaseMessaging();
+
+    webApi = WebApi();
 
     firebaseMessaging.getToken().then((token) {
       print("Your Device tocken==<>" + token);
@@ -104,13 +111,14 @@ class Injector {
     }
   }
 
-  static logout() async{
+  static logout() async {
     await Injector.prefs.clear();
     userData = null;
     userId = null;
     customerValueData = null;
     customerValueData = null;
     introData = null;
+    StringRes.username = "";
   }
 
   static updateMode(int _mode) async {
@@ -148,23 +156,19 @@ class Injector {
     return userData?.isManager == 1;
   }
 
-  static updateIntroDialogType(int introType) async {
-    await prefs.setInt(PrefKeys.dialogTypes, introType);
-    dialogType = introType;
-    print("----------------->" + Injector.dialogType.toString());
-  }
-
   static getIntroData() {
+    if (Injector.introData != null) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         IntroRequest rq = IntroRequest();
         rq.userId = Injector.userId;
         rq.type = 1;
 
-        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) async {
           if (data != null) {
             IntroData introData = IntroData.fromJson(data);
-            Injector.setIntroData(introData);
+            await Injector.setIntroData(introData);
           }
         }).catchError((e) {
           print("getIntro" + e.toString());
@@ -175,6 +179,8 @@ class Injector {
   }
 
   static updateIntroData() {
+    if (Injector.introData == null) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         IntroRequest rq = IntroRequest();

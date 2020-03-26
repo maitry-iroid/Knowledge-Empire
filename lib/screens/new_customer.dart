@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/get_question_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/home.dart';
@@ -11,9 +11,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
-import '../helper/web_api.dart';
 import '../models/questions.dart';
-
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -37,70 +35,51 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-
-
     if (Injector.introData == null || Injector.introData.newCustomer1 == 0)
       await DisplayDialogs.showIntroHeartOfTheBusiness(context);
 
-
-    questionAnswered = Injector.customerValueData?.totalAttemptedQuestion;
-    loyaltyBonus = Injector.customerValueData?.loyaltyBonus;
-    resourceBonus = Injector.customerValueData?.resourceBonus;
-    valueBonus = Injector.customerValueData?.valueBonus;
-    
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        getQuestions(_scaffoldKey.currentContext);
-      } else {
-        arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
-    
-        if (arrQuestions != null && arrQuestions.length > 0) {
-          if (mounted)setState(() {});
-        }
-      }
-    });
+    initData();
   }
 
-  getQuestions(BuildContext context) {
-    CommonView.showCircularProgress(true, context);
-    QuestionRequest rq = QuestionRequest();
-    rq.userId = Injector.userData.userId;
-
-    rq.type = Const.getNewQueType;
-    rq.type = Const.getNewQueType;
-
-    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-        arrQuestions.clear();
-
-        data.forEach((v) {
-          arrQuestions.add(QuestionData.fromJson(v));
-        });
-
-        for (int i = 0; i < arrQuestions.length; i++) {
-          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
-
-          print(arrQuestions[i].value);
-        }
-
-        if (mounted)setState(() {});
-      } else {
-//        Utils.showToast(Utils.getText(
-//            _scaffoldKey?.currentContext, StringRes.somethingWrong));
-
-      }
-    }).catchError((e) {
-      print("getQuestions_" + e.toString());
-      if (mounted) {
-        CommonView.showCircularProgress(false, context);
-      }
-      Utils.showToast(e.toString());
-    });
-  }
+//  getQuestions(BuildContext context) {
+//    CommonView.showCircularProgress(true, context);
+//    QuestionRequest rq = QuestionRequest();
+//    rq.userId = Injector.userData.userId;
+//
+//    rq.type = Const.getNewQueType;
+//
+//    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) async {
+//      CommonView.showCircularProgress(false, context);
+//
+//      if (data != null) {
+//        arrQuestions.clear();
+//
+//        data.forEach((v) {
+//          arrQuestions.add(QuestionData.fromJson(v));
+//        });
+//
+//        for (int i = 0; i < arrQuestions.length; i++) {
+//          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
+//          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
+//          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
+//
+//          print(arrQuestions[i].value);
+//        }
+//
+//        if (mounted) setState(() {});
+//      } else {
+////        Utils.showToast(Utils.getText(
+////            _scaffoldKey?.currentContext, StringRes.somethingWrong));
+//
+//      }
+//    }).catchError((e) {
+//      print("getQuestions_" + e.toString());
+//      if (mounted) {
+//        CommonView.showCircularProgress(false, context);
+//      }
+//      Utils.showToast(e.toString());
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,18 +124,21 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   Expanded showItems(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: arrQuestions.length,
-        itemBuilder: (BuildContext context, int index) {
-          return showItem(index);
-        },
-      ),
-    );
+        child: StreamBuilder(
+            stream: getQuestionsBloc?.getQuestions,
+            builder: (context, AsyncSnapshot<List<QuestionData>> snapshot) {
+              if (snapshot.hasData) {
+                return showData(snapshot?.data);
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
+              return CommonView.showShimmer();
+            }));
   }
 
   Container showSubHeader(BuildContext context) {
     return Container(
-      height: Injector.isBusinessMode ? 30 : 25,
+      height: Injector.isBusinessMode ? 35 : 30,
       margin: EdgeInsets.only(left: 0, right: 4, top: 8, bottom: 8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -172,7 +154,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -181,7 +163,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 5,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -190,7 +172,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -199,7 +181,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -208,7 +190,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.resources),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -217,7 +199,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.engage),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -240,9 +222,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                    height: Injector.isBusinessMode ? 30 : 25,
+                    height: Injector.isBusinessMode ? 35 : 30,
                     padding: EdgeInsets.only(left: 10),
-                    margin: EdgeInsets.symmetric(vertical: 4),
+                    margin: EdgeInsets.symmetric(vertical: 3),
                     decoration: BoxDecoration(
                         color: Injector.isBusinessMode ? null : ColorRes.white,
                         borderRadius: Injector.isBusinessMode
@@ -264,7 +246,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             arrQuestions[index].title,
                             style: TextStyle(
                               color: ColorRes.textRecordBlue,
-                              fontSize: 15,
+                              fontSize: 18,
                             ),
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -275,7 +257,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             arrQuestions[index].moduleName,
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -285,7 +267,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             ("${arrQuestions[index].value.toString()} \$"),
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -295,7 +277,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             ("${arrQuestions[index].loyalty.toString()} d"),
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -305,7 +287,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: Text(
                             arrQuestions[index].resources.toString(),
                             style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 15),
+                                color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -315,7 +297,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               ),
               InkResponse(
                 child: Container(
-                    height: Injector.isBusinessMode ? 32 : 25,
+                    height: Injector.isBusinessMode ? 35 : 28,
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(left: 10, right: 2),
                     padding: EdgeInsets.only(left: 15, right: 15),
@@ -335,7 +317,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     child: Text(
                       Utils.getText(
                           _scaffoldKey.currentContext, StringRes.engageNow),
-                      style: TextStyle(color: ColorRes.white, fontSize: 14),
+                      style: TextStyle(color: ColorRes.white, fontSize: 16),
                     )),
                 onTap: () {
                   Utils.playClickSound();
@@ -387,19 +369,25 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   void initData() {
-    questionAnswered = Injector.customerValueData.totalAttemptedQuestion;
-    loyaltyBonus = Injector.customerValueData.loyaltyBonus;
-    resourceBonus = Injector.customerValueData.resourceBonus;
-    valueBonus = Injector.customerValueData.valueBonus;
+    questionAnswered = Injector.customerValueData?.totalAttemptedQuestion;
+    loyaltyBonus = Injector.customerValueData?.loyaltyBonus;
+    resourceBonus = Injector.customerValueData?.resourceBonus;
+    valueBonus = Injector.customerValueData?.valueBonus;
 
-    Utils.isInternetConnected().then((isConnected) {
+    Utils.isInternetConnected().then((isConnected) async {
       if (isConnected) {
-        getQuestions(_scaffoldKey.currentContext);
+        QuestionRequest rq = QuestionRequest();
+        rq.userId = Injector.userData.userId;
+        rq.type = Const.getNewQueType;
+        await getQuestionsBloc.getQuestion(rq);
+//        getQuestions(_scaffoldKey.currentContext);
       } else {
         arrQuestions = Utils.getQuestionsLocally(Const.getNewQueType);
 
         if (arrQuestions != null && arrQuestions.length > 0) {
-          if (mounted)setState(() {});
+          getQuestionsBloc.updateQuestions(arrQuestions);
+
+//          if (mounted) setState(() {});
         }
       }
     });
@@ -412,5 +400,16 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             style: TextStyle(color: ColorRes.white),
           )
         : Container();
+  }
+
+  showData(List<QuestionData> data) {
+    arrQuestions = data;
+
+    return ListView.builder(
+      itemCount: arrQuestions.length,
+      itemBuilder: (BuildContext context, int index) {
+        return showItem(index);
+      },
+    );
   }
 }

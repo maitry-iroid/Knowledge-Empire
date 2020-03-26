@@ -31,6 +31,7 @@ import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 import 'P+L.dart';
@@ -90,7 +91,9 @@ class DrawerItem {
 
 List<DrawerItem> drawerItems = List();
 
-class HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class HomePageState extends State<HomePage>
+    with WidgetsBindingObserver
+    implements RefreshAnimation {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _selectedDrawerIndex = 0;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -98,6 +101,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   int duration = 4;
   bool isCoinViseble = false;
   DashboardLockStatusData dashboardLockStatusData;
+  RefreshAnimation mRefreshAnimation;
 
   @override
   void didChangeDependencies() {
@@ -110,6 +114,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     getLockStatus();
     super.initState();
     Utils.removeBadge();
+    mRefreshAnimation = this;
   }
 
   void getLockStatus() {
@@ -124,7 +129,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            print(dashboardLockStatusData);
+            Injector.dashboardLockStatusData = dashboardLockStatusData;
             if (mounted) setState(() {});
           }
         }).catchError((e) {
@@ -241,41 +246,39 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   _onSelectItem(int index) {
     Utils.playClickSound();
     if (_selectedDrawerIndex != index) {
-      switch (drawerItems[index].title) {
-        case "Organizations":
-          if (mounted) {
-            if (dashboardLockStatusData != null && dashboardLockStatusData.organization != null && dashboardLockStatusData.organization != 1) {
-              if (_scaffoldKey.currentState.isDrawerOpen) {
-                _scaffoldKey.currentState.openEndDrawer();
-              }
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => OrgInfoDialog(
-                        text: Utils.getText(context, StringRes.unLockOrg),
-                        isForIntroDialog: true,
-                      ));
-            } else {
-              setState(() => _selectedDrawerIndex = index);
+      if (index == Utils.getHomePageIndex(Const.typeOrg) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.organization != 1) {
+        Utils.showLockReasonDialog(Const.typeOrg, context);
+      } else if (index == Utils.getHomePageIndex(Const.typePl) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.pl != null &&
+          dashboardLockStatusData.pl != 1) {
+        Utils.showLockReasonDialog(Const.typePl, context);
+      } else if (index == Utils.  getHomePageIndex(Const.typeRanking) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.ranking != null &&
+          dashboardLockStatusData.ranking != 1) {
+        Utils.showLockReasonDialog(Const.typeRanking, context);
+      } else if (index == Utils.getHomePageIndex(Const.typeReward) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.achievement != null &&
+          dashboardLockStatusData.achievement != 1) {
+        Utils.showLockReasonDialog(Const.typeReward, context);
+      } else if (index == Utils.getHomePageIndex(Const.typeChallenges) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.challenge != null &&
+          dashboardLockStatusData.challenge != 1) {
+        Utils.showLockReasonDialog(Const.typeChallenges, context);
+      } else {
+        setState(() => _selectedDrawerIndex = index);
 
-              Navigator.of(context).pop(); // close the drawer
-              if (_selectedDrawerIndex ==
-                  Utils.getHomePageIndex(Const.typeHelp)) {
-                Navigator.push(context, FadeRouteIntro());
-              }
-            }
-          }
-          break;
-        default:
-          if (mounted) {
-            setState(() => _selectedDrawerIndex = index);
+        Navigator.of(context).pop(); // close the drawer
+        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+          Navigator.push(context, FadeRouteIntro());
+        }
 
-            Navigator.of(context).pop(); // close the drawer
-            if (_selectedDrawerIndex ==
-                Utils.getHomePageIndex(Const.typeHelp)) {
-              Navigator.push(context, FadeRouteIntro());
-            }
-          }
-          break;
       }
     } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -318,23 +321,40 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             isShowMenu: true,
             openProfile: openProfile,
           ),
-//          isCoinViseble
-//              ? Stack(
-//                  children: <Widget>[
-//                    coinWidget(250, 150),
-//                    coinWidget(310, 50),
-//                    coinWidget(70, 50),
-//                    coinWidget(150, 20),
-//                    coinWidget(350, 320),
-//                    coinWidget(350, 450),
-//                    coinWidget(180, 300),
-//                    coinWidget(200, 550),
-//                    coinWidget(350, 650),
-//                  ],
-//                )
-//              : Container()
+
+          Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              coinWidget(250, 150),
+              coinWidget(310, 50),
+              coinWidget(70, 50),
+              coinWidget(150, 20),
+              coinWidget(350, 320),
+              coinWidget(350, 450),
+              coinWidget(180, 300),
+              coinWidget(200, 550),
+              coinWidget(350, 650),
+            ],
+          ),
         ],
       )),
+    );
+  }
+
+  Widget coinWidget(double top, double left) {
+    return AnimatedPositioned(
+      duration: Duration(seconds: duration),
+      top: !isCoinViseble ? top : 5,
+      left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
+      onEnd: () {
+        isCoinViseble = false;
+        if (mounted) setState(() {});
+      },
+      child: Container(
+        child: isCoinViseble ? MyHomePage() : Container(),
+        width: 40,
+        height: 40,
+      ),
     );
   }
 
@@ -393,27 +413,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  Widget coinWidget(double top, double left) {
-    print("isCoinViseble=====>" +
-        isCoinViseble.toString() +
-        "====>startAnim===>" +
-        startAnim.toString());
-    return AnimatedPositioned(
-      duration: Duration(seconds: duration),
-      top: !isCoinViseble ? top : 20,
-      left: !isCoinViseble ? left : 750,
-      onEnd: () {
-        isCoinViseble = false;
-        if (mounted) setState(() {});
-      },
-      child: Container(
-        child: isCoinViseble ? MyHomePage() : Container(),
-        width: 40,
-        height: 40,
-      ),
-    );
-  }
-
   getPage() {
     if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeProfile))
       return ProfilePage();
@@ -428,6 +427,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         questionDataCustomerSituation: widget.homeData.questionDataSituation,
         isChallenge: widget.homeData.isChallenge,
         isCameFromExistingCustomer: widget.homeData.isCameFromExistingCustomer,
+        mRefreshAnimation: mRefreshAnimation,
       );
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeChallenges))
@@ -538,11 +538,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
           if (data != null) {
             QuestionData questionData = QuestionData.fromJson(data);
-
             if (questionData != null && questionData.challengeId != null)
-//              DisplayDialogs.showChallengeDialog(context, "Ravi", questionData);
-              Utils.showChallengeQuestionDialog(
-                  _scaffoldKey.currentContext, questionData);
+              DisplayDialogs.showChallengeDialog(
+                  context, questionData.firstName, questionData);
           }
         }).catchError((e) {
           Utils.showToast(e.toString());
@@ -644,5 +642,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 //    }).catchError((e) {
 //      print('[BackgroundFetch] start FAILURE: $e');
 //    });
+  }
+
+  @override
+  onRefresh() {
+    setState(() {
+      isCoinViseble = true;
+    });
   }
 }

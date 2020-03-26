@@ -389,13 +389,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.no)),
-      onPressed:  () {
+      onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.yes)),
-      onPressed:  () {
+      onPressed: () {
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
         Navigator.pop(context);
@@ -405,7 +405,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(Utils.getText(context, StringRes.alert)),
-      content: Text(Utils.getText(context, StringRes.alertUnFriend), style: TextStyle(color: ColorRes.textProf)),
+      content: Text(Utils.getText(context, StringRes.alertUnFriend),
+          style: TextStyle(color: ColorRes.textProf)),
       actions: [
         cancelButton,
         continueButton,
@@ -855,9 +856,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
       children: <Widget>[
         Expanded(
           child: Container(
-            height: 25,
+            height: 30,
             alignment: Alignment.center,
-            padding: EdgeInsets.only(top: 10, left: 10),
+            padding: EdgeInsets.only(left: 10),
             margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -887,13 +888,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
               maxLines: 1,
               controller: searchController,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 color: ColorRes.hintColor,
               ),
               decoration: InputDecoration(
 //                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
                 hintText: Utils.getText(context, StringRes.searchForKeywords),
-                hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 14),
+                hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 16),
                 border: InputBorder.none,
               ),
             ),

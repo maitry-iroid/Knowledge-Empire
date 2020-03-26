@@ -133,7 +133,7 @@ class HeaderViewState extends State<HeaderView> {
                     alignment: Alignment.centerLeft,
                     children: <Widget>[
                       Container(
-                        height: Injector.isBusinessMode ? 19 : 21,
+                        height: Injector.isBusinessMode ? 22 : 23,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: ColorRes.greyText,
@@ -146,7 +146,7 @@ class HeaderViewState extends State<HeaderView> {
                             horizontal: Injector.isBusinessMode ? 0 : 1),
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
-                          lineHeight: 19.0,
+                          lineHeight: 22.0,
                           percent:
                               HeaderUtils.getProgressInt(type)?.toDouble() ??
                                   0.toDouble(),
@@ -161,7 +161,7 @@ class HeaderViewState extends State<HeaderView> {
                         child: Text(
                           HeaderUtils.getProgress(type).toString() +
                               (type == Const.typeBrandValue ? "%" : ""),
-                          style: TextStyle(color: ColorRes.white, fontSize: 14),
+                          style: TextStyle(color: ColorRes.white, fontSize: 17),
                         ),
                       )
                     ],
@@ -170,25 +170,33 @@ class HeaderViewState extends State<HeaderView> {
                     Injector.customerValueData != null
                         ? Injector.customerValueData.totalBalance.toString()
                         : "00.00",
-                    style: TextStyle(color: ColorRes.white, fontSize: 16),
+                    style: TextStyle(color: ColorRes.white, fontSize: 18),
                   ),
           ],
         ),
         onTap: () {
-
-          if(Injector.homeStreamController==null)
+          if (Injector.homeStreamController == null)
             Injector.homeStreamController = StreamController.broadcast();
 
           if (type == Const.typeEmployee) {
-            Injector.homeStreamController?.add("${Const.typeOrg}");
+            if (Injector.dashboardLockStatusData.organization == 1)
+              Injector.homeStreamController?.add("${Const.typeOrg}");
+            else
+              Utils.showLockReasonDialog(Const.typeOrg, context);
           } else if (type == Const.typeSalesPersons) {
             Injector.homeStreamController?.add("${Const.typeNewCustomer}");
           } else if (type == Const.typeServicesPerson) {
             Injector.homeStreamController?.add("${Const.typeExistingCustomer}");
           } else if (type == Const.typeBrandValue) {
-            Injector.homeStreamController?.add("${Const.typeRanking}");
+            if (Injector.dashboardLockStatusData.ranking == 1)
+              Injector.homeStreamController?.add("${Const.typeRanking}");
+            else
+              Utils.showLockReasonDialog(Const.typeRanking, context);
           } else if (type == Const.typeMoney) {
-            Injector.homeStreamController?.add("${Const.typePl}");
+            if (Injector.dashboardLockStatusData.pl == 1)
+              Injector.homeStreamController?.add("${Const.typePl}");
+            else
+              Utils.showLockReasonDialog(Const.typePl, context);
           }
         },
       ),
@@ -206,8 +214,8 @@ class HeaderViewState extends State<HeaderView> {
             child: Row(
               children: <Widget>[
                 Container(
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   margin: EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -261,7 +269,7 @@ class HeaderViewState extends State<HeaderView> {
               color: Injector.isBusinessMode
                   ? ColorRes.textLightBlue
                   : ColorRes.white,
-              fontSize: 15),
+              fontSize: 17),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -274,7 +282,7 @@ class HeaderViewState extends State<HeaderView> {
               color: Injector.isBusinessMode
                   ? ColorRes.white
                   : ColorRes.textLightBlue,
-              fontSize: 15),
+              fontSize: 17),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         )

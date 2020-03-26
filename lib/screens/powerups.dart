@@ -176,7 +176,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                     color: Injector.isBusinessMode
                         ? ColorRes.blue
                         : ColorRes.textProf,
-                    fontSize: 15,
+                    fontSize: 18,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -288,7 +288,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
-                                  : ColorRes.textProf),
+                                  : ColorRes.textProf,fontSize: 18),
                         ),
                       ),
                     ),
@@ -303,7 +303,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                           left: Utils.getDeviceWidth(context) / 10,
                           right: Utils.getDeviceWidth(context) / 10),
                       padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                       decoration: BoxDecoration(
                           color: Injector.isBusinessMode
                               ? null
@@ -317,7 +317,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                               : null),
                       child: Text(
                         Utils.getText(context, StringRes.description),
-                        style: TextStyle(color: ColorRes.white, fontSize: 17),
+                        style: TextStyle(color: ColorRes.white, fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
                     ),

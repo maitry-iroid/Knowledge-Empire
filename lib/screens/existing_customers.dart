@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/get_question_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -32,34 +33,16 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     super.initState();
 
     initContent();
-
-
   }
 
   Future initContent() async {
     if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
       await DisplayDialogs.showServingYourExistingCustomers(context);
 
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        getQuestions();
-      } else {
-        arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueTYpe);
-    
-        if (arrQuestions != null && arrQuestions.length > 0) {
-          arrQuestions = arrQuestions;
-          if (mounted)setState(() {});
-        }
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-
-//    _notifier.dispose();
-    super.dispose();
+    QuestionRequest rq = QuestionRequest();
+    rq.userId = Injector.userData.userId;
+    rq.type = Const.getExistingQueType;
+    await getQuestionsBloc?.getQuestion(rq);
   }
 
   void releaseResource(int index) {
@@ -85,11 +68,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           CustomerValueData customerValueData =
               CustomerValueData.fromJson(data);
 
-          customerValueBloc.setCustomerValue(customerValueData);
+          customerValueBloc?.setCustomerValue(customerValueData);
 
-          if (mounted)setState(() {
-            arrQuestions.removeAt(index);
-          });
+          arrQuestions.removeAt(index);
+          getQuestionsBloc?.updateQuestions(arrQuestions);
         } else {
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
@@ -101,29 +83,30 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     });
   }
 
-  getQuestions() {
-    CommonView.showCircularProgress(true, context);
-
-    QuestionRequest rq = QuestionRequest();
-    rq.userId = Injector.userData.userId;
-    rq.type = Const.getExistingQueTYpe;
-
-    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-        data.forEach((v) {
-          arrQuestions.add(QuestionData.fromJson(v));
-        });
-
-        if (arrQuestions.isNotEmpty) if (mounted)setState(() {});
-      }
-    }).catchError((e) {
-      print("getQuestions_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
-    });
-  }
+//
+//  getQuestions() {
+//    CommonView.showCircularProgress(true, context);
+//
+//    QuestionRequest rq = QuestionRequest();
+//    rq.userId = Injector.userData.userId;
+//    rq.type = Const.getExistingQueType;
+//
+//    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) {
+//      CommonView.showCircularProgress(false, context);
+//
+//      if (data != null) {
+//        data.forEach((v) {
+//          arrQuestions.add(QuestionData.fromJson(v));
+//        });
+//
+//        if (arrQuestions.isNotEmpty) if (mounted) setState(() {});
+//      }
+//    }).catchError((e) {
+//      print("getQuestions_" + e.toString());
+//      CommonView.showCircularProgress(false, context);
+//      Utils.showToast(e.toString());
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,18 +135,33 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Expanded showItems() {
     return Expanded(
-      child: ListView.builder(
-        itemCount: arrQuestions.length,
-        itemBuilder: (BuildContext context, int index) {
-          return showItem(index);
-        },
-      ),
+      child: StreamBuilder(
+          stream: getQuestionsBloc?.getQuestions,
+          builder: (context, AsyncSnapshot<List<QuestionData>> snapshot) {
+            if (snapshot.hasData) {
+              return showData(snapshot?.data);
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }
+            return CommonView.showShimmer();
+          }),
+    );
+  }
+
+  showData(List<QuestionData> data) {
+    arrQuestions = data;
+
+    return ListView.builder(
+      itemCount: arrQuestions.length,
+      itemBuilder: (BuildContext context, int index) {
+        return showItem(index);
+      },
     );
   }
 
   Container showSubHeader() {
     return Container(
-      height: Injector.isBusinessMode ? 30 : 25,
+      height: Injector.isBusinessMode ? 35 : 30,
       margin: EdgeInsets.only(top: 8, bottom: 5),
       padding: EdgeInsets.only(right: 3),
       decoration: BoxDecoration(
@@ -181,7 +179,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -190,7 +188,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -199,7 +197,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -208,7 +206,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -217,7 +215,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -233,8 +231,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
         Expanded(
           child: InkResponse(
             child: Container(
-                height: Injector.isBusinessMode ? 30 : 25,
-                margin: EdgeInsets.symmetric(vertical: 5),
+                height: Injector.isBusinessMode ? 35 : 30,
+                margin: EdgeInsets.symmetric(vertical: 3),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
@@ -256,7 +254,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         arrQuestions[index].title,
                         style: TextStyle(
                           color: ColorRes.blue,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 1,
@@ -266,7 +264,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       flex: 6,
                       child: Text(
                         arrQuestions[index].moduleName,
-                        style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
@@ -277,7 +275,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         arrQuestions[index].value.toString() + ' \$',
                         style: TextStyle(
                           color: ColorRes.blue,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 1,
@@ -287,7 +285,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       flex: 3,
                       child: Text(
                         arrQuestions[index].loyalty.toString() + ' d',
-                        style: TextStyle(color: ColorRes.blue, fontSize: 15),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                       ),
@@ -335,11 +333,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {
         return AlertDialog(
-          content:
-              Text(Utils.getText(context, StringRes.alertReleaseResources)),
+          content: Text(
+            Utils.getText(context, StringRes.alertReleaseResources),
+            style: TextStyle(fontSize: 20),
+          ),
           actions: <Widget>[
             FlatButton(
-              child: Text(Utils.getText(context, StringRes.ok)),
+              child: Text(Utils.getText(context, StringRes.ok),
+                  style: TextStyle(fontSize: 20)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
@@ -347,7 +348,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
               },
             ),
             FlatButton(
-              child: Text(Utils.getText(context, StringRes.cancel)),
+              child: Text(
+                Utils.getText(context, StringRes.cancel),
+                style: TextStyle(fontSize: 20),
+              ),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

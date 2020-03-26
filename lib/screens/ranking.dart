@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/ranking_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -148,22 +149,18 @@ class _RankingPageState extends State<RankingPage> {
                 children: <Widget>[
                   showBack(),
                   Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      itemCount: arrGroups.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GroupItem(
-                          selectGroup,
-                          index: index,
-                          isSelected: selectedGroup == index ? true : false,
-                          title: arrGroups[index].name != null
-                              ? arrGroups[index].name
-                              : "",
-                        );
-                      },
-                    ),
+                    child: StreamBuilder(
+                        stream: getRankingDataBloc?.getGroups,
+                        builder: (context,
+                            AsyncSnapshot<List<GetUserGroupData>> snapshot) {
+                          if (snapshot.hasData) {
+                            arrGroups = snapshot.data;
+                            return showGroups();
+                          } else if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          }
+                          return CommonView.showShimmer();
+                        }),
                   ),
                   arrGroups.length > 4
                       ? Icon(
@@ -324,15 +321,7 @@ class _RankingPageState extends State<RankingPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              itemCount: arrFriends.length,
-              controller: _scrollController,
-              itemBuilder: (BuildContext context, int index) {
-                return showFriendItem(index);
-              },
-            ),
+            child: showFriends(),
           )
         ],
       ),
@@ -445,40 +434,10 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   getUserGroups() async {
-    if (await Utils.isInternetConnectedWithAlert()) {
-      CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
+    GetUserGroupRequest rq = GetUserGroupRequest();
+    rq.userId = Injector.userData.userId;
 
-      GetUserGroupData grp1 = GetUserGroupData();
-      grp1.groupId = 1;
-      grp1.name = Utils.getText(context, StringRes.world);
-      GetUserGroupData grp2 = GetUserGroupData();
-      grp2.groupId = 2;
-      grp2.name = Utils.getText(context, StringRes.country);
-      GetUserGroupData grp3 = GetUserGroupData();
-      grp3.groupId = 3;
-      grp3.name = Utils.getText(context, StringRes.friends);
-
-      arrGroups.add(grp1);
-      arrGroups.add(grp2);
-      arrGroups.add(grp3);
-
-      GetUserGroupRequest rq = GetUserGroupRequest();
-      rq.userId = Injector.userData.userId;
-
-      WebApi().callAPI(WebApi.rqGetUserGroups, rq.toJson()).then((data) {
-        CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
-
-        if (data != null) {
-          data.forEach((v) {
-            arrGroups.add(GetUserGroupData.fromJson(v));
-          });
-
-          if (arrGroups.isNotEmpty) if (mounted) setState(() {});
-        }
-      }).catchError((e) {
-        CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
-      });
-    }
+    await getRankingDataBloc.getUserGroupData(rq, context);
   }
 
   getFriends(bool isScrollDown, bool isToAddData) async {
@@ -595,11 +554,9 @@ class _RankingPageState extends State<RankingPage> {
                   arrFriends[index].isFriend = 1;
                   friendUnFriendUser(index, 1);
                 } else {
-
 //                  unFriend(context, index);
 
                   _showUnFriend(context, index);
-
                 }
               });
           }
@@ -767,7 +724,7 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   currentUserProfileShow(int index) {
-   /* if (isCurrentUser(index)) {
+    /* if (isCurrentUser(index)) {
       if (Injector.userData == null ||
           Injector.userData.profileImage == null ||
           Injector.userData.profileImage.isEmpty) {
@@ -782,7 +739,9 @@ class _RankingPageState extends State<RankingPage> {
 //    arrFriends
 
     if (Injector.userData == null ||
-        Injector.userData.profileImage.isEmpty || arrFriends[index].profileImage == null || arrFriends[index].profileImage.isEmpty ) {
+        Injector.userData.profileImage.isEmpty ||
+        arrFriends[index].profileImage == null ||
+        arrFriends[index].profileImage.isEmpty) {
       return AssetImage(Utils.getAssetsImg('add_emplyee'));
     } else {
       return Utils.getCacheNetworkImage(arrFriends[index].profileImage);
@@ -795,7 +754,6 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getData() async {
-
     if (Injector.introData == null || Injector.introData.ranking1 == 0)
       await DisplayDialogs.showMarketingAndCommunications(context);
 
@@ -807,23 +765,20 @@ class _RankingPageState extends State<RankingPage> {
     }
   }
 
-
   _showUnFriend(BuildContext context, int index) {
-
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.no)),
-      onPressed:  () {
+      onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
       child: Text(Utils.getText(context, StringRes.yes)),
-      onPressed:  () {
+      onPressed: () {
         arrFriends[index].isFriend = 0;
         friendUnFriendUser(index, 2);
-        setState(() {
-        });
+        setState(() {});
         Navigator.pop(context);
       },
     );
@@ -831,7 +786,10 @@ class _RankingPageState extends State<RankingPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(Utils.getText(context, StringRes.alert)),
-      content: Text(Utils.getText(context, StringRes.alertUnFriend), style: TextStyle(color: ColorRes.textProf),),
+      content: Text(
+        Utils.getText(context, StringRes.alertUnFriend),
+        style: TextStyle(color: ColorRes.textProf),
+      ),
       actions: [
         cancelButton,
         continueButton,
@@ -843,6 +801,35 @@ class _RankingPageState extends State<RankingPage> {
       context: context,
       builder: (BuildContext context) {
         return alert;
+      },
+    );
+  }
+
+  showGroups() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemCount: arrGroups.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GroupItem(
+          selectGroup,
+          index: index,
+          isSelected: selectedGroup == index ? true : false,
+          title: arrGroups[index].name != null ? arrGroups[index].name : "",
+        );
+      },
+    );
+  }
+
+  showFriends() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemCount: arrFriends.length,
+      controller: _scrollController,
+      itemBuilder: (BuildContext context, int index) {
+        return showFriendItem(index);
       },
     );
   }

@@ -13,6 +13,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
@@ -21,6 +22,8 @@ import '../models/getDownloadQuestions.dart';
 import '../models/get_learning_module.dart';
 
 class BusinessSectorPage extends StatefulWidget {
+  const BusinessSectorPage({Key key}) : super(key: key);
+
   @override
   _BusinessSectorPageState createState() => _BusinessSectorPageState();
 }
@@ -63,7 +66,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   jsonDecode(Injector.prefs.getString(PrefKeys.learningModles)))
               .data;
           print(arrFinalLearningModules);
-
           if (arrFinalLearningModules.length > 0) if (mounted) setState(() {});
         }
       }
@@ -116,7 +118,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             flex: 8,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: ColorRes.white),
+              style: TextStyle(color: ColorRes.white,fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ),
@@ -124,7 +126,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.size),
-              style: TextStyle(color: ColorRes.white),
+              style: TextStyle(color: ColorRes.white,fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ),
@@ -264,11 +266,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               children: <Widget>[
                 Expanded(
                     child: Container(
-                        height: 30,
+                        height: 33,
 //                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 2),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
@@ -295,7 +297,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           maxLines: 1,
                           controller: searchController,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 17,
                             color: ColorRes.hintColor,
                           ),
                           decoration: InputDecoration(
@@ -693,7 +695,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   style: TextStyle(
                       color: Injector.isBusinessMode
                           ? ColorRes.white
-                          : ColorRes.textProf),
+                          : ColorRes.textProf,fontSize: 17),
                 ),
               ),
             ),
@@ -718,7 +720,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
-                style: TextStyle(color: ColorRes.white, fontSize: 17),
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -801,7 +803,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   selectedModule.isAssign == 0
                       ? StringRes.subscribe
                       : StringRes.unSubscribe),
-              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              style: TextStyle(color: ColorRes.white, fontSize: 20),
               textAlign: TextAlign.center,
             )),
         onTap: () {

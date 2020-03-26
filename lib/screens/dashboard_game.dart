@@ -46,13 +46,18 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
     if (Injector.introData == null) {
       getIntroData();
-    } else if (Injector.introData.dashboard == 0) showIntroDialog();
+    } else if (Injector.introData.dashboard == 0) {
+      showIntroDialog();
+    }
     getUnreadBubbleCount();
 
     Utils.gameBackgroundMusic();
+    Injector.updateIntroData();
   }
 
   getIntroData() {
+    if (Injector.getIntroData() != null) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         CommonView.showCircularProgress(true, context);
@@ -61,16 +66,17 @@ class DashboardGamePageState extends State<DashboardGamePage>
         rq.userId = Injector.userId;
         rq.type = 1;
 
-        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(true, context);
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) async {
+          CommonView.showCircularProgress(false, context);
           if (data != null) {
             IntroData introData = IntroData.fromJson(data);
-            Injector.setIntroData(introData);
+            await Injector.setIntroData(introData);
 
-            if (Injector.introData.dashboard == 0) showIntroDialog();
+            if (Injector.introData == null || Injector.introData.dashboard == 0)
+              showIntroDialog();
           }
         }).catchError((e) {
-          CommonView.showCircularProgress(true, context);
+          CommonView.showCircularProgress(false, context);
           print("getIntro" + e.toString());
           Utils.showToast(e.toString());
         });
@@ -104,7 +110,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, dashboardData,dashboardLockStatusData),
+              CommonView.showDashboardView(
+                  context, dashboardData, dashboardLockStatusData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -149,6 +156,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             .then((data) {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+            Injector.dashboardLockStatusData = dashboardLockStatusData;
             print(dashboardLockStatusData);
             if (mounted) setState(() {});
           }

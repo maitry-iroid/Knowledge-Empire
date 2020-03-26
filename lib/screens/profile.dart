@@ -118,9 +118,6 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Container(
         child: ListView(
           children: <Widget>[
-            SizedBox(
-              height: 8,
-            ),
             showTitle(),
             SizedBox(
               height: 5,
@@ -792,7 +789,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             Utils.getText(context, StringRes.companyName),
                             style:
-                                TextStyle(color: ColorRes.white, fontSize: 12),
+                                TextStyle(color: ColorRes.white, fontSize: 15),
                           ),
                           SizedBox(
                             width: 10,
@@ -801,8 +798,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 38,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 0),
+                              padding: EdgeInsets.only(
+                                  left: 20,right: 20),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -815,7 +812,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 focusNode: myFocusNode,
                                 style: TextStyle(
                                   color: ColorRes.white,
-                                  fontSize: 13,
+                                  fontSize: 15,
                                 ),
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(bottom: 5),
@@ -870,7 +867,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             Utils.getText(context, StringRes.yourName),
                             style:
-                                TextStyle(color: ColorRes.white, fontSize: 12),
+                                TextStyle(color: ColorRes.white, fontSize: 15),
                           ),
                           SizedBox(
                             width: 10,
@@ -880,7 +877,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               alignment: Alignment.center,
                               height: 38,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
+                                  horizontal: 20, vertical: 1),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -892,7 +889,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 obscureText: false,
                                 style: TextStyle(
                                   color: ColorRes.white,
-                                  fontSize: 13,
+                                  fontSize: 15,
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -934,12 +931,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: <Widget>[
                           SizedBox(
-                            width: 13,
+                            width: 15,
                           ),
                           Text(
                             Utils.getText(context, StringRes.yourEmail),
                             style:
-                                TextStyle(color: ColorRes.white, fontSize: 12),
+                                TextStyle(color: ColorRes.white, fontSize: 15),
                           ),
                           SizedBox(
                             width: 10,
@@ -949,7 +946,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               alignment: Alignment.center,
                               height: 38,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
+                                  horizontal: 20, vertical: 1),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
@@ -961,7 +958,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 obscureText: false,
                                 style: TextStyle(
                                   color: ColorRes.white,
-                                  fontSize: 13,
+                                  fontSize: 15,
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -992,7 +989,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   flex: 2,
                   child: InkResponse(
                     child: Container(
-                      height: 35,
+                      height: 38,
                       alignment: Alignment.center,
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
@@ -1004,7 +1001,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(Utils.getText(context, StringRes.changePassword),
                               style: TextStyle(
                                 color: ColorRes.white,
-                                fontSize: 15,
+                                fontSize: 18,
                               )),
                     ),
                     onTap: () {
@@ -1020,7 +1017,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   flex: 1,
                   child: InkResponse(
                     child: Container(
-                      height: 35,
+                      height: 37,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -1029,7 +1026,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text(Utils.getText(context, StringRes.save),
                           style: TextStyle(
                             color: ColorRes.white,
-                            fontSize: 15,
+                            fontSize: 18,
                           )),
                     ),
                     onTap: () {
