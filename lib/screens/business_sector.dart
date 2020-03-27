@@ -263,11 +263,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //            color: ColorRes.lightBg,
 
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                     child: Container(
                         height: 33,
-//                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 0),
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
                         EdgeInsets.symmetric(vertical: 5, horizontal: 2),
@@ -275,37 +275,36 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                           borderRadius: BorderRadius.circular(15),
                           color: ColorRes.white,
                         ),
-//                        alignment: Alignment.center,
-                        child: TextField(
-                          onChanged: (text) {
-                            arrFinalLearningModules.clear();
-                            searchText = text;
+                        child: Theme(
+                          data: ThemeData(accentColor: ColorRes.colorPrimary),
+                          child: TextField(
+                            onChanged: (text) {
+                              arrFinalLearningModules.clear();
+                              searchText = text;
 
-                            if (mounted)
-                              setState(() {
-                                if (text.isEmpty) {
-                                  arrFinalLearningModules
-                                      .addAll(arrLearningModules);
-                                } else {
-//                              present = 0;
-                                  searchData();
-                                }
-                              });
-                          },
-//                          textAlignVertical: TextAlignVertical.center,
-                          textAlign: TextAlign.left,
-                          maxLines: 1,
-                          controller: searchController,
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: ColorRes.hintColor,
+
+                              if (mounted)
+                                setState(() {
+                                  if (text.isEmpty) {
+                                    arrFinalLearningModules
+                                        .addAll(arrLearningModules);
+                                  } else {
+                                    searchData();
+                                  }
+                                });
+                            },
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            controller: searchController,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: ColorRes.hintColor,
+                            ),
+                            decoration: InputDecoration(
+                                hintText: Utils.getText(context, StringRes.searchForKeywords),
+                                hintStyle: TextStyle(color: ColorRes.hintColor),
+                                border: InputBorder.none),
                           ),
-                          decoration: InputDecoration(
-//                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
-                              hintText: Utils.getText(
-                                  context, StringRes.searchForKeywords),
-                              hintStyle: TextStyle(color: ColorRes.hintColor),
-                              border: InputBorder.none),
                         ))),
                 SizedBox(
                   width: 5,

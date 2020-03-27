@@ -998,7 +998,7 @@ class CommonView {
                 child: Container(
                   padding: EdgeInsets.only(top: 25),
                   width: Utils.getDeviceWidth(context) / 2.2,
-                  height: Utils.getDeviceHeight(context) / 1.4,
+                  height: Utils.getDeviceHeight(context) / 1,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
@@ -1020,16 +1020,14 @@ class CommonView {
                         SizedBox(
                           height: 15
                         ),
-                        Expanded(
-                          child: Container(
-                            width: Utils.getDeviceWidth(context)/3,
-                            height: Utils.getDeviceHeight(context)/3,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("bg_collector")))),
-                            child: Image.asset(imageFomType(mPushModel.level),fit: BoxFit.contain),
-                          ),
+                        Container(
+                          width: Utils.getDeviceWidth(context)/3,
+                          height: Utils.getDeviceHeight(context)/3,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("bg_collector")))),
+                          child: Image.asset(imageFomType(mPushModel.level),fit: BoxFit.contain),
                         ),
                         SizedBox(
                             height: 15
@@ -1042,7 +1040,7 @@ class CommonView {
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.body2.copyWith(color: ColorRes.white)),
                         ),
-                        SizedBox(height: Utils.getDeviceHeight(context)/15),
+                        SizedBox(height: 20),
                         InkResponse(
                           child: Container(
                             height: Utils.getDeviceHeight(context)/14,
