@@ -301,7 +301,6 @@ class StringRes {
   static var serviceOMeter = "serviceOMeter";
   static var serviceOMeterDetails = "serviceOMeterDetails";
 
-
   static var readyForSerious = "readyForSerious";
   static var readyForSeriousDetails = "readyForSeriousDetails";
   static var goToBusiness = "goToBusiness";
@@ -339,8 +338,6 @@ class StringRes {
   static var collector = "collector";
   static var businessSegments = "businessSegments";
   static var businessSegmentsNew = "businessSegmentsNew";
-
-
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -658,29 +655,36 @@ class StringRes {
 
       //Dashboard Game screen
       'welcomeToKnow': 'Welcome to Knowledge Empire',
-      'welcomeToKnowDetails': "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      'welcomeToKnowDetails':
+          "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
       'clickYourProfile': 'Click on your Profile',
 
-      'meetYourTeam':'Meet your team',
-      'meetYourTeamDetails':"Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service employees.",
-      'clickOrgChart':'Click the Org Chart',
+      'meetYourTeam': 'Meet your team',
+      'meetYourTeamDetails':
+          "Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service employees.",
+      'clickOrgChart': 'Click the Org Chart',
 
-      'getReadyApproach':'Get ready to approach customers',
-      'getReadyApproachDetails':"In order to win new customers you need to have Sales Reps.\n\nLet's hire 10 Sales Reps by clicking on Sales and then “Hire 10 employees”.",
-      'clickSale':'Click on Sales',
+      'getReadyApproach': 'Get ready to approach customers',
+      'getReadyApproachDetails':
+          "In order to win new customers you need to have Sales Reps.\n\nLet's hire 10 Sales Reps by clicking on Sales and then “Hire 10 employees”.",
+      'clickSale': 'Click on Sales',
 
-      'salesOMeter':'Sales-O-Meter',
-      'salesOMeterDetails':'"Note that your Sales-o-Meter shows 10/10.\nThe last number shows your current number of Sales Rep. \nThe first number shows how many of them are currently available.\n\nEngaging customers will keep Sales Reps busy for 8 hours. "',
+      'salesOMeter': 'Sales-O-Meter',
+      'salesOMeterDetails':
+          '"Note that your Sales-o-Meter shows 10/10.\nThe last number shows your current number of Sales Rep. \nThe first number shows how many of them are currently available.\n\nEngaging customers will keep Sales Reps busy for 8 hours. "',
 
-      'getReadyServer':'Get ready to serve customers',
-      'getReadyServerDetails':'"In order to serve/provide services to existing customers you need to have one Service Representatives per customer.\n\nLet\'s hire 10 Service Reps by clicking on Service and then “Hire 10 employees”."',
-      'clickOnService':'Click on Service',
-      'serviceOMeter':'Service-O-Meter',
-      'serviceOMeterDetails':"Note that your Service-o-Meter shows 10/10.\nThe last number shows your current number of Service Rep.\nThe first number shows how many of them are currently available.\n\nEach existing customer will keep 1 Service Rep. occupied.",
+      'getReadyServer': 'Get ready to serve customers',
+      'getReadyServerDetails':
+          '"In order to serve/provide services to existing customers you need to have one Service Representatives per customer.\n\nLet\'s hire 10 Service Reps by clicking on Service and then “Hire 10 employees”."',
+      'clickOnService': 'Click on Service',
+      'serviceOMeter': 'Service-O-Meter',
+      'serviceOMeterDetails':
+          "Note that your Service-o-Meter shows 10/10.\nThe last number shows your current number of Service Rep.\nThe first number shows how many of them are currently available.\n\nEach existing customer will keep 1 Service Rep. occupied.",
 
-      'readyForSerious':'Ready for serious business',
-      'readyForSeriousDetails':'"Great, you are all set for business.\nLet\'s head over to the newspaper to select the first business sector that you want to engage in.\n\nYou can click on the menu “>” and then “Business Sectors”"',
-      'goToBusiness':'Go to ”Business Sectors”',
+      'readyForSerious': 'Ready for serious business',
+      'readyForSeriousDetails':
+          '"Great, you are all set for business.\nLet\'s head over to the newspaper to select the first business sector that you want to engage in.\n\nYou can click on the menu “>” and then “Business Sectors”"',
+      'goToBusiness': 'Go to ”Business Sectors”',
 
       //me
       //subscribed
@@ -696,15 +700,15 @@ class StringRes {
       //validation
       'emailEmpty': 'Email can\'t be empty.',
       'passWordEmpty': 'Password can\'t be empty.',
-      'mailSent':'Mail sent Successfully.',
-'enterOldPassword':'Please enter old Password.',
-'enterNewPassword ':'Please enter new Password.',
-'enterRePassword':'Please re-eneter new Password.',
-'enterSameNewPassword':'Please enter same new password.',
-'passwordChange':'Password changed Successfully.',
+      'mailSent': 'Mail sent Successfully.',
+      'enterOldPassword': 'Please enter old Password.',
+      'enterNewPassword ': 'Please enter new Password.',
+      'enterRePassword': 'Please re-eneter new Password.',
+      'enterSameNewPassword': 'Please enter same new password.',
+      'passwordChange': 'Password changed Successfully.',
 
       //intro page
-      'skipTutorial':'Skip Tutorial',
+      'skipTutorial': 'Skip Tutorial',
 
       //ranking
       'addFriend': 'Friend added successfully',
@@ -713,10 +717,9 @@ class StringRes {
       //pushNotification alert
       'congratulations': 'Congratulations!, You earned',
       'collector': 'Collector',
-      'businessSegments': '5 Business Segments subscribed to” then we say “Bonus:',
+      'businessSegments':
+          '5 Business Segments subscribed to” then we say “Bonus:',
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
-
-
     },
     'de': {
       //region german
@@ -984,13 +987,26 @@ class StringRes {
 
       // dashboard intro popup
 
-      'dashboardProfile': 'Change Profile\n name, Language',
-      'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': '"Services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering Questions\n increases your Cash',
-      'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
-      'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
+      'dashboardProfile': 'Benutzer Profil und\nSprache anpassen',
+      'dashboardSales': 'Vertriebskapazitäten\nAnzahl Verteibsmitarbeiter',
+      'dashboardServices': 'Servicekapazitaeten\nAnzahl Service Mitarbeiter',
+      'dashboardBalance': 'Fragen beantworten\nErhöht Vermögen',
+      'dashboardBusiness': '1. Geschäftsbereiche\nLernmodule auswählen',
+      'dashboardNewCustomer': '2. Neukundenliste\nFragen beantworten',
+      'dashboardExistingCustomer':
+          '3. Bestandskundenliste\nRichtig beantwortete Fragen',
+
+      'alertChangePassword': 'Passwort erfolgreich geändert.',
+      'unLockOrg':
+          'Wird freigeschaltet, wenn zum ersten mal Vertriebs- oder Service-Kapazitäten erschoepft sind',
+      'unLockPl': 'Wird eine Woche nach erstem Login freigeschaltet',
+      'unLockRanking':
+          'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
+      'unLockReward':
+          'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
+      'unLockChallenge':
+          'Wird freigeschaltet, wenn erster Anwalt eingestellt wird.',
+      //'detailChallengeMessage': 'Du Wurdest von $username im Modul ${questionData.moduleName} herausgefordert.\nDu musst alle Fragen richtig beantworten um ${questionData.winningAmount} zu gewinnen.',
 
       //Organization screen Dialog
       'hireHrEmp': 'Personaler einstellen',
@@ -1022,26 +1038,50 @@ class StringRes {
 
       //Dashboard Game screen
       'welcomeToKnow': 'Willkommen bei Knowledge Empire',
-      'welcomeToKnowDetails': "Hallo $username,\n\nMein Name ist Mike und ich arbeite in der Verwaltung.\nBist du bereit die Geschäftsführung deines eigenen kleinen Unternehmens zu übernehmen?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
+      'welcomeToKnowDetails':
+          "Hallo $username,\n\nMein Name ist Mike und ich arbeite in der Verwaltung.\nBist du bereit die Geschäftsführung deines eigenen kleinen Unternehmens zu übernehmen?\nBitte klick auf deinen Namen oder "
+              "Profil"
+              " im Menü (“>”).",
       'clickYourProfile': 'Klick auf dein Profil',
-      'meetYourTeam':'Das Führungsteam',
-      'meetYourTeamDetails':"Auf das Organigramm klicken um das Führungsteam zu treffen. Hier kannst du neue Mitarbeiter einstellen und entlassen.\nZu Beginn musst du ein paar Mitarbeiter in der Personalabteilung, im Vertrieb und im Service einstellen.",
-      'clickOrgChart':'Klick auf "Organigramm"',
-      'getReadyApproach':'Stärke dein Vertriebsteam',
-      'getReadyApproachDetails':'"Um neue Kunden gewinnen zu können benötigst du Vertriebsmitarbeiter.\n\nLass uns 10 Vertriebsmitarbeiter einstellen. Dazu klick bitte auf ""Vertrieb"" und Anschließend auf ""10 Mitarbeiter einstellen""."',
-      'clickSale':'Klick auf "Vertrieb" ',
-      'salesOMeter':'Vertriebskapazitäten',
-      'salesOMeterDetails':"Deine Vertriebskapazitäten zeigen nun 10/10.\nDie letzte Zahl zeigt dir deine gesamten Vertriebskapazitäten und die erste Zahl, wieviele davon aktuell verfuegbar sind.\n\nKunden anzusprechen beschaeftigt Vertriebsmitarbeiter für 8 Stunden bevor sie wieder zur Verfuegung stehen.",
+      'meetYourTeam': 'Das Führungsteam',
+      'meetYourTeamDetails':
+          "Auf das Organigramm klicken um das Führungsteam zu treffen. Hier kannst du neue Mitarbeiter einstellen und entlassen.\nZu Beginn musst du ein paar Mitarbeiter in der Personalabteilung, im Vertrieb und im Service einstellen.",
+      'clickOrgChart': 'Klick auf "Organigramm"',
+      'getReadyApproach': 'Stärke dein Vertriebsteam',
+      'getReadyApproachDetails':
+          '"Um neue Kunden gewinnen zu können benötigst du Vertriebsmitarbeiter.\n\nLass uns 10 Vertriebsmitarbeiter einstellen. Dazu klick bitte auf ""Vertrieb"" und Anschließend auf ""10 Mitarbeiter einstellen""."',
+      'clickSale': 'Klick auf "Vertrieb" ',
+      'salesOMeter': 'Vertriebskapazitäten',
+      'salesOMeterDetails':
+          "Deine Vertriebskapazitäten zeigen nun 10/10.\nDie letzte Zahl zeigt dir deine gesamten Vertriebskapazitäten und die erste Zahl, wieviele davon aktuell verfuegbar sind.\n\nKunden anzusprechen beschaeftigt Vertriebsmitarbeiter für 8 Stunden bevor sie wieder zur Verfuegung stehen.",
 
-      'getReadyServer':'Kunden benötigen Kundenservice',
-      'getReadyServerDetails':'"Um einen Kunden betreuen zu können benötigst du einen freien Service Mitarbeiter.\n\nLass uns 10 Servicemitarbeiter einstellen. Dazu bitte auf ""Service"" und dann auf ""10 Mitarbeiter einstellen"" klicken."',
-      'clickOnService':'Klick auf "Service"',
-      'serviceOMeter':'Servicekapazitat',
-      'serviceOMeterDetails':"Deine Servicekapazitäten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesammten Servicekapazitäten an. Die erste Zahl zeigt dir, wieviele diese Servicemitarbeiter aktuell frei zur Verfuegung stehen.\n\nJeder Kunde benötigt einen freien Servicemitarbeiter.",
+      'getReadyServer': 'Kunden benötigen Kundenservice',
+      'getReadyServerDetails':
+          '"Um einen Kunden betreuen zu können benötigst du einen freien Service Mitarbeiter.\n\nLass uns 10 Servicemitarbeiter einstellen. Dazu bitte auf ""Service"" und dann auf ""10 Mitarbeiter einstellen"" klicken."',
+      'clickOnService': 'Klick auf "Service"',
+      'serviceOMeter': 'Servicekapazitat',
+      'serviceOMeterDetails':
+          "Deine Servicekapazitäten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesammten Servicekapazitäten an. Die erste Zahl zeigt dir, wieviele diese Servicemitarbeiter aktuell frei zur Verfuegung stehen.\n\nJeder Kunde benötigt einen freien Servicemitarbeiter.",
 
-      'readyForSerious':'Neue Geschäftsbereiche',
-      'readyForSeriousDetails':"Super, jetzt sind wir startklar. Lass uns in der Zeitung nach neuen Geschäftsbereichen suchen, in denen wir aktiv werden wollen.\n\nBitte im Menü "">"" ""Geschäftsbereiche"" auswählen.",
-      'goToBusiness':'Zu "Geschäftsbereiche" wechseln',
+      'readyForSerious': 'Neue Geschäftsbereiche',
+      'readyForSeriousDetails':
+          "Super, jetzt sind wir startklar. Lass uns in der Zeitung nach neuen Geschäftsbereichen suchen, in denen wir aktiv werden wollen.\n\nBitte im Menü "
+              ">"
+              " "
+              "Geschäftsbereiche"
+              " auswählen.",
+      'goToBusiness': 'Zu "Geschäftsbereiche" wechseln',
+
+      'alertChangePassword': 'Passwort erfolgreich geändert.',
+      'unLockOrg':
+          'Wird freigeschaltet, wenn zum ersten mal Lern- oder Bestandsfragen-Kapazitäten erschoepft sind',
+      'unLockPl': 'Wird eine Woche nach erstem Login freigeschaltet',
+      'unLockRanking':
+          'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
+      'unLockReward':
+          'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
+      'unLockChallenge':
+          'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
     },
     'zh': {
 //      region chinese
@@ -1318,7 +1358,6 @@ class StringRes {
 
       //endregion
 
-
       //Organization screen Dialog
       'hireHrEmp': '招聘HR员工',
       'hireHrEmpDetails':
@@ -1340,28 +1379,40 @@ class StringRes {
 
       //Dashboard Game screen
       'welcomeToKnow': '欢迎来到知识帝国',
-      'welcomeToKnowDetails': "亲爱的$username，\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。",
+      'welcomeToKnowDetails':
+          "亲爱的$username，\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+              "个人资料"
+              "。",
       'clickYourProfile': '点击您的个人资料',
 
-      'meetYourTeam':'认识您的团队',
-      'meetYourTeamDetails':"单击组织结构图以了解您的组织概况。\n只要您想，您可以雇用和解雇员工！\n开始之前，您将需要聘请一些HR、销售和服务的员工。",
-      'clickOrgChart':'单击组织结构图',
-      'getReadyApproach':'准备接触客户',
-      'getReadyApproachDetails':'"为了赢得新的客户，您需要有销售代表。\n\n我们点击“销售”，然后点击""雇用10名员工""来雇用10名销售代表。"',
-      'clickSale':'点击“销售”',
+      'meetYourTeam': '认识您的团队',
+      'meetYourTeamDetails':
+          "单击组织结构图以了解您的组织概况。\n只要您想，您可以雇用和解雇员工！\n开始之前，您将需要聘请一些HR、销售和服务的员工。",
+      'clickOrgChart': '单击组织结构图',
+      'getReadyApproach': '准备接触客户',
+      'getReadyApproachDetails':
+          '"为了赢得新的客户，您需要有销售代表。\n\n我们点击“销售”，然后点击""雇用10名员工""来雇用10名销售代表。"',
+      'clickSale': '点击“销售”',
 
-      'salesOMeter':'销售代表指示图',
-      'salesOMeterDetails':"您的销售代表指示图显示10/10。\n最后一个数字显示您当前的销售代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n吸引客户将会让销售代表工作8个小时。",
+      'salesOMeter': '销售代表指示图',
+      'salesOMeterDetails':
+          "您的销售代表指示图显示10/10。\n最后一个数字显示您当前的销售代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n吸引客户将会让销售代表工作8个小时。",
 
-      'getReadyServer':'准备好为客户服务',
-      'getReadyServerDetails':'"为了服务现有客户或提供服务，您需要为每个客户配备一个服务代表。\n\n我们点击“服务”，然后点击""雇用10名员工""来雇用10名服务代表。"',
-      'clickOnService':'点击“服务”',
-      'serviceOMeter':'服务代表指示图',
-      'serviceOMeterDetails':"您的服务代表指示图显示10/10。\n最后一个数字显示您当前的服务代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n每个现有客户将占用1个服务代表。",
+      'getReadyServer': '准备好为客户服务',
+      'getReadyServerDetails':
+          '"为了服务现有客户或提供服务，您需要为每个客户配备一个服务代表。\n\n我们点击“服务”，然后点击""雇用10名员工""来雇用10名服务代表。"',
+      'clickOnService': '点击“服务”',
+      'serviceOMeter': '服务代表指示图',
+      'serviceOMeterDetails':
+          "您的服务代表指示图显示10/10。\n最后一个数字显示您当前的服务代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n每个现有客户将占用1个服务代表。",
 
-      'readyForSerious':'准备开展真正的业务',
-      'readyForSeriousDetails':"很好，您们都准备好开展业务了。\n让我们来看看报纸，选择您想要从事的第一个商业部门。\n\n您可以点击菜单"">""，然后点击""业务部门”",
-      'goToBusiness':'转到"业务部门”',
+      'readyForSerious': '准备开展真正的业务',
+      'readyForSeriousDetails':
+          "很好，您们都准备好开展业务了。\n让我们来看看报纸，选择您想要从事的第一个商业部门。\n\n您可以点击菜单"
+              ">"
+              "，然后点击"
+              "业务部门”",
+      'goToBusiness': '转到"业务部门”',
 
       //lock feature
       'unLockOrg': 'Unlocks when Sales or Service capacities empty first time.',
@@ -1370,9 +1421,19 @@ class StringRes {
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
-
-
-
+      'dashboardProfile': '更改个人资料\n名字，语言',
+      'dashboardSales': '销售代表指示图\n可用销售代表',
+      'dashboardServices': '服务代表指示图\n可用服务代表',
+      'dashboardBalance': '回答问题可以增加您的现金',
+      'dashboardBusiness': '1. 业务部门\n选择学习模块',
+      'dashboardNewCustomer': '2. 新客户\n回答问题',
+      'dashboardExistingCustomer': '3. 现有客户\n复习问题',
+      'alertChangePassword': '密码已更改。',
+      'unLockOrg': '销售或服务点数第一次清零时解锁。',
+      'unLockPl': '第一次登录一周后解锁',
+      'unLockRanking': '连续三天登录后解锁',
+      'unLockReward': '达成第一个成就后解锁',
+      'unLockChallenge': '雇用第一个律师后解锁',
     }
   };
 
@@ -1523,27 +1584,60 @@ class StringRes {
 
       //Dashboard Game screen
       'welcomeToKnow': 'Welcome to Knowledge Empire',
-      'welcomeToKnowDetails': "Dear $username,\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      'welcomeToKnowDetails':
+          "Dear $username,\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
       'clickYourProfile': 'Click on your Profile',
-      'meetYourTeam':'Your Power-Ups (PU)',
-      'meetYourTeamDetails':"Click on Power-Ups to have an overview of your improvements.\nYou get to increase and reduce power-up levels as you want!\nTo get started you will need to improve ""Max. Power-Ups (PU)"", ""Max. Study Points (SP)"" and ""Max. Memory (MP)"".",
-      'clickOrgChart':'Click on Power-Ups (PU)',
-      'getReadyApproach':'Study Points (SP) to answer questions',
-      'getReadyApproachDetails':'"In order to answer questions you need Study Points.\n\nLet\'s improve ""Max. Study Points (SP)"" to Level 1 by clicking on ""Max. Study Points (SP)"" and then ""Increase Level"""',
-      'clickSale':'Click on "Max. Study Points (SP)"',
-      'salesOMeter':'Study Points (SP) Bar',
-      'salesOMeterDetails':"Note that your Study Points (SP) Bar shows 10/10.\nThe last number shows your max Study Points (SP).\nThe first number shows how many Study Points (SP) are currently available.\n\nAnswering questions will require Study Points (SP) which will refill automatically after 8 hours. ",
+      'meetYourTeam': 'Your Power-Ups (PU)',
+      'meetYourTeamDetails':
+          "Click on Power-Ups to have an overview of your improvements.\nYou get to increase and reduce power-up levels as you want!\nTo get started you will need to improve "
+              "Max. Power-Ups (PU)"
+              ", "
+              "Max. Study Points (SP)"
+              " and "
+              "Max. Memory (MP)"
+              ".",
+      'clickOrgChart': 'Click on Power-Ups (PU)',
+      'getReadyApproach': 'Study Points (SP) to answer questions',
+      'getReadyApproachDetails':
+          '"In order to answer questions you need Study Points.\n\nLet\'s improve ""Max. Study Points (SP)"" to Level 1 by clicking on ""Max. Study Points (SP)"" and then ""Increase Level"""',
+      'clickSale': 'Click on "Max. Study Points (SP)"',
+      'salesOMeter': 'Study Points (SP) Bar',
+      'salesOMeterDetails':
+          "Note that your Study Points (SP) Bar shows 10/10.\nThe last number shows your max Study Points (SP).\nThe first number shows how many Study Points (SP) are currently available.\n\nAnswering questions will require Study Points (SP) which will refill automatically after 8 hours. ",
 
-      'getReadyServer':'Max Memory Points (MP)',
-      'getReadyServerDetails':"In order to keep one correctly answered in your memory, you need to have one free memory point.\n\nLet's get 10 Memory Points by clicking on ""Max. Memory Points (MP)"" and then “Increase Level”.",
-      'clickOnService':'Click on "Max. Memory Points (MP)"',
-      'serviceOMeter':'Memory Point (MP) Bar',
-      'serviceOMeterDetails':"Note that your Memory Point (MP) Bar shows 10/10.\nThe last number shows your maximum Memory capacity.\nThe first number shows your free Memory for new questions.\n\nEach correctly answered question will require 1 memory point.",
+      'getReadyServer': 'Max Memory Points (MP)',
+      'getReadyServerDetails':
+          "In order to keep one correctly answered in your memory, you need to have one free memory point.\n\nLet's get 10 Memory Points by clicking on "
+              "Max. Memory Points (MP)"
+              " and then “Increase Level”.",
+      'clickOnService': 'Click on "Max. Memory Points (MP)"',
+      'serviceOMeter': 'Memory Point (MP) Bar',
+      'serviceOMeterDetails':
+          "Note that your Memory Point (MP) Bar shows 10/10.\nThe last number shows your maximum Memory capacity.\nThe first number shows your free Memory for new questions.\n\nEach correctly answered question will require 1 memory point.",
 
-      'readyForSerious':'Ready for your first question?',
-      'readyForSeriousDetails':"Great, you are now ready for your first questions.\nLet's head over to the ""Learning Modules"" section to select the first Learning Module that you want to engage in.\n\nYou can click on the menu “>” and then “Learning Modules”",
-      'goToBusiness':'Go to "Learning Modules"',
-   },
+      'readyForSerious': 'Ready for your first question?',
+      'readyForSeriousDetails':
+          "Great, you are now ready for your first questions.\nLet's head over to the "
+              "Learning Modules"
+              " section to select the first Learning Module that you want to engage in.\n\nYou can click on the menu “>” and then “Learning Modules”",
+      'goToBusiness': 'Go to "Learning Modules"',
+
+      'dashboardProfile': 'Change Profile',
+
+      'dashboardSales': 'Study Points Bar\navailable Study Points',
+      'dashboardServices': 'Memory Points Bar\navailable Memory Points',
+      'dashboardBalance': 'Answering your question\nincreases your points',
+      'dashboardBusiness': '1. Learning Modules\nSelect Learning Module',
+      'dashboardNewCustomer': '2. New Questions\nAnswer Questions',
+      'dashboardExistingCustomer': '3. Existing Questions\nReview Questions',
+      'alertChangePassword': 'Password changed Successfully.',
+      'unLockOrg':
+          'Unlocks when Study or Memory Points are empty for the first time.',
+      'unLockPl': 'Unlocks 1 week after 1st login',
+      'unLockRanking': 'Unlocks after three days in row login',
+      'unLockReward': 'Unlocks if first Achievement is reached',
+      'unLockChallenge': 'Unlocks when max. Challenge Power-Up is increased',
+    },
     'de': {
       //region German
       'home': 'Start',
@@ -1800,25 +1894,62 @@ class StringRes {
 
       //Dashboard Game screen
       'welcomeToKnow': 'Willkommen bei Knowledge Empire',
-      'welcomeToKnowDetails': "Hallo $username,\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
+      'welcomeToKnowDetails':
+          "Hallo $username,\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder "
+              "Profil"
+              " im Menü (“>”).",
       'clickYourProfile': 'Klick auf dein Profil',
-      'meetYourTeam':'Bonuspunkte',
-      'meetYourTeamDetails':"Auf Bonuspunkte  klicken um mögliche Verbesserungen einzusehen. Hier kannst Bonuspunkte investieren um Vereinfachungen zu erhalten\nZu Beginn musst du ein paar Bonuspunkte investieren um die maximalen Bonuspunkte, maximale Lernpunkte und maximale Bestandsfragen zu erhöhen.",
-      'clickOrgChart':'Klick auf "Bonuspunkte"',
-      'getReadyApproach':'Lernpunkte (LP) um Fragen zu beantworten',
-      'getReadyApproachDetails':'"Um neue Fragen beantworten zu können benötigst du Lernpunkte (LP).\n\nLass uns unsere Lernpunkte auf 10 erhöhen. Dazu klick bitte auf ""Lernpunkte (LP)"" und Anschließend auf ""Level erhöhen""."',
-      'clickSale':'Klick auf "Lernpunkte (LP)"',
-      'salesOMeter':'Lernkapazität',
-      'salesOMeterDetails':"Deine Lernkapazitäten zeigen nun 10/10.\nDie letzte Zahl zeigt dir deine gesammten Lernkapazitäten und die erste Zahl, wieviele davon aktuell verfuegbar sind.\n\nFragen zu beantworten beansprucht Lernkapazitäten für 8 Stunden bevor sie wieder zur Verfuegung stehen.",
-      'getReadyServer':'Bestandsfragen (BF)',
-      'getReadyServerDetails':"Wenn du eine Frage richtig beantwortest wechselt sie in die Liste der Bestandsfragen. Dazu benötigst du ausreichend Kapazitaeten in den Bestandsfragen.\n\nLass uns die Bestnadskundenkapazitaeten auf 10 erhöhen. Dazu bitte auf ""Bestandsfragen (BF)"" und dann auf ""Level erhöhen"" klicken.",
-      'clickOnService':'Klick auf "Bestandsfragen"',
-      'serviceOMeter':'Bestandsfragenkapazitat (BF)',
-      'serviceOMeterDetails':"Deine Bestandsfragenkapazitaeten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesamten Bestandsfragenkapazitaeten an. Die erste Zahl zeigt dir, wieviele diese Bestandsfragenkapazitaeten aktuell frei zur Verfuegung stehen.\n\nJeder Fragen benötigt eine freie Bestandsfragenkapazitat.",
+      'meetYourTeam': 'Bonuspunkte',
+      'meetYourTeamDetails':
+          "Auf Bonuspunkte  klicken um mögliche Verbesserungen einzusehen. Hier kannst Bonuspunkte investieren um Vereinfachungen zu erhalten\nZu Beginn musst du ein paar Bonuspunkte investieren um die maximalen Bonuspunkte, maximale Lernpunkte und maximale Bestandsfragen zu erhöhen.",
+      'clickOrgChart': 'Klick auf "Bonuspunkte"',
+      'getReadyApproach': 'Lernpunkte (LP) um Fragen zu beantworten',
+      'getReadyApproachDetails':
+          '"Um neue Fragen beantworten zu können benötigst du Lernpunkte (LP).\n\nLass uns unsere Lernpunkte auf 10 erhöhen. Dazu klick bitte auf ""Lernpunkte (LP)"" und Anschließend auf ""Level erhöhen""."',
+      'clickSale': 'Klick auf "Lernpunkte (LP)"',
+      'salesOMeter': 'Lernkapazität',
+      'salesOMeterDetails':
+          "Deine Lernkapazitäten zeigen nun 10/10.\nDie letzte Zahl zeigt dir deine gesammten Lernkapazitäten und die erste Zahl, wieviele davon aktuell verfuegbar sind.\n\nFragen zu beantworten beansprucht Lernkapazitäten für 8 Stunden bevor sie wieder zur Verfuegung stehen.",
+      'getReadyServer': 'Bestandsfragen (BF)',
+      'getReadyServerDetails':
+          "Wenn du eine Frage richtig beantwortest wechselt sie in die Liste der Bestandsfragen. Dazu benötigst du ausreichend Kapazitaeten in den Bestandsfragen.\n\nLass uns die Bestnadskundenkapazitaeten auf 10 erhöhen. Dazu bitte auf "
+              "Bestandsfragen (BF)"
+              " und dann auf "
+              "Level erhöhen"
+              " klicken.",
+      'clickOnService': 'Klick auf "Bestandsfragen"',
+      'serviceOMeter': 'Bestandsfragenkapazitat (BF)',
+      'serviceOMeterDetails':
+          "Deine Bestandsfragenkapazitaeten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesamten Bestandsfragenkapazitaeten an. Die erste Zahl zeigt dir, wieviele diese Bestandsfragenkapazitaeten aktuell frei zur Verfuegung stehen.\n\nJeder Fragen benötigt eine freie Bestandsfragenkapazitat.",
 
-      'readyForSerious':'Bereit für die erste Frage?',
-      'readyForSeriousDetails':"Super, jetzt sind wir startklar. Lass uns in einen Blick in die Lernmodule werfen.\n\nBitte im Menü "">"" ""Lernmodule"" auswählen.",
-      'goToBusiness':'Zu "Lernmodule" wechseln',
+      'readyForSerious': 'Bereit für die erste Frage?',
+      'readyForSeriousDetails':
+          "Super, jetzt sind wir startklar. Lass uns in einen Blick in die Lernmodule werfen.\n\nBitte im Menü "
+              ">"
+              " "
+              "Lernmodule"
+              " auswählen.",
+      'goToBusiness': 'Zu "Lernmodule" wechseln',
+
+      'dashboardProfile': 'Benutzer Profil und\nSprache anpassen',
+      'dashboardSales': 'Lernkapazitäten"\num Fragen zu beantworten',
+      'dashboardServices':
+          '""Bestandsfragenkapazitaeten"\num Fragen zu behalten',
+      'dashboardBalance': '""Wissenspunkte"\nerhöhen durch Fragen beantworten',
+      'dashboardBusiness': '1. Lernmodule\nsuchen & auswählen',
+      'dashboardNewCustomer': '2. Fragenkatalog\nFragen beantworten',
+      'dashboardExistingCustomer':
+          '3. Bestandsfragenliste\nRichtig beantwortete Fragen',
+      'alertChangePassword': 'Passwort erfolgreich geändert.',
+      'unLockOrg':
+          'Wird freigeschaltet, wenn zum ersten mal Lern- oder Bestandsfragen-Kapazitäten erschoepft sind',
+      'unLockPl': 'Wird eine Woche nach erstem Login freigeschaltet',
+      'unLockRanking':
+          'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
+      'unLockReward':
+          'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
+      'unLockChallenge':
+          'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
     },
     'zh': {
       //region chines
@@ -2061,26 +2192,54 @@ class StringRes {
 
       //Dashboard Game screen
       'welcomeToKnow': '',
-      'welcomeToKnowDetails': "亲爱的$username，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。 ",
+      'welcomeToKnowDetails':
+          "亲爱的$username，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+              "个人资料"
+              "。 ",
       'clickYourProfile': '点击您的个人资料',
-      'meetYourTeam':'您的威力升级点数 (PU)',
-      'meetYourTeamDetails':"点击威力升级点数查看您的进步概览。\n您可以根据需要增加和减少威力升级点数的级别！\n开始前您需要提高”最大威力升级点数 (PU)”，“最大学习点数 (SP)”和“最大记忆力 (MP)”。",
-      'clickOrgChart':'点击威力升级 (PU)',
-      'getReadyApproach':'回答问题的学习点数 (SP)',
-      'getReadyApproachDetails':'"要回答问题，您需要学习点数。\n\n让我们点击“最大学习点数 (SP)”，然后“提升等级”来将“最大学习点数 (SP)”升至1级。"',
-      'clickSale':'点击“最大学习点数 (SP)”',
-      'salesOMeter':'学习点数 (SP) 条',
-      'salesOMeterDetails':'"您的学习点数 (SP) 条显示10/10。\n最后一个数字显示您的最大学习点数 (SP)。\n第一个数字显示当前可用的学习点数 (SP)。\n\n回答问题将需要学习点数 (SP)，8小时后会自动补充。"',
+      'meetYourTeam': '您的威力升级点数 (PU)',
+      'meetYourTeamDetails':
+          "点击威力升级点数查看您的进步概览。\n您可以根据需要增加和减少威力升级点数的级别！\n开始前您需要提高”最大威力升级点数 (PU)”，“最大学习点数 (SP)”和“最大记忆力 (MP)”。",
+      'clickOrgChart': '点击威力升级 (PU)',
+      'getReadyApproach': '回答问题的学习点数 (SP)',
+      'getReadyApproachDetails':
+          '"要回答问题，您需要学习点数。\n\n让我们点击“最大学习点数 (SP)”，然后“提升等级”来将“最大学习点数 (SP)”升至1级。"',
+      'clickSale': '点击“最大学习点数 (SP)”',
+      'salesOMeter': '学习点数 (SP) 条',
+      'salesOMeterDetails':
+          '"您的学习点数 (SP) 条显示10/10。\n最后一个数字显示您的最大学习点数 (SP)。\n第一个数字显示当前可用的学习点数 (SP)。\n\n回答问题将需要学习点数 (SP)，8小时后会自动补充。"',
 
-      'getReadyServer':'最大记忆点数 (MP)',
-      'getReadyServerDetails':"为了在您的记忆中保持一个正确的回答，您需要有一个可用的记忆点数。\n\n让我们点击“最大记忆点数 (MP)""，然后点击“提升等级”来获取10个记忆点数。",
-      'clickOnService':'点击“最大记忆点数 (MP)"',
-      'serviceOMeter':'记忆点数 (MP) 条',
-      'serviceOMeterDetails':"您的记忆点数 (MP) 条显示10/10。\n最后一个数字显示您的最大记忆容量。\n第一个数字显示新问题的可用记忆点数。\n\n每个正确回答的问题将需要1个记忆点数。",
+      'getReadyServer': '最大记忆点数 (MP)',
+      'getReadyServerDetails':
+          "为了在您的记忆中保持一个正确的回答，您需要有一个可用的记忆点数。\n\n让我们点击“最大记忆点数 (MP)"
+              "，然后点击“提升等级”来获取10个记忆点数。",
+      'clickOnService': '点击“最大记忆点数 (MP)"',
+      'serviceOMeter': '记忆点数 (MP) 条',
+      'serviceOMeterDetails':
+          "您的记忆点数 (MP) 条显示10/10。\n最后一个数字显示您的最大记忆容量。\n第一个数字显示新问题的可用记忆点数。\n\n每个正确回答的问题将需要1个记忆点数。",
 
-      'readyForSerious':'准备好回答您的第一个问题了吗',
-      'readyForSeriousDetails':"很好，您现在已经准备好您的第一个问题。\n让我们前往""学习模块""部分选择要进入的第一个学习模块。\n\n您可以点击菜单"">""，然后点击""学习模块”",
-      'goToBusiness':'转到"学习模块"',
+      'readyForSerious': '准备好回答您的第一个问题了吗',
+      'readyForSeriousDetails': "很好，您现在已经准备好您的第一个问题。\n让我们前往"
+          "学习模块"
+          "部分选择要进入的第一个学习模块。\n\n您可以点击菜单"
+          ">"
+          "，然后点击"
+          "学习模块”",
+      'goToBusiness': '转到"学习模块"',
+
+      'dashboardProfile': '更改个人资料\n名字，语言',
+      'dashboardSales': '学习点数条      \n可用学习点数',
+      'dashboardServices': '记忆点数条      \n可用记忆点数',
+      'dashboardBalance': '回答问题可以增加您的点数',
+      'dashboardBusiness': '1. 学习模块\n选择学习模块',
+      'dashboardNewCustomer': '2. 新问题\n回答问题',
+      'dashboardExistingCustomer': '3. 现有问题\n复习问题',
+      'alertChangePassword': '密码已更改。',
+      'unLockOrg': '学习或记忆点数第一次清零时解锁。',
+      'unLockPl': '第一次登录一周后解锁',
+      'unLockRanking': '连续三天登录后解锁',
+      'unLockReward': '达成第一个成就后解锁',
+      'unLockChallenge': '最大挑战威力升级点数增加后解锁',
     }
   };
 }
