@@ -17,6 +17,7 @@ import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/register_for_push.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Injector {
@@ -70,10 +71,6 @@ class Injector {
 
     webApi = WebApi();
 
-    firebaseMessaging.getToken().then((token) {
-      print("Your Device tocken==<>" + token);
-    });
-
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     deviceId = "123456";
@@ -89,11 +86,13 @@ class Injector {
     updateInstance();
   }
 
+
   static updateInstance() async {
     if (prefs.getString(PrefKeys.user) != null) {
       userData = UserData.fromJson(jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;
+
 
       isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
       dialogType = prefs.getInt(PrefKeys.dialogTypes);

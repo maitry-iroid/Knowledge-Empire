@@ -103,7 +103,7 @@ class PushNotificationHelper {
         RegisterForPushRequest rq = RegisterForPushRequest();
         rq.userId = Injector.userId;
         rq.deviceId = Injector.deviceId;
-        rq.deviceType = "android";
+        rq.deviceType = Injector.deviceType;
         rq.deviceToken = token;
 
         await Injector.prefs.setString(PrefKeys.deviceToken, token);

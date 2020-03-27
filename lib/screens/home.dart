@@ -110,10 +110,10 @@ class HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    initContent();
-    getLockStatus();
     super.initState();
+
     Utils.removeBadge();
+    initContent();
     mRefreshAnimation = this;
   }
 
@@ -256,7 +256,7 @@ class HomePageState extends State<HomePage>
           dashboardLockStatusData.pl != null &&
           dashboardLockStatusData.pl != 1) {
         Utils.showLockReasonDialog(Const.typePl, context);
-      } else if (index == Utils.  getHomePageIndex(Const.typeRanking) &&
+      } else if (index == Utils.getHomePageIndex(Const.typeRanking) &&
           dashboardLockStatusData != null &&
           dashboardLockStatusData.ranking != null &&
           dashboardLockStatusData.ranking != 1) {
@@ -278,7 +278,6 @@ class HomePageState extends State<HomePage>
         if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
           Navigator.push(context, FadeRouteIntro());
         }
-
       }
     } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {
@@ -321,7 +320,6 @@ class HomePageState extends State<HomePage>
             isShowMenu: true,
             openProfile: openProfile,
           ),
-
           Stack(
             fit: StackFit.expand,
             children: <Widget>[
@@ -614,6 +612,14 @@ class HomePageState extends State<HomePage>
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
 
+    Future.delayed(const Duration(milliseconds: 500), () {
+      PushNotificationHelper pushNotificationHelper = PushNotificationHelper(
+          context, Utils.getText(context, StringRes.home));
+
+      if (pushNotificationHelper != null) {
+        pushNotificationHelper.initPush();
+      }
+    });
 
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
@@ -625,8 +631,6 @@ class HomePageState extends State<HomePage>
     initCheckNetworkConnectivity();
 
     setSelectedIndex();
-
-    PushNotificationHelper(context, Utils.getText(context, "home")).initPush();
 
     initPlatformState();
 
