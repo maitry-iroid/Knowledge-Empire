@@ -383,6 +383,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           switchModeApi();
 
+                          Utils.playBackgroundMusic();
+
                           localeBloc.setLocale(
                               Utils.getIndexLocale(Injector.userData.language));
 
@@ -410,11 +412,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               Injector.isSoundEnable = value;
                               await Injector.prefs
                                   .setBool(PrefKeys.isSoundEnable, value);
-                              if (Injector.isSoundEnable) {
-                                Injector.audioCache.fixedPlayer.pause();
-                              } else {
-                                Injector.audioCache.fixedPlayer.pause();
-                              }
+
+                              Utils.playBackgroundMusic();
+
                               setState(() {});
                             },
                             activeTrackColor: Injector.isBusinessMode
