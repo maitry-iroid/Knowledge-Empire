@@ -77,7 +77,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 //      if (mounted) {
 //        CommonView.showCircularProgress(false, context);
 //      }
-//      Utils.showToast(e.toString());
+//      // Utils.showToast(e.toString());
 //    });
 //  }
 
@@ -127,12 +127,17 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         child: StreamBuilder(
             stream: getQuestionsBloc?.getQuestions,
             builder: (context, AsyncSnapshot<List<QuestionData>> snapshot) {
-              if (snapshot.hasData) {
-                return showData(snapshot?.data);
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CommonView.showShimmer();
+              } else if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData)
+                  return showData(snapshot?.data);
+                else
+                  Container();
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               }
-              return CommonView.showShimmer();
+              return Container();
             }));
   }
 

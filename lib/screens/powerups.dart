@@ -65,7 +65,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       }).catchError((e) {
         print("getOrganizations_" + e.toString());
         CommonView.showCircularProgress(false, context);
-        Utils.showToast(e.toString());
+        // Utils.showToast(e.toString());
       });
     });
   }
@@ -472,7 +472,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       }).catchError((e) {
         print("manageOrg_" + e.toString());
         CommonView.showCircularProgress(false, context);
-        Utils.showToast(e.toString());
+        // Utils.showToast(e.toString());
       });
     });
   }

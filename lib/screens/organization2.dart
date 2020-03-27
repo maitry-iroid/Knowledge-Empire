@@ -274,7 +274,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     }).catchError((e) {
       print("getOrganizations_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -330,7 +330,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       }).catchError((e) {
         print("manageOrg_" + e.toString());
         CommonView.showCircularProgress(false, context);
-        Utils.showToast(e.toString());
+        // Utils.showToast(e.toString());
       });
     });
   }

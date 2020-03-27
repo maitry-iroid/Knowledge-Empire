@@ -825,7 +825,7 @@ class _PLPageState extends State<PLPage> {
               });
           }
         }).catchError((e) {
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
           CommonView.showCircularProgress(false, context);
         });
       }

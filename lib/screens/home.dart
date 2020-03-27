@@ -543,7 +543,7 @@ class HomePageState extends State<HomePage>
                   context, questionData.firstName, questionData);
           }
         }).catchError((e) {
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
           print("getChallenges_" + e.toString());
           if (mounted) {
             setState(() {
@@ -613,7 +613,7 @@ class HomePageState extends State<HomePage>
   void initContent() async {
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
-    await Injector.getInstance();
+
 
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 

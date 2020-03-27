@@ -225,7 +225,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       if (mounted)setState(() {
         isLoading = false;
       });
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 }

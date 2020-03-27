@@ -406,14 +406,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Switch(
                             value: Injector.isSoundEnable,
-                            onChanged: (value) async{
+                            onChanged: (value) async {
                               Injector.isSoundEnable = value;
-                             await Injector.prefs
+                              await Injector.prefs
                                   .setBool(PrefKeys.isSoundEnable, value);
-//                              if (Injector.isSoundEnable)
-//                                Injector.audioPlayerBg.resume();
-//                              else
-//                                Injector.audioPlayerBg.pause();
+                              if (Injector.isSoundEnable) {
+                                Injector.audioCache.fixedPlayer.pause();
+                              } else {
+                                Injector.audioCache.fixedPlayer.pause();
+                              }
                               setState(() {});
                             },
                             activeTrackColor: Injector.isBusinessMode
@@ -478,7 +479,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: !Injector.isManager() &&
                                 Injector.customerValueData.totalBalance <= 0
                             ? () async {
-                                Injector.audioPlayer.clearCache();
+                                Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
 //                                Injector.audioPlayerBg.pause();
                                 Utils.playClickSound();
@@ -653,7 +654,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }).catchError((e) {
       print("logout_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -1222,7 +1223,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }).catchError((e) {
       print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -1248,7 +1249,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }).catchError((e) {
       print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -1301,7 +1302,7 @@ class _ProfilePageState extends State<ProfilePage> {
       Utils.performBack(context);
       print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -1329,7 +1330,7 @@ class _ProfilePageState extends State<ProfilePage> {
       Utils.performBack(context);
       print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -1379,7 +1380,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }).catchError((e) {
       print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 }

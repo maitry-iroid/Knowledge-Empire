@@ -112,7 +112,7 @@ class PushNotificationHelper {
           if (data != null) {}
         }).catchError((e) {
           print("registerForPush_" + e.toString());
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });

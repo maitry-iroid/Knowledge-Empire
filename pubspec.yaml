@@ -41,7 +41,7 @@ dependencies:
   firebase_core: ^0.4.4+3
   flutter_local_notifications: 0.9.1+2
   connectivity: ^0.4.5+7
-  audioplayers: ^0.14.0
+  audioplayers: ^0.14.2
   simple_animations: ^1.2.0
   pie_chart: ^3.1.1
   package_info: ^0.4.0+13

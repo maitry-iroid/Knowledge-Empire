@@ -51,8 +51,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
     }
     getUnreadBubbleCount();
 
-//    Utils.gameBackgroundMusic();
-
     Injector.updateIntroData();
   }
 
@@ -79,7 +77,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
           print("getIntro" + e.toString());
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });

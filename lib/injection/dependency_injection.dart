@@ -43,9 +43,10 @@ class Injector {
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
-  static AudioCache audioPlayer = AudioCache(prefix: 'sounds/');
-//  static AudioCache audioPlayerBg = AudioCache(prefix: 'sounds/');
- static AudioPlayer audioPlayerBg ;
+  static AudioCache audioCache = AudioCache(prefix: 'sounds/');
+
+  static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+
   static bool isDev = true;
 
   static int badgeCount = 0;
@@ -83,10 +84,13 @@ class Injector {
 
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
+    await Utils.playBackgroundMusic();
+
+    updateInstance();
+  }
+
+  static updateInstance() async {
     if (prefs.getString(PrefKeys.user) != null) {
-
-//      audioPlayerBg = await audioPlayer.loop('game_bg_music.mp3');
-
       userData = UserData.fromJson(jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;
@@ -178,7 +182,7 @@ class Injector {
           }
         }).catchError((e) {
           print("getIntro" + e.toString());
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });
@@ -198,7 +202,7 @@ class Injector {
           if (data != null) {}
         }).catchError((e) {
           print("updateIntroData");
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });

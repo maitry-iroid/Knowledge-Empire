@@ -294,7 +294,7 @@ class IntroDailogState extends State<IntroDailog> {
       setState(() {
         isLoading = false;
       });
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
