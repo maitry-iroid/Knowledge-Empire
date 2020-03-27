@@ -101,11 +101,9 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "john",
-            titleText: "Wellcome to Knowledge Empire",
-            btnName: "Click on your Profile",
-            desTextLine:
-                "Dear ${Injector.userData?.name}, \n\nMy name is Mike, your Head of Operations.\nAre you ready to becom CEO of your own virtual company?\nClick on your name \"\profile\" in the\nnavigation menu(\">\""
-                ").",
+            titleText: Utils.getText(context, StringRes.welcomeToKnow),
+            btnName: Utils.getText(context, StringRes.clickYourProfile),
+            desTextLine: Utils.getText(context, StringRes.welcomeToKnowDetails),
             onTapBtn: () {
               Navigator.pop(context);
               Injector.homeStreamController?.add("${Const.typeProfile}");
@@ -122,10 +120,9 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "john",
-            titleText: "Meet your team",
-            btnName: "Click the Org Chart",
-            desTextLine:
-                "Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service\nemployees",
+            titleText: Utils.getText(context, StringRes.meetYourTeam),
+            btnName: Utils.getText(context, StringRes.clickOrgChart),
+            desTextLine: Utils.getText(context, StringRes.meetYourTeamDetails),
             onTapBtn: () async {
               try {
                 Navigator.of(context).pop();
@@ -302,10 +299,9 @@ class DisplayDialogs {
             imageMoveRight: hrNikiImageMoveRight,
             imageHeight: hrNikiImageHeight,
             imageWidth: hrNikiImageWidth,
-            titleText: "Get ready to approach customers",
-            btnName: "Click on Sale",
-            desTextLine:
-                "In order to win new customer you need to have Sales Reprs.\n\nLet's hire 10 Sales Reps by clicking on Sales and then \"Hire 10 employees.\"",
+            titleText: Utils.getText(context, StringRes.getReadyApproach),
+            btnName: Utils.getText(context, StringRes.getReadyApproachDetails),
+            desTextLine: Utils.getText(context, StringRes.clickSale),
             onTapBtn: onTap,
             /*onTapBtn: () async {
         Navigator.pop(context);
@@ -325,11 +321,10 @@ class DisplayDialogs {
       imageMoveRight: hrNikiImageMoveRight,
       imageHeight: hrNikiImageHeight,
       imageWidth: hrNikiImageWidth,
-      titleText: "Sale-O-Meter",
-      btnName: "next",
+      titleText: Utils.getText(context, StringRes.salesOMeter),
+      btnName: Utils.getText(context, StringRes.next),
       btnColor: ColorRes.blue,
-      desTextLine:
-          "Note that your Sale-o-Meter shows 10/10\nThe last number shows your current number of Sales Rep.\nThe first number shows how many of them are currently available.\n\nEngaging customers will keep Sale Reps busy for 8 hours.",
+      desTextLine:Utils.getText(context, StringRes.salesOMeterDetails),
       onTapBtn: onTap,
       /* onTapBtn: () async {
               Navigator.pop(context);
@@ -349,10 +344,9 @@ class DisplayDialogs {
       imageMoveRight: hrNikiImageMoveRight,
       imageHeight: hrNikiImageHeight,
       imageWidth: hrNikiImageWidth,
-      titleText: "Get ready to serve customer",
-      btnName: "Click on  Service",
-      desTextLine:
-          "In order to serve/provide serives to existing customers you need to\nhave one Sales Representatives per customer.\n\nLet's hire 10 Service Reps by clicking on Service and then \"Hire 10 employees.\"",
+      titleText: Utils.getText(context, StringRes.getReadyServer),
+      btnName: Utils.getText(context, StringRes.clickOnService),
+      desTextLine: Utils.getText(context, StringRes.getReadyServerDetails),
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -372,10 +366,10 @@ class DisplayDialogs {
       imageMoveRight: hrNikiImageMoveRight,
       imageHeight: hrNikiImageHeight,
       imageWidth: hrNikiImageWidth,
-      titleText: "Service-O-Meter",
-      btnName: "Click on  Service",
+      titleText: Utils.getText(context, StringRes.serviceOMeter),
+      btnName: Utils.getText(context, StringRes.clickOnService),
       desTextLine:
-          "Note that your Service-o-meter shows 10/10.\nThe last number shows your current number of Service Rep.\nThe first number shows how many of them are currently available.\n\nEach existing customer will keep 1 service Rep. occupied.",
+      Utils.getText(context, StringRes.serviceOMeterDetails),
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);
@@ -395,10 +389,10 @@ class DisplayDialogs {
       imageMoveRight: hrNikiImageMoveRight,
       imageHeight: hrNikiImageHeight,
       imageWidth: hrNikiImageWidth,
-      titleText: "Ready for serious business",
-      btnName: "Go to \"Business Sectors\"",
+      titleText: Utils.getText(context, StringRes.readyForSerious),
+      btnName: Utils.getText(context, StringRes.goToBusiness),
       desTextLine:
-          "Great, you are all set for business.\nLets's head over to the newspaper to select the first business sector\nthat you want to engage in.\n\nYou can click on the menu \">\" and then \"Business Sectors\"",
+      Utils.getText(context, StringRes.readyForSeriousDetails),
       onTapBtn: onTap,
       /*onTapBtn: () async {
         Navigator.pop(context);

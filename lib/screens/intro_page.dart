@@ -137,7 +137,7 @@ class _IntroPageState extends State<IntroPage> {
                     image: AssetImage(Utils.getAssetsImg("bg_subscribe")),
                     fit: BoxFit.fill)),
             child: Text(
-              "Skip Tutorial",
+              Utils.getText(context, StringRes.skipTutorial),
               style: TextStyle(color: ColorRes.white, fontSize: 17),
               textAlign: TextAlign.center,
             )),

@@ -737,7 +737,7 @@ class CommonView {
                             Padding(padding: EdgeInsets.only(top: 13)),
                             Text(
                               Utils.getText(context,
-                                  "Congratulations!, You earned " /*+bonus.toString()!="null"?bonus.toString():""+*/ " rewards!"),
+                                  "${StringRes.congratulations}" /*+bonus.toString()!="null"?bonus.toString():""+*/ "${StringRes.rewards}!"),
                               style: TextStyle(
                                 color: ColorRes.greenDot,
                                 fontSize: 20,
@@ -899,7 +899,7 @@ class CommonView {
                                 color: ColorRes.borderRewardsName, width: 1)),
                         child: Center(
                             child: Text(
-                          "Collector",
+                              Utils.getText(context, StringRes.collector),
                           style: TextStyle(fontSize: 18, color: ColorRes.white),
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -915,7 +915,7 @@ class CommonView {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "5 Business Segments subscribed to” then we say “Bonus: $bonus",
+                        Utils.getText(context, "${StringRes.addFriend}$bonus"),
                         style: TextStyle(fontSize: 18, color: ColorRes.white),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -1017,7 +1017,7 @@ class CommonView {
                                   image: AssetImage(
                                       Utils.getAssetsImg("bg_achivement1")),
                                   fit: BoxFit.fill)),
-                          child: Text("Collector",
+                          child: Text(Utils.getText(context, StringRes.collector),
                               style: TextStyle(color: ColorRes.white)),
                         ),
                         Expanded(
@@ -1037,8 +1037,7 @@ class CommonView {
                         ),
                         Container(
                           height: 40,
-                          child: Text(
-                              "5 Business Segments subscribed to \n Bonus: $bonus",
+                          child: Text(Utils.getText(context, "${StringRes.businessSegmentsNew}$bonus"),
 //                              "5 Business Segments subscribed to” then we say “Bonus: $bonus"
                               maxLines: 2,
                               textAlign: TextAlign.center,
