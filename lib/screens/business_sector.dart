@@ -118,7 +118,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             flex: 8,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: ColorRes.white,fontSize: 17),
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ),
@@ -126,7 +126,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.size),
-              style: TextStyle(color: ColorRes.white,fontSize: 17),
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ),
@@ -270,53 +270,48 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         height: 33,
                         padding: EdgeInsets.only(top: 13, left: 10),
                         margin:
-                        EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 2),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: ColorRes.white,
-                        ),
+                            borderRadius: BorderRadius.circular(15),
+                            color: ColorRes.white),
                         child: Theme(
-                          data: ThemeData(accentColor: ColorRes.colorPrimary),
-                          child: TextField(
-                            onChanged: (text) {
-                              arrFinalLearningModules.clear();
-                              searchText = text;
+                            data: ThemeData(accentColor: ColorRes.colorPrimary),
+                            child: TextField(
+                                onChanged: (text) {
+                                  arrFinalLearningModules.clear();
+                                  searchText = text;
 
-
-                              if (mounted)
-                                setState(() {
-                                  if (text.isEmpty) {
-                                    arrFinalLearningModules
-                                        .addAll(arrLearningModules);
-                                  } else {
-                                    searchData();
-                                  }
-                                });
-                            },
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                            controller: searchController,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: ColorRes.hintColor,
-                            ),
-                            decoration: InputDecoration(
-                                hintText: Utils.getText(context, StringRes.searchForKeywords),
-                                hintStyle: TextStyle(color: ColorRes.hintColor),
-                                border: InputBorder.none),
-                          ),
-                        ))),
+                                  if (mounted)
+                                    setState(() {
+                                      if (text.isEmpty) {
+                                        arrFinalLearningModules
+                                            .addAll(arrLearningModules);
+                                      } else {
+                                        searchData();
+                                      }
+                                    });
+                                },
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                controller: searchController,
+                                style: TextStyle(
+                                    fontSize: 16, color: ColorRes.hintColor),
+                                decoration: InputDecoration(
+                                    hintText: Utils.getText(
+                                        context, StringRes.searchForKeywords),
+                                    hintStyle:
+                                        TextStyle(color: ColorRes.hintColor),
+                                    border: InputBorder.none))))),
                 SizedBox(
                   width: 5,
                 ),
                 Image(
-                  height: 35,
-                  image: AssetImage(
-                    Utils.getAssetsImg(
-                        Injector.isBusinessMode ? "search" : 'search_prof'),
-                  ),
-                  fit: BoxFit.fill,
-                )
+                    height: 35,
+                    image: AssetImage(
+                      Utils.getAssetsImg(
+                          Injector.isBusinessMode ? "search" : 'search_prof'),
+                    ),
+                    fit: BoxFit.fill)
               ],
             ),
           ),
@@ -694,7 +689,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   style: TextStyle(
                       color: Injector.isBusinessMode
                           ? ColorRes.white
-                          : ColorRes.textProf,fontSize: 17),
+                          : ColorRes.textProf,
+                      fontSize: 17),
                 ),
               ),
             ),

@@ -76,6 +76,7 @@ class DisplayDialogs {
                   RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        Utils.playClickSound();
                         Utils.showChallengeQuestionDialog(context, questionData);
                       },
                       shape: RoundedRectangleBorder(
@@ -105,6 +106,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.clickYourProfile),
             desTextLine: Utils.getText(context, StringRes.welcomeToKnowDetails),
             onTapBtn: () {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.homeStreamController?.add("${Const.typeProfile}");
             },
@@ -125,6 +127,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.meetYourTeamDetails),
             onTapBtn: () async {
               try {
+                Utils.playClickSound();
                 Navigator.of(context).pop();
                 Utils.performDashboardItemClick(context, Const.typeOrg);
               } catch (e) {
@@ -151,6 +154,7 @@ class DisplayDialogs {
 //            desTextLine: "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
             onTapBtn: () async {
               try {
+                Utils.playClickSound();
                 Injector.introData.profile1 = 1;
                 await Injector.setIntroData(Injector.introData);
                 showSettingsDialog(context);
@@ -177,6 +181,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.settingDetails),
             onTapBtn: () async {
               try {
+                Utils.playClickSound();
                 Injector.introData.profile2 = 1;
                 await Injector.setIntroData(Injector.introData);
 
@@ -205,6 +210,7 @@ class DisplayDialogs {
             imageMoveRight: 8,
             desTextLine: Utils.getText(context, StringRes.hireHrEmpDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.org1 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -229,6 +235,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.hireHrEmpDetailsSeconds)??"",
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.org2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -254,6 +261,7 @@ class DisplayDialogs {
             desTextLine:
             Utils.getText(context, StringRes.empOMasterDetails)??"",
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.org3 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -278,6 +286,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.costOfEmpDetails)??"",
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.org4 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -420,6 +429,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.customerRelationDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
               Injector.introData.learningModule1 = 1;
@@ -448,6 +458,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.areaOfCompDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.learningModule2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -473,6 +484,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.accessToFirstBtn),
             desTextLine: Utils.getText(context, StringRes.accessToFirstDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
               showReadyForYourFirstCustomerContact(context);
@@ -497,6 +509,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.readyForCustomerBtn),
             desTextLine: Utils.getText(context, StringRes.readyForCustomerDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
             },
@@ -522,6 +535,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.next),
             desTextLine: Utils.getText(context, StringRes.heartBusinessDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.newCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -548,6 +562,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.listOfPotentialDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.newCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -574,6 +589,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.yourFirstEngagementBtn),
             desTextLine: Utils.getText(context, StringRes.yourFirstEngagementDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
             },
           );
@@ -598,6 +614,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.impactOnSalesDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 //              await Injector.updateIntroDialogType(Const.introImpactOnBrandValueAndCash);
               Injector.introData.customerSituation = 1;
@@ -625,6 +642,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.impactOnBrandDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
               showCheckYourExistingCustomers(context);
@@ -649,6 +667,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.clickServiceBtn),
             desTextLine: Utils.getText(context, StringRes.checkYourCustomerDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
             },
@@ -674,6 +693,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.servingYourExistingDialog),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.existingCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -701,6 +721,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.listOfExistingDetails),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.existingCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -727,6 +748,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.readyForBusinessDeatils),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
             },
@@ -748,6 +770,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(context, StringRes.rewardsDialogContent),
             btnColor: ColorRes.blue,
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
               Injector.introData.rewards = 1;
@@ -776,6 +799,7 @@ class DisplayDialogs {
             desTextLine:
                 Utils.getText(context, StringRes.challengesDialogContent1),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.challenge1 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -803,6 +827,7 @@ class DisplayDialogs {
             desTextLine:
                 Utils.getText(context, StringRes.strChallangesDialogContent),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.challenge2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -831,6 +856,7 @@ class DisplayDialogs {
             desTextLine: Utils.getText(
                 context, StringRes.strMarketingCommunicationsDialog),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.ranking1 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -858,6 +884,7 @@ class DisplayDialogs {
             desTextLine:
                 Utils.getText(context, StringRes.strRankingDialogContent),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.ranking2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -885,6 +912,7 @@ class DisplayDialogs {
             desTextLine:
                 Utils.getText(context, StringRes.strYourTeamPerformanceDialog),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
 
               Injector.introData.team1 = 1;
@@ -912,6 +940,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: Utils.getText(context, StringRes.strTeamDialog),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.team2 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -939,6 +968,7 @@ class DisplayDialogs {
             desTextLine:
                 Utils.getText(context, StringRes.strYourTeamPerformanceDialog2),
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.team3 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -965,6 +995,7 @@ class DisplayDialogs {
             btnColor: ColorRes.blue,
             desTextLine: "${Utils.getText(context, StringRes.niceMeetYou)} ,${Utils.getText(context, StringRes.plMyName)}",
             onTapBtn: () async {
+              Utils.playClickSound();
               Navigator.pop(context);
               Injector.introData.pl1 = 1;
               await Injector.setIntroData(Injector.introData);
@@ -992,6 +1023,7 @@ class DisplayDialogs {
             desTextLine:
                 "${Utils.getText(context, StringRes.hereYourMonitor)}\n\n${Utils.getText(context, StringRes.selectPeriod)}",
             onTapBtn: () async {
+              Utils.playClickSound();
               Injector.introData.pl2 = 1;
               await Injector.setIntroData(Injector.introData);
               Navigator.pop(context);

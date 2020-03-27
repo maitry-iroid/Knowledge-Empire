@@ -46,7 +46,8 @@ class Injector {
   static bool isSoundEnable;
   static AudioCache audioCache = AudioCache(prefix: 'sounds/');
 
-  static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+  static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
+
 
   static bool isDev = true;
 
@@ -81,7 +82,7 @@ class Injector {
 
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
-    await Utils.playBackgroundMusic();
+   await Utils.playBackgroundMusic();
 
     updateInstance();
   }
