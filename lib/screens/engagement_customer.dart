@@ -189,7 +189,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   child: new Text(
                     Utils.getText(context, abcdList[index]),
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 17,
                       color: (arrAnswer[index].isSelected
                           ? ColorRes.white
                           : ColorRes.textProf),
@@ -201,7 +201,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 17,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
@@ -531,7 +531,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             elevation: 10,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(top: 10, bottom: 15, right: 15, left: 8),
+            margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
             child: Container(
                 alignment: Alignment.center,
                 padding:
@@ -577,7 +577,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.answers),
-                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -639,7 +639,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               color: ColorRes.transparent.withOpacity(0.4),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 10),
+              margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
               child: Container(
                   height: MediaQuery.of(context).size.height / 2.5,
                   alignment: Alignment.center,
@@ -963,7 +963,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                   child: new Text(
                     Utils.getText(context, abcdList[index]),
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       color: (arrAnswer[index].isSelected
                           ? ColorRes.white
                           : ColorRes.textProf),
@@ -975,7 +975,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),

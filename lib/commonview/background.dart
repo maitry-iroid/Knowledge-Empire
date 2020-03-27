@@ -169,7 +169,7 @@ class CommonView {
                       color: Injector.isBusinessMode
                           ? ColorRes.white
                           : ColorRes.textProf,
-                      fontSize: 15),
+                      fontSize: 17),
                 ),
               ),
             ),
@@ -202,7 +202,7 @@ class CommonView {
                       : null),
               child: Text(
                 title,
-                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -1013,7 +1013,7 @@ class CommonView {
                                       Utils.getAssetsImg("bg_achivement1")),
                                   fit: BoxFit.fill)),
                           child: Text(mPushModel.achievementName,
-                              style: TextStyle(color: ColorRes.white)),
+                              style: TextStyle(color: ColorRes.white,fontSize: 18)),
                         ),
                         SizedBox(
                           height: 15
@@ -1036,7 +1036,7 @@ class CommonView {
                               "${mPushModel.achievementText} \n Bonus: ${mPushModel.bonus}",
                               maxLines: 2,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.body2.copyWith(color: ColorRes.white)),
+                              style: Theme.of(context).textTheme.body2.copyWith(color: ColorRes.white,fontSize: 20)),
                         ),
                         SizedBox(height: 20),
                         InkResponse(
@@ -1050,7 +1050,7 @@ class CommonView {
                                         Utils.getAssetsImg("bg_save")),
                                     fit: BoxFit.fill)),
                             child: Text(Utils.getText(context, StringRes.gotIt),
-                                style: TextStyle(color: ColorRes.white)),
+                                style: TextStyle(color: ColorRes.white,fontSize: 18)),
                           ),
                           onTap: () {
                             Navigator.pop(context);

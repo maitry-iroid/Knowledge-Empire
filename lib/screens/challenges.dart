@@ -130,7 +130,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                height: 25,
+                height: 28,
                 margin: EdgeInsets.only(bottom: 5),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -143,7 +143,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 ),
                 child: Text(
                   Utils.getText(context, StringRes.competitor),
-                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                  style: TextStyle(color: ColorRes.white, fontSize: 19),
                 ),
               ),
               showSearchView(),
@@ -194,7 +194,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                         : null),
                 child: Text(
                   Utils.getText(context, StringRes.businessSector),
-                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                  style: TextStyle(color: ColorRes.white, fontSize: 19),
                 ),
               ),
               Expanded(
@@ -243,7 +243,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                         : null),
                 child: Text(
                   Utils.getText(context, StringRes.rewards),
-                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                  style: TextStyle(color: ColorRes.white, fontSize: 19),
                 ),
               ),
               Expanded(
@@ -267,7 +267,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Container(
                   margin:
                       EdgeInsets.only(bottom: 5, left: 15, right: 15, top: 5),
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
@@ -275,7 +275,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                           fit: BoxFit.fill)),
                   child: Text(
                     Utils.getText(context, StringRes.sendChallenge),
-                    style: TextStyle(color: ColorRes.white),
+                    style: TextStyle(color: ColorRes.white,fontSize: 17),
                   ),
                 ),
                 onTap: () {
@@ -352,7 +352,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     color: Injector.isBusinessMode
                         ? ColorRes.white
                         : ColorRes.fontGrey,
-                    fontSize: 15),
+                    fontSize: 17),
               ),
             ),
             InkResponse(
@@ -377,7 +377,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                         ? Utils.getAssetsImg('add_emplyee')
                         : Utils.getAssetsImg('remove_friend'),
                   ),
-                  width: 20,
+                  width: 25,
                 )),
           ],
         ),
@@ -388,13 +388,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
   _showUnFriend(BuildContext context, int index) {
     // set up the buttons
     Widget cancelButton = FlatButton(
-      child: Text(Utils.getText(context, StringRes.no)),
+      child: Text(Utils.getText(context, StringRes.no),style: TextStyle(fontSize: 20),),
       onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
-      child: Text(Utils.getText(context, StringRes.yes)),
+      child: Text(Utils.getText(context, StringRes.yes),style: TextStyle(fontSize: 20),),
       onPressed: () {
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
@@ -406,7 +406,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     AlertDialog alert = AlertDialog(
       title: Text(Utils.getText(context, StringRes.alert)),
       content: Text(Utils.getText(context, StringRes.alertUnFriend),
-          style: TextStyle(color: ColorRes.textProf)),
+          style: TextStyle(color: ColorRes.textProf,fontSize: 20)),
       actions: [
         cancelButton,
         continueButton,
@@ -604,7 +604,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   : isRewardSelected(index)
                       ? ColorRes.white
                       : ColorRes.fontGrey,
-              fontSize: 17),
+              fontSize: 19),
         ),
       ),
     );
@@ -651,7 +651,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                           color: Injector.isBusinessMode
                               ? ColorRes.white
                               : ColorRes.textProf,
-                          fontSize: 15)),
+                          fontSize: 18)),
                 ),
                 RotatedBox(
                   quarterTurns: 90,
@@ -686,7 +686,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   left: 6,
                   child: Text(
                     arrLearningModules[index].moduleProgress.toString() + "%",
-                    style: TextStyle(color: ColorRes.white, fontSize: 14),
+                    style: TextStyle(color: ColorRes.white, fontSize: 18),
                   ),
                 )
               ],

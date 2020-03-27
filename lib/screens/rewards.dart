@@ -277,7 +277,7 @@ class _RewardsPageState extends State<RewardsPage> {
                           : selectedSubCategory.nextLevelText
                       : "",
                   style: TextStyle(
-                    color: ColorRes.white,
+                    color: ColorRes.white,fontSize: 16
                   ),
                   textAlign: TextAlign.justify,
                 ),
@@ -297,7 +297,7 @@ class _RewardsPageState extends State<RewardsPage> {
               child: Text(
                 Utils.getText(context,
                     type == 1 ? StringRes.achievement : StringRes.nextLevel),
-                style: TextStyle(color: ColorRes.white, fontSize: 14),
+                style: TextStyle(color: ColorRes.white, fontSize: 17),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -322,7 +322,7 @@ class _RewardsPageState extends State<RewardsPage> {
                             ? selectedSubCategory.currentLevelBlonus.toString()
                             : selectedSubCategory.nextLevelBlonus.toString()
                         : "null Innovation"),
-                style: TextStyle(color: ColorRes.white, fontSize: 14),
+                style: TextStyle(color: ColorRes.white, fontSize: 17),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -381,12 +381,12 @@ class _RewardsPageState extends State<RewardsPage> {
                             : ColorRes.white,
                         width: 1)),
 //                 child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: EdgeInsets.symmetric( horizontal: 10),
 
                 child: Center(
                     child: Text(
                   selectedAchievement.subCategory[index].achievementName,
-                  style: TextStyle(fontSize: 15, color: ColorRes.white),
+                  style: TextStyle(fontSize: 17, color: ColorRes.white),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
