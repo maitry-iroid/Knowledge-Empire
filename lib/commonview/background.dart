@@ -1013,7 +1013,7 @@ class CommonView {
                                       Utils.getAssetsImg("bg_achivement1")),
                                   fit: BoxFit.fill)),
                           child: Text(mPushModel.achievementName,
-                              style: TextStyle(color: ColorRes.white,fontSize: 18)),
+                              style: TextStyle(color: ColorRes.white,fontSize: 15)),
                         ),
                         SizedBox(
                           height: 15
@@ -1050,7 +1050,7 @@ class CommonView {
                                         Utils.getAssetsImg("bg_save")),
                                     fit: BoxFit.fill)),
                             child: Text(Utils.getText(context, StringRes.gotIt),
-                                style: TextStyle(color: ColorRes.white,fontSize: 18)),
+                                style: TextStyle(color: ColorRes.white,fontSize: 15)),
                           ),
                           onTap: () {
                             Navigator.pop(context);
