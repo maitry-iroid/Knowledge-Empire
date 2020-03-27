@@ -30,8 +30,15 @@ class PushNotificationHelper {
 
     var initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
+//    var initializationSettingsIOS = IOSInitializationSettings(
+//        onDidReceiveLocalNotification: onDidReceiveLocalNotification, );
+
     var initializationSettingsIOS = IOSInitializationSettings(
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
+      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+    );
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
     await Injector.flutterLocalNotificationsPlugin.initialize(
@@ -129,45 +136,74 @@ class PushNotificationHelper {
     String body = "";
 
     print(message);
+    showLocalNotification(Injector.notificationID, body);
 
     Utils.addBadge();
-    title = message['notification']['title'];
-    body = message['notification']['body'];
 
-    if (message['data'] != null) {
-       mPushModel=new PushModel.fromJson(message['data']);
-      if (mPushModel.notificationType == Const.pushTypeChallenge.toString()) {
-        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
-      } else if (mPushModel.notificationType == Const.pushTypeAchievement.toString()) {
-        if (mPushModel.bonus != null)
-          Injector.customerValueData.totalBalance = int.parse(mPushModel.bonus);
+    try {
+//      title = message['notification']['title'];
+//      body = message['notification']['body'];
 
-        if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
-          Injector.customerValueData.totalEmployeeCapacity += int.parse(mPushModel.bonus);
-          Injector.customerValueData.remainingEmployeeCapacity +=
-              int.parse(mPushModel.bonus);
-        }
-        if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
-          Injector.customerValueData.totalSalesPerson += int.parse(mPushModel.bonus);
-          Injector.customerValueData.remainingSalesPerson += int.parse(mPushModel.bonus);
-        }
-        if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
-          Injector.customerValueData.totalCustomerCapacity += int.parse(mPushModel.bonus);
-          Injector.customerValueData.remainingCustomerCapacity +=
-              int.parse(mPushModel.bonus);
-        }
-        if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
-          Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
-        }
+      title = message['title'];
+      body = message['body'];
+    } catch (e) {
+      print(e);
+    }
 
-        Injector.setCustomerValueData(Injector.customerValueData);
-        customerValueBloc.setCustomerValue(Injector.customerValueData);
-        CommonView().collectorDialog(context,mPushModel);
-        Utils.playAchievementSound();
-
-      } else {
-        showLocalNotification(Injector.notificationID, body);
+    PushModel pushModel;
+    if (Injector.deviceType == "android") {
+      if (message['data'] != null) {
+        mPushModel = new PushModel.fromJson(message['data']);
       }
+    } else {
+      if (message != null) {
+        mPushModel = new PushModel.fromJson(message);
+      }
+    }
+
+    if (mPushModel.notificationType == Const.pushTypeChallenge.toString()) {
+      Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+    } else if (mPushModel.notificationType ==
+        Const.pushTypeAchievement.toString()) {
+      if (mPushModel.bonus != null)
+        Injector.customerValueData.totalBalance = int.parse(mPushModel.bonus);
+
+      if (mPushModel.type != null &&
+          mPushModel.type == "1" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalEmployeeCapacity +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingEmployeeCapacity +=
+            int.parse(mPushModel.bonus);
+      }
+      if (mPushModel.type != null &&
+          mPushModel.type == "3" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalSalesPerson +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingSalesPerson +=
+            int.parse(mPushModel.bonus);
+      }
+      if (mPushModel.type != null &&
+          mPushModel.type == "8" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalCustomerCapacity +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingCustomerCapacity +=
+            int.parse(mPushModel.bonus);
+      }
+      if (mPushModel.type != null &&
+          mPushModel.type == "0" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
+      }
+
+      Injector.setCustomerValueData(Injector.customerValueData);
+      customerValueBloc.setCustomerValue(Injector.customerValueData);
+      CommonView().collectorDialog(context, mPushModel);
+      Utils.playAchievementSound();
+    } else {
+      showLocalNotification(Injector.notificationID, body);
     }
 
     print(title);
@@ -181,9 +217,7 @@ class PushNotificationHelper {
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await Injector.flutterLocalNotificationsPlugin.show(
-        id, Const.appName, body, platformChannelSpecifics,
-        payload: 'item x');
+    await Injector.flutterLocalNotificationsPlugin
+        .show(id, body, body, platformChannelSpecifics, payload: 'item x');
   }
-
 }
