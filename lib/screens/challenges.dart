@@ -774,7 +774,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }).catchError((e) {
           print("getLearningModule_" + e.toString());
 //          CommonView.showCircularProgress(false, context);
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });
@@ -801,7 +801,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           print("sendChallenge_" + e.toString());
 
           CommonView.showCircularProgress(false, context);
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });
@@ -843,7 +843,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }).catchError((e) {
           print("searchFriends_" + e.toString());
 
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });

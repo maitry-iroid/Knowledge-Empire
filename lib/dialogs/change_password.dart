@@ -242,21 +242,21 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   void validateData() async {
     if (widget.isFromProfile) {
       if (pass1Controller.text.trim().isEmpty) {
-        Utils.showToast("Please enter old Password.");
+        Utils.showToast(Utils.getText(context, StringRes.enterOldPassword));
         return;
       }
     }
     if (pass2Controller.text.trim().isEmpty) {
-      Utils.showToast("Please enter new Password.");
+      Utils.showToast(Utils.getText(context, StringRes.enterNewPassword));
       return;
     }
     if (pass3Controller.text.trim().isEmpty) {
-      Utils.showToast("Please re-eneter new Password.");
+      Utils.showToast(Utils.getText(context, StringRes.enterRePassword));
       return;
     }
 
     if (pass2Controller.text.trim() != pass3Controller.text.trim()) {
-      Utils.showToast("Please enter same new password.");
+      Utils.showToast(Utils.getText(context, StringRes.enterSameNewPassword));
       return;
     }
 
@@ -280,7 +280,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         });
 
       if (data != null) {
-        Utils.showToast(Utils.getText(context, StringRes.alertChangePassword));
+        Utils.showToast(Utils.getText(context, StringRes.passwordChange));
 
         if (widget.isFromProfile) {
           Navigator.pop(context);
@@ -296,7 +296,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         setState(() {
           isLoading = false;
         });
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 

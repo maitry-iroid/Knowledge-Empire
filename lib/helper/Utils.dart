@@ -261,36 +261,50 @@ class Utils {
 //    currentVol = await Volume.getVol;
 //  }
 
-  static gameBackgroundMusic() async {
-//    if(Injector.isBusinessMode) {
-//      if (Injector.isSoundEnable) Injector.audioPlayerBg.play("game_bg_music.mp3");
+  static playBackgroundMusic() async {
+
+//    Injector.audioCache.play("game_bg_music.mp3");
+
+//    if (Injector.isBusinessMode) {
+//      print("==========PLAY=========");
+//      if (Injector.isSoundEnable) {
+//        int result =
+//            await Injector.audioPlayerBg.play("assets/sounds/game_bg_music.mp3");
+//        if (result == 1) {
+//          print("==========SUCCESS=========");
+//        }
+//      }
 //    }
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable) Injector.audioPlayer.play("achievement_music.mp3");
+    if (Injector.isSoundEnable)
+      Injector.audioCache.play("achievement_music.mp3");
   }
 
   static playClickSound() async {
-    if (Injector.isSoundEnable) Injector.audioPlayer.play("all_button_clicks.wav");
+    if (Injector.isSoundEnable)
+      Injector.audioCache.play("all_button_clicks.wav");
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioPlayer.play("right_answer.wav");
+    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioPlayer.play("wrong_answer.wav");
+    if (Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static procorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioPlayer.play("pro_right_answer.mp3");
+    if (Injector.isSoundEnable)
+      Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proincorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioPlayer.play("pro_wrong_answer.mp3");
+    if (Injector.isSoundEnable)
+      Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
 //  static audioPlay(String path) async {
@@ -345,7 +359,7 @@ class Utils {
       }
     }).catchError((e) {
       print("callSubmitAnswerApi" + e.toString());
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 

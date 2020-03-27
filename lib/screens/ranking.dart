@@ -499,9 +499,9 @@ class _RankingPageState extends State<RankingPage> {
 
         if (response != null) {
           if (i == 1) {
-            Utils.showToast("Friend added successfully");
+            Utils.showToast(Utils.getText(context, StringRes.addFriend));
           } else {
-            Utils.showToast("Unfriend successfully");
+            Utils.showToast(Utils.getText(context, StringRes.unFriend));
           }
         }
       }).catchError((e) {

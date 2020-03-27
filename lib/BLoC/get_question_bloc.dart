@@ -41,15 +41,12 @@ class GetQuestionsBloc {
         arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
       }
 
-      if (arrQuestions != null && arrQuestions.isNotEmpty)
-        _getQuestionSubject.sink.add(arrQuestions);
+      _getQuestionSubject.sink.add(arrQuestions);
     }
   }
 
   updateQuestions(List<QuestionData> arrQuestions) async {
-    if (arrQuestions != null && arrQuestions.isNotEmpty) {
-      _getQuestionSubject.sink.add(arrQuestions);
-    }
+    _getQuestionSubject.sink.add(arrQuestions);
   }
 
   dispose() {

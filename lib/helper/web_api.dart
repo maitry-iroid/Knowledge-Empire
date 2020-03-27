@@ -81,7 +81,8 @@ class WebApi {
     final response = await dio
         .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
         .catchError((e) {
-      Utils.showToast(apiReq + "_" + e.toString());
+//      Utils.showToast(apiReq + "_" + e.toString());
+      Utils.showToast("Something went wrong");
       return null;
     });
 

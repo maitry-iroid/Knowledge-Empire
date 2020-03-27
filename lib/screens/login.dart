@@ -338,12 +338,12 @@ class _LoginPageState extends State<LoginPage> {
     Utils.playClickSound();
 
     if (emailController.text.isEmpty) {
-      Utils.showToast("Email can't be empty.");
+      Utils.showToast(Utils.getText(context, StringRes.emailEmpty));
       return;
     }
 
     if (passwordController.text.isEmpty) {
-      Utils.showToast("Password can't be empty.");
+      Utils.showToast(Utils.getText(context, StringRes.passWordEmpty));
       return;
     }
 
@@ -369,6 +369,8 @@ class _LoginPageState extends State<LoginPage> {
 
         await Injector.setUserData(userData);
 
+        await Injector.updateInstance();
+
         if (userData.isFirstTimeLogin)
           Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
 
@@ -385,7 +387,7 @@ class _LoginPageState extends State<LoginPage> {
     }).catchError((e) {
       print("login_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+//      // Utils.showToast(e.toString());
     });
   }
 

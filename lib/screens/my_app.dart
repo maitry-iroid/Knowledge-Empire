@@ -33,7 +33,7 @@ class MyAppState extends State<MyApp> {
   void initState() {
     print("weburl-------" + Const.webUrl);
 
-    Injector.audioPlayer.loadAll(['all_button_clicks.wav']);
+    Injector.audioCache.loadAll(['all_button_clicks.wav']);
 
     initPlatformState();
 

@@ -44,7 +44,7 @@ class EngagementCustomer extends StatefulWidget {
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List alphaIndex = ['A', 'B', 'C', 'D'];
+  List alphaIndex = [StringRes.aIndex,StringRes.bIndex,StringRes.cIndex,StringRes.dIndex];
 
   String urlPDFPath = "";
   String assetPDFPath = "";
@@ -187,7 +187,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               Title(
                   color: ColorRes.greenDot,
                   child: new Text(
-                    abcdList[index],
+                    Utils.getText(context, abcdList[index]),
                     style: TextStyle(
                       fontSize: 15,
                       color: (arrAnswer[index].isSelected
@@ -315,7 +315,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }).catchError((e) {
       print("submitAnswer_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -335,7 +335,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -961,7 +961,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
               Title(
                   color: ColorRes.greenDot,
                   child: new Text(
-                    abcdList[index],
+                    Utils.getText(context, abcdList[index]),
                     style: TextStyle(
                       fontSize: 18,
                       color: (arrAnswer[index].isSelected

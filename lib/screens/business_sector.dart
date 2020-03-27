@@ -396,7 +396,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -421,10 +421,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       if (data != null) {
         if (type == Const.subscribe) {
-          Utils.showToast("Subscribed successfully!");
+          Utils.showToast(StringRes.subscribedSuccess);
           selectedModule.isAssign = 1;
         } else {
-          Utils.showToast("Unsubscribed successfully!");
+          Utils.showToast(StringRes.unSubscribedSuccess);
           selectedModule.isAssign = 0;
         }
 
@@ -443,7 +443,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         setState(() {
           isLoading = false;
         });
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -602,7 +602,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       CommonView.showCircularProgress(false, context);
 
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
