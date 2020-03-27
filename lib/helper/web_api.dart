@@ -82,7 +82,7 @@ class WebApi {
         .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
         .catchError((e) {
 //      Utils.showToast(apiReq + "_" + e.toString());
-      Utils.showToast("Something went wrong");
+//      Utils.showToast("Something went wrong");
       return null;
     });
 

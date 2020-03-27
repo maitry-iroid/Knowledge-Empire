@@ -481,14 +481,12 @@ class CommonView {
                                     dashboardLockStatusData.achievement !=
                                         null &&
                                     dashboardLockStatusData.achievement != 1
-                                ? Center(
-                                    child: Image(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("lock_rewards")),
-                                      width:
-                                          Utils.getDeviceHeight(context) / 3.0,
-                                    ),
-                                  )
+                                ? Image(
+                              image: AssetImage(
+                                  Utils.getAssetsImg("lock_rewards")),
+                              width:
+                              Utils.getDeviceHeight(context) / 3.0,
+                            )
                                 : ConstrainedBox(
                                     constraints: new BoxConstraints(
                                     minHeight: 25.0,
