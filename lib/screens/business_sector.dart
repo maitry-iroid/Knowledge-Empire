@@ -282,6 +282,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                               arrFinalLearningModules.clear();
                               searchText = text;
 
+
                               if (mounted)
                                 setState(() {
                                   if (text.isEmpty) {
