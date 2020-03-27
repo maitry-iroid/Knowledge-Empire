@@ -286,7 +286,7 @@ class Utils {
             new File('${(await getTemporaryDirectory()).path}/music.mp3');
         print(file.path);
         await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
-
+        await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
         Injector.audioPlayerBg.play(file.path, isLocal: true);
 
       } else {
