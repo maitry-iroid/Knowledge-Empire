@@ -697,7 +697,7 @@ class _TeamPageState extends State<TeamPage> {
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
-          Utils.showToast(e.toString());
+          // Utils.showToast(e.toString());
         });
       }
     });

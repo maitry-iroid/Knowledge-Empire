@@ -296,7 +296,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         setState(() {
           isLoading = false;
         });
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 

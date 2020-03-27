@@ -78,7 +78,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       }).catchError((e) {
         print("releaseResources_" + e.toString());
         CommonView.showCircularProgress(false, context);
-        Utils.showToast(e.toString());
+        // Utils.showToast(e.toString());
       });
     });
   }
@@ -104,7 +104,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //    }).catchError((e) {
 //      print("getQuestions_" + e.toString());
 //      CommonView.showCircularProgress(false, context);
-//      Utils.showToast(e.toString());
+//      // Utils.showToast(e.toString());
 //    });
 //  }
 
@@ -138,12 +138,17 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       child: StreamBuilder(
           stream: getQuestionsBloc?.getQuestions,
           builder: (context, AsyncSnapshot<List<QuestionData>> snapshot) {
-            if (snapshot.hasData) {
-              return showData(snapshot?.data);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CommonView.showShimmer();
+            } else if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData)
+                return showData(snapshot?.data);
+              else
+                Container();
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
-            return CommonView.showShimmer();
+            return Container();
           }),
     );
   }
@@ -179,7 +184,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
-              style: TextStyle(color: Colors.white,fontSize: 18),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -188,7 +193,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
-              style: TextStyle(color: Colors.white,fontSize: 18),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -197,7 +202,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
-              style: TextStyle(color: Colors.white,fontSize: 18),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -206,7 +211,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
-              style: TextStyle(color: Colors.white,fontSize: 18),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
@@ -215,7 +220,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
-              style: TextStyle(color: Colors.white,fontSize: 18),
+              style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),

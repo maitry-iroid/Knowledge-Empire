@@ -315,7 +315,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }).catchError((e) {
       print("submitAnswer_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
@@ -335,7 +335,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      Utils.showToast(e.toString());
+      // Utils.showToast(e.toString());
     });
   }
 
