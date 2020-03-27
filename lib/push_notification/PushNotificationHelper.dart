@@ -185,4 +185,5 @@ class PushNotificationHelper {
         id, Const.appName, body, platformChannelSpecifics,
         payload: 'item x');
   }
+
 }
