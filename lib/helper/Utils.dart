@@ -288,7 +288,6 @@ class Utils {
         await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
         await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
         Injector.audioPlayerBg.play(file.path, isLocal: true);
-
       } else {
         Injector.audioPlayerBg.stop();
       }

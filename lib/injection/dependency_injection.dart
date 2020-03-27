@@ -47,7 +47,6 @@ class Injector {
   static AudioCache audioCache = AudioCache(prefix: 'sounds/');
   static AudioCache audioCacheBg = AudioCache(prefix: 'sounds/');
 
-//  await Injector.audioCacheBg.loop(file.path);
   static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
 
 
