@@ -1631,6 +1631,7 @@ class StringRes {
       'dashboardNewCustomer': '2. New Questions\nAnswer Questions',
       'dashboardExistingCustomer': '3. Existing Questions\nReview Questions',
       'alertChangePassword': 'Password changed Successfully.',
+
       'unLockOrg':
           'Unlocks when Study or Memory Points are empty for the first time.',
       'unLockPl': 'Unlocks 1 week after 1st login',
