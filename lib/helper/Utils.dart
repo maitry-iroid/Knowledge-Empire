@@ -292,6 +292,7 @@ class Utils {
   static Future playSound(bool isPlaySound) async {
     try {
       if (isPlaySound) {
+
         final file =
             new File('${(await getTemporaryDirectory()).path}/music.mp3');
         print(file.path);
