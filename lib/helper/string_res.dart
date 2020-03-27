@@ -1,9 +1,7 @@
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 class StringRes {
-
-
-  static String username = Injector.userData?.name??"";
+  static String username = Injector.userData?.name ?? "";
 
   //main options
   static var home = "home";
@@ -281,8 +279,68 @@ class StringRes {
   static var unLockReward = "unLockReward";
   static var unLockChallenge = "unLockChallenge";
 
-// change password
-  static var alertChangePassword = "alertChangePassword";
+//Dashboard Game screen
+  static var welcomeToKnow = "welcomeToKnow";
+  static var welcomeToKnowDetails = "welcomeToKnowDetails";
+  static var clickYourProfile = "clickYourProfile";
+
+  static var meetYourTeam = "meetYourTeam";
+  static var meetYourTeamDetails = "meetYourTeamDetails";
+  static var clickOrgChart = "clickOrgChart";
+
+  static var getReadyApproach = "getReadyApproach";
+  static var getReadyApproachDetails = "getReadyApproachDetails";
+  static var clickSale = "clickSale";
+
+  static var salesOMeter = "salesOMeter";
+  static var salesOMeterDetails = "salesOMeterDetails";
+
+  static var getReadyServer = "getReadyServer";
+  static var getReadyServerDetails = "getReadyServerDetails";
+  static var clickOnService = "clickOnService";
+  static var serviceOMeter = "serviceOMeter";
+  static var serviceOMeterDetails = "serviceOMeterDetails";
+
+
+  static var readyForSerious = "readyForSerious";
+  static var readyForSeriousDetails = "readyForSeriousDetails";
+  static var goToBusiness = "goToBusiness";
+
+  //me
+  //subscribed
+  static var subscribedSuccess = "subscribedSuccess";
+  static var unSubscribedSuccess = "unSubscribedSuccess";
+
+  //index
+  static var aIndex = "aIndex";
+  static var bIndex = "bIndex";
+  static var cIndex = "cIndex";
+  static var dIndex = "dIndex";
+
+  //validation
+  static var emailEmpty = "emailEmpty";
+  static var passWordEmpty = "passWordEmpty";
+  static var mailSent = "mailSent";
+  static var enterOldPassword = "enterOldPassword";
+  static var enterNewPassword = "enterNewPassword ";
+  static var enterRePassword = "enterRePassword";
+  static var enterSameNewPassword = "enterSameNewPassword";
+  static var passwordChange = "passwordChange";
+
+  //intro page
+  static var skipTutorial = "skipTutorial";
+
+  //ranking
+  static var addFriend = "addFriend";
+  static var unFriend = "unFriend";
+
+  //pushNotification alert
+  static var congratulations = "congratulations";
+  static var collector = "collector";
+  static var businessSegments = "businessSegments";
+  static var businessSegmentsNew = "businessSegmentsNew";
+
+
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -585,6 +643,7 @@ class StringRes {
           "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
       'customizeYourCompanyContent':
           "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      //endregion
 
       //setting screen Dialog
       'settingDetails':
@@ -597,8 +656,67 @@ class StringRes {
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
-      //change password
-      'alertChangePassword': 'Password changed Successfully.'
+      //Dashboard Game screen
+      'welcomeToKnow': 'Welcome to Knowledge Empire',
+      'welcomeToKnowDetails': "Dear $username,\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      'clickYourProfile': 'Click on your Profile',
+
+      'meetYourTeam':'Meet your team',
+      'meetYourTeamDetails':"Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service employees.",
+      'clickOrgChart':'Click the Org Chart',
+
+      'getReadyApproach':'Get ready to approach customers',
+      'getReadyApproachDetails':"In order to win new customers you need to have Sales Reps.\n\nLet's hire 10 Sales Reps by clicking on Sales and then “Hire 10 employees”.",
+      'clickSale':'Click on Sales',
+
+      'salesOMeter':'Sales-O-Meter',
+      'salesOMeterDetails':'"Note that your Sales-o-Meter shows 10/10.\nThe last number shows your current number of Sales Rep. \nThe first number shows how many of them are currently available.\n\nEngaging customers will keep Sales Reps busy for 8 hours. "',
+
+      'getReadyServer':'Get ready to serve customers',
+      'getReadyServerDetails':'"In order to serve/provide services to existing customers you need to have one Service Representatives per customer.\n\nLet\'s hire 10 Service Reps by clicking on Service and then “Hire 10 employees”."',
+      'clickOnService':'Click on Service',
+      'serviceOMeter':'Service-O-Meter',
+      'serviceOMeterDetails':"Note that your Service-o-Meter shows 10/10.\nThe last number shows your current number of Service Rep.\nThe first number shows how many of them are currently available.\n\nEach existing customer will keep 1 Service Rep. occupied.",
+
+      'readyForSerious':'Ready for serious business',
+      'readyForSeriousDetails':'"Great, you are all set for business.\nLet\'s head over to the newspaper to select the first business sector that you want to engage in.\n\nYou can click on the menu “>” and then “Business Sectors”"',
+      'goToBusiness':'Go to ”Business Sectors”',
+
+      //me
+      //subscribed
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+
+      //question index
+      'aIndex': 'A',
+      'bIndex': 'B',
+      'cIndex': 'C',
+      'dIndex': 'D',
+
+      //validation
+      'emailEmpty': 'Email can\'t be empty.',
+      'passWordEmpty': 'Password can\'t be empty.',
+      'mailSent':'Mail sent Successfully.',
+'enterOldPassword':'Please enter old Password.',
+'enterNewPassword ':'Please enter new Password.',
+'enterRePassword':'Please re-eneter new Password.',
+'enterSameNewPassword':'Please enter same new password.',
+'passwordChange':'Password changed Successfully.',
+
+      //intro page
+      'skipTutorial':'Skip Tutorial',
+
+      //ranking
+      'addFriend': 'Friend added successfully',
+      'unFriend': 'Unfriend successfully',
+
+      //pushNotification alert
+      'congratulations': 'Congratulations!, You earned',
+      'collector': 'Collector',
+      'businessSegments': '5 Business Segments subscribed to” then we say “Bonus:',
+      'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
+
+
     },
     'de': {
       //region german
@@ -787,8 +905,7 @@ class StringRes {
           "Als Manager kannst du hier die Leistungen deines Teams und wenn du auf einen Mitarbeiter klickst auch dieses einzelnen Mitarbeiters einsehen.\naußerdem kannst du ihm aus dem Konkurs helfen und sein Vermögen auf 30.000 zurücksetzen.",
 
       'plPerson': 'Mit mir kannst du rechnen',
-      'niceMeetYou':
-          'Nett dich kennenzulernen $username\n',
+      'niceMeetYou': 'Nett dich kennenzulernen $username\n',
       'plMyName':
           'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immer\nmehr Einnahmen als Ausgaben haben.',
       'hereYourMonitor':
@@ -858,7 +975,6 @@ class StringRes {
       'readyForCustomerBtn': 'Klick auf Vertriebskapazitäten',
 
       'customersRelationShip': "Kundenbeziehungsmanagement (CRM)",
-      //endregion
 
       'customersRelationShipContent':
           "Hi $username\n\nMein Name ist Li Wei.\nIch leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.\nLass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche werfen, die uns zur Verfuegung stehen.",
@@ -876,8 +992,6 @@ class StringRes {
       'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
       'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
 
-      //endregion
-
       //Organization screen Dialog
       'hireHrEmp': 'Personaler einstellen',
       'hireHrEmpDetails':
@@ -893,6 +1007,8 @@ class StringRes {
       'costOfEmpDetails':
           'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld (Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag (Gehaelter steigen mit der Zeit).',
 
+      //endregion
+
       //setting screen Dialog
       'settingDetails':
           'Du kannst zur professionellen Ansicht wechseln (kein virtuelles Unternehmen) und den Ton ein und aus schalten.',
@@ -904,11 +1020,31 @@ class StringRes {
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
-      //change password
-      'alertChangePassword': 'Password changed Successfully.'
+      //Dashboard Game screen
+      'welcomeToKnow': 'Willkommen bei Knowledge Empire',
+      'welcomeToKnowDetails': "Hallo $username,\n\nMein Name ist Mike und ich arbeite in der Verwaltung.\nBist du bereit die Geschäftsführung deines eigenen kleinen Unternehmens zu übernehmen?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
+      'clickYourProfile': 'Klick auf dein Profil',
+      'meetYourTeam':'Das Führungsteam',
+      'meetYourTeamDetails':"Auf das Organigramm klicken um das Führungsteam zu treffen. Hier kannst du neue Mitarbeiter einstellen und entlassen.\nZu Beginn musst du ein paar Mitarbeiter in der Personalabteilung, im Vertrieb und im Service einstellen.",
+      'clickOrgChart':'Klick auf "Organigramm"',
+      'getReadyApproach':'Stärke dein Vertriebsteam',
+      'getReadyApproachDetails':'"Um neue Kunden gewinnen zu können benötigst du Vertriebsmitarbeiter.\n\nLass uns 10 Vertriebsmitarbeiter einstellen. Dazu klick bitte auf ""Vertrieb"" und Anschließend auf ""10 Mitarbeiter einstellen""."',
+      'clickSale':'Klick auf "Vertrieb" ',
+      'salesOMeter':'Vertriebskapazitäten',
+      'salesOMeterDetails':"Deine Vertriebskapazitäten zeigen nun 10/10.\nDie letzte Zahl zeigt dir deine gesamten Vertriebskapazitäten und die erste Zahl, wieviele davon aktuell verfuegbar sind.\n\nKunden anzusprechen beschaeftigt Vertriebsmitarbeiter für 8 Stunden bevor sie wieder zur Verfuegung stehen.",
+
+      'getReadyServer':'Kunden benötigen Kundenservice',
+      'getReadyServerDetails':'"Um einen Kunden betreuen zu können benötigst du einen freien Service Mitarbeiter.\n\nLass uns 10 Servicemitarbeiter einstellen. Dazu bitte auf ""Service"" und dann auf ""10 Mitarbeiter einstellen"" klicken."',
+      'clickOnService':'Klick auf "Service"',
+      'serviceOMeter':'Servicekapazitat',
+      'serviceOMeterDetails':"Deine Servicekapazitäten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesammten Servicekapazitäten an. Die erste Zahl zeigt dir, wieviele diese Servicemitarbeiter aktuell frei zur Verfuegung stehen.\n\nJeder Kunde benötigt einen freien Servicemitarbeiter.",
+
+      'readyForSerious':'Neue Geschäftsbereiche',
+      'readyForSeriousDetails':"Super, jetzt sind wir startklar. Lass uns in der Zeitung nach neuen Geschäftsbereichen suchen, in denen wir aktiv werden wollen.\n\nBitte im Menü "">"" ""Geschäftsbereiche"" auswählen.",
+      'goToBusiness':'Zu "Geschäftsbereiche" wechseln',
     },
     'zh': {
-      //region chinese
+//      region chinese
       //main options
       'home': "首页",
       'businessSector': "业务部门",
@@ -1180,6 +1316,9 @@ class StringRes {
               "个人资料"
               "。\n",
 
+      //endregion
+
+
       //Organization screen Dialog
       'hireHrEmp': '招聘HR员工',
       'hireHrEmpDetails':
@@ -1199,6 +1338,31 @@ class StringRes {
       'settingDetails':
           '您可以切换到专业模式（没有虚拟公司),\n您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金,\n您的经理会进行审批。',
 
+      //Dashboard Game screen
+      'welcomeToKnow': '欢迎来到知识帝国',
+      'welcomeToKnowDetails': "亲爱的$username，\n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。",
+      'clickYourProfile': '点击您的个人资料',
+
+      'meetYourTeam':'认识您的团队',
+      'meetYourTeamDetails':"单击组织结构图以了解您的组织概况。\n只要您想，您可以雇用和解雇员工！\n开始之前，您将需要聘请一些HR、销售和服务的员工。",
+      'clickOrgChart':'单击组织结构图',
+      'getReadyApproach':'准备接触客户',
+      'getReadyApproachDetails':'"为了赢得新的客户，您需要有销售代表。\n\n我们点击“销售”，然后点击""雇用10名员工""来雇用10名销售代表。"',
+      'clickSale':'点击“销售”',
+
+      'salesOMeter':'销售代表指示图',
+      'salesOMeterDetails':"您的销售代表指示图显示10/10。\n最后一个数字显示您当前的销售代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n吸引客户将会让销售代表工作8个小时。",
+
+      'getReadyServer':'准备好为客户服务',
+      'getReadyServerDetails':'"为了服务现有客户或提供服务，您需要为每个客户配备一个服务代表。\n\n我们点击“服务”，然后点击""雇用10名员工""来雇用10名服务代表。"',
+      'clickOnService':'点击“服务”',
+      'serviceOMeter':'服务代表指示图',
+      'serviceOMeterDetails':"您的服务代表指示图显示10/10。\n最后一个数字显示您当前的服务代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n每个现有客户将占用1个服务代表。",
+
+      'readyForSerious':'准备开展真正的业务',
+      'readyForSeriousDetails':"很好，您们都准备好开展业务了。\n让我们来看看报纸，选择您想要从事的第一个商业部门。\n\n您可以点击菜单"">""，然后点击""业务部门”",
+      'goToBusiness':'转到"业务部门”',
+
       //lock feature
       'unLockOrg': 'Unlocks when Sales or Service capacities empty first time.',
       'unLockPl': 'Unlocks 1 week after 1st login.',
@@ -1206,8 +1370,9 @@ class StringRes {
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
-      //change password
-      'alertChangePassword': 'Password changed Successfully.'
+
+
+
     }
   };
 
@@ -1355,7 +1520,30 @@ class StringRes {
       //setting screen Dialog
       'settingDetails':
           'You can switch to a game mode (virtual company)\nand turn the sound on and off.\n\nIn case your points become negative, you can request\na new start which will need to be approved by your manager.',
-    },
+
+      //Dashboard Game screen
+      'welcomeToKnow': 'Welcome to Knowledge Empire',
+      'welcomeToKnowDetails': "Dear $username,\n\nwelcome to this gamified learning Experience.\nAre you ready to earn some points and compete against colleagues?\nClick on your name or on “Profile” in the navigation\nmenu (“>”).",
+      'clickYourProfile': 'Click on your Profile',
+      'meetYourTeam':'Your Power-Ups (PU)',
+      'meetYourTeamDetails':"Click on Power-Ups to have an overview of your improvements.\nYou get to increase and reduce power-up levels as you want!\nTo get started you will need to improve ""Max. Power-Ups (PU)"", ""Max. Study Points (SP)"" and ""Max. Memory (MP)"".",
+      'clickOrgChart':'Click on Power-Ups (PU)',
+      'getReadyApproach':'Study Points (SP) to answer questions',
+      'getReadyApproachDetails':'"In order to answer questions you need Study Points.\n\nLet\'s improve ""Max. Study Points (SP)"" to Level 1 by clicking on ""Max. Study Points (SP)"" and then ""Increase Level"""',
+      'clickSale':'Click on "Max. Study Points (SP)"',
+      'salesOMeter':'Study Points (SP) Bar',
+      'salesOMeterDetails':"Note that your Study Points (SP) Bar shows 10/10.\nThe last number shows your max Study Points (SP).\nThe first number shows how many Study Points (SP) are currently available.\n\nAnswering questions will require Study Points (SP) which will refill automatically after 8 hours. ",
+
+      'getReadyServer':'Max Memory Points (MP)',
+      'getReadyServerDetails':"In order to keep one correctly answered in your memory, you need to have one free memory point.\n\nLet's get 10 Memory Points by clicking on ""Max. Memory Points (MP)"" and then “Increase Level”.",
+      'clickOnService':'Click on "Max. Memory Points (MP)"',
+      'serviceOMeter':'Memory Point (MP) Bar',
+      'serviceOMeterDetails':"Note that your Memory Point (MP) Bar shows 10/10.\nThe last number shows your maximum Memory capacity.\nThe first number shows your free Memory for new questions.\n\nEach correctly answered question will require 1 memory point.",
+
+      'readyForSerious':'Ready for your first question?',
+      'readyForSeriousDetails':"Great, you are now ready for your first questions.\nLet's head over to the ""Learning Modules"" section to select the first Learning Module that you want to engage in.\n\nYou can click on the menu “>” and then “Learning Modules”",
+      'goToBusiness':'Go to "Learning Modules"',
+   },
     'de': {
       //region German
       'home': 'Start',
@@ -1609,6 +1797,28 @@ class StringRes {
       //setting screen Dialog
       'settingDetails':
           'Du kannst zum wissensspiel wechseln (virtuelles Unternehmen) und den Ton ein und aus schalten.',
+
+      //Dashboard Game screen
+      'welcomeToKnow': 'Willkommen bei Knowledge Empire',
+      'welcomeToKnowDetails': "Hallo $username,\n\nwillkommen zu dieser spielerischen Wissensmanagement App.\nBist du bereit Wissenspunkte zu verdienen und Kollegen und Freunde herauszufordern?\nBitte klick auf deinen Namen oder ""Profil"" im Menü (“>”).",
+      'clickYourProfile': 'Klick auf dein Profil',
+      'meetYourTeam':'Bonuspunkte',
+      'meetYourTeamDetails':"Auf Bonuspunkte  klicken um mögliche Verbesserungen einzusehen. Hier kannst Bonuspunkte investieren um Vereinfachungen zu erhalten\nZu Beginn musst du ein paar Bonuspunkte investieren um die maximalen Bonuspunkte, maximale Lernpunkte und maximale Bestandsfragen zu erhöhen.",
+      'clickOrgChart':'Klick auf "Bonuspunkte"',
+      'getReadyApproach':'Lernpunkte (LP) um Fragen zu beantworten',
+      'getReadyApproachDetails':'"Um neue Fragen beantworten zu können benötigst du Lernpunkte (LP).\n\nLass uns unsere Lernpunkte auf 10 erhöhen. Dazu klick bitte auf ""Lernpunkte (LP)"" und Anschließend auf ""Level erhöhen""."',
+      'clickSale':'Klick auf "Lernpunkte (LP)"',
+      'salesOMeter':'Lernkapazität',
+      'salesOMeterDetails':"Deine Lernkapazitäten zeigen nun 10/10.\nDie letzte Zahl zeigt dir deine gesammten Lernkapazitäten und die erste Zahl, wieviele davon aktuell verfuegbar sind.\n\nFragen zu beantworten beansprucht Lernkapazitäten für 8 Stunden bevor sie wieder zur Verfuegung stehen.",
+      'getReadyServer':'Bestandsfragen (BF)',
+      'getReadyServerDetails':"Wenn du eine Frage richtig beantwortest wechselt sie in die Liste der Bestandsfragen. Dazu benötigst du ausreichend Kapazitaeten in den Bestandsfragen.\n\nLass uns die Bestnadskundenkapazitaeten auf 10 erhöhen. Dazu bitte auf ""Bestandsfragen (BF)"" und dann auf ""Level erhöhen"" klicken.",
+      'clickOnService':'Klick auf "Bestandsfragen"',
+      'serviceOMeter':'Bestandsfragenkapazitat (BF)',
+      'serviceOMeterDetails':"Deine Bestandsfragenkapazitaeten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesamten Bestandsfragenkapazitaeten an. Die erste Zahl zeigt dir, wieviele diese Bestandsfragenkapazitaeten aktuell frei zur Verfuegung stehen.\n\nJeder Fragen benötigt eine freie Bestandsfragenkapazitat.",
+
+      'readyForSerious':'Bereit für die erste Frage?',
+      'readyForSeriousDetails':"Super, jetzt sind wir startklar. Lass uns in einen Blick in die Lernmodule werfen.\n\nBitte im Menü "">"" ""Lernmodule"" auswählen.",
+      'goToBusiness':'Zu "Lernmodule" wechseln',
     },
     'zh': {
       //region chines
@@ -1848,6 +2058,29 @@ class StringRes {
       //setting screen Dialog
       'settingDetails':
           '您可以切换到游戏模式（有虚拟公司),您可以打开或关闭声音。\n\n如果您的点数变为负数，您可以请求重新开始，您的经理会进行审批。',
+
+      //Dashboard Game screen
+      'welcomeToKnow': '',
+      'welcomeToKnowDetails': "亲爱的$username，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n""个人资料""。 ",
+      'clickYourProfile': '点击您的个人资料',
+      'meetYourTeam':'您的威力升级点数 (PU)',
+      'meetYourTeamDetails':"点击威力升级点数查看您的进步概览。\n您可以根据需要增加和减少威力升级点数的级别！\n开始前您需要提高”最大威力升级点数 (PU)”，“最大学习点数 (SP)”和“最大记忆力 (MP)”。",
+      'clickOrgChart':'点击威力升级 (PU)',
+      'getReadyApproach':'回答问题的学习点数 (SP)',
+      'getReadyApproachDetails':'"要回答问题，您需要学习点数。\n\n让我们点击“最大学习点数 (SP)”，然后“提升等级”来将“最大学习点数 (SP)”升至1级。"',
+      'clickSale':'点击“最大学习点数 (SP)”',
+      'salesOMeter':'学习点数 (SP) 条',
+      'salesOMeterDetails':'"您的学习点数 (SP) 条显示10/10。\n最后一个数字显示您的最大学习点数 (SP)。\n第一个数字显示当前可用的学习点数 (SP)。\n\n回答问题将需要学习点数 (SP)，8小时后会自动补充。"',
+
+      'getReadyServer':'最大记忆点数 (MP)',
+      'getReadyServerDetails':"为了在您的记忆中保持一个正确的回答，您需要有一个可用的记忆点数。\n\n让我们点击“最大记忆点数 (MP)""，然后点击“提升等级”来获取10个记忆点数。",
+      'clickOnService':'点击“最大记忆点数 (MP)"',
+      'serviceOMeter':'记忆点数 (MP) 条',
+      'serviceOMeterDetails':"您的记忆点数 (MP) 条显示10/10。\n最后一个数字显示您的最大记忆容量。\n第一个数字显示新问题的可用记忆点数。\n\n每个正确回答的问题将需要1个记忆点数。",
+
+      'readyForSerious':'准备好回答您的第一个问题了吗',
+      'readyForSeriousDetails':"很好，您现在已经准备好您的第一个问题。\n让我们前往""学习模块""部分选择要进入的第一个学习模块。\n\n您可以点击菜单"">""，然后点击""学习模块”",
+      'goToBusiness':'转到"学习模块"',
     }
   };
 }

@@ -605,7 +605,6 @@ class HelpPageState extends State<HelpPage> {
                     width: Utils.getDeviceWidth(context) / 4.3,
                   ),
                   onTap: () {
-                    Utils.showToast("hello");
                   },
                 ),
                 InkResponse(

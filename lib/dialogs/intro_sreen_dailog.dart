@@ -265,7 +265,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                   padding: EdgeInsets.all(Utils.getDeviceWidth(context) / 100),
                   child: Center(
                     child: Text(
-                      "Skip tutorial",
+                      Utils.getText(context, StringRes.skipTutorial),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: ColorRes.white,

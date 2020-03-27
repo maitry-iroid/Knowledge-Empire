@@ -16,6 +16,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:shimmer/shimmer.dart';
@@ -737,7 +738,7 @@ class CommonView {
                             Padding(padding: EdgeInsets.only(top: 13)),
                             Text(
                               Utils.getText(context,
-                                  "Congratulations!, You earned " /*+bonus.toString()!="null"?bonus.toString():""+*/ " rewards!"),
+                                  "${StringRes.congratulations}" /*+bonus.toString()!="null"?bonus.toString():""+*/ "${StringRes.rewards}!"),
                               style: TextStyle(
                                 color: ColorRes.greenDot,
                                 fontSize: 20,
@@ -899,7 +900,7 @@ class CommonView {
                                 color: ColorRes.borderRewardsName, width: 1)),
                         child: Center(
                             child: Text(
-                          "Collector",
+                              Utils.getText(context, StringRes.collector),
                           style: TextStyle(fontSize: 18, color: ColorRes.white),
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -915,7 +916,7 @@ class CommonView {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "5 Business Segments subscribed to” then we say “Bonus: $bonus",
+                        Utils.getText(context, "${StringRes.addFriend}$bonus"),
                         style: TextStyle(fontSize: 18, color: ColorRes.white),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -981,12 +982,9 @@ class CommonView {
         })*/
   }
 
-  collectorDialog(BuildContext context, String bonus, String level, String type, String achievementType) {
-//  collectorDialog(BuildContext context, String bonus) {
+  collectorDialog(BuildContext context, PushModel mPushModel) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
-//        barrierColor: Colors.white.withOpacity(1.0),
-
         transitionBuilder: (context, a1, a2, widget) {
           return Transform.scale(
             scale: a1.value,
@@ -999,8 +997,7 @@ class CommonView {
                 ),
                 child: Container(
                   padding: EdgeInsets.only(top: 25),
-//                  width: Utils.getDeviceWidth(context),
-                  width: Utils.getDeviceWidth(context) / 2.25,
+                  width: Utils.getDeviceWidth(context) / 2.2,
                   height: Utils.getDeviceHeight(context) / 1.4,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -1009,56 +1006,60 @@ class CommonView {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: 30,
-                          width: 100,
+                          height: Utils.getDeviceHeight(context)/14,
+                          width: Utils.getDeviceWidth(context)/8,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
                                       Utils.getAssetsImg("bg_achivement1")),
                                   fit: BoxFit.fill)),
-                          child: Text("Collector",
+                          child: Text(mPushModel.achievementName,
                               style: TextStyle(color: ColorRes.white)),
+                        ),
+                        SizedBox(
+                          height: 15
                         ),
                         Expanded(
                           child: Container(
-                            width: 220,
+                            width: Utils.getDeviceWidth(context)/3,
+                            height: Utils.getDeviceHeight(context)/3,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        Utils.getAssetsImg("bg_collector")),
-                                    fit: BoxFit.fill)),
-                            //trophy3
-                            child: Image(
-                                image:
-                                    AssetImage(Utils.getAssetsImg("trophy3"))),
+                                        Utils.getAssetsImg("bg_collector")))),
+                            child: Image.asset(imageFomType(mPushModel.level),fit: BoxFit.contain),
                           ),
-//                      child: Text("hello")
+                        ),
+                        SizedBox(
+                            height: 15
                         ),
                         Container(
                           height: 40,
                           child: Text(
-                              "5 Business Segments subscribed to \n Bonus: $bonus",
-//                              "5 Business Segments subscribed to” then we say “Bonus: $bonus"
+                              "${mPushModel.achievementText} \n Bonus: ${mPushModel.bonus}",
                               maxLines: 2,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: ColorRes.white)),
+                              style: Theme.of(context).textTheme.body2.copyWith(color: ColorRes.white)),
                         ),
-                        /*InkResponse(
+                        SizedBox(height: Utils.getDeviceHeight(context)/15),
+                        InkResponse(
                           child: Container(
-                            height: 30,
-                            width: 80,
+                            height: Utils.getDeviceHeight(context)/14,
+                            width: Utils.getDeviceWidth(context)/8,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
                                         Utils.getAssetsImg("bg_save")),
                                     fit: BoxFit.fill)),
-                            child: Text("Next",
+                            child: Text(Utils.getText(context, StringRes.gotIt),
                                 style: TextStyle(color: ColorRes.white)),
                           ),
-                          onTap: () {},
-                        )*/
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        )
                       ],
                     ),
                   ),
@@ -1072,6 +1073,44 @@ class CommonView {
         barrierLabel: '',
         context: context,
         pageBuilder: (context, animation1, animation2) {});
+  }
+
+  imageFomType(String level) {
+    switch (level) {
+      case "0":
+        return Utils.getAssetsImg("trophy0");
+        break;
+      case "1":
+        return Utils.getAssetsImg("trophy1");
+        break;
+      case "2":
+        return Utils.getAssetsImg("trophy2");
+        break;
+      case "3":
+        return Utils.getAssetsImg("trophy3");
+        break;
+      case "4":
+        return Utils.getAssetsImg("trophy4");
+        break;
+      case "5":
+        return Utils.getAssetsImg("trophy5");
+        break;
+      case "6":
+        return Utils.getAssetsImg("trophy6");
+        break;
+      case "7":
+        return Utils.getAssetsImg("trophy7");
+        break;
+      case "8":
+        return Utils.getAssetsImg("trophy8");
+        break;
+      case "9":
+        return Utils.getAssetsImg("trophy9");
+        break;
+      case "10":
+        return Utils.getAssetsImg("trophy10");
+        break;
+    }
   }
 
   static showShimmer() {

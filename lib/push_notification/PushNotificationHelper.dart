@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,11 +10,13 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/models/register_for_push.dart';
 
 class PushNotificationHelper {
   BuildContext context;
   String page;
+  PushModel mPushModel;
 
   PushNotificationHelper(BuildContext _context, String _page) {
     this.context = _context;
@@ -127,58 +131,39 @@ class PushNotificationHelper {
     print(message);
 
     Utils.addBadge();
-
-//    if (Platform.isIOS) {
-//      title = message['title'];
-//      body = message['body'];
-//    } else {
-
     title = message['notification']['title'];
     body = message['notification']['body'];
 
     if (message['data'] != null) {
-      String challengeId = message['data']['challengeId'];
-      String notificationType = message['data']['notificationType'];
-      String type = message['data']['type'];
-      String level = message['data']['level'];
-      String bonus = message['data']['bonus'];
-      String achievementType = message['data']['achievementType'];
+       mPushModel=new PushModel.fromJson(message['data']);
+      if (mPushModel.notificationType == Const.pushTypeChallenge.toString()) {
+        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+      } else if (mPushModel.notificationType == Const.pushTypeAchievement.toString()) {
+        if (mPushModel.bonus != null)
+          Injector.customerValueData.totalBalance = int.parse(mPushModel.bonus);
 
-      if (notificationType == Const.pushTypeChallenge.toString() &&
-          challengeId != null) {
-        Injector.homeStreamController
-            ?.add("${Const.openPendingChallengeDialog}");
-      } else if (notificationType == Const.pushTypeAchievement.toString()) {
-        if (bonus != null)
-          Injector.customerValueData.totalBalance = int.parse(bonus);
-
-        if (type != null && type == "1" && bonus != null) {
-          Injector.customerValueData.totalEmployeeCapacity += int.parse(bonus);
+        if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
+          Injector.customerValueData.totalEmployeeCapacity += int.parse(mPushModel.bonus);
           Injector.customerValueData.remainingEmployeeCapacity +=
-              int.parse(bonus);
+              int.parse(mPushModel.bonus);
         }
-        if (type != null && type == "3" && bonus != null) {
-          Injector.customerValueData.totalSalesPerson += int.parse(bonus);
-          Injector.customerValueData.remainingSalesPerson += int.parse(bonus);
+        if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
+          Injector.customerValueData.totalSalesPerson += int.parse(mPushModel.bonus);
+          Injector.customerValueData.remainingSalesPerson += int.parse(mPushModel.bonus);
         }
-        if (type != null && type == "8" && bonus != null) {
-          Injector.customerValueData.totalCustomerCapacity += int.parse(bonus);
+        if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
+          Injector.customerValueData.totalCustomerCapacity += int.parse(mPushModel.bonus);
           Injector.customerValueData.remainingCustomerCapacity +=
-              int.parse(bonus);
+              int.parse(mPushModel.bonus);
         }
-        if (type != null && type == "0" && bonus != null) {
-          Injector.customerValueData.totalBalance += int.parse(bonus);
+        if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
+          Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
         }
 
         Injector.setCustomerValueData(Injector.customerValueData);
         customerValueBloc.setCustomerValue(Injector.customerValueData);
-
-//        CommonView().pushNotificationAlert2(context, bonus, level, type, achievementType);
-//        CommonView()
-//            .collectorDialog(context, bonus, level, type, achievementType);
-        showLocalNotification(Injector.notificationID, body);
+        CommonView().collectorDialog(context,mPushModel);
         Utils.playAchievementSound();
-//        CommonView().collectorDialog(context, bonus, level, type, achievementType);
 
       } else {
         showLocalNotification(Injector.notificationID, body);
@@ -200,4 +185,5 @@ class PushNotificationHelper {
         id, Const.appName, body, platformChannelSpecifics,
         payload: 'item x');
   }
+
 }

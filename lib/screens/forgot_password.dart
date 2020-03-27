@@ -198,7 +198,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     Utils.playClickSound();
 //    }
     if (emailController.text.isEmpty) {
-      Utils.showToast("Email can't be empty.");
+      Utils.showToast(Utils.getText(context, StringRes.emailEmpty));
       return;
     }
 
@@ -216,7 +216,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       });
 
       if (data != null) {
-        Utils.showToast("Mail sent Successfully.");
+        Utils.showToast(Utils.getText(context, StringRes.mailSent));
         //alert pop
         Navigator.pop(context);
       }
