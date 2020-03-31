@@ -1260,7 +1260,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     String x = "000";
     String y = "000";
-    String z = "005";
+    String z = "006";
 
     return mode +
         "-" +

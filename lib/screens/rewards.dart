@@ -371,6 +371,7 @@ class _RewardsPageState extends State<RewardsPage> {
             Expanded(
               flex: 2,
               child: Container(
+
                 width: Utils.getDeviceWidth(context) / 6,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -389,7 +390,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   style: TextStyle(fontSize: 17, color: ColorRes.white),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                  maxLines: 1,
                 )),
 //                 ),
               ),

@@ -111,7 +111,7 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-
+    getLockStatus();
     Utils.removeBadge();
     initContent();
     mRefreshAnimation = this;

@@ -525,6 +525,20 @@ class Utils {
     return arrFinalQuestion;
   }
 
+  static getUserNameForIntroDialog(String word, BuildContext context) {
+    String finalString;
+    if (word != null && word.isNotEmpty) {
+      if (word == "yes") {
+        return Injector.userData?.name ?? "";
+      } else {
+        finalString = Utils.getText(context, StringRes.hi);
+      }
+    } else {
+      finalString = Utils.getText(context, StringRes.dear);
+    }
+    return finalString + " " + Injector.userData?.name ?? "";
+  }
+
   static showComingSoonDialog(BuildContext context) {
     showDialog(
       context: context,

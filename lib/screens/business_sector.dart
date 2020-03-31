@@ -530,18 +530,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           QuestionsResponse questionsResponse = QuestionsResponse();
           questionsResponse.data = arrQuestions;
 
-          await Injector.prefs.setString(
-              PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+          await Injector.prefs.setString(PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
 
           //TODO remove media also
 
 //          Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            PushNotificationHelper(context, "").showLocalNotification(
-                101, Utils.getText(context, StringRes.downloading));
+            PushNotificationHelper(context, "").showLocalNotification(101, Utils.getText(context, StringRes.downloading));
 
-            await BackgroundFetch.start().then((int status) async {
+            await BackgroundFetch.
+            start().then((int status) async {
 //              if (mounted)setState(() {
 //                arrLearningModules
 //                    .firstWhere((module) => module.moduleId == moduleId)
@@ -550,8 +549,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
               await Injector.prefs.setString("datta", "scsdc");
 
-              await Injector.cacheManager
-                  .getSingleFile(arrQuestions[i].mediaLink);
+              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
               print("complted");
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
@@ -824,8 +822,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           showFileSize(),
-//          showDownloadStatus(),
-//          showDownloadSwitch(),
+          showDownloadStatus(),
+          showDownloadSwitch(),
           showSubscribeView()
         ],
       ),

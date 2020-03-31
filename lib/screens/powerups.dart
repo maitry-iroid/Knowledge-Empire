@@ -424,14 +424,14 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                   : ""),
           actions: <Widget>[
             FlatButton(
-              child: Text('Yes'),
+              child: Text(Utils.getText(context, StringRes.yes)),
               onPressed: () {
                 manageLevel(action);
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('No'),
+              child: Text(Utils.getText(context, StringRes.no)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

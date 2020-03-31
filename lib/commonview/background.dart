@@ -482,11 +482,10 @@ class CommonView {
                                         null &&
                                     dashboardLockStatusData.achievement != 1
                                 ? Image(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("lock_rewards")),
-                              width:
-                              Utils.getDeviceHeight(context) / 3.0,
-                            )
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("lock_rewards")),
+                                    width: Utils.getDeviceHeight(context) / 3.0,
+                                  )
                                 : ConstrainedBox(
                                     constraints: new BoxConstraints(
                                     minHeight: 25.0,
@@ -898,7 +897,7 @@ class CommonView {
                                 color: ColorRes.borderRewardsName, width: 1)),
                         child: Center(
                             child: Text(
-                              Utils.getText(context, StringRes.collector),
+                          Utils.getText(context, StringRes.collector),
                           style: TextStyle(fontSize: 18, color: ColorRes.white),
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
@@ -1004,8 +1003,8 @@ class CommonView {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: Utils.getDeviceHeight(context)/14,
-                          width: Utils.getDeviceWidth(context)/8,
+                          height: Utils.getDeviceHeight(context) / 15,
+                          width: Utils.getDeviceWidth(context) / 8,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               image: DecorationImage(
@@ -1013,36 +1012,35 @@ class CommonView {
                                       Utils.getAssetsImg("bg_achivement1")),
                                   fit: BoxFit.fill)),
                           child: Text(mPushModel.achievementName,
-                              style: TextStyle(color: ColorRes.white,fontSize: 15)),
+                              style: TextStyle(
+                                  color: ColorRes.white, fontSize: 15)),
                         ),
-                        SizedBox(
-                          height: 15
-                        ),
+                        SizedBox(height: 15),
                         Container(
-                          width: Utils.getDeviceWidth(context)/3,
-                          height: Utils.getDeviceHeight(context)/3,
+                          width: Utils.getDeviceWidth(context) / 3,
+                          height: Utils.getDeviceHeight(context) / 3,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
                                       Utils.getAssetsImg("bg_collector")))),
-                          child: Image.asset(imageFomType(mPushModel.level),fit: BoxFit.contain),
+                          child: Image.asset(imageFomType(mPushModel.level),
+                              fit: BoxFit.contain),
                         ),
-                        SizedBox(
-                            height: 15
-                        ),
+                        SizedBox(height: 15),
                         Container(
                           height: 40,
                           child: Text(
-                              "${mPushModel.achievementText} \n Bonus: ${mPushModel.bonus}",
+                              "${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}",
                               maxLines: 2,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.body2.copyWith(color: ColorRes.white,fontSize: 20)),
+                              style: Theme.of(context).textTheme.body2.copyWith(
+                                  color: ColorRes.white, fontSize: 20)),
                         ),
                         SizedBox(height: 20),
                         InkResponse(
                           child: Container(
-                            height: Utils.getDeviceHeight(context)/14,
-                            width: Utils.getDeviceWidth(context)/8,
+                            height: Utils.getDeviceHeight(context) / 14,
+                            width: Utils.getDeviceWidth(context) / 8,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -1050,7 +1048,8 @@ class CommonView {
                                         Utils.getAssetsImg("bg_save")),
                                     fit: BoxFit.fill)),
                             child: Text(Utils.getText(context, StringRes.gotIt),
-                                style: TextStyle(color: ColorRes.white,fontSize: 15)),
+                                style: TextStyle(
+                                    color: ColorRes.white, fontSize: 15)),
                           ),
                           onTap: () {
                             Navigator.pop(context);

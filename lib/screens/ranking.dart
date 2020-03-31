@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/ranking_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -14,7 +13,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
-
 import '../commonview/background.dart';
 import '../helper/constant.dart';
 
@@ -44,11 +42,14 @@ class _RankingPageState extends State<RankingPage> {
   String searchText = "";
   int lastUserId = 0;
 
+  var arrTime;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -74,6 +75,11 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
+    arrTime = [
+      Utils.getText(context, StringRes.day),
+      Utils.getText(context, StringRes.month),
+      Utils.getText(context, StringRes.year)
+    ];
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(
@@ -133,8 +139,6 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   var arrCategory = ['World', 'Country', 'Friends'];
-
-  var arrTime = ['Day', 'Month', 'Year'];
 
   final _height = 100.0;
 

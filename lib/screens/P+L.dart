@@ -21,7 +21,8 @@ class PLPage extends StatefulWidget {
 }
 
 class _PLPageState extends State<PLPage> {
-  var arrTime = ['Day', 'Month', 'Year'];
+  var arrTime;
+
   int selectedTime = 0;
 
   Map<String, double> dataMap = Map();
@@ -70,6 +71,11 @@ class _PLPageState extends State<PLPage> {
 
   @override
   Widget build(BuildContext context) {
+    arrTime = [
+      Utils.getText(context, StringRes.day),
+      Utils.getText(context, StringRes.month),
+      Utils.getText(context, StringRes.year)
+    ];
     return Stack(
       children: <Widget>[
         CommonView.showBackground(context),
