@@ -1254,6 +1254,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String getVersion() {
+
     String mode = Injector.isDev ? "D" : "P";
     String customerSpecificVersion = "BES"; //Blue Elephants Solutions
     String os = Injector.deviceType == "ios" ? "I" : "A";
