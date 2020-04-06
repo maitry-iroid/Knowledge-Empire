@@ -56,15 +56,17 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Can I use camera please?</string>
+	<string>App would like to use your camera to capture the image for profile photo.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>App would like to access your location to provide your better location related results and enhance your experience.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App would like to access your location to provide your better location related results and enhance your experience.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Can I use the mic please?</string>
+	<string>App would like to use your microphone to record the video to answer.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Can I use the PhotoLibrary please?</string>
+	<string>App would like to use your photo library to select the image for profile photo.
+App would like to use your photo library to select the image for profile photo.
+App would like to use your photo library to select the image for profile photo.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
