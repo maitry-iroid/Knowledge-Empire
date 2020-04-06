@@ -191,6 +191,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               maxLines: 1,
             ),
           ),
+
           Expanded(
             flex: 3,
             child: Text(
