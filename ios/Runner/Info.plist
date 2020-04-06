@@ -64,9 +64,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>App would like to use your microphone to record the video to answer.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App would like to use your photo library to select the image for profile photo.
-App would like to use your photo library to select the image for profile photo.
-App would like to use your photo library to select the image for profile photo.</string>
+	<string>App would like to use your photo library to select the image for profile photo.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
