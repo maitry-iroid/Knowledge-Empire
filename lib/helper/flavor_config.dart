@@ -13,5 +13,6 @@ class FlavorConfig {
   String appName;
   String webUrl;
 
+
   FlavorConfig({this.appName, this.webUrl});
 }
