@@ -1003,15 +1003,13 @@ class CommonView {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: Utils.getDeviceHeight(context) / 15,
-                          width: Utils.getDeviceWidth(context) / 8,
-                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("bg_achivement1")),
-                                  fit: BoxFit.fill)),
-                          child: Text(mPushModel.achievementName,
+                            color: ColorRes.fontDarkGrey,
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(color: ColorRes.borderRewardsName)
+                          ),
+                          child: Text("Everybody Empireknowlage",
                               style: TextStyle(
                                   color: ColorRes.white, fontSize: 15)),
                         ),
@@ -1043,11 +1041,10 @@ class CommonView {
                             width: Utils.getDeviceWidth(context) / 8,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("bg_save")),
-                                    fit: BoxFit.fill)),
-                            child: Text(Utils.getText(context, StringRes.gotIt),
+                                color: ColorRes.header,
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(color: ColorRes.white)),
+                            child: Text(Utils.getText(context, StringRes.bonusPoint),
                                 style: TextStyle(
                                     color: ColorRes.white, fontSize: 15)),
                           ),

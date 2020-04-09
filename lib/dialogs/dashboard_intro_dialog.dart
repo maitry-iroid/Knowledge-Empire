@@ -192,6 +192,33 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
   showGotIt() {
     return InkResponse(
       child: Container(
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.fromLTRB(20,10,20,10),
+        alignment: Alignment.center,
+        child: Text(
+          Utils.getText(context, StringRes.gotIt),
+          style: TextStyle(
+            color: ColorRes.white,
+            fontSize: 18,
+          ),
+        ),
+        decoration: BoxDecoration(
+            color: ColorRes.textRecordBlue,
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(color: ColorRes.white)
+        ),
+      ),
+      onTap: () async {
+        Injector.introData.dashboard = 1;
+        await Injector.setIntroData(Injector.introData);
+
+        await Injector.updateIntroData();
+
+        Navigator.pop(context);
+      },
+    );
+    return InkResponse(
+      child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         alignment: Alignment.center,

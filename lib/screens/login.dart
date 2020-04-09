@@ -58,6 +58,8 @@ class _LoginPageState extends State<LoginPage> {
 
   String tempLanguage = Const.english;
 
+  ScrollController _scrollController = new ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -72,54 +74,60 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-//      resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomPadding: false,
         backgroundColor: ColorRes.fontDarkGrey,
-        body: Container(
-//          height: 400,
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: ExactAssetImage(Utils.getAssetsImg('bg_login_profesonal')),
-              fit: BoxFit.cover,
-//              alignment: Alignment.topCenter,
-            ),
-          ),
-          child: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 50),
-                  child: Image(
-                    image: AssetImage(
-                      Utils.getAssetsImg('logo_login'),
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.asset(Utils.getAssetsImg('bg_login_profesonal'),
+                fit: BoxFit.cover),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: Utils.getDeviceWidth(context) / 15),
+                    child: Center(
+                      child: Image.asset(
+                        Utils.getAssetsImg('logo_login'),
+                        height: Utils.getDeviceHeight(context) / 1.8,
+                        width: Utils.getDeviceWidth(context) / 3.8,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                    width: Utils.getDeviceHeight(context) / 2,
                   ),
                 ),
-              ),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    width: Utils.getDeviceWidth(context) / 2.3,
-                    height: Utils.getDeviceHeight(context) / 1.5,
-                    margin: EdgeInsets.only(
-                        right: 20, left: Utils.getDeviceWidth(context) / 5.5),
-                    decoration: BoxDecoration(
-//                    color: ColorRes.colorBgDark,
-                      color: ColorRes.loginBg,
-                      border: Border.all(color: ColorRes.white, width: 1),
-                      borderRadius: new BorderRadius.circular(10.0),
+                Expanded(
+                  child: Center(
+                    child: ListView(
+                      controller: _scrollController,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                        Container(height: Utils.getDeviceHeight(context) / 8),
+                        Container(
+                          width: double.infinity,
+                          height: Utils.getDeviceHeight(context) / 1.5,
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          decoration: BoxDecoration(
+                            color: ColorRes.loginBg,
+                            border: Border.all(color: ColorRes.white, width: 1),
+                            borderRadius: new BorderRadius.circular(10.0),
+                          ),
+                          child: showLoginForm(),
+                        ),
+                        Container(height: Utils.getDeviceHeight(context) / 4),
+                      ],
                     ),
-                    child: showLoginForm(),
-                  )),
-            ],
-          ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ));
   }
 
-  showLoginForm() {
+  Widget showLoginForm() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -131,25 +139,20 @@ class _LoginPageState extends State<LoginPage> {
                 topLeft: Radius.circular(9), topRight: Radius.circular(9)),
           ),
         ),
-        Container(
-          height: 1,
-          color: ColorRes.white,
-        ),
+        Container(height: 1, color: ColorRes.white),
         Expanded(
           child: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: ListView(
                 shrinkWrap: true,
+                primary: false,
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
 //                  Text(Const.APP_NAME),
                   showEmailView(),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   showPassword(),
-
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: Utils.getDeviceWidth(context) / 9),
@@ -424,6 +427,13 @@ class _LoginPageState extends State<LoginPage> {
                     maxLines: 1,
                     style:
                         TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    onSubmitted: (value) {
+                      _scrollController.animateTo(
+                        0.0,
+                        curve: Curves.easeOut,
+                        duration: const Duration(milliseconds: 300),
+                      );
+                    },
                     decoration: InputDecoration(
 //                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
@@ -458,19 +468,24 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: passwordController,
                     obscureText: true,
-//                    autocorrect: true,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     style:
                         TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    onSubmitted: (value) {
+                      _scrollController.animateTo(
+                        0.0,
+                        curve: Curves.easeOut,
+                        duration: const Duration(milliseconds: 300),
+                      );
+                    },
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.password)
                             .toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.greyText),
-//                        hintStyle: TextStyle(color: ColorRes.hintColor),
                         border: InputBorder.none),
                   ),
                 )))

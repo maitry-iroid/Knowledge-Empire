@@ -10,6 +10,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/models/register_for_push.dart';
 
@@ -165,41 +166,30 @@ class PushNotificationHelper {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
     } else if (mPushModel.notificationType ==
         Const.pushTypeAchievement.toString()) {
-      if (mPushModel.bonus != null)
-        Injector.customerValueData.totalBalance = int.parse(mPushModel.bonus);
-
-      if (mPushModel.type != null &&
-          mPushModel.type == "1" &&
-          mPushModel.bonus != null) {
-        Injector.customerValueData.totalEmployeeCapacity +=
-            int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingEmployeeCapacity +=
-            int.parse(mPushModel.bonus);
+      if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
+        Injector.customerValueData.totalEmployeeCapacity +=int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingEmployeeCapacity +=int.parse(mPushModel.bonus);
       }
-      if (mPushModel.type != null &&
-          mPushModel.type == "3" &&
-          mPushModel.bonus != null) {
-        Injector.customerValueData.totalSalesPerson +=
-            int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingSalesPerson +=
-            int.parse(mPushModel.bonus);
+      if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
+        Injector.customerValueData.totalSalesPerson +=int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingSalesPerson +=int.parse(mPushModel.bonus);
       }
-      if (mPushModel.type != null &&
-          mPushModel.type == "8" &&
-          mPushModel.bonus != null) {
-        Injector.customerValueData.totalCustomerCapacity +=
-            int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingCustomerCapacity +=
-            int.parse(mPushModel.bonus);
+      if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
+        Injector.customerValueData.totalCustomerCapacity +=int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingCustomerCapacity +=int.parse(mPushModel.bonus);
       }
-      if (mPushModel.type != null &&
-          mPushModel.type == "0" &&
-          mPushModel.bonus != null) {
+      print(Injector.customerValueData.totalBalance.toString() +"======>"+ mPushModel.bonus.toString());
+      if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);
       customerValueBloc.setCustomerValue(Injector.customerValueData);
+
+      /*CustomerValueRequest rq =  CustomerValueRequest();
+      rq.userId = Injector.userId;
+      customerValueBloc.getCustomerValue(rq);*/
+
       CommonView().collectorDialog(context, mPushModel);
       Utils.playAchievementSound();
     } else {

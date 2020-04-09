@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -40,6 +41,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   List<int> arrRewards = [2, 4, 6, 8, 10];
   var selectedModuleIndex = -1;
   int selectedRewardsIndex = 0;
+  int currentIndex = 0;
 
   @override
   initState() {
@@ -222,7 +224,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
         margin: EdgeInsets.only(left: 12),
         child: Container(
           decoration: getBoxDecoration(),
-          child: Column(
+          child: ListView(
+            shrinkWrap: true,
+            primary: false,
             children: <Widget>[
               Container(
                 margin: EdgeInsets.symmetric(vertical: 8, horizontal: 35),
@@ -246,23 +250,60 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   style: TextStyle(color: ColorRes.white, fontSize: 19),
                 ),
               ),
-              Expanded(
-                child: Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: arrRewards.length,
-                      padding: EdgeInsets.all(0),
-                      itemBuilder: (BuildContext context, int index) {
-                        return showRewardItem(index);
-                      },
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(4),
+                margin: EdgeInsets.only(left: 10, right: 10),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      "My \$",
+                      style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.fontGrey,
+                          fontSize: 19),
                     ),
-                  ),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          "# Questions",
+                          style: TextStyle(
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.white
+                                  : ColorRes.fontGrey,
+                              fontSize: 19),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "His \$",
+                      style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.fontGrey,
+                          fontSize: 19),
+                    ),
+                  ],
                 ),
               ),
+              ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: arrRewards.length,
+                padding: EdgeInsets.all(0),
+                itemBuilder: (BuildContext context, int index) {
+                  currentIndex = index;
+                  return showRewardItem(index);
+                },
+              ),
+              /*Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Your friend will have to answer ${(arrRewards.length - currentIndex)} questions. Ifhe wins then he will earn ${arrRewards[arrRewards.length - (currentIndex + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[currentIndex]}% of your total value.",
+                  style: TextStyle(color: ColorRes.white, fontSize: 19),
+                ),
+              ),*/
               InkResponse(
                 child: Container(
                   margin:
@@ -275,7 +316,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                           fit: BoxFit.fill)),
                   child: Text(
                     Utils.getText(context, StringRes.sendChallenge),
-                    style: TextStyle(color: ColorRes.white,fontSize: 17),
+                    style: TextStyle(color: ColorRes.white, fontSize: 17),
                   ),
                 ),
                 onTap: () {
@@ -309,6 +350,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
+    Fluttertoast.showToast(
+        msg:
+            "Your friend will have to answer ${(arrRewards.length - index)} questions. Ifhe wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.");
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
 
@@ -388,13 +432,19 @@ class _ChallengesPageState extends State<ChallengesPage> {
   _showUnFriend(BuildContext context, int index) {
     // set up the buttons
     Widget cancelButton = FlatButton(
-      child: Text(Utils.getText(context, StringRes.no),style: TextStyle(fontSize: 20),),
+      child: Text(
+        Utils.getText(context, StringRes.no),
+        style: TextStyle(fontSize: 20),
+      ),
       onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget continueButton = FlatButton(
-      child: Text(Utils.getText(context, StringRes.yes),style: TextStyle(fontSize: 20),),
+      child: Text(
+        Utils.getText(context, StringRes.yes),
+        style: TextStyle(fontSize: 20),
+      ),
       onPressed: () {
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
@@ -406,7 +456,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     AlertDialog alert = AlertDialog(
       title: Text(Utils.getText(context, StringRes.alert)),
       content: Text(Utils.getText(context, StringRes.alertUnFriend),
-          style: TextStyle(color: ColorRes.textProf,fontSize: 20)),
+          style: TextStyle(color: ColorRes.textProf, fontSize: 20)),
       actions: [
         cancelButton,
         continueButton,
@@ -586,25 +636,57 @@ class _ChallengesPageState extends State<ChallengesPage> {
         Utils.playClickSound();
         _onSelectedRewards(index);
       },
-      child: Container(
-        alignment: Alignment.center,
-        width: 40,
-        decoration: BoxDecoration(
-          color: Injector.isBusinessMode
-              ? selectedItem(2, index)
-              : selectedItem(2, index),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        margin: EdgeInsets.symmetric(horizontal: 2),
-        child: Text(
-          arrRewards[index].toString() + "%",
-          style: TextStyle(
-              color: Injector.isBusinessMode
-                  ? ColorRes.white
-                  : isRewardSelected(index)
-                      ? ColorRes.white
-                      : ColorRes.fontGrey,
-              fontSize: 19),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+          alignment: Alignment.center,
+          width: 40,
+          padding: EdgeInsets.only(left: 10, right: 10),
+          decoration: BoxDecoration(
+            color: Injector.isBusinessMode
+                ? selectedItem(2, index)
+                : selectedItem(2, index),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          margin: EdgeInsets.symmetric(horizontal: 2),
+          child: Row(
+            children: <Widget>[
+              Text(
+                arrRewards[index].toString() + "%",
+                style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : isRewardSelected(index)
+                            ? ColorRes.white
+                            : ColorRes.fontGrey,
+                    fontSize: 19),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    (arrRewards.length - index).toString(),
+                    style: TextStyle(
+                        color: Injector.isBusinessMode
+                            ? ColorRes.white
+                            : isRewardSelected(index)
+                                ? ColorRes.white
+                                : ColorRes.fontGrey,
+                        fontSize: 19),
+                  ),
+                ),
+              ),
+              Text(
+                arrRewards[arrRewards.length - (index + 1)].toString() + "%",
+                style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : isRewardSelected(index)
+                            ? ColorRes.white
+                            : ColorRes.fontGrey,
+                    fontSize: 19),
+              ),
+            ],
+          ),
         ),
       ),
     );

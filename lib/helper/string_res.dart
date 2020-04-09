@@ -339,8 +339,10 @@ class StringRes {
   static var businessSegments = "businessSegments";
   static var businessSegmentsNew = "businessSegmentsNew";
   static var bonus = "bonus";
+  static var bonusPoint = "bonusPoint";
   static var dear = "dear";
   static var hi = "hi";
+  static var noInternet = "noInternet";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -516,10 +518,10 @@ class StringRes {
           "Check out the reward categories and click on a trophy to\nfind out what you have achieved already and what you will\nneed to achieve for the next level.\n\nThe number below the “Next Level” is the bonus\nyou will receive.",
       'challengesDialogTitle1': "Your Will is at your command",
       'challengesDialogContent1':
-          ", \n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to defend\nagainst attacks.",
+          ", \n\nMy name is Will and I am your corporate lawyer.\nI will help you to challenge other competitors and also to\ndefend against attacks.",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
-          "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected sector correctly in order to win the challenge.",
+          "Search or select a competitor you would like to challenge.\nSelect one of his business sectors you would like to challenge\nhim and select the reward (% of current cash) the the winner\ncan get. Your competitor will need to answer 3 out of 3\nquestions from the selected sector correctly in order to\nwin the challenge.",
       'strMarketingCommunications': "Marketing & Communications",
       'strMarketingCommunicationsDialog':
           ", \n\nWhat a great pleasure meeting you. I have heard a lot of good\nthings about you. So I am extremely exited to work for you.\nI am Lydia and in charge of Marketing & Communications.\nLet's have a look at your overall market position. ",
@@ -580,7 +582,7 @@ class StringRes {
       //New Customer screen
       'heartBusiness': 'The heart of the business',
       'heartBusinessDetails':
-          "Hi Boss,\n\nthis is where the rubber hits the road, where only\nthe best survive and where we earn the money for\nour company. I am Tina, your Senior Vice President of\nGlobal Sales. Let's get to work without any further due.",
+          "Hi Boss,\n\nthis is where the rubber hits the road, where only\nthe best survive and where we earn the money for\nour company. I am Tina, your Senior Vice President\nof Global Sales. Let's get to work without any further\ndue.",
       'listOfPotential': 'List of potential Customers',
       'listOfPotentialDetails':
           'Each customer has a name and belongs to a sector.\nValue is the cash you will receive every day while the\ncustomer is loyal to you. Loyalty of customers will\nincrease when you master the customer situation.\nResources indicate how many Sales Reps you will\nneed to engage this customer. Click on “Engage Now”.',
@@ -589,7 +591,7 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': 'Customer Relationship Management',
       'customerRelationDetails':
-          ', \n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different business\nsectors to find potential customers?',
+          ', \n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) \nin your company. Shall we have a look at the different\nbusiness sectors to find potential customers?',
       'areaOfComp': 'Area of competency',
       'areaOfCompDetails':
           'Each Business Sector will test specific knowledge to win\ncustomers. “Size” is the number of customers per Sector.\nYou can click on a business sector to read the description,\nsubscribe to it and download the questions for offline use.\nSome Business Sectors might already be assigned to you.',
@@ -722,8 +724,10 @@ class StringRes {
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
       //endregion
       'bonus': "",
+      'bonusPoint': "Bonus Point",
       'dear': "Dear",
-      'hi': "Hi"
+      'hi': "Hi",
+      'noInternet':"Check Your Internet Connection"
 
     },
     'de': {
@@ -895,13 +899,13 @@ class StringRes {
           "Schau dir die unterschiedlichen Kategorien von Auszeichnungen\nan um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen.Die\nZahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Dein Will ist mein Befehl",
       'challengesDialogContent1':
-          ", \n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und Angriffe abzuwehren.",
+          ", \n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und\nAngriffe abzuwehren.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
           "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.wähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom \naktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen.\nAnsonsten gewinnst du.",
       'strMarketingCommunications': "Marketing",
       'strMarketingCommunicationsDialog':
-          ", \n\nWas für eine ausserordentliche Freude dich kennenzulernen. Ich habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
+          ", \n\nWas für eine ausserordentliche Freude dich kennenzulernen.\nIch habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
       'strRankingDialogContent':
           "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
               "Du"
@@ -932,7 +936,7 @@ class StringRes {
 
       'listOfExisting': 'Bestandskundenliste',
       'listOfExistingDetails':
-          'Hier siehst du die Liste der Bestandskunden, ihren täglichen Umsatz und wieviel Tage sie noch loyal zu uns sind.\nMit "x" kannst du die Kundenbeziehung beenden. Dann generiert der Kunde keinen Umsatz mehr, wir gewinnen aber einen freien Servicemitarbeiter zurück.',
+          'Hier siehst du die Liste der Bestandskunden, ihren täglichen Umsatz und wieviel Tage sie noch loyal zu uns sind.\nMit "x" kannst du die Kundenbeziehung beenden. Dann\ngeneriert der Kunde keinen Umsatz mehr, wir gewinnen aber\neinen freien Servicemitarbeiter zurück.',
 
       'readyForBusiness': 'Ab ins Abenteuer ...',
       'readyForBusinessDeatils':
@@ -963,7 +967,7 @@ class StringRes {
           'Hallo Chef,\n\nwillkommen im Vertrieb, dem Herzen unseres Unternehmens.\nHier verdienen wir das Geld.Ich bin Tina, Vice Präsidentin\nfür unseren globalen Vertrieb.Lass uns ohne weiter\nUmschweife starten und Geld verdienen.',
       'listOfPotential': 'Liste potentieller Kunden',
       'listOfPotentialDetails':
-          'Jeder Kunde hat einen Namen und gehört zu einem Geschäftsbereich.Umsatz ist der tägliche Umsatz den der Kunde uns einbringen wird, so lange er uns loyal ist.Die Kundenloyalität steigt, wenn wir die Fragen dieses Kunden richtig\nbeantworten.In der Spalte Vertriebler ist zu ersehen\nwieviel Vertriebler wir benötigen um den Kunden\nanzusprechen.Um den Kunden anzusprechen bitte\n.auf "Ansprechen" klicken',
+          'Jeder Kunde hat einen Namen und gehört zu einem Geschäftsbereich.Umsatz ist der tägliche Umsatz den der\nKunde uns einbringen wird, so lange er uns loyal ist.Die Kundenloyalität steigt, wenn wir die Fragen dieses Kunden\nrichtig beantworten.In der Spalte Vertriebler ist zu\nersehen wieviel Vertriebler wir benötigen um den\nKunden anzusprechen.Um den Kunden anzusprechen\nbitte .auf "Ansprechen" klicken',
       'listOfPotentialBtn': 'Klick auf "Ansprechen"',
 
       //Business sector screen dialog
@@ -1023,7 +1027,7 @@ class StringRes {
 
       'empOMaster': 'Mitarbeiterkapazitäten',
       'empOMasterDetails':
-          'Deine Mitarbeiterkapazitäten sind jetzt 40/50.50 ist die gesamte Mitarbeiterkapazität und 40 die noch verfügbare, da du ja schon\n10 Mitarbeiter in der Personalabteilung hast.\nDu kannst die Mitarbeiterkapazität weiter erhöhen, indem du\nneue Personalmitarbeiter einstellst.Ein klick auf deine Mitarbeiter Kapazitäten bringt dich auch zu diesem Bildschirm.',
+          'Deine Mitarbeiterkapazitäten sind jetzt 40/50.50 ist die gesamte Mitarbeiterkapazität und 40 die noch verfügbare, da du ja schon\n10 Mitarbeiter in der Personalabteilung hast.\nDu kannst die Mitarbeiterkapazität weiter erhöhen, indem du\nneue Personalmitarbeiter einstellst.Ein klick auf deine\nMitarbeiter Kapazitäten bringt dich auch zu diesem Bildschirm.',
       'costOfEmp': 'Mitarbeiter Kosten',
       'costOfEmpDetails':
           'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld (Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag (Gehaelter steigen mit der Zeit).',
@@ -1087,7 +1091,9 @@ class StringRes {
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
       //endregion
       'dear': "Dear",
-      'hi': "Hi"
+      'bonusPoint': "Bonus Point",
+      'hi': "Hi",
+      'noInternet':"Check Your Internet Connection"
     },
     'zh': {
       //      region chinese
@@ -1440,7 +1446,9 @@ class StringRes {
       //endregion
 
       'dear': "Dear",
-      'hi': "Hi"
+      'bonusPoint': "Bonus Point",
+      'hi': "Hi",
+      'noInternet':"Check Your Internet Connection"
     }
   };
 
@@ -1645,7 +1653,9 @@ class StringRes {
       'unLockChallenge': 'Unlocks when max. Challenge Power-Up is increased',
       //endregion
       'dear': "Dear",
-      'hi': "Hi"
+      'bonusPoint': "Bonus Point",
+      'hi': "Hi",
+      'noInternet':"Check Your Internet Connection"
     },
     'de': {
       //region German
@@ -1960,7 +1970,9 @@ class StringRes {
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
       //endregion
       'dear': "Dear",
-      'hi': "Hi"
+      'bonusPoint': "Bonus Point",
+      'hi': "Hi",
+      'noInternet':"Check Your Internet Connection"
     },
     'zh': {
       //region chines
@@ -2252,7 +2264,9 @@ class StringRes {
       'unLockChallenge': '最大挑战威力升级点数增加后解锁',
       //endregion
       'dear': "Dear",
-      'hi': "Hi"
+      'bonusPoint': "Bonus Point",
+      'hi': "Hi",
+      'noInternet':"Check Your Internet Connection"
     }
   };
 }

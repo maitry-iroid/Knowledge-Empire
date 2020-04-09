@@ -4,7 +4,8 @@ class AppConfig {
   }
 
   static FlavorConfig prodConfig() {
-    return FlavorConfig(webUrl: "http://18.141.132.109:7000/api", appName: "Knowledge Empire");
+//    return FlavorConfig(webUrl: "http://18.141.132.109:7000/api", appName: "Knowledge Empire");
+    return FlavorConfig(webUrl: "https://www.knowledge-empire.com/api", appName: "Knowledge Empire");
   }
 }
 

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
@@ -639,23 +640,33 @@ class _ProfilePageState extends State<ProfilePage> {
     rq.deviceType = Injector.deviceType;
     rq.deviceToken = Injector.prefs.getString(PrefKeys.deviceToken);
 
-    WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
 
-      if (data != null) {}
-      try {
-        await Injector.logout();
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
+          CommonView.showCircularProgress(false, context);
 
-        Navigator.pushAndRemoveUntil(
-            context, FadeRouteLogin(), ModalRoute.withName("/home"));
-      } catch (e) {
-        print(e);
+          if (data != null) {}
+          try {
+            await Injector.logout();
+
+            Navigator.pushAndRemoveUntil(
+                context, FadeRouteLogin(), ModalRoute.withName("/home"));
+          } catch (e) {
+            print(e);
+          }
+        }).catchError((e) {
+          print("logout_" + e.toString());
+          CommonView.showCircularProgress(false, context);
+          // Utils.showToast(e.toString());
+        });
+      }else{
+        CommonView.showCircularProgress(false, context);
+        Fluttertoast.showToast(msg:Utils.getText(context, StringRes.noInternet));
       }
-    }).catchError((e) {
-      print("logout_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
     });
+
+
   }
 
   showTitle() {
@@ -1261,7 +1272,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     String x = "000";
     String y = "000";
-    String z = "006";
+    String z = "008";
 
     return mode +
         "-" +

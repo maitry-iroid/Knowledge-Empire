@@ -39,7 +39,7 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
   bool isLoading = false;
-
+  ScrollController _scrollController = new ScrollController();
   @override
   void initState() {
     super.initState();
@@ -49,6 +49,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
 //        key: _scaffoldKey,
+        resizeToAvoidBottomPadding: false,
       backgroundColor: ColorRes.fontDarkGrey,
       body: Container(
 
@@ -62,41 +63,64 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         ),
         child: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 50),
-                child: Image(
-                  image: AssetImage(
-                    Utils.getAssetsImg('logo_login'),
+            Image.asset(Utils.getAssetsImg('bg_login_profesonal'),
+                fit: BoxFit.cover),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        right: Utils.getDeviceWidth(context) / 15),
+                    child: Center(
+                      child: Image.asset(
+                        Utils.getAssetsImg('logo_login'),
+                        height: Utils.getDeviceHeight(context) / 1.8,
+                        width: Utils.getDeviceWidth(context) / 3.8,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
-                  width: Utils.getDeviceHeight(context) / 2,
                 ),
-              ),
+                Expanded(
+                  child: Center(
+                    child: ListView(
+                      controller: _scrollController,
+                      children: <Widget>[
+                        Container(height: Utils.getDeviceHeight(context) / 5),
+                        Container(
+                          width: Utils.getDeviceWidth(context) / 2.3,
+                          height: Utils.getDeviceHeight(context) / 2,
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          decoration: BoxDecoration(
+                            color: ColorRes.loginBg,
+                            border: Border.all(color: ColorRes.white, width: 1),
+                            borderRadius: new BorderRadius.circular(10.0),
+                          ),
+                          child: showLoginForm(),
+                        ),
+                        Container(height: Utils.getDeviceHeight(context) / 2.5),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: Utils.getDeviceWidth(context) / 2.3,
-                  height: Utils.getDeviceHeight(context) / 2,
-                  margin: EdgeInsets.only(right: 20),
-                  decoration: BoxDecoration(
-//                    color: ColorRes.colorBgDark,
-                    color: ColorRes.loginBg,
-                    border: Border.all(color: ColorRes.white, width: 1),
-                    borderRadius: new BorderRadius.circular(10.0),
+
+
+            Positioned(
+              top: 1,
+              child: SafeArea(
+                child: IconButton(
+                  icon: new Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 40,
                   ),
-                  child: showLoginForm(),
-                )),
-            SafeArea(
-              child: IconButton(
-                icon: new Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 40,
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
               ),
             ),
             showCircularProgress()
@@ -145,6 +169,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
                   style: TextStyle(color: ColorRes.titleBlueProf, fontSize: 15),
+                  onSubmitted: (value) {
+                    _scrollController.animateTo(
+                      0.0,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 300),
+                    );
+                  },
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText:

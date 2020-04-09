@@ -534,7 +534,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
           //TODO remove media also
 
-//          Injector.cacheManager.emptyCache();
+        //Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
             PushNotificationHelper(context, "").showLocalNotification(101, Utils.getText(context, StringRes.downloading));

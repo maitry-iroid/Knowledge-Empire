@@ -726,12 +726,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         padding: EdgeInsets.all(3),
         decoration:
             BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: SimplePdfViewerWidget(
-          completeCallback: (bool result) {
-            print("completeCallback,result:$result");
-          },
-          initialUrl: questionData.mediaLink,
-        ),
+        child: pdfShow(),
       );
     }
 //    else {
