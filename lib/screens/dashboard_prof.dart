@@ -146,6 +146,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                 overflow: TextOverflow.ellipsis,
               ),
             )
+
           ],
         ),
       ),
