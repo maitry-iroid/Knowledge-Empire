@@ -9,6 +9,7 @@ import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
@@ -111,6 +112,14 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+    initStateMethods();
+  }
+
+  Future<void> initStateMethods() async {
+    UpdateDialogModel status = await Injector.getCurrentVersion(context);
+    if(status.status!="0"){
+      DisplayDialogs.showUpdateDialog(context,status.message);
+    }
     getLockStatus();
     Utils.removeBadge();
     initContent();

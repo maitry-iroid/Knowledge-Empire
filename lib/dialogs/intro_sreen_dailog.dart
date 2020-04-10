@@ -133,7 +133,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Center(
                                   //  child: Text("",
-                                  child: Text(Utils.getText(context, StringRes.next),
+                                  child: Text(widget.btnName,
                                       style: TextStyle(
                                           fontSize: size.width / 46.5,
                                           color: ColorRes.white)),
@@ -145,7 +145,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                   ),
                 ),
               ),
-              Positioned(
+              widget.imageName!=null?Positioned(
                   right: widget.imageMoveRight != null
                       ? size.width / widget.imageMoveRight
                       : size.width / 10.0,
@@ -159,7 +159,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                       width: widget.imageWidth != null
                           ? size.height / widget.imageWidth
                           : size.width / 4.5,
-                      fit: BoxFit.contain))
+                      fit: BoxFit.contain)):Container()
             ],
           ),
         );

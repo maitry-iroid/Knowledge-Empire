@@ -108,13 +108,13 @@ class DashboardProfPageState extends State<DashboardProfPage> {
           children: List.generate(
               Injector.isManager() ? arrTypeManager.length : arrType.length,
               (index) {
-            return showMainItem(
-                Injector.isManager() ? arrTypeManager[index] : arrType[index]);
+            return showMainItem(Injector.isManager() ? arrTypeManager[index] : arrType[index]);
           }),
         ));
   }
 
   showMainItem(String type) {
+    print(Injector.dashboardLockStatusData);
     return InkResponse(
       child: Container(
 //         height: Utils.getDeviceHeight(context) / 15,
@@ -151,13 +151,13 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       ),
       onTap: () {
         Utils.playClickSound();
-
         Utils.performDashboardItemClick(context, type);
       },
     );
   }
 
   getTitle(String type) {
+
     if (type == Const.typeBusinessSector)
       return Utils.getText(context, StringRes.businessSector);
     else if (type == Const.typeNewCustomer)

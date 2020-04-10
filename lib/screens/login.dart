@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/language.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -59,13 +61,23 @@ class _LoginPageState extends State<LoginPage> {
   String tempLanguage = Const.english;
 
   ScrollController _scrollController = new ScrollController();
+  UpdateDialogModel status;
 
   @override
   void initState() {
     super.initState();
 
-    localeBloc.setLocale(0);
+    initStateMethods();
 //    localeBloc.setLocale(Utils.getIndexLocale());
+  }
+
+  Future initStateMethods() async {
+    status = await Injector.getCurrentVersion(context);
+    if (status.status != "0") {
+      DisplayDialogs.showUpdateDialog(context, status.message);
+    }
+    localeBloc.setLocale(0);
+    //    localeBloc.setLocale(Utils.getIndexLocale());
   }
 
   //Sound Is mute
@@ -157,34 +169,34 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.symmetric(
                         horizontal: Utils.getDeviceWidth(context) / 9),
                     child: InkResponse(
-                      child: Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(top: 10),
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: ExactAssetImage(
-                                  Utils.getAssetsImg('btn_login')),
-                              alignment: Alignment.topCenter,
-                              fit: BoxFit.fill),
-                        ),
-                        child: Text(
-                          Utils.getText(context, StringRes.login).toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: ColorRes.white,
-                            fontSize: 16,
+                        child: Container(
+                          height: 30,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: ExactAssetImage(
+                                    Utils.getAssetsImg('btn_login')),
+                                alignment: Alignment.topCenter,
+                                fit: BoxFit.fill),
+                          ),
+                          child: Text(
+                            Utils.getText(context, StringRes.login)
+                                .toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: ColorRes.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
-                      ),
-                      onTap: () {
-                        Utils.isInternetConnectedWithAlert()
-                            .then((isConnected) {
-                          if (isConnected) validateForm();
-                        });
-                      },
-                    ),
+                        onTap: () {
+                          Utils.isInternetConnectedWithAlert()
+                              .then((isConnected) async {
+                            if (isConnected) validateForm();
+                          });
+                        }),
                   ),
                   SizedBox(
                     height: 5,
