@@ -995,7 +995,6 @@ class CommonView {
                 child: Container(
                   padding: EdgeInsets.only(top: 25),
                   width: Utils.getDeviceWidth(context) / 2.2,
-                  height: Utils.getDeviceHeight(context) / 1,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
@@ -1025,20 +1024,18 @@ class CommonView {
                               fit: BoxFit.contain),
                         ),
                         SizedBox(height: 15),
-                        Container(
-                          height: 40,
-                          child: Text(
-                              "${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}",
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.body2.copyWith(
-                                  color: ColorRes.white, fontSize: 20)),
-                        ),
-                        SizedBox(height: 20),
+                        Text(
+                            "${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}\n${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}",
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.body2.copyWith(
+                                color: ColorRes.white, fontSize: 20)),
+
                         InkResponse(
                           child: Container(
-                            height: Utils.getDeviceHeight(context) / 14,
+                            padding: EdgeInsets.all(5),
                             width: Utils.getDeviceWidth(context) / 8,
+                            margin: EdgeInsets.only(top:10),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: ColorRes.header,

@@ -7,6 +7,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:open_appstore/open_appstore.dart';
 
 class DisplayDialogs {
   //todo li_wei  image configuration
@@ -1038,6 +1039,33 @@ class DisplayDialogs {
               await Injector.setIntroData(Injector.introData);
               Navigator.pop(context);
             },
+          );
+        });
+  }
+
+  static showUpdateDialog(BuildContext context,String message)  {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: (){},
+            child: IntroScreenDialog(
+              menuView: false,
+//              imageName: "bob",
+              imageMoveTop: akikoImageMoveTop,
+              imageMoveRight: akikoImageMoveRight,
+              imageHeight: akikoImageHeight,
+              imageWidth: akikoImageWidth,
+              titleText: "Update Application",
+              btnName: Utils.getText(context, StringRes.update),
+              btnColor: ColorRes.blue,
+              desTextLine: message,/*"We hope you are enjoying using our application. Our new update is available on the store and in order you give you a better experience, we like to you update the application to the latest version."*/
+              onTapBtn: () async {
+                //Navigator.pop(context);
+                OpenAppstore.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: Injector.packageInfo.packageName);
+              },
+            ),
           );
         });
   }

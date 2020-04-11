@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -36,6 +37,11 @@ class MyAppState extends State<MyApp> {
     Injector.audioCache.loadAll(['all_button_clicks.wav']);
 
     initPlatformState();
+
+    Injector.getContext(context);
+
+
+
 
 //    if (Injector.userId != null) {
 //      PushNotificationHelper(context,"my app").initPush();

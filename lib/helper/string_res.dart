@@ -343,6 +343,7 @@ class StringRes {
   static var dear = "dear";
   static var hi = "hi";
   static var noInternet = "noInternet";
+  static var update = "update";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -727,7 +728,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'dear': "Dear",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection"
+      'noInternet':"Check Your Internet Connection",
+      'update':"Update Application"
 
     },
     'de': {
@@ -1093,7 +1095,8 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection"
+      'noInternet':"Check Your Internet Connection",
+      'update':"Update Application"
     },
     'zh': {
       //      region chinese
@@ -1448,7 +1451,8 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection"
+      'noInternet':"Check Your Internet Connection",
+      'update':"Update Application"
     }
   };
 
@@ -1655,7 +1659,8 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection"
+      'noInternet':"Check Your Internet Connection",
+      'update':"Update Application"
     },
     'de': {
       //region German
@@ -1972,7 +1977,8 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection"
+      'noInternet':"Check Your Internet Connection",
+      'update':"Update Application"
     },
     'zh': {
       //region chines
@@ -2266,7 +2272,8 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection"
+      'noInternet':"Check Your Internet Connection",
+      'update':"Update Application"
     }
   };
 }

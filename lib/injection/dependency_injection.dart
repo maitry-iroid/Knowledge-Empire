@@ -4,20 +4,26 @@ import 'dart:convert';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
+import 'package:ke_employee/models/force_update.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/register_for_push.dart';
+import 'package:package_info/package_info.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Injector {
@@ -49,7 +55,6 @@ class Injector {
 
   static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
 
-
   static bool isDev = true;
 
   static int badgeCount = 0;
@@ -57,6 +62,9 @@ class Injector {
   static int dialogType = 0;
 
   static WebApi webApi;
+
+  static PackageInfo packageInfo;
+  static BuildContext buildContext;
 
 //  factory Injector {
 //    return _singleton;
@@ -66,6 +74,7 @@ class Injector {
 
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
+    packageInfo = await PackageInfo.fromPlatform();
 
     deviceType = Device.get().isAndroid ? "android" : "ios";
 
@@ -83,18 +92,20 @@ class Injector {
 
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
-   await Utils.playBackgroundMusic();
+    await Utils.playBackgroundMusic();
 
     updateInstance();
   }
 
+  static getContext(BuildContext context) {
+    buildContext = context;
+  }
 
   static updateInstance() async {
     if (prefs.getString(PrefKeys.user) != null) {
       userData = UserData.fromJson(jsonDecode(prefs.getString(PrefKeys.user)));
 
       userId = userData.userId;
-
 
       isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
       dialogType = prefs.getInt(PrefKeys.dialogTypes);
@@ -207,5 +218,66 @@ class Injector {
         });
       }
     });
+  }
+
+  static Future<UpdateDialogModel> getCurrentVersion(
+      BuildContext context) async {
+    bool isConnected = await Utils.isInternetConnected();
+    if (isConnected) {
+      bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+      Map<String, dynamic> map = {
+        "appVersion": packageInfo.version,
+        "deviceType": isIOS ? "ios" : "android",
+        "language":
+            Injector.userData != null ? Injector.userData.language : "English"
+      };
+      Map data = await WebApi().callAPI(WebApi.forceUpdate, map);
+      if (data != null) {
+        UpdateDialogModel dialogModel = UpdateDialogModel.fromJson(data);
+        return dialogModel;
+      } else {
+        return null;
+      }
+    }
+  }
+
+  static forceUpdateApplicationDialog(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'What do you want to remember?'),
+                    ),
+                    SizedBox(
+                      width: 320.0,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Save",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: const Color(0xFF1BC0C5),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

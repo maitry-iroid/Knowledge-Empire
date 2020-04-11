@@ -49,6 +49,7 @@ class WebApi {
   static String updateMode = "updateMode";
   static String switchCompanyProfile = "switchCompanyProfile";
   static String rqGameIntro = "gameIntro";
+  static String forceUpdate = "forceUpdate";
   static String rqDashboardLockStatus = "dashboardLockStatus";
 
   static getRequest(String req, String data) {
@@ -82,11 +83,11 @@ class WebApi {
         .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
         .catchError((e) {
 //      Utils.showToast(apiReq + "_" + e.toString());
-//      Utils.showToast("Something went wrong");
+//      Utils.showToast("Something we nt wrong");
       return null;
     });
 
-    print(apiReq + "_" + response?.data);
+    print(apiReq + "==> " + response.toString());
 
     if (response.statusCode == 200) {
       BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));

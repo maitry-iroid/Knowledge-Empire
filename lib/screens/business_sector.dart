@@ -415,10 +415,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
       if (data != null) {
         if (type == Const.subscribe) {
-          Utils.showToast(StringRes.subscribedSuccess);
+          Utils.showToast(Utils.getText(context, StringRes.subscribedSuccess));
           selectedModule.isAssign = 1;
         } else {
-          Utils.showToast(StringRes.unSubscribedSuccess);
+          Utils.showToast(Utils.getText(context, StringRes.unSubscribedSuccess));
           selectedModule.isAssign = 0;
         }
 
