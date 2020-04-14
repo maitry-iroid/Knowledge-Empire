@@ -29,6 +29,9 @@ class IntroDailogState extends State<IntroDailog> {
 
   bool isLoading = false;
 
+  double fontSizeValue = 17;
+  double btnFontSize = 19;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +92,8 @@ class IntroDailogState extends State<IntroDailog> {
                                     maxLines: 1,
                                     obscureText: true,
                                     style: TextStyle(
-                                        fontSize: 14, color: ColorRes.white),
+                                        fontSize: fontSizeValue,
+                                        color: ColorRes.white),
                                     decoration: InputDecoration(
                                         contentPadding:
                                             const EdgeInsets.symmetric(
@@ -116,7 +120,8 @@ class IntroDailogState extends State<IntroDailog> {
                                 maxLines: 1,
                                 obscureText: true,
                                 style: TextStyle(
-                                    fontSize: 14, color: ColorRes.white),
+                                    fontSize: fontSizeValue,
+                                    color: ColorRes.white),
                                 decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 10),
@@ -141,7 +146,8 @@ class IntroDailogState extends State<IntroDailog> {
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 style: TextStyle(
-                                    fontSize: 14, color: ColorRes.white),
+                                    fontSize: fontSizeValue,
+                                    color: ColorRes.white),
                                 decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 10),
@@ -186,7 +192,8 @@ class IntroDailogState extends State<IntroDailog> {
                                   child: Text(
                                     Utils.getText(context, StringRes.save),
                                     style: TextStyle(
-                                        fontSize: 17, color: ColorRes.white),
+                                        fontSize: btnFontSize,
+                                        color: ColorRes.white),
                                   )),
                               onTap: () {
                                 Utils.playClickSound();
@@ -210,7 +217,8 @@ class IntroDailogState extends State<IntroDailog> {
                                   child: Text(
                                     Utils.getText(context, StringRes.cancel),
                                     style: TextStyle(
-                                        fontSize: 17, color: ColorRes.white),
+                                        fontSize: btnFontSize,
+                                        color: ColorRes.white),
                                   )),
                               onTap: () {
                                 Utils.playClickSound();
@@ -279,8 +287,7 @@ class IntroDailogState extends State<IntroDailog> {
       });
 
       if (data != null) {
-        Utils.showToast(Utils.getText(context, StringRes.passwordChange)
-        );
+        Utils.showToast(Utils.getText(context, StringRes.passwordChange));
 
         if (widget.isFromProfile) {
           Navigator.pop(context);
