@@ -19,9 +19,10 @@ class IntroScreenDialog extends StatefulWidget {
   final double imageMoveRight;
   final double imageMoveTop;
   final GestureDragCancelCallback onTapBtn;
+  final GestureDragCancelCallback onTapSecondBtn;
 
   final bool menuView;
-
+  final bool secondBtn;
 
   final AlignmentGeometry cardAlignment;
 
@@ -41,7 +42,9 @@ class IntroScreenDialog extends StatefulWidget {
       this.onTapBtn,
       this.imageHeight,
       this.imageWidth,
-      @required this.menuView});
+      @required this.menuView,
+      this.secondBtn,
+      this.onTapSecondBtn});
 
   @override
   IntroScreenDialogState createState() => new IntroScreenDialogState();
@@ -75,7 +78,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                         : size.height / 1.6,
                     width: widget.cardWidth != null
                         ? size.width / widget.cardWidth
-                        : size.width / 1.7,
+                        : size.width / 1.4,
                     padding: EdgeInsets.all(size.height / 30.7),
                     decoration: BoxDecoration(
                         border: Border.all(),
@@ -88,16 +91,15 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                         SizedBox(height: Utils.getDeviceWidth(context) / 80),
                         Text(widget.titleText,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: Utils.getDeviceWidth(context) / 45,
-                                fontWeight: FontWeight.bold)),
+                            style: Theme.of(context).textTheme.title.copyWith(
+                                color: ColorRes.black,
+                                fontWeight: FontWeight.w800)),
                         SizedBox(height: Utils.getDeviceWidth(context) / 60),
                         widget.desTextLine != null &&
                                 widget.desTextLine.isNotEmpty
                             ? Expanded(
                                 child: Scrollbar(
                                   child: SingleChildScrollView(
-
                                     child: Column(
                                       children: <Widget>[
                                         Align(
@@ -105,8 +107,9 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                           child: Text(widget.desTextLine,
                                               textAlign: TextAlign.start,
                                               maxLines: null,
-                                              style:
-                                                  TextStyle(fontSize: size.width / 48.5)),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .title),
                                         ),
                                       ],
                                     ),
@@ -115,51 +118,95 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                               )
                             : Container(),
                         SizedBox(height: Utils.getDeviceWidth(context) / 60),
-                        GestureDetector(
-                          onTap: widget.onTapBtn,
-                          child: Container(
-                            height: size.height / 11,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            widget.secondBtn!=null && widget.secondBtn
+                                ? GestureDetector(
+                                    onTap: widget.onTapSecondBtn,
+                                    child: Container(
+                                      height: size.height / 11,
+                                      child: Container(
+                                          width: size.width / 3.5,
+                                          margin: EdgeInsets.only(top: 6),
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              border: Border.all(
+                                                  color: ColorRes.header,
+                                                  width: 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Center(
+                                            child: Text(
+                                                Utils.getText(context,
+                                                    StringRes.updateLatter),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .title
+                                                    .copyWith(
+                                                        color: ColorRes
+                                                            .white)),
+                                          )),
+                                    ),
+                                  )
+                                : Container(),
+                            widget.secondBtn!=null && widget.secondBtn?SizedBox(width: size.width/30,):Container(),
+                            GestureDetector(
+                              onTap: widget.onTapBtn,
+                              child: Container(
+                                height: size.height / 11,
 //                            color: ColorRes.black,
-                            child: Container(
-                                width: size.width / 3.5,
-                                height: size.height / 14,
-                                margin: EdgeInsets.only(top: 6),
-                                decoration: BoxDecoration(
-                                    color: widget.btnColor != null
-                                        ? widget.btnColor
-                                        : Colors.grey,
-                                    border: Border.all(
-                                        color: ColorRes.header, width: 1),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                  //  child: Text("",
-                                  child: Text(widget.btnName,
-                                      style: TextStyle(
-                                          fontSize: size.width / 46.5,
-                                          color: ColorRes.white)),
-                                )),
-                          ),
+                                child: Container(
+                                    width: size.width / 3.5,
+                                    margin: EdgeInsets.only(top: 6),
+                                    decoration: BoxDecoration(
+                                        color: widget.btnColor != null
+                                            ? widget.btnColor
+                                            : Colors.grey,
+                                        border: Border.all(
+                                            color: ColorRes.header,
+                                            width: 1),
+                                        borderRadius:
+                                            BorderRadius.circular(5)),
+                                    child: Center(
+                                      //  child: Text("",
+                                      child: Text(
+                                          widget.btnName != null
+                                              ? widget.btnName
+                                              : "",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .title
+                                              .copyWith(
+                                                  color: ColorRes.white)),
+                                    )),
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),
                   ),
                 ),
               ),
-              widget.imageName!=null?Positioned(
-                  right: widget.imageMoveRight != null
-                      ? size.width / widget.imageMoveRight
-                      : size.width / 10.0,
-                  bottom: widget.imageMoveTop != null
-                      ? size.height / widget.imageMoveTop
-                      : size.height / 7,
-                  child: Image.asset(Utils.getAssetsImg(widget.imageName),
-                      height: widget.imageHeight != null
-                          ? size.height / widget.imageHeight
-                          : size.height / 1.85,
-                      width: widget.imageWidth != null
-                          ? size.height / widget.imageWidth
-                          : size.width / 4.5,
-                      fit: BoxFit.contain)):Container()
+              widget.imageName != null
+                  ? Positioned(
+                      right: widget.imageMoveRight != null
+                          ? size.width / widget.imageMoveRight
+                          : size.width / 20.0,
+                      bottom: widget.imageMoveTop != null
+                          ? size.height / widget.imageMoveTop
+                          : size.height / 7,
+                      child: Image.asset(Utils.getAssetsImg(widget.imageName),
+                          height: widget.imageHeight != null
+                              ? size.height / widget.imageHeight
+                              : size.height / 1.85,
+                          width: widget.imageWidth != null
+                              ? size.height / widget.imageWidth
+                              : size.width / 4.5,
+                          fit: BoxFit.contain))
+                  : Container()
             ],
           ),
         );
@@ -206,7 +253,8 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                   scrollDirection: Axis.vertical,
                                   child: Text(widget.desTextLine,
                                       maxLines: null,
-                                      textAlign: TextAlign.start, style: TextStyle(
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
                                           fontSize: size.width / 50.5)),
                                 ),
                               )
@@ -240,7 +288,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
               Positioned(
                   right: widget.imageMoveRight != null
                       ? size.width / widget.imageMoveRight
-                      : size.width / 10.0,
+                      : size.width / 9.0,
                   bottom: widget.imageMoveTop != null
                       ? size.height / widget.imageMoveTop
                       : size.height / 5.2,
@@ -278,10 +326,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
               Container(
                 color: Colors.amber,
                 margin: EdgeInsets.all(15),
-                child: HeaderView(
-                  scaffoldKey: _scaffoldKey,
-                  isShowMenu: true
-                ),
+                child: HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
               ),
             ],
           );

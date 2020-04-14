@@ -345,6 +345,8 @@ class StringRes {
   static var noInternet = "noInternet";
   static var update = "update";
 
+  static var updateLatter = "updateLatter";
+
 //  static var empOMasterDetails = "empOMasterDetails";
 
   static Map<String, Map<String, String>> localizedValues = {
@@ -532,7 +534,7 @@ class StringRes {
       'strYourTeamPerformanceDialog':
           "Hi, it's me again, Niki.\n\nThis section is exclusively for team leaders.\nHere you can see the performance of your reports.",
       'strTeamDialog':
-          "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case his company is\nout of cash (reset his cash to 30.000).",
+          "As a manager you can see and monitor the performance\nof your team. If you click on a team member you can see his\nindividual performance and also bail him out in case\nhis company is out of cash (reset his cash to 30.000).",
 
       'plPerson': 'The person you can count on',
       'niceMeetYou': 'Nice to meet you ',
@@ -729,7 +731,8 @@ class StringRes {
       'dear': "Dear",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application"
+      'update':"Update Application",
+      'updateLatter':"Update letter",
 
     },
     'de': {
@@ -898,7 +901,7 @@ class StringRes {
       //introDialog
       'gotIt': "Verstanden",
       'rewardsDialogContent':
-          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen\nan um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen.Die\nZahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
+          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen\nan um herauszufinden was du\nschon erreicht hast und was du noch machen musst um das\nnächste Level zu erreichen.Die\nZahlen ist der Geldbonus den du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Dein Will ist mein Befehl",
       'challengesDialogContent1':
           ", \n\nMein Name ist Will und ich bin der Anwalt der Firma.\nIch will dir helfen Wettbewerber herauszufordern und\nAngriffe abzuwehren.",
@@ -907,11 +910,11 @@ class StringRes {
           "Suche und wähle Wettbewerber aus, die du herausfordern möchtest.wähle den Geschäftsbereich aus, in dem er herausgefordert werden soll und den Prozentsatz vom \naktuellen Vermögen, den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 fragen aus diesem Geschäftsbereich richtig beantworten um zu gewinnen.\nAnsonsten gewinnst du.",
       'strMarketingCommunications': "Marketing",
       'strMarketingCommunicationsDialog':
-          ", \n\nWas für eine ausserordentliche Freude dich kennenzulernen.\nIch habe von den Kollegen schon so viel gutes über dich gehört. Ich freue mich schon sehr mit dir zusammen zu arbeiten.\nIch bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
+          ", \n\nWas für eine ausserordentliche Freude dich kennenzulernen.\nIch habe von den Kollegen schon so viel gutes über dich\ngehört. Ich freue mich schon sehr mit dir zusammen zu\narbeiten. Ich bin Lydia und verantwortlich für das Marketing.\nLass uns gemeinsam einen Blick auf deine aktuelle Wettbewerbsposition legen",
       'strRankingDialogContent':
           "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
               "Du"
-              " klickst siehst du deine Position und auf der rechten Seite kannst du Freunde hinzufügen und Wettbewerber herausfordern.",
+              " klickst siehst du deine Position und auf der\nrechten Seite kannst du Freunde hinzufügen und Wettbewerber herausfordern.",
       'strYourTeamPerformance': "Teamperformance",
       'strYourTeamPerformanceDialog':
           "Hallo, Ich bin es nochmal, Niki.\n\nDieser Bereich ist nur für Mitarbeiter mit Führungsverantwortung.\nHier kannst du die Leistungen deiner echten Mitarbeiter einsehen.",
@@ -975,10 +978,10 @@ class StringRes {
       //Business sector screen dialog
       'customerRelation': 'Kundenbeziehungsmanagement (CRM)',
       'customerRelationDetails':
-          ', \n\nMein Name ist Li Wei.Ich leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.Lass uns gemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche\nwerfen, die uns zur Verfuegung stehen.',
+          ', \n\nMein Name ist Li Wei.Ich leite die CRM Abteilung die sich um das Kundenbeziehungsmanagement kümmert.Lass uns\ngemeinsam einen Blick auf die unterschiedlichen Geschäftsbereiche\nwerfen, die uns zur Verfuegung stehen.',
       'areaOfComp': 'Geschäftsbereiche',
       'areaOfCompDetails':
-          'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden zu gewinnen."Groesse" zeigt an, wieviele Kunden (Fragen) es in\neinem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+          'Jeder Geschäftsbereich benötigt spezielles Wissen um Kunden\nzu gewinnen."Groesse" zeigt an, wieviele Kunden (Fragen) es in\neinem Geschäftsbereich gibt.\n\nIn der Beschreibung erfaehrst du, um was es in diesem Geschäftsbereich geht.\nDu kannst Geschäftsbereich abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Geschäftsbereiche sind dir evtl. schon zugeordnet und\nkönnen nicht deaktiviert werden.',
       'accessToFirst': "Geschäftsbereich abonnieren",
       'accessToFirstDetails':
           'Lass uns den ersten Geschäftsbereich abonnieren um Zugang zu den ersten Kunden zu erlangen.\n\nDazu klick bitte auf den Geschäftsbereich "Los geht\'s" und dann auf abonnieren.',
@@ -1025,14 +1028,14 @@ class StringRes {
           ', \n\nwillkommen im Unternehmen und willkommen im Management\nTeam.Mein Name ist Nikita aber bitte nenne mich Niki.Als\nPersonalchef werde ich dir eine kurze Einführung geben, wie du\nneue Mitarbeiter einstellen kannst.',
 
       'hireHrEmpDetailsSeconds':
-          'Um die Empfehlungen deiner Mitarbeiter zu hören, warum du in eine Abteilung investieren solltest, klicke einfach auf die Mitarbeiter.\n\nLass uns zu Anfang 10 neue Mitarbeiter in der Personalabteilung einstellen. Klicke dazu bitte auf "Personal" und dann auf "10 Mitarbeiter einstellen"',
+          'Um die Empfehlungen deiner Mitarbeiter zu hören, warum du in\neine Abteilung investieren solltest, klicke einfach auf die\nMitarbeiter.\n\nLass uns zu Anfang 10 neue Mitarbeiter in der Personalabteilung einstellen. Klicke dazu bitte auf "Personal" und dann auf "10 Mitarbeiter einstellen"',
 
       'empOMaster': 'Mitarbeiterkapazitäten',
       'empOMasterDetails':
           'Deine Mitarbeiterkapazitäten sind jetzt 40/50.50 ist die gesamte Mitarbeiterkapazität und 40 die noch verfügbare, da du ja schon\n10 Mitarbeiter in der Personalabteilung hast.\nDu kannst die Mitarbeiterkapazität weiter erhöhen, indem du\nneue Personalmitarbeiter einstellst.Ein klick auf deine\nMitarbeiter Kapazitäten bringt dich auch zu diesem Bildschirm.',
       'costOfEmp': 'Mitarbeiter Kosten',
       'costOfEmpDetails':
-          'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld (Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag (Gehaelter steigen mit der Zeit).',
+          'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld \n(Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag \n(Gehaelter steigen mit der Zeit).',
 
       //setting screen Dialog
       'settingDetails':
@@ -1096,7 +1099,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application"
+      'update':"Update Application",
+      'updateLatter':"Update letter",
     },
     'zh': {
       //      region chinese
@@ -1268,27 +1272,27 @@ class StringRes {
           ", \n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
       'strChallanges': "挑战",
       'strChallangesDialogContent':
-          "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
+          "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择\n赢家可以获得的奖励 (%当前知识点数 (KP))。\n您的竞争对手需要正确回答选定部门的3个\n问题才能赢得挑战。",
       'strMarketingCommunications': "营销与传播",
       'strMarketingCommunicationsDialog':
-          ", \n\n很高兴见到您。我久仰您的大名。所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
-      'strRankingDialogContent': "在左侧选择排名标准（比如现金），并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
+          ", \n\n很高兴见到您。我久仰您的大名。\n所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
+      'strRankingDialogContent': "在左侧选择排名标准（比如现金），\n并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
           "您"
           "滚动到您的位置和挑战以及添加朋友。",
       'strYourTeamPerformance': "您的团队的表现",
       'strYourTeamPerformanceDialog':
           "您好，我是尼基，我又来了。\n这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
       'strTeamDialog':
-          "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现。如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
+          "作为经理，您可以查看和监控您的团队的表现。\n如果您点击一个团队成员，您可以看到他的个人表现。\n如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
       'plPerson': '您可以依靠的人',
       'niceMeetYou': '很高兴见到您',
-      'plMyName': '我叫中村明子。我负责财务。让我们确保收入始终高于支出。',
+      'plMyName': '我叫中村明子。\n我负责财务。让我们确保收入始终高于支出。',
       'hereYourMonitor': '在这里，您可以监控公司的成本和收入。',
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前\n周期与上一个周期',
 
       'strYourTeamPerformanceDialog2':
-          '图表显示"保留级别"和"问题状态”"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+          '图表显示"保留级别"和"问题状态”\n"保留级别"表示保留了多少问题\n（1 = 低保留级别，10 = 知识保留得很好）。\n"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
 
       //existing customer
       'servingYourExisting': '服务现有客户',
@@ -1297,7 +1301,7 @@ class StringRes {
 
       'listOfExisting': '现有客户名单',
       'listOfExistingDetails':
-          '在这里，您可以看到您目前正在联络的所有客户和合同。他们每天产生多少现金\n以及他们在多少天内会对您忠诚。\n如果您想结束合同，您可以点击"X"。\n这个客户将不再产生现金，但您会收回1位服务代表。',
+          '在这里，您可以看到您目前正在联络的所有客户和合同.\n他们每天产生多少现金以及他们在多少天内会对您忠诚。\n如果您想结束合同，您可以点击"X"。\n这个客户将不再产生现金，但您会收回1位服务代表。',
 
       'readyForBusiness': '准备开展业务',
       'readyForBusinessDeatils':
@@ -1328,7 +1332,7 @@ class StringRes {
           '老板您好，\n\n现在到了关键时刻，只有最后的公司才能生存下来,\n但也是我们为公司赚钱的时机。我是蒂娜,\n您的全球销售高级副总裁。\n我们开始工作吧，不要再拖延了。',
       'listOfPotential': '潜在客户名单',
       'listOfPotentialDetails':
-          '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚。当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。\n点击"立即联络"。',
+          '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚.\n当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。\n点击"立即联络"。',
       'listOfPotentialBtn': '点击"立即联络"',
 
       //Business sector screen dialog
@@ -1337,7 +1341,7 @@ class StringRes {
           ', \n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM).\n我们看看不同的业务部门来\n寻找潜在的客户吧！',
       'areaOfComp': '能力领域',
       'areaOfCompDetails':
-          '每个业务部门将测试特定的知识来赢得客户.\n"大小"是每个部门的客户数量.您可以点击业务板块阅读说明,\n加入并下载问题以便离线使用.某些业务部门可能已经分配给您。',
+          '每个业务部门将测试特定的知识来赢得客户.\n"大小"是每个部门的客户数量.\n您可以点击业务板块阅读说明,\n加入并下载问题以便离线使用.\n某些业务部门可能已经分配给您。',
       'accessToFirst': '访问您的第一个客户',
       'accessToFirstDetails': '您可以加入第一个商业部门从而访问您的第一个客户。\n点击业务板块的"开始"，然后点击"加入"。',
       'accessToFirstBtn': '点击"开始”',
@@ -1373,10 +1377,10 @@ class StringRes {
       //Organization screen Dialog
       'hireHrEmp': '招聘HR员工',
       'hireHrEmpDetails':
-          ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，我将向您介绍我们的团队以及指导您如何招聘员工，让我们的团队发展壮大。',
+          ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人,\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
 
       'hireHrEmpDetailsSeconds':
-          '听听您的团队的建议，为什么您应该招聘更多的员工，点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后\n选择“雇用10名员工”。',
+          '听听您的团队的建议，为什么您应该招聘更多的员工，\n点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后\n选择“雇用10名员工”。',
 
       'empOMaster': '雇员指示图',
       'empOMasterDetails':
@@ -1452,7 +1456,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application"
+      'update':"Update Application",
+      'updateLatter':"Update letter",
     }
   };
 
@@ -1490,7 +1495,7 @@ class StringRes {
           "Here you will learn how to challenge other colleagues",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
-          "Search or select a Colleague you would like to challenge.\nSelect one of his Learning Modules you would like to challenge\nhim and select the reward (% of current Knowledge Points (KP)) the winner\ncan get. Your competitor will need to answer 3 out of 3 questions from the selected module correctly in order to win the challenge.",
+          "Search or select a Colleague you would like to challenge.\nSelect one of his Learning Modules you would like to challenge\nhim and select the reward (% of current Knowledge Points (KP))\nthe winner can get. Your competitor will need to answer\n3 out of 3 questions from the selected module correctly in\norder to win the challenge.",
       'strMarketingCommunications': "Ranking",
       'strMarketingCommunicationsDialog':
           "In this section you will learn everything you need to know about the ranking",
@@ -1509,7 +1514,7 @@ class StringRes {
       'hereYourMonitor':
           'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
       'selectPeriod':
-          'You can also select the period you want to look at and compare the current period with the previous period.',
+          'You can also select the period you want to look at and\ncompare the current period with the previous period.',
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
@@ -1531,7 +1536,7 @@ class StringRes {
           'In this part of the tutorial you will learn all relevant information about your completed learnings',
       'listOfExisting': 'List of Completed Learnings',
       'listOfExistingDetails':
-          'Here you see all questions that you currently have memorized. How much Knowledge Points (KP) you receive from them each day and\nhow many days they will stay in this list.\nYou can click the “X” if you want to remove a question.\nThis question will then not generate any more Knowledge Points for you but you will regain 1 free Memory Point (MP).',
+          'Here you see all questions that you currently have memorized. How much Knowledge Points (KP) you receive from them each day and\nhow many days they will stay in this list.\nYou can click the “X” if you want to remove a question.\nThis question will then not generate any more Knowledge Points\nfor you but you will regain 1 free Memory Point (MP).',
 
       'readyForBusiness': 'Ready to get started',
       'readyForBusinessDeatils':
@@ -1562,7 +1567,7 @@ class StringRes {
           'In this part of the tutorial you will learn all relevant information needed to select and answer questions',
       'listOfPotential': 'List of Questions',
       'listOfPotentialDetails':
-          'Each question has a name and belongs to a Learning Module.\nKnowledge are the Knowledge Points (KP) you can earn every day you have this question in your completed Learning lsit.\n"Repeat in ..." tells you in how many days you need to repeat the question if you now answer it correctly. The more often you answer a question correctly the less often you will need to repeat it.\nStudy Points (SP) indicate how many Study Points (SP) you will need to answer this question. Click on “Answer Now”.',
+          'Each question has a name and belongs to a Learning Module.\nKnowledge are the Knowledge Points (KP) you can earn every\nday you have this question in your completed Learning lsit.\n"Repeat in ..." tells you in how many days you need to\nrepeat the question if you now answer it correctly.\nThe more often you answer a question correctly\nthe less often you will need to repeat it.\nStudy Points (SP) indicate how many Study Points (SP)\nyou will need to answer this question. Click on “Answer Now”.',
       'listOfPotentialBtn': 'Click on “Answer Now”',
 
       //Business sector screen dialog
@@ -1571,7 +1576,7 @@ class StringRes {
           'Here you can search for Learning Modules, subscribe and unsubscribe to them and also decide if you want to download the content for future offline usage.',
       'areaOfComp': 'Learning Modules introduction',
       'areaOfCompDetails':
-          'Each Learning Module will test specific areas of knowledge. "Size" indicated the number of Questions in each Module. You can click on a Learning Module to read a description and decide if you want to subscribe to them. Some Learning Modules are already assigned to you by your company and cannot be unsubscribed.',
+          'Each Learning Module will test specific areas of knowledge. "Size" indicated the number of Questions in each Module. You can click on a Learning Module to read a description and decide if you want to subscribe to them. Some Learning Modules are already assigned\nto you by your company and cannot be unsubscribed.',
       'accessToFirst': 'Subscribe to the first Module',
       'accessToFirstDetails':
           'Why don\'t you subscribe to the first business sector to\ngain access to your first questions.\n\nClick on the Learning Module “Getting Started” and then on “Subscribe”.',
@@ -1660,7 +1665,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application"
+      'update':"Update Application",
+      'updateLatter':"Update letter",
     },
     'de': {
       //region German
@@ -1795,13 +1801,13 @@ class StringRes {
       //introDialog
       'gotIt': "Verstanden",
       'rewardsDialogContent':
-          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen. Die Zahlen sind die Wissenspunkte (WP) die du erhältst, wenn du diese Auszeichnung erreichst.",
+          "Schau dir die unterschiedlichen Kategorien von Auszeichnungen\nan um herauszufinden was du schon erreicht hast und was du\nnoch machen musst um das nächste Level zu erreichen.\nDie Zahlen sind die Wissenspunkte (WP) die du erhältst, wenn\ndu diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Herausforderungen",
       'challengesDialogContent1':
-          "Hier lernst du wie du einen Kollegen zu einem Wissensduell heraus forderst.",
+          "\nHier lernst du wie du einen Kollegen zu einem Wissensduell\nheraus forderst.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
-          "Suche und wähle Kollegen aus, die du herausfordern möchtest.\nwähle den Lernbereich aus, in dem er herausgefordert werden soll und den Prozentsatz von den aktuellen Wissenspunkte (WP), den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 Fragen aus diesem Lernmodul richtig beantworten um zu gewinnen. Ansonsten gewinnst du.",
+          "Suche und wähle Kollegen aus, die du herausfordern möchtest.\nwähle den Lernbereich aus, in dem er herausgefordert werden\nsoll und den Prozentsatz von den aktuellen Wissenspunkte (WP),\nden der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 Fragen aus diesem Lernmodul richtig beantworten um zu gewinnen.\nAnsonsten gewinnst du.",
       'strMarketingCommunications': "Rangliste",
       'strMarketingCommunicationsDialog':
           "In diesem Bereich lernst du alles über die Rangliste",
@@ -1822,7 +1828,7 @@ class StringRes {
       'hereYourMonitor':
           'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
       'selectPeriod':
-          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+          'Dazu kannst du unterschiedliche Zeithorizonte auswählen\nund immer die aktuelle Periode mit der Perioden davor\nvergleichen.',
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
       //existing customer
@@ -1832,7 +1838,7 @@ class StringRes {
 
       'listOfExisting': 'Liste der Bestandsfragen',
       'listOfExistingDetails':
-          'Hier siehst du die Liste der Bestandsfragen, die täglichen Wissenspunkte und wieviel Tage sie noch in der Liste bleiben.\nMit "x" kannst du die Frage aus dieser Liste löschen. Dann generiert sie keine Wissenspunkte mehr, du hast aber eine Bestandsfragenkapazität mehr.',
+          'Hier siehst du die Liste der Bestandsfragen, die täglichen Wissenspunkte und wieviel Tage sie noch in der Liste bleiben.\nMit "x" kannst du die Frage aus dieser Liste löschen.\nDann generiert sie keine Wissenspunkte mehr, du hast aber eine Bestandsfragenkapazität mehr.',
 
       'readyForBusiness': 'Und los geht\'s ...',
       'readyForBusinessDeatils':
@@ -1863,16 +1869,16 @@ class StringRes {
           'In diesem Teil der Einführung lernst du alles Wissenswerte über die Fragenliste und die Fragen',
       'listOfPotential': 'Liste der offenen Fragen',
       'listOfPotentialDetails':
-          'Jeder Frage hat einen Namen und gehört zu einem Lernmodul. Wissenspunkte (WP) sind die täglichen Punkte die dir diese Frage einbringen wird, so lange sie in der Bestandsfragenliste bleibt.\n"Wiederholen in..." zeigt die Anzahl Tage wann die Frage wiederholt werden muss. Je häufiger du sie richtig beantwortest, je grösser wird der Abstand.\nIn der Spalte Lernpunkte (LP) siehst du wieviel Lernpunkte (LP) du benötigst um die Frage zu beantworten.\nUm eine Frage zu beantworten bitte auf "Beantworten" klicken',
+          'Jeder Frage hat einen Namen und gehört zu einem Lernmodul. Wissenspunkte (WP) sind die täglichen Punkte die dir diese Frage einbringen wird, so lange sie in der Bestandsfragenliste bleibt.\n"Wiederholen in..." zeigt die Anzahl Tage wann die Frage wiederholt werden muss. Je häufiger du sie richtig beantwortest, je grösser wird der Abstand.\nIn der Spalte Lernpunkte (LP) siehst du wieviel\nLernpunkte (LP) du benötigst um die Frage zu beantworten.\nUm eine Frage zu beantworten bitte auf\n"Beantworten" klicken',
       'listOfPotentialBtn': 'Klick auf "Beantworten"',
 
       //Business sector screen dialog
       'customerRelation': 'Einführung in Lernmodule',
       'customerRelationDetails':
-          'Hier kannst du nach Lernmodulen suchen, diese abonnieren und auch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.',
+          '\nHier kannst du nach Lernmodulen suchen, diese abonnieren und\nauch herunterladen, wenn du sie ohne Internetverbindung beantworten möchtest.',
       'areaOfComp': 'Einführung in Lernmodule',
       'areaOfCompDetails':
-          'Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten.\n"Grösse" zeigt an, wieviele Fragen es in einem Lernmodul gibt.\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht.\nDu kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl. schon zugeordnet und können nicht deaktiviert werden.',
+          'Jeder Lernmodul benötigt spezielles Wissen um Fragen zu beantworten."Grösse" zeigt an, wieviele Fragen es in einem Lernmodul gibt.\n\nIn der Beschreibung erfährst du, um was es in diesem Lernmodul geht. Du kannst Lernmodule abonnieren und die Fragen auch herunterladen um sie im Offline Modus zu nutzen.\nEinige Lernmodule sind dir evtl.\nschon zugeordnet und können nicht deaktiviert werden.',
       'accessToFirst': 'Lernmodul abonnieren',
       'accessToFirstDetails':
           'Lass uns ein erstes Lernmodul abonnieren um Zugang zu den ersten Fragen zu erlangen.\n\nDazu klick bitte auf das Lernmodul "Los geht\'s" und dann auf abonnieren.',
@@ -1978,7 +1984,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application"
+      'update':"Update Application",
+      'updateLatter':"Update letter",
     },
     'zh': {
       //region chines
@@ -2111,12 +2118,12 @@ class StringRes {
       //introDialog
       'gotIt': "了解",
       'rewardsDialogContent':
-          "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您\n将收到的奖金。",
+          "查看奖励类别，点击奖杯查看您目前的成就以及\n您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您\n将收到的奖金。",
       'challengesDialogTitle1': "挑战",
       'challengesDialogContent1': "在这里，您将学习如何挑战其他同事",
       'strChallanges': "挑战",
       'strChallangesDialogContent':
-          "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。您的竞争对手需要正确回答选定模块的3个问题才能赢得挑战。",
+          "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，\n然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。\n您的竞争对手需要正确回答选定模块的3\n个问题才能赢得挑战。",
       'strMarketingCommunications': "排名",
       'strMarketingCommunicationsDialog': "在这一部分，您将了解有关排名的所有信息",
       'strRankingDialogContent':
@@ -2130,17 +2137,17 @@ class StringRes {
 
       'plPerson': '表现',
 //      'niceMeetYou':'${Injector.userData?.name??""}很高兴见到您',
-      'plMyName': '在这一部分，您将了解有关表现分析的所有信息',
+      'plMyName': '在这一部分，\n您将了解有关表现分析的所有信息',
       'hereYourMonitor': '在这里，您可以监控扣除和增加知识点数 (KP)。',
-      'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
+      'selectPeriod': '您还可以选择您想要查看的时间段和比较当\n前周期与上一个周期。',
       'strYourTeamPerformanceDialog2':
           '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
       //existing customer
       'servingYourExisting': '已完成的学习列表',
-      'servingYourExistingDialog': '在本教程的这一部分，您将学习有关您已完成的学习的所有相关信息',
+      'servingYourExistingDialog': '\n在本教程的这一部分，\n您将学习有关您已完成的学习的所有相关信息',
       'listOfExisting': '已完成的学习列表',
       'listOfExistingDetails':
-          '在这里，您可以看到您目前已经记住的所有问题。您每天从这些问题那里获得多少知识点 (KP) 以及这些问题会在列表中存在多少天。\n如果您想删除一个问题，您可以点击"X"。\n然后，这个问题将不会为您生成更多的知识点数，但您将重新获得1个可用记忆点数 (MP)。',
+          '在这里，您可以看到您目前已经记住的所有问题。\n您每天从这些问题那里获得多少知识点 (KP)\n以及这些问题会在列表中存在多少天。\n如果您想删除一个问题，您可以点击"X"。\n然后，这个问题将不会为您生成更多的知识点数，\n但您将重新获得1个可用记忆点数 (MP)。',
       'readyForBusiness': '准备开始',
       'readyForBusinessDeatils':
           '您可以进一步查看学习模块，回答更多的问题。\n\n或者探索这个应用程序的其他区域，您可以赚取奖励，挑战其他玩家，查看您的表现和比较您的排名。',
@@ -2166,18 +2173,18 @@ class StringRes {
 
       //New Customer screen
       'heartBusiness': '开放学习列表',
-      'heartBusinessDetails': '在本教程的这一部分，您将学习选择和回答问题所需的所有相关信息',
+      'heartBusinessDetails': '在本教程的这一部分,\n您将学习选择和回答问题所需的所有相关信息',
       'listOfPotential': '问题列表',
       'listOfPotentialDetails':
-          '每个问题都有一个名称，属于对应的学习模块。\n知识是您每天可以在已完成学习列表中通过这个问题可以赚取的知识点数 (KP)。\n“重复...”表示您如果现在回答正确，在多少天后您需要重复回答这个问题。您越经常正确地回答一个问题，您就越不经常需要重复。\n学习点数 (SP) 表示您需要多少学习点数 (SP) 来回答这个问题。点击"立即回答"。',
+          '每个问题都有一个名称，属于对应的学习模块。\n知识是您每天可以在已完成学习列表中通过这\n个问题可以赚取的知识点数 (KP)。\n“重复...”表示您如果现在回答正确，\n在多少天后您需要重复回答这个问题。\n您越经常正确地回答一个问题，\n您就越不经常需要重复。\n学习点数 (SP) 表示您需要多少学习点数 (SP) \n来回答这个问题。点击"立即回答"。',
       'listOfPotentialBtn': '点击"立即回答"',
 
       //Business sector screen dialog
       'customerRelation': '学习模块介绍',
-      'customerRelationDetails': '在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。',
+      'customerRelationDetails': '\n在这里，您可以搜索学习模块，加入和取消加入，\n并决定是否要下载内容以供将来离线使用。',
       'areaOfComp': '学习模块介绍',
       'areaOfCompDetails':
-          '每个学习模块将测试特定的知识领域。"大小"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。',
+          '每个学习模块将测试特定的知识领域。\n"大小"表示每个模块中的问题数量。\n您可以点击学习模块阅读描述，并决定是否要加入它们。\n某些学习模块已由贵公司分配给您，无法取消加入。',
       'accessToFirst': '加入第一个模块',
       'accessToFirstDetails':
           '您可以加入第一个商业部门从而\n访问您的第一个问题。\n\n点击学习模块"开始"，然后点击"加入"。',
@@ -2273,7 +2280,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application"
+      'update':"Update Application",
+      'updateLatter':"Update letter",
     }
   };
 }

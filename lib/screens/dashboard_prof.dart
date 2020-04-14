@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 
 import '../helper/constant.dart';
@@ -23,7 +24,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     super.initState();
     getDashboardConfig();
 
-      Injector.isSoundEnable = false;
+    Injector.isSoundEnable = false;
   }
 
   @override
@@ -53,7 +54,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
               arrDashboardData.add(GetDashboardData.fromJson(v));
             });
 
-            if (arrDashboardData.isNotEmpty) if (mounted)setState(() {});
+            if (arrDashboardData.isNotEmpty) if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
@@ -108,7 +109,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
           children: List.generate(
               Injector.isManager() ? arrTypeManager.length : arrType.length,
               (index) {
-            return showMainItem(Injector.isManager() ? arrTypeManager[index] : arrType[index]);
+            return showMainItem(
+                Injector.isManager() ? arrTypeManager[index] : arrType[index]);
           }),
         ));
   }
@@ -121,7 +123,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),
+                image: AssetImage(Utils.ifIsLocked(type)),
                 //bg_main_card
                 fit: BoxFit.fill)),
         child: Row(
@@ -146,7 +148,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                 overflow: TextOverflow.ellipsis,
               ),
             )
-
           ],
         ),
       ),
@@ -157,8 +158,9 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-  getTitle(String type) {
 
+
+  getTitle(String type) {
     if (type == Const.typeBusinessSector)
       return Utils.getText(context, StringRes.businessSector);
     else if (type == Const.typeNewCustomer)

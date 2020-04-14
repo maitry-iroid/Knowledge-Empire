@@ -109,8 +109,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(
-                  context, dashboardData, dashboardLockStatusData),
+              CommonView.showDashboardView(context, dashboardData, dashboardLockStatusData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),

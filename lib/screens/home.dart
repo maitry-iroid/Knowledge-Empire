@@ -9,6 +9,7 @@ import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_challenges.dart';
@@ -99,7 +100,7 @@ class HomePageState extends State<HomePage>
   int _selectedDrawerIndex = 0;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool startAnim = false;
-  int duration = 4;
+  int duration = 3;
   bool isCoinViseble = false;
   DashboardLockStatusData dashboardLockStatusData;
   RefreshAnimation mRefreshAnimation;
@@ -117,8 +118,22 @@ class HomePageState extends State<HomePage>
 
   Future<void> initStateMethods() async {
     UpdateDialogModel status = await Injector.getCurrentVersion(context);
-    if(status.status!="0"){
-      DisplayDialogs.showUpdateDialog(context,status.message);
+    if (status != null) {
+      if (status.status != "0" || status.status == "2") {
+        if (status.status == "2") {
+          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
+            DisplayDialogs.showUpdateDialog(context, status.message, true);
+          } else {
+            DateTime clickedTime =
+                DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+            if (DateTime.now().difference(clickedTime).inDays >= 1) {
+              DisplayDialogs.showUpdateDialog(context, status.message, true);
+            }
+          }
+        } else {
+          DisplayDialogs.showUpdateDialog(context, status.message, false);
+        }
+      }
     }
     getLockStatus();
     Utils.removeBadge();

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -38,7 +39,6 @@ import 'package:ke_employee/screens/intro_page.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -595,6 +595,52 @@ class Utils {
     }
   }
 
+  static ifIsLocked(String type) {
+    DashboardLockStatusData dashboardLockStatusData =
+        Injector.dashboardLockStatusData;
+    print(type);
+    switch (type) {
+      case "reward":
+        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+                dashboardLockStatusData.achievement != null &&
+                dashboardLockStatusData.achievement != 1
+            ? "pro_lock"
+            : "ic_pro_bg_main_card");
+        break;
+      case "challenge":
+        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+                dashboardLockStatusData.challenge != null &&
+                dashboardLockStatusData.challenge != 1
+            ? "pro_lock"
+            : "ic_pro_bg_main_card");
+        break;
+      case "org":
+        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+                dashboardLockStatusData.organization != null &&
+                dashboardLockStatusData.organization != 1
+            ? "pro_lock"
+            : "ic_pro_bg_main_card");
+        break;
+      case "pl":
+        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+                dashboardLockStatusData.pl != null &&
+                dashboardLockStatusData.pl != 1
+            ? "pro_lock"
+            : "ic_pro_bg_main_card");
+        break;
+      case "ranking":
+        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+                dashboardLockStatusData.ranking != null &&
+                dashboardLockStatusData.ranking != 1
+            ? "pro_lock"
+            : "ic_pro_bg_main_card");
+        break;
+      default:
+        return Utils.getAssetsImg("ic_pro_bg_main_card");
+        break;
+    }
+  }
+
   static checkAudio() {
     if (Injector.isBusinessMode) {
       if (questionData.isAnsweredCorrect == true) {
@@ -611,12 +657,19 @@ class Utils {
     }
   }
 
-  static pdfShow() {
+  /*static pdfShow() {
     return SimplePdfViewerWidget(
       completeCallback: (bool result) {
         print("completeCallback,result:$result");
       },
       initialUrl: questionData.mediaLink,
+    );
+  }*/
+
+  static Widget pdfShow(PDFDocument doc) {
+    return PDFViewer(
+      document: doc,
+
     );
   }
 

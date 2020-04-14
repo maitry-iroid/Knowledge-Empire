@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -21,7 +22,6 @@ import '../helper/res.dart';
 import 'home.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
-import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 
 List<Answer> arrAnswer = List();
 
@@ -44,7 +44,12 @@ class EngagementCustomer extends StatefulWidget {
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List alphaIndex = [StringRes.aIndex,StringRes.bIndex,StringRes.cIndex,StringRes.dIndex];
+  List alphaIndex = [
+    StringRes.aIndex,
+    StringRes.bIndex,
+    StringRes.cIndex,
+    StringRes.dIndex
+  ];
 
   String urlPDFPath = "";
   String assetPDFPath = "";
@@ -54,6 +59,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   FileInfo fileInfo;
   String error;
   bool isChallenge = false;
+   PDFDocument doc;
 
   @override
   void initState() {
@@ -66,8 +72,20 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       arrAnswer = widget.questionDataEngCustomer.answer;
       abcdList = alphaIndex;
       print(questionData.value);
+
+      getPdf();
+
 //    downloadFile();
       initVideoController();
+    }
+  }
+
+  Future getPdf() async {
+    if (Utils.getCacheFile(questionData.mediaLink) != null) {
+      doc = await PDFDocument.fromFile(
+          Utils.getCacheFile(questionData.mediaLink).file);
+    } else {
+      doc = await PDFDocument.fromURL(questionData.mediaLink);
     }
   }
 
@@ -91,9 +109,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 Utils.getCacheFile(questionData.mediaLink).file)
             : VideoPlayerController.network(questionData.mediaLink)
           ..initialize().then((_) {
-            if (mounted)setState(() {
-              _controller.play();
-            });
+            if (mounted)
+              setState(() {
+                _controller.play();
+              });
           });
 
         _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
@@ -128,34 +147,27 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   selectItem(index) {
-    if (mounted)setState(() {
+    if (mounted)
+      setState(() {
 //      _selectedItem = index;
-      print(selectItem.toString());
-    });
+        print(selectItem.toString());
+      });
   }
 
   refresh() {
-    if (mounted)setState(() {});
+    if (mounted) setState(() {});
   }
 
-  pdfShow() {
-    return SimplePdfViewerWidget(
-      completeCallback: (bool result) {
-        print("completeCallback,result:$result");
-      },
-      initialUrl: Utils.getCacheFile(questionData.mediaLink) != null
-          ? Utils.getCacheFile(questionData.mediaLink)
-          : questionData.mediaLink,
-    );
-  }
+
 
   Widget showItem(int index) {
     return GestureDetector(
         onTap: () {
           Utils.playClickSound();
-          if (mounted)setState(() {
-            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-          });
+          if (mounted)
+            setState(() {
+              arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+            });
         },
         child: Container(
           height: 48,
@@ -366,7 +378,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                             border: Border.all(color: ColorRes.textLightBlue)),
                       ),
                       Text(
-                        questionData.firstName.toString() + " " + questionData.lastName.toString(),
+                        questionData.firstName.toString() +
+                            " " +
+                            questionData.lastName.toString(),
                         style: TextStyle(color: ColorRes.white, fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
@@ -692,7 +706,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       ? _controller.pause()
                       : _controller.play();
 
-                  if (mounted)setState(() {});
+                  if (mounted) setState(() {});
 
 //                  questionData.videoPlay == 1
 //                      ? if (mounted)setState(() {
@@ -726,7 +740,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         padding: EdgeInsets.all(3),
         decoration:
             BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: pdfShow(),
+        child: Utils.pdfShow(doc),
       );
     }
 //    else {
@@ -1205,6 +1219,9 @@ class ExpandMediaState extends State<ExpandMedia>
   AnimationController controller;
   Animation<double> scaleAnimation;
 
+
+  PDFDocument doc;
+
   @override
   void initState() {
     super.initState();
@@ -1219,6 +1236,16 @@ class ExpandMediaState extends State<ExpandMedia>
     });
 
     controller.forward();
+    getPdf();
+  }
+
+  Future getPdf() async {
+    if (Utils.getCacheFile(questionData.mediaLink) != null) {
+      doc = await PDFDocument.fromFile(
+          Utils.getCacheFile(questionData.mediaLink).file);
+    } else {
+      doc = await PDFDocument.fromURL(questionData.mediaLink);
+    }
   }
 
   bool checkimg = true;
@@ -1269,7 +1296,7 @@ class ExpandMediaState extends State<ExpandMedia>
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
                               )
-                            : Utils.pdfShow(),
+                            : Utils.pdfShow(doc),
                       ),
                     ),
 

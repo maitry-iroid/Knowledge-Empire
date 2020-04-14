@@ -13,43 +13,43 @@ class DisplayDialogs {
   //todo li_wei  image configuration
   static double liWeiImageHeight = 2.10;
   static double liWeiImageWidth = 2.7;
-  static double liWeiImageMoveRight = 8.5;
+  static double liWeiImageMoveRight = 15.5;
   static double liWeiImageMoveTop = 5.2;
 
   //todo hrNiki  image configuration
   static double hrNikiImageHeight = 1.25;
   static double hrNikiImageWidth = 2.5;
-  static double hrNikiImageMoveRight = 8.0;
+  static double hrNikiImageMoveRight = 12.0;
   static double hrNikiImageMoveTop = 50.0;
 
   //todo tina image configuration
   static double tinaImageHeight = 2.10;
   static double tinaImageWidth = 2.5;
-  static double tinaImageMoveRight = 7.5;
+  static double tinaImageMoveRight = 12.5;
   static double tinaImageMoveTop = 5.2;
 
   //todo tina image configuration
   static double bobImageHeight = 2.10;
   static double bobImageWidth = 2.5;
-  static double bobImageMoveRight = 9.5;
+  static double bobImageMoveRight = 15.5;
   static double bobImageMoveTop = 6.3;
 
   //todo tina image configuration
   static double willImageHeight = 2.10;
   static double willImageWidth = 2.5;
-  static double willImageMoveRight = 7.5;
+  static double willImageMoveRight = 10.5;
   static double willImageMoveTop = 5.2;
 
   //todo lydia image configuration
   static double lydiaImageHeight = 1.25;
   static double lydiaImageWidth = 2.5;
-  static double lydiaImageMoveRight = 8.0;
+  static double lydiaImageMoveRight = 10.0;
   static double lydiaImageMoveTop = 70.0;
 
   //todo lydia akiki configuration
   static double akikoImageHeight = 1.25;
   static double akikoImageWidth = 2.9;
-  static double akikoImageMoveRight = 6.3;
+  static double akikoImageMoveRight = 9.3;
   static double akikoImageMoveTop = 80.0;
 
   //todo  This dialogs only for Dashboard Game screen
@@ -108,7 +108,7 @@ class DisplayDialogs {
             imageName: "john",
             titleText: Utils.getText(context, StringRes.welcomeToKnow),
             btnName: Utils.getText(context, StringRes.clickYourProfile),
-            desTextLine: Utils.getUserNameForIntroDialog(null,context) +
+            desTextLine: Utils.getUserNameForIntroDialog(null, context) +
                 Utils.getText(context, StringRes.welcomeToKnowDetails),
             onTapBtn: () {
               Utils.playClickSound();
@@ -155,7 +155,7 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.customizeYourCompany),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine: Utils.getUserNameForIntroDialog(null,context) +
+            desTextLine: Utils.getUserNameForIntroDialog(null, context) +
                 Utils.getText(context, StringRes.customizeYourCompanyContent),
 //            desTextLine: "Dear ${Injector.userData?.name},\n\nMy name is Mike, your Head of Operations.\nAre you ready to become CEO of your own virtual company?\nUpload a profile picture and edit your company name then click \"save\"",
             onTapBtn: () async {
@@ -213,8 +213,9 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             imageMoveTop: 8.5,
-            imageMoveRight: 8,
-            desTextLine: Utils.getUserNameForIntroDialog("Hi",context)+Utils.getText(context, StringRes.hireHrEmpDetails),
+            imageMoveRight: 12,
+            desTextLine: Utils.getUserNameForIntroDialog("Hi", context) +
+                Utils.getText(context, StringRes.hireHrEmpDetails),
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
@@ -235,9 +236,9 @@ class DisplayDialogs {
             menuView: false,
             imageName: "hr_niki",
             imageMoveTop: 8.5,
-            imageMoveRight: 8,
+            imageMoveRight: 12,
             titleText: Utils.getText(context, StringRes.hireHrEmp) ?? "",
-//            btnName: StringRes.next,
+            btnName: StringRes.next,
             btnColor: ColorRes.blue,
             desTextLine:
                 Utils.getText(context, StringRes.hireHrEmpDetailsSeconds) ?? "",
@@ -261,7 +262,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "hr_niki",
             imageMoveTop: 8.5,
-            imageMoveRight: 8,
+            imageMoveRight: 12,
             titleText: Utils.getText(context, StringRes.empOMaster) ?? "",
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
@@ -287,7 +288,7 @@ class DisplayDialogs {
             menuView: false,
             imageName: "hr_niki",
             imageMoveTop: 8.5,
-            imageMoveRight: 8,
+            imageMoveRight: 12,
             titleText: Utils.getText(context, StringRes.costOfEmp) ?? "",
             btnName: Utils.getText(context, StringRes.gotIt),
             btnColor: ColorRes.blue,
@@ -433,7 +434,8 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.customerRelation),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine: Utils.getUserNameForIntroDialog("Hi",context)+Utils.getText(context, StringRes.customerRelationDetails),
+            desTextLine: Utils.getUserNameForIntroDialog("Hi", context) +
+                Utils.getText(context, StringRes.customerRelationDetails),
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
@@ -699,7 +701,7 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.servingYourExisting),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine: Utils.getUserNameForIntroDialog("Hi",context) +
+            desTextLine: Utils.getUserNameForIntroDialog("Hi", context) +
                 Utils.getText(context, StringRes.servingYourExistingDialog),
             onTapBtn: () async {
               Utils.playClickSound();
@@ -806,7 +808,7 @@ class DisplayDialogs {
             imageMoveRight: willImageMoveRight,
             titleText: Utils.getText(context, StringRes.challengesDialogTitle1),
             btnName: Utils.getText(context, StringRes.next),
-            desTextLine: Utils.getUserNameForIntroDialog(null,context) +
+            desTextLine: Utils.getUserNameForIntroDialog(null, context) +
                 Utils.getText(context, StringRes.challengesDialogContent1),
             onTapBtn: () async {
               Utils.playClickSound();
@@ -863,8 +865,9 @@ class DisplayDialogs {
             titleText:
                 Utils.getText(context, StringRes.strMarketingCommunications),
             btnName: Utils.getText(context, StringRes.next),
-            desTextLine: Utils.getUserNameForIntroDialog("Hi",context)+Utils.getText(
-                context, StringRes.strMarketingCommunicationsDialog),
+            desTextLine: Utils.getUserNameForIntroDialog("Hi", context) +
+                Utils.getText(
+                    context, StringRes.strMarketingCommunicationsDialog),
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
@@ -1004,7 +1007,7 @@ class DisplayDialogs {
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine:
-                "${Utils.getText(context, StringRes.niceMeetYou)+Utils.getUserNameForIntroDialog("yes", context)} ,${Utils.getText(context, StringRes.plMyName)}",
+                "${Utils.getText(context, StringRes.niceMeetYou) + Utils.getUserNameForIntroDialog("yes", context)} ,${Utils.getText(context, StringRes.plMyName)}",
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
@@ -1043,15 +1046,16 @@ class DisplayDialogs {
         });
   }
 
-  static showUpdateDialog(BuildContext context,String message)  {
+  static showUpdateDialog(BuildContext context, String message, isCancelAble) {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return WillPopScope(
-            onWillPop: (){},
+            onWillPop: () {},
             child: IntroScreenDialog(
               menuView: false,
+              secondBtn: isCancelAble,
 //              imageName: "bob",
               imageMoveTop: akikoImageMoveTop,
               imageMoveRight: akikoImageMoveRight,
@@ -1060,10 +1064,17 @@ class DisplayDialogs {
               titleText: "Update Application",
               btnName: Utils.getText(context, StringRes.update),
               btnColor: ColorRes.blue,
-              desTextLine: message,/*"We hope you are enjoying using our application. Our new update is available on the store and in order you give you a better experience, we like to you update the application to the latest version."*/
+              desTextLine: message,
+              /*"We hope you are enjoying using our application. Our new update is available on the store and in order you give you a better experience, we like to you update the application to the latest version."*/
               onTapBtn: () async {
                 //Navigator.pop(context);
-                OpenAppstore.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: Injector.packageInfo.packageName);
+                OpenAppstore.launch(
+                    androidAppId: Injector.packageInfo.packageName,
+                    iOSAppId: Injector.packageInfo.packageName);
+              },
+              onTapSecondBtn: (){
+                Injector.prefs.setString(PrefKeys.isCancelDialog, DateTime.now().toString());
+                Navigator.pop(context);
               },
             ),
           );

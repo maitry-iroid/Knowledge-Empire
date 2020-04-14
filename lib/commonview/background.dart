@@ -354,7 +354,7 @@ class CommonView {
                       ),
                       dashboardLockStatusData != null &&
                               dashboardLockStatusData.organization != null &&
-                              dashboardLockStatusData.organization != 1
+                              dashboardLockStatusData.organization == 1
                           ? Utils.showUnreadCount(Const.typeOrg, 17, 5, data)
                           : Container(),
                       dashboardLockStatusData != null &&
@@ -381,7 +381,7 @@ class CommonView {
                       ),
                       dashboardLockStatusData != null &&
                               dashboardLockStatusData.pl != null &&
-                              dashboardLockStatusData.pl != 1
+                              dashboardLockStatusData.pl == 1
                           ? Utils.showUnreadCount(Const.typePl, 17, 5, data)
                           : Container(),
                       dashboardLockStatusData != null &&
@@ -408,7 +408,7 @@ class CommonView {
                         ),
                         dashboardLockStatusData != null &&
                                 dashboardLockStatusData.ranking != null &&
-                                dashboardLockStatusData.ranking != 1
+                                dashboardLockStatusData.ranking == 1
                             ? Utils.showUnreadCount(
                                 Const.typeRanking, 17, 5, data)
                             : Container(),
@@ -469,9 +469,8 @@ class CommonView {
                             dashboardLockStatusData != null &&
                                     dashboardLockStatusData.achievement !=
                                         null &&
-                                    dashboardLockStatusData.achievement != 1
-                                ? Utils.showUnreadCount(
-                                    Const.typeReward, 17, 5, data)
+                                    dashboardLockStatusData.achievement == 1
+                                ? Utils.showUnreadCount(Const.typeReward, 17, 5, data)
                                 : ConstrainedBox(
                                     constraints: new BoxConstraints(
                                     minHeight: 25.0,
@@ -544,7 +543,7 @@ class CommonView {
                             ),
                             dashboardLockStatusData != null &&
                                     dashboardLockStatusData.challenge != null &&
-                                    dashboardLockStatusData.challenge != 1
+                                    dashboardLockStatusData.challenge == 1
                                 ? Utils.showUnreadCount(
                                     Const.typeChallenges, 17, 17, data)
                                 : ConstrainedBox(
@@ -1025,7 +1024,7 @@ class CommonView {
                         ),
                         SizedBox(height: 15),
                         Text(
-                            "${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}\n${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}",
+                            "${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}",
                             maxLines: 2,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.body2.copyWith(

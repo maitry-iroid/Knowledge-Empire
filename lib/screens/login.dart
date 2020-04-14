@@ -73,8 +73,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Future initStateMethods() async {
     status = await Injector.getCurrentVersion(context);
-    if (status.status != "0") {
-      DisplayDialogs.showUpdateDialog(context, status.message);
+    if (status.status != "0" || status.status == "2") {
+      if (status.status == "2") {
+        if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
+          DisplayDialogs.showUpdateDialog(context, status.message, true);
+        } else {
+          DateTime clickedTime =
+              DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+          if (DateTime.now().difference(clickedTime).inDays >= 1) {
+            DisplayDialogs.showUpdateDialog(context, status.message, true);
+          }
+        }
+      } else {
+        DisplayDialogs.showUpdateDialog(context, status.message, false);
+      }
     }
     localeBloc.setLocale(0);
     //    localeBloc.setLocale(Utils.getIndexLocale());

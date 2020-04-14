@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage>
                 ..rotateY(2 * pi * flipAnim.value),
               alignment: Alignment.center,
               child: Image.asset(
-                Utils.getAssetsImg("coin"),
+                Utils.getAssetsImg("ic_dollar"),
                 height: 25,
                 width: 25,
               ),
