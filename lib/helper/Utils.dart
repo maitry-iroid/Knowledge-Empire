@@ -669,7 +669,6 @@ class Utils {
   static Widget pdfShow(PDFDocument doc) {
     return PDFViewer(
       document: doc,
-
     );
   }
 
