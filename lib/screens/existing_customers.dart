@@ -58,6 +58,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
 //      customerValueBloc?.releaseResource(rq);
 
+
       CommonView.showCircularProgress(true, context);
       WebApi()
           .callAPI(WebApi.rqReleaseResource, rq.toJson())
