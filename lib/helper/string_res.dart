@@ -347,6 +347,9 @@ class StringRes {
 
   static var updateLatter = "updateLatter";
 
+  static var servicePerson = "servicePerson";
+  static var customerCapacity = "customerCapacity";
+
 //  static var empOMasterDetails = "empOMasterDetails";
 
   static Map<String, Map<String, String>> localizedValues = {
@@ -733,6 +736,8 @@ class StringRes {
       'noInternet':"Check Your Internet Connection",
       'update':"Update Application",
       'updateLatter':"Update letter",
+      'servicePerson':"Service Person",
+      'customerCapacity':"Customer Capacity",
 
     },
     'de': {
@@ -1101,6 +1106,8 @@ class StringRes {
       'noInternet':"Check Your Internet Connection",
       'update':"Update Application",
       'updateLatter':"Update letter",
+    'servicePerson':"Service Person",
+      'customerCapacity':"Customer Capacity",
     },
     'zh': {
       //      region chinese
@@ -1458,6 +1465,8 @@ class StringRes {
       'noInternet':"Check Your Internet Connection",
       'update':"Update Application",
       'updateLatter':"Update letter",
+      'servicePerson':"Service Person",
+      'customerCapacity':"Customer Capacity",
     }
   };
 
@@ -1667,6 +1676,8 @@ class StringRes {
       'noInternet':"Check Your Internet Connection",
       'update':"Update Application",
       'updateLatter':"Update letter",
+      'servicePerson':"Service Person",
+      'customerCapacity':"Customer Capacity",
     },
     'de': {
       //region German
@@ -1986,6 +1997,8 @@ class StringRes {
       'noInternet':"Check Your Internet Connection",
       'update':"Update Application",
       'updateLatter':"Update letter",
+      'servicePerson':"Service Person",
+      'customerCapacity':"Customer Capacity",
     },
     'zh': {
       //region chines
@@ -2282,6 +2295,8 @@ class StringRes {
       'noInternet':"Check Your Internet Connection",
       'update':"Update Application",
       'updateLatter':"Update letter",
+      'servicePerson':"Service Person",
+      'customerCapacity':"Customer Capacity",
     }
   };
 }

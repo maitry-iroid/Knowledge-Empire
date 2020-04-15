@@ -470,7 +470,8 @@ class CommonView {
                                     dashboardLockStatusData.achievement !=
                                         null &&
                                     dashboardLockStatusData.achievement == 1
-                                ? Utils.showUnreadCount(Const.typeReward, 17, 5, data)
+                                ? Utils.showUnreadCount(
+                                    Const.typeReward, 17, 5, data)
                                 : ConstrainedBox(
                                     constraints: new BoxConstraints(
                                     minHeight: 25.0,
@@ -978,7 +979,7 @@ class CommonView {
         })*/
   }
 
-  collectorDialog(BuildContext context, PushModel mPushModel) {
+  collectorDialog(BuildContext context, PushModel mPushModel, String btnText) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
         transitionBuilder: (context, a1, a2, widget) {
@@ -997,16 +998,17 @@ class CommonView {
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: ColorRes.fontDarkGrey,
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: ColorRes.borderRewardsName)
-                          ),
+                              color: ColorRes.fontDarkGrey,
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                  color: ColorRes.borderRewardsName)),
                           child: Text("Everybody Empireknowlage",
                               style: TextStyle(
                                   color: ColorRes.white, fontSize: 15)),
@@ -1024,23 +1026,23 @@ class CommonView {
                         ),
                         SizedBox(height: 15),
                         Text(
-                            "${mPushModel.achievementText} ${Utils.getText(context, StringRes.bonus)} : ${mPushModel.bonus}",
+                            "${mPushModel.achievementText}",
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.body2.copyWith(
-                                color: ColorRes.white, fontSize: 20)),
-
+                            style: Theme.of(context)
+                                .textTheme
+                                .body2
+                                .copyWith(color: ColorRes.white, fontSize: 20)),
+                        SizedBox(height: 10),
                         InkResponse(
                           child: Container(
-                            padding: EdgeInsets.all(5),
-                            width: Utils.getDeviceWidth(context) / 8,
-                            margin: EdgeInsets.only(top:10),
-                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
                                 color: ColorRes.header,
                                 borderRadius: BorderRadius.circular(18),
                                 border: Border.all(color: ColorRes.white)),
-                            child: Text(Utils.getText(context, StringRes.bonusPoint),
+                            child: Text(
+                                btnText,
                                 style: TextStyle(
                                     color: ColorRes.white, fontSize: 15)),
                           ),

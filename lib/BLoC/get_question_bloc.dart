@@ -22,9 +22,7 @@ class GetQuestionsBloc {
     bool isInternetConnected = await Utils.isInternetConnected();
     List<QuestionData> arrQuestions = List();
     if (isInternetConnected) {
-      dynamic data =
-          await Injector.webApi.callAPI(WebApi.rqGetQuestions, rq.toJson());
-
+      dynamic data = await Injector.webApi.callAPI(WebApi.rqGetQuestions, rq.toJson());
       if (data != null) {
         data.forEach((v) {
           arrQuestions.add(QuestionData.fromJson(v));
@@ -37,11 +35,13 @@ class GetQuestionsBloc {
             arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
           }
         }
-      } else {
-        arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
       }
 
       _getQuestionSubject.sink.add(arrQuestions);
+    }else {
+      arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
+      _getQuestionSubject.sink.add(arrQuestions);
+      print(arrQuestions);
     }
   }
 

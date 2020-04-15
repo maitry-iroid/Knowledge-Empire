@@ -8,6 +8,7 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -162,6 +163,7 @@ class PushNotificationHelper {
       }
     }
 
+    String btnText="";
     if (mPushModel.notificationType == Const.pushTypeChallenge.toString()) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
     } else if (mPushModel.notificationType ==
@@ -169,18 +171,22 @@ class PushNotificationHelper {
       if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
         Injector.customerValueData.totalEmployeeCapacity +=int.parse(mPushModel.bonus);
         Injector.customerValueData.remainingEmployeeCapacity +=int.parse(mPushModel.bonus);
+        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.employees);
       }
       if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
         Injector.customerValueData.totalSalesPerson +=int.parse(mPushModel.bonus);
         Injector.customerValueData.remainingSalesPerson +=int.parse(mPushModel.bonus);
+        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.servicePerson);
       }
       if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
         Injector.customerValueData.totalCustomerCapacity +=int.parse(mPushModel.bonus);
         Injector.customerValueData.remainingCustomerCapacity +=int.parse(mPushModel.bonus);
+        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.customerCapacity);
       }
       print(Injector.customerValueData.totalBalance.toString() +"======>"+ mPushModel.bonus.toString());
       if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
+        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.bonusPoint);
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);
@@ -190,7 +196,7 @@ class PushNotificationHelper {
       rq.userId = Injector.userId;
       customerValueBloc.getCustomerValue(rq);*/
 
-      CommonView().collectorDialog(context, mPushModel);
+      CommonView().collectorDialog(context, mPushModel,btnText );
       Utils.playAchievementSound();
     } else {
       showLocalNotification(Injector.notificationID, body);
