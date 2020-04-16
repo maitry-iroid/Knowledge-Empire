@@ -182,7 +182,7 @@ class HeaderViewState extends State<HeaderView> {
             if (Injector.dashboardLockStatusData.organization == 1)
               Injector.homeStreamController?.add("${Const.typeOrg}");
             else
-              Utils.showLockReasonDialog(Const.typeOrg, context);
+              Utils.showLockReasonDialog(Const.typeOrg, context,false);
           } else if (type == Const.typeSalesPersons) {
             Injector.homeStreamController?.add("${Const.typeNewCustomer}");
           } else if (type == Const.typeServicesPerson) {
@@ -191,12 +191,12 @@ class HeaderViewState extends State<HeaderView> {
             if (Injector.dashboardLockStatusData.ranking == 1)
               Injector.homeStreamController?.add("${Const.typeRanking}");
             else
-              Utils.showLockReasonDialog(Const.typeRanking, context);
+              Utils.showLockReasonDialog(Const.typeRanking, context,false);
           } else if (type == Const.typeMoney) {
             if (Injector.dashboardLockStatusData.pl == 1)
               Injector.homeStreamController?.add("${Const.typePl}");
             else
-              Utils.showLockReasonDialog(Const.typePl, context);
+              Utils.showLockReasonDialog(Const.typePl, context,false);
           }
         },
       ),

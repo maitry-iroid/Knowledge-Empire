@@ -101,7 +101,7 @@ class HomePageState extends State<HomePage>
   int _selectedDrawerIndex = 0;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool startAnim = false;
-  int duration = 2;
+  int duration = 1;
   bool isCoinViseble = false;
   DashboardLockStatusData dashboardLockStatusData;
   RefreshAnimation mRefreshAnimation;
@@ -176,16 +176,19 @@ class HomePageState extends State<HomePage>
       if (status.status != "0" || status.status == "2") {
         if (status.status == "2") {
           if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-            DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
+            DisplayDialogs.showUpdateDialog(
+                context, status.headlineText, status.message, true);
           } else {
             DateTime clickedTime =
                 DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
             if (DateTime.now().difference(clickedTime).inDays >= 1) {
-              DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
+              DisplayDialogs.showUpdateDialog(
+                  context, status.headlineText, status.message, true);
             }
           }
         } else {
-          DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, false);
+          DisplayDialogs.showUpdateDialog(
+              context, status.headlineText, status.message, false);
         }
       }
     }
@@ -328,39 +331,87 @@ class HomePageState extends State<HomePage>
           dashboardLockStatusData != null &&
           dashboardLockStatusData.organization != null &&
           dashboardLockStatusData.organization != 1) {
-        Utils.showLockReasonDialog(Const.typeOrg, context);
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeOrg, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
       } else if (index == Utils.getHomePageIndex(Const.typePl) &&
           dashboardLockStatusData != null &&
           dashboardLockStatusData.pl != null &&
           dashboardLockStatusData.pl != 1) {
-        Utils.showLockReasonDialog(Const.typePl, context);
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typePl, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
       } else if (index == Utils.getHomePageIndex(Const.typeRanking) &&
           dashboardLockStatusData != null &&
           dashboardLockStatusData.ranking != null &&
           dashboardLockStatusData.ranking != 1) {
-        Utils.showLockReasonDialog(Const.typeRanking, context);
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeRanking, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
       } else if (index == Utils.getHomePageIndex(Const.typeReward) &&
           dashboardLockStatusData != null &&
           dashboardLockStatusData.achievement != null &&
           dashboardLockStatusData.achievement != 1) {
-        Utils.showLockReasonDialog(Const.typeReward, context);
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeReward, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
       } else if (index == Utils.getHomePageIndex(Const.typeChallenges) &&
           dashboardLockStatusData != null &&
           dashboardLockStatusData.challenge != null &&
           dashboardLockStatusData.challenge != 1) {
-        Utils.showLockReasonDialog(Const.typeChallenges, context);
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeChallenges, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
       } else {
-        setState(() => _selectedDrawerIndex = index);
-
-        Navigator.of(context).pop(); // close the drawer
-        if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
-          Navigator.push(context, FadeRouteIntro());
+        if (index == Utils.getHomePageIndex(Const.typeOrg) ||
+            index == Utils.getHomePageIndex(Const.typeChallenges) ||
+            index == Utils.getHomePageIndex(Const.typeReward) ||
+            index == Utils.getHomePageIndex(Const.typeRanking) ||
+            index == Utils.getHomePageIndex(Const.typeProfile) ||
+            index == Utils.getHomePageIndex(Const.typePl)) {
+          Utils.isInternetConnected().then((isConnected) {
+            if (isConnected) {
+              navigationOnScreen(index);
+            } else {
+              Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+            }
+          });
+        } else {
+          navigationOnScreen(index);
         }
       }
     } else {
       if (_scaffoldKey.currentState.isDrawerOpen) {
         _scaffoldKey.currentState.openEndDrawer();
       }
+    }
+  }
+
+  void navigationOnScreen(int index) {
+    setState(() => _selectedDrawerIndex = index);
+    Navigator.of(context).pop(); // close the drawer
+    if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+      Navigator.push(context, FadeRouteIntro());
     }
   }
 
@@ -566,7 +617,9 @@ class HomePageState extends State<HomePage>
             QuestionData questionData = QuestionData.fromJson(data);
             if (questionData != null && questionData.challengeId != null)
               DisplayDialogs.showChallengeDialog(
-                  context, questionData.firstName+" "+questionData.lastName, questionData);
+                  context,
+                  questionData.firstName + " " + questionData.lastName,
+                  questionData);
           }
         }).catchError((e) {
           // Utils.showToast(e.toString());

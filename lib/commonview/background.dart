@@ -56,7 +56,9 @@ class CommonView {
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            margin: title==StringRes.challenges?EdgeInsets.only(right: 60):EdgeInsets.symmetric(horizontal: 10),
+            margin: title == StringRes.challenges
+                ? EdgeInsets.only(right: 60)
+                : EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
                     Injector.isBusinessMode ? null : BorderRadius.circular(20),
@@ -369,7 +371,14 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typeOrg);
+                    Utils.isInternetConnected().then((isConnected) {
+                      if (isConnected) {
+                        Utils.performDashboardItemClick(context, Const.typeOrg);
+                      } else {
+                        Utils.showLockReasonDialog(
+                            StringRes.noOffline, context, true);
+                      }
+                    });
                   },
                 ),
                 InkResponse(
@@ -396,7 +405,14 @@ class CommonView {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    Utils.performDashboardItemClick(context, Const.typePl);
+                    Utils.isInternetConnected().then((isConnected) {
+                      if (isConnected) {
+                        Utils.performDashboardItemClick(context, Const.typePl);
+                      } else {
+                        Utils.showLockReasonDialog(
+                            StringRes.noOffline, context, true);
+                      }
+                    });
                   },
                 ),
                 InkResponse(
@@ -425,8 +441,17 @@ class CommonView {
                     ),
                     onTap: () {
                       Utils.playClickSound();
-                      Utils.performDashboardItemClick(
-                          context, Const.typeRanking);
+
+                      Utils.isInternetConnected().then((isConnected) {
+                        if (isConnected) {
+                          Utils.performDashboardItemClick(
+                              context, Const.typeRanking);
+                        } else {
+                          Utils.showLockReasonDialog(
+                              StringRes.noOffline, context, true);
+                        }
+                      });
+
 //                      Utils.achievement();
 //                      CommonView().collectorDialog(context, '1000');
                     }
@@ -495,8 +520,15 @@ class CommonView {
                         ),
                         onTap: () {
                           Utils.playClickSound();
-                          Utils.performDashboardItemClick(
-                              context, Const.typeReward);
+                          Utils.isInternetConnected().then((isConnected) {
+                            if (isConnected) {
+                              Utils.performDashboardItemClick(
+                                  context, Const.typeReward);
+                            } else {
+                              Utils.showLockReasonDialog(
+                                  StringRes.noOffline, context, true);
+                            }
+                          });
                         },
                       )),
                 ),
@@ -520,8 +552,15 @@ class CommonView {
                           ),
                           onTap: () {
                             Utils.playClickSound();
-                            Utils.performDashboardItemClick(
-                                context, Const.typeTeam);
+                            Utils.isInternetConnected().then((isConnected) {
+                              if (isConnected) {
+                                Utils.performDashboardItemClick(
+                                    context, Const.typeTeam);
+                              } else {
+                                Utils.showLockReasonDialog(
+                                    StringRes.noOffline, context, true);
+                              }
+                            });
                           },
                         ),
                         opacity: Injector.isManager() ? 1 : 0,
@@ -569,8 +608,15 @@ class CommonView {
                         ),
                         onTap: () {
                           Utils.playClickSound();
-                          Utils.performDashboardItemClick(
-                              context, Const.typeChallenges);
+                          Utils.isInternetConnected().then((isConnected) {
+                            if (isConnected) {
+                              Utils.performDashboardItemClick(
+                                  context, Const.typeChallenges);
+                            } else {
+                              Utils.showLockReasonDialog(
+                                  StringRes.noOffline, context, true);
+                            }
+                          });
                         }),
                   ),
                 ),
@@ -997,60 +1043,58 @@ class CommonView {
                   width: Utils.getDeviceWidth(context) / 2.2,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: ColorRes.fontDarkGrey,
-                              borderRadius: BorderRadius.circular(18),
-                              border: Border.all(
-                                  color: ColorRes.borderRewardsName)),
-                          child: Text("Everybody Empireknowlage",
-                              style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15)),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          width: Utils.getDeviceWidth(context) / 3,
-                          height: Utils.getDeviceHeight(context) / 3,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("bg_collector")))),
-                          child: Image.asset(imageFomType(mPushModel.level),
-                              fit: BoxFit.contain),
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                            "${mPushModel.achievementText}",
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .body2
-                                .copyWith(color: ColorRes.white, fontSize: 20)),
-                        SizedBox(height: 10),
-                        InkResponse(
-                          child: Container(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                                color: ColorRes.header,
+                                color: ColorRes.fontDarkGrey,
                                 borderRadius: BorderRadius.circular(18),
-                                border: Border.all(color: ColorRes.white)),
-                            child: Text(
-                                btnText,
+                                border: Border.all(
+                                    color: ColorRes.borderRewardsName)),
+                            child: Text("Everybody Empireknowlage",
                                 style: TextStyle(
                                     color: ColorRes.white, fontSize: 15)),
                           ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
+                          SizedBox(height: 15),
+                          Container(
+                            width: Utils.getDeviceWidth(context) / 3.5,
+                            height: Utils.getDeviceHeight(context) / 3.5,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_collector")))),
+                            child: Image.asset(imageFomType(mPushModel.level),
+                                fit: BoxFit.contain),
+                          ),
+                          SizedBox(height: 15),
+                          Text("${mPushModel.achievementText}",
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.body2.copyWith(
+                                  color: ColorRes.white, fontSize: 20)),
+                          SizedBox(height: 10),
+                          InkResponse(
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  color: ColorRes.header,
+                                  borderRadius: BorderRadius.circular(18),
+                                  border: Border.all(color: ColorRes.white)),
+                              child: Text(btnText,
+                                  style: TextStyle(
+                                      color: ColorRes.white, fontSize: 15)),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

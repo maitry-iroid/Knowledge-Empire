@@ -350,6 +350,8 @@ class StringRes {
   static var servicePerson = "servicePerson";
   static var customerCapacity = "customerCapacity";
 
+  static var noOffline = "noOffline";
+
 //  static var empOMasterDetails = "empOMasterDetails";
 
   static Map<String, Map<String, String>> localizedValues = {
@@ -739,6 +741,8 @@ class StringRes {
       'updateLatter':"Update letter",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
+      'noOffline':"Sorry, this feature is only available while online.",
+
 
     },
     'de': {
@@ -1110,6 +1114,7 @@ class StringRes {
       'updateLatter':"Später aktualisieren",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
+      'noOffline':"Diese Funktion ist leider nur online verfügbar.",
     },
     'zh': {
       //      region chinese
@@ -1469,6 +1474,7 @@ class StringRes {
       'updateLatter':"以后再说",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
+      'noOffline':"很抱歉 此项功能需要连接互联网",
     }
   };
 
@@ -1681,6 +1687,7 @@ class StringRes {
       'updateLatter':"Update letter",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
+      'noOffline':"Sorry, this feature is only available while online.",
     },
     'de': {
       //region German
@@ -2003,6 +2010,7 @@ class StringRes {
       'updateLatter':"Später aktualisieren",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
+      'noOffline':"Diese Funktion ist leider nur online verfügbar.",
     },
     'zh': {
       //region chines
@@ -2302,6 +2310,7 @@ class StringRes {
       'updateLatter':"以后再说",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
+      'noOffline':"很抱歉 此项功能需要连接互联网",
     }
   };
 }

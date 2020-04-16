@@ -569,27 +569,27 @@ class Utils {
         dashboardLockStatusData != null &&
         dashboardLockStatusData.organization != null &&
         dashboardLockStatusData.organization != 1) {
-      showLockReasonDialog(type, context);
+      showLockReasonDialog(type, context,false);
     } else if (type == Const.typePl &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.pl != null &&
         dashboardLockStatusData.pl != 1) {
-      showLockReasonDialog(type, context);
+      showLockReasonDialog(type, context,false);
     } else if (type == Const.typeRanking &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.ranking != null &&
         dashboardLockStatusData.ranking != 1) {
-      showLockReasonDialog(type, context);
+      showLockReasonDialog(type, context,false);
     } else if (type == Const.typeReward &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.achievement != null &&
         dashboardLockStatusData.achievement != 1) {
-      showLockReasonDialog(type, context);
+      showLockReasonDialog(type, context,false);
     } else if (type == Const.typeChallenges &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.challenge != null &&
         dashboardLockStatusData.challenge != 1) {
-      showLockReasonDialog(type, context);
+      showLockReasonDialog(type, context,false);
     } else {
       performNavigation(type, context);
     }
@@ -886,11 +886,11 @@ class Utils {
 //        .document(userId)
 //        .updateData({Const.keyBadgeCount: FieldValue.increment(1)});
 //  }
-  static void showLockReasonDialog(String typeOrg, BuildContext context) {
+  static void showLockReasonDialog(String typeOrg, BuildContext context,isForInternet) {
     showDialog(
         context: context,
         builder: (BuildContext context) => OrgInfoDialog(
-              text: Utils.getText(context, getLockReasonText(typeOrg)),
+              text: Utils.getText(context, isForInternet?typeOrg:getLockReasonText(typeOrg)),
               isForIntroDialog: true,
             ));
   }
