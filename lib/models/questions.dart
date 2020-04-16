@@ -80,6 +80,8 @@ class QuestionData {
   String attemptTime;
   int videoPlay;
   int videoLoop;
+  int totalQuestion;
+
   var winningAmount;
 
   QuestionData(
@@ -106,6 +108,7 @@ class QuestionData {
       this.videoPlay,
       this.videoLoop,
       this.winningAmount,
+      this.totalQuestion,
       this.attemptTime});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
@@ -139,6 +142,7 @@ class QuestionData {
     videoPlay = json['videoPlay'];
     videoLoop = json['videoLoop'];
     attemptTime = json['attemptTime'];
+    totalQuestion = json['totalQuestion'];
   }
 
   Map<String, dynamic> toJson() {
@@ -170,6 +174,7 @@ class QuestionData {
     data['correctAnswerImage'] = this.correctAnswerImage;
     data['inCorrectAnswerImage'] = this.inCorrectAnswerImage;
     data['attemptTime'] = this.attemptTime;
+    data['totalQuestion'] = this.totalQuestion;
     return data;
   }
 }
