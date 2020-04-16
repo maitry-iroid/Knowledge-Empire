@@ -313,7 +313,8 @@ class Utils {
   }
 
   static correctAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
+//    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
+    if (Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {

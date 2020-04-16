@@ -72,7 +72,7 @@ class DisplayDialogs {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                      "Your are challenged by $userName in module ${questionData.moduleName}\nYou have to attempt all 3 challenges to win ${questionData.winningAmount}.",
+                      "Your are challenged by $userName in module ${questionData.moduleName ?? ""}\nYou have to attempt all ${questionData.totalQuestion ?? ""} challenges to win ${questionData.winningAmount ?? ""}.",
                       style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center),
                   SizedBox(height: 20),
@@ -1046,7 +1046,8 @@ class DisplayDialogs {
         });
   }
 
-  static showUpdateDialog(BuildContext context, String headline,String message, isCancelAble) {
+  static showUpdateDialog(
+      BuildContext context, String headline, String message, isCancelAble) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -1072,8 +1073,9 @@ class DisplayDialogs {
                     androidAppId: Injector.packageInfo.packageName,
                     iOSAppId: Injector.packageInfo.packageName);
               },
-              onTapSecondBtn: (){
-                Injector.prefs.setString(PrefKeys.isCancelDialog, DateTime.now().toString());
+              onTapSecondBtn: () {
+                Injector.prefs.setString(
+                    PrefKeys.isCancelDialog, DateTime.now().toString());
                 Navigator.pop(context);
               },
             ),
