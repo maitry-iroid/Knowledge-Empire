@@ -56,7 +56,7 @@ class CommonView {
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: title==StringRes.challenges?EdgeInsets.only(right: 60):EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius:
                     Injector.isBusinessMode ? null : BorderRadius.circular(20),

@@ -20,7 +20,7 @@ class _MyHomePageState extends State<MyHomePage>
   void initState() {
     super.initState();
     controller = AnimationController(
-        duration: Duration(milliseconds: 103500), vsync: this);
+        duration: Duration(milliseconds: 61100), vsync: this);
     flipAnim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
         parent: controller, curve: Interval(0.0, 0.5, curve: Curves.linear)));
     controller.forward();

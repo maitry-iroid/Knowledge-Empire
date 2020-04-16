@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:background_fetch/background_fetch.dart';
 import 'package:connectivity/connectivity.dart';
@@ -100,10 +101,63 @@ class HomePageState extends State<HomePage>
   int _selectedDrawerIndex = 0;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool startAnim = false;
-  int duration = 3;
+  int duration = 2;
   bool isCoinViseble = false;
   DashboardLockStatusData dashboardLockStatusData;
   RefreshAnimation mRefreshAnimation;
+
+  @override
+  Widget build(BuildContext context) {
+    initDrawerItems();
+
+    var drawerOptions = <Widget>[];
+    for (var i = 0; i < drawerItems.length; i++) {
+      drawerOptions.add(new ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          title: showMainItem(drawerItems[i], i),
+          selected: i == _selectedDrawerIndex,
+          onTap: () => _onSelectItem(i)));
+    }
+
+    return Scaffold(
+      key: _scaffoldKey,
+      drawer: new SizedBox(
+        width: Utils.getDeviceWidth(context) / 2.5,
+        child: Drawer(
+            child: Container(
+          color:
+              Injector.isBusinessMode ? ColorRes.bgMenu : ColorRes.headerBlue,
+          child: new ListView(children: drawerOptions),
+        )),
+      ),
+      backgroundColor: ColorRes.colorBgDark,
+      body: SafeArea(
+          child: Stack(
+        children: <Widget>[
+          getPage(),
+          HeaderView(
+            scaffoldKey: _scaffoldKey,
+            isShowMenu: true,
+            openProfile: openProfile,
+          ),
+          Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              coinWidget(250, 150),
+              coinWidget(310, 50),
+              coinWidget(70, 50),
+              coinWidget(150, 20),
+              coinWidget(350, 320),
+              coinWidget(350, 450),
+              coinWidget(180, 300),
+              coinWidget(200, 550),
+              coinWidget(350, 650),
+            ],
+          ),
+        ],
+      )),
+    );
+  }
 
   @override
   void didChangeDependencies() {
@@ -122,16 +176,16 @@ class HomePageState extends State<HomePage>
       if (status.status != "0" || status.status == "2") {
         if (status.status == "2") {
           if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-            DisplayDialogs.showUpdateDialog(context, status.message, true);
+            DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
           } else {
             DateTime clickedTime =
                 DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
             if (DateTime.now().difference(clickedTime).inDays >= 1) {
-              DisplayDialogs.showUpdateDialog(context, status.message, true);
+              DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
             }
           }
         } else {
-          DisplayDialogs.showUpdateDialog(context, status.message, false);
+          DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, false);
         }
       }
     }
@@ -310,59 +364,6 @@ class HomePageState extends State<HomePage>
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    initDrawerItems();
-
-    var drawerOptions = <Widget>[];
-    for (var i = 0; i < drawerItems.length; i++) {
-      drawerOptions.add(new ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          title: showMainItem(drawerItems[i], i),
-          selected: i == _selectedDrawerIndex,
-          onTap: () => _onSelectItem(i)));
-    }
-
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: new SizedBox(
-        width: Utils.getDeviceWidth(context) / 2.5,
-        child: Drawer(
-            child: Container(
-          color:
-              Injector.isBusinessMode ? ColorRes.bgMenu : ColorRes.headerBlue,
-          child: new ListView(children: drawerOptions),
-        )),
-      ),
-      backgroundColor: ColorRes.colorBgDark,
-      body: SafeArea(
-          child: Stack(
-        children: <Widget>[
-          getPage(),
-          HeaderView(
-            scaffoldKey: _scaffoldKey,
-            isShowMenu: true,
-            openProfile: openProfile,
-          ),
-          Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              coinWidget(250, 150),
-              coinWidget(310, 50),
-              coinWidget(70, 50),
-              coinWidget(150, 20),
-              coinWidget(350, 320),
-              coinWidget(350, 450),
-              coinWidget(180, 300),
-              coinWidget(200, 550),
-              coinWidget(350, 650),
-            ],
-          ),
-        ],
-      )),
-    );
-  }
-
   Widget coinWidget(double top, double left) {
     return AnimatedPositioned(
       duration: Duration(seconds: duration),
@@ -370,7 +371,10 @@ class HomePageState extends State<HomePage>
       left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
         isCoinViseble = false;
-        if (mounted) setState(() {});
+        if (Injector.customerValueData != null)
+          customerValueBloc.setCustomerValue(Injector.customerValueData);
+
+        setState(() {});
       },
       child: Container(
         child: isCoinViseble ? MyHomePage() : Container(),

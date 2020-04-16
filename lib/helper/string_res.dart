@@ -729,12 +729,13 @@ class StringRes {
           '5 Business Segments subscribed to” then we say “Bonus:',
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
       //endregion
+
       'bonus': "",
       'bonusPoint': "Bonus Point",
       'dear': "Dear",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application",
+      'update':"Update now",
       'updateLatter':"Update letter",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
@@ -1100,13 +1101,14 @@ class StringRes {
       'unLockChallenge':
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
       //endregion
+
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application",
-      'updateLatter':"Update letter",
-    'servicePerson':"Service Person",
+      'update':"Jetzt aktualisieren",
+      'updateLatter':"Später aktualisieren",
+      'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
     },
     'zh': {
@@ -1463,8 +1465,8 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application",
-      'updateLatter':"Update letter",
+      'update':"立即升级",
+      'updateLatter':"以后再说",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
     }
@@ -1670,6 +1672,7 @@ class StringRes {
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when max. Challenge Power-Up is increased',
       //endregion
+
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
@@ -1991,12 +1994,13 @@ class StringRes {
       'unLockChallenge':
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
       //endregion
+
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application",
-      'updateLatter':"Update letter",
+      'update':"Jetzt aktualisieren",
+      'updateLatter':"Später aktualisieren",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
     },
@@ -2289,12 +2293,13 @@ class StringRes {
       'unLockReward': '达成第一个成就后解锁',
       'unLockChallenge': '最大挑战威力升级点数增加后解锁',
       //endregion
+
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
       'noInternet':"Check Your Internet Connection",
-      'update':"Update Application",
-      'updateLatter':"Update letter",
+      'update':"立即升级",
+      'updateLatter':"以后再说",
       'servicePerson':"Service Person",
       'customerCapacity':"Customer Capacity",
     }

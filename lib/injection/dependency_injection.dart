@@ -158,8 +158,7 @@ class Injector {
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
-    await Injector.prefs.setString(
-        PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
+    await Injector.prefs.setString(PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
   }

@@ -1046,7 +1046,7 @@ class DisplayDialogs {
         });
   }
 
-  static showUpdateDialog(BuildContext context, String message, isCancelAble) {
+  static showUpdateDialog(BuildContext context, String headline,String message, isCancelAble) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -1061,7 +1061,7 @@ class DisplayDialogs {
               imageMoveRight: akikoImageMoveRight,
               imageHeight: akikoImageHeight,
               imageWidth: akikoImageWidth,
-              titleText: "Update Application",
+              titleText: headline,
               btnName: Utils.getText(context, StringRes.update),
               btnColor: ColorRes.blue,
               desTextLine: message,
