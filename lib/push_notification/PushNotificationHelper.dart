@@ -178,6 +178,7 @@ class PushNotificationHelper {
         Injector.customerValueData.remainingSalesPerson +=int.parse(mPushModel.bonus);
         btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.servicePerson);
       }
+
       if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
         Injector.customerValueData.totalCustomerCapacity +=int.parse(mPushModel.bonus);
         Injector.customerValueData.remainingCustomerCapacity +=int.parse(mPushModel.bonus);
