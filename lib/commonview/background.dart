@@ -1049,6 +1049,7 @@ class CommonView {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+
                           Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
