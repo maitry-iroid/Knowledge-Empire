@@ -235,6 +235,7 @@ class Injector {
         UpdateDialogModel dialogModel = UpdateDialogModel.fromJson(data);
         return dialogModel;
       } else {
+
         return null;
       }
     }
