@@ -98,10 +98,73 @@ class _ChallengesPageState extends State<ChallengesPage> {
               SizedBox(
                 height: Utils.getHeaderHeight(context) + 10,
               ),
-              CommonView.showTitle(context, StringRes.challenges),
+              showTitle(context, StringRes.challenges),
               showMainBody(),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  showTitle(BuildContext context, String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Stack(
+//        crossAxisAlignment: CrossAxisAlignment.center,
+//        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg(
+                  Injector.isBusinessMode ? "back" : 'back_prof')),
+              width: 30,
+            ),
+            onTap: () {
+              Utils.playClickSound();
+              Utils.performBack(context);
+            },
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              alignment: Alignment.center,
+              width: 150,
+              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              margin: title == StringRes.challenges
+                  ? EdgeInsets.only(right: 60)
+                  : EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode
+                      ? null
+                      : Border.all(width: 1, color: ColorRes.white),
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(
+                            Utils.getAssetsImg("bg_blue"),
+                          ),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                Utils.getText(context, Utils.getText(context, title)),
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: DimenRes.titleTextSize,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            child: showSendChallengeButton(),
+          )
         ],
       ),
     );
@@ -223,6 +286,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         shape: getBorderShape(),
         margin: EdgeInsets.only(left: 12),
         child: Container(
+          height: double.infinity,
           decoration: getBoxDecoration(),
           child: ListView(
             shrinkWrap: true,
@@ -304,31 +368,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   style: TextStyle(color: ColorRes.white, fontSize: 19),
                 ),
               ),*/
-              InkResponse(
-                child: Container(
-                  margin:
-                      EdgeInsets.only(bottom: 5, left: 15, right: 15, top: 5),
-                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg("bg_switch_to_prfsnl")),
-                          fit: BoxFit.fill)),
-                  child: Text(
-                    Utils.getText(context, StringRes.sendChallenge),
-                    style: TextStyle(color: ColorRes.white, fontSize: 17),
-                  ),
-                ),
-                onTap: () {
-//                  unFriend(context);
-                  if (selectedModuleIndex != null && selectedModuleIndex != -1)
-                    sendChallenges();
-                  else {
-                    Utils.showToast(
-                        Utils.getText(context, StringRes.alertNoModuleFound));
-                  }
-                },
-              ),
             ],
           ),
         ),
@@ -992,6 +1031,31 @@ class _ChallengesPageState extends State<ChallengesPage> {
           ),
         )
       ],
+    );
+  }
+
+  showSendChallengeButton() {
+    return InkResponse(
+      child: Container(
+        margin: EdgeInsets.only(right: 15),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("bg_switch_to_prfsnl")),
+                fit: BoxFit.fill)),
+        child: Text(
+          Utils.getText(context, StringRes.sendChallenge),
+          style: TextStyle(color: ColorRes.white, fontSize: 17),textAlign: TextAlign.center,
+        ),
+      ),
+      onTap: () {
+//                  unFriend(context);
+        if (selectedModuleIndex != null && selectedModuleIndex != -1)
+          sendChallenges();
+        else {
+          Utils.showToast(Utils.getText(context, StringRes.alertNoModuleFound));
+        }
+      },
     );
   }
 }
