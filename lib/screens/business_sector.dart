@@ -363,12 +363,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           i++;
         });
 
-        LearningModuleResponse learningModuleResponse =
-            LearningModuleResponse();
-        learningModuleResponse.data = arrData;
-
-        await Injector.prefs.setString(PrefKeys.learningModles,
-            jsonEncode(learningModuleResponse.toJson()));
+        saveModulesLocally(arrData);
 
         if (mounted)
           setState(() {
@@ -418,17 +413,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           Utils.showToast(Utils.getText(context, StringRes.subscribedSuccess));
           selectedModule.isAssign = 1;
         } else {
-          Utils.showToast(Utils.getText(context, StringRes.unSubscribedSuccess));
+          Utils.showToast(
+              Utils.getText(context, StringRes.unSubscribedSuccess));
           selectedModule.isAssign = 0;
         }
 
-        if (mounted)
-          setState(() {
-            arrLearningModules
-                .firstWhere(
-                    (module) => module.moduleId == selectedModule.moduleId)
-                .isAssign = selectedModule.isAssign;
-          });
+        arrLearningModules
+            .firstWhere((module) => module.moduleId == selectedModule.moduleId)
+            .isAssign = selectedModule.isAssign;
+
+        saveModulesLocally(arrLearningModules);
+        if (mounted) setState(() {});
       }
     }).catchError((e) {
       print("assignUserModule_" + e.toString());
@@ -478,6 +473,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           removeDownloadedQuestion();
         else
           downloadQuestions(selectedModule.moduleId);
+
+        saveModulesLocally(arrLearningModules);
 
         if (mounted) setState(() {});
       }
@@ -530,17 +527,18 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           QuestionsResponse questionsResponse = QuestionsResponse();
           questionsResponse.data = arrQuestions;
 
-          await Injector.prefs.setString(PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+          await Injector.prefs.setString(
+              PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
 
           //TODO remove media also
 
-        //Injector.cacheManager.emptyCache();
+          //Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            PushNotificationHelper(context, "").showLocalNotification(101, Utils.getText(context, StringRes.downloading));
+            PushNotificationHelper(context, "").showLocalNotification(
+                101, Utils.getText(context, StringRes.downloading));
 
-            await BackgroundFetch.
-            start().then((int status) async {
+            await BackgroundFetch.start().then((int status) async {
 //              if (mounted)setState(() {
 //                arrLearningModules
 //                    .firstWhere((module) => module.moduleId == moduleId)
@@ -549,7 +547,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
               await Injector.prefs.setString("datta", "scsdc");
 
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].mediaLink);
               print("complted");
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');
@@ -850,5 +849,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             style: TextStyle(color: ColorRes.white, fontSize: 17),
           )
         : Container();
+  }
+
+  void saveModulesLocally(List<LearningModuleData> arrLearningModules) async {
+    LearningModuleResponse learningModuleResponse = LearningModuleResponse();
+    learningModuleResponse.data = arrLearningModules;
+    await Injector.prefs.setString(
+        PrefKeys.learningModles, jsonEncode(learningModuleResponse.toJson()));
   }
 }
