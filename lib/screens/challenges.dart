@@ -979,23 +979,25 @@ class _ChallengesPageState extends State<ChallengesPage> {
           child: Container(
             height: 30,
             alignment: Alignment.center,
-            padding: EdgeInsets.only(left: 10),
+            padding: EdgeInsets.only(top: 13, left: 10),
             margin: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: ColorRes.white,
             ),
-            child: TextField(
-              onChanged: (text) {
-                searchText = text;
-                arrSearchFriends.clear();
+            child: Theme(
+              data: ThemeData(accentColor: ColorRes.colorPrimary),
+              child: TextField(
+                onChanged: (text) {
+                  searchText = text;
+                  arrSearchFriends.clear();
 
-                if (timeHandle != null) {
-                  timeHandle.cancel();
-                }
-                timeHandle = Timer(Duration(seconds: 1), () {
-                  getSearchFriends(searchText);
-                });
+                  if (timeHandle != null) {
+                    timeHandle.cancel();
+                  }
+                  timeHandle = Timer(Duration(seconds: 1), () {
+                    getSearchFriends(searchText);
+                  });
 
 //                if (text.isEmpty) {
 //                  arrSearchFriends = arrFriends;
@@ -1004,19 +1006,20 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //                } else {
 //                  getSearchFriends(searchText);
 //                }
-              },
-              textAlign: TextAlign.left,
-              maxLines: 1,
-              controller: searchController,
-              style: TextStyle(
-                fontSize: 16,
-                color: ColorRes.hintColor,
-              ),
-              decoration: InputDecoration(
+                },
+                textAlign: TextAlign.left,
+                maxLines: 1,
+                controller: searchController,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: ColorRes.hintColor,
+                ),
+                decoration: InputDecoration(
 //                              contentPadding:  EdgeInsets.symmetric(horizontal: 5),
-                hintText: Utils.getText(context, StringRes.searchForKeywords),
-                hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 16),
-                border: InputBorder.none,
+                  hintText: Utils.getText(context, StringRes.searchForKeywords),
+                  hintStyle: TextStyle(color: ColorRes.hintColor, fontSize: 16),
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ),
