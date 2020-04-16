@@ -562,7 +562,7 @@ class HomePageState extends State<HomePage>
             QuestionData questionData = QuestionData.fromJson(data);
             if (questionData != null && questionData.challengeId != null)
               DisplayDialogs.showChallengeDialog(
-                  context, questionData.firstName, questionData);
+                  context, questionData.firstName+" "+questionData.lastName, questionData);
           }
         }).catchError((e) {
           // Utils.showToast(e.toString());

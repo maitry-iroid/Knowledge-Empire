@@ -189,12 +189,12 @@ class PushNotificationHelper {
         btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.bonusPoint);
       }
 
-      Injector.setCustomerValueData(Injector.customerValueData);
-      customerValueBloc.setCustomerValue(Injector.customerValueData);
+//      Injector.setCustomerValueData(Injector.customerValueData);
+//      customerValueBloc.setCustomerValue(Injector.customerValueData);
 
-      /*CustomerValueRequest rq =  CustomerValueRequest();
+      CustomerValueRequest rq =  CustomerValueRequest();
       rq.userId = Injector.userId;
-      customerValueBloc.getCustomerValue(rq);*/
+      customerValueBloc.getCustomerValue(rq);
 
       CommonView().collectorDialog(context, mPushModel,btnText );
       Utils.playAchievementSound();
