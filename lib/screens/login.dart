@@ -76,16 +76,16 @@ class _LoginPageState extends State<LoginPage> {
     if (status.status != "0" || status.status == "2") {
       if (status.status == "2") {
         if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-          DisplayDialogs.showUpdateDialog(context, status.message, true);
+          DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
         } else {
           DateTime clickedTime =
               DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
           if (DateTime.now().difference(clickedTime).inDays >= 1) {
-            DisplayDialogs.showUpdateDialog(context, status.message, true);
+            DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
           }
         }
       } else {
-        DisplayDialogs.showUpdateDialog(context, status.message, false);
+        DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, false);
       }
     }
     localeBloc.setLocale(0);

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
@@ -330,18 +332,19 @@ class _PLPageState extends State<PLPage> {
                                   : ColorRes.rankingProBg)),
                     ),
                     onTap: () {
-                      if (index == 0) {
-                        selectedDay = 0;
-                        getPerformanceData(Const.plDay);
-                        print(0);
-                      } else if (index == 1) {
-                        selectedDay = 1;
-                        getPerformanceData(Const.plMonth);
-
-                        print(1);
-                      } else if (index == 2) {
-                        selectedDay = 2;
-                        getPerformanceData(Const.plYear);
+                      switch (index) {
+                        case 0:
+                          selectedDay = 0;
+                          getPerformanceData(Const.plDay);
+                          break;
+                        case 1:
+                          selectedDay = 1;
+                          getPerformanceData(Const.plMonth);
+                          break;
+                        case 2:
+                          selectedDay = 2;
+                          getPerformanceData(Const.plYear);
+                          break;
                       }
 
                       if (mounted) setState(() {});
@@ -814,20 +817,25 @@ class _PLPageState extends State<PLPage> {
 
         WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
           if (data != null) {
+            print(jsonEncode(data));
             CommonView.showCircularProgress(false, context);
             if (mounted)
               setState(() {
                 performanceData = PerformanceData.fromJson(data);
-
+                dataMap.clear();
+                openCloseMap.clear();
                 performanceData.cost.forEach((cost) {
-                  dataMap.putIfAbsent(
-                      cost.name, () => cost.currentCost.toDouble());
+                  dataMap.putIfAbsent(cost.name, () => cost.currentCost.toDouble());
                 });
+
+                print(dataMap);
 
                 performanceData.revenue.forEach((revenue) {
                   openCloseMap.putIfAbsent(
                       revenue.name, () => revenue.currentRevenue.toDouble());
                 });
+
+                print(openCloseMap);
               });
           }
         }).catchError((e) {
