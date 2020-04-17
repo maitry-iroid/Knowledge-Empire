@@ -512,7 +512,7 @@ class HomePageState extends State<HomePage>
       return CustomerSituationPage(
         questionDataCustomerSituation: widget.homeData.questionDataSituation,
         isChallenge: widget.homeData.isChallenge,
-        isCameFromExistingCustomer: widget.homeData.isCameFromNewCustomer,
+        isCameFromNewCustomer: widget.homeData.isCameFromNewCustomer,
         mRefreshAnimation: mRefreshAnimation,
       );
     else if (_selectedDrawerIndex ==

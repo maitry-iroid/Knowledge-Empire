@@ -750,7 +750,7 @@ class Utils {
         builder: (BuildContext context) => CustomerSituationPage(
               questionDataCustomerSituation: questionData,
               isChallenge: true,
-              isCameFromExistingCustomer: false,
+              isCameFromNewCustomer: false,
               nextChallengeQuestionData: nextChallengeQuestionData,
             ));
   }

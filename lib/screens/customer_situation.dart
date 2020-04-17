@@ -39,7 +39,7 @@ class CustomerSituationPage extends StatefulWidget {
   final QuestionData questionDataCustomerSituation;
   final bool isChallenge;
   final QuestionData nextChallengeQuestionData;
-  final bool isCameFromExistingCustomer;
+  final bool isCameFromNewCustomer;
   final RefreshAnimation mRefreshAnimation;
 
   CustomerSituationPage(
@@ -47,7 +47,7 @@ class CustomerSituationPage extends StatefulWidget {
       this.questionDataCustomerSituation,
       this.isChallenge,
       this.nextChallengeQuestionData,
-      this.isCameFromExistingCustomer,
+      this.isCameFromNewCustomer,
       this.mRefreshAnimation})
       : super(key: key);
 
@@ -80,7 +80,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     abcdList = alphaIndex;
 
-    if (!widget.isCameFromExistingCustomer) Utils.checkAudio();
+    if (widget.isCameFromNewCustomer) Utils.checkAudio();
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
@@ -253,7 +253,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
               onTap: () {
                 Utils.playClickSound();
-                if (widget.isCameFromExistingCustomer)
+                if (!widget.isCameFromNewCustomer)
                   Navigator.pop(context);
                 else
                   gotoMainScreen(context);
