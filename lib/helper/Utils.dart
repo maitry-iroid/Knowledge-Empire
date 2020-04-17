@@ -563,6 +563,25 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) {
+    if (type == Const.typeOrg ||
+        type == Const.typeChallenges ||
+        type == Const.typeReward ||
+        type == Const.typeRanking ||
+        type == Const.typeProfile ||
+        type == Const.typePl) {
+      Utils.isInternetConnected().then((isConnected) {
+        if (isConnected) {
+          clickWithValidation(type, context);
+        } else {
+          Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+        }
+      });
+    } else {
+      clickWithValidation(type, context);
+    }
+  }
+
+  static void clickWithValidation(String type, BuildContext context) {
     DashboardLockStatusData dashboardLockStatusData =
         Injector.dashboardLockStatusData;
 
@@ -570,76 +589,94 @@ class Utils {
         dashboardLockStatusData != null &&
         dashboardLockStatusData.organization != null &&
         dashboardLockStatusData.organization != 1) {
-      showLockReasonDialog(type, context,false);
+      showLockReasonDialog(type, context, false);
     } else if (type == Const.typePl &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.pl != null &&
         dashboardLockStatusData.pl != 1) {
-      showLockReasonDialog(type, context,false);
+      showLockReasonDialog(type, context, false);
     } else if (type == Const.typeRanking &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.ranking != null &&
         dashboardLockStatusData.ranking != 1) {
-      showLockReasonDialog(type, context,false);
+      showLockReasonDialog(type, context, false);
     } else if (type == Const.typeReward &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.achievement != null &&
         dashboardLockStatusData.achievement != 1) {
-      showLockReasonDialog(type, context,false);
+      showLockReasonDialog(type, context, false);
     } else if (type == Const.typeChallenges &&
         dashboardLockStatusData != null &&
         dashboardLockStatusData.challenge != null &&
         dashboardLockStatusData.challenge != 1) {
-      showLockReasonDialog(type, context,false);
+      showLockReasonDialog(type, context, false);
     } else {
       performNavigation(type, context);
     }
   }
 
-  static ifIsLocked(String type) {
+  static Widget ifIsLocked(String type, BuildContext context) {
     DashboardLockStatusData dashboardLockStatusData =
         Injector.dashboardLockStatusData;
-    print(type);
     switch (type) {
       case "reward":
-        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+        return dashboardLockStatusData != null &&
                 dashboardLockStatusData.achievement != null &&
                 dashboardLockStatusData.achievement != 1
-            ? "pro_lock"
-            : "ic_pro_bg_main_card");
+            ? lockUi(type, context)
+            : Container();
         break;
       case "challenge":
-        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+        return dashboardLockStatusData != null &&
                 dashboardLockStatusData.challenge != null &&
                 dashboardLockStatusData.challenge != 1
-            ? "pro_lock"
-            : "ic_pro_bg_main_card");
+            ? lockUi(type, context)
+            : Container();
         break;
       case "org":
-        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+        return dashboardLockStatusData != null &&
                 dashboardLockStatusData.organization != null &&
                 dashboardLockStatusData.organization != 1
-            ? "pro_lock"
-            : "ic_pro_bg_main_card");
+            ? lockUi(type, context)
+            : Container();
         break;
       case "pl":
-        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+        return dashboardLockStatusData != null &&
                 dashboardLockStatusData.pl != null &&
                 dashboardLockStatusData.pl != 1
-            ? "pro_lock"
-            : "ic_pro_bg_main_card");
+            ? lockUi(type, context)
+            : Container();
         break;
       case "ranking":
-        return Utils.getAssetsImg(dashboardLockStatusData != null &&
+        return dashboardLockStatusData != null &&
                 dashboardLockStatusData.ranking != null &&
                 dashboardLockStatusData.ranking != 1
-            ? "pro_lock"
-            : "ic_pro_bg_main_card");
+            ? lockUi(type, context)
+            : Container();
         break;
       default:
-        return Utils.getAssetsImg("ic_pro_bg_main_card");
+        return Container();
         break;
     }
+  }
+
+  static Widget lockUi(String type, BuildContext context) {
+    return InkResponse(
+      onTap: () {
+        Utils.playClickSound();
+        Utils.performDashboardItemClick(context, type);
+      },
+      child: Container(
+        foregroundDecoration:
+            BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("pro_lock")),
+                //bg_main_card
+                fit: BoxFit.fill)),
+      ),
+    );
   }
 
   static checkAudio() {
@@ -887,11 +924,13 @@ class Utils {
 //        .document(userId)
 //        .updateData({Const.keyBadgeCount: FieldValue.increment(1)});
 //  }
-  static void showLockReasonDialog(String typeOrg, BuildContext context,isForInternet) {
+  static void showLockReasonDialog(
+      String typeOrg, BuildContext context, isForInternet) {
     showDialog(
         context: context,
         builder: (BuildContext context) => OrgInfoDialog(
-              text: Utils.getText(context, isForInternet?typeOrg:getLockReasonText(typeOrg)),
+              text: Utils.getText(context,
+                  isForInternet ? typeOrg : getLockReasonText(typeOrg)),
               isForIntroDialog: true,
             ));
   }

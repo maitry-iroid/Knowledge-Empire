@@ -389,9 +389,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
-    Fluttertoast.showToast(
-        msg:
-            "Your friend will have to answer ${(arrRewards.length - index)} questions. Ifhe wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.");
+    String message =
+        "Your friend will have to answer ${(arrRewards.length - index)} questions. Ifhe wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
+    Utils.showLockReasonDialog(message,context,true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
 
@@ -485,9 +485,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
         style: TextStyle(fontSize: 20),
       ),
       onPressed: () {
+        Navigator.pop(context);
         arrFriendsToShow[index].isFriend = 0;
         friendUnFriendUser(index, 2);
-        Navigator.pop(context);
       },
     );
 
@@ -1048,7 +1048,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 fit: BoxFit.fill)),
         child: Text(
           Utils.getText(context, StringRes.sendChallenge),
-          style: TextStyle(color: ColorRes.white, fontSize: 17),textAlign: TextAlign.center,
+          style: TextStyle(color: ColorRes.white, fontSize: 17),
+          textAlign: TextAlign.center,
         ),
       ),
       onTap: () {

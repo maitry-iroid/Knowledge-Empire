@@ -462,8 +462,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ? BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Utils.getAssetsImg(
-                                          'bg_switch_to_prfsnl')),
-                                      fit: BoxFit.fill))
+                                          'bg_switch_to_prfsnl'))))
                               : BoxDecoration(
                                   color: Injector.isBusinessMode
                                       ? null

@@ -821,11 +821,13 @@ class _PLPageState extends State<PLPage> {
             CommonView.showCircularProgress(false, context);
             if (mounted)
               setState(() {
+//                performanceData = new PerformanceData();
                 performanceData = PerformanceData.fromJson(data);
                 dataMap.clear();
                 openCloseMap.clear();
                 performanceData.cost.forEach((cost) {
-                  dataMap.putIfAbsent(cost.name, () => cost.currentCost.toDouble());
+                  dataMap.putIfAbsent(
+                      cost.name, () => cost.currentCost.toDouble());
                 });
 
                 print(dataMap);

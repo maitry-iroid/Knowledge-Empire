@@ -117,48 +117,54 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
   showMainItem(String type) {
     print(Injector.dashboardLockStatusData);
-    return InkResponse(
-      child: Container(
-//         height: Utils.getDeviceHeight(context) / 15,
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.ifIsLocked(type)),
-                //bg_main_card
-                fit: BoxFit.fill)),
-        child: Row(
-          children: <Widget>[
-            Stack(
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        InkResponse(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image:
+                        AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),
+                    //bg_main_card
+                    fit: BoxFit.fill)),
+            child: Row(
               children: <Widget>[
-                Image(
-                  image: AssetImage(Utils.getAssetsImg(getImage(type))),
-                  width: Utils.getDeviceHeight(context) / 5.8,
+                Stack(
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage(Utils.getAssetsImg(getImage(type))),
+                      width: Utils.getDeviceHeight(context) / 5.8,
+                    ),
+                    Utils.showUnreadCount(type, 2, 2, arrDashboardData)
+                  ],
                 ),
-                Utils.showUnreadCount(type, 2, 2, arrDashboardData)
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Text(
+                    getTitle(type),
+                    maxLines: 2,
+                    style:
+                        TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
               ],
             ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                getTitle(type),
-                maxLines: 2,
-                style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
-                overflow: TextOverflow.ellipsis,
-              ),
-            )
-          ],
+          ),
+          onTap: () {
+            Utils.playClickSound();
+            Utils.performDashboardItemClick(context, type);
+          },
         ),
-      ),
-      onTap: () {
-        Utils.playClickSound();
-        Utils.performDashboardItemClick(context, type);
-      },
+        Utils.ifIsLocked(type,context),
+
+      ],
     );
   }
-
-
 
   getTitle(String type) {
     if (type == Const.typeBusinessSector)

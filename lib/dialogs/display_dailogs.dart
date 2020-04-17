@@ -99,6 +99,47 @@ class DisplayDialogs {
         ));
   }
 
+  static showRewardDialog(BuildContext context, String userName) {
+    showDialog(
+        context: context,
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            width: Utils.getDeviceWidth(context) / 2,
+            height: Utils.getDeviceWidth(context) / 4,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(userName,
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center),
+                  SizedBox(height: 20),
+                  RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Utils.playClickSound();
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: ColorRes.colorPrimary,
+                      child: Text(Utils.getText(context, StringRes.ok),
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .copyWith(color: ColorRes.white)))
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
   static showIntroKnowledgeEmpire(BuildContext context) {
     showDialog(
         context: context,
