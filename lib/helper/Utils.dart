@@ -569,6 +569,7 @@ class Utils {
         type == Const.typeRanking ||
         type == Const.typeProfile ||
         type == Const.typePl) {
+
       Utils.isInternetConnected().then((isConnected) {
         if (isConnected) {
           clickWithValidation(type, context);
