@@ -515,7 +515,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           initialPageType: Const.typeCustomerSituation,
           questionDataSituation: questionData,
           isChallenge: isChallenge,
-          isCameFromExistingCustomer: false);
+          isCameFromNewCustomer: true);
 
       Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
           ModalRoute.withName("/home"));

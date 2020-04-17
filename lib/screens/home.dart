@@ -133,6 +133,14 @@ class HomePageState extends State<HomePage>
           onTap: () => _onSelectItem(i)));
     }
 
+    if (widget.homeData != null &&
+        widget.homeData.isCameFromNewCustomer != null &&
+        widget.homeData.isCameFromNewCustomer) isCoinViseble = true;
+
+    print("==========");
+    print(isCoinViseble.toString());
+    print("==========");
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: new SizedBox(
@@ -154,7 +162,7 @@ class HomePageState extends State<HomePage>
             isShowMenu: true,
             openProfile: openProfile,
           ),
-          isCoinViseble?Stack(
+          Stack(
             fit: StackFit.expand,
             children: <Widget>[
               coinWidget(250, 150),
@@ -167,7 +175,7 @@ class HomePageState extends State<HomePage>
               coinWidget(200, 550),
               coinWidget(350, 650),
             ],
-          ):Container(),
+          ),
         ],
       )),
     );
@@ -512,7 +520,7 @@ class HomePageState extends State<HomePage>
       return CustomerSituationPage(
         questionDataCustomerSituation: widget.homeData.questionDataSituation,
         isChallenge: widget.homeData.isChallenge,
-        isCameFromExistingCustomer: widget.homeData.isCameFromExistingCustomer,
+        isCameFromExistingCustomer: widget.homeData.isCameFromNewCustomer,
         mRefreshAnimation: mRefreshAnimation,
       );
     else if (_selectedDrawerIndex ==
@@ -740,6 +748,10 @@ class HomePageState extends State<HomePage>
 
   @override
   onRefresh(bool isVisible) {
+    print("onRefresh");
+    print(isCoinViseble.toString());
+    print("onRefresh");
+
     setState(() {
       isCoinViseble = isVisible;
     });

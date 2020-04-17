@@ -13,7 +13,7 @@ class HomeData {
   int friendId;
   bool isChallenge;
   bool isCameFromDashboard;
-  bool isCameFromExistingCustomer;
+  bool isCameFromNewCustomer;
   List<GetFriendsData> arrFriends = List();
 
   HomeData({
@@ -26,7 +26,7 @@ class HomeData {
     this.friendId,
     this.isChallenge,
     this.isCameFromDashboard,
-    this.isCameFromExistingCustomer,
+    this.isCameFromNewCustomer,
     this.arrFriends,
   });
 }

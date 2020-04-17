@@ -93,7 +93,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       }
 
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-      widget.mRefreshAnimation.onRefresh(!widget.isCameFromExistingCustomer);
+      widget.mRefreshAnimation.onRefresh(widget.isCameFromExistingCustomer);
       setState(() {});
     }
   }

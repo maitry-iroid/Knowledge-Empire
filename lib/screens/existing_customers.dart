@@ -302,7 +302,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
               HomeData homeData = HomeData(
                   initialPageType: Const.typeCustomerSituation,
                   questionDataSituation: arrQuestions[index],
-                  isCameFromExistingCustomer: true,
+                  isCameFromNewCustomer: false,
                   isChallenge: false);
 
               Navigator.push(context, FadeRouteHome(homeData: homeData));
