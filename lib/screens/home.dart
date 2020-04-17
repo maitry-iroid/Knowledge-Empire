@@ -702,14 +702,14 @@ class HomePageState extends State<HomePage>
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
 
-//    Future.delayed(const Duration(milliseconds: 500), () {
-//      PushNotificationHelper pushNotificationHelper =
-//          PushNotificationHelper(context);
-//
-//      if (pushNotificationHelper != null) {
-//        pushNotificationHelper.initPush();
-//      }
-//    });
+    Future.delayed(const Duration(milliseconds: 500), () {
+      PushNotificationHelper pushNotificationHelper =
+          PushNotificationHelper(context);
+
+      if (pushNotificationHelper != null) {
+        pushNotificationHelper.initPush();
+      }
+    });
 
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 

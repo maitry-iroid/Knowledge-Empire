@@ -143,12 +143,7 @@ class Injector {
       isBusinessMode = mode == Const.businessMode;
 
       getIntroData();
-      PushNotificationHelper pushNotificationHelper =
-          PushNotificationHelper(buildContext);
 
-      if (pushNotificationHelper != null) {
-        pushNotificationHelper.initPush();
-      }
     }
   }
 
