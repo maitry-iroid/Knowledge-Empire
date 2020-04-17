@@ -352,6 +352,10 @@ class StringRes {
 
   static var noOffline = "noOffline";
 
+  static var my = "my";
+  static var mQuestions = "mQuestions";
+  static var mHis = "mHis";
+
 //  static var empOMasterDetails = "empOMasterDetails";
 
   static Map<String, Map<String, String>> localizedValues = {
@@ -613,7 +617,6 @@ class StringRes {
       'readyForCustomerBtn': 'Click on your Sales-o-Meter',
       'customersRelationShip': "Customer Relationship Management",
 
-
       'customersRelationShipContent':
           "\n\nMy name is Li Wei. Just like the english word leeway.\nI am in charge of Customer Relationship Management (CRM) in your company. Shall we have a look at the different business sectors to find potential customers?",
       'areaOfCompetency': "Area of competency",
@@ -736,14 +739,15 @@ class StringRes {
       'bonusPoint': "Bonus Point",
       'dear': "Dear",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection",
-      'update':"Update now",
-      'updateLatter':"Update letter",
-      'servicePerson':"Service Person",
-      'customerCapacity':"Customer Capacity",
-      'noOffline':"Sorry, this feature is only available while online.",
-
-
+      'noInternet': "Check Your Internet Connection",
+      'update': "Update now",
+      'updateLatter': "Update letter",
+      'servicePerson': "Service Person",
+      'customerCapacity': "Customer Capacity",
+      'noOffline': "Sorry, this feature is only available while online.",
+      'my': "My",
+      'mQuestions': "Questions",
+      'mHis': "His",
     },
     'de': {
       //region german
@@ -1109,12 +1113,15 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection",
-      'update':"Jetzt aktualisieren",
-      'updateLatter':"Später aktualisieren",
-      'servicePerson':"Service Person",
-      'customerCapacity':"Customer Capacity",
-      'noOffline':"Diese Funktion ist leider nur online verfügbar.",
+      'noInternet': "Check Your Internet Connection",
+      'update': "Jetzt aktualisieren",
+      'updateLatter': "Später aktualisieren",
+      'servicePerson': "Service Person",
+      'customerCapacity': "Customer Capacity",
+      'noOffline': "Diese Funktion ist leider nur online verfügbar.",
+      'my': "My",
+      'mQuestions': "Questions",
+      'mHis': "His",
     },
     'zh': {
       //      region chinese
@@ -1310,8 +1317,7 @@ class StringRes {
 
       //existing customer
       'servingYourExisting': '服务现有客户',
-      'servingYourExistingDialog':
-          ', \n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
+      'servingYourExistingDialog': ', \n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
 
       'listOfExisting': '现有客户名单',
       'listOfExistingDetails':
@@ -1469,12 +1475,15 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection",
-      'update':"立即升级",
-      'updateLatter':"以后再说",
-      'servicePerson':"Service Person",
-      'customerCapacity':"Customer Capacity",
-      'noOffline':"很抱歉 此项功能需要连接互联网",
+      'noInternet': "Check Your Internet Connection",
+      'update': "立即升级",
+      'updateLatter': "以后再说",
+      'servicePerson': "Service Person",
+      'customerCapacity': "Customer Capacity",
+      'noOffline': "很抱歉 此项功能需要连接互联网",
+      'my': "My",
+      'mQuestions': "Questions",
+      'mHis': "His",
     }
   };
 
@@ -1682,12 +1691,15 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection",
-      'update':"Update Application",
-      'updateLatter':"Update letter",
-      'servicePerson':"Service Person",
-      'customerCapacity':"Customer Capacity",
-      'noOffline':"Sorry, this feature is only available while online.",
+      'noInternet': "Check Your Internet Connection",
+      'update': "Update Application",
+      'updateLatter': "Update letter",
+      'servicePerson': "Service Person",
+      'customerCapacity': "Customer Capacity",
+      'noOffline': "Sorry, this feature is only available while online.",
+      'my': "My",
+      'mQuestions': "Questions",
+      'mHis': "His",
     },
     'de': {
       //region German
@@ -2005,12 +2017,15 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection",
-      'update':"Jetzt aktualisieren",
-      'updateLatter':"Später aktualisieren",
-      'servicePerson':"Service Person",
-      'customerCapacity':"Customer Capacity",
-      'noOffline':"Diese Funktion ist leider nur online verfügbar.",
+      'noInternet': "Check Your Internet Connection",
+      'update': "Jetzt aktualisieren",
+      'updateLatter': "Später aktualisieren",
+      'servicePerson': "Service Person",
+      'customerCapacity': "Customer Capacity",
+      'noOffline': "Diese Funktion ist leider nur online verfügbar.",
+      'my': "My",
+      'mQuestions': "Questions",
+      'mHis': "His",
     },
     'zh': {
       //region chines
@@ -2206,7 +2221,8 @@ class StringRes {
 
       //Business sector screen dialog
       'customerRelation': '学习模块介绍',
-      'customerRelationDetails': '\n在这里，您可以搜索学习模块，加入和取消加入，\n并决定是否要下载内容以供将来离线使用。',
+      'customerRelationDetails':
+          '\n在这里，您可以搜索学习模块，加入和取消加入，\n并决定是否要下载内容以供将来离线使用。',
       'areaOfComp': '学习模块介绍',
       'areaOfCompDetails':
           '每个学习模块将测试特定的知识领域。\n"大小"表示每个模块中的问题数量。\n您可以点击学习模块阅读描述，并决定是否要加入它们。\n某些学习模块已由贵公司分配给您，无法取消加入。',
@@ -2305,12 +2321,15 @@ class StringRes {
       'dear': "Dear",
       'bonusPoint': "Bonus Point",
       'hi': "Hi",
-      'noInternet':"Check Your Internet Connection",
-      'update':"立即升级",
-      'updateLatter':"以后再说",
-      'servicePerson':"Service Person",
-      'customerCapacity':"Customer Capacity",
-      'noOffline':"很抱歉 此项功能需要连接互联网",
+      'noInternet': "Check Your Internet Connection",
+      'update': "立即升级",
+      'updateLatter': "以后再说",
+      'servicePerson': "Service Person",
+      'customerCapacity': "Customer Capacity",
+      'noOffline': "很抱歉 此项功能需要连接互联网",
+      'my': "My",
+      'mQuestions': "Questions",
+      'mHis': "His",
     }
   };
 }

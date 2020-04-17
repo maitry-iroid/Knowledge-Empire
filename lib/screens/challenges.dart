@@ -165,6 +165,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
           ),
           Positioned(
             right: 0,
+            top: 0,
             child: showSendChallengeButton(),
           )
         ],
@@ -323,7 +324,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "My \$",
+                      "${Utils.getText(context, StringRes.my)} \$",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -333,7 +334,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     Expanded(
                       child: Center(
                         child: Text(
-                          "# Questions",
+                          "# ${Utils.getText(context, StringRes.mQuestions)}",
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
@@ -343,7 +344,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       ),
                     ),
                     Text(
-                      "His \$",
+                      "${Utils.getText(context, StringRes.mHis)} \$",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white

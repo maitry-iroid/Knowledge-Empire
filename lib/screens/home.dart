@@ -154,7 +154,7 @@ class HomePageState extends State<HomePage>
             isShowMenu: true,
             openProfile: openProfile,
           ),
-          Stack(
+          /*Stack(
             fit: StackFit.expand,
             children: <Widget>[
               coinWidget(250, 150),
@@ -167,7 +167,7 @@ class HomePageState extends State<HomePage>
               coinWidget(200, 550),
               coinWidget(350, 650),
             ],
-          ),
+          ),*/
         ],
       )),
     );
@@ -740,8 +740,8 @@ class HomePageState extends State<HomePage>
 
   @override
   onRefresh() {
-    setState(() {
+   /* setState(() {
       isCoinViseble = true;
-    });
+    });*/
   }
 }
