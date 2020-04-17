@@ -318,6 +318,7 @@ class CommonView {
   static Widget showBGDashboardView(BuildContext context) {
 //    CommonView.showDashboardView(context);
     return Container(
+
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg("intro_bub_background")),
