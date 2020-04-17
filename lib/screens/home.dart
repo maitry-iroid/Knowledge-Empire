@@ -107,6 +107,20 @@ class HomePageState extends State<HomePage>
   RefreshAnimation mRefreshAnimation;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("init_______home");
+    dashboardLockStatusData = Injector.dashboardLockStatusData;
+
+    initStateMethods();
+  }
+
+  @override
   Widget build(BuildContext context) {
     initDrawerItems();
 
@@ -159,17 +173,6 @@ class HomePageState extends State<HomePage>
     );
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initStateMethods();
-  }
-
   Future<void> initStateMethods() async {
     UpdateDialogModel status = await Injector.getCurrentVersion(context);
     if (status != null) {
@@ -207,9 +210,11 @@ class HomePageState extends State<HomePage>
 
         WebApi()
             .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) {
+            .then((data) async {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+            await Injector.prefs.setString(PrefKeys.lockStatusData,
+                jsonEncode(dashboardLockStatusData.toJson()));
             Injector.dashboardLockStatusData = dashboardLockStatusData;
             if (mounted) setState(() {});
           }
@@ -264,12 +269,16 @@ class HomePageState extends State<HomePage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
+    print("=============");
+    print(state.toString());
+
     if (state == AppLifecycleState.resumed) {
+//      print("====== resume ======");
       Utils.removeBadge();
     } else if (state == AppLifecycleState.inactive) {
-      print("====== inactive ======");
+//      print("====== inactive ======");
     } else if (state == AppLifecycleState.paused) {
-      print("====== paused ======");
+//      print("====== paused ======");
     }
   }
 
@@ -693,14 +702,14 @@ class HomePageState extends State<HomePage>
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
 
-    Future.delayed(const Duration(milliseconds: 500), () {
-      PushNotificationHelper pushNotificationHelper = PushNotificationHelper(
-          context, Utils.getText(context, StringRes.home));
-
-      if (pushNotificationHelper != null) {
-        pushNotificationHelper.initPush();
-      }
-    });
+//    Future.delayed(const Duration(milliseconds: 500), () {
+//      PushNotificationHelper pushNotificationHelper =
+//          PushNotificationHelper(context);
+//
+//      if (pushNotificationHelper != null) {
+//        pushNotificationHelper.initPush();
+//      }
+//    });
 
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 

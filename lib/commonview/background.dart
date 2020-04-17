@@ -291,7 +291,7 @@ class CommonView {
     return Injector.isBusinessMode
         ? Stack(
             children: <Widget>[
-              showDashboardView(context, null, null),
+              showDashboardView(context, null),
               Container(
                 color: ColorRes.black.withOpacity(0.75),
               )
@@ -318,19 +318,18 @@ class CommonView {
   static Widget showBGDashboardView(BuildContext context) {
 //    CommonView.showDashboardView(context);
     return Container(
-
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg("intro_bub_background")),
                 fit: BoxFit.fill)));
   }
 
-  List<GetDashboardData> data = List();
+  List<UnreadBubbleCountData> data = List();
 
   static Widget showDashboardView(
-      BuildContext context,
-      List<GetDashboardData> data,
-      DashboardLockStatusData dashboardLockStatusData) {
+      BuildContext context, List<UnreadBubbleCountData> data) {
+    DashboardLockStatusData dashboardLockStatusData =
+        Injector.dashboardLockStatusData;
     print(dashboardLockStatusData);
     return Container(
       width: double.infinity,

@@ -30,7 +30,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
   AnimationController rotationController;
 
-  List<GetDashboardData> dashboardData = List();
+  List<UnreadBubbleCountData> unreadBubbleCountData = List();
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
@@ -109,7 +109,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, dashboardData, dashboardLockStatusData),
+              CommonView.showDashboardView(context, unreadBubbleCountData),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -128,15 +128,13 @@ class DashboardGamePageState extends State<DashboardGamePage>
         WebApi().callAPI(WebApi.rqUnreadBubbleCount, rq.toJson()).then((data) {
           if (data != null) {
             data.forEach((v) {
-              dashboardData.add(GetDashboardData.fromJson(v));
+              unreadBubbleCountData.add(UnreadBubbleCountData.fromJson(v));
             });
 
-            if (dashboardData.isNotEmpty) if (mounted) setState(() {});
+            if (unreadBubbleCountData.isNotEmpty) if (mounted) setState(() {});
           }
-          getLockStatus();
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
-          getLockStatus();
         });
       }
     });

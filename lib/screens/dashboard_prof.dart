@@ -17,7 +17,7 @@ class DashboardProfPage extends StatefulWidget {
 }
 
 class DashboardProfPageState extends State<DashboardProfPage> {
-  List<GetDashboardData> arrDashboardData = List();
+  List<UnreadBubbleCountData> arrDashboardData = List();
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
         WebApi().callAPI(WebApi.rqUnreadBubbleCount, rq.toJson()).then((data) {
           if (data != null) {
             data.forEach((v) {
-              arrDashboardData.add(GetDashboardData.fromJson(v));
+              arrDashboardData.add(UnreadBubbleCountData.fromJson(v));
             });
 
             if (arrDashboardData.isNotEmpty) if (mounted) setState(() {});

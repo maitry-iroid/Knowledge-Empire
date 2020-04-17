@@ -69,7 +69,7 @@ class _TeamPageState extends State<TeamPage> {
 //          child: showMainBody(),
           child: Column(
             children: <Widget>[
-              secondScreen != true
+              !secondScreen
                   ? CommonView.showTitle(context, StringRes.team)
                   : showTitleSecondScreen(context, StringRes.team),
               showMainBody()
@@ -84,41 +84,6 @@ class _TeamPageState extends State<TeamPage> {
     return Expanded(
         child: Column(
       children: <Widget>[
-        Injector.customerValueData.totalBalance <= 0
-            ? InkResponse(
-                child: Container(
-//                  height: 35,
-                  width: 100,
-                  padding:
-                      EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
-                  alignment: Alignment.center,
-                  child: Text(
-                    Utils.getText(
-                        context,
-                        Injector.customerValueData == null ||
-                                Injector.customerValueData?.manager == null ||
-                                Injector.customerValueData.manager.isEmpty
-                            ? StringRes.bailout
-                            : StringRes.requestBailOut),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: ColorRes.white,
-                        fontSize: 15,
-                        letterSpacing: 0.7),
-                  ),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg('bg_switch_to_prfsnl')),
-                          fit: BoxFit.fill)),
-                ),
-                onTap: () async {
-                  Utils.playClickSound();
-                  _asyncConfirmDialog(context);
-                },
-              )
-            : Container(),
         Expanded(
           child: Row(
             children: <Widget>[showFirstHalf(), showSecondHalf()],
@@ -157,17 +122,17 @@ class _TeamPageState extends State<TeamPage> {
     return Container(
         alignment: Alignment.topCenter,
         height: 30,
-        margin: secondScreen != true
+        margin: !secondScreen
             ? EdgeInsets.only(left: 15, right: 15, top: 8, bottom: 10)
             : EdgeInsets.only(left: 15, right: 10, top: 15, bottom: 10),
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg("bg_grey_teamheader")),
                 fit: BoxFit.fill)),
-        padding: secondScreen != true
+        padding: !secondScreen
             ? EdgeInsets.only(left: 30, right: 5, top: 5, bottom: 5)
             : EdgeInsets.only(left: 13, right: 5, top: 5, bottom: 5),
-        child: secondScreen != true
+        child: !secondScreen
             ? Row(
                 children: <Widget>[
                   listHeaderText(
@@ -260,12 +225,14 @@ class _TeamPageState extends State<TeamPage> {
         if (mounted)
           setState(() {
             secondScreen = true;
-
+            selectedTeamUserId = user.userId;
             getTeamUserById(user.userId);
           });
       },
     );
   }
+
+  int selectedTeamUserId = -1;
 
   profileBorderShow() {
     return BoxDecoration(
@@ -342,25 +309,36 @@ class _TeamPageState extends State<TeamPage> {
                     ),
                   ),
                 ),
-                Container(
-                  height: 25,
-                  width: 75,
-                  margin: EdgeInsets.only(left: 0, top: 8, bottom: 5, right: 5),
-                  padding:
-                      EdgeInsets.only(left: 4, top: 3, bottom: 0, right: 5),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg("bg_change_pw")),
-                          fit: BoxFit.fill)),
-                  child: Center(
-                    child: Text(
-                      Utils.getText(context, StringRes.bailout),
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
+                selectedTeamUserId != -1
+                    ? InkResponse(
+                        child: Container(
+//                  height: 35,
+                          width: 80,
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          padding: EdgeInsets.only(
+                              left: 5, right: 5, top: 5, bottom: 5),
+                          alignment: Alignment.center,
+                          child: Text(
+                            Utils.getText(context, StringRes.bailout),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: ColorRes.white,
+                                fontSize: 15,
+                                letterSpacing: 0.7),
+                          ),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(Utils.getAssetsImg(
+                                      'bg_switch_to_prfsnl')),
+                                  fit: BoxFit.fill)),
+                        ),
+                        onTap: () async {
+                          Utils.playClickSound();
+                          _asyncConfirmDialog(context);
+                        },
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -427,7 +405,7 @@ class _TeamPageState extends State<TeamPage> {
       child: Container(
         margin: EdgeInsets.only(right: 15, bottom: 8),
         decoration: BoxDecoration(
-            color: Injector.isBusinessMode ? null : ColorRes.white,
+            color: Injector.isBusinessMode ? ColorRes.white.withOpacity(0.2) : ColorRes.white,
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: SingleChildScrollView(
           child: Column(
@@ -467,7 +445,6 @@ class _TeamPageState extends State<TeamPage> {
   pieChart(String title, int type) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: <Widget>[
           Container(
             height: 25,
@@ -480,7 +457,7 @@ class _TeamPageState extends State<TeamPage> {
             child: Center(
               child: Text(
                 title,
-                style: TextStyle(color: ColorRes.white,fontSize: 17),
+                style: TextStyle(color: ColorRes.white, fontSize: 17),
               ),
             ),
           ),
@@ -570,6 +547,7 @@ class _TeamPageState extends State<TeamPage> {
               Utils.playClickSound();
               if (mounted)
                 setState(() {
+                  selectedTeamUserId = -1;
                   secondScreen = false;
                 });
             },
@@ -613,7 +591,6 @@ class _TeamPageState extends State<TeamPage> {
   Future getTeamUsers() async {
     if (Injector.introData == null || Injector.introData.team1 == 0)
       await DisplayDialogs.showYourTeamsPerformance(context);
-
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -736,6 +713,7 @@ class _TeamPageState extends State<TeamPage> {
     BailOutRequest rq = BailOutRequest();
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
+    rq.teamUserId = selectedTeamUserId != -1 ? selectedTeamUserId : null;
 
     customerValueBloc?.bailOut(rq);
   }

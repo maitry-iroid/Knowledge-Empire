@@ -97,7 +97,7 @@ class HelpPageState extends State<HelpPage> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, null,Injector.dashboardLockStatusData),
+              CommonView.showDashboardView(context, null),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,

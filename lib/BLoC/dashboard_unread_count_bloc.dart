@@ -13,9 +13,9 @@ import 'package:rxdart/rxdart.dart';
 final dashboardUnreadCountBloc = DashboardUnreadCount();
 
 class DashboardUnreadCount {
-  final _getDashboardCountSubject = PublishSubject<List<GetDashboardData>>();
+  final _getDashboardCountSubject = PublishSubject<List<UnreadBubbleCountData>>();
 
-  Observable<List<GetDashboardData>> get getDashboardUnreadCount =>
+  Observable<List<UnreadBubbleCountData>> get getDashboardUnreadCount =>
       _getDashboardCountSubject.stream;
 
   getDashboardUnreadCountData(DashboardRequest rq) async {
@@ -23,17 +23,17 @@ class DashboardUnreadCount {
         await Injector.webApi.callAPI(WebApi.rqUnreadBubbleCount, rq.toJson());
 
     if (data != null) {
-      List<GetDashboardData> arrData = List();
+      List<UnreadBubbleCountData> arrData = List();
 
       data.forEach((v) {
-        arrData.add(GetDashboardData.fromJson(v));
+        arrData.add(UnreadBubbleCountData.fromJson(v));
       });
 
       _getDashboardCountSubject.sink.add(arrData);
     }
   }
 
-  updateQuestions(List<GetDashboardData> arrQuestions) async {
+  updateQuestions(List<UnreadBubbleCountData> arrQuestions) async {
     if (arrQuestions != null && arrQuestions.isNotEmpty) {
       _getDashboardCountSubject.sink.add(arrQuestions);
     }

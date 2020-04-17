@@ -17,16 +17,13 @@ import 'package:ke_employee/models/register_for_push.dart';
 
 class PushNotificationHelper {
   BuildContext context;
-  String page;
   PushModel mPushModel;
 
-  PushNotificationHelper(BuildContext _context, String _page) {
+  PushNotificationHelper(BuildContext _context) {
     this.context = _context;
-    this.page = _page;
   }
 
   void initPush() async {
-    print("register___" + page);
 
     firebaseCloudMessagingListeners();
 

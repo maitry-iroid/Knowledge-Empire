@@ -15,3 +15,4 @@ class Repository {
   Future<dynamic> releaseResource(ReleaseResourceRequest rq) =>
       webApi.callAPI(WebApi.rqReleaseResource, rq.toJson());
 }
+

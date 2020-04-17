@@ -546,8 +546,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           //Injector.cacheManager.emptyCache();
 
           for (int i = 0; i < arrQuestions.length; i++) {
-            PushNotificationHelper(context, "").showLocalNotification(
-                101, Utils.getText(context, StringRes.downloading));
+//            PushNotificationHelper(context).showLocalNotification(
+//                101, Utils.getText(context, StringRes.downloading));
 
             await BackgroundFetch.start().then((int status) async {
 //              if (mounted)setState(() {

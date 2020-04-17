@@ -768,7 +768,7 @@ class Utils {
   }
 
   static showUnreadCount(
-      String type, double top, double right, List<GetDashboardData> data) {
+      String type, double top, double right, List<UnreadBubbleCountData> data) {
     return Positioned(
         right: right,
         top: top,
@@ -795,7 +795,7 @@ class Utils {
         ));
   }
 
-  static int getCount(String _type, List<GetDashboardData> data) {
+  static int getCount(String _type, List<UnreadBubbleCountData> data) {
     if (data != null) {
       int type = 0;
 

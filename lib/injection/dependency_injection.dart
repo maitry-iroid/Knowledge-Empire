@@ -19,9 +19,11 @@ import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/force_update.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/register_for_push.dart';
+import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +39,7 @@ class Injector {
   static CustomerValueData customerValueData;
   static IntroData introData;
   static DashboardLockStatusData dashboardLockStatusData;
+  static UnreadBubbleCountData unreadBubbleCountData;
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
@@ -73,6 +76,8 @@ class Injector {
   Injector._internal();
 
   static getInstance() async {
+    print("=============== riddhi ");
+
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
 
@@ -120,6 +125,14 @@ class Injector {
 
         updateIntroData();
       }
+      if (prefs.getString(PrefKeys.lockStatusData) != null) {
+        dashboardLockStatusData = DashboardLockStatusData.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.lockStatusData)));
+      }
+      if (prefs.getString(PrefKeys.unreadBubbleCountData) != null) {
+        unreadBubbleCountData = UnreadBubbleCountData.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.unreadBubbleCountData)));
+      }
 
       headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();
@@ -130,6 +143,12 @@ class Injector {
       isBusinessMode = mode == Const.businessMode;
 
       getIntroData();
+      PushNotificationHelper pushNotificationHelper =
+          PushNotificationHelper(buildContext);
+
+      if (pushNotificationHelper != null) {
+        pushNotificationHelper.initPush();
+      }
     }
   }
 
@@ -158,7 +177,8 @@ class Injector {
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
-    await Injector.prefs.setString(PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
+    await Injector.prefs.setString(
+        PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
   }
@@ -235,7 +255,6 @@ class Injector {
         UpdateDialogModel dialogModel = UpdateDialogModel.fromJson(data);
         return dialogModel;
       } else {
-
         return null;
       }
     }

@@ -18,14 +18,17 @@ class DashboardRequest {
 }
 
 
-class GetDashboardData {
+
+
+
+class UnreadBubbleCountData {
   String title;
   int type;
   int count;
 
-  GetDashboardData({this.title, this.type, this.count});
+  UnreadBubbleCountData({this.title, this.type, this.count});
 
-  GetDashboardData.fromJson(Map<String, dynamic> json) {
+  UnreadBubbleCountData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     type = json['type'];
     count = json['count'];
