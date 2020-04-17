@@ -90,10 +90,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         await DisplayDialogs.showImpactOnSalesAndService(context);
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);
+
       }
 
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-      widget.mRefreshAnimation.onRefresh(widget.isCameFromExistingCustomer);
+      widget.mRefreshAnimation.onRefresh();
       setState(() {});
     }
   }
