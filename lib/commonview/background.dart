@@ -361,12 +361,12 @@ class CommonView {
                           : Container(),
                       dashboardLockStatusData != null &&
                               dashboardLockStatusData.organization != null &&
-                              dashboardLockStatusData.organization != 1
-                          ? Image(
+                              dashboardLockStatusData.organization == 1
+                          ? Container()
+                          : Image(
                               image: AssetImage(Utils.getAssetsImg("lock_org")),
                               width: Utils.getDeviceWidth(context) / 4.5,
-                            )
-                          : Container(),
+                            ),
                     ],
                   ),
                   onTap: () {
@@ -395,12 +395,12 @@ class CommonView {
                           : Container(),
                       dashboardLockStatusData != null &&
                               dashboardLockStatusData.pl != null &&
-                              dashboardLockStatusData.pl != 1
-                          ? Image(
+                              dashboardLockStatusData.pl == 1
+                          ? Container()
+                          : Image(
                               image: AssetImage(Utils.getAssetsImg("lock_pl")),
                               width: Utils.getDeviceWidth(context) / 4.5,
-                            )
-                          : Container(),
+                            ),
                     ],
                   ),
                   onTap: () {
@@ -430,13 +430,13 @@ class CommonView {
                             : Container(),
                         dashboardLockStatusData != null &&
                                 dashboardLockStatusData.ranking != null &&
-                                dashboardLockStatusData.ranking != 1
-                            ? Image(
+                                dashboardLockStatusData.ranking == 1
+                            ? Container()
+                            : Image(
                                 image: AssetImage(
                                     Utils.getAssetsImg("lock_ranking")),
                                 width: Utils.getDeviceWidth(context) / 4.5,
-                              )
-                            : Container(),
+                              ),
                       ],
                     ),
                     onTap: () {
@@ -505,17 +505,17 @@ class CommonView {
                             dashboardLockStatusData != null &&
                                     dashboardLockStatusData.achievement !=
                                         null &&
-                                    dashboardLockStatusData.achievement != 1
-                                ? Image(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("lock_rewards")),
-                                    width: Utils.getDeviceHeight(context) / 3.0,
-                                  )
-                                : ConstrainedBox(
+                                    dashboardLockStatusData.achievement == 1
+                                ? ConstrainedBox(
                                     constraints: new BoxConstraints(
                                     minHeight: 25.0,
                                     minWidth: 25.0,
-                                  )),
+                                  ))
+                                : Image(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("lock_rewards")),
+                                    width: Utils.getDeviceHeight(context) / 3.0,
+                                  ),
                           ],
                         ),
                         onTap: () {
@@ -593,17 +593,17 @@ class CommonView {
                                   )),
                             dashboardLockStatusData != null &&
                                     dashboardLockStatusData.challenge != null &&
-                                    dashboardLockStatusData.challenge != 1
-                                ? Image(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("lock_challenges")),
-                                    width: Utils.getDeviceHeight(context) / 2.6,
-                                  )
-                                : ConstrainedBox(
+                                    dashboardLockStatusData.challenge == 1
+                                ? ConstrainedBox(
                                     constraints: new BoxConstraints(
                                     minHeight: 25.0,
                                     minWidth: 25.0,
-                                  )),
+                                  ))
+                                : Image(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("lock_challenges")),
+                                    width: Utils.getDeviceHeight(context) / 2.6,
+                                  ),
                           ],
                         ),
                         onTap: () {
@@ -1049,7 +1049,6 @@ class CommonView {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-
                           Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
