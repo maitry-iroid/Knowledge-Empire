@@ -53,9 +53,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData == null || Injector.introData.learningModule1 == 0) {
+    if (Injector.introData == null || Injector.introData.learningModule1 == 0)
       await DisplayDialogs.showCustomerRelationshipManagement(context);
-    }
+
+    //TODO for testing
+//    await DisplayDialogs.showThePersonYouCanCountOn(context); //  PL
+//    await DisplayDialogs.showServingYourExistingCustomers(context); // existing
+//    await DisplayDialogs.showIntroHeartOfTheBusiness(context); //new
+//    await DisplayDialogs.showHireHRDialog(context);  //org
+//    await DisplayDialogs.showIntroRewards(context);  //reward
+//    await DisplayDialogs.showMarketingAndCommunications(context);  //ranking
+//    await DisplayDialogs.showYourWillIsAtYourCommand(context);  //challenge
+//    await DisplayDialogs.showYourTeamsPerformance(context);  //team
+//    await DisplayDialogs.showIntroDialog(context); // profile
+
     Utils.isInternetConnectedWithAlert().then((isConnected) async {
       if (isConnected) {
         fetchLearningModules();
