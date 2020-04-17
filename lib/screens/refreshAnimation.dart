@@ -1,3 +1,3 @@
 abstract class RefreshAnimation {
-  onRefresh() {}
+  onRefresh(bool isVisible) {}
 }

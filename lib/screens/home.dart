@@ -154,7 +154,7 @@ class HomePageState extends State<HomePage>
             isShowMenu: true,
             openProfile: openProfile,
           ),
-          Stack(
+          isCoinViseble?Stack(
             fit: StackFit.expand,
             children: <Widget>[
               coinWidget(250, 150),
@@ -167,7 +167,7 @@ class HomePageState extends State<HomePage>
               coinWidget(200, 550),
               coinWidget(350, 650),
             ],
-          ),
+          ):Container(),
         ],
       )),
     );
@@ -257,15 +257,15 @@ class HomePageState extends State<HomePage>
     super.dispose();
   }
 
-  startAnimation() {
-    isCoinViseble = true;
-    if (isCoinViseble) {
-      startAnim = true;
-    } else {
-      startAnim = false;
-    }
-    if (mounted) setState(() {});
-  }
+//  startAnimation() {
+//    isCoinViseble = true;
+//    if (isCoinViseble) {
+//      startAnim = true;
+//    } else {
+//      startAnim = false;
+//    }
+//    if (mounted) setState(() {});
+//  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
@@ -739,9 +739,9 @@ class HomePageState extends State<HomePage>
   }
 
   @override
-  onRefresh() {
+  onRefresh(bool isVisible) {
     setState(() {
-      isCoinViseble = true;
+      isCoinViseble = isVisible;
     });
   }
 }

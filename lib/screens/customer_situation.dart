@@ -60,15 +60,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   int index = 1;
 
-  bool isGif = true;
+//  bool isGif = true;
 
   List alphaIndex = ['A', 'B', 'C', 'D'];
 
   selectItem(index) {}
 
-  bool startAnim = false;
-  int duration = 4;
-  bool isCoinViseble = false;
+//  int duration = 4;
 
   @override
   void initState() {
@@ -92,11 +90,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         await DisplayDialogs.showImpactOnSalesAndService(context);
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);
-
       }
 
       Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-      widget.mRefreshAnimation.onRefresh();
+      widget.mRefreshAnimation.onRefresh(!widget.isCameFromExistingCustomer);
       setState(() {});
     }
   }
@@ -148,38 +145,37 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     );
   }
 
-  gifImageShow() {
-    if (questionData.isAnsweredCorrect == true) {
-      Future.delayed(const Duration(seconds: 5), () {
-        if (mounted) {
-          if (mounted)
-            setState(() {
-              isGif = false;
-            });
-        }
-      });
-
-      return Visibility(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: Image(
-                    image: AssetImage("assets/images/dollar.gif"),
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        visible: isGif,
-      );
-    } else {
-      return Container();
-    }
-  }
+//
+//  gifImageShow() {
+//    if (questionData.isAnsweredCorrect == true) {
+//      Future.delayed(const Duration(seconds: 5), () {
+//        if (mounted)
+//          setState(() {
+//            isGif = false;
+//          });
+//      });
+//
+//      return Visibility(
+//        child: Container(
+//          child: Column(
+//            children: <Widget>[
+//              Expanded(
+//                child: Container(
+//                  child: Image(
+//                    image: AssetImage("assets/images/dollar.gif"),
+//                    fit: BoxFit.fitHeight,
+//                  ),
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
+//        visible: isGif,
+//      );
+//    } else {
+//      return Container();
+//    }
+//  }
 
   showSubHeader(BuildContext context) {
     return Container(
