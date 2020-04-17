@@ -201,7 +201,7 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Organization screen
-  static Future<Widget> showHireHRDialog(BuildContext context) async {
+  static Future showHireHRDialog(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1063,10 +1063,9 @@ class DisplayDialogs {
               imageHeight: akikoImageHeight,
               imageWidth: akikoImageWidth,
               titleText: headline,
-              btnName: Utils.getText(context, StringRes.update),
+              btnName: Utils.getText(context, StringRes.updateNow),
               btnColor: ColorRes.blue,
               desTextLine: message,
-              /*"We hope you are enjoying using our application. Our new update is available on the store and in order you give you a better experience, we like to you update the application to the latest version."*/
               onTapBtn: () async {
                 //Navigator.pop(context);
                 OpenAppstore.launch(
