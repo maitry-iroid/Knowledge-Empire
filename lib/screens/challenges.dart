@@ -111,6 +111,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Stack(
+        fit: StackFit.loose,
 //        crossAxisAlignment: CrossAxisAlignment.center,
 //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -129,7 +130,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             alignment: Alignment.center,
             child: Container(
               alignment: Alignment.center,
-              width: 150,
+              width: Utils.getDeviceWidth(context)/4,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 20),
               margin: title == StringRes.challenges
@@ -157,7 +158,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   color: ColorRes.white,
                   fontSize: DimenRes.titleTextSize,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.center,maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
