@@ -140,11 +140,11 @@ class PushNotificationHelper {
     Utils.addBadge();
 
     try {
-//      title = message['notification']['title'];
-//      body = message['notification']['body'];
+      title = message['notification']['title'];
+      body = message['notification']['body'];
 
-      title = message['title'];
-      body = message['body'];
+//      title = message['title'];
+//      body = message['body'];
     } catch (e) {
       print(e);
     }

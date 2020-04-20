@@ -80,7 +80,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     abcdList = alphaIndex;
 
-    if (widget.isCameFromNewCustomer) Utils.checkAudio();
+
     correctWrongImage();
 
     if (questionData.isAnsweredCorrect == true) {
@@ -90,12 +90,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         await DisplayDialogs.showImpactOnSalesAndService(context);
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);
-
       }
 
-      Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-      widget.mRefreshAnimation.onRefresh();
+      if (widget.isCameFromNewCustomer) {
+        Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
+        widget.mRefreshAnimation.onRefresh();
+        if (widget.isCameFromNewCustomer) Utils.checkAudio(questionData.isAnsweredCorrect);
+      }
       setState(() {});
+    }else{
+      if (widget.isCameFromNewCustomer) Utils.checkAudio(questionData.isAnsweredCorrect);
     }
   }
 

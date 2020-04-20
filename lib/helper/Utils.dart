@@ -569,7 +569,6 @@ class Utils {
         type == Const.typeRanking ||
         type == Const.typeProfile ||
         type == Const.typePl) {
-
       Utils.isInternetConnected().then((isConnected) {
         if (isConnected) {
           clickWithValidation(type, context);
@@ -680,15 +679,15 @@ class Utils {
     );
   }
 
-  static checkAudio() {
+  static checkAudio(isAnsweredCorrect) {
     if (Injector.isBusinessMode) {
-      if (questionData.isAnsweredCorrect == true) {
+      if (isAnsweredCorrect) {
         return Utils.correctAnswerSound();
       } else {
         return Utils.incorrectAnswerSound();
       }
     } else {
-      if (questionData.isAnsweredCorrect == true) {
+      if (isAnsweredCorrect) {
         return Utils.procorrectAnswerSound();
       } else {
         return Utils.proincorrectAnswerSound();
