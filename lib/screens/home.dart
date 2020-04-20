@@ -439,6 +439,7 @@ class HomePageState extends State<HomePage>
       child: Container(
         child: isCoinViseble ? MyHomePage() : Container(),
         width: 40,
+
         height: 40,
       ),
     );
