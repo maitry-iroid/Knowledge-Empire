@@ -81,6 +81,10 @@ class StringRes {
   static var alertFriendSuccess = "alertFriendSuccess";
   static var alertUnFriendSuccess = "alertUnFriendSuccess";
   static var alertUChallengeSent = "alertUChallengeSent";
+  static var by = "by";
+  static var inText = "inText";
+  static var toWin = "toWin";
+  static var questions = "questions";
 
   //learning module
   static var subscribe = "subscribe";
@@ -441,6 +445,10 @@ class StringRes {
       'alertFriendSuccess': "Friend added successfully",
       'alertUnFriendSuccess': "Unfriend successfully",
       'alertUChallengeSent': "Challenge sent successfully!",
+      'by':'By : ',
+      'inText':'In : ',
+      'toWin':'To Win : ',
+      'questions':'Questions : ',
 
       //learning module
       'subscribe': 'Subscribe',
@@ -831,6 +839,10 @@ class StringRes {
       'alertFriendSuccess': 'Friend added successfully',
       'alertUnFriendSuccess': 'Unfriend successfully',
       'alertUChallengeSent': 'Challenge sent successfully!',
+      'by':'By : ',
+      'inText':'In : ',
+      'toWin':'To Win : ',
+      'questions':'Questions : ',
 
       //learning module
       'subscribe': 'Abonnieren',
@@ -1205,6 +1217,10 @@ class StringRes {
       'alertFriendSuccess': "添加朋友成功",
       'alertUnFriendSuccess': "成功取消朋友",
       'alertUChallengeSent': "挑战已成功发送",
+      'by':'By : ',
+      'inText':'In : ',
+      'toWin':'To Win : ',
+      'questions':'Questions : ',
 
       //learning module
       'subscribe': '订阅',

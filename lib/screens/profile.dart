@@ -766,10 +766,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-//      onTap: () => showPhotoOptionDialog(context),
-      onTap: () {
+      onTap: () => showPhotoOptionDialog(context),
+  /*    onTap: () {
         DisplayDialogs.showChallengeDialog(context, "hello", null);
-      },
+      },*/
     );
   }
 
