@@ -117,8 +117,10 @@ class DisplayDialogs {
                     fit: BoxFit.contain),
                 Center(
                   child: Container(
-                    height: Utils.getDeviceWidth(context) / 2.8,
-                    width: Utils.getDeviceWidth(context) / 2.3,
+//                    height: Utils.getDeviceWidth(context) / 2.8,
+//                    width: Utils.getDeviceWidth(context) / 2.3,
+                  height: 250,
+                    width: 250,
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(
                         top: 27, left: 10, right: 10, bottom: 10),
@@ -148,6 +150,7 @@ class DisplayDialogs {
                         challengesRow(
                             Utils.getText(context, StringRes.questions),
                             "${questionData.winningAmount ?? ""}"),
+
                         InkResponse(
                           child: Container(
 //                            height: 40,
