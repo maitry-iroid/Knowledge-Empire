@@ -55,9 +55,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
         multiDexEnabled true
-//        ndk {
-//            abiFilters 'armeabi','armeabi-v7a','arm64-v8a'
-//        }
+        ndk {
+            abiFilters 'armeabi','armeabi-v7a','arm64-v8a'
+        }
     }
 
     buildTypes {

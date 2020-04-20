@@ -138,7 +138,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 )),
               ],
             ),
-
 //            gifImageShow(),
           ],
         ),

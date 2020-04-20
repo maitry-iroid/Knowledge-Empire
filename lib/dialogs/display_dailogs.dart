@@ -53,7 +53,7 @@ class DisplayDialogs {
   static double akikoImageMoveTop = 80.0;
 
   //todo  This dialogs only for Dashboard Game screen
-  static showChallengeDialog(
+  static showChallengeDialog1(
       BuildContext context, String userName, QuestionData questionData) {
     showDialog(
         context: context,
@@ -97,6 +97,116 @@ class DisplayDialogs {
             ),
           ),
         ));
+  }
+
+  static showChallengeDialog(
+      BuildContext context, String userName, QuestionData questionData) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            content: Stack(
+              children: <Widget>[
+                Center(
+                  child: Container(
+                    height: Utils.getDeviceWidth(context) / 2.8,
+                    width: Utils.getDeviceWidth(context) / 2.3,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 27, left: 10, right: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: Utils.getDeviceHeight(context) / 20),
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(image: AssetImage(Utils.getAssetsImg("challenges_alert_bg")))
+                          ),
+                          child:
+                              Text(Utils.getText(context, StringRes.challenge), style: TextStyle(color: ColorRes.textRecordBlue)),
+                        ),
+
+                        challengesRow("By : ","hello"),
+                        challengesRow("In : ","hellohellohello"),
+                        challengesRow("To Win : ","hellhellohellohellohelloo"),
+                        challengesRow("Questions : ","hellohellohellohellohellohellohellohello"),
+
+                        InkResponse(
+                          child: Container(
+//                            height: 40,
+                            padding: EdgeInsets.only(left: 25, right: 25, top: 13, bottom: 10),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(image: AssetImage(Utils.getAssetsImg('chhellages_alert_next_bg')))
+                            ),  
+                            child: Text(Utils.getText(context, StringRes.next), style: TextStyle(color: ColorRes.white)),
+                          ),
+                          onTap: () {
+
+                          },
+                        )
+
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                    child: Container(
+                  height: 60,
+                  alignment: Alignment.center,
+                  child: Image(
+                      image: AssetImage(Utils.getAssetsImg("challenges_icon"))),
+                ))
+              ],
+            ),
+          );
+        }
+        /*    child: Dialog(
+
+//        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                height: Utils.getDeviceWidth(context)/3.0,
+                width: Utils.getDeviceWidth(context)/2.7,
+                color: Colors.white,
+                alignment: Alignment.center,
+                margin: EdgeInsets.all(10),
+              ),
+            ),
+            Positioned(
+                child: Container(
+              height: 30,
+              child: Text('hello'),
+            ))
+          ],
+        ),
+      ),*/
+        );
+  }
+
+  static challengesRow(String title,String details) {
+    return  Row(
+//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Expanded(
+            flex: 3,
+            child: Align(alignment: Alignment.centerRight,child: Text(title, overflow: TextOverflow.ellipsis, style: TextStyle(color: ColorRes.headerBlue),),)),
+        Expanded(
+            flex: 5,
+            child: Align(alignment: Alignment.centerLeft,child: Text(details,overflow: TextOverflow.ellipsis, style: TextStyle(color: ColorRes.greyText)))),
+      ],
+    );
   }
 
   static showRewardDialog(BuildContext context, String userName) {

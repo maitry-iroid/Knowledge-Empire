@@ -10,6 +10,7 @@ class StringRes {
   static var existingCustomers = "existingCustomers";
   static var organizations = "organizations";
   static var challenges = "challenges";
+  static var challenge = "challenge";
   static var pl = "pl";
   static var rewards = "rewards";
   static var ranking = "ranking";
@@ -368,6 +369,7 @@ class StringRes {
       'existingCustomers': "Existing Customers",
       'organizations': "Organizations",
       'challenges': "Challenges",
+      'challenge': "Challenge",
       'pl': "P+L",
       'rewards': "Rewards",
       'ranking': "Ranking",
@@ -758,6 +760,7 @@ class StringRes {
       'existingCustomers': "Bestandskunden",
       'organizations': "Organisation",
       'challenges': "Herausforderungen",
+      'challenge': "Herausforderungen",
       'pl': "Bilanz",
       'rewards': "Preise",
       'ranking': "Rangliste",
@@ -1132,6 +1135,7 @@ class StringRes {
       'existingCustomers': "现有客户",
       'organizations': "组织",
       'challenges': "挑战",
+      'challenge': "挑战",
       'pl': "损益表",
       'rewards': "奖励",
       'ranking': "排名",

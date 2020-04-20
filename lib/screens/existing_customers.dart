@@ -74,6 +74,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           arrQuestions.removeAt(index);
           getQuestionsBloc?.updateQuestions(arrQuestions);
         } else {
+          Utils.showToast('hello');
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {
@@ -118,7 +119,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             CommonView.showBackground(context),
             Container(
               margin: EdgeInsets.only(
-                  left: 30, right: 30, top: Utils.getHeaderHeight(context)),
+                  left: 30, right: 30, top: Utils.getHeaderHeight(context)
+              ),
               child: Column(
                 children: <Widget>[
                   SizedBox(
