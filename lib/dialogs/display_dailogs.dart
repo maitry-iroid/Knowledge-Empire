@@ -164,7 +164,9 @@ class DisplayDialogs {
                             child: Text(Utils.getText(context, StringRes.next),
                                 style: TextStyle(color: ColorRes.white)),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         )
                       ],
                     ),
