@@ -439,7 +439,6 @@ class HomePageState extends State<HomePage>
       child: Container(
         child: isCoinViseble ? MyHomePage() : Container(),
         width: 40,
-
         height: 40,
       ),
     );
@@ -625,11 +624,16 @@ class HomePageState extends State<HomePage>
 
           if (data != null) {
             QuestionData questionData = QuestionData.fromJson(data);
-            if (questionData != null && questionData.challengeId != null)
-              DisplayDialogs.showChallengeDialog(
-                  context,
-                  questionData.firstName + " " + questionData.lastName,
-                  questionData);
+            if (questionData != null && questionData.challengeId != null) {
+              if (questionData.isFirstQuestion == 1) {
+                DisplayDialogs.showChallengeDialog(
+                    context,
+                    questionData.firstName + " " + questionData.lastName,
+                    questionData);
+              } else {
+                Utils.showChallengeQuestionDialog(context, questionData);
+              }
+            }
           }
         }).catchError((e) {
           // Utils.showToast(e.toString());
