@@ -166,6 +166,9 @@ class DisplayDialogs {
                           ),
                           onTap: () {
                             Navigator.pop(context);
+                            Utils.playClickSound();
+                            Utils.showChallengeQuestionDialog(
+                                context, questionData);
                           },
                         )
                       ],
