@@ -149,6 +149,7 @@ class HomePageState extends State<HomePage>
           child: Stack(
         children: <Widget>[
           getPage(),
+
           HeaderView(
             scaffoldKey: _scaffoldKey,
             isShowMenu: true,
