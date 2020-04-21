@@ -39,7 +39,6 @@ class Injector {
   static CustomerValueData customerValueData;
   static IntroData introData;
   static DashboardLockStatusData dashboardLockStatusData;
-  static UnreadBubbleCountData unreadBubbleCountData;
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
@@ -50,6 +49,7 @@ class Injector {
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
   static String deviceType = "";
+  static List<UnreadBubbleCountData> unreadBubbleCountData = new List();
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
@@ -129,9 +129,15 @@ class Injector {
         dashboardLockStatusData = DashboardLockStatusData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.lockStatusData)));
       }
+
       if (prefs.getString(PrefKeys.unreadBubbleCountData) != null) {
-        unreadBubbleCountData = UnreadBubbleCountData.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.unreadBubbleCountData)));
+        List<String> countList =
+            prefs.getStringList(PrefKeys.unreadBubbleCountData);
+        unreadBubbleCountData = new List();
+        countList.forEach((v) {
+          unreadBubbleCountData
+              .add(UnreadBubbleCountData.fromJson(jsonDecode(v)));
+        });
       }
 
       headerStreamController = StreamController.broadcast();
@@ -143,7 +149,6 @@ class Injector {
       isBusinessMode = mode == Const.businessMode;
 
       getIntroData();
-
     }
   }
 

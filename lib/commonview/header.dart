@@ -6,6 +6,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/screens/help_screen.dart';
@@ -182,21 +183,34 @@ class HeaderViewState extends State<HeaderView> {
             if (Injector.dashboardLockStatusData.organization == 1)
               Injector.homeStreamController?.add("${Const.typeOrg}");
             else
-              Utils.showLockReasonDialog(Const.typeOrg, context,false);
+              Utils.showLockReasonDialog(Const.typeOrg, context, false);
           } else if (type == Const.typeSalesPersons) {
             Injector.homeStreamController?.add("${Const.typeNewCustomer}");
           } else if (type == Const.typeServicesPerson) {
             Injector.homeStreamController?.add("${Const.typeExistingCustomer}");
           } else if (type == Const.typeBrandValue) {
-            if (Injector.dashboardLockStatusData.ranking == 1)
-              Injector.homeStreamController?.add("${Const.typeRanking}");
-            else
-              Utils.showLockReasonDialog(Const.typeRanking, context,false);
+            Utils.isInternetConnected().then((isConnected) {
+              if (isConnected) {
+                if (Injector.dashboardLockStatusData.ranking == 1)
+                  Injector.homeStreamController?.add("${Const.typeRanking}");
+                else
+                  Utils.showLockReasonDialog(Const.typeRanking, context, false);
+              } else {
+                Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+              }
+            });
           } else if (type == Const.typeMoney) {
-            if (Injector.dashboardLockStatusData.pl == 1)
-              Injector.homeStreamController?.add("${Const.typePl}");
-            else
-              Utils.showLockReasonDialog(Const.typePl, context,false);
+            if (Injector.dashboardLockStatusData.pl == 1) {
+              Utils.isInternetConnected().then((isConnected) {
+                if (isConnected) {
+                  Injector.homeStreamController?.add("${Const.typePl}");
+                } else {
+                  Utils.showLockReasonDialog(
+                      StringRes.noOffline, context, true);
+                }
+              });
+            } else
+              Utils.showLockReasonDialog(Const.typePl, context, false);
           }
         },
       ),
@@ -235,6 +249,9 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
+            if (Injector.homeStreamController == null)
+              Injector.homeStreamController = StreamController.broadcast();
+
             Injector.homeStreamController?.add("${Const.typeProfile}");
           }),
     );

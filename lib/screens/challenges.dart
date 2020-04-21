@@ -798,9 +798,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   lineHeight: 20.0,
-                  percent:
-                      ((arrLearningModules[index].moduleProgress ?? 0) / 100)
-                          .toDouble(),
+                  percent: ((arrLearningModules[index].moduleProgress ?? 0) / 100).toDouble(),
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -809,7 +807,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Positioned(
                   left: 6,
                   child: Text(
-                    arrLearningModules[index].moduleProgress.toString() + "%",
+                    arrLearningModules[index].moduleProgress.toStringAsFixed(2)+ "%",
                     style: TextStyle(color: ColorRes.white, fontSize: 18),
                   ),
                 )

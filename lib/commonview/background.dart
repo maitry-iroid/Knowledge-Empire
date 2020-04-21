@@ -330,7 +330,7 @@ class CommonView {
       BuildContext context, List<UnreadBubbleCountData> data) {
     DashboardLockStatusData dashboardLockStatusData =
         Injector.dashboardLockStatusData;
-    print(dashboardLockStatusData);
+    data = Injector.unreadBubbleCountData;
     return Container(
       width: double.infinity,
       height: double.infinity,

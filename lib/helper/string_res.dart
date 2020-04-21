@@ -360,6 +360,8 @@ class StringRes {
   static var my = "my";
   static var mQuestions = "mQuestions";
   static var mHis = "mHis";
+  static var yourValue = "yourValue";
+  static var achievementTitle = "Everybody Empireknowlage";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -758,6 +760,7 @@ class StringRes {
       'my': "My",
       'mQuestions': "Questions",
       'mHis': "His",
+      'yourValue': "of your value",
     },
     'de': {
       //region german
@@ -1137,6 +1140,7 @@ class StringRes {
       'my': "My",
       'mQuestions': "Questions",
       'mHis': "His",
+      'yourValue': "of your value",
     },
     'zh': {
       //      region chinese
@@ -1504,6 +1508,7 @@ class StringRes {
       'my': "My",
       'mQuestions': "Questions",
       'mHis': "His",
+      'yourValue': "of your value",
     }
   };
 
@@ -1720,6 +1725,7 @@ class StringRes {
       'my': "My",
       'mQuestions': "Questions",
       'mHis': "His",
+      'yourValue': "of your value",
     },
     'de': {
       //region German
@@ -2046,6 +2052,7 @@ class StringRes {
       'my': "My",
       'mQuestions': "Questions",
       'mHis': "His",
+      'yourValue': "of your value",
     },
     'zh': {
       //region chines
@@ -2350,6 +2357,7 @@ class StringRes {
       'my': "My",
       'mQuestions': "Questions",
       'mHis': "His",
+      'yourValue': "of your value",
     }
   };
 }

@@ -213,8 +213,7 @@ class HomePageState extends State<HomePage>
             .then((data) async {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            await Injector.prefs.setString(PrefKeys.lockStatusData,
-                jsonEncode(dashboardLockStatusData.toJson()));
+            await Injector.prefs.setString(PrefKeys.lockStatusData, jsonEncode(dashboardLockStatusData.toJson()));
             Injector.dashboardLockStatusData = dashboardLockStatusData;
             if (mounted) setState(() {});
           }
@@ -328,8 +327,7 @@ class HomePageState extends State<HomePage>
   openProfile() {
     if (mounted) {
       if (mounted)
-        setState(() =>
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
+        setState(() => _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
     }
   }
 

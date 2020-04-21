@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
   AnimationController rotationController;
 
-  List<UnreadBubbleCountData> unreadBubbleCountData = List();
+  List<UnreadBubbleCountData> unreadBubbleCountData = new List();
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
@@ -125,12 +127,19 @@ class DashboardGamePageState extends State<DashboardGamePage>
         rq.userId = Injector.userId;
         rq.mode = Injector.mode ?? Const.businessMode;
 
-        WebApi().callAPI(WebApi.rqUnreadBubbleCount, rq.toJson()).then((data) {
+        WebApi()
+            .callAPI(WebApi.rqUnreadBubbleCount, rq.toJson())
+            .then((data) async {
           if (data != null) {
+            List<String> listCount = new List();
             data.forEach((v) {
               unreadBubbleCountData.add(UnreadBubbleCountData.fromJson(v));
+              listCount.add(jsonEncode(v));
             });
 
+            await Injector.prefs
+                .setStringList(PrefKeys.unreadBubbleCountData, listCount);
+            Injector.unreadBubbleCountData = unreadBubbleCountData;
             if (unreadBubbleCountData.isNotEmpty) if (mounted) setState(() {});
           }
         }).catchError((e) {

@@ -766,8 +766,7 @@ class Utils {
             ));
   }
 
-  static showUnreadCount(
-      String type, double top, double right, List<UnreadBubbleCountData> data) {
+  static showUnreadCount(String type, double top, double right, List<UnreadBubbleCountData> data) {
     return Positioned(
         right: right,
         top: top,

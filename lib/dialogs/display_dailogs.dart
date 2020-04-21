@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -99,90 +100,91 @@ class DisplayDialogs {
         ));
   }*/
 
-  static showChallengeDialog(
-      BuildContext context, String userName, QuestionData questionData) {
+  static showChallengeDialog(BuildContext context, String userName
+      , QuestionData questionData) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return Dialog(
             backgroundColor: Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
-            content: Stack(
-              children: <Widget>[
-                Image(
-                    image:
-                        AssetImage(Utils.getAssetsImg('challenges_bg_alert')),
-                    fit: BoxFit.contain),
-                Center(
-                  child: Container(
-//                    height: Utils.getDeviceWidth(context) / 2.8,
-//                    width: Utils.getDeviceWidth(context) / 2.3,
-                  height: 250,
-                    width: 250,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                        top: 27, left: 10, right: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Utils.getDeviceHeight(context) / 20),
-                          padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      "challenges_alert_bg")))),
-                          child: Text(
-                              Utils.getText(context, StringRes.challenge),
-                              style: TextStyle(color: ColorRes.textRecordBlue)),
+            child: Container(
+              height: Utils.getDeviceHeight(context) / 1.4,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg(
+                          "challenges_bg_alert")),fit: BoxFit.cover)),
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      width: Utils.getDeviceWidth(context) / 2.5,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(
+                          top: 30, left: 10, right: 10, bottom: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            new Container(
+                              height: 30,
+                              padding: EdgeInsets.all(8),
+                              margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 22),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(Utils.getAssetsImg(
+                                          "challenges_alert_bg")))),
+                              child: Center(
+                                child: Text(
+                                    Utils.getText(context, StringRes.challenge),
+                                    style:
+                                        TextStyle(color: ColorRes.textRecordBlue)),
+                              ),
+                            ),
+                            SizedBox(height: 9),
+                            challengesRow(Utils.getText(context, StringRes.by), userName),
+                            challengesRow(Utils.getText(context, StringRes.inText), "${questionData.moduleName ?? ""}"),
+                            challengesRow(Utils.getText(context, StringRes.toWin), questionData.winningAmount.toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
+                            challengesRow(Utils.getText(context, StringRes.questions), "${questionData.question ?? ""}"),
+                            InkResponse(
+                              child: Container(
+                                padding: EdgeInsets.only(left: 35, right: 35, top: 10, bottom: 10),
+                                margin: EdgeInsets.only(top: 5),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            'chhellages_alert_next_bg')),fit: BoxFit.fill)),
+                                child: Text(
+                                    Utils.getText(context, StringRes.next),
+                                    style: TextStyle(color: ColorRes.white)),
+                              ),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Utils.playClickSound();
+                                Utils.showChallengeQuestionDialog(
+                                    context, questionData);
+                              },
+                            )
+                          ],
                         ),
-                        challengesRow(
-                            Utils.getText(context, StringRes.by), userName),
-                        challengesRow(Utils.getText(context, StringRes.inText),
-                            "${questionData.moduleName ?? ""}"),
-                        challengesRow(Utils.getText(context, StringRes.toWin),
-                            "${questionData.totalQuestion ?? ""}"),
-                        challengesRow(
-                            Utils.getText(context, StringRes.questions),
-                            "${questionData.winningAmount ?? ""}"),
-
-                        InkResponse(
-                          child: Container(
-//                            height: 40,
-                            padding: EdgeInsets.only(
-                                left: 25, right: 25, top: 10, bottom: 10),
-                            margin: EdgeInsets.only(top: 5),
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(Utils.getAssetsImg(
-                                        'chhellages_alert_next_bg')))),
-                            child: Text(Utils.getText(context, StringRes.next),
-                                style: TextStyle(color: ColorRes.white)),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                            Utils.playClickSound();
-                            Utils.showChallengeQuestionDialog(
-                                context, questionData);
-                          },
-                        )
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                    child: Container(
-                  height: 60,
-                  alignment: Alignment.center,
-                  child: Image(
-                      image: AssetImage(Utils.getAssetsImg("challenges_icon"))),
-                ))
-              ],
+                  Positioned(
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Image.asset(
+                              Utils.getAssetsImg("challenges_icon"),
+                              fit: BoxFit.contain,
+                              height: Utils.getDeviceHeight(context) / 6,
+                              width: Utils.getDeviceHeight(context) / 6)))
+                ],
+              ),
             ),
           );
         }
@@ -215,27 +217,31 @@ class DisplayDialogs {
   }
 
   static challengesRow(String title, String details) {
-    return Row(
-//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Expanded(
-            flex: 3,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: ColorRes.headerBlue),
-              ),
-            )),
-        Expanded(
-            flex: 5,
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(details,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: ColorRes.greyText)))),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Row(
+
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+              flex: 3,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: ColorRes.headerBlue),
+                ),
+              )),
+          Expanded(
+              flex: 5,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(details,
+                      style: TextStyle(color: ColorRes.greyText)))),
+        ],
+      ),
     );
   }
 
