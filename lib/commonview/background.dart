@@ -543,6 +543,7 @@ class CommonView {
                                       StringRes.noOffline, context, true);
                                 }
                               });
+
                             },
                           )),
                     ),
