@@ -361,7 +361,8 @@ class StringRes {
   static var mQuestions = "mQuestions";
   static var mHis = "mHis";
   static var yourValue = "yourValue";
-  static var achievementTitle = "Everybody Empireknowlage";
+  static var achievementTitle = "achievementTitle";
+  static var needAtList = "needAtList";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -761,6 +762,7 @@ class StringRes {
       'mQuestions': "Questions",
       'mHis': "His",
       'yourValue': "of your value",
+      'achievementTitle': "Everybody Empireknowlage",
     },
     'de': {
       //region german
@@ -1141,6 +1143,7 @@ class StringRes {
       'mQuestions': "Questions",
       'mHis': "His",
       'yourValue': "of your value",
+      'achievementTitle': "Everybody Empireknowlage",
     },
     'zh': {
       //      region chinese
@@ -1509,6 +1512,7 @@ class StringRes {
       'mQuestions': "Questions",
       'mHis': "His",
       'yourValue': "of your value",
+      'achievementTitle': "Everybody Empireknowlage",
     }
   };
 
@@ -1726,6 +1730,7 @@ class StringRes {
       'mQuestions': "Questions",
       'mHis': "His",
       'yourValue': "of your value",
+      'achievementTitle': "Everybody Empireknowlage",
     },
     'de': {
       //region German
@@ -2053,6 +2058,7 @@ class StringRes {
       'mQuestions': "Questions",
       'mHis': "His",
       'yourValue': "of your value",
+      'achievementTitle': "Everybody Empireknowlage",
     },
     'zh': {
       //region chines
@@ -2358,6 +2364,7 @@ class StringRes {
       'mQuestions': "Questions",
       'mHis': "His",
       'yourValue': "of your value",
+      'achievementTitle': "Everybody Empireknowlage",
     }
   };
 }

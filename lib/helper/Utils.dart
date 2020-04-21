@@ -739,7 +739,8 @@ class Utils {
       return AssetImage(Utils.getAssetsImg("title_art_2"));
   }
 
-  static showCustomerSituationDialog(
+  static
+  showCustomerSituationDialog(
     GlobalKey<ScaffoldState> _scaffoldKey,
     QuestionData questionData,
     QuestionData nextChallengeQuestionData,

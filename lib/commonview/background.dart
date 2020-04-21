@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ke_employee/animation/Particles.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/ResponsiveUi.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -331,401 +332,421 @@ class CommonView {
     DashboardLockStatusData dashboardLockStatusData =
         Injector.dashboardLockStatusData;
     data = Injector.unreadBubbleCountData;
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
-              fit: BoxFit.fill)),
-      child: Stack(
-        fit: StackFit.expand,
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            top: 40,
-//            right: Utils.getDeviceWidth(context) / 10,
-            child: Row(
-              children: <Widget>[
-                InkResponse(
-                  child: Stack(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getAssetsImg("organization")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
-                      ),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.organization != null &&
-                              dashboardLockStatusData.organization == 1
-                          ? Utils.showUnreadCount(Const.typeOrg, 17, 5, data)
-                          : Container(),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.organization != null &&
-                              dashboardLockStatusData.organization == 1
-                          ? Container()
-                          : Image(
-                              image: AssetImage(Utils.getAssetsImg("lock_org")),
-                              width: Utils.getDeviceWidth(context) / 4.5,
-                            ),
-                    ],
-                  ),
-                  onTap: () {
-                    Utils.playClickSound();
-                    Utils.isInternetConnected().then((isConnected) {
-                      if (isConnected) {
-                        Utils.performDashboardItemClick(context, Const.typeOrg);
-                      } else {
-                        Utils.showLockReasonDialog(
-                            StringRes.noOffline, context, true);
-                      }
-                    });
-                  },
-                ),
-                InkResponse(
-                  child: Stack(
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage(Utils.getAssetsImg("profit-loss")),
-                        width: Utils.getDeviceWidth(context) / 4.5,
-                      ),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.pl != null &&
-                              dashboardLockStatusData.pl == 1
-                          ? Utils.showUnreadCount(Const.typePl, 17, 5, data)
-                          : Container(),
-                      dashboardLockStatusData != null &&
-                              dashboardLockStatusData.pl != null &&
-                              dashboardLockStatusData.pl == 1
-                          ? Container()
-                          : Image(
-                              image: AssetImage(Utils.getAssetsImg("lock_pl")),
-                              width: Utils.getDeviceWidth(context) / 4.5,
-                            ),
-                    ],
-                  ),
-                  onTap: () {
-                    Utils.playClickSound();
-                    Utils.isInternetConnected().then((isConnected) {
-                      if (isConnected) {
-                        Utils.performDashboardItemClick(context, Const.typePl);
-                      } else {
-                        Utils.showLockReasonDialog(
-                            StringRes.noOffline, context, true);
-                      }
-                    });
-                  },
-                ),
-                InkResponse(
-                    child: Stack(
-                      children: <Widget>[
-                        Image(
-                          image: AssetImage(Utils.getAssetsImg("ranking")),
-                          width: Utils.getDeviceWidth(context) / 4.5,
-                        ),
-                        dashboardLockStatusData != null &&
-                                dashboardLockStatusData.ranking != null &&
-                                dashboardLockStatusData.ranking == 1
-                            ? Utils.showUnreadCount(
-                                Const.typeRanking, 17, 5, data)
-                            : Container(),
-                        dashboardLockStatusData != null &&
-                                dashboardLockStatusData.ranking != null &&
-                                dashboardLockStatusData.ranking == 1
-                            ? Container()
-                            : Image(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("lock_ranking")),
-                                width: Utils.getDeviceWidth(context) / 4.5,
-                              ),
-                      ],
-                    ),
-                    onTap: () {
-                      Utils.playClickSound();
-
-                      Utils.isInternetConnected().then((isConnected) {
-                        if (isConnected) {
-                          Utils.performDashboardItemClick(
-                              context, Const.typeRanking);
-                        } else {
-                          Utils.showLockReasonDialog(
-                              StringRes.noOffline, context, true);
-                        }
-                      });
-
-//                      Utils.achievement();
-//                      CommonView().collectorDialog(context, '1000');
-                    }
-//                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-                    ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 3.2,
-            right: Utils.getDeviceWidth(context) / 3.5,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("papers_rack")),
-              height: Utils.getDeviceHeight(context) / 9,
-            ),
-          ),
-          Container(
+    return ResponsiveUi(
+      builder: (context, size) {
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
+                  fit: BoxFit.fill)),
+          child: Stack(
+            fit: StackFit.expand,
             alignment: Alignment.center,
-            width: Utils.getDeviceWidth(context),
-            margin: EdgeInsets.only(
-                top: Utils.getDeviceHeight(context) / 4.2,
-                left: Utils.getDeviceWidth(context) / 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 40,
-                          left: 20,
-                          right: Utils.getDeviceWidth(context) / 13),
-                      child: InkResponse(
-                        child: Stack(
-                          children: <Widget>[
-                            Image(
-                              image: AssetImage(Utils.getAssetsImg("rewards")),
-                              width: Utils.getDeviceHeight(context) / 3.0,
-                            ),
-                            dashboardLockStatusData != null &&
-                                    dashboardLockStatusData.achievement !=
-                                        null &&
-                                    dashboardLockStatusData.achievement == 1
-                                ? Utils.showUnreadCount(
-                                    Const.typeReward, 17, 5, data)
-                                : ConstrainedBox(
-                                    constraints: new BoxConstraints(
-                                    minHeight: 25.0,
-                                    minWidth: 25.0,
-                                  )),
-                            dashboardLockStatusData != null &&
-                                    dashboardLockStatusData.achievement !=
-                                        null &&
-                                    dashboardLockStatusData.achievement == 1
-                                ? ConstrainedBox(
-                                    constraints: new BoxConstraints(
-                                    minHeight: 25.0,
-                                    minWidth: 25.0,
-                                  ))
-                                : Image(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("lock_rewards")),
-                                    width: Utils.getDeviceHeight(context) / 3.0,
-                                  ),
-                          ],
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          Utils.isInternetConnected().then((isConnected) {
-                            if (isConnected) {
-                              Utils.performDashboardItemClick(
-                                  context, Const.typeReward);
-                            } else {
-                              Utils.showLockReasonDialog(
-                                  StringRes.noOffline, context, true);
-                            }
-                          });
-                        },
-                      )),
-                ),
-                Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 15,
-                          left: Utils.getDeviceWidth(context) / 14,
-                          right: Utils.getDeviceWidth(context) / 14),
-                      child: Opacity(
-                        child: InkResponse(
-                          child: Stack(
-                            children: <Widget>[
-                              Image(
-                                image: AssetImage(Utils.getAssetsImg("team")),
-                                width: Utils.getDeviceHeight(context) / 3.0,
-                              ),
-                              Utils.showUnreadCount(
-                                  Const.typeTeam, 18, 20, data)
-                            ],
-                          ),
-                          onTap: () {
-                            Utils.playClickSound();
-                            Utils.isInternetConnected().then((isConnected) {
-                              if (isConnected) {
-                                Utils.performDashboardItemClick(
-                                    context, Const.typeTeam);
-                              } else {
-                                Utils.showLockReasonDialog(
-                                    StringRes.noOffline, context, true);
-                              }
-                            });
-                          },
-                        ),
-                        opacity: Injector.isManager() ? 1 : 0,
-                      )),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 0,
-                        left: 0,
-                        right: Utils.getDeviceWidth(context) / 10,
-                        top: 00),
-                    child: InkResponse(
-                        child: Stack(
-                          children: <Widget>[
-                            Image(
-                              image:
-                                  AssetImage(Utils.getAssetsImg("challenges")),
-                              width: Utils.getDeviceHeight(context) / 2.6,
-                            ),
-                            dashboardLockStatusData != null &&
-                                    dashboardLockStatusData.challenge != null &&
-                                    dashboardLockStatusData.challenge == 1
-                                ? Utils.showUnreadCount(
-                                    Const.typeChallenges, 17, 17, data)
-                                : ConstrainedBox(
-                                    constraints: new BoxConstraints(
-                                    minHeight: 25.0,
-                                    minWidth: 25.0,
-                                  )),
-                            dashboardLockStatusData != null &&
-                                    dashboardLockStatusData.challenge != null &&
-                                    dashboardLockStatusData.challenge == 1
-                                ? ConstrainedBox(
-                                    constraints: new BoxConstraints(
-                                    minHeight: 25.0,
-                                    minWidth: 25.0,
-                                  ))
-                                : Image(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("lock_challenges")),
-                                    width: Utils.getDeviceHeight(context) / 2.6,
-                                  ),
-                          ],
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          Utils.isInternetConnected().then((isConnected) {
-                            if (isConnected) {
-                              Utils.performDashboardItemClick(
-                                  context, Const.typeChallenges);
-                            } else {
-                              Utils.showLockReasonDialog(
-                                  StringRes.noOffline, context, true);
-                            }
-                          });
-                        }),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 10,
-            right: 10,
-            child: Container(
-              width: Utils.getDeviceWidth(context),
-              alignment: Alignment.bottomCenter,
-//              color: ColorRes.black,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          Image(
-                            image: AssetImage(
-                                Utils.getAssetsImg("business_sectors")),
-                            width: Utils.getDeviceWidth(context) / 3.8,
-                          ),
-                          Utils.showUnreadCount(
-                              Const.typeBusinessSector, 10, 35, data)
-                        ],
-                      ),
-                      onTap: () {
-                        Utils.playClickSound();
-                        Utils.performDashboardItemClick(
-                            context, Const.typeBusinessSector);
-                      }),
-                  InkResponse(
+            children: <Widget>[
+              Positioned(
+                top: 40,
+//            right: Utils.getDeviceWidth(context) / 10,
+                child: Row(
+                  children: <Widget>[
+                    InkResponse(
                       child: Stack(
                         children: <Widget>[
                           Image(
                             image:
-                                AssetImage(Utils.getAssetsImg("new-customer")),
-                            width: Utils.getDeviceWidth(context) / 4.2,
+                                AssetImage(Utils.getAssetsImg("organization")),
+                            width: Utils.getDeviceWidth(context) / 4.5,
                           ),
-                          Utils.showUnreadCount(
-                              Const.typeNewCustomer, 10, 15, data)
+                          dashboardLockStatusData != null &&
+                                  dashboardLockStatusData.organization !=
+                                      null &&
+                                  dashboardLockStatusData.organization == 1
+                              ? Utils.showUnreadCount(
+                                  Const.typeOrg, 17, 5, data)
+                              : Container(),
+                          dashboardLockStatusData != null &&
+                                  dashboardLockStatusData.organization !=
+                                      null &&
+                                  dashboardLockStatusData.organization == 1
+                              ? Container()
+                              : Image(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("lock_org")),
+                                  width: Utils.getDeviceWidth(context) / 4.5,
+                                ),
                         ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(
-                            context, Const.typeNewCustomer);
-                      }),
-//                SizedBox(
-//                  width: Utils.getDeviceWidth(context) / 20,
-//                ),
-                  InkResponse(
+                        Utils.isInternetConnected().then((isConnected) {
+                          if (isConnected) {
+                            Utils.performDashboardItemClick(
+                                context, Const.typeOrg);
+                          } else {
+                            Utils.showLockReasonDialog(
+                                StringRes.noOffline, context, true);
+                          }
+                        });
+                      },
+                    ),
+                    InkResponse(
                       child: Stack(
                         children: <Widget>[
                           Image(
-                            image: AssetImage(Utils.getAssetsImg("existing")),
-                            width: Utils.getDeviceWidth(context) / 4.6,
+                            image:
+                                AssetImage(Utils.getAssetsImg("profit-loss")),
+                            width: Utils.getDeviceWidth(context) / 4.5,
                           ),
-                          Utils.showUnreadCount(
-                              Const.typeExistingCustomer, 10, 35, data)
+                          dashboardLockStatusData != null &&
+                                  dashboardLockStatusData.pl != null &&
+                                  dashboardLockStatusData.pl == 1
+                              ? Utils.showUnreadCount(Const.typePl, 17, 5, data)
+                              : Container(),
+                          dashboardLockStatusData != null &&
+                                  dashboardLockStatusData.pl != null &&
+                                  dashboardLockStatusData.pl == 1
+                              ? Container()
+                              : Image(
+                                  image:
+                                      AssetImage(Utils.getAssetsImg("lock_pl")),
+                                  width: Utils.getDeviceWidth(context) / 4.5,
+                                ),
                         ],
                       ),
                       onTap: () {
                         Utils.playClickSound();
-                        Utils.performDashboardItemClick(
-                            context, Const.typeExistingCustomer);
-                      }),
-                ],
+                        Utils.isInternetConnected().then((isConnected) {
+                          if (isConnected) {
+                            Utils.performDashboardItemClick(
+                                context, Const.typePl);
+                          } else {
+                            Utils.showLockReasonDialog(
+                                StringRes.noOffline, context, true);
+                          }
+                        });
+                      },
+                    ),
+                    InkResponse(
+                        child: Stack(
+                          children: <Widget>[
+                            Image(
+                              image: AssetImage(Utils.getAssetsImg("ranking")),
+                              width: Utils.getDeviceWidth(context) / 4.5,
+                            ),
+                            dashboardLockStatusData != null &&
+                                    dashboardLockStatusData.ranking != null &&
+                                    dashboardLockStatusData.ranking == 1
+                                ? Utils.showUnreadCount(
+                                    Const.typeRanking, 17, 5, data)
+                                : Container(),
+                            dashboardLockStatusData != null &&
+                                    dashboardLockStatusData.ranking != null &&
+                                    dashboardLockStatusData.ranking == 1
+                                ? Container()
+                                : Image(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("lock_ranking")),
+                                    width: Utils.getDeviceWidth(context) / 4.5,
+                                  ),
+                          ],
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+
+                          Utils.isInternetConnected().then((isConnected) {
+                            if (isConnected) {
+                              Utils.performDashboardItemClick(
+                                  context, Const.typeRanking);
+                            } else {
+                              Utils.showLockReasonDialog(
+                                  StringRes.noOffline, context, true);
+                            }
+                          });
+
+//                      Utils.achievement();
+//                      CommonView().collectorDialog(context, '1000');
+                        }
+//                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
+                        ),
+                  ],
+                ),
               ),
-            ),
+              Positioned(
+                bottom: Utils.getDeviceHeight(context) / 3.2,
+                right: Utils.getDeviceWidth(context) / 3.5,
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("papers_rack")),
+                  height: Utils.getDeviceHeight(context) / 9,
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: Utils.getDeviceWidth(context),
+                margin: EdgeInsets.only(
+                    top: Utils.getDeviceHeight(context) / 4.2,
+                    left: Utils.getDeviceWidth(context) / 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 40,
+                              left: 20,
+                              right: Utils.getDeviceWidth(context) / 13),
+                          child: InkResponse(
+                            child: Stack(
+                              children: <Widget>[
+                                Image(
+                                  image:
+                                      AssetImage(Utils.getAssetsImg("rewards")),
+                                  width: Utils.getDeviceHeight(context) / 3.0,
+                                ),
+                                dashboardLockStatusData != null &&
+                                        dashboardLockStatusData.achievement !=
+                                            null &&
+                                        dashboardLockStatusData.achievement == 1
+                                    ? Utils.showUnreadCount(
+                                        Const.typeReward, 17, size.width/20, data)
+                                    : ConstrainedBox(
+                                        constraints: new BoxConstraints(
+                                        minHeight: 25.0,
+                                        minWidth: 25.0,
+                                      )),
+                                dashboardLockStatusData != null &&
+                                        dashboardLockStatusData.achievement !=
+                                            null &&
+                                        dashboardLockStatusData.achievement == 1
+                                    ? ConstrainedBox(
+                                        constraints: new BoxConstraints(
+                                        minHeight: 25.0,
+                                        minWidth: 25.0,
+                                      ))
+                                    : Image(
+                                        image: AssetImage(
+                                            Utils.getAssetsImg("lock_rewards")),
+                                        width: Utils.getDeviceHeight(context) /
+                                            3.0,
+                                      ),
+                              ],
+                            ),
+                            onTap: () {
+                              Utils.playClickSound();
+                              Utils.isInternetConnected().then((isConnected) {
+                                if (isConnected) {
+                                  Utils.performDashboardItemClick(
+                                      context, Const.typeReward);
+                                } else {
+                                  Utils.showLockReasonDialog(
+                                      StringRes.noOffline, context, true);
+                                }
+                              });
+                            },
+                          )),
+                    ),
+                    Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 15,
+                              left: Utils.getDeviceWidth(context) / 14,
+                              right: Utils.getDeviceWidth(context) / 14),
+                          child: Opacity(
+                            child: InkResponse(
+                              child: Stack(
+                                children: <Widget>[
+                                  Image(
+                                    image:
+                                        AssetImage(Utils.getAssetsImg("team")),
+                                    width: Utils.getDeviceHeight(context) / 3.0,
+                                  ),
+                                  Utils.showUnreadCount(
+                                      Const.typeTeam, 18, 20, data)
+                                ],
+                              ),
+                              onTap: () {
+                                Utils.playClickSound();
+                                Utils.isInternetConnected().then((isConnected) {
+                                  if (isConnected) {
+                                    Utils.performDashboardItemClick(
+                                        context, Const.typeTeam);
+                                  } else {
+                                    Utils.showLockReasonDialog(
+                                        StringRes.noOffline, context, true);
+                                  }
+                                });
+                              },
+                            ),
+                            opacity: Injector.isManager() ? 1 : 0,
+                          )),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            bottom: 0,
+                            left: 0,
+                            right: Utils.getDeviceWidth(context) / 10,
+                            top: 00),
+                        child: InkResponse(
+                            child: Stack(
+                              children: <Widget>[
+                                Image(
+                                  image: AssetImage(
+                                      Utils.getAssetsImg("challenges")),
+                                  width: Utils.getDeviceHeight(context) / 2.6,
+                                ),
+                                dashboardLockStatusData != null &&
+                                        dashboardLockStatusData.challenge !=
+                                            null &&
+                                        dashboardLockStatusData.challenge == 1
+                                    ? Utils.showUnreadCount(
+                                        Const.typeChallenges, 17, 17, data)
+                                    : ConstrainedBox(
+                                        constraints: new BoxConstraints(
+                                        minHeight: 25.0,
+                                        minWidth: 25.0,
+                                      )),
+                                dashboardLockStatusData != null &&
+                                        dashboardLockStatusData.challenge !=
+                                            null &&
+                                        dashboardLockStatusData.challenge == 1
+                                    ? ConstrainedBox(
+                                        constraints: new BoxConstraints(
+                                        minHeight: 25.0,
+                                        minWidth: 25.0,
+                                      ))
+                                    : Image(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            "lock_challenges")),
+                                        width: Utils.getDeviceHeight(context) /
+                                            2.6,
+                                      ),
+                              ],
+                            ),
+                            onTap: () {
+                              Utils.playClickSound();
+                              Utils.isInternetConnected().then((isConnected) {
+                                if (isConnected) {
+                                  Utils.performDashboardItemClick(
+                                      context, Const.typeChallenges);
+                                } else {
+                                  Utils.showLockReasonDialog(
+                                      StringRes.noOffline, context, true);
+                                }
+                              });
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 10,
+                right: 10,
+                child: Container(
+                  width: Utils.getDeviceWidth(context),
+                  alignment: Alignment.bottomCenter,
+//              color: ColorRes.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      InkResponse(
+                          child: Stack(
+                            children: <Widget>[
+                              Image(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("business_sectors")),
+                                width: Utils.getDeviceWidth(context) / 3.8,
+                              ),
+                              Utils.showUnreadCount(
+                                  Const.typeBusinessSector, 10, 35, data)
+                            ],
+                          ),
+                          onTap: () {
+                            Utils.playClickSound();
+                            Utils.performDashboardItemClick(
+                                context, Const.typeBusinessSector);
+                          }),
+                      InkResponse(
+                          child: Stack(
+                            children: <Widget>[
+                              Image(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("new-customer")),
+                                width: Utils.getDeviceWidth(context) / 4.2,
+                              ),
+                              Utils.showUnreadCount(
+                                  Const.typeNewCustomer, 10, 15, data)
+                            ],
+                          ),
+                          onTap: () {
+                            Utils.playClickSound();
+                            Utils.performDashboardItemClick(
+                                context, Const.typeNewCustomer);
+                          }),
+//                SizedBox(
+//                  width: Utils.getDeviceWidth(context) / 20,
+//                ),
+                      InkResponse(
+                          child: Stack(
+                            children: <Widget>[
+                              Image(
+                                image:
+                                    AssetImage(Utils.getAssetsImg("existing")),
+                                width: Utils.getDeviceWidth(context) / 4.6,
+                              ),
+                              Utils.showUnreadCount(
+                                  Const.typeExistingCustomer, 10, 35, data)
+                            ],
+                          ),
+                          onTap: () {
+                            Utils.playClickSound();
+                            Utils.performDashboardItemClick(
+                                context, Const.typeExistingCustomer);
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: Utils.getDeviceHeight(context) / 3.2,
+                left: Utils.getDeviceWidth(context) / 3.5,
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("pencils")),
+                  height: Utils.getDeviceHeight(context) / 5,
+                ),
+              ),
+              Positioned(
+                bottom: Utils.getDeviceHeight(context) / 6,
+                left: Utils.getDeviceWidth(context) / 3.3,
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("mobile")),
+                  height: Utils.getDeviceHeight(context) / 12,
+                ),
+              ),
+              Positioned(
+                bottom: Utils.getDeviceHeight(context) / 20,
+                left: Utils.getDeviceWidth(context) / 3.4,
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("glasses")),
+                  height: Utils.getDeviceHeight(context) / 15,
+                ),
+              ),
+              Positioned(
+                bottom: Utils.getDeviceHeight(context) / 8,
+                right: Utils.getDeviceWidth(context) / 3.7,
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("coffee_cup")),
+                  height: Utils.getDeviceHeight(context) / 8,
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 3.2,
-            left: Utils.getDeviceWidth(context) / 3.5,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("pencils")),
-              height: Utils.getDeviceHeight(context) / 5,
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 6,
-            left: Utils.getDeviceWidth(context) / 3.3,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("mobile")),
-              height: Utils.getDeviceHeight(context) / 12,
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 20,
-            left: Utils.getDeviceWidth(context) / 3.4,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("glasses")),
-              height: Utils.getDeviceHeight(context) / 15,
-            ),
-          ),
-          Positioned(
-            bottom: Utils.getDeviceHeight(context) / 8,
-            right: Utils.getDeviceWidth(context) / 3.7,
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg("coffee_cup")),
-              height: Utils.getDeviceHeight(context) / 8,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -1028,6 +1049,7 @@ class CommonView {
   collectorDialog(BuildContext context, PushModel mPushModel, String btnText) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
+        barrierDismissible: false,
         transitionBuilder: (context, a1, a2, widget) {
           return Transform.scale(
             scale: a1.value,
@@ -1056,7 +1078,9 @@ class CommonView {
                                 borderRadius: BorderRadius.circular(18),
                                 border: Border.all(
                                     color: ColorRes.borderRewardsName)),
-                            child: Text("Everybody Empireknowlage",
+                            child: Text(
+                                Utils.getText(
+                                    context, StringRes.achievementTitle),
                                 style: TextStyle(
                                     color: ColorRes.white, fontSize: 15)),
                           ),
@@ -1103,7 +1127,6 @@ class CommonView {
           );
         },
         transitionDuration: Duration(milliseconds: 300),
-        barrierDismissible: true,
         barrierLabel: '',
         context: context,
         pageBuilder: (context, animation1, animation2) {});

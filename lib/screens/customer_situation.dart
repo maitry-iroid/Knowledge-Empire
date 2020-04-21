@@ -94,7 +94,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (widget.isCameFromNewCustomer || widget.isChallenge) {
         Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
         if (widget.isCameFromNewCustomer || widget.isChallenge)
-          Utils.checkAudio( questionData.isAnsweredCorrect);
+          Utils.checkAudio(questionData.isAnsweredCorrect);
       }
       setState(() {});
     } else {
@@ -257,9 +257,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
               onTap: () {
                 Utils.playClickSound();
-                if (!widget.isCameFromNewCustomer)
+                if (!widget.isCameFromNewCustomer) {
                   Navigator.pop(context);
-                else
+
+                  if (Injector.homeStreamController == null)
+                    Injector.homeStreamController =
+                        StreamController.broadcast();
+
+                  Injector.homeStreamController
+                      ?.add("${Const.openPendingChallengeDialog}");
+                } else
                   gotoMainScreen(context);
               },
             )
