@@ -508,8 +508,8 @@ class CommonView {
                                         dashboardLockStatusData.achievement !=
                                             null &&
                                         dashboardLockStatusData.achievement == 1
-                                    ? Utils.showUnreadCount(
-                                        Const.typeReward, 17, size.width/20, data)
+                                    ? Utils.showUnreadCount(Const.typeReward,
+                                        17, size.width / 20, data)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
@@ -543,7 +543,6 @@ class CommonView {
                                       StringRes.noOffline, context, true);
                                 }
                               });
-
                             },
                           )),
                     ),
@@ -1079,9 +1078,7 @@ class CommonView {
                                 borderRadius: BorderRadius.circular(18),
                                 border: Border.all(
                                     color: ColorRes.borderRewardsName)),
-                            child: Text(
-                                Utils.getText(
-                                    context, StringRes.achievementTitle),
+                            child: Text(mPushModel.achievementName??"",
                                 style: TextStyle(
                                     color: ColorRes.white, fontSize: 15)),
                           ),
@@ -1097,7 +1094,7 @@ class CommonView {
                                 fit: BoxFit.contain),
                           ),
                           SizedBox(height: 15),
-                          Text("${mPushModel.achievementText}",
+                          Text("${mPushModel.achievementText??""}",
                               maxLines: 2,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.body2.copyWith(
