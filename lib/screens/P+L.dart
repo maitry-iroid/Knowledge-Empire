@@ -836,12 +836,9 @@ class _PLPageState extends State<PLPage> {
                   openCloseMap.putIfAbsent(
                       revenue.name, () => revenue.currentRevenue.toDouble());
                 });
-
-                print(openCloseMap);
               });
           }
         }).catchError((e) {
-          // Utils.showToast(e.toString());
           CommonView.showCircularProgress(false, context);
         });
       }

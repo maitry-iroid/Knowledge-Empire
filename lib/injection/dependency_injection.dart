@@ -43,7 +43,7 @@ class Injector {
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
   static StreamController<String> headerStreamController;
-  static StreamController<String> homeStreamController;
+  static StreamController<String> homeStreamController=new StreamController<String>();
   static StreamController<String> newCustomerStreamController;
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;

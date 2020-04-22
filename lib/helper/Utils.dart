@@ -393,7 +393,12 @@ class Utils {
   }
 
   static FileInfo getCacheFile(String url) {
-    return Injector.cacheManager.getFileFromMemory(url);
+    try {
+      return Injector.cacheManager.getFileFromMemory(url);
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   static getHeaderHeight(BuildContext context) {
@@ -771,7 +776,8 @@ class Utils {
             ));
   }
 
-  static showUnreadCount(String type, double top, double right, List<UnreadBubbleCountData> data) {
+  static showUnreadCount(
+      String type, double top, double right, List<UnreadBubbleCountData> data) {
     return Positioned(
         right: right,
         top: top,

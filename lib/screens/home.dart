@@ -129,7 +129,6 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     initDrawerItems();
-
     var drawerOptions = <Widget>[];
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
@@ -269,6 +268,7 @@ class HomePageState extends State<HomePage>
 
   @override
   void dispose() {
+    Injector.homeStreamController.close();
     _connectivitySubscription?.cancel();
     super.dispose();
   }
@@ -743,6 +743,9 @@ class HomePageState extends State<HomePage>
 //      print('[BackgroundFetch] start FAILURE: $e');
 //    });
   }
+
+
+
 
   @override
   onRefresh() {
