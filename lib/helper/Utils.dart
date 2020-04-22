@@ -388,7 +388,12 @@ class Utils {
   }
 
   static FileInfo getCacheFile(String url) {
-    return Injector.cacheManager.getFileFromMemory(url);
+    try {
+      return Injector.cacheManager.getFileFromMemory(url);
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   static getHeaderHeight(BuildContext context) {
@@ -739,8 +744,7 @@ class Utils {
       return AssetImage(Utils.getAssetsImg("title_art_2"));
   }
 
-  static
-  showCustomerSituationDialog(
+  static showCustomerSituationDialog(
     GlobalKey<ScaffoldState> _scaffoldKey,
     QuestionData questionData,
     QuestionData nextChallengeQuestionData,
@@ -767,7 +771,8 @@ class Utils {
             ));
   }
 
-  static showUnreadCount(String type, double top, double right, List<UnreadBubbleCountData> data) {
+  static showUnreadCount(
+      String type, double top, double right, List<UnreadBubbleCountData> data) {
     return Positioned(
         right: right,
         top: top,

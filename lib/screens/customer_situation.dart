@@ -1093,4 +1093,10 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
 //    }
     }
   }
+
+  @override
+  void dispose() {
+    Injector.homeStreamController.close();
+    super.dispose();
+  }
 }

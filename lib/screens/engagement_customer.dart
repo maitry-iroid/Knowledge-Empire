@@ -59,7 +59,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   FileInfo fileInfo;
   String error;
   bool isChallenge = false;
-   PDFDocument doc;
+  PDFDocument doc;
 
   @override
   void initState() {
@@ -81,11 +81,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   Future getPdf() async {
-    if (Utils.getCacheFile(questionData.mediaLink) != null) {
-      doc = await PDFDocument.fromFile(
-          Utils.getCacheFile(questionData.mediaLink).file);
-    } else {
-      doc = await PDFDocument.fromURL(questionData.mediaLink);
+    if (questionData!=null && questionData.mediaLink != null) {
+      if (Utils.getCacheFile(questionData.mediaLink) != null) {
+        doc = await PDFDocument.fromFile(
+            Utils.getCacheFile(questionData.mediaLink).file);
+      } else {
+        doc = await PDFDocument.fromURL(questionData.mediaLink);
+      }
     }
   }
 
@@ -157,8 +159,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   refresh() {
     if (mounted) setState(() {});
   }
-
-
 
   Widget showItem(int index) {
     return GestureDetector(
@@ -320,9 +320,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
         await Injector.prefs.remove(PrefKeys.answerData);
         Injector.setCustomerValueData(customerValueData);
-
-
-
 
         navigateToSituation(context, null);
       }
@@ -1221,7 +1218,6 @@ class ExpandMediaState extends State<ExpandMedia>
   AnimationController controller;
   Animation<double> scaleAnimation;
 
-
   PDFDocument doc;
 
   @override
@@ -1347,5 +1343,10 @@ class ExpandMediaState extends State<ExpandMedia>
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    Injector.homeStreamController.close();
+    super.dispose();
   }
 }
