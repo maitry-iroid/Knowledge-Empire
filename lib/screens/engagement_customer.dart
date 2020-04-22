@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -321,9 +322,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         await Injector.prefs.remove(PrefKeys.answerData);
         Injector.setCustomerValueData(customerValueData);
 
-
-
-
         navigateToSituation(context, null);
       }
     }).catchError((e) {
@@ -517,8 +515,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           isChallenge: isChallenge,
           isCameFromNewCustomer: true);
 
-      Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
-          ModalRoute.withName("/home"));
+//      Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
+//          ModalRoute.withName("/home"));
+
+    navigationBloc.updateNavigation(homeData);
+
     } else {
       Navigator.pop(context);
       Utils.showCustomerSituationDialog(_scaffoldKey,

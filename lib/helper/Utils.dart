@@ -11,6 +11,7 @@ import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -194,12 +195,16 @@ class Utils {
   }
 
   static performBack(BuildContext context) {
-    if (!Navigator.canPop(context)) {
+
+
+    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+
+  /*  if (!Navigator.canPop(context)) {
       Navigator.pop(context);
 
-      Navigator.pushReplacement(context, FadeRouteHome());
-
-      /*showDialog(
+//      Navigator.pushReplacement(context, FadeRouteHome());
+      navigationBloc.updateNavigation(Const.typeHome);
+      *//*showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -220,9 +225,9 @@ class Utils {
                 )
               ],
             );
-          });*/
+          });*//*
     } else
-      Navigator.pop(context);
+      Navigator.pop(context);*/
   }
 
   static String getText(BuildContext context, String text) {
@@ -729,14 +734,14 @@ class Utils {
       return CachedNetworkImageProvider(url,
           scale: 1, cacheManager: Injector.cacheManager);
     } else
-      return AssetImage(Utils.getAssetsImg("title_art_2"));
+      return AssetImage(Utils.getAssetsImg("user_org"));
   }
 
   static getCacheNetworkImageWidget(String url) {
     if (url.isNotEmpty) {
       return CachedNetworkImage(imageUrl: url);
     } else
-      return AssetImage(Utils.getAssetsImg("title_art_2"));
+      return AssetImage(Utils.getAssetsImg("user_org"));
   }
 
   static showCustomerSituationDialog(
@@ -861,26 +866,16 @@ class Utils {
   }
 
   static void performNavigation(String type, BuildContext context) {
-    HomeData homeData =
-        HomeData(initialPageType: type, isCameFromDashboard: true);
+//    HomeData homeData =
+//        HomeData(initialPageType: type, isCameFromDashboard: true);
+//
+//    Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
+//        ModalRoute.withName("/home"));
 
-    Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
-        ModalRoute.withName("/home"));
+    navigationBloc.updateNavigation(HomeData(initialPageType: type));
+
   }
 
-  static Stream<Locale> setLocale(int index) {
-    var localeSubject = BehaviorSubject<Locale>();
-
-    if (index == 0)
-      localeSubject.sink.add(Locale('en', ''));
-    else if (index == 1)
-      localeSubject.sink.add(Locale('de', ''));
-    else if (index == 2)
-      localeSubject.sink.add(Locale('zh', ''));
-    else
-      localeSubject.sink.add(Locale('en', ''));
-    return localeSubject.stream.distinct();
-  }
 
   static int getIndexLocale(String language) {
     int index = 0;

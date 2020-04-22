@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/get_question_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -26,7 +27,7 @@ class ExistingCustomerPage extends StatefulWidget {
 
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -85,34 +86,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     });
   }
 
-//
-//  getQuestions() {
-//    CommonView.showCircularProgress(true, context);
-//
-//    QuestionRequest rq = QuestionRequest();
-//    rq.userId = Injector.userData.userId;
-//    rq.type = Const.getExistingQueType;
-//
-//    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) {
-//      CommonView.showCircularProgress(false, context);
-//
-//      if (data != null) {
-//        data.forEach((v) {
-//          arrQuestions.add(QuestionData.fromJson(v));
-//        });
-//
-//        if (arrQuestions.isNotEmpty) if (mounted) setState(() {});
-//      }
-//    }).catchError((e) {
-//      print("getQuestions_" + e.toString());
-//      CommonView.showCircularProgress(false, context);
-//      // Utils.showToast(e.toString());
-//    });
-//  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
         backgroundColor: ColorRes.colorBgDark,
         body: Stack(
           children: <Widget>[
@@ -307,7 +284,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   isCameFromNewCustomer: false,
                   isChallenge: false);
 
-              Navigator.push(context, FadeRouteHome(homeData: homeData));
+//              Navigator.push(context, FadeRouteHome(homeData: homeData));
+//              Navigator.push(_scaffoldKey.currentContext,
+//                  FadeRouteHome(homeData: homeData));
+            navigationBloc.updateNavigation(homeData);
             },
           ),
         ),

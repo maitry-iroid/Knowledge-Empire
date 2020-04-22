@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -48,17 +49,18 @@ import '../models/get_friends.dart';
 import 'package:flutter/services.dart';
 
 class FadeRouteHome extends PageRouteBuilder {
-  final HomeData homeData;
+//  final HomeData homeData;
   List<GetFriendsData> arrFriends = List();
 
-  FadeRouteHome({this.homeData})
+  FadeRouteHome(/*{this.homeData}*/)
       : super(
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              homeData.page,
+              /*homeData.page,*/
+              HomePage(),
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -68,16 +70,16 @@ class FadeRouteHome extends PageRouteBuilder {
               FadeTransition(
             opacity: animation,
             child: HomePage(
-              homeData: homeData,
+//              homeData: homeData,
             ),
           ),
         );
 }
 
 class HomePage extends StatefulWidget {
-  final HomeData homeData;
-
-  HomePage({Key key, this.homeData}) : super(key: key);
+//  final HomeData homeData;
+//
+//  HomePage({Key key, this.homeData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -88,8 +90,9 @@ class HomePage extends StatefulWidget {
 class DrawerItem {
   String title;
   String icon;
+  String key;
 
-  DrawerItem(this.title, this.icon);
+  DrawerItem(this.title, this.icon, this.key);
 }
 
 List<DrawerItem> drawerItems = List();
@@ -99,12 +102,15 @@ class HomePageState extends State<HomePage>
     implements RefreshAnimation {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _selectedDrawerIndex = 0;
+  String _currentPage = Const.typeHome;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool startAnim = false;
   int duration = 1;
   bool isCoinViseble = false;
   DashboardLockStatusData dashboardLockStatusData;
   RefreshAnimation mRefreshAnimation;
+
+  HomeData homeData;
 
   @override
   void didChangeDependencies() {
@@ -116,7 +122,7 @@ class HomePageState extends State<HomePage>
     super.initState();
     print("init_______home");
     dashboardLockStatusData = Injector.dashboardLockStatusData;
-
+//    setSelectedIndex();
     initStateMethods();
   }
 
@@ -130,77 +136,86 @@ class HomePageState extends State<HomePage>
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
           title: showMainItem(drawerItems[i], i),
           selected: i == _selectedDrawerIndex,
-          onTap: () => _onSelectItem(i)));
+          onTap: () => _onSelectItem(i, drawerItems[i])));
     }
 
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: new SizedBox(
-        width: Utils.getDeviceWidth(context) / 2.5,
-        child: Drawer(
-            child: Container(
-          color:
-              Injector.isBusinessMode ? ColorRes.bgMenu : ColorRes.headerBlue,
-          child: new ListView(children: drawerOptions),
-        )),
-      ),
-      backgroundColor: ColorRes.colorBgDark,
-      body: SafeArea(
-          child: Stack(
-        children: <Widget>[
-          getPage(),
+    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
 
-          HeaderView(
-            scaffoldKey: _scaffoldKey,
-            isShowMenu: true,
-            openProfile: openProfile,
-          ),
-          Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              coinWidget(250, 150),
-              coinWidget(310, 50),
-              coinWidget(70, 50),
-              coinWidget(150, 20),
-              coinWidget(350, 320),
-              coinWidget(350, 450),
-              coinWidget(180, 300),
-              coinWidget(200, 550),
-              coinWidget(350, 650),
-            ],
-          ),
-        ],
-      )),
-    );
+    return StreamBuilder(
+        stream: navigationBloc?.navigationKey,
+        builder: (context, AsyncSnapshot<HomeData> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              color: ColorRes.white,
+            );
+          } else if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              homeData = snapshot.data;
+              _selectedDrawerIndex = Utils.getHomePageIndex(snapshot.data.initialPageType);
+              _currentPage = snapshot.data.initialPageType;
+              return Scaffold(
+                key: _scaffoldKey,
+                drawer: new SizedBox(
+                  width: Utils.getDeviceWidth(context) / 2.5,
+                  child: Drawer(
+                      child: Container(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.bgMenu
+                        : ColorRes.headerBlue,
+                    child: new ListView(children: drawerOptions),
+                  )),
+                ),
+                backgroundColor: ColorRes.colorBgDark,
+                body: SafeArea(
+                    child: Stack(
+                  children: <Widget>[
+                    getPage(),
+                    HeaderView(
+                      scaffoldKey: _scaffoldKey,
+                      isShowMenu: true,
+//                      openProfile: openProfile,
+                    ),
+                    Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        coinWidget(250, 150),
+                        coinWidget(310, 50),
+                        coinWidget(70, 50),
+                        coinWidget(150, 20),
+                        coinWidget(350, 320),
+                        coinWidget(350, 450),
+                        coinWidget(180, 300),
+                        coinWidget(200, 550),
+                        coinWidget(350, 650),
+                      ],
+                    ),
+                  ],
+                )),
+              );
+            } else
+              return Container();
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return Container();
+          }
+        });
   }
 
   Future<void> initStateMethods() async {
-    UpdateDialogModel status = await Injector.getCurrentVersion(context);
-    if (status != null) {
-      if (status.status != "0" || status.status == "2") {
-        if (status.status == "2") {
-          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-            DisplayDialogs.showUpdateDialog(
-                context, status.headlineText, status.message, true);
-          } else {
-            DateTime clickedTime =
-                DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
-            if (DateTime.now().difference(clickedTime).inDays >= 1) {
-              DisplayDialogs.showUpdateDialog(
-                  context, status.headlineText, status.message, true);
-            }
-          }
-        } else {
-          DisplayDialogs.showUpdateDialog(
-              context, status.headlineText, status.message, false);
-        }
-      }
-    }
+
+    updateVersionDialog();
+    initContent();
     getLockStatus();
     Utils.removeBadge();
-    initContent();
     mRefreshAnimation = this;
   }
+
+  /*
+  * we need to call thi API here because we want to restrict features from
+  * menu-drawer items as well as top Header
+  *
+  * */
 
   void getLockStatus() {
     Utils.isInternetConnected().then((isConnected) {
@@ -214,9 +229,10 @@ class HomePageState extends State<HomePage>
             .then((data) async {
           if (data != null) {
             dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            await Injector.prefs.setString(PrefKeys.lockStatusData, jsonEncode(dashboardLockStatusData.toJson()));
+            await Injector.prefs.setString(PrefKeys.lockStatusData,
+                jsonEncode(dashboardLockStatusData.toJson()));
             Injector.dashboardLockStatusData = dashboardLockStatusData;
-            if (mounted) setState(() {});
+//            if (mounted) setState(() {});
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
@@ -325,14 +341,16 @@ class HomePageState extends State<HomePage>
     }
   }
 
-  openProfile() {
-    if (mounted) {
-      if (mounted)
-        setState(() => _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
-    }
-  }
+//
+//  openProfile() {
+//    if (mounted)
+//      setState(() =>
+//          _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
+//  }
 
-  _onSelectItem(int index) {
+  _onSelectItem(int index, DrawerItem item) {
+    _currentPage = item.key;
+
     Utils.playClickSound();
     if (_selectedDrawerIndex != index) {
       if (index == Utils.getHomePageIndex(Const.typeOrg) &&
@@ -399,13 +417,13 @@ class HomePageState extends State<HomePage>
             index == Utils.getHomePageIndex(Const.typePl)) {
           Utils.isInternetConnected().then((isConnected) {
             if (isConnected) {
-              navigationOnScreen(index);
+              navigationOnScreen(item);
             } else {
               Utils.showLockReasonDialog(StringRes.noOffline, context, true);
             }
           });
         } else {
-          navigationOnScreen(index);
+          navigationOnScreen(item);
         }
       }
     } else {
@@ -415,9 +433,10 @@ class HomePageState extends State<HomePage>
     }
   }
 
-  void navigationOnScreen(int index) {
-    setState(() => _selectedDrawerIndex = index);
-    Navigator.of(context).pop(); // close the drawer
+  void navigationOnScreen(DrawerItem item) {
+//    setState(() => _selectedDrawerIndex = index);
+    Navigator.of(context).pop(); //
+    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage)); // close the drawer
     if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
       Navigator.push(context, FadeRouteIntro());
     }
@@ -504,21 +523,21 @@ class HomePageState extends State<HomePage>
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeEngagement))
       return EngagementCustomer(
-          questionDataEngCustomer: widget.homeData.questionDataHomeScr,
-          isChallenge: widget.homeData.isChallenge);
+          questionDataEngCustomer: homeData.questionDataHomeScr,
+          isChallenge: homeData.isChallenge);
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeCustomerSituation))
       return CustomerSituationPage(
-        questionDataCustomerSituation: widget.homeData.questionDataSituation,
-        isChallenge: widget.homeData.isChallenge,
-        isCameFromNewCustomer: widget.homeData.isCameFromNewCustomer,
+        questionDataCustomerSituation: homeData.questionDataSituation,
+        isChallenge: homeData.isChallenge,
+        isCameFromNewCustomer: homeData.isCameFromNewCustomer,
         mRefreshAnimation: mRefreshAnimation,
       );
     else if (_selectedDrawerIndex ==
         Utils.getHomePageIndex(Const.typeChallenges))
       return ChallengesPage(
-        arrFriends: widget.homeData?.arrFriends,
-        friendId: widget.homeData?.friendId,
+        arrFriends: homeData?.arrFriends,
+        friendId: homeData?.friendId,
       );
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
@@ -534,59 +553,18 @@ class HomePageState extends State<HomePage>
   }
 
   void setSelectedIndex() {
-    _selectedDrawerIndex =
-        Utils.getHomePageIndex(widget.homeData?.initialPageType);
+    if (homeData != null) {
+      _selectedDrawerIndex =
+          Utils.getHomePageIndex(homeData?.initialPageType);
+      _currentPage = homeData?.initialPageType;
+    }
+
   }
 
   void initStreamController() async {
     Injector.homeStreamController.stream.listen((data) {
-      if (data == "${Const.typeProfile}") {
-        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeProfile) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile);
-          });
-      } else if (data == "${Const.typeOrg}") {
-        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeOrg) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeOrg);
-          });
-      } else if (data == "${Const.typeTeam}") {
-        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeTeam) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeTeam);
-          });
-      } else if (data == "${Const.typeNewCustomer}") {
-        if (_selectedDrawerIndex !=
-                Utils.getHomePageIndex(Const.typeNewCustomer) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex =
-                Utils.getHomePageIndex(Const.typeNewCustomer);
-          });
-      } else if (data == "${Const.typeExistingCustomer}") {
-        if (_selectedDrawerIndex !=
-                Utils.getHomePageIndex(Const.typeExistingCustomer) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex =
-                Utils.getHomePageIndex(Const.typeExistingCustomer);
-          });
-      } else if (data == "${Const.typeRanking}") {
-        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typeRanking) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeRanking);
-          });
-      } else if (data == "${Const.typePl}") {
-        if (_selectedDrawerIndex != Utils.getHomePageIndex(Const.typePl) &&
-            mounted)
-          setState(() {
-            _selectedDrawerIndex = Utils.getHomePageIndex(Const.typePl);
-          });
-      } else if (data == "${Const.openPendingChallengeDialog}") {
+
+      if (data == "${Const.openPendingChallengeDialog}") {
         getPendingChallenges();
       } else if (data == "${Const.typeMoneyAnim}") {
         isCoinViseble = true;
@@ -650,55 +628,78 @@ class HomePageState extends State<HomePage>
   void initDrawerItems() {
     drawerItems = [];
 
-    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.home),
-        Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home"));
+    drawerItems.add(
+      DrawerItem(
+          Utils.getText(context, StringRes.home),
+          Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home",
+          Const.typeHome),
+    );
 
-    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.businessSector),
-        Injector.isBusinessMode ? "business_sectors" : "ic_pro_home_business"));
+    drawerItems.add(DrawerItem(
+        Utils.getText(context, StringRes.businessSector),
+        Injector.isBusinessMode ? "business_sectors" : "ic_pro_home_business",
+        Const.typeBusinessSector));
 
-    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.newCustomers),
-        Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer"));
+    drawerItems.add(DrawerItem(
+        Utils.getText(context, StringRes.newCustomers),
+        Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer",
+        Const.typeNewCustomer));
 
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-          Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer"),
+      DrawerItem(
+          Utils.getText(context, StringRes.existingCustomers),
+          Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer",
+          Const.typeExistingCustomer),
     );
 
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.rewards),
-          Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards"),
+      DrawerItem(
+          Utils.getText(context, StringRes.rewards),
+          Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards",
+          Const.typeReward),
     );
 
     if (Injector.isManager())
       drawerItems.add(
-        DrawerItem(Utils.getText(context, StringRes.team),
-            Injector.isBusinessMode ? "team" : "ic_pro_home_team"),
+        DrawerItem(
+            Utils.getText(context, StringRes.team),
+            Injector.isBusinessMode ? "team" : "ic_pro_home_team",
+            Const.typeTeam),
       );
 
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.challenges),
-          Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges"),
+      DrawerItem(
+          Utils.getText(context, StringRes.challenges),
+          Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges",
+          Const.typeChallenges),
     );
     drawerItems.add(
       DrawerItem(
           Utils.getText(context, StringRes.organizations),
-          Injector.isBusinessMode
-              ? "organization"
-              : "ic_pro_home_organization"),
+          Injector.isBusinessMode ? "organization" : "ic_pro_home_organization",
+          Const.typeOrg),
     );
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.pl),
-          Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl"),
+      DrawerItem(
+          Utils.getText(context, StringRes.pl),
+          Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl",
+          Const.typePl),
     );
-    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.ranking),
-        Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking"));
+    drawerItems.add(DrawerItem(
+        Utils.getText(context, StringRes.ranking),
+        Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking",
+        Const.typeRanking));
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.profile),
-          Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile"),
+      DrawerItem(
+          Utils.getText(context, StringRes.profile),
+          Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile",
+          Const.typeProfile),
     );
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.help),
-          Injector.isBusinessMode ? "help_icon" : "ic_pro_help"),
+      DrawerItem(
+          Utils.getText(context, StringRes.help),
+          Injector.isBusinessMode ? "help_icon" : "ic_pro_help",
+          Const.typeHelp),
     );
   }
 
@@ -717,25 +718,26 @@ class HomePageState extends State<HomePage>
 
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
-    Injector.headerStreamController.add("event");
+//    if (Injector.headerStreamController == null)
+//      Injector.headerStreamController = StreamController.broadcast();
+//
+//    Injector.headerStreamController.add("event");
 
     initStreamController();
     getCustomerValues();
 
     initCheckNetworkConnectivity();
 
-    setSelectedIndex();
-
     initPlatformState();
 
-    if (widget.homeData == null ||
-        widget.homeData.page == null ||
-        (widget.homeData.initialPageType != Const.typeChallenges &&
-            widget.homeData.initialPageType != Const.typeCustomerSituation &&
-            widget.homeData.initialPageType != Const.typeEngagement)) {
-      if (widget.homeData == null ||
-          widget.homeData.isChallenge == null ||
-          widget.homeData.isChallenge) getPendingChallenges();
+    if (homeData == null ||
+        homeData.page == null ||
+        (homeData.initialPageType != Const.typeChallenges &&
+            homeData.initialPageType != Const.typeCustomerSituation &&
+            homeData.initialPageType != Const.typeEngagement)) {
+      if (homeData == null ||
+          homeData.isChallenge == null ||
+          homeData.isChallenge) getPendingChallenges();
     }
 //    }).catchError((e) {
 //      print('[BackgroundFetch] start FAILURE: $e');
@@ -747,5 +749,29 @@ class HomePageState extends State<HomePage>
     setState(() {
       isCoinViseble = true;
     });
+  }
+
+  void updateVersionDialog() async {
+    UpdateDialogModel status = await Injector.getCurrentVersion(context);
+    if (status != null) {
+      if (status.status != "0" || status.status == "2") {
+        if (status.status == "2") {
+          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
+            DisplayDialogs.showUpdateDialog(
+                context, status.headlineText, status.message, true);
+          } else {
+            DateTime clickedTime =
+                DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+            if (DateTime.now().difference(clickedTime).inDays >= 1) {
+              DisplayDialogs.showUpdateDialog(
+                  context, status.headlineText, status.message, true);
+            }
+          }
+        } else {
+          DisplayDialogs.showUpdateDialog(
+              context, status.headlineText, status.message, false);
+        }
+      }
+    }
   }
 }

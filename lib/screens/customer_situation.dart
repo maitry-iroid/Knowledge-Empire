@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
@@ -76,7 +77,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   Future<void> showIntroDialog() async {
     questionDataCustSituation = widget.questionDataCustomerSituation;
-    arrAnswerSituation = widget.questionDataCustomerSituation.answer;
+    arrAnswerSituation = widget.questionDataCustomerSituation?.answer;
 
     abcdList = alphaIndex;
 
@@ -131,7 +132,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 HeaderView(
                   isShowMenu: true,
                   scaffoldKey: _scaffoldKey,
-                  openProfile: null,
                 ),
                 showSubHeader(context),
                 Expanded(
@@ -258,7 +258,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               onTap: () {
                 Utils.playClickSound();
                 if (!widget.isCameFromNewCustomer)
-                  Navigator.pop(context);
+                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
                 else
                   gotoMainScreen(context);
               },
@@ -529,13 +529,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             context, widget.nextChallengeQuestionData);
       }
     } else {
-      Navigator.pushAndRemoveUntil(
-          context, FadeRouteHome(), ModalRoute.withName("home"));
 
-      HomeData homeData = HomeData(
-          initialPageType: Const.typeNewCustomer, questionDataSituation: null);
+    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
 
-      Navigator.push(context, FadeRouteHome(homeData: homeData));
     }
   }
 

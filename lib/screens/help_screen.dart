@@ -553,14 +553,10 @@ class HelpPageState extends State<HelpPage> {
                     )
                   : Container(width: Utils.getDeviceWidth(context) / 3.8),
               selectedType == Const.typeNewCustomer
-                  ? InkResponse(
-                      child: Image(
-                        image: AssetImage(Utils.getAssetsImg("new-customer")),
-                        width: Utils.getDeviceWidth(context) / 4.3,
-                      ),
-                      onTap: () {
-                        performItemClick(Const.typeNewCustomer);
-                      })
+                  ? Image(
+                    image: AssetImage(Utils.getAssetsImg("new-customer")),
+                    width: Utils.getDeviceWidth(context) / 4.3,
+                  )
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.2,
                     ),
@@ -750,11 +746,7 @@ class HelpPageState extends State<HelpPage> {
     );
   }
 
-  performItemClick(String type) {
-    HomeData homeData = HomeData(initialPageType: type);
 
-    Navigator.push(context, FadeRouteHome(homeData: homeData));
-  }
 
   bool isShowing = false;
 

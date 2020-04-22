@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/get_question_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -336,8 +337,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         questionDataHomeScr: arrQuestions[index],
                         value: arrQuestions[index].value);
 
-                    Navigator.push(_scaffoldKey.currentContext,
-                        FadeRouteHome(homeData: homeData));
+//                    Navigator.push(_scaffoldKey.currentContext,
+//                        FadeRouteHome(homeData: homeData));
+                  navigationBloc.updateNavigation(homeData);
                   } else {
                     Utils.showToast("You need atleast " +
                         arrQuestions[index].resources.toString() +
@@ -359,8 +361,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     questionDataHomeScr: arrQuestions[index],
                     value: arrQuestions[index].value);
 
-                Navigator.push(_scaffoldKey.currentContext,
-                    FadeRouteHome(homeData: homeData));
+//                Navigator.push(_scaffoldKey.currentContext,
+//                    FadeRouteHome(homeData: homeData));
+              navigationBloc.updateNavigation(homeData);
               } else {
                 Utils.showToast("You need atleast " +
                     arrQuestions[index].resources.toString() +

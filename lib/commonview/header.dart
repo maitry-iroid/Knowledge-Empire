@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/header_utils.dart';
@@ -9,15 +10,15 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/help_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HeaderView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
-  final Function openProfile;
 
-  HeaderView({this.scaffoldKey, this.isShowMenu, this.openProfile});
+  HeaderView({this.scaffoldKey, this.isShowMenu});
 
 //  List<Organization> arrOrganization = Injector.customerValueData.organization;
 
@@ -181,18 +182,22 @@ class HeaderViewState extends State<HeaderView> {
 
           if (type == Const.typeEmployee) {
             if (Injector.dashboardLockStatusData.organization == 1)
-              Injector.homeStreamController?.add("${Const.typeOrg}");
+              navigationBloc
+                  .updateNavigation(HomeData(initialPageType: Const.typeOrg));
             else
               Utils.showLockReasonDialog(Const.typeOrg, context, false);
           } else if (type == Const.typeSalesPersons) {
-            Injector.homeStreamController?.add("${Const.typeNewCustomer}");
+            navigationBloc.updateNavigation(
+                HomeData(initialPageType: Const.typeNewCustomer));
           } else if (type == Const.typeServicesPerson) {
-            Injector.homeStreamController?.add("${Const.typeExistingCustomer}");
+            navigationBloc.updateNavigation(
+                HomeData(initialPageType: Const.typeExistingCustomer));
           } else if (type == Const.typeBrandValue) {
             Utils.isInternetConnected().then((isConnected) {
               if (isConnected) {
                 if (Injector.dashboardLockStatusData.ranking == 1)
-                  Injector.homeStreamController?.add("${Const.typeRanking}");
+                  navigationBloc.updateNavigation(
+                      HomeData(initialPageType: Const.typeRanking));
                 else
                   Utils.showLockReasonDialog(Const.typeRanking, context, false);
               } else {
@@ -203,7 +208,8 @@ class HeaderViewState extends State<HeaderView> {
             if (Injector.dashboardLockStatusData.pl == 1) {
               Utils.isInternetConnected().then((isConnected) {
                 if (isConnected) {
-                  Injector.homeStreamController?.add("${Const.typePl}");
+                  navigationBloc.updateNavigation(
+                      HomeData(initialPageType: Const.typePl));
                 } else {
                   Utils.showLockReasonDialog(
                       StringRes.noOffline, context, true);
@@ -249,10 +255,13 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            if (Injector.homeStreamController == null)
+            /* if (Injector.homeStreamController == null)
               Injector.homeStreamController = StreamController.broadcast();
 
-            Injector.homeStreamController?.add("${Const.typeProfile}");
+            Injector.homeStreamController?.add("${Const.typeProfile}");*/
+
+            navigationBloc
+                .updateNavigation(HomeData(initialPageType: Const.typeProfile));
           }),
     );
   }

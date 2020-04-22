@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/BLoC/ranking_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -534,8 +535,8 @@ class _RankingPageState extends State<RankingPage> {
                   initialPageType: Const.typeChallenges,
                   friendId: arrFriends[index].userId);
 
-              Navigator.push(context, FadeRouteHome(homeData: homeData));
-
+//              Navigator.push(context, FadeRouteHome(homeData: homeData));
+navigationBloc.updateNavigation(homeData);
               print(arrFriends[index].isFriend);
             }
           }
