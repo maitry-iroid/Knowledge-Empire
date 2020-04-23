@@ -32,10 +32,9 @@ List abcdList = List();
 VideoPlayerController _controller;
 
 class EngagementCustomer extends StatefulWidget {
-  final QuestionData questionDataEngCustomer;
-  final bool isChallenge;
+  final HomeData homeData;
 
-  EngagementCustomer({Key key, this.questionDataEngCustomer, this.isChallenge})
+  EngagementCustomer({Key key, this.homeData})
       : super(key: key);
 
   @override
@@ -44,6 +43,9 @@ class EngagementCustomer extends StatefulWidget {
 
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+   QuestionData questionDataEngCustomer;
+   bool isChallenge;
 
   List alphaIndex = [
     StringRes.aIndex,
@@ -59,18 +61,19 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   FileInfo fileInfo;
   String error;
-  bool isChallenge = false;
   PDFDocument doc;
 
   @override
   void initState() {
     super.initState();
 
-    isChallenge = widget.isChallenge ?? false;
-    if (widget.questionDataEngCustomer != null) {
-      questionData = widget.questionDataEngCustomer;
-      widget.questionDataEngCustomer?.answer?.shuffle();
-      arrAnswer = widget.questionDataEngCustomer.answer;
+    questionDataEngCustomer = widget.homeData.questionDataHomeScr;
+    isChallenge = widget.homeData.isChallenge??false;
+
+    if (questionDataEngCustomer != null) {
+      questionData = questionDataEngCustomer;
+      questionDataEngCustomer?.answer?.shuffle();
+      arrAnswer = questionDataEngCustomer.answer;
       abcdList = alphaIndex;
       print(questionData.value);
 
@@ -82,12 +85,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   Future getPdf() async {
-    if (questionData!=null && questionData.mediaLink != null) {
+    if (questionData != null &&
+        questionData.mediaLink != null &&
+        Utils.isPdf(questionData.mediaLink)) {
       if (Utils.getCacheFile(questionData.mediaLink) != null) {
         doc = await PDFDocument.fromFile(
             Utils.getCacheFile(questionData.mediaLink).file);
       } else {
-        doc = await PDFDocument.fromURL(questionData.mediaLink);
+        doc =
+            await PDFDocument.fromURL(questionData.mediaLink).catchError(() {});
       }
     }
   }
@@ -295,8 +301,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitChallengesRequest rq = SubmitChallengesRequest();
 
     rq.userId = Injector.userData.userId;
-    rq.challengeId = widget.questionDataEngCustomer.challengeId;
-    rq.questionId = widget.questionDataEngCustomer.questionId;
+    rq.challengeId = questionDataEngCustomer.challengeId;
+    rq.questionId = questionDataEngCustomer.questionId;
     rq.isAnsweredCorrect = questionData.isAnsweredCorrect ? 1 : 0;
 
     Utils.isInternetConnected().then((isConnected) {
@@ -341,7 +347,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
-        QuestionData questionData = QuestionData.fromJson(data);
+//        QuestionData questionData = QuestionData.fromJson(data);
         navigateToSituation(context, questionData);
       }
     }).catchError((e) {
@@ -511,19 +517,20 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     if (!isChallenge) {
       HomeData homeData = HomeData(
           initialPageType: Const.typeCustomerSituation,
-          questionDataSituation: questionData,
+          questionDataHomeScr: questionData,
           isChallenge: isChallenge,
           isCameFromNewCustomer: true);
 
-//      Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
-//          ModalRoute.withName("/home"));
-
-    navigationBloc.updateNavigation(homeData);
-
+      navigationBloc.updateNavigation(homeData);
     } else {
-      Navigator.pop(context);
-      Utils.showCustomerSituationDialog(_scaffoldKey,
-          widget.questionDataEngCustomer, nextChallengeQuestionData);
+
+      navigationBloc.updateNavigation(HomeData(
+        initialPageType: Const.typeCustomerSituation,
+        questionDataHomeScr: questionData,
+        isChallenge: true,
+        isCameFromNewCustomer: false,
+        nextChallengeQuestionData: nextChallengeQuestionData,
+      ));
     }
   }
 
@@ -1348,6 +1355,7 @@ class ExpandMediaState extends State<ExpandMedia>
       ),
     );
   }
+
   @override
   void dispose() {
     Injector.homeStreamController.close();

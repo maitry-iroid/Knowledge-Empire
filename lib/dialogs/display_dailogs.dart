@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -7,6 +8,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:open_appstore/open_appstore.dart';
 
@@ -164,10 +166,15 @@ class DisplayDialogs {
                                     style: TextStyle(color: ColorRes.white)),
                               ),
                               onTap: () {
-                                Navigator.pop(context);
                                 Utils.playClickSound();
-                                Utils.showChallengeQuestionDialog(
-                                    context, questionData);
+                                Navigator.pop(context);
+//                                Utils.showChallengeQuestionDialog(
+//                                    context, questionData);
+                                navigationBloc.updateNavigation(HomeData(
+                                  initialPageType: Const.typeEngagement,
+                                  questionDataHomeScr: questionData,
+                                  isChallenge: true,
+                                ));
                               },
                             )
                           ],

@@ -10,6 +10,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -21,16 +22,17 @@ import '../helper/web_api.dart';
 import '../models/get_friends.dart';
 
 class ChallengesPage extends StatefulWidget {
-  final List<GetFriendsData> arrFriends;
-  final int friendId;
+  final HomeData homeData;
 
-  ChallengesPage({Key key, this.arrFriends, this.friendId}) : super(key: key);
+  ChallengesPage({Key key, this.homeData}) : super(key: key);
 
   @override
   _ChallengesPageState createState() => _ChallengesPageState();
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
+  int friendId;
+
   List<GetFriendsData> arrFriends = List();
 
   List<GetFriendsData> arrFriendsToShow = List();
@@ -47,6 +49,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
   initState() {
     super.initState();
 
+    arrFriends = widget.homeData.arrFriends;
+    friendId = widget.homeData.friendId;
+
     showIntroDialog();
 
     getSearchFriends(searchText);
@@ -55,8 +60,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
 //    selectedFriendId = arrFriends[0].userId;
 //    getBusinessSectors();
 
-    if (widget.arrFriends != null) {
-      arrSearchFriends = widget.arrFriends;
+    if (arrFriends != null) {
+      arrSearchFriends = arrFriends;
       if (arrSearchFriends.length > 0) if (mounted) setState(() {});
     }
   }
@@ -77,7 +82,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.friendId != null) selectedFriendId = widget.friendId;
+    if (friendId != null) selectedFriendId = friendId;
 
     return Scaffold(
       body: Stack(
@@ -130,7 +135,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             alignment: Alignment.center,
             child: Container(
               alignment: Alignment.center,
-              width: Utils.getDeviceWidth(context)/4,
+              width: Utils.getDeviceWidth(context) / 4,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 20),
               margin: title == StringRes.challenges
@@ -158,7 +163,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                   color: ColorRes.white,
                   fontSize: DimenRes.titleTextSize,
                 ),
-                textAlign: TextAlign.center,maxLines: 1,
+                textAlign: TextAlign.center,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -394,7 +400,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   _onSelectedRewards(int index) {
     String message =
         "Your friend will have to answer ${(arrRewards.length - index)} questions. Ifhe wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
-    Utils.showLockReasonDialog(message,context,true);
+    Utils.showLockReasonDialog(message, context, true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
 
@@ -798,7 +804,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   lineHeight: 20.0,
-                  percent: ((arrLearningModules[index].moduleProgress ?? 0) / 100).toDouble(),
+                  percent:
+                      ((arrLearningModules[index].moduleProgress ?? 0) / 100)
+                          .toDouble(),
                   backgroundColor: Colors.grey,
                   progressColor: Injector.isBusinessMode
                       ? Colors.blue
@@ -807,7 +815,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Positioned(
                   left: 6,
                   child: Text(
-                    arrLearningModules[index].moduleProgress.toStringAsFixed(2)+ "%",
+                    arrLearningModules[index]
+                            .moduleProgress
+                            .toStringAsFixed(2) +
+                        "%",
                     style: TextStyle(color: ColorRes.white, fontSize: 18),
                   ),
                 )

@@ -37,20 +37,9 @@ List abcdList = List();
 FileInfo fileInfo;
 
 class CustomerSituationPage extends StatefulWidget {
-  final QuestionData questionDataCustomerSituation;
-  final bool isChallenge;
-  final QuestionData nextChallengeQuestionData;
-  final bool isCameFromNewCustomer;
-  final RefreshAnimation mRefreshAnimation;
+  final HomeData homeData;
 
-  CustomerSituationPage(
-      {Key key,
-      this.questionDataCustomerSituation,
-      this.isChallenge,
-      this.nextChallengeQuestionData,
-      this.isCameFromNewCustomer,
-      this.mRefreshAnimation})
-      : super(key: key);
+  CustomerSituationPage({Key key, this.homeData}) : super(key: key);
 
   @override
   _CustomerSituationPageState createState() => _CustomerSituationPageState();
@@ -58,6 +47,11 @@ class CustomerSituationPage extends StatefulWidget {
 
 class _CustomerSituationPageState extends State<CustomerSituationPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  QuestionData questionDataCustomerSituation;
+  bool isChallenge;
+  QuestionData nextChallengeQuestionData;
+  bool isCameFromNewCustomer;
 
   int index = 1;
 
@@ -71,13 +65,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   void initState() {
+    questionDataCustomerSituation = widget.homeData.questionDataHomeScr;
+    isChallenge = widget.homeData.isChallenge;
+    nextChallengeQuestionData = widget.homeData.nextChallengeQuestionData;
+    isCameFromNewCustomer = widget.homeData.isCameFromNewCustomer;
+
     showIntroDialog();
+
     super.initState();
   }
 
   Future<void> showIntroDialog() async {
-    questionDataCustSituation = widget.questionDataCustomerSituation;
-    arrAnswerSituation = widget.questionDataCustomerSituation?.answer;
+    questionDataCustSituation = questionDataCustomerSituation;
+    arrAnswerSituation = questionDataCustomerSituation?.answer;
 
     abcdList = alphaIndex;
 
@@ -92,13 +92,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         await Injector.setIntroData(Injector.introData);
       }
 
-      if (widget.isCameFromNewCustomer || widget.isChallenge) {
+      if (isCameFromNewCustomer || isChallenge) {
         Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
         Utils.checkAudio(questionData.isAnsweredCorrect);
       }
       setState(() {});
     } else {
-      if (widget.isCameFromNewCustomer || widget.isChallenge) {
+      if (isCameFromNewCustomer || isChallenge) {
         Utils.checkAudio(questionData.isAnsweredCorrect);
       }
     }
@@ -121,7 +121,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            widget.isChallenge != null && widget.isChallenge
+            isChallenge != null && isChallenge
                 ? Container(
                     color: ColorRes.colorBgDark,
                   )
@@ -187,7 +187,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            widget.isChallenge != null && widget.isChallenge
+            isChallenge != null && isChallenge
                 ? Row(
                     children: <Widget>[
                       Container(
@@ -256,14 +256,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
               onTap: () {
                 Utils.playClickSound();
-                if (widget.isChallenge != null && widget.isChallenge) {
-                  Navigator.pop(context);
-                  if (widget.nextChallengeQuestionData != null &&
-                      widget.nextChallengeQuestionData.challengeId != null) {
-                    Utils.showChallengeQuestionDialog(
-                        context, widget.nextChallengeQuestionData);
+                if (isChallenge != null && isChallenge) {
+                  if (nextChallengeQuestionData != null &&
+                      nextChallengeQuestionData.challengeId != null) {
+
+                    navigationBloc.updateNavigation(HomeData(
+                        initialPageType: Const.typeEngagement,
+                        isChallenge: isChallenge,
+                        questionDataHomeScr: nextChallengeQuestionData));
                   }
-                } else if (widget.isCameFromNewCustomer) {
+                } else if (isCameFromNewCustomer != null &&
+                    isCameFromNewCustomer) {
                   navigationBloc.updateNavigation(
                       HomeData(initialPageType: Const.typeNewCustomer));
                 } else {
@@ -529,12 +532,15 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   void gotoMainScreen(BuildContext context) {
-    if (widget.isChallenge) {
-      Navigator.pop(context);
-      if (widget.nextChallengeQuestionData != null &&
-          widget.nextChallengeQuestionData.challengeId != null) {
-        Utils.showChallengeQuestionDialog(
-            context, widget.nextChallengeQuestionData);
+    if (isChallenge != null && isChallenge) {
+      if (nextChallengeQuestionData != null &&
+          nextChallengeQuestionData.challengeId != null) {
+//        Utils.showChallengeQuestionDialog(
+//            context, widget.nextChallengeQuestionData);
+        navigationBloc.updateNavigation(HomeData(
+            initialPageType: Const.typeEngagement,
+            questionDataHomeScr: nextChallengeQuestionData,
+            isChallenge: true));
       }
     } else {
       navigationBloc

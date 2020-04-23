@@ -25,6 +25,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   void initState() {
     super.initState();
     getUnreadBubbleCount();
+    getLockStatus();
 
     if (Injector.introData == null) {
       getIntroData();

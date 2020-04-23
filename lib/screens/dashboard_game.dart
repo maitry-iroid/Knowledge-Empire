@@ -52,6 +52,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
       showIntroDialog();
     }
     getUnreadBubbleCount();
+    getLockStatus();
 
   }
 

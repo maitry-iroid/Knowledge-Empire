@@ -29,6 +29,7 @@ class CustomerValueData {
   int totalAttemptedQuestion;
   int correctAnswerCount;
   int totalSalesPerson;
+  String introText;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
@@ -43,7 +44,9 @@ class CustomerValueData {
         this.resourceBonus,
         this.totalAttemptedQuestion,
         this.correctAnswerCount,
-        this.totalSalesPerson});
+        this.introText,
+        this.totalSalesPerson
+      });
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
@@ -59,6 +62,7 @@ class CustomerValueData {
     totalAttemptedQuestion = json['totalAttemptedQuestion'];
     correctAnswerCount = json['correctAnswerCount'];
     totalSalesPerson = json['totalSalesPerson'];
+    introText = json['introText'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +80,7 @@ class CustomerValueData {
     data['totalAttemptedQuestion'] = this.totalAttemptedQuestion;
     data['correctAnswerCount'] = this.correctAnswerCount;
     data['totalSalesPerson'] = this.totalSalesPerson;
+    data['introText'] = this.introText;
     return data;
   }
 }

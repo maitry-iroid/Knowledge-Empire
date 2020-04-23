@@ -749,32 +749,18 @@ class Utils {
       return AssetImage(Utils.getAssetsImg("user_org"));
   }
 
-  static showCustomerSituationDialog(
-    GlobalKey<ScaffoldState> _scaffoldKey,
-    QuestionData questionData,
-    QuestionData nextChallengeQuestionData,
-  ) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => CustomerSituationPage(
-              questionDataCustomerSituation: questionData,
-              isChallenge: true,
-              isCameFromNewCustomer: false,
-              nextChallengeQuestionData: nextChallengeQuestionData,
-            ));
-  }
 
-  static showChallengeQuestionDialog(
-    BuildContext context,
-    QuestionData questionData,
-  ) async {
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) => EngagementCustomer(
-              questionDataEngCustomer: questionData,
-              isChallenge: true,
-            ));
-  }
+//  static showChallengeQuestionDialog(
+//    BuildContext context,
+//    QuestionData questionData,
+//  ) async {
+//    await showDialog(
+//        context: context,
+//        builder: (BuildContext context) => EngagementCustomer(
+//              questionDataEngCustomer: questionData,
+//              isChallenge: true,
+//            ));
+//  }
 
   static showUnreadCount(
       String type, double top, double right, List<UnreadBubbleCountData> data) {

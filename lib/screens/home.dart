@@ -126,7 +126,6 @@ class HomePageState extends State<HomePage>
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     initDrawerItems();
@@ -155,12 +154,18 @@ class HomePageState extends State<HomePage>
                   Utils.getHomePageIndex(snapshot.data.initialPageType);
               _currentPage = snapshot.data.initialPageType;
 
+              print("current_page :  " + _currentPage);
+
               if (_currentPage == Const.typeCustomerSituation &&
                   ((homeData.isCameFromNewCustomer != null &&
-                          homeData.isCameFromNewCustomer) ||
-                      (homeData.isChallenge != null && homeData.isChallenge))) {
+                          homeData.isCameFromNewCustomer &&
+                          homeData.questionDataHomeScr.isAnsweredCorrect) ||
+                      (homeData.isChallenge != null &&
+                          homeData.isChallenge &&
+                          homeData.questionDataHomeScr.isAnsweredCorrect))) {
                 isCoinViseble = true;
-              }else isCoinViseble = false;
+              } else
+                isCoinViseble = false;
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -494,21 +499,11 @@ class HomePageState extends State<HomePage>
     if (_currentPage == Const.typeProfile)
       return ProfilePage();
     else if (_currentPage == Const.typeEngagement)
-      return EngagementCustomer(
-          questionDataEngCustomer: homeData.questionDataHomeScr,
-          isChallenge: homeData.isChallenge);
+      return EngagementCustomer(homeData: homeData);
     else if (_currentPage == Const.typeCustomerSituation)
-      return CustomerSituationPage(
-        questionDataCustomerSituation: homeData.questionDataSituation,
-        isChallenge: homeData.isChallenge,
-        isCameFromNewCustomer: homeData.isCameFromNewCustomer,
-        mRefreshAnimation: mRefreshAnimation,
-      );
+      return CustomerSituationPage(homeData: homeData);
     else if (_currentPage == Const.typeChallenges)
-      return ChallengesPage(
-        arrFriends: homeData?.arrFriends,
-        friendId: homeData?.friendId,
-      );
+      return ChallengesPage(homeData: homeData);
     else
       return _getDrawerItemWidget(_selectedDrawerIndex);
   }
@@ -534,10 +529,6 @@ class HomePageState extends State<HomePage>
       if (data == "${Const.openPendingChallengeDialog}") {
         getPendingChallenges();
       }
-//      else if (data == "${Const.typeMoneyAnim}") {
-//        isCoinViseble = true;
-////        startAnimation();
-//      }
     }, onDone: () {}, onError: (error) {});
   }
 
@@ -553,8 +544,6 @@ class HomePageState extends State<HomePage>
     });
   }
 
-  bool isLoading = false;
-
   void getPendingChallenges() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -562,11 +551,6 @@ class HomePageState extends State<HomePage>
         rq.userId = Injector.userData.userId;
 
         WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) {
-          if (mounted)
-            setState(() {
-              isLoading = false;
-            });
-
           if (data != null) {
             QuestionData questionData = QuestionData.fromJson(data);
             if (questionData != null && questionData.challengeId != null) {
@@ -576,18 +560,18 @@ class HomePageState extends State<HomePage>
                     questionData.firstName + " " + questionData.lastName,
                     questionData);
               } else {
-                Utils.showChallengeQuestionDialog(context, questionData);
+//                Utils.showChallengeQuestionDialog(context, questionData);
+                navigationBloc.updateNavigation(HomeData(
+                  initialPageType: Const.typeEngagement,
+                  questionDataHomeScr: questionData,
+                  isChallenge: true,
+                ));
               }
             }
           }
         }).catchError((e) {
           // Utils.showToast(e.toString());
           print("getChallenges_" + e.toString());
-          if (mounted) {
-            setState(() {
-              isLoading = false;
-            });
-          }
         });
       }
     });

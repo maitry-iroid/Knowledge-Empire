@@ -280,7 +280,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             onTap: () {
               HomeData homeData = HomeData(
                   initialPageType: Const.typeCustomerSituation,
-                  questionDataSituation: arrQuestions[index],
+                  questionDataHomeScr: arrQuestions[index],
                   isCameFromNewCustomer: false,
                   isChallenge: false);
 
