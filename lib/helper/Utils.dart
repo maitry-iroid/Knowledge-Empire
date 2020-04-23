@@ -793,7 +793,6 @@ class Utils {
   static int getCount(String _type, List<UnreadBubbleCountData> data) {
     if (data != null) {
       int type = 0;
-
       if (_type == Const.typeHome)
         type = 0;
       else if (_type == Const.typeBusinessSector)
