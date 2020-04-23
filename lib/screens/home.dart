@@ -120,15 +120,12 @@ class HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    print("init_______home");
     dashboardLockStatusData = Injector.dashboardLockStatusData;
-//    setSelectedIndex();
     Future.delayed(Duration(seconds: 1)).then((d) {
       initStateMethods();
     });
   }
 
-  bool _visible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +150,18 @@ class HomePageState extends State<HomePage>
             );
           } else if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
-              _visible = true;
               homeData = snapshot.data;
               _selectedDrawerIndex =
                   Utils.getHomePageIndex(snapshot.data.initialPageType);
               _currentPage = snapshot.data.initialPageType;
+
+              if (_currentPage == Const.typeCustomerSituation &&
+                  ((homeData.isCameFromNewCustomer != null &&
+                          homeData.isCameFromNewCustomer) ||
+                      (homeData.isChallenge != null && homeData.isChallenge))) {
+                isCoinViseble = true;
+              }else isCoinViseble = false;
+
               return Scaffold(
                 key: _scaffoldKey,
                 drawer: new SizedBox(
@@ -174,11 +178,7 @@ class HomePageState extends State<HomePage>
                 body: SafeArea(
                     child: Stack(
                   children: <Widget>[
-                    AnimatedOpacity(
-                      opacity: _visible ? 1.0 : 0.0,
-                      duration: Duration(milliseconds: 500),
-                      child: getPage(),
-                    ),
+                    getPage(),
                     HeaderView(
                       scaffoldKey: _scaffoldKey,
                       isShowMenu: true,
@@ -252,16 +252,6 @@ class HomePageState extends State<HomePage>
     super.dispose();
   }
 
-//  startAnimation() {
-//    isCoinViseble = true;
-//    if (isCoinViseble) {
-//      startAnim = true;
-//    } else {
-//      startAnim = false;
-//    }
-//    if (mounted) setState(() {});
-//  }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     print("=============");
@@ -270,7 +260,9 @@ class HomePageState extends State<HomePage>
     if (state == AppLifecycleState.resumed) {
 //      print("====== resume ======");
       Utils.removeBadge();
+      Injector.audioPlayerBg.resume();
     } else if (state == AppLifecycleState.inactive) {
+      Injector.audioPlayerBg.pause();
 //      print("====== inactive ======");
     } else if (state == AppLifecycleState.paused) {
 //      print("====== paused ======");
@@ -541,10 +533,11 @@ class HomePageState extends State<HomePage>
     Injector.homeStreamController.stream.listen((data) {
       if (data == "${Const.openPendingChallengeDialog}") {
         getPendingChallenges();
-      } else if (data == "${Const.typeMoneyAnim}") {
-        isCoinViseble = true;
-//        startAnimation();
       }
+//      else if (data == "${Const.typeMoneyAnim}") {
+//        isCoinViseble = true;
+////        startAnimation();
+//      }
     }, onDone: () {}, onError: (error) {});
   }
 

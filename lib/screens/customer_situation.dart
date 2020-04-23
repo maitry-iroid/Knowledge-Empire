@@ -94,8 +94,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
       if (widget.isCameFromNewCustomer || widget.isChallenge) {
         Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-        if (widget.isCameFromNewCustomer || widget.isChallenge)
-          Utils.checkAudio(questionData.isAnsweredCorrect);
+        Utils.checkAudio(questionData.isAnsweredCorrect);
       }
       setState(() {});
     } else {
@@ -122,7 +121,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            widget.isChallenge
+            widget.isChallenge != null && widget.isChallenge
                 ? Container(
                     color: ColorRes.colorBgDark,
                   )
@@ -188,7 +187,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            widget.isChallenge
+            widget.isChallenge != null && widget.isChallenge
                 ? Row(
                     children: <Widget>[
                       Container(
@@ -257,10 +256,20 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
               onTap: () {
                 Utils.playClickSound();
-                if (!widget.isCameFromNewCustomer)
-                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                else
-                  gotoMainScreen(context);
+                if (widget.isChallenge != null && widget.isChallenge) {
+                  Navigator.pop(context);
+                  if (widget.nextChallengeQuestionData != null &&
+                      widget.nextChallengeQuestionData.challengeId != null) {
+                    Utils.showChallengeQuestionDialog(
+                        context, widget.nextChallengeQuestionData);
+                  }
+                } else if (widget.isCameFromNewCustomer) {
+                  navigationBloc.updateNavigation(
+                      HomeData(initialPageType: Const.typeNewCustomer));
+                } else {
+                  navigationBloc.updateNavigation(
+                      HomeData(initialPageType: Const.typeExistingCustomer));
+                }
               },
             )
           ],
@@ -276,7 +285,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       isAnswerCorrect = false;
       return false;
     }
-
     return isAnswerCorrect;
   }
 
@@ -529,9 +537,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             context, widget.nextChallengeQuestionData);
       }
     } else {
-
-    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
-
+      navigationBloc
+          .updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
     }
   }
 
