@@ -567,6 +567,8 @@ class HomePageState extends State<HomePage>
                   isChallenge: true,
                 ));
               }
+            }else{
+              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           }
         }).catchError((e) {
