@@ -340,7 +340,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     Expanded(
                       child: Center(
                         child: Text(
-                          "# ${Utils.getText(context, StringRes.mQuestions)}",
+                          "# ${Utils.getText(context, StringRes.question)}",
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
@@ -713,6 +713,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Center(
                   child: Text(
                     (arrRewards.length - index).toString(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Injector.isBusinessMode
                             ? ColorRes.white

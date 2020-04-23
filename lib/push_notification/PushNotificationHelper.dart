@@ -173,13 +173,13 @@ class PushNotificationHelper {
       if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
         Injector.customerValueData.totalSalesPerson +=int.parse(mPushModel.bonus);
         Injector.customerValueData.remainingSalesPerson +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.servicePerson);
+        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.salesReps);
       }
 
       if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
         Injector.customerValueData.totalCustomerCapacity +=int.parse(mPushModel.bonus);
         Injector.customerValueData.remainingCustomerCapacity +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.customerCapacity);
+        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.serviceReps);
       }
       print(Injector.customerValueData.totalBalance.toString() +"======>"+ mPushModel.bonus.toString());
       if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {

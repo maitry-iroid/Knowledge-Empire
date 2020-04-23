@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -89,6 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor:
@@ -639,7 +644,6 @@ class _ProfilePageState extends State<ProfilePage> {
     rq.deviceType = Injector.deviceType;
     rq.deviceToken = Injector.prefs.getString(PrefKeys.deviceToken);
 
-
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
@@ -659,13 +663,12 @@ class _ProfilePageState extends State<ProfilePage> {
           CommonView.showCircularProgress(false, context);
           // Utils.showToast(e.toString());
         });
-      }else{
+      } else {
         CommonView.showCircularProgress(false, context);
-        Fluttertoast.showToast(msg:Utils.getText(context, StringRes.noInternet));
+        Fluttertoast.showToast(
+            msg: Utils.getText(context, StringRes.noInternet));
       }
     });
-
-
   }
 
   showTitle() {
@@ -767,7 +770,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       onTap: () => showPhotoOptionDialog(context),
- /*     onTap: () {
+      /*     onTap: () {
         DisplayDialogs.showChallengeDialog(context, "hello", null);
       },*/
     );
@@ -1056,6 +1059,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future getImage(int type) async {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     File tempImage = await ImagePicker.pickImage(
       source:
           type == Const.typeGallery ? ImageSource.gallery : ImageSource.camera,
@@ -1064,6 +1071,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (tempImage != null) {
       setState(() {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ]);
         photoUrl = "";
         _image = tempImage;
         if (_image != null) {
@@ -1267,7 +1278,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String getVersion() {
-
     String mode = Injector.isDev ? "D" : "P";
     String customerSpecificVersion = "BES"; //Blue Elephants Solutions
     String os = Injector.deviceType == "ios" ? "I" : "A";

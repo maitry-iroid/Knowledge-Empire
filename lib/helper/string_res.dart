@@ -343,7 +343,6 @@ class StringRes {
   static var collector = "collector";
   static var businessSegments = "businessSegments";
   static var businessSegmentsNew = "businessSegmentsNew";
-  static var bonus = "bonus";
   static var bonusPoint = "bonusPoint";
   static var dear = "dear";
   static var hi = "hi";
@@ -352,17 +351,15 @@ class StringRes {
 
   static var updateLatter = "updateLatter";
 
-  static var servicePerson = "servicePerson";
-  static var customerCapacity = "customerCapacity";
+  static var serviceReps = "serviceReps";
+  static var salesReps = "salesReps";
 
   static var noOffline = "noOffline";
 
   static var my = "my";
-  static var mQuestions = "mQuestions";
   static var mHis = "mHis";
-  static var yourValue = "yourValue";
-  static var achievementTitle = "achievementTitle";
   static var needAtList = "needAtList";
+  static var sizeInKb = "sizeInKb";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -448,10 +445,7 @@ class StringRes {
       'alertFriendSuccess': "Friend added successfully",
       'alertUnFriendSuccess': "Unfriend successfully",
       'alertUChallengeSent': "Challenge sent successfully!",
-      'by':'By : ',
-      'inText':'In : ',
-      'toWin':'To Win : ',
-      'questions':'Questions : ',
+
 
       //learning module
       'subscribe': 'Subscribe',
@@ -748,21 +742,22 @@ class StringRes {
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
       //endregion
 
-      'bonus': "",
       'bonusPoint': "Bonus Point",
       'dear': "Dear",
       'hi': "Hi",
       'noInternet': "Check Your Internet Connection",
       'update': "Update now",
       'updateLatter': "Update letter",
-      'servicePerson': "Service Person",
-      'customerCapacity': "Customer Capacity",
+      'serviceReps': "Service Reps",
+      'salesReps': "Sales Reps",
       'noOffline': "Sorry, this feature is only available while online.",
       'my': "My",
-      'mQuestions': "Questions",
       'mHis': "His",
-      'yourValue': "of your value",
-      'achievementTitle': "Everybody Empireknowlage",
+      'by':'By : ',
+      'inText':'In : ',
+      'toWin':'To Win : ',
+      'questions':'Questions : ',
+      'sizeInKb': "kb",
     },
     'de': {
       //region german
@@ -844,10 +839,7 @@ class StringRes {
       'alertFriendSuccess': 'Friend added successfully',
       'alertUnFriendSuccess': 'Unfriend successfully',
       'alertUChallengeSent': 'Challenge sent successfully!',
-      'by':'By : ',
-      'inText':'In : ',
-      'toWin':'To Win : ',
-      'questions':'Questions : ',
+
 
       //learning module
       'subscribe': 'Abonnieren',
@@ -1130,20 +1122,23 @@ class StringRes {
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
       //endregion
 
-      'dear': "Dear",
-      'bonusPoint': "Bonus Point",
-      'hi': "Hi",
-      'noInternet': "Check Your Internet Connection",
+      'dear': "Hallo",
+      'hi': "Hallo",
+      'noInternet': 'Bitte Internetverbindung prüfen',
       'update': "Jetzt aktualisieren",
       'updateLatter': "Später aktualisieren",
-      'servicePerson': "Service Person",
-      'customerCapacity': "Customer Capacity",
       'noOffline': "Diese Funktion ist leider nur online verfügbar.",
-      'my': "My",
-      'mQuestions': "Questions",
-      'mHis': "His",
-      'yourValue': "of your value",
-      'achievementTitle': "Everybody Empireknowlage",
+      'my': 'Mein',
+      'mHis': 'Sein',
+      'by': 'Von',
+      'inText': 'In',
+      'toWin': 'Preis',
+
+      'servicePerson': 'Servicemitarbeiter',
+      'salesReps': 'Vertriebler',
+      'bonusPoint': "Bonus Point",
+      'questions':'Questions : ',
+      'sizeInKb': "kb",
     },
     'zh': {
       //      region chinese
@@ -1224,10 +1219,7 @@ class StringRes {
       'alertFriendSuccess': "添加朋友成功",
       'alertUnFriendSuccess': "成功取消朋友",
       'alertUChallengeSent': "挑战已成功发送",
-      'by':'By : ',
-      'inText':'In : ',
-      'toWin':'To Win : ',
-      'questions':'Questions : ',
+
 
       //learning module
       'subscribe': '订阅',
@@ -1499,20 +1491,23 @@ class StringRes {
       'unLockChallenge': '雇用第一个律师后解锁',
       //endregion
 
-      'dear': "Dear",
-      'bonusPoint': "Bonus Point",
-      'hi': "Hi",
-      'noInternet': "Check Your Internet Connection",
+      'dear': "亲爱的",
+      'hi': "您好",
+      'noInternet': '请确认是否连接到互联网',
       'update': "立即升级",
       'updateLatter': "以后再说",
-      'servicePerson': "Service Person",
-      'customerCapacity': "Customer Capacity",
       'noOffline': "很抱歉 此项功能需要连接互联网",
-      'my': "My",
-      'mQuestions': "Questions",
-      'mHis': "His",
-      'yourValue': "of your value",
-      'achievementTitle': "Everybody Empireknowlage",
+      'my': '我的',
+      'mHis': '他的',
+      'by': '挑战者',
+      'inText': '业务部门',
+      'toWin': '可赢得',
+
+      'servicePerson': '服务代表',
+      'salesReps': '销售代表',
+      'bonusPoint': "Bonus Point",
+      'questions':'Questions : ',
+      'sizeInKb': "kb",
     }
   };
 
@@ -1718,19 +1713,23 @@ class StringRes {
       //endregion
 
       'dear': "Dear",
-      'bonusPoint': "Bonus Point",
-      'hi': "Hi",
-      'noInternet': "Check Your Internet Connection",
+      'hi': "Dear",
+      'noInternet': 'Please check your Internet connection',
       'update': "Update Application",
       'updateLatter': "Update letter",
-      'servicePerson': "Service Person",
-      'customerCapacity': "Customer Capacity",
       'noOffline': "Sorry, this feature is only available while online.",
       'my': "My",
-      'mQuestions': "Questions",
       'mHis': "His",
-      'yourValue': "of your value",
-      'achievementTitle': "Everybody Empireknowlage",
+      'by': 'By',
+      'inText': 'In',
+      'toWin': 'To win',
+      'challenge': 'Challenge',
+
+      'servicePerson': 'Memory Points',
+      'salesReps': 'Study Points',
+      'bonusPoint': "Bonus Point",
+      'questions':'Questions : ',
+      'sizeInKb': "kb",
     },
     'de': {
       //region German
@@ -2045,20 +2044,24 @@ class StringRes {
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
       //endregion
 
-      'dear': "Dear",
-      'bonusPoint': "Bonus Point",
-      'hi': "Hi",
-      'noInternet': "Check Your Internet Connection",
+      'dear': "Hallo",
+      'hi': "Hallo",
+      'noInternet': 'Bitte Internetverbindung prüfen',
       'update': "Jetzt aktualisieren",
       'updateLatter': "Später aktualisieren",
-      'servicePerson': "Service Person",
-      'customerCapacity': "Customer Capacity",
       'noOffline': "Diese Funktion ist leider nur online verfügbar.",
-      'my': "My",
-      'mQuestions': "Questions",
-      'mHis': "His",
-      'yourValue': "of your value",
-      'achievementTitle': "Everybody Empireknowlage",
+      'my': 'Mein',
+      'mHis': 'Sein',
+      'by': 'Von',
+      'inText': 'In',
+      'toWin': 'Preis',
+      'challenge': 'Herausforderung',
+      'servicePerson': 'Bestandsfragen',
+      'salesReps': 'Lernpunkte ',
+      'bonusPoint': "Bonus Point",
+      'questions':'Questions : ',
+      'sizeInKb': "kb",
+
     },
     'zh': {
       //region chines
@@ -2351,20 +2354,23 @@ class StringRes {
       'unLockChallenge': '最大挑战威力升级点数增加后解锁',
       //endregion
 
-      'dear': "Dear",
-      'bonusPoint': "Bonus Point",
-      'hi': "Hi",
-      'noInternet': "Check Your Internet Connection",
+      'dear': "亲爱的",
+      'hi': "亲爱的",
+      'noInternet': '请确认是否连接到互联网',
       'update': "立即升级",
       'updateLatter': "以后再说",
-      'servicePerson': "Service Person",
-      'customerCapacity': "Customer Capacity",
       'noOffline': "很抱歉 此项功能需要连接互联网",
-      'my': "My",
-      'mQuestions': "Questions",
-      'mHis': "His",
-      'yourValue': "of your value",
-      'achievementTitle': "Everybody Empireknowlage",
+      'my': '我的',
+      'mHis': '他的',
+      'by': '挑战者',
+      'inText': '学习模块',
+      'toWin': '可赢得',
+      'challenge': '挑战',
+      'servicePerson': '记忆点数',
+      'salesReps': '学习点数',
+      'bonusPoint': "Bonus Point",
+      'questions':'Questions : ',
+      'sizeInKb': "kb",
     }
   };
 }

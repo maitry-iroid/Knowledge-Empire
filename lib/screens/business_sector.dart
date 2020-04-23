@@ -855,8 +855,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
             Utils.getText(context, StringRes.thisModuleWillOccupie) +
-                selectedModule.fileSize.toString() +
-                "",
+                selectedModule.fileSize.toString()+ " " +
+                Utils.getText(context, StringRes.sizeInKb),
             style: TextStyle(color: ColorRes.white, fontSize: 17),
           )
         : Container();
