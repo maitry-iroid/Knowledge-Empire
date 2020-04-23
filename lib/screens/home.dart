@@ -71,7 +71,7 @@ class FadeRouteHome extends PageRouteBuilder {
             opacity: animation,
             child: HomePage(
 //              homeData: homeData,
-            ),
+                ),
           ),
         );
 }
@@ -123,8 +123,12 @@ class HomePageState extends State<HomePage>
     print("init_______home");
     dashboardLockStatusData = Injector.dashboardLockStatusData;
 //    setSelectedIndex();
-    initStateMethods();
+    Future.delayed(Duration(seconds: 1)).then((d) {
+      initStateMethods();
+    });
   }
+
+  bool _visible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -149,8 +153,10 @@ class HomePageState extends State<HomePage>
             );
           } else if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
+              _visible = true;
               homeData = snapshot.data;
-              _selectedDrawerIndex = Utils.getHomePageIndex(snapshot.data.initialPageType);
+              _selectedDrawerIndex =
+                  Utils.getHomePageIndex(snapshot.data.initialPageType);
               _currentPage = snapshot.data.initialPageType;
               return Scaffold(
                 key: _scaffoldKey,
@@ -168,7 +174,11 @@ class HomePageState extends State<HomePage>
                 body: SafeArea(
                     child: Stack(
                   children: <Widget>[
-                    getPage(),
+                    AnimatedOpacity(
+                      opacity: _visible ? 1.0 : 0.0,
+                      duration: Duration(milliseconds: 500),
+                      child: getPage(),
+                    ),
                     HeaderView(
                       scaffoldKey: _scaffoldKey,
                       isShowMenu: true,
@@ -202,42 +212,11 @@ class HomePageState extends State<HomePage>
   }
 
   Future<void> initStateMethods() async {
-
     updateVersionDialog();
     initContent();
     getLockStatus();
     Utils.removeBadge();
     mRefreshAnimation = this;
-  }
-
-  /*
-  * we need to call thi API here because we want to restrict features from
-  * menu-drawer items as well as top Header
-  *
-  * */
-
-  void getLockStatus() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
-
-        WebApi()
-            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) async {
-          if (data != null) {
-            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            await Injector.prefs.setString(PrefKeys.lockStatusData,
-                jsonEncode(dashboardLockStatusData.toJson()));
-            Injector.dashboardLockStatusData = dashboardLockStatusData;
-//            if (mounted) setState(() {});
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
   }
 
 //push notification
@@ -295,6 +274,7 @@ class HomePageState extends State<HomePage>
 //      print("====== inactive ======");
     } else if (state == AppLifecycleState.paused) {
 //      print("====== paused ======");
+      Injector.updateIntroData();
     }
   }
 
@@ -436,7 +416,8 @@ class HomePageState extends State<HomePage>
   void navigationOnScreen(DrawerItem item) {
 //    setState(() => _selectedDrawerIndex = index);
     Navigator.of(context).pop(); //
-    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage)); // close the drawer
+    navigationBloc.updateNavigation(
+        HomeData(initialPageType: _currentPage)); // close the drawer
     if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
       Navigator.push(context, FadeRouteIntro());
     }
@@ -518,23 +499,20 @@ class HomePageState extends State<HomePage>
   }
 
   getPage() {
-    if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeProfile))
+    if (_currentPage == Const.typeProfile)
       return ProfilePage();
-    else if (_selectedDrawerIndex ==
-        Utils.getHomePageIndex(Const.typeEngagement))
+    else if (_currentPage == Const.typeEngagement)
       return EngagementCustomer(
           questionDataEngCustomer: homeData.questionDataHomeScr,
           isChallenge: homeData.isChallenge);
-    else if (_selectedDrawerIndex ==
-        Utils.getHomePageIndex(Const.typeCustomerSituation))
+    else if (_currentPage == Const.typeCustomerSituation)
       return CustomerSituationPage(
         questionDataCustomerSituation: homeData.questionDataSituation,
         isChallenge: homeData.isChallenge,
         isCameFromNewCustomer: homeData.isCameFromNewCustomer,
         mRefreshAnimation: mRefreshAnimation,
       );
-    else if (_selectedDrawerIndex ==
-        Utils.getHomePageIndex(Const.typeChallenges))
+    else if (_currentPage == Const.typeChallenges)
       return ChallengesPage(
         arrFriends: homeData?.arrFriends,
         friendId: homeData?.friendId,
@@ -554,16 +532,13 @@ class HomePageState extends State<HomePage>
 
   void setSelectedIndex() {
     if (homeData != null) {
-      _selectedDrawerIndex =
-          Utils.getHomePageIndex(homeData?.initialPageType);
+      _selectedDrawerIndex = Utils.getHomePageIndex(homeData?.initialPageType);
       _currentPage = homeData?.initialPageType;
     }
-
   }
 
   void initStreamController() async {
     Injector.homeStreamController.stream.listen((data) {
-
       if (data == "${Const.openPendingChallengeDialog}") {
         getPendingChallenges();
       } else if (data == "${Const.typeMoneyAnim}") {
@@ -718,11 +693,6 @@ class HomePageState extends State<HomePage>
 
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
-//    if (Injector.headerStreamController == null)
-//      Injector.headerStreamController = StreamController.broadcast();
-//
-//    Injector.headerStreamController.add("event");
-
     initStreamController();
     getCustomerValues();
 
@@ -743,9 +713,6 @@ class HomePageState extends State<HomePage>
 //      print('[BackgroundFetch] start FAILURE: $e');
 //    });
   }
-
-
-
 
   @override
   onRefresh() {
@@ -776,5 +743,35 @@ class HomePageState extends State<HomePage>
         }
       }
     }
+  }
+
+  /*
+  * we need to call thi API here because we want to restrict features from
+  * menu-drawer items as well as top Header
+  *
+  * */
+  static Future getLockStatus() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Const.businessMode;
+
+        WebApi()
+            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
+            .then((data) async {
+          if (data != null) {
+            DashboardLockStatusData dashboardLockStatusData =
+                DashboardLockStatusData.fromJson(data);
+            await Injector.prefs.setString(PrefKeys.lockStatusData,
+                jsonEncode(dashboardLockStatusData.toJson()));
+            Injector.dashboardLockStatusData = dashboardLockStatusData;
+//            if (mounted) setState(() {});
+          }
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+        });
+      }
+    });
   }
 }

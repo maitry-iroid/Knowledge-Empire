@@ -53,7 +53,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
     }
     getUnreadBubbleCount();
 
-    Injector.updateIntroData();
   }
 
   getIntroData() {

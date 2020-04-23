@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -7,6 +8,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/intro.dart';
 
 import '../helper/constant.dart';
 
@@ -22,7 +24,11 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   @override
   void initState() {
     super.initState();
-    getDashboardConfig();
+    getUnreadBubbleCount();
+
+    if (Injector.introData == null) {
+      getIntroData();
+    }
 
     Injector.isSoundEnable = false;
   }
@@ -41,7 +47,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-  void getDashboardConfig() {
+  void getUnreadBubbleCount() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         DashboardRequest rq = DashboardRequest();
@@ -166,6 +172,30 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
+  DashboardLockStatusData dashboardLockStatusData;
+
+  void getLockStatus() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
+        rq.userId = Injector.userId;
+        rq.mode = Injector.mode ?? Const.businessMode;
+
+        WebApi()
+            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
+            .then((data) {
+          if (data != null) {
+            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
+            Injector.dashboardLockStatusData = dashboardLockStatusData;
+            if (mounted) setState(() {});
+          }
+        }).catchError((e) {
+          print("getDashboardValue_" + e.toString());
+        });
+      }
+    });
+  }
+
   getTitle(String type) {
     if (type == Const.typeBusinessSector)
       return Utils.getText(context, StringRes.businessSector);
@@ -210,5 +240,33 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "ic_pro_home_team";
     else
       return "";
+  }
+
+  getIntroData() {
+    if (Injector.getIntroData() != null) return;
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        CommonView.showCircularProgress(true, context);
+
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 1;
+
+        WebApi().callAPI(WebApi.rqGameIntro, rq.toJson()).then((data) async {
+          CommonView.showCircularProgress(false, context);
+          if (data != null) {
+            IntroData introData = IntroData.fromJson(data);
+            await Injector.setIntroData(introData);
+
+
+          }
+        }).catchError((e) {
+          CommonView.showCircularProgress(false, context);
+          print("getIntro" + e.toString());
+          // Utils.showToast(e.toString());
+        });
+      }
+    });
   }
 }
