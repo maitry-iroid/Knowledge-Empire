@@ -152,7 +152,7 @@ class DisplayDialogs {
                             challengesRow(Utils.getText(context, StringRes.by), userName),
                             challengesRow(Utils.getText(context, StringRes.inText), "${questionData.moduleName ?? ""}"),
                             challengesRow(Utils.getText(context, StringRes.toWin), questionData.winningAmount.toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
-                            challengesRow(Utils.getText(context, StringRes.questions), "${questionData.question ?? ""}"),
+                            challengesRow(Utils.getText(context, StringRes.questions), "${questionData.totalQuestion ?? ""}"),
                             InkResponse(
                               child: Container(
                                 padding: EdgeInsets.only(left: 35, right: 35, top: 10, bottom: 10),

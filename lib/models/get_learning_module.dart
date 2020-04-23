@@ -75,6 +75,7 @@ class LearningModuleData {
     question = json['question'];
     isAssign = json['isAssign'];
     companyId = json['companyId'];
+    fileSize = json['fileSize'];
     isDownloadEnable = json['isDownloadEnable'];
     moduleProgress = json['moduleProgress'];
     isSubscribedFromBackend = json['isSubscribedFromBackend'];
