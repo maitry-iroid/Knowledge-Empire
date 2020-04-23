@@ -334,7 +334,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           0) {
                     HomeData homeData = HomeData(
                         initialPageType: Const.typeEngagement,
-                        questionDataHomeScr: arrQuestions[index],
+                        questionHomeData: arrQuestions[index],
                         value: arrQuestions[index].value);
 
 //                    Navigator.push(_scaffoldKey.currentContext,
@@ -358,7 +358,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   Injector.customerValueData.remainingCustomerCapacity > 0) {
                 HomeData homeData = HomeData(
                     initialPageType: Const.typeEngagement,
-                    questionDataHomeScr: arrQuestions[index],
+                    questionHomeData: arrQuestions[index],
                     value: arrQuestions[index].value);
 
 //                Navigator.push(_scaffoldKey.currentContext,

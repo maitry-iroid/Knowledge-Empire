@@ -66,7 +66,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void initState() {
     super.initState();
 
-    questionDataEngCustomer = widget.homeData.questionDataHomeScr;
+    questionDataEngCustomer = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge ?? false;
 
     if (questionDataEngCustomer != null) {
@@ -540,7 +540,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     if (!isChallenge) {
       HomeData homeData = HomeData(
           initialPageType: Const.typeCustomerSituation,
-          questionDataHomeScr: questionData,
+          questionHomeData: questionData,
           isChallenge: isChallenge,
           isCameFromNewCustomer: true);
 
@@ -548,10 +548,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     } else {
       navigationBloc.updateNavigation(HomeData(
         initialPageType: Const.typeCustomerSituation,
-        questionDataHomeScr: questionData,
+        questionHomeData: questionData,
         isChallenge: true,
         isCameFromNewCustomer: false,
-        nextChallengeQuestionData: nextChallengeQuestionData,
       ));
     }
   }

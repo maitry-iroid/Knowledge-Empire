@@ -73,6 +73,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   TextEditingController searchController = TextEditingController();
   String searchText = "";
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -107,6 +108,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
               showMainBody(),
             ],
           ),
+          CommonView.showLoderView(isLoading)
         ],
       ),
     );
@@ -856,15 +858,24 @@ class _ChallengesPageState extends State<ChallengesPage> {
   int selectedFriendId = 3;
 
   void friendUnFriendUser(int index, int action) {
-    CommonView.showCircularProgress(true, context);
+
+    if(mounted){
+      setState(() {
+        isLoading = true;
+      });
+    }
     GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
     rq.userId = Injector.userData.userId;
     rq.requestedTo = arrFriendsToShow[index].userId;
     rq.action = action;
 
     WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, context);
 
+      if(mounted){
+        setState(() {
+          isLoading = false;
+        });
+      }
       if (data != null) {
         if (action == 1) {
           Utils.showToast(Utils.getText(context, StringRes.alertFriendSuccess));
@@ -878,7 +889,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError(() {
-      CommonView.showCircularProgress(false, context);
+
+      if(mounted){
+        setState(() {
+          isLoading = false;
+        });
+      }
     });
   }
 
@@ -917,7 +933,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
   void sendChallenges() {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) {
-        CommonView.showCircularProgress(true, context);
+
+        if(mounted){
+          setState(() {
+            isLoading = true;
+          });
+        }
 
         SendChallengesRequest rq = SendChallengesRequest();
         rq.userId = Injector.userData.userId;
@@ -926,15 +947,24 @@ class _ChallengesPageState extends State<ChallengesPage> {
         rq.rewards = arrRewards[selectedRewardsIndex];
 
         WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
-          CommonView.showCircularProgress(false, context);
 
+          if(mounted){
+            setState(() {
+              isLoading = false;
+            });
+          }
           if (data != null)
             Utils.showToast(
                 Utils.getText(context, StringRes.alertUChallengeSent));
         }).catchError((e) {
           print("sendChallenge_" + e.toString());
 
-          CommonView.showCircularProgress(false, context);
+
+          if(mounted){
+            setState(() {
+              isLoading = false;
+            });
+          }
           // Utils.showToast(e.toString());
         });
       }

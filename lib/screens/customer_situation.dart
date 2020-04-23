@@ -50,7 +50,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   QuestionData questionDataCustomerSituation;
   bool isChallenge;
-  QuestionData nextChallengeQuestionData;
   bool isCameFromNewCustomer;
 
   int index = 1;
@@ -65,9 +64,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   void initState() {
-    questionDataCustomerSituation = widget.homeData.questionDataHomeScr;
+    questionDataCustomerSituation = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge;
-    nextChallengeQuestionData = widget.homeData.nextChallengeQuestionData;
     isCameFromNewCustomer = widget.homeData.isCameFromNewCustomer;
 
     showIntroDialog();
@@ -257,14 +255,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               onTap: () {
                 Utils.playClickSound();
                 if (isChallenge != null && isChallenge) {
-                  if (nextChallengeQuestionData != null &&
+
+                  Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+
+                 /* if (nextChallengeQuestionData != null &&
                       nextChallengeQuestionData.challengeId != null) {
 
                     navigationBloc.updateNavigation(HomeData(
                         initialPageType: Const.typeEngagement,
                         isChallenge: isChallenge,
-                        questionDataHomeScr: nextChallengeQuestionData));
-                  }
+                        questionHomeData: nextChallengeQuestionData));
+                  }*/
                 } else if (isCameFromNewCustomer != null &&
                     isCameFromNewCustomer) {
                   navigationBloc.updateNavigation(
@@ -531,22 +532,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         ));
   }
 
-  void gotoMainScreen(BuildContext context) {
-    if (isChallenge != null && isChallenge) {
-      if (nextChallengeQuestionData != null &&
-          nextChallengeQuestionData.challengeId != null) {
-//        Utils.showChallengeQuestionDialog(
-//            context, widget.nextChallengeQuestionData);
-        navigationBloc.updateNavigation(HomeData(
-            initialPageType: Const.typeEngagement,
-            questionDataHomeScr: nextChallengeQuestionData,
-            isChallenge: true));
-      }
-    } else {
-      navigationBloc
-          .updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
-    }
-  }
+
 
   showQueMedia(BuildContext context) {
     return InkResponse(

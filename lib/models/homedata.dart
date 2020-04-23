@@ -6,10 +6,10 @@ import 'get_friends.dart';
 class HomeData {
   Widget page;
   String initialPageType;
-  QuestionData questionDataHomeScr;
+  QuestionData questionHomeData;
 //  QuestionData questionDataSituation;
 //  QuestionData questionDataChallenge;
-  QuestionData  nextChallengeQuestionData;
+//  QuestionData  nextChallengeQuestionData;
   int value;
   int friendId;
   bool isChallenge;
@@ -20,10 +20,10 @@ class HomeData {
   HomeData({
     this.page,
     this.initialPageType,
-    this.questionDataHomeScr,
+    this.questionHomeData,
 //    this.questionDataSituation,
 //    this.questionDataChallenge,
-    this.nextChallengeQuestionData,
+//    this.nextChallengeQuestionData,
     this.value,
     this.friendId,
     this.isChallenge,

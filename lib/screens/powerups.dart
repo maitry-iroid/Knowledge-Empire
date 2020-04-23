@@ -32,7 +32,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Utils.isInternetConnectedWithAlert().then((isConnected) {

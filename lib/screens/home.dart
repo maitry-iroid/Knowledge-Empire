@@ -159,10 +159,10 @@ class HomePageState extends State<HomePage>
               if (_currentPage == Const.typeCustomerSituation &&
                   ((homeData.isCameFromNewCustomer != null &&
                           homeData.isCameFromNewCustomer &&
-                          homeData.questionDataHomeScr.isAnsweredCorrect) ||
+                          homeData.questionHomeData.isAnsweredCorrect) ||
                       (homeData.isChallenge != null &&
                           homeData.isChallenge &&
-                          homeData.questionDataHomeScr.isAnsweredCorrect))) {
+                          homeData.questionHomeData.isAnsweredCorrect))) {
                 isCoinViseble = true;
               } else
                 isCoinViseble = false;
@@ -563,7 +563,7 @@ class HomePageState extends State<HomePage>
 //                Utils.showChallengeQuestionDialog(context, questionData);
                 navigationBloc.updateNavigation(HomeData(
                   initialPageType: Const.typeEngagement,
-                  questionDataHomeScr: questionData,
+                  questionHomeData: questionData,
                   isChallenge: true,
                 ));
               }

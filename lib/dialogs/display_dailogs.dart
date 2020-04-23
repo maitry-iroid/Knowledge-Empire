@@ -172,7 +172,7 @@ class DisplayDialogs {
 //                                    context, questionData);
                                 navigationBloc.updateNavigation(HomeData(
                                   initialPageType: Const.typeEngagement,
-                                  questionDataHomeScr: questionData,
+                                  questionHomeData: questionData,
                                   isChallenge: true,
                                 ));
                               },
