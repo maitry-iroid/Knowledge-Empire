@@ -28,6 +28,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   OrganizationData organizationData;
 
   List<Organization> arrOrganization = List();
+  bool isLoading  = false;
 
   @override
   void initState() {
@@ -51,10 +52,16 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
 
-      CommonView.showCircularProgress(true, context);
+      if (mounted)
+        setState(() {
+          isLoading = true;
+        });
 
       WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
         if (data != null) {
           organizationData = OrganizationData.fromJson(data);
           arrOrganization = organizationData.organization;
@@ -64,7 +71,10 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         }
       }).catchError((e) {
         print("getOrganizations_" + e.toString());
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
         // Utils.showToast(e.toString());
       });
     });
@@ -96,6 +106,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                 )
               : Container(),
         ),
+        CommonView.showLoderView(isLoading)
       ],
     );
   }
@@ -451,10 +462,16 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       rq.type = selectedOrg.type;
       rq.mode = Injector.mode;
 
-      CommonView.showCircularProgress(true, context);
+      if (mounted)
+        setState(() {
+          isLoading = true;
+        });
 
       WebApi().callAPI(WebApi.rqManageOrganization, rq.toJson()).then((data) {
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
 
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
@@ -471,7 +488,10 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         }
       }).catchError((e) {
         print("manageOrg_" + e.toString());
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
         // Utils.showToast(e.toString());
       });
     });

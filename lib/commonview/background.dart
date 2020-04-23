@@ -1078,7 +1078,7 @@ class CommonView {
                                 borderRadius: BorderRadius.circular(18),
                                 border: Border.all(
                                     color: ColorRes.borderRewardsName)),
-                            child: Text(mPushModel.achievementName??"",
+                            child: Text(mPushModel.achievementName ?? "",
                                 style: TextStyle(
                                     color: ColorRes.white, fontSize: 15)),
                           ),
@@ -1094,7 +1094,7 @@ class CommonView {
                                 fit: BoxFit.contain),
                           ),
                           SizedBox(height: 15),
-                          Text("${mPushModel.achievementText??""}",
+                          Text("${mPushModel.achievementText ?? ""}",
                               maxLines: 2,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.body2.copyWith(
@@ -1232,5 +1232,21 @@ class CommonView {
         ],
       ),
     );
+  }
+
+  static showLoderView(bool isLoading) {
+    return isLoading
+        ? Center(
+            child: Container(
+                height: 40.0,
+                color: Colors.transparent,
+                child: new Center(
+                  child: SpinKitThreeBounce(color: Colors.white),
+                )),
+          )
+        : Container(
+            width: 0,
+            height: 0,
+          );
   }
 }

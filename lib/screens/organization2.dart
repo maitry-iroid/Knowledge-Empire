@@ -26,6 +26,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<Organization> arrOrganization = List();
+  bool isLoading = false;
 
   @override
   initState() {
@@ -67,6 +68,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             ],
           ),
           showBack(),
+          CommonView.showLoderView(isLoading)
         ],
       ),
     );
@@ -260,10 +262,16 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
 
-      CommonView.showCircularProgress(true, context);
+      if (mounted)
+        setState(() {
+          isLoading = true;
+        });
 
       WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
 
         if (data != null) {
           arrOrganization = OrganizationData.fromJson(data).organization;
@@ -273,7 +281,10 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       });
     }).catchError((e) {
       print("getOrganizations_" + e.toString());
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       // Utils.showToast(e.toString());
     });
   }
@@ -305,12 +316,18 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
       rq.type = organization.type;
       rq.mode = Injector.mode;
 
-      CommonView.showCircularProgress(true, context);
+      if (mounted)
+        setState(() {
+          isLoading = true;
+        });
 
       WebApi()
           .callAPI(WebApi.rqManageOrganization, rq.toJson())
           .then((data) async {
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
 
         if (data != null) {
           ManageOrgData manageOrgData = ManageOrgData.fromJson(data);
@@ -329,7 +346,10 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         }
       }).catchError((e) {
         print("manageOrg_" + e.toString());
-        CommonView.showCircularProgress(false, context);
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
         // Utils.showToast(e.toString());
       });
     });

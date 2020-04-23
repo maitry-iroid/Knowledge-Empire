@@ -34,8 +34,7 @@ VideoPlayerController _controller;
 class EngagementCustomer extends StatefulWidget {
   final HomeData homeData;
 
-  EngagementCustomer({Key key, this.homeData})
-      : super(key: key);
+  EngagementCustomer({Key key, this.homeData}) : super(key: key);
 
   @override
   _EngagementCustomerState createState() => _EngagementCustomerState();
@@ -44,8 +43,8 @@ class EngagementCustomer extends StatefulWidget {
 class _EngagementCustomerState extends State<EngagementCustomer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-   QuestionData questionDataEngCustomer;
-   bool isChallenge;
+  QuestionData questionDataEngCustomer;
+  bool isChallenge;
 
   List alphaIndex = [
     StringRes.aIndex,
@@ -68,7 +67,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     super.initState();
 
     questionDataEngCustomer = widget.homeData.questionDataHomeScr;
-    isChallenge = widget.homeData.isChallenge??false;
+    isChallenge = widget.homeData.isChallenge ?? false;
 
     if (questionDataEngCustomer != null) {
       questionData = questionDataEngCustomer;
@@ -132,6 +131,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,6 +151,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               showMainBody(context),
             ],
           ),
+          CommonView.showLoderView(isLoading)
         ],
       ),
     );
@@ -318,10 +320,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
         jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
-    CommonView.showCircularProgress(true, context);
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     WebApi().callAPI(WebApi.rqSubmitAnswers, rq.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+
       if (data != null) {
         CustomerValueData customerValueData = CustomerValueData.fromJson(data);
 
@@ -332,19 +341,29 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       }
     }).catchError((e) {
       print("submitAnswer_" + e.toString());
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+
       // Utils.showToast(e.toString());
     });
   }
 
   void callSubmitChallengeApi(
       BuildContext context, SubmitChallengesRequest rq) {
-    CommonView.showCircularProgress(true, context);
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     WebApi()
         .callAPI(WebApi.rqSubmitChallengeAnswer, rq.toJson())
         .then((data) async {
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
 //        QuestionData questionData = QuestionData.fromJson(data);
@@ -352,7 +371,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       }
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+
       // Utils.showToast(e.toString());
     });
   }
@@ -523,7 +546,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
       navigationBloc.updateNavigation(homeData);
     } else {
-
       navigationBloc.updateNavigation(HomeData(
         initialPageType: Const.typeCustomerSituation,
         questionDataHomeScr: questionData,
