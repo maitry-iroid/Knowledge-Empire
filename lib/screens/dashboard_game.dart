@@ -137,6 +137,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
               listCount.add(jsonEncode(v));
             });
 
+
             await Injector.prefs
                 .setStringList(PrefKeys.unreadBubbleCountData, listCount);
             Injector.unreadBubbleCountData = unreadBubbleCountData;
