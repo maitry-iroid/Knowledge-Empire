@@ -343,6 +343,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       child: Center(
                         child: Text(
                           "# ${Utils.getText(context, StringRes.question)}",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
@@ -401,7 +402,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   _onSelectedRewards(int index) {
     String message =
-        "Your friend will have to answer ${(arrRewards.length - index)} questions. Ifhe wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
+        "Your friend will have to answer ${(arrRewards.length - index)} questions. If he wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
     Utils.showLockReasonDialog(message, context, true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
@@ -700,6 +701,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
           ),
           margin: EdgeInsets.symmetric(horizontal: 2),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
                 arrRewards[index].toString() + "%",
@@ -712,18 +715,16 @@ class _ChallengesPageState extends State<ChallengesPage> {
                     fontSize: 19),
               ),
               Expanded(
-                child: Center(
-                  child: Text(
-                    (arrRewards.length - index).toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.white
-                            : isRewardSelected(index)
-                                ? ColorRes.white
-                                : ColorRes.fontGrey,
-                        fontSize: 19),
-                  ),
+                child: Text(
+                  (arrRewards.length - index).toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : isRewardSelected(index)
+                              ? ColorRes.white
+                              : ColorRes.fontGrey,
+                      fontSize: 19),
                 ),
               ),
               Text(

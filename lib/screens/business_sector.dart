@@ -557,9 +557,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //              });
 
               await Injector.prefs.setString("datta", "scsdc");
-
-              await Injector.cacheManager
-                  .getSingleFile(arrQuestions[i].mediaLink);
+              print("URL=====>"+arrQuestions[i].mediaLink);
+              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
               print("complted");
             }).catchError((e) {
               print('[BackgroundFetch] setSpentTime start FAILURE: $e');

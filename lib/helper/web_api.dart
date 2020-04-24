@@ -89,7 +89,7 @@ class WebApi {
 
     print(apiReq + "==> " + response.toString());
 
-    if (response.statusCode == 200) {
+    if (response != null && response.statusCode == 200) {
       BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
 
       if (_response != null) {

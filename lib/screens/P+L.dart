@@ -759,11 +759,10 @@ class _PLPageState extends State<PLPage> {
             ),
             Expanded(
               child: Container(
-                height: 140,
                 width: 80,
                 margin: EdgeInsets.only(left: 00),
                 child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+//                    physics: NeverScrollableScrollPhysics(),
                     itemCount: type == Const.typeCost
                         ? performanceData?.cost?.length
                         : performanceData?.revenue?.length,

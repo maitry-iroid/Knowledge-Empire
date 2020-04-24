@@ -753,10 +753,10 @@ class StringRes {
       'noOffline': "Sorry, this feature is only available while online.",
       'my': "My",
       'mHis': "His",
-      'by':'By : ',
-      'inText':'In : ',
-      'toWin':'To Win : ',
-      'questions':'Questions : ',
+      'by':'By',
+      'inText':'In',
+      'toWin':'To Win',
+      'questions':'Questions',
       'sizeInKb': "kb",
     },
     'de': {
@@ -1137,7 +1137,7 @@ class StringRes {
       'servicePerson': 'Servicemitarbeiter',
       'salesReps': 'Vertriebler',
       'bonusPoint': "Bonus Point",
-      'questions':'Questions : ',
+      'questions':'Questions',
       'sizeInKb': "kb",
     },
     'zh': {
@@ -1506,7 +1506,7 @@ class StringRes {
       'servicePerson': '服务代表',
       'salesReps': '销售代表',
       'bonusPoint': "Bonus Point",
-      'questions':'Questions : ',
+      'questions':'Questions',
       'sizeInKb': "kb",
     }
   };
@@ -1728,7 +1728,7 @@ class StringRes {
       'servicePerson': 'Memory Points',
       'salesReps': 'Study Points',
       'bonusPoint': "Bonus Point",
-      'questions':'Questions : ',
+      'questions':'Questions',
       'sizeInKb': "kb",
     },
     'de': {
@@ -2059,7 +2059,7 @@ class StringRes {
       'servicePerson': 'Bestandsfragen',
       'salesReps': 'Lernpunkte ',
       'bonusPoint': "Bonus Point",
-      'questions':'Questions : ',
+      'questions':'Questions',
       'sizeInKb': "kb",
 
     },
@@ -2369,7 +2369,7 @@ class StringRes {
       'servicePerson': '记忆点数',
       'salesReps': '学习点数',
       'bonusPoint': "Bonus Point",
-      'questions':'Questions : ',
+      'questions':'Questions',
       'sizeInKb': "kb",
     }
   };

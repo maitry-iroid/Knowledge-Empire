@@ -1129,6 +1129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () async {
                           try {
                             if (index == 0) {
+
                               await languageChangeAPI(Const.english, index);
                             } else if (index == 1) {
                               await languageChangeAPI(Const.german, index);
@@ -1284,7 +1285,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     String x = "000";
     String y = "000";
-    String z = "011";
+    String z = "012";
 
     return mode +
         "-" +
@@ -1312,6 +1313,7 @@ class _ProfilePageState extends State<ProfilePage> {
     CommonView.showCircularProgress(true, context);
     WebApi().callAPI(WebApi.updateLanguage, rq.toJson()).then((data) async {
       CommonView.showCircularProgress(false, context);
+      Navigator.pop(context);
 
       if (data != null) {
         localeBloc.setLocale(index);

@@ -74,10 +74,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = questionDataEngCustomer.answer;
       abcdList = alphaIndex;
-      print(questionData.value);
 
       getPdf();
-
 //    downloadFile();
       initVideoController();
     }
@@ -1375,11 +1373,5 @@ class ExpandMediaState extends State<ExpandMedia>
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    Injector.homeStreamController.close();
-    super.dispose();
   }
 }

@@ -498,9 +498,9 @@ class HomePageState extends State<HomePage>
   getPage() {
     if (_currentPage == Const.typeProfile)
       return ProfilePage();
-    else if (_currentPage == Const.typeEngagement)
+    else if (_currentPage == Const.typeEngagement) {
       return EngagementCustomer(homeData: homeData);
-    else if (_currentPage == Const.typeCustomerSituation)
+    } else if (_currentPage == Const.typeCustomerSituation)
       return CustomerSituationPage(homeData: homeData);
     else if (_currentPage == Const.typeChallenges)
       return ChallengesPage(homeData: homeData);
@@ -525,9 +525,9 @@ class HomePageState extends State<HomePage>
   }
 
   void initStreamController() async {
-    Injector.homeStreamController.stream.listen((data) {
+    Injector.homeStreamController.stream.listen((data) async {
       if (data == "${Const.openPendingChallengeDialog}") {
-        getPendingChallenges();
+        await getPendingChallenges();
       }
     }, onDone: () {}, onError: (error) {});
   }
