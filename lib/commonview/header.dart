@@ -177,9 +177,6 @@ class HeaderViewState extends State<HeaderView> {
           ],
         ),
         onTap: () {
-          if (Injector.homeStreamController == null)
-            Injector.homeStreamController = StreamController.broadcast();
-
           if (type == Const.typeEmployee) {
             if (Injector.dashboardLockStatusData.organization == 1)
               navigationBloc
@@ -255,10 +252,6 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            /* if (Injector.homeStreamController == null)
-              Injector.homeStreamController = StreamController.broadcast();
-
-            Injector.homeStreamController?.add("${Const.typeProfile}");*/
 
             navigationBloc
                 .updateNavigation(HomeData(initialPageType: Const.typeProfile));

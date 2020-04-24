@@ -393,18 +393,7 @@ class HelpPageState extends State<HelpPage> {
             ],
           ),
           onTap: () {
-            if (type == Const.typeEmployee) {
-              Injector.homeStreamController?.add("${Const.typeOrg}");
-            } else if (type == Const.typeSalesPersons) {
-              Injector.homeStreamController?.add("${Const.typeNewCustomer}");
-            } else if (type == Const.typeServicesPerson) {
-              Injector.homeStreamController
-                  ?.add("${Const.typeExistingCustomer}");
-            } else if (type == Const.typeBrandValue) {
-              Injector.homeStreamController?.add("${Const.typeRanking}");
-            } else if (type == Const.typeMoney) {
-              Injector.homeStreamController?.add("${Const.typePl}");
-            }
+
           },
         ),
       ),

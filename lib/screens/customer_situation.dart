@@ -91,7 +91,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       }
 
       if (isCameFromNewCustomer || isChallenge) {
-        Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
         Utils.checkAudio(questionData.isAnsweredCorrect);
       }
       setState(() {});

@@ -7,9 +7,6 @@ class HomeData {
   Widget page;
   String initialPageType;
   QuestionData questionHomeData;
-//  QuestionData questionDataSituation;
-//  QuestionData questionDataChallenge;
-//  QuestionData  nextChallengeQuestionData;
   int value;
   int friendId;
   bool isChallenge;
@@ -21,9 +18,6 @@ class HomeData {
     this.page,
     this.initialPageType,
     this.questionHomeData,
-//    this.questionDataSituation,
-//    this.questionDataChallenge,
-//    this.nextChallengeQuestionData,
     this.value,
     this.friendId,
     this.isChallenge,
