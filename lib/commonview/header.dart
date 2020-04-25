@@ -178,11 +178,7 @@ class HeaderViewState extends State<HeaderView> {
         ),
         onTap: () {
           if (type == Const.typeEmployee) {
-            if (Injector.dashboardLockStatusData.organization == 1)
-              navigationBloc
-                  .updateNavigation(HomeData(initialPageType: Const.typeOrg));
-            else
-              Utils.showLockReasonDialog(Const.typeOrg, context, false);
+           Utils.performDashboardItemClick(context, Const.typeOrg);
           } else if (type == Const.typeSalesPersons) {
             navigationBloc.updateNavigation(
                 HomeData(initialPageType: Const.typeNewCustomer));
@@ -190,30 +186,9 @@ class HeaderViewState extends State<HeaderView> {
             navigationBloc.updateNavigation(
                 HomeData(initialPageType: Const.typeExistingCustomer));
           } else if (type == Const.typeBrandValue) {
-            Utils.isInternetConnected().then((isConnected) {
-              if (isConnected) {
-                if (Injector.dashboardLockStatusData.ranking == 1)
-                  navigationBloc.updateNavigation(
-                      HomeData(initialPageType: Const.typeRanking));
-                else
-                  Utils.showLockReasonDialog(Const.typeRanking, context, false);
-              } else {
-                Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-              }
-            });
+            Utils.performDashboardItemClick(context, Const.typeRanking);
           } else if (type == Const.typeMoney) {
-            if (Injector.dashboardLockStatusData.pl == 1) {
-              Utils.isInternetConnected().then((isConnected) {
-                if (isConnected) {
-                  navigationBloc.updateNavigation(
-                      HomeData(initialPageType: Const.typePl));
-                } else {
-                  Utils.showLockReasonDialog(
-                      StringRes.noOffline, context, true);
-                }
-              });
-            } else
-              Utils.showLockReasonDialog(Const.typePl, context, false);
+            Utils.performDashboardItemClick(context, Const.typePl);
           }
         },
       ),

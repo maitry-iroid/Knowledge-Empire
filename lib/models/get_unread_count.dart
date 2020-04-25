@@ -1,10 +1,10 @@
-class DashboardRequest {
+class UnreadCountRequest {
   int userId;
   int mode;
 
-  DashboardRequest({this.userId, this.mode});
+  UnreadCountRequest({this.userId, this.mode});
 
-  DashboardRequest.fromJson(Map<String, dynamic> json) {
+  UnreadCountRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     mode = json['mode'];
   }
@@ -17,18 +17,14 @@ class DashboardRequest {
   }
 }
 
-
-
-
-
-class UnreadBubbleCountData {
+class UnreadCountData {
   String title;
   int type;
   int count;
 
-  UnreadBubbleCountData({this.title, this.type, this.count});
+  UnreadCountData({this.title, this.type, this.count});
 
-  UnreadBubbleCountData.fromJson(Map<String, dynamic> json) {
+  UnreadCountData.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     type = json['type'];
     count = json['count'];
@@ -42,4 +38,3 @@ class UnreadBubbleCountData {
     return data;
   }
 }
-

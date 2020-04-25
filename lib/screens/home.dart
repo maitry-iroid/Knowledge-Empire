@@ -13,7 +13,10 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -209,7 +212,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Future<void> initStateMethods() async {
     updateVersionDialog();
     initContent();
-    getLockStatus();
+    getDashboardStatus();
     Utils.removeBadge();
   }
 
@@ -303,87 +306,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   _onSelectItem(DrawerItem item) {
-//    _currentPage = item.key;
-
     Utils.playClickSound();
+    if (_scaffoldKey.currentState.isDrawerOpen) {
+      _scaffoldKey.currentState.openEndDrawer();
+    }
     if (_currentPage != item.key) {
-      if (item.key == Const.typeOrg &&
-          dashboardLockStatusData != null &&
-          dashboardLockStatusData.organization != null &&
-          dashboardLockStatusData.organization != 1) {
-        Utils.isInternetConnected().then((isConnected) {
-          if (isConnected) {
-            Utils.showLockReasonDialog(Const.typeOrg, context, false);
-          } else {
-            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-          }
-        });
-      } else if (item.key == Const.typePl &&
-          dashboardLockStatusData != null &&
-          dashboardLockStatusData.pl != null &&
-          dashboardLockStatusData.pl != 1) {
-        Utils.isInternetConnected().then((isConnected) {
-          if (isConnected) {
-            Utils.showLockReasonDialog(Const.typePl, context, false);
-          } else {
-            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-          }
-        });
-      } else if (item.key == Const.typeRanking &&
-          dashboardLockStatusData != null &&
-          dashboardLockStatusData.ranking != null &&
-          dashboardLockStatusData.ranking != 1) {
-        Utils.isInternetConnected().then((isConnected) {
-          if (isConnected) {
-            Utils.showLockReasonDialog(Const.typeRanking, context, false);
-          } else {
-            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-          }
-        });
-      } else if (item.key == Const.typeReward &&
-          dashboardLockStatusData != null &&
-          dashboardLockStatusData.achievement != null &&
-          dashboardLockStatusData.achievement != 1) {
-        Utils.isInternetConnected().then((isConnected) {
-          if (isConnected) {
-            Utils.showLockReasonDialog(Const.typeReward, context, false);
-          } else {
-            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-          }
-        });
-      } else if (item.key == Const.typeChallenges &&
-          dashboardLockStatusData != null &&
-          dashboardLockStatusData.challenge != null &&
-          dashboardLockStatusData.challenge != 1) {
-        Utils.isInternetConnected().then((isConnected) {
-          if (isConnected) {
-            Utils.showLockReasonDialog(Const.typeChallenges, context, false);
-          } else {
-            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-          }
-        });
-      } else {
-        if (item.key == Const.typeOrg ||
-            item.key == Const.typeChallenges ||
-            item.key == Const.typeReward ||
-            item.key == Const.typeRanking ||
-            item.key == Const.typeProfile ||
-            item.key == Const.typePl) {
-          Utils.isInternetConnected().then((isConnected) {
-            if (isConnected) {
-              navigationOnScreen(item);
-            } else {
-              Utils.showLockReasonDialog(StringRes.noOffline, context, true);
-            }
-          });
-        } else {
-          navigationOnScreen(item);
-        }
-      }
-    } else {
-      if (_scaffoldKey.currentState.isDrawerOpen) {
-        _scaffoldKey.currentState.openEndDrawer();
-      }
+      Utils.performDashboardItemClick(context, item.key);
     }
   }
 
@@ -541,9 +469,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initDrawerItems() {
     drawerItems = [];
 
-
     drawerItems.add(DrawerItem(
-        Utils.getText(context, StringRes.businessSector),
+        Utils.getText(context, StringRes.home),
         Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home",
         Const.typeHome));
 
@@ -564,14 +491,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Const.typeExistingCustomer),
     );
 
-    drawerItems.add(
-      DrawerItem(
-          Utils.getText(context, StringRes.rewards),
-          Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards",
-          Const.typeReward),
-    );
+    if (Utils.isFeatureOn(Const.typeReward))
+      drawerItems.add(
+        DrawerItem(
+            Utils.getText(context, StringRes.rewards),
+            Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards",
+            Const.typeReward),
+      );
 
-    if (Injector.isManager())
+    if (Injector.isManager() && Utils.isFeatureOn(Const.typeTeam))
       drawerItems.add(
         DrawerItem(
             Utils.getText(context, StringRes.team),
@@ -579,28 +507,35 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             Const.typeTeam),
       );
 
-    drawerItems.add(
-      DrawerItem(
-          Utils.getText(context, StringRes.challenges),
-          Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges",
-          Const.typeChallenges),
-    );
-    drawerItems.add(
-      DrawerItem(
-          Utils.getText(context, StringRes.organizations),
-          Injector.isBusinessMode ? "organization" : "ic_pro_home_organization",
-          Const.typeOrg),
-    );
-    drawerItems.add(
-      DrawerItem(
-          Utils.getText(context, StringRes.pl),
-          Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl",
-          Const.typePl),
-    );
-    drawerItems.add(DrawerItem(
-        Utils.getText(context, StringRes.ranking),
-        Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking",
-        Const.typeRanking));
+    if (Utils.isFeatureOn(Const.typeChallenges))
+      drawerItems.add(
+        DrawerItem(
+            Utils.getText(context, StringRes.challenges),
+            Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges",
+            Const.typeChallenges),
+      );
+    if (Utils.isFeatureOn(Const.typeOrg))
+      drawerItems.add(
+        DrawerItem(
+            Utils.getText(context, StringRes.organizations),
+            Injector.isBusinessMode
+                ? "organization"
+                : "ic_pro_home_organization",
+            Const.typeOrg),
+      );
+    if (Utils.isFeatureOn(Const.typePl))
+      drawerItems.add(
+        DrawerItem(
+            Utils.getText(context, StringRes.pl),
+            Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl",
+            Const.typePl),
+      );
+    if (Utils.isFeatureOn(Const.typeRanking))
+      drawerItems.add(DrawerItem(
+          Utils.getText(context, StringRes.ranking),
+          Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking",
+          Const.typeRanking));
+
     drawerItems.add(
       DrawerItem(
           Utils.getText(context, StringRes.profile),
@@ -680,23 +615,24 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   * menu-drawer items as well as top Header
   *
   * */
-  static Future getLockStatus() {
+  getDashboardStatus() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
+        DashboardStatusRequest rq = DashboardStatusRequest();
+        rq.userId = Injector.userData.userId;
 
-        WebApi()
-            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) async {
+        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            DashboardLockStatusData dashboardLockStatusData =
-                DashboardLockStatusData.fromJson(data);
-            await Injector.prefs.setString(PrefKeys.lockStatusData,
-                jsonEncode(dashboardLockStatusData.toJson()));
-            Injector.dashboardLockStatusData = dashboardLockStatusData;
-//            if (mounted) setState(() {});
+            DashboardStatusResponse response =
+                DashboardStatusResponse.fromJson(data);
+
+            if (response.data.isNotEmpty) {
+              Injector.prefs.setString(
+                  PrefKeys.onOffStatusData, jsonEncode(response.toJson()));
+              Injector.dashboardStatusResponse = response;
+
+              if (mounted) setState(() {});
+            }
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());

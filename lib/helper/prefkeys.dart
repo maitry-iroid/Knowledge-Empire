@@ -17,6 +17,7 @@ class PrefKeys {
   static var isCancelDialog= "isCancelDialog";
   static var lockStatusData= "lockStatusData";
     static var unreadBubbleCountData= "unreadBubbleCountData";
+    static var onOffStatusData= "onOffStatusData";
 
 //  static var learningModule1= "learningModule1";
 //  static var learningModule2= "learningModule2";

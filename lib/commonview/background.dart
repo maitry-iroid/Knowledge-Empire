@@ -1,13 +1,6 @@
-import 'dart:async';
-import 'dart:math';
-import 'dart:typed_data';
-
-import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ke_employee/animation/Particles.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
 
 import 'package:ke_employee/helper/Utils.dart';
@@ -15,11 +8,9 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/screens/organization2.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CommonView {
@@ -292,7 +283,7 @@ class CommonView {
     return Injector.isBusinessMode
         ? Stack(
             children: <Widget>[
-              showDashboardView(context, null),
+              showDashboardView(context),
               Container(
                 color: ColorRes.black.withOpacity(0.75),
               )
@@ -325,13 +316,12 @@ class CommonView {
                 fit: BoxFit.fill)));
   }
 
-  List<UnreadBubbleCountData> data = List();
+  List<UnreadCountData> data = List();
 
-  static Widget showDashboardView(
-      BuildContext context, List<UnreadBubbleCountData> data) {
-    DashboardLockStatusData dashboardLockStatusData =
-        Injector.dashboardLockStatusData;
-    data = Injector.unreadBubbleCountData;
+  static Widget showDashboardView(BuildContext context) {
+//    DashboardLockStatusData dashboardLockStatusData =
+//        Injector.dashboardLockStatusData;
+//    data = Injector.unreadBubbleCountData;
     return ResponsiveUi(
       builder: (context, size) {
         return Container(
@@ -358,36 +348,20 @@ class CommonView {
                                 AssetImage(Utils.getAssetsImg("organization")),
                             width: Utils.getDeviceWidth(context) / 4.5,
                           ),
-                          dashboardLockStatusData != null &&
-                                  dashboardLockStatusData.organization !=
-                                      null &&
-                                  dashboardLockStatusData.organization == 1
-                              ? Utils.showUnreadCount(
-                                  Const.typeOrg, 17, 5, data)
+                          Utils.isShowUnreadCount(Const.typeOrg)
+                              ? Utils.showUnreadCount(Const.typeOrg, 17, 5)
                               : Container(),
-                          dashboardLockStatusData != null &&
-                                  dashboardLockStatusData.organization !=
-                                      null &&
-                                  dashboardLockStatusData.organization == 1
-                              ? Container()
-                              : Image(
+                          Utils.isShowLock(Const.typeOrg)
+                              ? Image(
                                   image: AssetImage(
                                       Utils.getAssetsImg("lock_org")),
                                   width: Utils.getDeviceWidth(context) / 4.5,
-                                ),
+                                )
+                              : Container(),
                         ],
                       ),
                       onTap: () {
-                        Utils.playClickSound();
-                        Utils.isInternetConnected().then((isConnected) {
-                          if (isConnected) {
-                            Utils.performDashboardItemClick(
-                                context, Const.typeOrg);
-                          } else {
-                            Utils.showLockReasonDialog(
-                                StringRes.noOffline, context, true);
-                          }
-                        });
+                        Utils.performDashboardItemClick(context, Const.typeOrg);
                       },
                     ),
                     InkResponse(
@@ -398,33 +372,20 @@ class CommonView {
                                 AssetImage(Utils.getAssetsImg("profit-loss")),
                             width: Utils.getDeviceWidth(context) / 4.5,
                           ),
-                          dashboardLockStatusData != null &&
-                                  dashboardLockStatusData.pl != null &&
-                                  dashboardLockStatusData.pl == 1
-                              ? Utils.showUnreadCount(Const.typePl, 17, 5, data)
+                          Utils.isShowUnreadCount(Const.typePl)
+                              ? Utils.showUnreadCount(Const.typePl, 17, 5)
                               : Container(),
-                          dashboardLockStatusData != null &&
-                                  dashboardLockStatusData.pl != null &&
-                                  dashboardLockStatusData.pl == 1
-                              ? Container()
-                              : Image(
+                          Utils.isShowLock(Const.typePl)
+                              ? Image(
                                   image:
                                       AssetImage(Utils.getAssetsImg("lock_pl")),
                                   width: Utils.getDeviceWidth(context) / 4.5,
-                                ),
+                                )
+                              : Container(),
                         ],
                       ),
                       onTap: () {
-                        Utils.playClickSound();
-                        Utils.isInternetConnected().then((isConnected) {
-                          if (isConnected) {
-                            Utils.performDashboardItemClick(
-                                context, Const.typePl);
-                          } else {
-                            Utils.showLockReasonDialog(
-                                StringRes.noOffline, context, true);
-                          }
-                        });
+                        Utils.performDashboardItemClick(context, Const.typePl);
                       },
                     ),
                     InkResponse(
@@ -434,41 +395,23 @@ class CommonView {
                               image: AssetImage(Utils.getAssetsImg("ranking")),
                               width: Utils.getDeviceWidth(context) / 4.5,
                             ),
-                            dashboardLockStatusData != null &&
-                                    dashboardLockStatusData.ranking != null &&
-                                    dashboardLockStatusData.ranking == 1
+                            Utils.isShowUnreadCount(Const.typeRanking)
                                 ? Utils.showUnreadCount(
-                                    Const.typeRanking, 17, 5, data)
+                                    Const.typeRanking, 17, 5)
                                 : Container(),
-                            dashboardLockStatusData != null &&
-                                    dashboardLockStatusData.ranking != null &&
-                                    dashboardLockStatusData.ranking == 1
-                                ? Container()
-                                : Image(
+                            Utils.isShowLock(Const.typeRanking)
+                                ? Image(
                                     image: AssetImage(
                                         Utils.getAssetsImg("lock_ranking")),
                                     width: Utils.getDeviceWidth(context) / 4.5,
-                                  ),
+                                  )
+                                : Container(),
                           ],
                         ),
                         onTap: () {
-                          Utils.playClickSound();
-
-                          Utils.isInternetConnected().then((isConnected) {
-                            if (isConnected) {
-                              Utils.performDashboardItemClick(
-                                  context, Const.typeRanking);
-                            } else {
-                              Utils.showLockReasonDialog(
-                                  StringRes.noOffline, context, true);
-                            }
-                          });
-
-//                      Utils.achievement();
-//                      CommonView().collectorDialog(context, '1000');
-                        }
-//                    DisplayDialogs.showChallengeDialog(context,"Ravi",null);
-                        ),
+                          Utils.performDashboardItemClick(
+                              context, Const.typeRanking);
+                        }),
                   ],
                 ),
               ),
@@ -504,45 +447,31 @@ class CommonView {
                                       AssetImage(Utils.getAssetsImg("rewards")),
                                   width: Utils.getDeviceHeight(context) / 3.0,
                                 ),
-                                dashboardLockStatusData != null &&
-                                        dashboardLockStatusData.achievement !=
-                                            null &&
-                                        dashboardLockStatusData.achievement == 1
-                                    ? Utils.showUnreadCount(Const.typeReward,
-                                        17, size.width / 20, data)
+                                Utils.isShowUnreadCount(Const.typeReward)
+                                    ? Utils.showUnreadCount(
+                                        Const.typeReward, 17, size.width / 20)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
                                         minWidth: 25.0,
                                       )),
-                                dashboardLockStatusData != null &&
-                                        dashboardLockStatusData.achievement !=
-                                            null &&
-                                        dashboardLockStatusData.achievement == 1
-                                    ? ConstrainedBox(
-                                        constraints: new BoxConstraints(
-                                        minHeight: 25.0,
-                                        minWidth: 25.0,
-                                      ))
-                                    : Image(
+                                Utils.isShowLock(Const.typeReward)
+                                    ? Image(
                                         image: AssetImage(
                                             Utils.getAssetsImg("lock_rewards")),
                                         width: Utils.getDeviceHeight(context) /
                                             3.0,
-                                      ),
+                                      )
+                                    : ConstrainedBox(
+                                        constraints: new BoxConstraints(
+                                        minHeight: 25.0,
+                                        minWidth: 25.0,
+                                      )),
                               ],
                             ),
                             onTap: () {
-                              Utils.playClickSound();
-                              Utils.isInternetConnected().then((isConnected) {
-                                if (isConnected) {
-                                  Utils.performDashboardItemClick(
-                                      context, Const.typeReward);
-                                } else {
-                                  Utils.showLockReasonDialog(
-                                      StringRes.noOffline, context, true);
-                                }
-                              });
+                              Utils.performDashboardItemClick(
+                                  context, Const.typeReward);
                             },
                           )),
                     ),
@@ -561,21 +490,12 @@ class CommonView {
                                         AssetImage(Utils.getAssetsImg("team")),
                                     width: Utils.getDeviceHeight(context) / 3.0,
                                   ),
-                                  Utils.showUnreadCount(
-                                      Const.typeTeam, 18, 20, data)
+                                  Utils.showUnreadCount(Const.typeTeam, 18, 20)
                                 ],
                               ),
                               onTap: () {
-                                Utils.playClickSound();
-                                Utils.isInternetConnected().then((isConnected) {
-                                  if (isConnected) {
-                                    Utils.performDashboardItemClick(
-                                        context, Const.typeTeam);
-                                  } else {
-                                    Utils.showLockReasonDialog(
-                                        StringRes.noOffline, context, true);
-                                  }
-                                });
+                                Utils.performDashboardItemClick(
+                                    context, Const.typeTeam);
                               },
                             ),
                             opacity: Injector.isManager() ? 1 : 0,
@@ -596,45 +516,31 @@ class CommonView {
                                       Utils.getAssetsImg("challenges")),
                                   width: Utils.getDeviceHeight(context) / 2.6,
                                 ),
-                                dashboardLockStatusData != null &&
-                                        dashboardLockStatusData.challenge !=
-                                            null &&
-                                        dashboardLockStatusData.challenge == 1
+                                Utils.isShowUnreadCount(Const.typeChallenges)
                                     ? Utils.showUnreadCount(
-                                        Const.typeChallenges, 17, 17, data)
+                                        Const.typeChallenges, 17, 17)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
                                         minWidth: 25.0,
                                       )),
-                                dashboardLockStatusData != null &&
-                                        dashboardLockStatusData.challenge !=
-                                            null &&
-                                        dashboardLockStatusData.challenge == 1
-                                    ? ConstrainedBox(
-                                        constraints: new BoxConstraints(
-                                        minHeight: 25.0,
-                                        minWidth: 25.0,
-                                      ))
-                                    : Image(
+                                Utils.isShowLock(Const.typeChallenges)
+                                    ? Image(
                                         image: AssetImage(Utils.getAssetsImg(
                                             "lock_challenges")),
                                         width: Utils.getDeviceHeight(context) /
                                             2.6,
-                                      ),
+                                      )
+                                    : ConstrainedBox(
+                                        constraints: new BoxConstraints(
+                                        minHeight: 25.0,
+                                        minWidth: 25.0,
+                                      )),
                               ],
                             ),
                             onTap: () {
-                              Utils.playClickSound();
-                              Utils.isInternetConnected().then((isConnected) {
-                                if (isConnected) {
-                                  Utils.performDashboardItemClick(
-                                      context, Const.typeChallenges);
-                                } else {
-                                  Utils.showLockReasonDialog(
-                                      StringRes.noOffline, context, true);
-                                }
-                              });
+                              Utils.performDashboardItemClick(
+                                  context, Const.typeChallenges);
                             }),
                       ),
                     ),
@@ -662,11 +568,10 @@ class CommonView {
                                 width: Utils.getDeviceWidth(context) / 3.8,
                               ),
                               Utils.showUnreadCount(
-                                  Const.typeBusinessSector, 10, 35, data)
+                                  Const.typeBusinessSector, 10, 35)
                             ],
                           ),
                           onTap: () {
-                            Utils.playClickSound();
                             Utils.performDashboardItemClick(
                                 context, Const.typeBusinessSector);
                           }),
@@ -679,11 +584,10 @@ class CommonView {
                                 width: Utils.getDeviceWidth(context) / 4.2,
                               ),
                               Utils.showUnreadCount(
-                                  Const.typeNewCustomer, 10, 15, data)
+                                  Const.typeNewCustomer, 10, 15)
                             ],
                           ),
                           onTap: () {
-                            Utils.playClickSound();
                             Utils.performDashboardItemClick(
                                 context, Const.typeNewCustomer);
                           }),
@@ -699,11 +603,10 @@ class CommonView {
                                 width: Utils.getDeviceWidth(context) / 4.6,
                               ),
                               Utils.showUnreadCount(
-                                  Const.typeExistingCustomer, 10, 35, data)
+                                  Const.typeExistingCustomer, 10, 35)
                             ],
                           ),
                           onTap: () {
-                            Utils.playClickSound();
                             Utils.performDashboardItemClick(
                                 context, Const.typeExistingCustomer);
                           }),

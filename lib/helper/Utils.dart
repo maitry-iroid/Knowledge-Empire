@@ -18,6 +18,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -25,11 +26,8 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/customer_situation.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
@@ -39,7 +37,6 @@ import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/intro_page.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:path/path.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -195,16 +192,14 @@ class Utils {
   }
 
   static performBack(BuildContext context) {
-
-
     navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
 
-  /*  if (!Navigator.canPop(context)) {
+    /*  if (!Navigator.canPop(context)) {
       Navigator.pop(context);
 
 //      Navigator.pushReplacement(context, FadeRouteHome());
       navigationBloc.updateNavigation(Const.typeHome);
-      *//*showDialog(
+      */ /*showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -225,7 +220,7 @@ class Utils {
                 )
               ],
             );
-          });*//*
+          });*/ /*
     } else
       Navigator.pop(context);*/
   }
@@ -572,102 +567,37 @@ class Utils {
     );
   }
 
-  static performDashboardItemClick(BuildContext context, String type) {
+  static performDashboardItemClick(BuildContext context, String type) async {
+
+    Utils.playClickSound();
+
     if (type == Const.typeOrg ||
         type == Const.typeChallenges ||
         type == Const.typeReward ||
         type == Const.typeRanking ||
-        type == Const.typeProfile ||
+        type == Const.typeTeam ||
         type == Const.typePl) {
-      Utils.isInternetConnected().then((isConnected) {
-        if (isConnected) {
-          clickWithValidation(type, context);
-        } else {
+      bool isConnected = await isInternetConnected();
+
+      if (Injector.dashboardStatusResponse != null) {
+        OnOffFeatureData data = Injector.dashboardStatusResponse.data
+            .where((obj) => obj.type == int.parse(type))
+            ?.first;
+
+        if (data != null && data.isFeatureOn == 0) return;
+
+        if (!isConnected) {
           Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          return;
         }
-      });
-    } else {
-      clickWithValidation(type, context);
-    }
-  }
 
-  static void clickWithValidation(String type, BuildContext context) {
-    DashboardLockStatusData dashboardLockStatusData =
-        Injector.dashboardLockStatusData;
-
-    if (type == Const.typeOrg &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.organization != null &&
-        dashboardLockStatusData.organization != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typePl &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.pl != null &&
-        dashboardLockStatusData.pl != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typeRanking &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.ranking != null &&
-        dashboardLockStatusData.ranking != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typeReward &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.achievement != null &&
-        dashboardLockStatusData.achievement != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typeChallenges &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.challenge != null &&
-        dashboardLockStatusData.challenge != 1) {
-      showLockReasonDialog(type, context, false);
-    } else {
-      performNavigation(type, context);
+        if (data != null && data.isLocked == 1) {
+          showLockReasonDialog(type, context, false);
+          return;
+        }
+      }
     }
-  }
-
-  static Widget ifIsLocked(String type, BuildContext context) {
-    DashboardLockStatusData dashboardLockStatusData =
-        Injector.dashboardLockStatusData;
-    switch (type) {
-      case "reward":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.achievement != null &&
-                dashboardLockStatusData.achievement != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "challenge":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.challenge != null &&
-                dashboardLockStatusData.challenge != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "org":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.organization != null &&
-                dashboardLockStatusData.organization != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "pl":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.pl != null &&
-                dashboardLockStatusData.pl != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "ranking":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.ranking != null &&
-                dashboardLockStatusData.ranking != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      default:
-        return Container();
-        break;
-    }
+    performNavigation(type, context);
   }
 
   static Widget lockUi(String type, BuildContext context) {
@@ -749,7 +679,6 @@ class Utils {
       return AssetImage(Utils.getAssetsImg("user_org"));
   }
 
-
 //  static showChallengeQuestionDialog(
 //    BuildContext context,
 //    QuestionData questionData,
@@ -762,8 +691,7 @@ class Utils {
 //            ));
 //  }
 
-  static showUnreadCount(
-      String type, double top, double right, List<UnreadBubbleCountData> data) {
+  static showUnreadCount(String type, double top, double right) {
     return Positioned(
         right: right,
         top: top,
@@ -772,17 +700,14 @@ class Utils {
             minHeight: 25.0,
             minWidth: 25.0,
           ),
-
-//TODO comment below code fro prod mode
-
-          child: getCount(type, data) > 0
+          child: getCount(type) > 0
               ? new DecoratedBox(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: ColorRes.greenDot),
                   child: Center(
                     child: Text(
-                      getCount(type, data).toString(),
+                      getCount(type).toString(),
                       style: TextStyle(color: ColorRes.white),
                     ),
                   ))
@@ -790,83 +715,22 @@ class Utils {
         ));
   }
 
-  static int getCount(String _type, List<UnreadBubbleCountData> data) {
-    if (data != null) {
-      int type = 0;
-      if (_type == Const.typeHome)
-        type = 0;
-      else if (_type == Const.typeBusinessSector)
-        type = 1;
-      else if (_type == Const.typeNewCustomer)
-        type = 2;
-      else if (_type == Const.typeExistingCustomer)
-        type = 3;
-      else if (_type == Const.typeReward)
-        type = 4;
-      else if (_type == Const.typeTeam)
-        type = 5;
-      else if (_type == Const.typeChallenges)
-        type = 6;
-      else if (_type == Const.typeOrg)
-        type = 7;
-      else if (_type == Const.typePl)
-        type = 8;
-      else if (_type == Const.typeRanking)
-        type = 9;
-      else
-        type = 0;
-
-      return data.length > 0
-          ? (data?.where((obj) => obj.type == type)?.first?.count ?? 00)
+  static int getCount(String _type) {
+    if (Injector.dashboardStatusResponse != null) {
+      return Injector.dashboardStatusResponse.data.length > 0
+          ? (Injector.dashboardStatusResponse.data
+                  ?.where((obj) => obj.type == int.parse(_type))
+                  ?.first
+                  ?.unreadCount ??
+              00)
           : 00;
     } else
       return 0;
   }
 
-//  static int getHomePageIndex(String key) {
-//    if (key == Const.typeHome) {
-//      return 0;
-//    } else if (key == Const.typeBusinessSector) {
-//      return 1;
-//    } else if (key == Const.typeNewCustomer) {
-//      return 2;
-//    } else if (key == Const.typeExistingCustomer) {
-//      return 3;
-//    } else if (key == Const.typeReward) {
-//      return 4;
-//    } else if (key == Const.typeTeam) {
-//      return 5;
-//    } else if (key == Const.typeChallenges) {
-//      return Injector.isManager() ? 6 : 5;
-//    } else if (key == Const.typeOrg) {
-//      return Injector.isManager() ? 7 : 6;
-//    } else if (key == Const.typePl) {
-//      return Injector.isManager() ? 8 : 7;
-//    } else if (key == Const.typeRanking) {
-//      return Injector.isManager() ? 9 : 8;
-//    } else if (key == Const.typeProfile) {
-//      return Injector.isManager() ? 10 : 9;
-//    } else if (key == Const.typeHelp) {
-//      return Injector.isManager() ? 11 : 10;
-//    } else if (key == Const.typeEngagement) {
-//      return Injector.isManager() ? 12 : 11;
-//    } else if (key == Const.typeCustomerSituation) {
-//      return Injector.isManager() ? 13 : 12;
-//    }
-//    return 0;
-//  }
-
   static void performNavigation(String type, BuildContext context) {
-//    HomeData homeData =
-//        HomeData(initialPageType: type, isCameFromDashboard: true);
-//
-//    Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
-//        ModalRoute.withName("/home"));
-
     navigationBloc.updateNavigation(HomeData(initialPageType: type));
-
   }
-
 
   static int getIndexLocale(String language) {
     int index = 0;
@@ -933,5 +797,45 @@ class Utils {
       return StringRes.unLockReward;
     else
       return "";
+  }
+
+  static bool isFeatureOn(String type) {
+    if (Injector.dashboardStatusResponse != null) {
+      List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
+
+      if (data.length > 0) {
+        int status = data
+            .where((obj) => obj.type == int.parse(type))
+            ?.first
+            ?.isFeatureOn;
+
+        return status == 1;
+      }
+    }
+
+    return true;
+  }
+
+  static bool isLocked(String type) {
+    if (Injector.dashboardStatusResponse != null) {
+      List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
+
+      if (data.length > 0) {
+        int status =
+            data.where((obj) => obj.type == int.parse(type))?.first?.isLocked;
+
+        return status == 1;
+      }
+    }
+
+    return true;
+  }
+
+  static isShowUnreadCount(String type) {
+    return !Utils.isFeatureOn(type) || Utils.isLocked(type);
+  }
+
+  static isShowLock(String type) {
+    return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
 }

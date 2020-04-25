@@ -14,8 +14,9 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/intro.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 
 import '../commonview/header.dart';
 import '../helper/constant.dart';
@@ -32,7 +33,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
   AnimationController rotationController;
 
-  List<UnreadBubbleCountData> unreadBubbleCountData = new List();
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
@@ -51,8 +51,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
     } else if (Injector.introData.dashboard == 0) {
       showIntroDialog();
     }
-    getUnreadBubbleCount();
-    getLockStatus();
+    getDashboardStatus();
 
   }
 
@@ -111,7 +110,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, unreadBubbleCountData),
+              CommonView.showDashboardView(context),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -120,28 +119,23 @@ class DashboardGamePageState extends State<DashboardGamePage>
     );
   }
 
-  void getUnreadBubbleCount() {
+  getDashboardStatus() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        DashboardRequest rq = DashboardRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
+        DashboardStatusRequest rq = DashboardStatusRequest();
+        rq.userId = Injector.userData.userId;
 
-        WebApi()
-            .callAPI(WebApi.rqUnreadBubbleCount, rq.toJson())
-            .then((data) async {
+        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            List<String> listCount = new List();
-            data.forEach((v) {
-              unreadBubbleCountData.add(UnreadBubbleCountData.fromJson(v));
-              listCount.add(jsonEncode(v));
-            });
+            DashboardStatusResponse response = DashboardStatusResponse.fromJson(data);
 
+            if (response.data.isNotEmpty) {
+              Injector.prefs.setString(
+                  PrefKeys.onOffStatusData, jsonEncode(response.toJson()));
+              Injector.dashboardStatusResponse = response;
 
-            await Injector.prefs
-                .setStringList(PrefKeys.unreadBubbleCountData, listCount);
-            Injector.unreadBubbleCountData = unreadBubbleCountData;
-            if (unreadBubbleCountData.isNotEmpty) if (mounted) setState(() {});
+              if (mounted) setState(() {});
+            }
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
@@ -150,25 +144,4 @@ class DashboardGamePageState extends State<DashboardGamePage>
     });
   }
 
-  void getLockStatus() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
-
-        WebApi()
-            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) {
-          if (data != null) {
-            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            Injector.dashboardLockStatusData = dashboardLockStatusData;
-            if (mounted) setState(() {});
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
-  }
 }

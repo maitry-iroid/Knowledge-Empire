@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 
 import 'package:ke_employee/helper/constant.dart';
@@ -18,15 +17,12 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/force_update.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
+import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
-import 'package:ke_employee/models/register_for_push.dart';
-import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:package_info/package_info.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Injector {
@@ -40,6 +36,7 @@ class Injector {
   static CustomerValueData customerValueData;
   static IntroData introData;
   static DashboardLockStatusData dashboardLockStatusData;
+  static DashboardStatusResponse dashboardStatusResponse;
   static int mode;
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
@@ -50,7 +47,7 @@ class Injector {
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
   static String deviceType = "";
-  static List<UnreadBubbleCountData> unreadBubbleCountData = new List();
+  static List<UnreadCountData> unreadBubbleCountData = new List();
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
@@ -130,6 +127,10 @@ class Injector {
         dashboardLockStatusData = DashboardLockStatusData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.lockStatusData)));
       }
+      if (prefs.getString(PrefKeys.onOffStatusData) != null) {
+        dashboardStatusResponse = DashboardStatusResponse.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.onOffStatusData)));
+      }
 
       if (prefs.getString(PrefKeys.unreadBubbleCountData) != null) {
         List<String> countList =
@@ -137,7 +138,7 @@ class Injector {
         unreadBubbleCountData = new List();
         countList.forEach((v) {
           unreadBubbleCountData
-              .add(UnreadBubbleCountData.fromJson(jsonDecode(v)));
+              .add(UnreadCountData.fromJson(jsonDecode(v)));
         });
       }
 
