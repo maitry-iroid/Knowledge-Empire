@@ -25,8 +25,6 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';

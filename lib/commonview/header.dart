@@ -178,7 +178,7 @@ class HeaderViewState extends State<HeaderView> {
         ),
         onTap: () {
           if (type == Const.typeEmployee) {
-           Utils.performDashboardItemClick(context, Const.typeOrg);
+            Utils.performDashboardItemClick(context, Const.typeOrg);
           } else if (type == Const.typeSalesPersons) {
             navigationBloc.updateNavigation(
                 HomeData(initialPageType: Const.typeNewCustomer));
@@ -309,9 +309,15 @@ class HeaderViewState extends State<HeaderView> {
       children: <Widget>[
         showMenuView(),
         showProfile(context),
-        showHeaderItem(Const.typeEmployee, context),
-        showHeaderItem(Const.typeSalesPersons, context),
-        showHeaderItem(Const.typeServicesPerson, context),
+        Utils.isFeatureOn(Const.typeOrg)
+            ? showHeaderItem(Const.typeEmployee, context)
+            : Container(),
+        Utils.isFeatureOn(Const.typeOrg)
+            ? showHeaderItem(Const.typeSalesPersons, context)
+            : Container(),
+        Utils.isFeatureOn(Const.typeOrg)
+            ? showHeaderItem(Const.typeServicesPerson, context)
+            : Container(),
         showHeaderItem(Const.typeBrandValue, context),
         showHeaderItem(Const.typeMoney, context),
         showHelpView(context)

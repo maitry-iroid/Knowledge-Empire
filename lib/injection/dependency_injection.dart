@@ -16,9 +16,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
@@ -35,7 +33,6 @@ class Injector {
   static int userId;
   static CustomerValueData customerValueData;
   static IntroData introData;
-  static DashboardLockStatusData dashboardLockStatusData;
   static DashboardStatusResponse dashboardStatusResponse;
   static int mode;
   static bool isBusinessMode = true;
@@ -47,7 +44,6 @@ class Injector {
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
   static String deviceType = "";
-  static List<UnreadCountData> unreadBubbleCountData = new List();
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
@@ -123,24 +119,12 @@ class Injector {
 
         updateIntroData();
       }
-      if (prefs.getString(PrefKeys.lockStatusData) != null) {
-        dashboardLockStatusData = DashboardLockStatusData.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.lockStatusData)));
-      }
+
       if (prefs.getString(PrefKeys.onOffStatusData) != null) {
         dashboardStatusResponse = DashboardStatusResponse.fromJson(
             jsonDecode(prefs.getString(PrefKeys.onOffStatusData)));
       }
 
-      if (prefs.getString(PrefKeys.unreadBubbleCountData) != null) {
-        List<String> countList =
-            prefs.getStringList(PrefKeys.unreadBubbleCountData);
-        unreadBubbleCountData = new List();
-        countList.forEach((v) {
-          unreadBubbleCountData
-              .add(UnreadCountData.fromJson(jsonDecode(v)));
-        });
-      }
 
       headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();

@@ -11,11 +11,8 @@ import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_challenges.dart';
-import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
@@ -34,7 +31,6 @@ import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 import 'P+L.dart';
@@ -103,7 +99,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool startAnim = false;
   int duration = 1;
   bool isCoinViseble = false;
-  DashboardLockStatusData dashboardLockStatusData;
 
   HomeData homeData;
 
@@ -115,7 +110,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    dashboardLockStatusData = Injector.dashboardLockStatusData;
     Future.delayed(Duration(seconds: 1)).then((d) {
       initStateMethods();
     });

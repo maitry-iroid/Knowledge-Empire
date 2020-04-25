@@ -8,7 +8,6 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:shimmer/shimmer.dart';
@@ -316,7 +315,6 @@ class CommonView {
                 fit: BoxFit.fill)));
   }
 
-  List<UnreadCountData> data = List();
 
   static Widget showDashboardView(BuildContext context) {
 //    DashboardLockStatusData dashboardLockStatusData =

@@ -9,8 +9,6 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 
@@ -106,7 +104,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   }
 
   showMainItem(String type) {
-    print(Injector.dashboardLockStatusData);
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -159,7 +156,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-  DashboardLockStatusData dashboardLockStatusData;
 
   getTitle(String type) {
     if (type == Const.typeBusinessSector)

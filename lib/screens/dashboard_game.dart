@@ -1,20 +1,14 @@
 import 'dart:convert';
 
-import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/dashboard_intro_dialog.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_unread_count.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 
@@ -36,7 +30,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
-  DashboardLockStatusData dashboardLockStatusData;
 
   @override
   void initState() {

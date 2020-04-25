@@ -8,7 +8,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/friendUnfriendUser.dart';
+import 'package:ke_employee/models/friend_unfriend_user.dart';
 import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/search_friend.dart';
