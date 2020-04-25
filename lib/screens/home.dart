@@ -541,11 +541,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initDrawerItems() {
     drawerItems = [];
 
-    drawerItems.add(
-      DrawerItem(profil
-          Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home",
-          Const.typeHome),
-    );
+
+    drawerItems.add(DrawerItem(
+        Utils.getText(context, StringRes.businessSector),
+        Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home",
+        Const.typeHome));
 
     drawerItems.add(DrawerItem(
         Utils.getText(context, StringRes.businessSector),
