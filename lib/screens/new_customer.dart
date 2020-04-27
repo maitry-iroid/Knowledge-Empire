@@ -7,7 +7,6 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import '../helper/constant.dart';
@@ -42,53 +41,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     initData();
   }
 
-//  getQuestions(BuildContext context) {
-//    CommonView.showCircularProgress(true, context);
-//    QuestionRequest rq = QuestionRequest();
-//    rq.userId = Injector.userData.userId;
-//
-//    rq.type = Const.getNewQueType;
-//
-//    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) async {
-//      CommonView.showCircularProgress(false, context);
-//
-//      if (data != null) {
-//        arrQuestions.clear();
-//
-//        data.forEach((v) {
-//          arrQuestions.add(QuestionData.fromJson(v));
-//        });
-//
-//        for (int i = 0; i < arrQuestions.length; i++) {
-//          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-//          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-//          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
-//
-//          print(arrQuestions[i].value);
-//        }
-//
-//        if (mounted) setState(() {});
-//      } else {
-////        Utils.showToast(Utils.getText(
-////            _scaffoldKey?.currentContext, StringRes.somethingWrong));
-//
-//      }
-//    }).catchError((e) {
-//      print("getQuestions_" + e.toString());
-//      if (mounted) {
-//        CommonView.showCircularProgress(false, context);
-//      }
-//      // Utils.showToast(e.toString());
-//    });
-//  }
-
   @override
   Widget build(BuildContext context) {
-//    showCupertinoDialog<String>(
-//      context: context,
-//      builder: (BuildContext context) => Particles(),
-//    );
-
     return Scaffold(
         key: _scaffoldKey,
         body: SafeArea(
@@ -192,7 +146,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               maxLines: 1,
             ),
           ),
-          Expanded(
+          Utils.isFeatureOn(Const.typeOrg)?Expanded(
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.resources),
@@ -200,7 +154,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
-          ),
+          ):Container(),
           Expanded(
             flex: 3,
             child: Text(
@@ -288,7 +242,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             maxLines: 1,
                           ),
                         ),
-                        Expanded(
+                        Utils.isFeatureOn(Const.typeOrg)?Expanded(
                           flex: 3,
                           child: Text(
                             arrQuestions[index].resources.toString(),
@@ -297,7 +251,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
-                        ),
+                        ):Container(),
                       ],
                     )),
               ),
@@ -339,7 +293,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
 //                    Navigator.push(_scaffoldKey.currentContext,
 //                        FadeRouteHome(homeData: homeData));
-                  navigationBloc.updateNavigation(homeData);
+                    navigationBloc.updateNavigation(homeData);
                   } else {
                     Utils.showToast("You need atleast " +
                         arrQuestions[index].resources.toString() +
@@ -363,7 +317,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
 //                Navigator.push(_scaffoldKey.currentContext,
 //                    FadeRouteHome(homeData: homeData));
-              navigationBloc.updateNavigation(homeData);
+                navigationBloc.updateNavigation(homeData);
               } else {
                 Utils.showToast("You need atleast " +
                     arrQuestions[index].resources.toString() +

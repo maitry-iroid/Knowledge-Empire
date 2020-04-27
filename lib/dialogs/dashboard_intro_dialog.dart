@@ -45,16 +45,16 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
           top: 50,
           child: showItem(Const.typeName),
         ),
-        Positioned(
+        Utils.isFeatureOn(Const.typeOrg)?Positioned(
           left: Utils.getDeviceWidth(context) / 3.5,
           top: 50,
           child: showItem(Const.typeSalesPersons),
-        ),
-        Positioned(
+        ):Container(),
+        Utils.isFeatureOn(Const.typeOrg)?Positioned(
           left: Utils.getDeviceWidth(context) / 1.9,
           top: 50,
           child: showItem(Const.typeServicesPerson),
-        ),
+        ):Container(),
         Positioned(
           right: 0,
           top: 50,

@@ -148,183 +148,8 @@ class _RankingPageState extends State<RankingPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-              height: Injector.isBusinessMode ? 50 : 30,
-              child: Row(
-                children: <Widget>[
-                  showBack(),
-                  Expanded(
-                    child: StreamBuilder(
-                        stream: getRankingDataBloc?.getGroups,
-                        builder: (context,
-                            AsyncSnapshot<List<GetUserGroupData>> snapshot) {
-                          if (snapshot.hasData) {
-                            arrGroups = snapshot.data;
-                            return showGroups();
-                          } else if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          }
-                          return CommonView.showShimmer();
-                        }),
-                  ),
-                  arrGroups.length > 4
-                      ? Icon(
-                          Icons.chevron_right,
-                          color: Injector.isBusinessMode
-                              ? Colors.white
-                              : ColorRes.titleBlueProf,
-                          size: 22.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        )
-                      : Container(),
-                  arrGroups.length > 4
-                      ? Container(
-                          height: 20,
-                          width: 1,
-                          color: ColorRes.fontGrey,
-                          margin: EdgeInsets.symmetric(horizontal: 2),
-                        )
-                      : Container(),
-                  ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: arrTime.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TimeItem(
-                        selectTime,
-                        index: index,
-                        isSelected: selectedTime == index ? true : false,
-                        title: arrTime[index],
-                      );
-                    },
-                  ),
-                ],
-              )),
-          Container(
-            child: Row(
-              children: <Widget>[
-                InkResponse(
-                  child: Container(
-                      width: 35,
-                      height: 35,
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg(
-                                  Injector.isBusinessMode
-                                      ? "bg_you"
-                                      : "bg_pro_you")),
-                              fit: BoxFit.fill)),
-                      child: Text(
-                        Utils.getText(context, StringRes.you),
-                        style: TextStyle(color: ColorRes.white, fontSize: 15),
-                      )),
-                  onTap: () {
-                    int index = arrFriends.indexOf(arrFriends.firstWhere(
-                        (friend) => friend.userId == Injector.userData.userId));
-
-                    _scrollController.animateTo(_height * index,
-                        duration: Duration(seconds: 2),
-                        curve: Curves.fastOutSlowIn);
-                  },
-                ),
-                Expanded(
-                  flex: 15,
-                  child: Container(
-                    height: 30,
-                    margin: EdgeInsets.symmetric(vertical: 11, horizontal: 3),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg(
-                                Injector.isBusinessMode
-                                    ? "bg_ranking_header"
-                                    : "bg_pro_ranking_header")),
-                            fit: BoxFit.fill)),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 18),
-                            child: Text(
-                              Utils.getText(context, StringRes.name),
-                              style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: Text(
-                              Utils.getText(context, StringRes.companyName),
-                              style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),
-                              maxLines: 1,
-                              textAlign: TextAlign.center),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Text(Utils.getText(context, StringRes.score),
-                              style: TextStyle(
-                                  color: ColorRes.white, fontSize: 15),
-                              textAlign: TextAlign.right),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    height: 30,
-                    margin: EdgeInsets.only(left: 0),
-                    padding: EdgeInsets.only(left: 3, right: 3),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg(
-                                Injector.isBusinessMode
-                                    ? "bg_ranking_header_1"
-                                    : "bg_pro_ranking_header_1")),
-                            fit: BoxFit.fill)),
-                    child: Text(
-                      Utils.getText(context, StringRes.challenges),
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    width: 45,
-                    height: 30,
-                    margin: EdgeInsets.only(left: 2, right: 5),
-//        padding: EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg(
-                                Injector.isBusinessMode
-                                    ? "bg_ranking_header_1"
-                                    : "bg_pro_ranking_header_1")),
-                            fit: BoxFit.fill)),
-                    child: Text(
-                      Utils.getText(context, StringRes.friend),
-                      style: TextStyle(color: ColorRes.white, fontSize: 15),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          showHeaderFirst(),
+          showSubHeader(),
           Expanded(
             child: showFriends(),
           )
@@ -516,33 +341,35 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showChallengeButton(int index) {
-    return Expanded(
-      flex: 3,
-      child: InkResponse(
-        child: Image(
-            height: Utils.getDeviceWidth(context) / 20,
-            width: Utils.getDeviceWidth(context) / 20,
-            image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
-                ? "ic_challenge_disable"
-                : (arrFriends[index].isFriend == 0
-                    ? 'ic_challenge_disable'
-                    : 'ic_challenge')))),
-        onTap: () {
-          if (!isCurrentUser(index)) {
-            if (arrFriends[index].isFriend == 1) {
-              HomeData homeData = HomeData(
-                  arrFriends: arrFriends,
-                  initialPageType: Const.typeChallenges,
-                  friendId: arrFriends[index].userId);
+    return Utils.isFeatureOn(Const.typeChallenges)
+        ? Expanded(
+            flex: 3,
+            child: InkResponse(
+              child: Image(
+                  height: Utils.getDeviceWidth(context) / 20,
+                  width: Utils.getDeviceWidth(context) / 20,
+                  image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
+                      ? "ic_challenge_disable"
+                      : (arrFriends[index].isFriend == 0
+                          ? 'ic_challenge_disable'
+                          : 'ic_challenge')))),
+              onTap: () {
+                if (!isCurrentUser(index)) {
+                  if (arrFriends[index].isFriend == 1) {
+                    HomeData homeData = HomeData(
+                        arrFriends: arrFriends,
+                        initialPageType: Const.typeChallenges,
+                        friendId: arrFriends[index].userId);
 
 //              Navigator.push(context, FadeRouteHome(homeData: homeData));
-navigationBloc.updateNavigation(homeData);
-              print(arrFriends[index].isFriend);
-            }
-          }
-        },
-      ),
-    );
+                    navigationBloc.updateNavigation(homeData);
+                    print(arrFriends[index].isFriend);
+                  }
+                }
+              },
+            ),
+          )
+        : Container();
   }
 
   showFriendUnFriendButton(int index) {
@@ -836,6 +663,179 @@ navigationBloc.updateNavigation(homeData);
       itemBuilder: (BuildContext context, int index) {
         return showFriendItem(index);
       },
+    );
+  }
+
+  showHeaderFirst() {
+    return Container(
+        height: Injector.isBusinessMode ? 50 : 30,
+        child: Row(
+          children: <Widget>[
+            showBack(),
+            Expanded(
+              child: StreamBuilder(
+                  stream: getRankingDataBloc?.getGroups,
+                  builder: (context,
+                      AsyncSnapshot<List<GetUserGroupData>> snapshot) {
+                    if (snapshot.hasData) {
+                      arrGroups = snapshot.data;
+                      return showGroups();
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    }
+                    return CommonView.showShimmer();
+                  }),
+            ),
+            arrGroups.length > 4
+                ? Icon(
+                    Icons.chevron_right,
+                    color: Injector.isBusinessMode
+                        ? Colors.white
+                        : ColorRes.titleBlueProf,
+                    size: 22.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  )
+                : Container(),
+            arrGroups.length > 4
+                ? Container(
+                    height: 20,
+                    width: 1,
+                    color: ColorRes.fontGrey,
+                    margin: EdgeInsets.symmetric(horizontal: 2),
+                  )
+                : Container(),
+            ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemCount: arrTime.length,
+              itemBuilder: (BuildContext context, int index) {
+                return TimeItem(
+                  selectTime,
+                  index: index,
+                  isSelected: selectedTime == index ? true : false,
+                  title: arrTime[index],
+                );
+              },
+            ),
+          ],
+        ));
+  }
+
+  showSubHeader() {
+    return Row(
+      children: <Widget>[
+        InkResponse(
+          child: Container(
+              width: 35,
+              height: 35,
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 3),
+//        padding: EdgeInsets.symmetric(horizontal: 20),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg(
+                          Injector.isBusinessMode ? "bg_you" : "bg_pro_you")),
+                      fit: BoxFit.fill)),
+              child: Text(
+                Utils.getText(context, StringRes.you),
+                style: TextStyle(color: ColorRes.white, fontSize: 15),
+              )),
+          onTap: () {
+            int index = arrFriends.indexOf(arrFriends.firstWhere(
+                (friend) => friend.userId == Injector.userData.userId));
+
+            _scrollController.animateTo(_height * index,
+                duration: Duration(seconds: 2), curve: Curves.fastOutSlowIn);
+          },
+        ),
+        Expanded(
+          flex: 15,
+          child: Container(
+            height: 30,
+            margin: EdgeInsets.symmetric(vertical: 11, horizontal: 3),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode
+                        ? "bg_ranking_header"
+                        : "bg_pro_ranking_header")),
+                    fit: BoxFit.fill)),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 18),
+                    child: Text(
+                      Utils.getText(context, StringRes.name),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      maxLines: 1,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Text(Utils.getText(context, StringRes.companyName),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      maxLines: 1,
+                      textAlign: TextAlign.center),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Text(Utils.getText(context, StringRes.score),
+                      style: TextStyle(color: ColorRes.white, fontSize: 15),
+                      textAlign: TextAlign.right),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Utils.isFeatureOn(Const.typeChallenges)
+            ? Expanded(
+                flex: 3,
+                child: Container(
+                  height: 30,
+                  margin: EdgeInsets.only(left: 0),
+                  padding: EdgeInsets.only(left: 3, right: 3),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg(
+                              Injector.isBusinessMode
+                                  ? "bg_ranking_header_1"
+                                  : "bg_pro_ranking_header_1")),
+                          fit: BoxFit.fill)),
+                  child: Text(
+                    Utils.getText(context, StringRes.challenges),
+                    style: TextStyle(color: ColorRes.white, fontSize: 15),
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            : Container(),
+        Expanded(
+          flex: 3,
+          child: Container(
+            width: 45,
+            height: 30,
+            margin: EdgeInsets.only(left: 2, right: 5),
+//        padding: EdgeInsets.symmetric(horizontal: 20),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode
+                        ? "bg_ranking_header_1"
+                        : "bg_pro_ranking_header_1")),
+                    fit: BoxFit.fill)),
+            child: Text(
+              Utils.getText(context, StringRes.friend),
+              style: TextStyle(color: ColorRes.white, fontSize: 15),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

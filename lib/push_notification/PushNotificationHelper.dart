@@ -24,7 +24,6 @@ class PushNotificationHelper {
   }
 
   void initPush() async {
-
     firebaseCloudMessagingListeners();
 
     var initializationSettingsAndroid =
@@ -160,31 +159,53 @@ class PushNotificationHelper {
       }
     }
 
-    String btnText="";
-    if (mPushModel.notificationType == Const.pushTypeChallenge.toString()) {
+    String btnText = "";
+    if (mPushModel.notificationType == Const.pushTypeChallenge.toString() &&
+        Utils.isFeatureOn(Const.typeChallenges)) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
     } else if (mPushModel.notificationType ==
-        Const.pushTypeAchievement.toString()) {
-      if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
-        Injector.customerValueData.totalEmployeeCapacity +=int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingEmployeeCapacity +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.employees);
+            Const.pushTypeAchievement.toString() &&
+        Utils.isFeatureOn(Const.typeReward)) {
+      if (mPushModel.type != null &&
+          mPushModel.type == "1" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalEmployeeCapacity +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingEmployeeCapacity +=
+            int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.employees);
       }
-      if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
-        Injector.customerValueData.totalSalesPerson +=int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingSalesPerson +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.salesReps);
+      if (mPushModel.type != null &&
+          mPushModel.type == "3" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalSalesPerson +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingSalesPerson +=
+            int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.salesReps);
       }
 
-      if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
-        Injector.customerValueData.totalCustomerCapacity +=int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingCustomerCapacity +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.serviceReps);
+      if (mPushModel.type != null &&
+          mPushModel.type == "8" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalCustomerCapacity +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingCustomerCapacity +=
+            int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.serviceReps);
       }
-      print(Injector.customerValueData.totalBalance.toString() +"======>"+ mPushModel.bonus.toString());
-      if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
+      print(Injector.customerValueData.totalBalance.toString() +
+          "======>" +
+          mPushModel.bonus.toString());
+      if (mPushModel.type != null &&
+          mPushModel.type == "0" &&
+          mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.bonusPoint);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.bonusPoint);
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);
@@ -194,7 +215,7 @@ class PushNotificationHelper {
 //      rq.userId = Injector.userId;
 //      customerValueBloc.getCustomerValue(rq);
 
-      CommonView().collectorDialog(context, mPushModel,btnText );
+      CommonView().collectorDialog(context, mPushModel, btnText);
       Utils.playAchievementSound();
     } else {
       showLocalNotification(Injector.notificationID, body);
