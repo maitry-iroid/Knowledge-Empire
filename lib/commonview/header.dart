@@ -88,8 +88,7 @@ class HeaderViewState extends State<HeaderView> {
 
   showHeaderItem(String type, BuildContext context) {
     return Container(
-      foregroundDecoration:
-          /*BoxDecoration(color: ColorRes.white.withOpacity(0.5))*/ null,
+      foregroundDecoration: null,
       padding:
           EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       decoration: BoxDecoration(
@@ -200,8 +199,6 @@ class HeaderViewState extends State<HeaderView> {
       child: InkResponse(
           child: Container(
             foregroundDecoration:
-                /*
-                BoxDecoration(color: ColorRes.white.withOpacity(0.5))*/
                 null,
             child: Row(
               children: <Widget>[

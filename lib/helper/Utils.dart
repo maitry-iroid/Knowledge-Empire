@@ -566,7 +566,6 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) async {
-
     Utils.playClickSound();
 
     if (type == Const.typeOrg ||
@@ -836,4 +835,5 @@ class Utils {
   static isShowLock(String type) {
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
+
 }

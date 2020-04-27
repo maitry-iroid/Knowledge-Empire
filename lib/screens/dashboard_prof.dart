@@ -28,7 +28,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     super.initState();
     getDashboardStatus();
 
-    initFeatureDataArray();
+    arrType = initFeatureDataArray();
 
     if (Injector.introData == null) {
       getIntroData();
@@ -156,7 +156,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-
   getTitle(String type) {
     if (type == Const.typeBusinessSector)
       return Utils.getText(context, StringRes.businessSector);
@@ -229,22 +228,27 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     });
   }
 
-  void initFeatureDataArray() {
-    arrType.add(Const.typeBusinessSector);
-    arrType.add(Const.typeNewCustomer);
-    arrType.add(Const.typeExistingCustomer);
+  List<String> initFeatureDataArray() {
+    List<String> arrTypeData = List();
 
-    if (Utils.isFeatureOn(Const.typeReward)) arrType.add(Const.typeReward);
+    arrTypeData.add(Const.typeBusinessSector);
+    arrTypeData.add(Const.typeNewCustomer);
+    arrTypeData.add(Const.typeExistingCustomer);
+
+    if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
 
     if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
-      arrType.add(Const.typeTeam);
+      arrTypeData.add(Const.typeTeam);
     if (Utils.isFeatureOn(Const.typeChallenges))
-      arrType.add(Const.typeChallenges);
+      arrTypeData.add(Const.typeChallenges);
 
-    if (Utils.isFeatureOn(Const.typeOrg)) arrType.add(Const.typeOrg);
+    if (Utils.isFeatureOn(Const.typeOrg)) arrTypeData.add(Const.typeOrg);
 
-    if (Utils.isFeatureOn(Const.typePl)) arrType.add(Const.typePl);
+    if (Utils.isFeatureOn(Const.typePl)) arrTypeData.add(Const.typePl);
 
-    if (Utils.isFeatureOn(Const.typeRanking)) arrType.add(Const.typeRanking);
+    if (Utils.isFeatureOn(Const.typeRanking))
+      arrTypeData.add(Const.typeRanking);
+
+    return arrTypeData;
   }
 }

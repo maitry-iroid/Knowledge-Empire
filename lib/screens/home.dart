@@ -305,17 +305,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _scaffoldKey.currentState.openEndDrawer();
     }
     if (_currentPage != item.key) {
-      Utils.performDashboardItemClick(context, item.key);
-    }
-  }
-
-  void navigationOnScreen(DrawerItem item) {
-    Navigator.of(context).pop(); //
-    if (_currentPage == Const.typeHelp) {
-      Navigator.push(context, FadeRouteIntro());
-    } else {
-      navigationBloc.updateNavigation(
-          HomeData(initialPageType: item.key)); // close the drawer
+      if (item.key == Const.typeHelp)
+        Navigator.push(context, FadeRouteIntro());
+      else
+        Utils.performDashboardItemClick(context, item.key);
     }
   }
 
