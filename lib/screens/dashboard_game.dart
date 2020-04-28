@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:animated_background/animated_background.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -112,7 +111,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           child: Stack(
             children: <Widget>[
               CommonView.showDashboardView(context, unreadBubbleCountData),
-              HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+             // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
         ),

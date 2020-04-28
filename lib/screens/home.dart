@@ -6,9 +6,12 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/animation/Explostion.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -97,10 +100,10 @@ class DrawerItem {
 
 List<DrawerItem> drawerItems = List();
 
-class HomePageState extends State<HomePage>
-    with WidgetsBindingObserver
-    implements RefreshAnimation {
+class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey =
+      new GlobalKey<ExplosionWidgetState>();
   int _selectedDrawerIndex = 0;
   String _currentPage = Const.typeHome;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -108,9 +111,10 @@ class HomePageState extends State<HomePage>
   int duration = 1;
   bool isCoinViseble = false;
   DashboardLockStatusData dashboardLockStatusData;
-  RefreshAnimation mRefreshAnimation;
 
   HomeData homeData;
+
+
 
   @override
   void didChangeDependencies() {
@@ -163,7 +167,11 @@ class HomePageState extends State<HomePage>
                       (homeData.isChallenge != null &&
                           homeData.isChallenge &&
                           homeData.questionHomeData.isAnsweredCorrect))) {
-                isCoinViseble = true;
+                if (!homeData.isChallenge ||
+                    (Injector.countList.length ==
+                        questionData.questionCurrentIndex)) {
+                  isCoinViseble = true;
+                }
               } else
                 isCoinViseble = false;
 
@@ -185,10 +193,21 @@ class HomePageState extends State<HomePage>
                   children: <Widget>[
                     getPage(),
                     HeaderView(
-                      scaffoldKey: _scaffoldKey,
-                      isShowMenu: true,
-//                      openProfile: openProfile,
-                    ),
+                        scaffoldKey: _scaffoldKey,
+                        isShowMenu: true,
+                        isChallenge: homeData.isChallenge,
+                        currentIndex: homeData != null &&
+                                homeData.questionHomeData != null &&
+                                homeData.questionHomeData
+                                        .questionCurrentIndex !=
+                                    null
+                            ? homeData.questionHomeData.questionCurrentIndex
+                            : 0,
+                        challengeCount: homeData != null &&
+                                homeData.questionHomeData != null &&
+                                homeData.questionHomeData.totalQuestion != null
+                            ? homeData.questionHomeData.totalQuestion
+                            : 0),
                     Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
@@ -221,7 +240,6 @@ class HomePageState extends State<HomePage>
     initContent();
     getLockStatus();
     Utils.removeBadge();
-    mRefreshAnimation = this;
   }
 
 //push notification
@@ -549,10 +567,10 @@ class HomePageState extends State<HomePage>
       if (isConnected) {
         GetChallengesRequest rq = GetChallengesRequest();
         rq.userId = Injector.userData.userId;
-
-        WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) {
-          if (data != null) {
+        WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) async {
+          if (data != null && data.toString() != "{}") {
             QuestionData questionData = QuestionData.fromJson(data);
+            await getChallengeQueBloc?.getChallengeQuestion();
             if (questionData != null && questionData.challengeId != null) {
               if (questionData.isFirstQuestion == 1) {
                 DisplayDialogs.showChallengeDialog(
@@ -567,9 +585,13 @@ class HomePageState extends State<HomePage>
                   isChallenge: true,
                 ));
               }
-            }else{
-              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+            } else {
+              navigationBloc
+                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
+          } else {
+            navigationBloc
+                .updateNavigation(HomeData(initialPageType: Const.typeHome));
           }
         }).catchError((e) {
           // Utils.showToast(e.toString());
@@ -661,9 +683,10 @@ class HomePageState extends State<HomePage>
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
 
+
     Future.delayed(const Duration(milliseconds: 500), () {
       PushNotificationHelper pushNotificationHelper =
-          PushNotificationHelper(context);
+          PushNotificationHelper(context, explosionWidgetStateKey);
 
       if (pushNotificationHelper != null) {
         pushNotificationHelper.initPush();

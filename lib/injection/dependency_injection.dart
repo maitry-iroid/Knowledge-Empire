@@ -1,14 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:wasm';
 
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:device_id/device_id.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
+
+//import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 
@@ -28,7 +34,7 @@ import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:ui' as ui;
 class Injector {
 //  static final Injector _singleton = new Injector._internal();
 
@@ -44,13 +50,15 @@ class Injector {
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
   static StreamController<String> headerStreamController;
-  static StreamController<String> homeStreamController=new StreamController<String>();
+  static StreamController<String> homeStreamController =
+      new StreamController<String>();
   static StreamController<String> newCustomerStreamController;
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
   static String deviceType = "";
   static List<UnreadBubbleCountData> unreadBubbleCountData = new List();
+  static ui.Image image;
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   static bool isSoundEnable;
@@ -76,13 +84,15 @@ class Injector {
 
   Injector._internal();
 
+  static List<QuestionCountWithData> countList = new List();
+
   static getInstance() async {
-    print("=============== riddhi ");
 
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
 
-    deviceType = Device.get().isAndroid ? "android" : "ios";
+    deviceType = Platform.operatingSystem;
+    print(deviceType);
 
     firebaseMessaging = FirebaseMessaging();
 
@@ -90,7 +100,8 @@ class Injector {
 
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-    deviceId = "123456";
+    deviceId = await DeviceId.getID;
+    print(deviceId);
 
     if (prefs.getBool(PrefKeys.isSoundEnable) == null) {
       await prefs.setBool(PrefKeys.isSoundEnable, true);
@@ -101,10 +112,25 @@ class Injector {
     await Utils.playBackgroundMusic();
 
     updateInstance();
+    init();
   }
 
   static getContext(BuildContext context) {
     buildContext = context;
+  }
+
+  static Future<Null> init() async {
+    final ByteData data =
+    await rootBundle.load(Utils.getAssetsImg("small_coin"));
+    image = await loadImage(new Uint8List.view(data.buffer));
+  }
+
+  static Future<ui.Image> loadImage(List<int> img) async {
+    final Completer<ui.Image> completer = new Completer();
+    ui.decodeImageFromList(img, (ui.Image img) {
+      return completer.complete(img);
+    });
+    return completer.future;
   }
 
   static updateInstance() async {
@@ -300,6 +326,4 @@ class Injector {
           );
         });
   }
-
-
 }

@@ -184,8 +184,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       isForIntroDialog: false,
                     ));
 
-            print("dialog dissmissed");
-            print(data);
 
             if (data != null) manageLevel(org, data);
           },
@@ -280,7 +278,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         }
       });
     }).catchError((e) {
-      print("getOrganizations_" + e.toString());
       if (mounted)
         setState(() {
           isLoading = false;
@@ -345,7 +342,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Utils.getText(context, StringRes.somethingWrong);
         }
       }).catchError((e) {
-        print("manageOrg_" + e.toString());
         if (mounted)
           setState(() {
             isLoading = false;
