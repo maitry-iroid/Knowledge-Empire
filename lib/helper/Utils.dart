@@ -823,38 +823,38 @@ class Utils {
       return 0;
   }
 
-  static int getHomePageIndex(String key) {
-    if (key == Const.typeHome) {
-      return 0;
-    } else if (key == Const.typeBusinessSector) {
-      return 1;
-    } else if (key == Const.typeNewCustomer) {
-      return 2;
-    } else if (key == Const.typeExistingCustomer) {
-      return 3;
-    } else if (key == Const.typeReward) {
-      return 4;
-    } else if (key == Const.typeTeam) {
-      return 5;
-    } else if (key == Const.typeChallenges) {
-      return Injector.isManager() ? 6 : 5;
-    } else if (key == Const.typeOrg) {
-      return Injector.isManager() ? 7 : 6;
-    } else if (key == Const.typePl) {
-      return Injector.isManager() ? 8 : 7;
-    } else if (key == Const.typeRanking) {
-      return Injector.isManager() ? 9 : 8;
-    } else if (key == Const.typeProfile) {
-      return Injector.isManager() ? 10 : 9;
-    } else if (key == Const.typeHelp) {
-      return Injector.isManager() ? 11 : 10;
-    } else if (key == Const.typeEngagement) {
-      return Injector.isManager() ? 12 : 11;
-    } else if (key == Const.typeCustomerSituation) {
-      return Injector.isManager() ? 13 : 12;
-    }
-    return 0;
-  }
+//  static int getHomePageIndex(String key) {
+//    if (key == Const.typeHome) {
+//      return 0;
+//    } else if (key == Const.typeBusinessSector) {
+//      return 1;
+//    } else if (key == Const.typeNewCustomer) {
+//      return 2;
+//    } else if (key == Const.typeExistingCustomer) {
+//      return 3;
+//    } else if (key == Const.typeReward) {
+//      return 4;
+//    } else if (key == Const.typeTeam) {
+//      return 5;
+//    } else if (key == Const.typeChallenges) {
+//      return Injector.isManager() ? 6 : 5;
+//    } else if (key == Const.typeOrg) {
+//      return Injector.isManager() ? 7 : 6;
+//    } else if (key == Const.typePl) {
+//      return Injector.isManager() ? 8 : 7;
+//    } else if (key == Const.typeRanking) {
+//      return Injector.isManager() ? 9 : 8;
+//    } else if (key == Const.typeProfile) {
+//      return Injector.isManager() ? 10 : 9;
+//    } else if (key == Const.typeHelp) {
+//      return Injector.isManager() ? 11 : 10;
+//    } else if (key == Const.typeEngagement) {
+//      return Injector.isManager() ? 12 : 11;
+//    } else if (key == Const.typeCustomerSituation) {
+//      return Injector.isManager() ? 13 : 12;
+//    }
+//    return 0;
+//  }
 
   static void performNavigation(String type, BuildContext context) {
 //    HomeData homeData =

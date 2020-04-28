@@ -56,8 +56,6 @@ class Const {
   static var typeCRM = 7;
   static var typeServices = 8;
 
-  static var typeMoneyAnim = "typeMoneyAnim";
-
   static var businessMode = 1;
   static var professionalMode = 2;
 

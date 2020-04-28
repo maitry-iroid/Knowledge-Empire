@@ -307,7 +307,7 @@ class DisplayDialogs {
             onTapBtn: () {
               Utils.playClickSound();
               Navigator.pop(context);
-              Injector.homeStreamController?.add("${Const.typeProfile}");
+//              Injector.homeStreamController?.add("${Const.typeProfile}");
             },
           );
         });
