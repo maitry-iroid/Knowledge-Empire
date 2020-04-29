@@ -365,6 +365,7 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
+
       //region english
       //main options
       'home': "Home",
@@ -747,7 +748,7 @@ class StringRes {
       'hi': "Hi",
       'noInternet': "Check Your Internet Connection",
       'update': "Update now",
-      'updateLatter': "Update letter",
+      'updateLatter': "Update later",
       'serviceReps': "Service Reps",
       'salesReps': "Sales Reps",
       'noOffline': "Sorry, this feature is only available while online.",

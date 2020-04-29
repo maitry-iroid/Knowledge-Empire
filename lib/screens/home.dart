@@ -246,7 +246,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 mQuestionCountWithData.isCorrect != null
                     ? !mQuestionCountWithData.isCorrect
                     : false);
-        if (index == -1) {
+        if (!homeData.isChallenge || index == -1) {
           isCoinViseble = true;
         }
       }
