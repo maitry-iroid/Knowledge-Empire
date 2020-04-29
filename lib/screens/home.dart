@@ -110,11 +110,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool startAnim = false;
   int duration = 1;
   bool isCoinViseble = false;
+  bool isReadyForChallenge = false;
   DashboardLockStatusData dashboardLockStatusData;
 
   HomeData homeData;
-
-
 
   @override
   void didChangeDependencies() {
@@ -160,20 +159,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
               print("current_page :  " + _currentPage);
 
-              if (_currentPage == Const.typeCustomerSituation &&
-                  ((homeData.isCameFromNewCustomer != null &&
-                          homeData.isCameFromNewCustomer &&
-                          homeData.questionHomeData.isAnsweredCorrect) ||
-                      (homeData.isChallenge != null &&
-                          homeData.isChallenge &&
-                          homeData.questionHomeData.isAnsweredCorrect))) {
-                if (!homeData.isChallenge ||
-                    (Injector.countList.length ==
-                        questionData.questionCurrentIndex)) {
-                  isCoinViseble = true;
-                }
-              } else
-                isCoinViseble = false;
+              getAnimationStatus();
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -233,6 +219,39 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             return Container();
           }
         });
+  }
+
+  void getAnimationStatus() {
+    bool first = false;
+    bool second = false;
+    if (homeData != null) {
+      print(homeData);
+      first = _currentPage == Const.typeCustomerSituation &&
+          ((homeData.isCameFromNewCustomer != null &&
+              homeData.isCameFromNewCustomer &&
+              homeData.questionHomeData.isAnsweredCorrect));
+      second = homeData.isChallenge != null &&
+              homeData.isChallenge &&
+              homeData.questionHomeData != null
+          ? homeData.questionHomeData.isAnsweredCorrect != null
+              ? homeData.questionHomeData.isAnsweredCorrect
+              : false
+          : false;
+    }
+    if (first || second) {
+      if (!homeData.isChallenge ||
+          (Injector.countList.length == questionData.questionCurrentIndex)) {
+        int index = Injector.countList.indexWhere(
+            (QuestionCountWithData mQuestionCountWithData) =>
+                mQuestionCountWithData.isCorrect != null
+                    ? !mQuestionCountWithData.isCorrect
+                    : false);
+        if (index == -1) {
+          isCoinViseble = true;
+        }
+      }
+    } else
+      isCoinViseble = false;
   }
 
   Future<void> initStateMethods() async {
@@ -562,7 +581,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     });
   }
 
-  void getPendingChallenges() {
+  Future<void> getPendingChallenges() async {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         GetChallengesRequest rq = GetChallengesRequest();
@@ -570,7 +589,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) async {
           if (data != null && data.toString() != "{}") {
             QuestionData questionData = QuestionData.fromJson(data);
-            await getChallengeQueBloc?.getChallengeQuestion();
+            new Future.delayed(const Duration(seconds: 5), () async {
+              await getChallengeQueBloc.getChallengeQuestion();
+            });
             if (questionData != null && questionData.challengeId != null) {
               if (questionData.isFirstQuestion == 1) {
                 DisplayDialogs.showChallengeDialog(
@@ -682,7 +703,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initContent() async {
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
-
 
     Future.delayed(const Duration(milliseconds: 500), () {
       PushNotificationHelper pushNotificationHelper =

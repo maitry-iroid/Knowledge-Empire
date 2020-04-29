@@ -23,24 +23,12 @@ class ChallengeHeader extends StatefulWidget {
 class _ChallengeHeaderState extends State<ChallengeHeader> {
   int setColor = 0;
 
-  /*@override
-  void initState() {
-    if (Injector.countList != null && Injector.countList.length > 0) {
-      for (int i = 0; i < Injector.countList.length; i++) {
-        Injector.countList.add(new QuestionCountWithData(Colors.blue));
-      }
-    }
-    print(Injector.countList);
-    setState(() {});
-
-    super.initState();
-  }*/
-
   @override
   Widget build(BuildContext context) {
-    StreamBuilder(
-        stream: getChallengeQueBloc?.getChallenge,
-        builder: (context, AsyncSnapshot<List<QuestionCountWithData>> snapshot) {
+    return StreamBuilder(
+        stream: getChallengeQueBloc.getChallenge,
+        builder:
+            (context, AsyncSnapshot<List<QuestionCountWithData>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CommonView.showShimmer();
           } else if (snapshot.connectionState == ConnectionState.active) {
@@ -56,7 +44,8 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
   }
 
   Widget showData(List<QuestionCountWithData> data) {
-    print(data);
+    Injector.countList = new List();
+    Injector.countList = data;
     return Container(
       color: ColorRes.colorBgDark,
       height: Utils.getHeaderHeight(context),
@@ -168,7 +157,7 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: widget.currentIndex == index ? ColorRes.blue : ColorRes.red,
+            color: colorData(index, false),
             border: Border.all(
                 color: widget.currentIndex == index
                     ? ColorRes.blue
@@ -181,9 +170,7 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: widget.currentIndex == index
-                ? ColorRes.blue
-                : ColorRes.greenDot,
+            color: colorData(index, true),
             border: Border.all(
                 color: widget.currentIndex == index
                     ? ColorRes.blue
@@ -207,6 +194,19 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
                   .copyWith(color: ColorRes.white)),
         ),
       );
+    }
+  }
+
+  Color colorData(int index, bool isForCorrect) {
+    if (widget.currentIndex == index) {
+      if (Injector.countList[index].isCorrect != null &&
+          Injector.countList[index].isCorrect) {
+        return isForCorrect ? ColorRes.greenDot : ColorRes.red;
+      } else {
+        return isForCorrect ? ColorRes.greenDot : ColorRes.red;
+      }
+    } else {
+      return isForCorrect ? ColorRes.greenDot : ColorRes.red;
     }
   }
 }

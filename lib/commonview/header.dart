@@ -351,6 +351,7 @@ class HeaderViewState extends State<HeaderView> {
             challengeCount: widget.challengeCount, currentIndex: indexData);
       }
     }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[

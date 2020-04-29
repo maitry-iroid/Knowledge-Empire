@@ -1114,8 +1114,8 @@ class CommonView {
                                             color: ColorRes.white, fontSize: 15)),
                                   ),
                                   onTap: () {
-                                    explosionWidgetStateKey.currentState.onTap();
-//                                  Navigator.pop(context);
+//                                    explosionWidgetStateKey.currentState.onTap();
+                                  Navigator.pop(context);
                                   },
                                 )
                               ],

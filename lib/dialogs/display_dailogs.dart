@@ -174,6 +174,7 @@ class DisplayDialogs {
                                   initialPageType: Const.typeEngagement,
                                   questionHomeData: questionData,
                                   isChallenge: true,
+                                  isReadyForChallenge: true
                                 ));
                               },
                             )

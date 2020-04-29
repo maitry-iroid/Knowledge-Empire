@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
@@ -103,14 +104,21 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           (QuestionCountWithData questionCountWithData) =>
               questionCountWithData.questionIndex ==
               questionData.questionCurrentIndex);
-      if (index != -1) Injector.countList[index].color = ColorRes.greenDot;
+
+      if (index != -1) {
+        Injector.countList[index].color = ColorRes.greenDot;
+        getChallengeQueBloc?.updateQuestions(index, true);
+      }
     } else {
       if (isCameFromNewCustomer || isChallenge) {
         int index = Injector.countList.indexWhere(
             (QuestionCountWithData questionCountWithData) =>
                 questionCountWithData.questionIndex ==
                 questionData.questionCurrentIndex);
-        if (index != -1) Injector.countList[index].color = ColorRes.red;
+        if (index != -1) {
+          Injector.countList[index].color = ColorRes.red;
+          getChallengeQueBloc?.updateQuestions(index, false);
+        }
 
         Utils.checkAudio(questionData.isAnsweredCorrect);
       }

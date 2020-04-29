@@ -1,3 +1,4 @@
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
@@ -142,9 +143,10 @@ class QuestionData {
     if (json.containsKey("questionAnswerStatus") &&
         json['questionAnswerStatus'] != null) {
       List ansList = json['questionAnswerStatus'];
-      if (ansList != null && ansList.length > 0)
-        Injector.countList =
-            ansList.map((e) => QuestionCountWithData.fromJson(e)).toList();
+      if (ansList != null && ansList.length > 0) {
+        Injector.countList = ansList.map((e) => QuestionCountWithData.fromJson(e)).toList();
+
+      }
     }
 
     if (json['answer'] != null) {
