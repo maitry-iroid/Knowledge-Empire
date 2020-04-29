@@ -853,7 +853,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Utils.getText(context, StringRes.thisModuleWillOccupie) +
                 selectedModule.fileSize.toString()+ " " +
                 Utils.getText(context, StringRes.sizeInKb),
-            style: TextStyle(color: ColorRes.white, fontSize: 17),
+            style: TextStyle(color:Injector.isBusinessMode? ColorRes.white:ColorRes.fontDarkGrey, fontSize: 17),
           )
         : Container();
   }

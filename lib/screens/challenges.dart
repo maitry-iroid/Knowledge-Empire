@@ -41,7 +41,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
   List<LearningModuleData> arrLearningModules = List();
 
   List<int> arrRewards = [2, 4, 6, 8, 10];
+  int selectedFriendId = -1;
   var selectedModuleIndex = -1;
+  int selectedFriendIndex = -1;
+
   int selectedRewardsIndex = 0;
   int currentIndex = 0;
 
@@ -55,10 +58,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     showIntroDialog();
 
     getSearchFriends(searchText);
-
-//    arrFriends = widget.arrFriends;
-//    selectedFriendId = arrFriends[0].userId;
-//    getBusinessSectors();
 
     if (arrFriends != null) {
       arrSearchFriends = arrFriends;
@@ -90,22 +89,15 @@ class _ChallengesPageState extends State<ChallengesPage> {
         fit: StackFit.expand,
         children: <Widget>[
           CommonView.showBackground(context),
-//          Card(
-//            margin: EdgeInsets.all(0),
-//            elevation: 10,
-//            child: Container(
-//              color: ColorRes.colorBgDark,
-//              height: 1,
-//            ),
-//          ),
-          ListView(
-            shrinkWrap: false,
+          Column(
             children: <Widget>[
               SizedBox(
                 height: Utils.getHeaderHeight(context) + 10,
               ),
               showTitle(context, StringRes.challenges),
-              showMainBody(),
+              Expanded(
+                child: showMainBody(),
+              ),
             ],
           ),
           CommonView.showLoderView(isLoading)
@@ -193,14 +185,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   showFriends() {
     return Expanded(
-      flex: 3,
+      flex: 4,
       child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 6),
         color: ColorRes.bgProf,
-        margin: EdgeInsets.all(0),
         shape: getBorderShape(),
-        elevation: 10,
         child: Container(
-          margin: EdgeInsets.only(),
           decoration: getBoxDecoration(),
           child: Column(
             children: <Widget>[
@@ -224,7 +214,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
               ),
               showSearchView(),
               Expanded(
-                flex: 3,
                 child: ListView.builder(
                   itemCount: arrFriendsToShow.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -241,9 +230,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   showBusinessSectors() {
     return Expanded(
-      flex: 4,
+      flex: 5,
       child: Card(
-        margin: EdgeInsets.only(left: 12),
+        margin: EdgeInsets.symmetric(horizontal: 6),
         elevation: 10,
         shape: getBorderShape(),
         child: Container(
@@ -291,11 +280,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   showRewards() {
     return Expanded(
-      flex: 4,
+      flex: 5,
       child: Card(
         elevation: 10,
         shape: getBorderShape(),
-        margin: EdgeInsets.only(left: 12),
+        margin: EdgeInsets.symmetric(horizontal: 6),
         child: Container(
           height: double.infinity,
           decoration: getBoxDecoration(),
@@ -387,14 +376,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-  int selectedIndex = -1;
-
   _onSelectedFriend(int index) {
     if (mounted)
       setState(() {
-        selectedIndex = index;
+        selectedFriendIndex = index;
 
-        selectedFriendId = arrFriends[selectedIndex].userId;
+        selectedFriendId = arrFriends[selectedFriendIndex].userId;
 
         getBusinessSectors();
       });
@@ -407,20 +394,24 @@ class _ChallengesPageState extends State<ChallengesPage> {
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
 
-  selectedItem(int type, int index) {
+  getSelectedItemColor(int type, int index) {
     if (type == 1) {
       if (arrFriendsToShow[index].userId == selectedFriendId) {
-        return Colors.blue;
+        return Injector.isBusinessMode ? Colors.blue : ColorRes.titleBlueProf;
       } else {
-        return ColorRes.greyText;
+        return Injector.isBusinessMode ? ColorRes.greyText : ColorRes.white;
       }
     } else {
       if (selectedRewardsIndex == index) {
-        return ColorRes.blue;
+        return Injector.isBusinessMode ? Colors.blue : ColorRes.titleBlueProf;
       } else {
         return Injector.isBusinessMode ? ColorRes.greyText : ColorRes.white;
       }
     }
+  }
+
+  isSelectedFriend(int index) {
+    return arrFriendsToShow[index].userId == selectedFriendId;
   }
 
   showFriendItem(int index) {
@@ -432,8 +423,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color:
-              Injector.isBusinessMode ? selectedItem(1, index) : ColorRes.white,
+          color: getSelectedItemColor(1, index),
           borderRadius: BorderRadius.circular(20),
         ),
         margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -446,7 +436,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 style: TextStyle(
                     color: Injector.isBusinessMode
                         ? ColorRes.white
-                        : ColorRes.fontGrey,
+                        : (isSelectedFriend(index)
+                            ? ColorRes.white
+                            : ColorRes.fontGrey),
                     fontSize: 17),
               ),
             ),
@@ -523,164 +515,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
     );
   }
 
-/*
-  unFriend(BuildContext context, int index) {
-    showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: ColorRes.blackTransparentColor,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(40),
-                      width: Utils.getDeviceWidth(context) / 3.0,
-                      height: Utils.getDeviceHeight(context) / 2.7,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: ColorRes.white,
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: 35,
-                              width: Utils.getDeviceWidth(context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-                                color: ColorRes.blue,
-                              ),
-                              alignment: Alignment.topCenter,
-                              child: Center(
-                                child: Text(
-                                  Utils.getText(context, "Alert"),
-                                  style: TextStyle(
-                                      color: ColorRes.white, fontSize: 17),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(top: 13)),
-
-                            Container(
-                              height: 50,
-                              width: Utils.getDeviceWidth(context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-//                                color: ColorRes.blue,
-                              ),
-                              alignment: Alignment.topCenter,
-                              child: Center(
-                                child: Text(
-                                  Utils.getText(context, "Are sure want to unfriend this user?"),
-                                  style: TextStyle(
-                                      color: ColorRes.textProf, fontSize: 17),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-
-                            Padding(padding: EdgeInsets.only(top: 13)),
-
-                            Row(
-
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                InkResponse(
-                                  child: Container(
-                                    height: 33,
-                                    width: 65,
-                                    decoration: BoxDecoration(
-//                                    color: ColorRes.blue,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(5)),
-                                        border: Border.all(
-                                            color: ColorRes.blue, width: 1)),
-                                    padding: EdgeInsets.only(
-                                        top: 8, bottom: 10, left: 10, right: 10),
-                                    margin: EdgeInsets.only(
-                                        top: 0, bottom: 25, left: 0, right: 10),
-                                    child: Center(child: Text('No', style: TextStyle(color: ColorRes.blue),)),
-                                  ),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                InkResponse(
-                                  child: Container(
-                                    height: 35,
-                                    width: 65,
-                                    decoration: BoxDecoration(
-                                        color: ColorRes.blue,
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(5)),
-                                        border: Border.all(
-                                            color: ColorRes.white, width: 1)),
-                                    padding: EdgeInsets.only(
-                                        top: 8, bottom: 10, left: 10, right: 10),
-                                    margin: EdgeInsets.only(
-                                        top: 0, bottom: 25, left: 0, right: 10),
-                                    child: Center(
-                                      child: Text(
-                                        'Yes',
-                                        style: TextStyle(color: ColorRes.white),
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    arrFriendsToShow[index].isFriend = 0;
-                                    friendUnFriendUser(index, 2);
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-
-                            Padding(padding: EdgeInsets.only(top: 13)),
-
-//                            languageSelectCell(StringRes.english, 0),
-//                            languageSelectCell(StringRes.german, 1),
-//                            languageSelectCell(StringRes.chinese, 2),
-                          ],
-                        ),
-                      )),
-                  Positioned(
-                      right: 10,
-                      child: InkResponse(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Image(
-                            image:
-                                AssetImage(Utils.getAssetsImg('close_dialog')),
-                            width: 20,
-                          ),
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          Navigator.pop(context, null);
-                        },
-                      ))
-                ],
-              ),
-            ),
-          );
-        });
-  }
-*/
-
   showRewardItem(int index) {
     return GestureDetector(
       onTap: () {
@@ -695,8 +529,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
           padding: EdgeInsets.only(left: 10, right: 10),
           decoration: BoxDecoration(
             color: Injector.isBusinessMode
-                ? selectedItem(2, index)
-                : selectedItem(2, index),
+                ? getSelectedItemColor(2, index)
+                : getSelectedItemColor(2, index),
             borderRadius: BorderRadius.circular(20),
           ),
           margin: EdgeInsets.symmetric(horizontal: 2),
@@ -761,6 +595,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
       child: Container(
         decoration: BoxDecoration(
             color: Injector.isBusinessMode ? null : ColorRes.white,
+            border: (selectedModuleIndex != null &&
+                    selectedModuleIndex == index &&
+                    !Injector.isBusinessMode)
+                ? Border.all(color: ColorRes.titleBlueProf)
+                : null,
             borderRadius: BorderRadius.circular(5),
             image: Injector.isBusinessMode
                 ? DecorationImage(
@@ -768,7 +607,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       selectedModuleIndex != null &&
                               selectedModuleIndex == index
                           ? Utils.getAssetsImg('challenges_bg_sector')
-                          : Utils.getAssetsImg(''),
+                          : null,
                     ),
                     fit: BoxFit.fill)
                 : null),
@@ -856,11 +695,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
             bottomRight: Radius.circular(8)));
   }
 
-  int selectedFriendId = 3;
-
   void friendUnFriendUser(int index, int action) {
-
-    if(mounted){
+    if (mounted) {
       setState(() {
         isLoading = true;
       });
@@ -871,8 +707,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
     rq.action = action;
 
     WebApi().callAPI(WebApi.rqFriendUnFriendUser, rq.toJson()).then((data) {
-
-      if(mounted){
+      if (mounted) {
         setState(() {
           isLoading = false;
         });
@@ -890,8 +725,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }
       }
     }).catchError(() {
-
-      if(mounted){
+      if (mounted) {
         setState(() {
           isLoading = false;
         });
@@ -934,8 +768,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   void sendChallenges() {
     Utils.isInternetConnectedWithAlert().then((isConnected) {
       if (isConnected) {
-
-        if(mounted){
+        if (mounted) {
           setState(() {
             isLoading = true;
           });
@@ -948,8 +781,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         rq.rewards = arrRewards[selectedRewardsIndex];
 
         WebApi().callAPI(WebApi.rqSendChallenge, rq.toJson()).then((data) {
-
-          if(mounted){
+          if (mounted) {
             setState(() {
               isLoading = false;
             });
@@ -960,8 +792,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         }).catchError((e) {
           print("sendChallenge_" + e.toString());
 
-
-          if(mounted){
+          if (mounted) {
             setState(() {
               isLoading = false;
             });

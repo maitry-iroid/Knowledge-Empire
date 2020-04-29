@@ -588,7 +588,7 @@ class Utils {
           return;
         }
 
-        if (data != null && data.isLocked == 1) {
+        if (data != null && data.isUnlock == 0) {
           showLockReasonDialog(type, context, false);
           return;
         }
@@ -819,9 +819,9 @@ class Utils {
 
       if (data.length > 0) {
         int status =
-            data.where((obj) => obj.type == int.parse(type))?.first?.isLocked;
+            data.where((obj) => obj.type == int.parse(type))?.first?.isUnlock;
 
-        return status == 1;
+        return status == 0;
       }
     }
 
@@ -835,5 +835,4 @@ class Utils {
   static isShowLock(String type) {
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
-
 }

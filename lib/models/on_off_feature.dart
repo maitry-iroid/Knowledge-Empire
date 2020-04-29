@@ -49,15 +49,15 @@ class DashboardStatusResponse {
 class OnOffFeatureData {
   int type;
   int isFeatureOn;
-  int isLocked;
+  int isUnlock;
   int unreadCount;
 
-  OnOffFeatureData({this.type, this.isFeatureOn,this.isLocked,this.unreadCount});
+  OnOffFeatureData({this.type, this.isFeatureOn,this.isUnlock,this.unreadCount});
 
   OnOffFeatureData.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     isFeatureOn = json['isFeatureOn'];
-    isLocked = json['isLocked'];
+    isUnlock = json['isUnlock'];
     unreadCount = json['unreadCount'];
   }
 
@@ -65,7 +65,7 @@ class OnOffFeatureData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['isFeatureOn'] = this.isFeatureOn;
-    data['isLocked'] = this.isLocked;
+    data['isUnlock'] = this.isUnlock;
     data['unreadCount'] = this.unreadCount;
     return data;
   }

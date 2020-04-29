@@ -33,6 +33,7 @@ class _PLPageState extends State<PLPage> {
   PerformanceData performanceData;
 
   int selectedDay = 0;
+  bool isLoading = false;
 
   List<Color> colorOpenCloseList = [
     ColorRes.chartOne,
@@ -112,32 +113,23 @@ class _PLPageState extends State<PLPage> {
             ],
           ),
         ),
+        CommonView.showLoderView(isLoading)
       ],
     );
   }
 
   mainBody() {
-//    return Expanded(
-//        child: ListView(
-//          children: <Widget>[
-//            Expanded(child: Text("hello")),
-//            Container(
-//              height: 300,
-//              child: Text("hello"),
-//            )
-//          ],
-//        ));
     return Expanded(
         child: SingleChildScrollView(
       child: Column(
-        children: <Widget>[showFirstHalf(), showSecondHalf()],
+        children: <Widget>[showListAndPieChart(), showLinearHybridGraph()],
       ),
     ));
   }
 
-  showFirstHalf() {
+  showListAndPieChart() {
     return Container(
-        height: 500,
+//        height: Utils.isFeatureOn(Const.typeOrg)?500:300,
         width: Utils.getDeviceWidth(context),
         child: Row(
           children: <Widget>[
@@ -149,16 +141,30 @@ class _PLPageState extends State<PLPage> {
                   children: <Widget>[
                     showDayLine(),
                     showCashLine(),
-                    showListHeader(
-                        Utils.getText(context, StringRes.cost),
-                        Utils.getText(context, StringRes.employees),
-                        Utils.getText(context, StringRes.salaries)),
-                    showListView(1),
-                    showListHeader(
-                        Utils.getText(context, StringRes.revenue),
-                        Utils.getText(context, StringRes.customers),
-                        Utils.getText(context, StringRes.revenue)),
-                    showListView(2),
+
+                    // cost section
+                    Utils.isFeatureOn(Const.typeOrg) &&
+                            performanceData.cost.isNotEmpty
+                        ? showListHeader(
+                            Utils.getText(context, StringRes.cost),
+                            Utils.getText(context, StringRes.employees),
+                            Utils.getText(context, StringRes.salaries))
+                        : Container(),
+                    Utils.isFeatureOn(Const.typeOrg) &&
+                            performanceData.cost.isNotEmpty
+                        ? showListView(1)
+                        : Container(),
+
+                    // revenue list section
+                    performanceData.revenue.isNotEmpty
+                        ? showListHeader(
+                            Utils.getText(context, StringRes.revenue),
+                            Utils.getText(context, StringRes.customers),
+                            Utils.getText(context, StringRes.revenue))
+                        : Container(),
+                    performanceData.revenue.isNotEmpty
+                        ? showListView(2)
+                        : Container(),
                     showProfitCash(1),
                     showProfitCash(2),
 //                  showCashEnd(),
@@ -169,7 +175,6 @@ class _PLPageState extends State<PLPage> {
             Expanded(
               flex: 5,
               child: Container(
-                height: 500,
                 margin: EdgeInsets.only(right: 20),
                 decoration: BoxDecoration(
                   border: Border.all(width: 1, color: ColorRes.white),
@@ -179,9 +184,8 @@ class _PLPageState extends State<PLPage> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    firstPieChart(),
-                    secondPieChart(),
-//                    bottomBusinessList()
+                    showCostPieChart(),
+                    showRevenuePieChart(),
                   ],
                 ),
               ),
@@ -190,8 +194,8 @@ class _PLPageState extends State<PLPage> {
         ));
   }
 
-  showSecondHalf() {
-    return Container(
+  showLinearHybridGraph() {
+    return performanceData.graph.isNotEmpty?Container(
         height: 310,
         padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
         margin: EdgeInsets.all(20),
@@ -236,25 +240,29 @@ class _PLPageState extends State<PLPage> {
               ),
             )
           ],
-        ));
+        )):Container();
   }
 
   bottomOption() {
     return Container(
       child: Row(
         children: <Widget>[
-          Container(
-            width: 50,
-            height: 15,
-            color: Colors.amber,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              Utils.getText(context, StringRes.cost),
-              style: TextStyle(color: ColorRes.white),
-            ),
-          ),
+          Utils.isFeatureOn(Const.typeOrg)
+              ? Container(
+                  width: 50,
+                  height: 15,
+                  color: Colors.amber,
+                )
+              : Container(),
+          Utils.isFeatureOn(Const.typeOrg)
+              ? Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    Utils.getText(context, StringRes.cost),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
+                )
+              : Container(),
           Container(
             width: 50,
             height: 15,
@@ -683,16 +691,18 @@ class _PLPageState extends State<PLPage> {
     );
   }
 
-  firstPieChart() {
-    return Container(
-      height: 180,
-      padding: EdgeInsets.only(left: 5),
-      child:
-          pieChart(Utils.getText(context, StringRes.costSplit), Const.typeCost),
-    );
+  showCostPieChart() {
+    return Utils.isFeatureOn(Const.typeOrg) && dataMap.isNotEmpty
+        ? Container(
+            height: 180,
+            padding: EdgeInsets.only(left: 5),
+            child: pieChart(
+                Utils.getText(context, StringRes.costSplit), Const.typeCost),
+          )
+        : Container();
   }
 
-  secondPieChart() {
+  showRevenuePieChart() {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 0),
@@ -807,7 +817,11 @@ class _PLPageState extends State<PLPage> {
   Future getPerformanceData(int plDay) async {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        CommonView.showCircularProgress(true, context);
+        if (mounted) {
+          setState(() {
+            isLoading = true;
+          });
+        }
 
         PerformanceRequest rq = PerformanceRequest();
         rq.userId = Injector.userId;
@@ -815,9 +829,15 @@ class _PLPageState extends State<PLPage> {
         rq.type = plDay;
 
         WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+
           if (data != null) {
             print(jsonEncode(data));
-            CommonView.showCircularProgress(false, context);
+
             if (mounted)
               setState(() {
 //                performanceData = new PerformanceData();
@@ -838,7 +858,11 @@ class _PLPageState extends State<PLPage> {
               });
           }
         }).catchError((e) {
-          CommonView.showCircularProgress(false, context);
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
         });
       }
     });

@@ -179,11 +179,9 @@ class HeaderViewState extends State<HeaderView> {
           if (type == Const.typeEmployee) {
             Utils.performDashboardItemClick(context, Const.typeOrg);
           } else if (type == Const.typeSalesPersons) {
-            navigationBloc.updateNavigation(
-                HomeData(initialPageType: Const.typeNewCustomer));
+            Utils.performDashboardItemClick(context, Const.typeNewCustomer);
           } else if (type == Const.typeServicesPerson) {
-            navigationBloc.updateNavigation(
-                HomeData(initialPageType: Const.typeExistingCustomer));
+            Utils.performDashboardItemClick(context, Const.typeExistingCustomer);
           } else if (type == Const.typeBrandValue) {
             Utils.performDashboardItemClick(context, Const.typeRanking);
           } else if (type == Const.typeMoney) {
