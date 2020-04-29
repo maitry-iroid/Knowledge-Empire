@@ -1,18 +1,24 @@
-class UpdateModeRequest {
-  String userId;
-  int mode;
+class UpdateSoundAndModeRequest {
+  int userId;
+  int companyId;
+  int type;
+  int isEnable;
 
-  UpdateModeRequest({this.userId, this.mode});
+  UpdateSoundAndModeRequest({this.userId, this.companyId,this.type,this.isEnable});
 
-  UpdateModeRequest.fromJson(Map<String, dynamic> json) {
+  UpdateSoundAndModeRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    mode = json['mode'];
+    companyId = json['companyId'];
+    type = json['type'];
+    isEnable = json['isEnable'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
-    data['mode'] = this.mode;
+    data['companyId'] = this.companyId;
+    data['type'] = this.type;
+    data['isEnable'] = this.isEnable;
     return data;
   }
 }

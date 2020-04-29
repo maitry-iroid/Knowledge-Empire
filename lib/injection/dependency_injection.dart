@@ -38,7 +38,8 @@ class Injector {
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
   static StreamController<String> headerStreamController;
-  static StreamController<String> homeStreamController=new StreamController<String>();
+  static StreamController<String> homeStreamController =
+      new StreamController<String>();
   static StreamController<String> newCustomerStreamController;
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;
@@ -91,8 +92,6 @@ class Injector {
 
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
-    await Utils.playBackgroundMusic();
-
     updateInstance();
   }
 
@@ -124,7 +123,6 @@ class Injector {
         dashboardStatusResponse = DashboardStatusResponse.fromJson(
             jsonDecode(prefs.getString(PrefKeys.onOffStatusData)));
       }
-
 
       headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();
@@ -167,6 +165,13 @@ class Injector {
         PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
+
+    bool isSoundOn = customerValueData.isEnableSound == 1;
+
+    if (isSoundEnable != isSoundOn) {
+      if (isSoundOn) await Utils.playBackgroundMusic();
+    }
+
   }
 
   static setIntroData(IntroData _introData) async {
@@ -285,6 +290,4 @@ class Injector {
           );
         });
   }
-
-
 }

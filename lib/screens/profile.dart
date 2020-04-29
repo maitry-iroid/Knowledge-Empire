@@ -356,7 +356,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
-                      InkResponse(
+                      Injector.customerValueData.isSwitchEnable==1?InkResponse(
                         child: Container(
                           height: 35,
                           margin: EdgeInsets.only(top: 15),
@@ -396,7 +396,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           setState(() {});
                         },
-                      ),
+                      ):Container(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -1337,12 +1337,12 @@ class _ProfilePageState extends State<ProfilePage> {
   switchModeApi() {
     Utils.playClickSound();
 
-    UpdateModeRequest rq = UpdateModeRequest();
-    rq.userId = Injector.userId.toString();
-    rq.mode = Injector.mode ?? Const.businessMode;
+    UpdateSoundAndModeRequest rq = UpdateSoundAndModeRequest();
+    rq.userId = Injector.userId;
+    rq.type = Injector.mode ?? Const.businessMode;
 
     CommonView.showCircularProgress(true, context);
-    WebApi().callAPI(WebApi.updateMode, rq.toJson()).then((data) async {
+    WebApi().callAPI(WebApi.updateModeAndSoundStatus, rq.toJson()).then((data) async {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {

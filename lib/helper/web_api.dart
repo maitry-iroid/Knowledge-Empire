@@ -46,7 +46,7 @@ class WebApi {
   static String rqGetPerformance = "getPerformance";
   static String rqGetCompany = "getCompany";
   static String updateLanguage = "updateLanguage";
-  static String updateMode = "updateMode";
+  static String updateModeAndSoundStatus = "updateModeAndSoundStatus";
   static String switchCompanyProfile = "switchCompanyProfile";
   static String rqGameIntro = "gameIntro";
   static String forceUpdate = "forceUpdate";
