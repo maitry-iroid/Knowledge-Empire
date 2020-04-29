@@ -144,6 +144,7 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
                     ? ColorRes.blue
                     : ColorRes.white),
             shape: BoxShape.circle),
+
         child: Center(
           child: Text((index + 1).toString(),
               style: Theme.of(context)
