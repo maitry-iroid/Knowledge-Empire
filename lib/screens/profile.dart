@@ -443,27 +443,19 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             Utils.getText(
                                 context,
-                                Injector.customerValueData == null ||
-                                        Injector.customerValueData?.manager ==
-                                            null ||
-                                        Injector
-                                            .customerValueData.manager.isEmpty
+                                Injector.customerValueData == null || Injector.customerValueData?.manager == null || Injector.customerValueData.manager.isEmpty
                                     ? StringRes.bailout
                                     : StringRes.requestBailOut),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                color: !Injector.isManager() &&
-                                        Injector.customerValueData
-                                                .totalBalance <=
-                                            0
+                                color: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
                                     ? ColorRes.white
                                     : ColorRes.greyText,
                                 fontSize: 15,
                                 letterSpacing: 0.7),
                           ),
-                          decoration: !Injector.isManager() &&
-                                  Injector.customerValueData.totalBalance <= 0
+                          decoration: Injector.customerValueData.totalBalance <= 0
                               ? BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Utils.getAssetsImg(
@@ -481,8 +473,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               Utils.getAssetsImg('bg_privacy')))
                                       : null),
                         ),
-                        onTap: !Injector.isManager() &&
-                                Injector.customerValueData.totalBalance <= 0
+                        onTap:  Injector.customerValueData.totalBalance <= 0
                             ? () async {
                                 Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");

@@ -527,8 +527,10 @@ class _PLPageState extends State<PLPage> {
 
   showListView(int type) {
     return Container(
-      height: type == Const.typeCost ? 160 : 120,
+//      height: type == Const.typeCost ? 160 : 120,
       child: ListView.builder(
+        primary: false,
+          shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemCount: type == Const.typeCost
               ? performanceData?.cost?.length
@@ -628,7 +630,7 @@ class _PLPageState extends State<PLPage> {
   showProfitCash(int type) {
     return Container(
       height: 25,
-      margin: EdgeInsets.only(left: 8, right: 0, bottom: 5, top: 5),
+      margin: EdgeInsets.only( right: 0, bottom: 5, top: 5),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bgPlHeader")),

@@ -47,7 +47,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   }
 
   void releaseResource(int index) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       QuestionData questionData = arrQuestions[index];
 
       ReleaseResourceRequest rq = ReleaseResourceRequest();
@@ -304,7 +304,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     fit: BoxFit.fill)),
           ),
           onTap: () {
-            Utils.isInternetConnectedWithAlert().then((isConnected) {
+            Utils.isInternetConnectedWithAlert(context).then((isConnected) {
               if (isConnected) {
                 _asyncConfirmDialog(context, index);
               }

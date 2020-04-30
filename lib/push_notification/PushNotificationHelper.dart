@@ -90,7 +90,7 @@ class PushNotificationHelper {
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
-            child: Text('Ok'),
+            child: Text(Utils.getText(context, StringRes.ok)),
             onPressed: () async {
               Navigator.of(context, rootNavigator: true).pop();
 //              await Navigator.push(
@@ -120,7 +120,6 @@ class PushNotificationHelper {
         WebApi().callAPI(WebApi.rqRegisterForPush, rq.toJson()).then((data) {
           if (data != null) {}
         }).catchError((e) {
-          print("registerForPush_" + e.toString());
           // Utils.showToast(e.toString());
         });
       }
@@ -197,15 +196,11 @@ class PushNotificationHelper {
         btnText = "${mPushModel.bonus} " +
             Utils.getText(context, StringRes.serviceReps);
       }
-      print(Injector.customerValueData.totalBalance.toString() +
-          "======>" +
-          mPushModel.bonus.toString());
       if (mPushModel.type != null &&
           mPushModel.type == "0" &&
           mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
-        btnText = "${mPushModel.bonus} " +
-            Utils.getText(context, StringRes.bonusPoint);
+        btnText = "${mPushModel.bonus} \$" ;
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);

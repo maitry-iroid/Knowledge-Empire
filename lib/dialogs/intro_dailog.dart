@@ -297,7 +297,6 @@ class IntroDailogState extends State<IntroDailog> {
         }
       }
     }).catchError((e) {
-      print("changePassword_" + e.toString());
       setState(() {
         isLoading = false;
       });

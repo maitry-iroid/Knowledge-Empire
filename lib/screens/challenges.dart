@@ -388,8 +388,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
-    String message =
-        "Your friend will have to answer ${(arrRewards.length - index)} questions. If he wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
+    String message = "Your friend will have to answer ${(arrRewards.length - index)} questions. If he wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
     Utils.showLockReasonDialog(message, context, true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
@@ -757,7 +756,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
             if (mounted) setState(() {});
           }
         }).catchError((e) {
-          print("getLearningModule_" + e.toString());
 //          CommonView.showCircularProgress(false, context);
           // Utils.showToast(e.toString());
         });
@@ -766,7 +764,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   void sendChallenges() {
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) {
         if (mounted) {
           setState(() {
@@ -790,8 +788,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
             Utils.showToast(
                 Utils.getText(context, StringRes.alertUChallengeSent));
         }).catchError((e) {
-          print("sendChallenge_" + e.toString());
-
           if (mounted) {
             setState(() {
               isLoading = false;
@@ -804,7 +800,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   void getSearchFriends(String searchText) {
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) {
         SearchFriendRequest rq = SearchFriendRequest();
         rq.userId = Injector.userId.toString();

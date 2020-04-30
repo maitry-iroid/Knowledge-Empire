@@ -204,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onTap: () {
-                          Utils.isInternetConnectedWithAlert()
+                          Utils.isInternetConnectedWithAlert(context)
                               .then((isConnected) async {
                             if (isConnected) validateForm();
                           });

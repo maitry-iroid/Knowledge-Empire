@@ -64,7 +64,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //    await DisplayDialogs.showYourTeamsPerformance(context);  //team
 //    await DisplayDialogs.showIntroDialog(context); // profile
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) async {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
       if (isConnected) {
         fetchLearningModules();
       } else {
@@ -262,7 +262,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: 10,
+            height: 10
           ),
           CommonView.showTitle(context, StringRes.businessSector),
           Container(
@@ -434,8 +434,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (mounted) setState(() {});
       }
     }).catchError((e) {
-      print("assignUserModule_" + e.toString());
-
       if (mounted)
         setState(() {
           isLoading = false;
@@ -554,11 +552,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //              });
 
               await Injector.prefs.setString("datta", "scsdc");
-              print("URL=====>"+arrQuestions[i].mediaLink);
               await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
-              print("complted");
             }).catchError((e) {
-              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
               if (moduleId != null) {
 //                if (mounted)setState(() {
 //                  arrLearningModules
@@ -596,10 +591,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     }).catchError((e) {
-      print("downloadQuestion_" + e.toString());
-
       CommonView.showCircularProgress(false, context);
-
       // Utils.showToast(e.toString());
     });
   }
@@ -648,7 +640,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void performSubscribeUnsubscribe() {
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) {
         if (selectedModule.isAssign == 0) {
           assignUserToModule(Const.subscribe);
@@ -751,7 +743,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ? Switch(
                 value: isSwitched,
                 onChanged: (value) {
-                  Utils.isInternetConnectedWithAlert().then((isConnected) {
+                  Utils.isInternetConnectedWithAlert(context).then((isConnected) {
                     if (isConnected) {
                       if (mounted)
                         setState(() {
@@ -850,10 +842,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-            Utils.getText(context, StringRes.thisModuleWillOccupie) +
-                selectedModule.fileSize.toString()+ " " +
+      Utils.getText(context, StringRes.strDownloadNewText)+" "+
+                selectedModule.fileSize.toString()+
                 Utils.getText(context, StringRes.sizeInKb),
-            style: TextStyle(color:Injector.isBusinessMode? ColorRes.white:ColorRes.fontDarkGrey, fontSize: 17),
+            style: TextStyle(color:Injector.isBusinessMode? ColorRes.white:ColorRes.blue, fontSize: 17),
           )
         : Container();
   }

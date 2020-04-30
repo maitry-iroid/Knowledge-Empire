@@ -22,7 +22,6 @@ class TeamPage extends StatefulWidget {
 }
 
 class _TeamPageState extends State<TeamPage> {
-  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   bool secondScreen = false;
 
@@ -49,8 +48,6 @@ class _TeamPageState extends State<TeamPage> {
   List<Color> colorOpenCloseList = [
     ColorRes.chartClose,
     ColorRes.chartOpen,
-//    ColorRes.chartClose,
-//    ColorRes.chartOpen,
   ];
 
   @override
@@ -630,7 +627,7 @@ class _TeamPageState extends State<TeamPage> {
       openCloseMap.putIfAbsent(
           "Open", () => teamUserData.qStatus.open.toDouble());
       openCloseMap.putIfAbsent(
-          "Close", () => teamUserData.qStatus.closed.toDouble());
+          Utils.getText(context, StringRes.close), () => teamUserData.qStatus.closed.toDouble());
     } else {
       teamUserByIdData?.qLevel?.forEach((element) {
         dataMap.putIfAbsent(
@@ -646,9 +643,9 @@ class _TeamPageState extends State<TeamPage> {
 
       if (teamUserByIdData?.qStatus?.closed?.toDouble() != null) {
         openCloseMap.putIfAbsent(
-            "Close", () => teamUserByIdData?.qStatus?.closed?.toDouble());
+            Utils.getText(context, StringRes.close), () => teamUserByIdData?.qStatus?.closed?.toDouble());
       } else {
-        openCloseMap.putIfAbsent("Close", () => 0.0);
+        openCloseMap.putIfAbsent(Utils.getText(context, StringRes.close), () => 0.0);
       }
     }
   }

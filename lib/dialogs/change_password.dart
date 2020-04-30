@@ -291,7 +291,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         }
       }
     }).catchError((e) {
-      print("changePassword_" + e.toString());
       if (mounted)
         setState(() {
           isLoading = false;

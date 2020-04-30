@@ -139,7 +139,6 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
-  var arrCategory = ['World', 'Country', 'Friends'];
 
   final _height = 100.0;
 
@@ -271,9 +270,8 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   getFriends(bool isScrollDown, bool isToAddData) async {
-    print("present__" + present.toString());
 
-    if (await Utils.isInternetConnectedWithAlert()) {
+    if (await Utils.isInternetConnectedWithAlert(context)) {
       CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
       if (!isToAddData) arrFriends.clear();
@@ -313,8 +311,8 @@ class _RankingPageState extends State<RankingPage> {
     }
   }
 
-  void friendUnFriendUser(int index, int i) async {
-    if (await Utils.isInternetConnectedWithAlert()) {
+  void friendUnFriendUser(int index, int i,) async {
+    if (await Utils.isInternetConnectedWithAlert(context)) {
 //    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
       GetFriendsUnfriendReuest rq = GetFriendsUnfriendReuest();
@@ -589,7 +587,7 @@ class _RankingPageState extends State<RankingPage> {
     if (Injector.introData == null || Injector.introData.ranking1 == 0)
       await DisplayDialogs.showMarketingAndCommunications(context);
 
-    bool isConnected = await Utils.isInternetConnectedWithAlert();
+    bool isConnected = await Utils.isInternetConnectedWithAlert(context);
 
     if (isConnected) {
       await getUserGroups();
@@ -693,6 +691,7 @@ class _RankingPageState extends State<RankingPage> {
                         ? Colors.white
                         : ColorRes.titleBlueProf,
                     size: 22.0,
+                    //not shown in UI
                     semanticLabel: 'Text to announce in accessibility modes',
                   )
                 : Container(),

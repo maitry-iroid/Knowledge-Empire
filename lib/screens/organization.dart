@@ -23,13 +23,12 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
   List<Organization> arrOrganization = List();
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
     });
   }
@@ -53,7 +52,6 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
               )
             ],
           ),
-
         ],
       ),
     );
@@ -84,9 +82,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
             ),
             InkResponse(
               child: Image(
-                image: AssetImage(
-                  Utils.getAssetsImg('info'),
-                ),
+                image: AssetImage(Utils.getAssetsImg('info')),
                 color: Injector.isBusinessMode
                     ? ColorRes.white
                     : ColorRes.hintColor,
@@ -262,22 +258,18 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   void getOrganization() {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
       CommonView.showCircularProgress(true, context);
 
-      WebApi().callAPI(WebApi.rqGetOrganization,rq.toJson()).then((data) {
-
+      WebApi().callAPI(WebApi.rqGetOrganization, rq.toJson()).then((data) {
         CommonView.showCircularProgress(false, context);
-
 
         if (data != null) {
           organizationData = OrganizationData.fromJson(data.toJson());
           arrOrganization = organizationData.organization;
-
-
         }
       });
     }).catchError((e) {
@@ -335,7 +327,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   manageLevel(int position, int action) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.action = action;
@@ -355,8 +347,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           arrOrganization[position] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
 
-
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
 
           Utils.performManageLevel(data);
         }

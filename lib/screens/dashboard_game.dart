@@ -87,12 +87,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
   }
 
   @override
-  void dispose() {
-    print("dispose=======");
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,

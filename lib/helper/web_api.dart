@@ -120,9 +120,6 @@ class WebApi {
       Map<String, dynamic> jsonMap, File file) async {
     initDio();
 
-    print("updateProfile_request__" + json.encode(jsonMap));
-    print("headers" + dio.options.headers.toString());
-
     try {
       FormData formData = await getUploadProfileRequest(
           rqUpdateProfile, json.encode(jsonMap), file);

@@ -23,17 +23,17 @@ SubCategory selectedSubCategory;
 
 class _RewardsPageState extends State<RewardsPage> {
   List<RewardsModel> rewardsList = [
-    RewardsModel(levelName: "Level 0", image: "trophy0"),
-    RewardsModel(levelName: "Level 1", image: "trophy1"),
-    RewardsModel(levelName: "Level 2", image: "trophy2"),
-    RewardsModel(levelName: "Level 3", image: "trophy3"),
-    RewardsModel(levelName: "Level 4", image: "trophy4"),
-    RewardsModel(levelName: "Level 5", image: "trophy5"),
-    RewardsModel(levelName: "Level 6", image: "trophy6"),
-    RewardsModel(levelName: "Level 7", image: "trophy7"),
-    RewardsModel(levelName: "Level 8", image: "trophy8"),
-    RewardsModel(levelName: "Level 9", image: "trophy9"),
-    RewardsModel(levelName: "Level 10", image: "trophy10"),
+    RewardsModel(image: "trophy0"),
+    RewardsModel(image: "trophy1"),
+    RewardsModel(image: "trophy2"),
+    RewardsModel(image: "trophy3"),
+    RewardsModel(image: "trophy4"),
+    RewardsModel(image: "trophy5"),
+    RewardsModel(image: "trophy6"),
+    RewardsModel(image: "trophy7"),
+    RewardsModel(image: "trophy8"),
+    RewardsModel(image: "trophy9"),
+    RewardsModel(image: "trophy10"),
   ];
 
   @override
@@ -48,7 +48,7 @@ class _RewardsPageState extends State<RewardsPage> {
     if (Injector.introData == null || Injector.introData.rewards == 0)
       await DisplayDialogs.showIntroRewards(context);
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       getAchievements();
     });
   }
@@ -276,9 +276,7 @@ class _RewardsPageState extends State<RewardsPage> {
                           ? selectedSubCategory.currentLevelText
                           : selectedSubCategory.nextLevelText
                       : "",
-                  style: TextStyle(
-                    color: ColorRes.white,fontSize: 16
-                  ),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -371,7 +369,6 @@ class _RewardsPageState extends State<RewardsPage> {
             Expanded(
               flex: 2,
               child: Container(
-
                 width: Utils.getDeviceWidth(context) / 6,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -382,7 +379,7 @@ class _RewardsPageState extends State<RewardsPage> {
                             : ColorRes.white,
                         width: 1)),
 //                 child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric( horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
 
                 child: Center(
                     child: Text(
@@ -438,12 +435,12 @@ class _RewardsPageState extends State<RewardsPage> {
 }
 
 class RewardsModel {
-  String levelName = "";
+//  String levelName = "";
   String image = "";
 
 //  bool isSelected = false;
 
-  RewardsModel({this.levelName, this.image});
+  RewardsModel({/*this.levelName,*/ this.image});
 }
 
 //-----------------------

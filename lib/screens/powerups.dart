@@ -34,7 +34,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   void initState() {
     super.initState();
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
     });
   }
@@ -46,7 +46,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   }
 
   void getOrganization() {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
@@ -69,7 +69,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           if (mounted)setState(() {});
         }
       }).catchError((e) {
-        print("getOrganizations_" + e.toString());
         if (mounted)
           setState(() {
             isLoading = false;
@@ -454,7 +453,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   }
 
   manageLevel(int action) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.action = action;

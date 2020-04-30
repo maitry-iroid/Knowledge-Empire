@@ -38,7 +38,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     if (Injector.introData == null || Injector.introData.org1 == 0)
       await DisplayDialogs.showHireHRDialog(context);
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
     });
   }
@@ -78,6 +78,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 //    int position = type - 1;
 
     Organization org = arrOrganization.firstWhere((org) => org.type == type);
+
 
     return Stack(
       fit: StackFit.loose,
@@ -122,7 +123,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                             ),
                             color: ColorRes.headerBlue),
                         child: Text(
-                          org.level.toString(),
+                          org != null && org.level != null
+                              ? org.level.toString()
+                              : "",
                           style: TextStyle(
                               fontSize: 14,
                               color: Injector.isBusinessMode
@@ -132,7 +135,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       ),
                       Expanded(
                         child: Text(
-                          org.name,
+                          org != null && org.name != null
+                              ? org.name:"",
                           style: TextStyle(
                               fontSize: 12,
                               color: Injector.isBusinessMode
@@ -183,10 +187,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       text: org.description,
                       isForIntroDialog: false,
                     ));
-
-            print("dialog dissmissed");
-            print(data);
-
             if (data != null) manageLevel(org, data);
           },
         ),
@@ -257,7 +257,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   void getOrganization() {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
@@ -309,7 +309,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   manageLevel(Organization organization, int action) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.action = action;

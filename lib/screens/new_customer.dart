@@ -129,7 +129,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
               style: TextStyle(color: Colors.white, fontSize: 18),
@@ -282,10 +282,10 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 onTap: () {
                   Utils.playClickSound();
 
-                  if (Injector.customerValueData.remainingSalesPerson >=
+                 /* if (Injector.customerValueData.remainingSalesPerson >=
                           arrQuestions[index].resources &&
                       Injector.customerValueData.remainingCustomerCapacity >
-                          0) {
+                          0) {*/
                     HomeData homeData = HomeData(
                         initialPageType: Const.typeEngagement,
                         questionHomeData: arrQuestions[index],
@@ -294,11 +294,11 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 //                    Navigator.push(_scaffoldKey.currentContext,
 //                        FadeRouteHome(homeData: homeData));
                     navigationBloc.updateNavigation(homeData);
-                  } else {
+                  /*} else {
                     Utils.showToast("You need atleast " +
                         arrQuestions[index].resources.toString() +
                         " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-                  }
+                  }*/
                 },
               ),
             ],
@@ -319,9 +319,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 //                    FadeRouteHome(homeData: homeData));
                 navigationBloc.updateNavigation(homeData);
               } else {
-                Utils.showToast("You need atleast " +
-                    arrQuestions[index].resources.toString() +
-                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+                Utils.showToast("You need atleast " + arrQuestions[index].resources.toString() + " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
               }
             }
           },

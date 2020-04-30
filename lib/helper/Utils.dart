@@ -86,7 +86,7 @@ class Utils {
         textColor: Colors.white);
   }
 
-  static Future<bool> isInternetConnectedWithAlert() async {
+  static Future<bool> isInternetConnectedWithAlert(BuildContext context) async {
     bool isConnected = false;
 
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -94,7 +94,7 @@ class Utils {
         connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
     } else {
-      showToast("Please check your internet connectivity.");
+      showToast(Utils.getText(context, StringRes.noInternet));
       isConnected = false;
     }
 
@@ -249,9 +249,6 @@ class Utils {
   static getSecret(String email, String password) {
     String text =
         email.split('').reversed.join() + password.split('').reversed.join();
-
-    print('secret' + text);
-
     return generateMd5(text);
   }
 
@@ -517,8 +514,6 @@ class Utils {
         } else {
           DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss")
               .parse(questionData.attemptTime);
-          print("question date string : -    ${questionData.attemptTime}");
-
           if (type == Const.getNewQueType
               ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
               : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
@@ -752,7 +747,6 @@ class Utils {
 
   static void addBadge() {
     int count = Injector.badgeCount + 1;
-    print('badge_Count' + count.toString());
     FlutterAppBadger.updateBadgeCount(count);
     Injector.prefs.setInt(PrefKeys.badgeCount, count);
     Injector.badgeCount = Injector.prefs.getInt(PrefKeys.badgeCount);

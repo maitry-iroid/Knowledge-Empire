@@ -55,7 +55,7 @@ class StringRes {
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
-  static var selectLanguages = "selectLanguages"; //onlu define english
+//  static var selectLanguages = "selectLanguages"; //onlu define english
 
   //organization
   static var fireEmp = "fireEmp";
@@ -96,7 +96,8 @@ class StringRes {
   static var alertWantToSubscribe1 = "alertWantToSubscribe1";
   static var alertWantToSubscribe2 = "alertWantToSubscribe2";
   static var downloading = "downloading";
-  static var thisModuleWillOccupie = "thisModuleWillOccupie";
+  static var strDownloadText = "strDownloadText";
+  static var strDownloadNewText = "strDownloadNewText";
   static var alertNotAllowed = "alertNotAllowed";
 
   //engage customer
@@ -147,7 +148,7 @@ class StringRes {
 
   //pl
   static var cashAtStartOfPeriod = "cashAtStartOfPeriod";
-  static var cashAtTheEndOfPeriod = "Cash at end of period";
+  static var cashAtTheEndOfPeriod = "cashAtTheEndOfPeriod";
   static var costSplit = "costSplit";
   static var revenueSplit = "revenueSplit";
   static var employees = "employees";
@@ -343,7 +344,6 @@ class StringRes {
   static var collector = "collector";
   static var businessSegments = "businessSegments";
   static var businessSegmentsNew = "businessSegmentsNew";
-  static var bonusPoint = "bonusPoint";
   static var dear = "dear";
   static var hi = "hi";
   static var noInternet = "noInternet";
@@ -457,7 +457,8 @@ class StringRes {
       'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
-      'thisModuleWillOccupie': "This module will occupie ",
+      'strDownloadText': "This module will occupie ",
+      'strDownloadNewText': "This module will occupie ",
       'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
 
       //engage customer
@@ -505,8 +506,6 @@ class StringRes {
       'brand': "Brand",
 
       //pl
-      'cashAtStartOfPeriod': "Cash at start of Period",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
       'costSplit': "CostSplit",
       'revenueSplit': "revenueSplit",
       'employees': "Employees",
@@ -518,7 +517,7 @@ class StringRes {
       'year': "Year",
       'lastPeriod': "Last Period",
       'thisPeriod': "This Period",
-      'sevenDaysDevelopment': "7 days developments",
+
 
       //alerts
       'alertWantToBailOut': "Are you sure you want to Bail Out.",
@@ -708,8 +707,7 @@ class StringRes {
 
       //me
       //subscribed
-      'subscribedSuccess': 'Subscribed successfully!',
-      'unSubscribedSuccess': 'Unsubscribed successfully!',
+
 
       //question index
       'aIndex': 'A',
@@ -740,7 +738,7 @@ class StringRes {
       'businessSegments':
           '5 Business Segments subscribed to” then we say “Bonus:',
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
-      //endregion
+
 
       'bonusPoint': "Bonus Point",
       'dear': "Dear",
@@ -758,6 +756,21 @@ class StringRes {
       'toWin':'To Win',
       'questions':'Questions',
       'sizeInKb': "kb",
+      //endregion
+
+      'bonusPoint': "Bonus Point",
+      'questions':'Questions',
+      'sizeInKb': "kb",
+      'english': 'English',
+      'german': 'German',
+      'chinese': 'Chinese',
+      'cashAtStartOfPeriod': 'Cash at start of Period',
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+
     },
     'de': {
       //region german
@@ -770,7 +783,7 @@ class StringRes {
       'challenges': "Herausforderungen",
       'challenge': "Herausforderungen",
       'pl': "Bilanz",
-      'rewards': "Preise",
+      'rewards': "Auszeichnungen",
       'ranking': "Rangliste",
       'team': "Team",
       'profile': "Profil",
@@ -797,7 +810,7 @@ class StringRes {
       'requestbailout': 'Konkurs anmelden',
       'alertBailOut': "Wirklich Konkurs anmelden?",
       'successProfileUpdate': 'Profil erfolgreich gespeichert!',
-      'selectCompany': "Select Company",
+      'selectCompany': "Unternehmen auswählen",
       'selectLanguage': "Select Language",
       'english': "English",
       'german': "German",
@@ -851,12 +864,13 @@ class StringRes {
       'alertWantToSubscribe1': "Wirklich abmelden ",
       'alertWantToSubscribe2': "? Alle Fragen gehen verlohren",
       'downloading': "Daten werden geladen ...",
-      'thisModuleWillOccupie ': "Dieses Modul benötigt ",
+      'strDownloadText ': "Dieses Modul benötigt ",
+      'strDownloadNewText ': "Dieses Modul benötigt ",
       'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
 
       //engage customer
       'engagement': 'Nachbesprechung',
-      'situation': 'Debriefing',
+      'situation': 'Nachbesprechung',
       'category': 'Kategorie',
       'achievement': 'Bereits erreicht',
       'nextLevel': 'Nächste Stufe',
@@ -866,7 +880,7 @@ class StringRes {
       'next': 'Weiter',
 
       //  engage customer
-      'answers': 'Antwortn',
+      'answers': 'Antworten',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
       'alertSelectOneOption': "Please select at least one option.",
@@ -900,8 +914,8 @@ class StringRes {
 
       //pl
       'cashAtStartOfPeriod': "Startvermögen",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'costSplit': "CostSplit",
+
+
       'revenueSplit': "revenueSplit",
       'employees': "Mitarbeiter",
       'salaries': "Gehälter",
@@ -913,7 +927,7 @@ class StringRes {
       'year': "Jahr",
       'lastPeriod': "Letzte Periode",
       'thisPeriod': "Aktuelle Periode",
-      'sevenDaysDevelopment': "7 days developments",
+
 
       //alerts
       'alertWantToBailOut': "Wirklich Konkurs anmelden?",
@@ -1120,7 +1134,7 @@ class StringRes {
           'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
       'unLockChallenge':
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
-      //endregion
+
 
       'dear': "Hallo",
       'hi': "Hallo",
@@ -1136,9 +1150,27 @@ class StringRes {
 
       'servicePerson': 'Servicemitarbeiter',
       'salesReps': 'Vertriebler',
+
+
+      //endregion
+
       'bonusPoint': "Bonus Point",
       'questions':'Questions',
       'sizeInKb': "kb",
+      'english': 'English',
+      'german': 'German',
+      'chinese': 'Chinese',
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'aIndex': 'A',
+      'bIndex': 'B',
+      'cIndex': 'C',
+      'dIndex': 'D',
+      'selectLanguage': "Sprache auswählen",
+
     },
     'zh': {
       //      region chinese
@@ -1161,7 +1193,7 @@ class StringRes {
       'emailId': '邮箱账户名会员名',
       'editProfile': '编辑个人主页',
       'yourName': '您的名字',
-      'yourEmail': 'Your邮箱',
+      'yourEmail': '您的电子邮箱',
       'changePassword': '更改密码',
       'save': '保存',
       'settings': '设置',
@@ -1231,7 +1263,8 @@ class StringRes {
       'alertWantToSubscribe1': "您确定要取消订阅吗",
       'alertWantToSubscribe2': "您将失去所有的问题",
       'downloading': "正在下载......",
-      'thisModuleWillOccupie': "这个模块将占用",
+      'strDownloadText': "这个模块将占用",
+      'strDownloadNewText': "这个模块将占用",
       'alertNotAllowed': "您不能取消加入已分配的业务板块",
 
       //engage customer
@@ -1291,7 +1324,7 @@ class StringRes {
       'year': "年",
       'lastPeriod': "上一时期",
       'thisPeriod': "这一时期",
-      'sevenDaysDevelopment': "7 days developments",
+
 
       //alerts
       'alertWantToBailOut': "您确定要申请纾困.",
@@ -1489,7 +1522,7 @@ class StringRes {
       'unLockRanking': '连续三天登录后解锁',
       'unLockReward': '达成第一个成就后解锁',
       'unLockChallenge': '雇用第一个律师后解锁',
-      //endregion
+
 
       'dear': "亲爱的",
       'hi': "您好",
@@ -1505,9 +1538,25 @@ class StringRes {
 
       'servicePerson': '服务代表',
       'salesReps': '销售代表',
+
+      //endregion
+
       'bonusPoint': "Bonus Point",
       'questions':'Questions',
       'sizeInKb': "kb",
+      'english': 'English',
+      'german': 'German',
+      'chinese': 'Chinese',
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'aIndex': 'A',
+      'bIndex': 'B',
+      'cIndex': 'C',
+      'dIndex': 'D',
+      'selectLanguages': '选择语言',
     }
   };
 
@@ -1710,7 +1759,7 @@ class StringRes {
       'unLockRanking': 'Unlocks after three days in row login',
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when max. Challenge Power-Up is increased',
-      //endregion
+
 
       'dear': "Dear",
       'hi': "Dear",
@@ -1727,9 +1776,48 @@ class StringRes {
 
       'servicePerson': 'Memory Points',
       'salesReps': 'Study Points',
+
+
+      'yourName': 'Your Name',
+      'yourEmail': 'Your Email',
+
+      'strDownloadText': 'This module will occupy ',
+      'strDownloadNewText': 'This module will occupy ',
+      //endregion
+
+
+
+      'cost': 'Deductions',
+      'employees': 'Power-Ups',
+      'salaries': 'Cost',
+      'revenue': 'Additions',
+      'hashCustomers': '#Questions',
+      'brand': '%Correct',
+      'customers': 'Questions',
+      'Profit': 'Knowledge Points (KP)',
+      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost.",
+      'alertWantToSubscribe2': '? You will lose all the questions from the ',
+      'answers': 'Answers',
       'bonusPoint': "Bonus Point",
       'questions':'Questions',
       'sizeInKb': "kb",
+      'english': 'English',
+      'german': 'German',
+      'chinese': 'Chinese',
+      'cashAtStartOfPeriod': 'Knowledge Points at start',
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'aIndex': 'A',
+      'bIndex': 'B',
+      'cIndex': 'C',
+      'dIndex': 'D',
+      'selectCompany': 'Select Company',
+      'selectLanguages': 'Select Language',
+
+
     },
     'de': {
       //region German
@@ -1767,9 +1855,6 @@ class StringRes {
       'successProfileUpdate': 'Profil erfolgreich gespeichert!',
       'selectCompany': 'Unternehmen auswählen',
       'selectLanguage': 'Sprache auswählen',
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
       'login': 'Einloggen',
       'enterRegisteredEmail': 'Email eingeben',
       'password': 'Passwort',
@@ -1806,7 +1891,8 @@ class StringRes {
       'alertWantToSubscribe1': 'Wirklich abmelden',
       'alertWantToSubscribe2': '? Alle Fragen gehen verloren',
       'downloading': 'Daten werden geladen ...',
-      'thisModuleWillOccupie': 'Dieses Modul benötigt',
+      'strDownloadText': 'Dieses Modul benötigt',
+      'strDownloadNewText': 'Dieses Modul benötigt',
       'alertNotAllowed':
           'Zugeordnete Lernbereiche können nicht abgemeldet werden',
       'engagement': 'Situation',
@@ -2042,7 +2128,7 @@ class StringRes {
           'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
       'unLockChallenge':
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
-      //endregion
+
 
       'dear': "Hallo",
       'hi': "Hallo",
@@ -2058,9 +2144,25 @@ class StringRes {
       'challenge': 'Herausforderung',
       'servicePerson': 'Bestandsfragen',
       'salesReps': 'Lernpunkte ',
+      //endregion
+
       'bonusPoint': "Bonus Point",
       'questions':'Questions',
       'sizeInKb': "kb",
+      'english': 'English',
+      'german': 'German',
+      'chinese': 'Chinese',
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'aIndex': 'A',
+      'bIndex': 'B',
+      'cIndex': 'C',
+      'dIndex': 'D',
+      'selectLanguages': 'Sprache auswählen',
+
 
     },
     'zh': {
@@ -2099,9 +2201,6 @@ class StringRes {
       'successProfileUpdate': '个人资料已更新！',
       'selectCompany': '选择公司',
       'selectLanguage': '选择语言',
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
       'login': '登录',
       'enterRegisteredEmail': '输入注册电子邮件ID',
       'password': '密码',
@@ -2137,7 +2236,8 @@ class StringRes {
       'alertWantToSubscribe1': '您确定要取消加入吗？',
       'alertWantToSubscribe2': '您将失去所有的问题',
       'downloading': '正在下载......',
-      'thisModuleWillOccupie': '这个模块将占用',
+      'strDownloadText': '这个模块将占用',
+      'strDownloadNewText': '这个模块将占用',
       'alertNotAllowed': '您不能取消加入已分配的学习模块',
       'engagement': '情况',
       'debrief': '任务报告',
@@ -2173,7 +2273,7 @@ class StringRes {
       'companyName': '增加',
       'revenue': '#问题',
       'hashCustomers': '%正确',
-      'brand': '开始时的知识点数',
+      'brand': '%正确',
       'cashAtStartOfPeriod': '威力升级点数',
       'employees': '费用',
       'salaries': '问题',
@@ -2352,7 +2452,6 @@ class StringRes {
       'unLockRanking': '连续三天登录后解锁',
       'unLockReward': '达成第一个成就后解锁',
       'unLockChallenge': '最大挑战威力升级点数增加后解锁',
-      //endregion
 
       'dear': "亲爱的",
       'hi': "亲爱的",
@@ -2368,9 +2467,26 @@ class StringRes {
       'challenge': '挑战',
       'servicePerson': '记忆点数',
       'salesReps': '学习点数',
+      //endregion
+
+
       'bonusPoint': "Bonus Point",
       'questions':'Questions',
       'sizeInKb': "kb",
+      'english': 'English',
+      'german': 'German',
+      'chinese': 'Chinese',
+      'subscribedSuccess': 'Subscribed successfully!',
+      'unSubscribedSuccess': 'Unsubscribed successfully!',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'aIndex': 'A',
+      'bIndex': 'B',
+      'cIndex': 'C',
+      'dIndex': 'D',
+      'selectLanguages': '选择语言',
+
     }
   };
 }

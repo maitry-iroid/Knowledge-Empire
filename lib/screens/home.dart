@@ -245,9 +245,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    print("=============");
-    print(state.toString());
-
     if (state == AppLifecycleState.resumed) {
 //      print("====== resume ======");
       Utils.removeBadge();

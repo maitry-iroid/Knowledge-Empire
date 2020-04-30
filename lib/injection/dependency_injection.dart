@@ -38,7 +38,8 @@ class Injector {
   static bool isBusinessMode = true;
   static DefaultCacheManager cacheManager;
   static StreamController<String> headerStreamController;
-  static StreamController<String> homeStreamController=new StreamController<String>();
+  static StreamController<String> homeStreamController =
+      new StreamController<String>();
   static StreamController<String> newCustomerStreamController;
   static FirebaseMessaging firebaseMessaging;
   static bool isIntroRemaining = true;
@@ -124,7 +125,6 @@ class Injector {
         dashboardStatusResponse = DashboardStatusResponse.fromJson(
             jsonDecode(prefs.getString(PrefKeys.onOffStatusData)));
       }
-
 
       headerStreamController = StreamController.broadcast();
       newCustomerStreamController = StreamController.broadcast();
@@ -245,46 +245,4 @@ class Injector {
       }
     }
   }
-
-  static forceUpdateApplicationDialog(BuildContext context) async {
-    await Future.delayed(Duration(milliseconds: 50));
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)), //this right here
-            child: Container(
-              height: 200,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'What do you want to remember?'),
-                    ),
-                    SizedBox(
-                      width: 320.0,
-                      child: RaisedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: const Color(0xFF1BC0C5),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-  }
-
-
 }
