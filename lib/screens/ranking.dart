@@ -358,8 +358,6 @@ class _RankingPageState extends State<RankingPage> {
                         arrFriends: arrFriends,
                         initialPageType: Const.typeChallenges,
                         friendId: arrFriends[index].userId);
-
-//              Navigator.push(context, FadeRouteHome(homeData: homeData));
                     navigationBloc.updateNavigation(homeData);
                     print(arrFriends[index].isFriend);
                   }
