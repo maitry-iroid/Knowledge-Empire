@@ -853,6 +853,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void saveModulesLocally(List<LearningModuleData> arrLearningModules) async {
     LearningModuleResponse learningModuleResponse = LearningModuleResponse();
     learningModuleResponse.data = arrLearningModules;
+
     await Injector.prefs.setString(
         PrefKeys.learningModles, jsonEncode(learningModuleResponse.toJson()));
   }
