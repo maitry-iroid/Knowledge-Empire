@@ -15,6 +15,7 @@ import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/language.dart';
 import 'package:ke_employee/models/switch_company.dart';
 import 'package:ke_employee/models/update_mode.dart';
+import 'package:ke_employee/models/update_user_setting.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,6 +43,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
+  String updateUserID;
+  String updateType;
+  String updateMode;
+  String updateIsSoundEnable;
+  String updateLanguage;
+  int updateCompanyId;
+
   @override
   void initState() {
     showIntroDialog();
@@ -55,6 +63,10 @@ class _ProfilePageState extends State<ProfilePage> {
     myFocusNode = FocusNode();
 
     companyController.text = Injector.userData?.companyName;
+    updateUserID = Injector.userId.toString();
+    updateIsSoundEnable = Injector.isSoundEnable ? 1.toString() : 0.toString();
+    updateMode = Injector.mode.toString();
+    updateLanguage = Injector.userData.language;
 
     photoUrl = Injector.userData != null
         ? Injector.userData?.profileImage != null
@@ -356,47 +368,52 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
-                      Injector.customerValueData.isSwitchEnable==1?InkResponse(
-                        child: Container(
-                          height: 35,
-                          margin: EdgeInsets.only(top: 15),
-                          alignment: Alignment.center,
-                          child: Text(
-                            Utils.getText(
-                                context,
-                                Injector.isBusinessMode
-                                    ? StringRes.switchProfMode
-                                    : StringRes.switchBusinessMode),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: ColorRes.white,
-                                fontSize: 15,
-                                letterSpacing: 0.7),
-                          ),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      'bg_switch_to_prfsnl')),
-                                  fit: BoxFit.fill)),
-                        ),
-                        onTap: () async {
-                          Utils.playClickSound();
+                      Injector.customerValueData.isSwitchEnable == 0
+                          ? InkResponse(
+                              child: Container(
+                                height: 35,
+                                margin: EdgeInsets.only(top: 15),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  Utils.getText(
+                                      context,
+                                      Injector.isBusinessMode
+                                          ? StringRes.switchProfMode
+                                          : StringRes.switchBusinessMode),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: ColorRes.white,
+                                      fontSize: 15,
+                                      letterSpacing: 0.7),
+                                ),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            'bg_switch_to_prfsnl')),
+                                        fit: BoxFit.fill)),
+                              ),
+                              onTap: () async {
+                                Utils.playClickSound();
 
-                          await Injector.updateMode(Injector.isBusinessMode
-                              ? Const.professionalMode
-                              : Const.businessMode);
+                                await Injector.updateMode(
+                                    Injector.isBusinessMode
+                                        ? Const.professionalMode
+                                        : Const.businessMode);
 
-                          switchModeApi();
+                                updateType = 1.toString();
+                                updateMode = Injector.mode.toString();
+                                callApiForUpdateUserSetting(updateType, null);
 
-                          Utils.playBackgroundMusic();
+                                Utils.playBackgroundMusic();
 
-                          localeBloc.setLocale(
-                              Utils.getIndexLocale(Injector.userData.language));
+                                localeBloc.setLocale(Utils.getIndexLocale(
+                                    Injector.userData.language));
 
-                          setState(() {});
-                        },
-                      ):Container(),
+                                setState(() {});
+                              },
+                            )
+                          : Container(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -418,8 +435,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               Injector.isSoundEnable = value;
                               await Injector.prefs
                                   .setBool(PrefKeys.isSoundEnable, value);
-
                               Utils.playBackgroundMusic();
+
+                              updateType = 2.toString();
+                              updateIsSoundEnable = value ? 1.toString() : 0.toString();
+                              callApiForUpdateUserSetting(updateType, null);
 
                               setState(() {});
                             },
@@ -443,19 +463,27 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(
                             Utils.getText(
                                 context,
-                                Injector.customerValueData == null || Injector.customerValueData?.manager == null || Injector.customerValueData.manager.isEmpty
+                                Injector.customerValueData == null ||
+                                        Injector.customerValueData?.manager ==
+                                            null ||
+                                        Injector
+                                            .customerValueData.manager.isEmpty
                                     ? StringRes.bailout
                                     : StringRes.requestBailOut),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                color: !Injector.isManager() && Injector.customerValueData.totalBalance <= 0
+                                color: !Injector.isManager() &&
+                                        Injector.customerValueData
+                                                .totalBalance <=
+                                            0
                                     ? ColorRes.white
                                     : ColorRes.greyText,
                                 fontSize: 15,
                                 letterSpacing: 0.7),
                           ),
-                          decoration: Injector.customerValueData.totalBalance <= 0
+                          decoration: Injector.customerValueData.totalBalance <=
+                                  0
                               ? BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Utils.getAssetsImg(
@@ -473,7 +501,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               Utils.getAssetsImg('bg_privacy')))
                                       : null),
                         ),
-                        onTap:  Injector.customerValueData.totalBalance <= 0
+                        onTap: Injector.customerValueData.totalBalance <= 0
                             ? () async {
                                 Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
@@ -568,7 +596,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Injector.userData.companyName =
                               companyList[index].companyName;
 
-                          switchCompanyList(companyList[index].companyId);
+                          updateType = 4.toString();
+                          updateCompanyId = companyList[index].companyId;
+                          callApiForUpdateUserSetting(updateType, null);
 
                           Navigator.pop(context);
                         },
@@ -1119,14 +1149,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       return GestureDetector(
                         onTap: () async {
                           try {
-                            if (index == 0) {
-
-                              await languageChangeAPI(Const.english, index);
-                            } else if (index == 1) {
-                              await languageChangeAPI(Const.german, index);
-                            } else if (index == 2) {
-                              await languageChangeAPI(Const.chinese, index);
-                            }
+                            updateType = 3.toString();
+                            callApiForUpdateUserSetting(updateType, index);
                           } catch (e) {
                             print(e);
                           }
@@ -1291,64 +1315,62 @@ class _ProfilePageState extends State<ProfilePage> {
         z;
   }
 
-  //Update Language API
-
-  languageChangeAPI(String language, int index) {
+  callApiForUpdateUserSetting(String updateType, int index) {
     Utils.playClickSound();
 
-    LanguageRequest rq = LanguageRequest();
-    rq.userId = Injector.userId.toString();
-    rq.language = language;
+    UpdateUserSetting rq = UpdateUserSetting();
+    rq.userId = updateUserID;
+    rq.type = updateType;
+    rq.mode = updateMode;
+    rq.isSoundEnable = updateIsSoundEnable;
+    rq.language = updateLanguage;
+    if (updateCompanyId != null) {
+      rq.companyId = updateCompanyId;
+    }
 
-//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
+    print(rq);
     CommonView.showCircularProgress(true, context);
-    WebApi().callAPI(WebApi.updateLanguage, rq.toJson()).then((data) async {
+    WebApi().callAPI(WebApi.updateUserSetting, rq.toJson()).then((data) async {
       CommonView.showCircularProgress(false, context);
-      Navigator.pop(context);
-
+      print(data);
       if (data != null) {
-        localeBloc.setLocale(index);
-        Injector.userData.language = language;
-        await Injector.setUserData(Injector.userData);
-        setState(() {});
+        switch (updateType) {
+          case "1":
+            await setMode();
+            break;
+          case "3":
+            await setLanguage(index);
+            break;
+          case "4":
+            await setCompany();
+            break;
+        }
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
-      Utils.performBack(context);
     }).catchError((e) {
-      Utils.performBack(context);
-      print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
     });
   }
 
-  //Update Language API
+  Future setLanguage(int index) async {
+    switch (index) {
+      case 0:
+        Injector.userData.language = Const.english;
+        updateLanguage = Const.english;
+        break;
+      case 1:
+        Injector.userData.language = Const.german;
+        updateLanguage = Const.german;
+        break;
+      case 2:
+        Injector.userData.language = Const.chinese;
+        updateLanguage = Const.chinese;
+        break;
+    }
 
-  switchModeApi() {
-    Utils.playClickSound();
-
-    UpdateSoundAndModeRequest rq = UpdateSoundAndModeRequest();
-    rq.userId = Injector.userId;
-    rq.type = Injector.mode ?? Const.businessMode;
-
-    CommonView.showCircularProgress(true, context);
-    WebApi().callAPI(WebApi.updateModeAndSoundStatus, rq.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-        Injector.userData.mode = Injector.mode;
-        await Injector.setUserData(Injector.userData);
-        setState(() {});
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-      }
-    }).catchError((e) {
-      Utils.performBack(context);
-      print("updatePorfile_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
-    });
+    localeBloc.setLocale(index);
+    await Injector.setUserData(Injector.userData);
   }
 
   removeKeys() {
@@ -1372,32 +1394,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   //switch Company List
 
-  switchCompanyList(int companyId) {
-    Utils.playClickSound();
+  setMode() async {
+    Injector.userData.mode = Injector.mode;
+    await Injector.setUserData(Injector.userData);
+  }
 
-    SwitchCompanyRequest rq = SwitchCompanyRequest();
-    rq.userId = Injector.userId.toString();
-    rq.companyId = companyId.toString();
-
-//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
-    CommonView.showCircularProgress(true, context);
-    WebApi()
-        .callAPI(WebApi.switchCompanyProfile, rq.toJson())
-        .then((data) async {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-//        await Injector.setUserData(Injector.userData);
-
-        localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-      }
-//      Utils.performBack(context);
-    }).catchError((e) {
-      print("updatePorfile_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
-    });
+  setCompany() {
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
   }
 }

@@ -45,11 +45,11 @@ class WebApi {
   static String rqGetTeamUserById = "getTeamUserById";
   static String rqGetPerformance = "getPerformance";
   static String rqGetCompany = "getCompany";
-  static String updateLanguage = "updateLanguage";
   static String updateModeAndSoundStatus = "updateModeAndSoundStatus";
   static String switchCompanyProfile = "switchCompanyProfile";
   static String rqGameIntro = "gameIntro";
   static String forceUpdate = "forceUpdate";
+  static String updateUserSetting = "updateUserSetting";
 //  static String rqDashboardLockStatus = "dashboardLockStatus";
   static String rqGetDashboardStatus = "getDashboardStatus";
 

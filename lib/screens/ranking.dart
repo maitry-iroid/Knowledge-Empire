@@ -180,7 +180,7 @@ class _RankingPageState extends State<RankingPage> {
         children: <Widget>[
           showUserDetails(index),
           showChallengeButton(index),
-          showFriendUnFriendButton(index)
+          showFriendUnFriendButton(index),
         ],
       ),
     );
@@ -371,7 +371,7 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showFriendUnFriendButton(int index) {
-    return Expanded(
+    return Utils.isFeatureOn(Const.typeChallenges) ? Expanded(
       flex: 3,
       child: InkResponse(
         onTap: () {
@@ -400,7 +400,7 @@ class _RankingPageState extends State<RankingPage> {
                     ? 'add_emplyee'
                     : 'remove_friend'))),
       ),
-    );
+    ):Container();
   }
 
   showUserDetails(int index) {
@@ -814,7 +814,8 @@ class _RankingPageState extends State<RankingPage> {
                 ),
               )
             : Container(),
-        Expanded(
+        Utils.isFeatureOn(Const.typeChallenges)
+            ? Expanded(
           flex: 3,
           child: Container(
             width: 45,
@@ -833,7 +834,7 @@ class _RankingPageState extends State<RankingPage> {
               style: TextStyle(color: ColorRes.white, fontSize: 15),
             ),
           ),
-        ),
+        ):Container(),
       ],
     );
   }
