@@ -168,10 +168,9 @@ class Injector {
 
     bool isSoundOn = customerValueData.isEnableSound == 1;
 
-    if (isSoundEnable != isSoundOn) {
-      if (isSoundOn) await Utils.playBackgroundMusic();
+    if (isSoundOn) {
+      await Utils.playBackgroundMusic();
     }
-
   }
 
   static setIntroData(IntroData _introData) async {
