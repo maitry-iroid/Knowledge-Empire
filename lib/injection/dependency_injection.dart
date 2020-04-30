@@ -92,8 +92,6 @@ class Injector {
 
     isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
 
-    await Utils.playBackgroundMusic();
-
     updateInstance();
   }
 
@@ -167,6 +165,13 @@ class Injector {
         PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
+
+    bool isSoundOn = customerValueData.isEnableSound == 1;
+
+    if (isSoundEnable != isSoundOn) {
+      if (isSoundOn) await Utils.playBackgroundMusic();
+    }
+
   }
 
   static setIntroData(IntroData _introData) async {
