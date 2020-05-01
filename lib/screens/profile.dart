@@ -433,7 +433,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             value: Injector.isSoundEnable,
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
-                              await Injector.prefs.setBool(PrefKeys.isSoundEnable, value);
+                              await Injector.prefs
+                                  .setBool(PrefKeys.isSoundEnable, value);
                               Utils.playBackgroundMusic();
 
                               updateType = 2.toString();
@@ -469,7 +470,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         Injector
                                             .customerValueData.manager.isEmpty
                                     ? StringRes.bailout //todo
-                                    : StringRes.requestBailOut),//todo
+                                    : StringRes.requestBailOut), //todo
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -482,7 +483,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontSize: 15,
                                 letterSpacing: 0.7),
                           ),
-                          decoration: Injector.customerValueData.totalBalance <= 0
+                          decoration: Injector.customerValueData.totalBalance <=
+                                  0
                               ? BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Utils.getAssetsImg(
@@ -1149,6 +1151,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () async {
                           try {
                             updateType = 3.toString();
+                            await setLanguage(index);
+                            Navigator.pop(context);
                             callApiForUpdateUserSetting(updateType, index);
                           } catch (e) {
                             print(e);
@@ -1338,7 +1342,6 @@ class _ProfilePageState extends State<ProfilePage> {
             await setMode();
             break;
           case "3":
-            await setLanguage(index);
             break;
           case "4":
             await setCompany();

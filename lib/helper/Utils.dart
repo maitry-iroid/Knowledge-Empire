@@ -753,31 +753,31 @@ class Utils {
         return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
         break;
       case "German":
-        return "Sie benötigen mindestens $salesCount Salespersons und 1 Serviceperson, um diese Frage zu beantworten. Sie können weitere Salespersons aus der Organisation hinzufügen.";
+        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
         break;
       case "Chinese":
-        return "您需要至少 $salesCount 个销售人员和 1个服务人员才能尝试此问题。您可以从组织中添加更多销售人员。";
+        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
         break;
       default:
-        return "";
+        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
         break;
     }
   }
 
-  static String challengeString(int question,int earn,int totalValue) {
+  static String challengeString(int question, int earn, int totalValue) {
     String language = Injector.userData.language;
     switch (language) {
       case "English":
         return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
         break;
       case "German":
-//        return "Sie benötigen mindestens $salesCount Salespersons und $serviceCount Serviceperson, um diese Frage zu beantworten. Sie können weitere Salespersons aus der Organisation hinzufügen.";
+        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
         break;
       case "Chinese":
-//        return "您需要至少 $salesCount 个销售人员和 $serviceCount 个服务人员才能尝试此问题。您可以从组织中添加更多销售人员。";
+        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
         break;
       default:
-        return "";
+        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
         break;
     }
   }
@@ -789,13 +789,13 @@ class Utils {
         return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
         break;
       case "German":
-//        return "Sie benötigen mindestens $salesCount Salespersons und $serviceCount Serviceperson, um diese Frage zu beantworten. Sie können weitere Salespersons aus der Organisation hinzufügen.";
+        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
         break;
       case "Chinese":
-//        return "您需要至少 $salesCount 个销售人员和 $serviceCount 个服务人员才能尝试此问题。您可以从组织中添加更多销售人员。";
+        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
         break;
       default:
-        return "";
+        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
         break;
     }
   }
@@ -821,7 +821,6 @@ class Utils {
 //  }
   static void showLockReasonDialog(
       String typeOrg, BuildContext context, isForInternet) {
-
     showDialog(
         context: context,
         builder: (BuildContext context) => OrgInfoDialog(
