@@ -19,6 +19,7 @@ import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/login.dart';
 
 import 'package:ke_employee/screens/intro_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
@@ -131,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(height: Utils.getDeviceHeight(context) / 8),
                         Container(
                           width: double.infinity,
-                          height: Utils.getDeviceHeight(context) / 1.5,
+                          height: Utils.getDeviceHeight(context) / 1.3,
                           margin: EdgeInsets.only(left: 20, right: 20),
                           decoration: BoxDecoration(
                             color: ColorRes.loginBg,
@@ -211,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                         }),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   Align(
                     alignment: Alignment.topRight,
@@ -247,11 +248,34 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkResponse(
+                      child: Text(
+                        Utils.getText(context, StringRes.requestDemoAccount),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                      ),
+                      onTap: () {
+                        _launchEmail("support@knowledge-empire.com");
+                      },
+                    ),
+                  ),
                 ],
               )),
         ),
       ],
     );
+  }
+
+  _launchEmail(String email) async {
+    if (await canLaunch("mailto:$email")) {
+      await launch("mailto:$email");
+    } else {
+      throw 'Could not launch';
+    }
   }
 
   selectLanguagesAlert(BuildContext context) {

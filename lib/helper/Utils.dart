@@ -745,6 +745,61 @@ class Utils {
     return index;
   }
 
+  static String getQueValidationToast(int salesCount) {
+    String language = Injector.userData.language;
+
+    switch (language) {
+      case "English":
+        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
+        break;
+      case "German":
+        return "Sie benötigen mindestens $salesCount Salespersons und 1 Serviceperson, um diese Frage zu beantworten. Sie können weitere Salespersons aus der Organisation hinzufügen.";
+        break;
+      case "Chinese":
+        return "您需要至少 $salesCount 个销售人员和 1个服务人员才能尝试此问题。您可以从组织中添加更多销售人员。";
+        break;
+      default:
+        return "";
+        break;
+    }
+  }
+
+  static String challengeString(int question,int earn,int totalValue) {
+    String language = Injector.userData.language;
+    switch (language) {
+      case "English":
+        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+        break;
+      case "German":
+//        return "Sie benötigen mindestens $salesCount Salespersons und $serviceCount Serviceperson, um diese Frage zu beantworten. Sie können weitere Salespersons aus der Organisation hinzufügen.";
+        break;
+      case "Chinese":
+//        return "您需要至少 $salesCount 个销售人员和 $serviceCount 个服务人员才能尝试此问题。您可以从组织中添加更多销售人员。";
+        break;
+      default:
+        return "";
+        break;
+    }
+  }
+
+  static String subscribeText(String moduleName) {
+    String language = Injector.userData.language;
+    switch (language) {
+      case "English":
+        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
+        break;
+      case "German":
+//        return "Sie benötigen mindestens $salesCount Salespersons und $serviceCount Serviceperson, um diese Frage zu beantworten. Sie können weitere Salespersons aus der Organisation hinzufügen.";
+        break;
+      case "Chinese":
+//        return "您需要至少 $salesCount 个销售人员和 $serviceCount 个服务人员才能尝试此问题。您可以从组织中添加更多销售人员。";
+        break;
+      default:
+        return "";
+        break;
+    }
+  }
+
   static void addBadge() {
     int count = Injector.badgeCount + 1;
     FlutterAppBadger.updateBadgeCount(count);

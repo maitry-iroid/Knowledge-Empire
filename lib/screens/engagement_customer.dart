@@ -47,10 +47,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   bool isChallenge;
 
   List alphaIndex = [
-    StringRes.aIndex,
-    StringRes.bIndex,
-    StringRes.cIndex,
-    StringRes.dIndex
+    "A",
+    "B",
+    "C",
+    "D"
   ];
 
   String urlPDFPath = "";

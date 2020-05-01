@@ -14,7 +14,7 @@ class HeaderUtils {
     else if (type == Const.typeBrandValue)
       return "%";
     else if (type == Const.typeMoney)
-      return "LP";
+      return "KP";
     else
       return "";
   }

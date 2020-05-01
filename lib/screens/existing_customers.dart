@@ -164,6 +164,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -173,6 +175,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -182,6 +186,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -191,6 +197,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -200,6 +208,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -257,7 +267,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        arrQuestions[index].value.toString() + ' \$',
+                        arrQuestions[index].value.toString() + ' ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}',
                         style: TextStyle(
                           color: ColorRes.blue,
                           fontSize: 18,

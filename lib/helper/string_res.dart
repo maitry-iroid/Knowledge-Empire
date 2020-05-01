@@ -317,10 +317,7 @@ class StringRes {
   static var unSubscribedSuccess = "unSubscribedSuccess";
 
   //index
-  static var aIndex = "aIndex";
-  static var bIndex = "bIndex";
-  static var cIndex = "cIndex";
-  static var dIndex = "dIndex";
+
 
   //validation
   static var emailEmpty = "emailEmpty";
@@ -360,6 +357,8 @@ class StringRes {
   static var mHis = "mHis";
   static var needAtList = "needAtList";
   static var sizeInKb = "sizeInKb";
+  static var kp = "kp";
+  static var requestDemoAccount = "requestDemoAccount";
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -758,18 +757,19 @@ class StringRes {
       'sizeInKb': "kb",
       //endregion
 
-      'bonusPoint': "Bonus Point",
-      'questions':'Questions',
+      'cashAtTheEndOfPeriod': "Cash at end of Period",
       'sizeInKb': "kb",
+      'questions':'Questions',
       'english': 'English',
       'german': 'German',
       'chinese': 'Chinese',
+      'costSplit': "CostSplit",
+      'sevenDaysDevelopment': "7 days developments",
+
       'cashAtStartOfPeriod': 'Cash at start of Period',
       'subscribedSuccess': 'Subscribed successfully!',
       'unSubscribedSuccess': 'Unsubscribed successfully!',
-      'costSplit': "CostSplit",
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
+      'requestDemoAccount': "Request demo Account",
 
     },
     'de': {
@@ -1154,22 +1154,19 @@ class StringRes {
 
       //endregion
 
-      'bonusPoint': "Bonus Point",
-      'questions':'Questions',
-      'sizeInKb': "kb",
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
-      'subscribedSuccess': 'Subscribed successfully!',
-      'unSubscribedSuccess': 'Unsubscribed successfully!',
-      'costSplit': "CostSplit",
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'aIndex': 'A',
-      'bIndex': 'B',
-      'cIndex': 'C',
-      'dIndex': 'D',
+      'cashAtTheEndOfPeriod':"Vermögen am Ende der Periode",
+      'sizeInKb':"kb",
+      'questions':"Fragen",
+      'english':"English",
+      'german':"German",
+      'chinese':"Chinese",
+      'costSplit':"Kosten",
+      'sevenDaysDevelopment':"7 Tage Überblick",
+
+      'subscribedSuccess': 'Erfolgreich abonniert!',
+      'unSubscribedSuccess': 'Erfolgreich abbestellt!',
       'selectLanguage': "Sprache auswählen",
+      'requestDemoAccount': "Request demo Account",
 
     },
     'zh': {
@@ -1541,22 +1538,20 @@ class StringRes {
 
       //endregion
 
-      'bonusPoint': "Bonus Point",
-      'questions':'Questions',
-      'sizeInKb': "kb",
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
-      'subscribedSuccess': 'Subscribed successfully!',
-      'unSubscribedSuccess': 'Unsubscribed successfully!',
-      'costSplit': "CostSplit",
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'aIndex': 'A',
-      'bIndex': 'B',
-      'cIndex': 'C',
-      'dIndex': 'D',
+      'cashAtTheEndOfPeriod':"期末现金",
+      'sizeInKb':"kb",
+      'questions':"问题",
+      'english':"English",
+      'german':"German",
+      'chinese':"Chinese",
+      'costSplit':"花费",
+      'sevenDaysDevelopment':"过去7天的概览",
+
+
       'selectLanguages': '选择语言',
+      'subscribedSuccess': '订阅成功！',
+      'unSubscribedSuccess': '取消订阅！',
+      'requestDemoAccount': "Request demo Account",
     }
   };
 
@@ -1799,23 +1794,27 @@ class StringRes {
       'alertWantToSubscribe2': '? You will lose all the questions from the ',
       'answers': 'Answers',
       'bonusPoint': "Bonus Point",
-      'questions':'Questions',
-      'sizeInKb': "kb",
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
+
+
+
+
       'cashAtStartOfPeriod': 'Knowledge Points at start',
       'subscribedSuccess': 'Subscribed successfully!',
       'unSubscribedSuccess': 'Unsubscribed successfully!',
-      'costSplit': "CostSplit",
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'aIndex': 'A',
-      'bIndex': 'B',
-      'cIndex': 'C',
-      'dIndex': 'D',
+
+
       'selectCompany': 'Select Company',
       'selectLanguages': 'Select Language',
+      'requestDemoAccount': "Request demo Account",
+
+      'cashAtTheEndOfPeriod':"Knowledge Points at end of Period",
+      'sizeInKb':"kb",
+      'questions':"Questions",
+      'english':"English",
+      'german':"German",
+      'chinese':"Chinese",
+      'costSplit':"Cost Split",
+      'sevenDaysDevelopment':"7 days developments",
 
 
     },
@@ -2146,22 +2145,19 @@ class StringRes {
       'salesReps': 'Lernpunkte ',
       //endregion
 
-      'bonusPoint': "Bonus Point",
-      'questions':'Questions',
-      'sizeInKb': "kb",
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
-      'subscribedSuccess': 'Subscribed successfully!',
-      'unSubscribedSuccess': 'Unsubscribed successfully!',
-      'costSplit': "CostSplit",
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'aIndex': 'A',
-      'bIndex': 'B',
-      'cIndex': 'C',
-      'dIndex': 'D',
+      'cashAtTheEndOfPeriod':"Wissenspunkte am Ende der Periode",
+      'sizeInKb':"kb",
+      'questions':"Fragen",
+      'english':"English",
+      'german':"German",
+      'chinese':"Chinese",
+      'costSplit':"Kosten",
+      'sevenDaysDevelopment':"7 Tage Überblick",
+
+      'subscribedSuccess': 'Erfolgreich abonniert!',
+      'unSubscribedSuccess': 'Erfolgreich abbestellt!',
       'selectLanguages': 'Sprache auswählen',
+      'requestDemoAccount': "Request demo Account",
 
 
     },
@@ -2470,22 +2466,19 @@ class StringRes {
       //endregion
 
 
-      'bonusPoint': "Bonus Point",
-      'questions':'Questions',
+      'cashAtTheEndOfPeriod': "期末知识点数",
       'sizeInKb': "kb",
-      'english': 'English',
-      'german': 'German',
-      'chinese': 'Chinese',
-      'subscribedSuccess': 'Subscribed successfully!',
-      'unSubscribedSuccess': 'Unsubscribed successfully!',
-      'costSplit': "CostSplit",
-      'sevenDaysDevelopment': "7 days developments",
-      'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'aIndex': 'A',
-      'bIndex': 'B',
-      'cIndex': 'C',
-      'dIndex': 'D',
+      'questions':"问题",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+      'costSplit': "花费",
+      'sevenDaysDevelopment': "过去7天的概览",
+
+      'subscribedSuccess': '订阅成功！',
+      'unSubscribedSuccess': '取消订阅！',
       'selectLanguages': '选择语言',
+      'requestDemoAccount': "Request demo Account",
 
     }
   };

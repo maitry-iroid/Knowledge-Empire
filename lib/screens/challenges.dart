@@ -321,7 +321,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "${Utils.getText(context, StringRes.my)} \$",
+                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -342,7 +342,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       ),
                     ),
                     Text(
-                      "${Utils.getText(context, StringRes.mHis)} \$",
+                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -388,7 +388,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
-    String message = "Your friend will have to answer ${(arrRewards.length - index)} questions. If he wins then he will earn ${arrRewards[arrRewards.length - (index + 1)].toString()}% of his total value. If you win then you will earn ${arrRewards[index]}% of your total value.";
+    String message =Utils.challengeString(arrRewards.length - index,arrRewards[arrRewards.length - (index + 1)],arrRewards[index]);
     Utils.showLockReasonDialog(message, context, true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }

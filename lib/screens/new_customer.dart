@@ -114,6 +114,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.name),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -123,6 +125,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 5,
             child: Text(
               Utils.getText(context, StringRes.sector),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -132,6 +136,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -141,24 +147,32 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
           ),
-          Utils.isFeatureOn(Const.typeOrg)?Expanded(
-            flex: 3,
-            child: Text(
-              Utils.getText(context, StringRes.resources),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-            ),
-          ):Container(),
+          Utils.isFeatureOn(Const.typeOrg)
+              ? Expanded(
+                  flex: 3,
+                  child: Text(
+                    Utils.getText(context, StringRes.resources),
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                  ),
+                )
+              : Container(),
           Expanded(
             flex: 3,
             child: Text(
               Utils.getText(context, StringRes.engage),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -225,7 +239,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            ("${arrQuestions[index].value.toString()} \$"),
+                            ("${arrQuestions[index].value.toString()} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.kp) : "\$"}"),
                             style: TextStyle(
                                 color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,
@@ -242,16 +256,19 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             maxLines: 1,
                           ),
                         ),
-                        Utils.isFeatureOn(Const.typeOrg)?Expanded(
-                          flex: 3,
-                          child: Text(
-                            arrQuestions[index].resources.toString(),
-                            style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 18),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                          ),
-                        ):Container(),
+                        Utils.isFeatureOn(Const.typeOrg)
+                            ? Expanded(
+                                flex: 3,
+                                child: Text(
+                                  arrQuestions[index].resources.toString(),
+                                  style: TextStyle(
+                                      color: ColorRes.textRecordBlue,
+                                      fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                ),
+                              )
+                            : Container(),
                       ],
                     )),
               ),
@@ -295,32 +312,32 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 //                        FadeRouteHome(homeData: homeData));
                     navigationBloc.updateNavigation(homeData);
                   } else {
-                    Utils.showToast("You need atleast " +
+                    Utils.getQueValidationToast(arrQuestions[index].resources);
+                    /*Utils.showToast("You need atleast " +
                         arrQuestions[index].resources.toString() +
-                        " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+                        " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");*/
                   }
                 },
               ),
             ],
           ),
           onTap: () {
-            {
-              Utils.playClickSound();
+            Utils.playClickSound();
 
-              if (Injector.customerValueData.remainingSalesPerson >=
-                      arrQuestions[index].resources &&
-                  Injector.customerValueData.remainingCustomerCapacity > 0) {
-                HomeData homeData = HomeData(
-                    initialPageType: Const.typeEngagement,
-                    questionHomeData: arrQuestions[index],
-                    value: arrQuestions[index].value);
+            if (Injector.customerValueData.remainingSalesPerson >=
+                    arrQuestions[index].resources &&
+                Injector.customerValueData.remainingCustomerCapacity > 0) {
+              HomeData homeData = HomeData(
+                  initialPageType: Const.typeEngagement,
+                  questionHomeData: arrQuestions[index],
+                  value: arrQuestions[index].value);
 
 //                Navigator.push(_scaffoldKey.currentContext,
 //                    FadeRouteHome(homeData: homeData));
-                navigationBloc.updateNavigation(homeData);
-              } else {
-                Utils.showToast("You need atleast " + arrQuestions[index].resources.toString() + " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-              }
+              navigationBloc.updateNavigation(homeData);
+            } else {
+              Utils.getQueValidationToast(arrQuestions[index].resources);
+//                Utils.showToast("You need atleast " + arrQuestions[index].resources.toString() + " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
             }
           },
         ),

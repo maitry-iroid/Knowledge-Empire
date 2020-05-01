@@ -611,15 +611,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showConfirmDialog() {
+    String message=Utils.subscribeText(selectedModule.moduleName);
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            content: Text(
-                Utils.getText(context, StringRes.alertWantToSubscribe1) +
-                    selectedModule.moduleName +
-                    Utils.getText(context, StringRes.alertWantToSubscribe2) +
-                    Utils.getText(context, StringRes.newCustomers)),
+            content: Text(message),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,

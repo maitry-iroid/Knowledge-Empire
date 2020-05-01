@@ -433,12 +433,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             value: Injector.isSoundEnable,
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
-                              await Injector.prefs
-                                  .setBool(PrefKeys.isSoundEnable, value);
+                              await Injector.prefs.setBool(PrefKeys.isSoundEnable, value);
                               Utils.playBackgroundMusic();
 
                               updateType = 2.toString();
-                              updateIsSoundEnable = value ? 1.toString() : 0.toString();
+                              updateIsSoundEnable =
+                                  value ? 1.toString() : 0.toString();
                               callApiForUpdateUserSetting(updateType, null);
 
                               setState(() {});
@@ -468,8 +468,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                             null ||
                                         Injector
                                             .customerValueData.manager.isEmpty
-                                    ? StringRes.bailout
-                                    : StringRes.requestBailOut),
+                                    ? StringRes.bailout //todo
+                                    : StringRes.requestBailOut),//todo
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -482,8 +482,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontSize: 15,
                                 letterSpacing: 0.7),
                           ),
-                          decoration: Injector.customerValueData.totalBalance <=
-                                  0
+                          decoration: Injector.customerValueData.totalBalance <= 0
                               ? BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Utils.getAssetsImg(
