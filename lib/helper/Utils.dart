@@ -821,6 +821,7 @@ class Utils {
 //  }
   static void showLockReasonDialog(
       String typeOrg, BuildContext context, isForInternet) {
+
     showDialog(
         context: context,
         builder: (BuildContext context) => OrgInfoDialog(
