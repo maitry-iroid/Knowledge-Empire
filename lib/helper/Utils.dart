@@ -879,7 +879,7 @@ class Utils {
   }
 
   static isShowUnreadCount(String type) {
-    return !Utils.isFeatureOn(type) || Utils.isLocked(type);
+    return Utils.isFeatureOn(type) && !Utils.isLocked(type);
   }
 
   static isShowLock(String type) {
