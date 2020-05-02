@@ -299,23 +299,20 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 onTap: () {
                   Utils.playClickSound();
 
-                  if (Injector.customerValueData.remainingSalesPerson >=
-                          arrQuestions[index].resources &&
-                      Injector.customerValueData.remainingCustomerCapacity >
-                          0) {
+                  if (!Utils.isFeatureOn(Const.typeOrg) ||
+                      (Injector.customerValueData.remainingSalesPerson >=
+                              arrQuestions[index].resources &&
+                          Injector.customerValueData.remainingCustomerCapacity >
+                              0)) {
                     HomeData homeData = HomeData(
                         initialPageType: Const.typeEngagement,
                         questionHomeData: arrQuestions[index],
                         value: arrQuestions[index].value);
 
-//                    Navigator.push(_scaffoldKey.currentContext,
-//                        FadeRouteHome(homeData: homeData));
                     navigationBloc.updateNavigation(homeData);
                   } else {
-                    Utils.getQueValidationToast(arrQuestions[index].resources);
-                    /*Utils.showToast("You need atleast " +
-                        arrQuestions[index].resources.toString() +
-                        " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");*/
+                    Utils.showToast(Utils.getQueValidationToast(
+                        arrQuestions[index].resources));
                   }
                 },
               ),

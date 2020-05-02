@@ -368,7 +368,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
-                      Injector.customerValueData.isSwitchEnable == 0
+                      Injector.customerValueData.isSwitchEnable == 1
                           ? InkResponse(
                               child: Container(
                                 height: 35,

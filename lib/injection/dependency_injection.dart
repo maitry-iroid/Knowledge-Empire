@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 
 import 'package:ke_employee/helper/constant.dart';
@@ -166,9 +167,14 @@ class Injector {
 
     customerValueData = _customerValueData;
 
-    bool isSoundOn = customerValueData.isEnableSound == 1;
+    isSoundEnable = customerValueData.isEnableSound == 1;
 
-    if (isSoundOn) {
+    if (mode != _customerValueData.mode) {
+      updateMode(customerValueData.mode);
+      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    }
+
+    if (isSoundEnable) {
       await Utils.playBackgroundMusic();
     }
   }

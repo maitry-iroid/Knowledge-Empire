@@ -79,7 +79,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
     Organization org = arrOrganization.firstWhere((org) => org.type == type);
 
-
     return Stack(
       fit: StackFit.loose,
       children: <Widget>[
@@ -112,31 +111,36 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 5, right: 5),
-                        width: 18,
-                        height: 18,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
+                      type != Const.typeLegal &&
+                              !Utils.isFeatureOn(Const.typeChallenges)
+                          ? Container(
+                              margin: EdgeInsets.only(left: 5, right: 5),
+                              width: 18,
+                              height: 18,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                  color: ColorRes.headerBlue),
+                              child: Text(
+                                org != null && org.level != null
+                                    ? org.level.toString()
+                                    : "",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Injector.isBusinessMode
+                                        ? ColorRes.white
+                                        : ColorRes.hintColor),
+                              ),
+                            )
+                          : Container(
+                              width: 18,
+                              height: 18,
                             ),
-                            color: ColorRes.headerBlue),
-                        child: Text(
-                          org != null && org.level != null
-                              ? org.level.toString()
-                              : "",
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.hintColor),
-                        ),
-                      ),
                       Expanded(
                         child: Text(
-                          org != null && org.name != null
-                              ? org.name:"",
+                          org != null && org.name != null ? org.name : "",
                           style: TextStyle(
                               fontSize: 12,
                               color: Injector.isBusinessMode
@@ -179,7 +183,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
             ),
           ),
           onTap: () async {
-//            showBody(context, arrOrganization[position].description);
+            if (type == Const.typeLegal &&
+                !Utils.isFeatureOn(Const.typeChallenges)) return;
 
             var data = await showDialog(
                 context: _scaffoldKey.currentContext,
@@ -192,10 +197,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         ),
       ],
     );
-  }
-
-  String getTitle(int position) {
-    return Utils.getText(context, arrOrganization[position].name);
   }
 
   showItems() {

@@ -1,4 +1,7 @@
 
+import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+
 class CustomerValueRequest {
   int userId;
 
@@ -32,6 +35,7 @@ class CustomerValueData {
   String introText;
   int isSwitchEnable = 1;
   int isEnableSound = 1;
+  int mode = Const.businessMode;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
@@ -49,7 +53,8 @@ class CustomerValueData {
         this.introText,
         this.totalSalesPerson,
         this.isSwitchEnable,
-        this.isEnableSound
+        this.isEnableSound,
+        this.mode
       });
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
@@ -69,6 +74,7 @@ class CustomerValueData {
     introText = json['introText'];
     isSwitchEnable = json['isSwitchEnable'];
     isEnableSound = json['isEnableSound'];
+    mode = json['mode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -89,6 +95,7 @@ class CustomerValueData {
     data['introText'] = this.introText;
     data['isSwitchEnable'] = this.isSwitchEnable;
     data['isEnableSound'] = this.isEnableSound;
+    data['mode'] = this.mode;
     return data;
   }
 }

@@ -103,6 +103,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ],
           ),
         ),
+        CommonView.showLoderView(isLoading)
       ],
     );
   }
@@ -350,7 +351,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void fetchLearningModules() async {
-    CommonView.showCircularProgress(true, context);
+
+
+    if(mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     GetLearningModuleRequest rq = GetLearningModuleRequest();
     rq.userId = Injector.userId;
@@ -358,7 +364,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetLearningModule, rq.toJson())
         .then((data) async {
-      CommonView.showCircularProgress(false, context);
+      if(mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
         List<LearningModuleData> arrData = new List<LearningModuleData>();
@@ -392,7 +401,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
-      CommonView.showCircularProgress(false, context);
+      if(mounted)
+        setState(() {
+          isLoading = false;
+        });
       // Utils.showToast(e.toString());
     });
   }
@@ -490,7 +502,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   List<QuestionData> arrQuestions = List();
 
   downloadQuestions(int moduleId) {
-    CommonView.showCircularProgress(true, context);
+
 
     if (mounted)
       setState(() {
@@ -504,7 +516,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetDownloadQuestions, rq.toJson())
         .then((data) async {
-      CommonView.showCircularProgress(false, context);
+      if(mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
         List<QuestionData> arrQuestions = new List<QuestionData>();
@@ -591,7 +606,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     }).catchError((e) {
-      CommonView.showCircularProgress(false, context);
+      if(mounted)
+        setState(() {
+          isLoading = false;
+        });
       // Utils.showToast(e.toString());
     });
   }
