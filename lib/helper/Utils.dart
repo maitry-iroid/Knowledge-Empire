@@ -563,10 +563,7 @@ class Utils {
   static performDashboardItemClick(BuildContext context, String type) async {
     Utils.playClickSound();
 
-    if (type == Const.typeBusinessSector ||
-        type == Const.typeNewCustomer ||
-        type == Const.typeExistingCustomer ||
-        type == Const.typeOrg ||
+    if (type == Const.typeOrg ||
         type == Const.typeChallenges ||
         type == Const.typeReward ||
         type == Const.typeRanking ||
