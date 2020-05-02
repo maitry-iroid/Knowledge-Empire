@@ -262,9 +262,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       flex: 1,
       child: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10
-          ),
+          SizedBox(height: 10),
           CommonView.showTitle(context, StringRes.businessSector),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
@@ -351,9 +349,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void fetchLearningModules() async {
-
-
-    if(mounted)
+    if (mounted)
       setState(() {
         isLoading = true;
       });
@@ -364,7 +360,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetLearningModule, rq.toJson())
         .then((data) async {
-      if(mounted)
+      if (mounted)
         setState(() {
           isLoading = false;
         });
@@ -401,7 +397,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
-      if(mounted)
+      if (mounted)
         setState(() {
           isLoading = false;
         });
@@ -502,8 +498,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   List<QuestionData> arrQuestions = List();
 
   downloadQuestions(int moduleId) {
-
-
     if (mounted)
       setState(() {
         isLoading = true;
@@ -516,7 +510,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetDownloadQuestions, rq.toJson())
         .then((data) async {
-      if(mounted)
+      if (mounted)
         setState(() {
           isLoading = false;
         });
@@ -567,7 +561,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //              });
 
               await Injector.prefs.setString("datta", "scsdc");
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].mediaLink);
             }).catchError((e) {
               if (moduleId != null) {
 //                if (mounted)setState(() {
@@ -606,7 +601,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     }).catchError((e) {
-      if(mounted)
+      if (mounted)
         setState(() {
           isLoading = false;
         });
@@ -629,7 +624,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showConfirmDialog() {
-    String message=Utils.subscribeText(selectedModule.moduleName);
+    String message = Utils.subscribeText(selectedModule.moduleName);
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -758,7 +753,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ? Switch(
                 value: isSwitched,
                 onChanged: (value) {
-                  Utils.isInternetConnectedWithAlert(context).then((isConnected) {
+                  Utils.isInternetConnectedWithAlert(context)
+                      .then((isConnected) {
                     if (isConnected) {
                       if (mounted)
                         setState(() {
@@ -857,10 +853,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-      Utils.getText(context, StringRes.strDownloadNewText)+" "+
-                selectedModule.fileSize.toString()+
+            Utils.getText(context, StringRes.strDownloadNewText) +
+                " " +
+                selectedModule.fileSize.toString() +
                 Utils.getText(context, StringRes.sizeInKb),
-            style: TextStyle(color:Injector.isBusinessMode? ColorRes.white:ColorRes.blue, fontSize: 17),
+            style: TextStyle(
+                color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+                fontSize: 17),
           )
         : Container();
   }

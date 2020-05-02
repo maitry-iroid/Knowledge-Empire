@@ -159,6 +159,9 @@ class Injector {
     userData = _user;
 
     userId = _user.userId;
+
+   updateMode(_user.mode);
+
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
