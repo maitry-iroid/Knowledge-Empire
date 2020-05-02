@@ -861,7 +861,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedIndex < arrType.length-1
+          selectedIndex < arrType.length - 1
               ? Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
                   right: 10,
@@ -872,7 +872,7 @@ class HelpPageState extends State<HelpPage> {
                     ),
                     onTap: () {
                       Utils.playClickSound();
-                      if (selectedIndex < arrType.length-1) {
+                      if (selectedIndex < arrType.length - 1) {
                         selectedIndex += 1;
                         setState(() {});
                       }
@@ -891,7 +891,8 @@ class HelpPageState extends State<HelpPage> {
                         ),
                         onTap: () {
                           Utils.playClickSound();
-                         Navigator.pop(context);
+                          if (Navigator.canPop(context)) Navigator.pop(context);
+
                         },
                       )))
         ],
