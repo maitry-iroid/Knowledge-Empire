@@ -104,7 +104,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   String error;
 
   correctWrongImage() {
-    if (questionData.isAnsweredCorrect == true) {
+    if (questionData.isAnsweredCorrect == true || !widget.homeData.isCameFromNewCustomer) {
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;

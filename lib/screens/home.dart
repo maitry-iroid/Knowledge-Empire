@@ -248,7 +248,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
 //      print("====== resume ======");
       Utils.removeBadge();
-      Injector.audioPlayerBg.resume();
+      if (Injector.isSoundEnable) {
+        Injector.audioPlayerBg.resume();
+      }
     } else if (state == AppLifecycleState.inactive) {
       Injector.audioPlayerBg.pause();
 //      print("====== inactive ======");

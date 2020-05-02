@@ -1094,8 +1094,6 @@ class HelpPageState extends State<HelpPage> {
   }
 
   getSelectedType() {
-    print(selectedIndex);
-    print(arrType.length);
     return arrType[selectedIndex];
   }
 
