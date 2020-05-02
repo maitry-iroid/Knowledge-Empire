@@ -119,6 +119,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Stack(
           children: <Widget>[
             isChallenge != null && isChallenge
+
                 ? Container(
                     color: ColorRes.colorBgDark,
                   )
