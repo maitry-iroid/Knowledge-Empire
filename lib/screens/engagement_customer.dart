@@ -239,7 +239,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitAnswer(BuildContext context) async {
-    Utils.playClickSound();
 
     List<Answer> selectedAnswer =
         arrAnswer.where((answer) => answer.isSelected).toList();
@@ -286,7 +285,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitChallenge(BuildContext context) async {
-    Utils.playClickSound();
 
     List<Answer> selectedAnswer =
         arrAnswer.where((answer) => answer.isSelected).toList();

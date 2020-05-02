@@ -418,8 +418,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void getPendingChallenges() {
-    if (!Utils.isFeatureOn(Const.typeChallenges) ||
-        Injector.customerValueData.isChallengeAvailable == 0) return;
+    if (!Utils.isFeatureOn(Const.typeChallenges)) return;
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -446,7 +445,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             } else {
               // if there are no more question to attempt then navigate to HOME
               navigationBloc
-                  .updateNavigation(HomeData(initialPageType: _currentPage));
+                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           }
         }).catchError((e) {
@@ -570,7 +569,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             homeData.initialPageType != Const.typeEngagement)) {
       if (homeData == null ||
           homeData.isChallenge == null ||
-          homeData.isChallenge) getPendingChallenges();
+          homeData.isChallenge) {
+        if (Injector.customerValueData.isChallengeAvailable == 1)
+          getPendingChallenges();
+      }
     }
 //    }).catchError((e) {
 //      print('[BackgroundFetch] start FAILURE: $e');
