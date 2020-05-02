@@ -889,6 +889,7 @@ class HelpPageState extends State<HelpPage> {
                       height: Utils.getDeviceHeight(context) / 10,
                     ),
                     onTap: () {
+
                       Utils.playClickSound();
                       if (selectedIndex < arrType.length) {
                         selectedIndex += 1;

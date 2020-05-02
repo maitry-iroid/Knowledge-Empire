@@ -333,8 +333,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 //                    FadeRouteHome(homeData: homeData));
               navigationBloc.updateNavigation(homeData);
             } else {
-              Utils.getQueValidationToast(arrQuestions[index].resources);
-//                Utils.showToast("You need atleast " + arrQuestions[index].resources.toString() + " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
+              Utils.showToast(Utils.getQueValidationToast(arrQuestions[index].resources));
             }
           },
         ),
