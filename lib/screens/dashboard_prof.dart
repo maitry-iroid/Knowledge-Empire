@@ -26,9 +26,9 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   @override
   void initState() {
     super.initState();
-    getDashboardStatus();
 
     arrType = initFeatureDataArray();
+    getDashboardStatus();
 
     if (Injector.introData == null) {
       getIntroData();
@@ -66,6 +66,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
               Injector.prefs.setString(
                   PrefKeys.onOffStatusData, jsonEncode(response.toJson()));
               Injector.dashboardStatusResponse = response;
+
+              arrType = initFeatureDataArray();
 
               if (mounted) setState(() {});
             }

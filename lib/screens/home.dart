@@ -141,6 +141,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               homeData = snapshot.data;
               _currentPage = snapshot.data.initialPageType;
 
+              initDrawerItems();
+              var drawerOptions = <Widget>[];
+              for (var i = 0; i < drawerItems.length; i++) {
+                drawerOptions.add(new ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                    title: showMainItem(drawerItems[i]),
+                    selected: drawerItems[i].key == _currentPage,
+                    onTap: () => _onSelectItem(drawerItems[i])));
+              }
+
               print("current_page :  " + _currentPage);
 
               if (_currentPage == Const.typeCustomerSituation &&
@@ -386,15 +397,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  void getCustomerValues() {
-    CustomerValueRequest rq = CustomerValueRequest();
-    rq.userId = Injector.userData.userId;
-
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) customerValueBloc?.getCustomerValue(rq);
-    });
-  }
-
   void initStreamController() async {
     Injector.homeStreamController.stream.listen((data) async {
       if (data == "${Const.openPendingChallengeDialog}") {
@@ -416,6 +418,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void getPendingChallenges() {
+    if (!Utils.isFeatureOn(Const.typeChallenges) ||
+        Injector.customerValueData.isChallengeAvailable == 0) return;
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         GetChallengesRequest rq = GetChallengesRequest();
@@ -441,7 +446,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             } else {
               // if there are no more question to attempt then navigate to HOME
               navigationBloc
-                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
+                  .updateNavigation(HomeData(initialPageType: _currentPage));
             }
           }
         }).catchError((e) {
@@ -552,7 +557,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
     initStreamController();
-    getCustomerValues();
+    Utils.getCustomerValues();
 
     initCheckNetworkConnectivity();
 

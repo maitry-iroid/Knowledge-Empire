@@ -366,6 +366,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (data != null) {
 //        QuestionData questionData = QuestionData.fromJson(data);
         navigateToSituation(context, questionData);
+        Utils.getCustomerValues();
       }
     }).catchError((e) {
       print("submitChallenge_" + e.toString());

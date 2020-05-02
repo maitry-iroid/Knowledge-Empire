@@ -884,4 +884,14 @@ class Utils {
   static isShowLock(String type) {
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
+
+  static void getCustomerValues() {
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) customerValueBloc?.getCustomerValue(rq);
+    });
+  }
+
 }
