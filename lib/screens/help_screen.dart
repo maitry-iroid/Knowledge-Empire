@@ -838,9 +838,8 @@ class HelpPageState extends State<HelpPage> {
               : Container(),
 //-------------------------------------------------------------------------------------------------------
 
-          getSelectedType() == Const.typeProfile
-              ? Container()
-              : Positioned(
+          selectedIndex > 0
+              ? Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
                   left: 10,
                   child: InkResponse(
@@ -859,10 +858,28 @@ class HelpPageState extends State<HelpPage> {
                       }
                     },
                   ),
-                ),
+                )
+              : Container(),
 
-          getSelectedType() == Const.typeRanking
-              ? Container(
+          selectedIndex < arrType.length-1
+              ? Positioned(
+                  top: Utils.getDeviceHeight(context) / 2.35,
+                  right: 10,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg(introShowNext())),
+                      height: Utils.getDeviceHeight(context) / 10,
+                    ),
+                    onTap: () {
+                      Utils.playClickSound();
+                      if (selectedIndex < arrType.length-1) {
+                        selectedIndex += 1;
+                        setState(() {});
+                      }
+                    },
+                  ),
+                )
+              : Container(
                   child: Positioned(
                       top: Utils.getDeviceHeight(context) / 2.35,
                       right: 10,
@@ -874,30 +891,9 @@ class HelpPageState extends State<HelpPage> {
                         ),
                         onTap: () {
                           Utils.playClickSound();
-                          setState(() {
-                            Navigator.pushAndRemoveUntil(context,
-                                FadeRouteHome(), ModalRoute.withName("/home"));
-                          });
+                         Navigator.pop(context);
                         },
                       )))
-              : Positioned(
-                  top: Utils.getDeviceHeight(context) / 2.35,
-                  right: 10,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowNext())),
-                      height: Utils.getDeviceHeight(context) / 10,
-                    ),
-                    onTap: () {
-
-                      Utils.playClickSound();
-                      if (selectedIndex < arrType.length) {
-                        selectedIndex += 1;
-                        setState(() {});
-                      }
-                    },
-                  ),
-                ),
         ],
       ),
     );
@@ -1097,6 +1093,8 @@ class HelpPageState extends State<HelpPage> {
   }
 
   getSelectedType() {
+    print(selectedIndex);
+    print(arrType.length);
     return arrType[selectedIndex];
   }
 
