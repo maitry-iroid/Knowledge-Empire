@@ -216,8 +216,8 @@ class HeaderViewState extends State<HeaderView> {
             ),
           ),
           onTap: () {
-            Utils.playClickSound();
 
+            Utils.playClickSound();
             navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeProfile));
           }),
     );
