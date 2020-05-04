@@ -115,16 +115,11 @@ class HeaderViewState extends State<HeaderView> {
                             border: Border.all(color: ColorRes.white, width: 1),
                             borderRadius: BorderRadius.circular(12.5)),
                       ),
-                Injector.isBusinessMode
-                    ? Image(
-                        image: AssetImage(Utils.getAssetsImg(
-                            HeaderUtils.getHeaderIcon(type))),
-                        height: 26,
-                      )
-                    : Text(
-                        HeaderUtils.getHeadText(type),
-                        style: TextStyle(fontSize: 15, color: ColorRes.white),
-                      ),
+                Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                  height: 26,
+                ),
               ],
             ),
             SizedBox(
@@ -182,7 +177,8 @@ class HeaderViewState extends State<HeaderView> {
           } else if (type == Const.typeSalesPersons) {
             Utils.performDashboardItemClick(context, Const.typeNewCustomer);
           } else if (type == Const.typeServicesPerson) {
-            Utils.performDashboardItemClick(context, Const.typeExistingCustomer);
+            Utils.performDashboardItemClick(
+                context, Const.typeExistingCustomer);
           } else if (type == Const.typeBrandValue) {
             Utils.performDashboardItemClick(context, Const.typeRanking);
           } else if (type == Const.typeMoney) {
@@ -197,8 +193,7 @@ class HeaderViewState extends State<HeaderView> {
     return Expanded(
       child: InkResponse(
           child: Container(
-            foregroundDecoration:
-                null,
+            foregroundDecoration: null,
             child: Row(
               children: <Widget>[
                 Container(
@@ -222,10 +217,9 @@ class HeaderViewState extends State<HeaderView> {
             ),
           ),
           onTap: () {
-            Utils.playClickSound();
 
-            navigationBloc
-                .updateNavigation(HomeData(initialPageType: Const.typeProfile));
+            Utils.playClickSound();
+            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeProfile));
           }),
     );
   }

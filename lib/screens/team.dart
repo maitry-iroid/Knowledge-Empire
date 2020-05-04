@@ -625,7 +625,7 @@ class _TeamPageState extends State<TeamPage> {
       });
 
       openCloseMap.putIfAbsent(
-          "Open", () => teamUserData.qStatus.open.toDouble());
+          Utils.getText(context, StringRes.strOpen), () => teamUserData.qStatus.open.toDouble());
       openCloseMap.putIfAbsent(
           Utils.getText(context, StringRes.close), () => teamUserData.qStatus.closed.toDouble());
     } else {
@@ -636,9 +636,9 @@ class _TeamPageState extends State<TeamPage> {
 
       if (teamUserByIdData?.qStatus?.open?.toDouble() != null) {
         openCloseMap.putIfAbsent(
-            "Open", () => teamUserByIdData?.qStatus?.open?.toDouble());
+            Utils.getText(context, StringRes.strOpen), () => teamUserByIdData?.qStatus?.open?.toDouble());
       } else {
-        openCloseMap.putIfAbsent("Open", () => 0.0);
+        openCloseMap.putIfAbsent(Utils.getText(context, StringRes.strOpen), () => 0.0);
       }
 
       if (teamUserByIdData?.qStatus?.closed?.toDouble() != null) {

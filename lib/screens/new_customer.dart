@@ -184,14 +184,31 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Widget showItem(int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        showValueText("counter : " + arrQuestions[index].counter.toString()),
-        showValueText(
-            "daysInList : " + arrQuestions[index].daysInList.toString()),
-        InkResponse(
-          child: Row(
+    return InkResponse(
+      onTap: (){
+        Utils.playClickSound();
+
+        if (Utils.isFeatureOn(Const.typeOrg)) {
+          if ((Injector.customerValueData.remainingSalesPerson >=
+              arrQuestions[index].resources &&
+              Injector.customerValueData.remainingCustomerCapacity >
+                  0)) {
+            attemptQuestion(index);
+          } else {
+            Utils.showToast(Utils.getQueValidationToast(
+                arrQuestions[index].resources));
+          }
+        } else {
+          attemptQuestion(index);
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          showValueText("counter : " + arrQuestions[index].counter.toString()),
+          showValueText(
+              "daysInList : " + arrQuestions[index].daysInList.toString()),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
@@ -272,72 +289,33 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       ],
                     )),
               ),
-              InkResponse(
-                child: Container(
-                    height: Injector.isBusinessMode ? 35 : 28,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 10, right: 2),
-                    padding: EdgeInsets.only(left: 15, right: 15),
-                    decoration: BoxDecoration(
-                        color: Injector.isBusinessMode
-                            ? null
-                            : ColorRes.headerBlue,
-                        borderRadius: Injector.isBusinessMode
-                            ? null
-                            : BorderRadius.circular(20),
-                        image: Injector.isBusinessMode
-                            ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("bg_engage_now")),
-                                fit: BoxFit.fill)
-                            : null),
-                    child: Text(
-                      Utils.getText(
-                          _scaffoldKey.currentContext, StringRes.engageNow),
-                      style: TextStyle(color: ColorRes.white, fontSize: 16),
-                    )),
-                onTap: () {
-                  Utils.playClickSound();
-
-                  if (!Utils.isFeatureOn(Const.typeOrg) ||
-                      (Injector.customerValueData.remainingSalesPerson >=
-                              arrQuestions[index].resources &&
-                          Injector.customerValueData.remainingCustomerCapacity >
-                              0)) {
-                    HomeData homeData = HomeData(
-                        initialPageType: Const.typeEngagement,
-                        questionHomeData: arrQuestions[index],
-                        value: arrQuestions[index].value);
-
-                    navigationBloc.updateNavigation(homeData);
-                  } else {
-                    Utils.showToast(Utils.getQueValidationToast(
-                        arrQuestions[index].resources));
-                  }
-                },
-              ),
+              Container(
+                  height: Injector.isBusinessMode ? 35 : 28,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(left: 10, right: 2),
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  decoration: BoxDecoration(
+                      color: Injector.isBusinessMode
+                          ? null
+                          : ColorRes.headerBlue,
+                      borderRadius: Injector.isBusinessMode
+                          ? null
+                          : BorderRadius.circular(20),
+                      image: Injector.isBusinessMode
+                          ? DecorationImage(
+                              image: AssetImage(
+                                  Utils.getAssetsImg("bg_engage_now")),
+                              fit: BoxFit.fill)
+                          : null),
+                  child: Text(
+                    Utils.getText(
+                        _scaffoldKey.currentContext, StringRes.engageNow),
+                    style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  )),
             ],
           ),
-          onTap: () {
-            Utils.playClickSound();
-
-            if (Injector.customerValueData.remainingSalesPerson >=
-                    arrQuestions[index].resources &&
-                Injector.customerValueData.remainingCustomerCapacity > 0) {
-              HomeData homeData = HomeData(
-                  initialPageType: Const.typeEngagement,
-                  questionHomeData: arrQuestions[index],
-                  value: arrQuestions[index].value);
-
-//                Navigator.push(_scaffoldKey.currentContext,
-//                    FadeRouteHome(homeData: homeData));
-              navigationBloc.updateNavigation(homeData);
-            } else {
-              Utils.showToast(Utils.getQueValidationToast(arrQuestions[index].resources));
-            }
-          },
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -384,5 +362,14 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         return showItem(index);
       },
     );
+  }
+
+  void attemptQuestion(int index) {
+    HomeData homeData = HomeData(
+        initialPageType: Const.typeEngagement,
+        questionHomeData: arrQuestions[index],
+        value: arrQuestions[index].value);
+
+    navigationBloc.updateNavigation(homeData);
   }
 }

@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           onTap: () => _onSelectItem(drawerItems[i])));
     }
 
-    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
+    print("current___"+_currentPage);
 
     return StreamBuilder(
         stream: navigationBloc?.navigationKey,
@@ -218,6 +218,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Future<void> initStateMethods() async {
     updateVersionDialog();
     initContent();
+    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
     getDashboardStatus();
     Utils.removeBadge();
   }
@@ -451,8 +452,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               }
             } else {
               // if there are no more question to attempt then navigate to HOME
-              navigationBloc
-                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
+              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           }
         }).catchError((e) {
