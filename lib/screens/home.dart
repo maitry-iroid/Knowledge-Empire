@@ -445,8 +445,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               }
             } else {
               // if there are no more question to attempt then navigate to HOME
-              navigationBloc
-                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
+              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           }
         }).catchError((e) {
