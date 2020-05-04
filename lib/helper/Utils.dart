@@ -946,5 +946,6 @@ class Utils {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) customerValueBloc?.getCustomerValue(rq);
     });
+
   }
 }

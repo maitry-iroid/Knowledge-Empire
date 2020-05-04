@@ -569,21 +569,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     initPlatformState();
 
-    if (homeData == null ||
-        homeData.page == null ||
-        (homeData.initialPageType != Const.typeChallenges &&
-            homeData.initialPageType != Const.typeCustomerSituation &&
-            homeData.initialPageType != Const.typeEngagement)) {
-      if (homeData == null ||
-          homeData.isChallenge == null ||
-          homeData.isChallenge) {
-        if (Injector.customerValueData.isChallengeAvailable == 1)
-          getPendingChallenges();
-      }
-    }
-//    }).catchError((e) {
-//      print('[BackgroundFetch] start FAILURE: $e');
-//    });
+
   }
 
   void updateVersionDialog() async {

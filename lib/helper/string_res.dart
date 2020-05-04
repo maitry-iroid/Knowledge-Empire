@@ -1593,7 +1593,7 @@ class StringRes {
       'home': "Home",
       'businessSector': "Learning Module",
       'newCustomers': "Open Learnings",
-      'existingCustomers': "Completed Learnings",
+      'existingCustomers': "Memorized Learnings",
       'organizations': "Power-Up",
       'challenges': "Challenges",
       'pl': "Performance",
