@@ -1115,7 +1115,7 @@ class _ProfilePageState extends State<ProfilePage> {
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
     } else {
-      throw 'Could not launch $url';
+      throw '${Utils.getText(context, StringRes.strUrlExeption)} $url';
     }
   }
 
@@ -1123,7 +1123,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (await canLaunch("mailto:$email")) {
       await launch("mailto:$email");
     } else {
-      throw 'Could not launch';
+      throw Utils.getText(context, StringRes.strUrlExeption);
     }
   }
 
@@ -1310,7 +1310,7 @@ class _ProfilePageState extends State<ProfilePage> {
         customerSpecificVersion +
         "-" +
         os +
-        " Version: " +
+        " ${Utils.getText(context, StringRes.strVersion)}: " +
         x +
         "." +
         y +

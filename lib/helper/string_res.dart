@@ -359,6 +359,11 @@ class StringRes {
   static var sizeInKb = "sizeInKb";
   static var kp = "kp";
   static var requestDemoAccount = "requestDemoAccount";
+  static var strVersion = "strVersion";
+  static var strUrlExeption = "strUrlExeption";
+  static var strOpen = "strOpen";
+
+
 
 //  static var empOMasterDetails = "empOMasterDetails";
 
@@ -453,7 +458,7 @@ class StringRes {
       'downLoad': 'DownLoad',
       'size': 'Size',
       'description': 'Description',
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe ",
+      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
       'strDownloadText': "This module will occupie ",
@@ -505,7 +510,6 @@ class StringRes {
       'brand': "Brand",
 
       //pl
-      'costSplit': "CostSplit",
       'revenueSplit': "revenueSplit",
       'employees': "Employees",
       'salaries': "Salaries",
@@ -680,7 +684,7 @@ class StringRes {
       'meetYourTeam': 'Meet your team',
       'meetYourTeamDetails':
           "Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service employees.",
-      'clickOrgChart': 'Click the Org Chart',
+
 
       'getReadyApproach': 'Get ready to approach customers',
       'getReadyApproachDetails':
@@ -704,8 +708,7 @@ class StringRes {
           '"Great, you are all set for business.\nLet\'s head over to the newspaper to select the first business sector that you want to engage in.\n\nYou can click on the menu “>” and then “Business Sectors”"',
       'goToBusiness': 'Go to ”Business Sectors”',
 
-      //me
-      //subscribed
+
 
 
       //question index
@@ -744,7 +747,7 @@ class StringRes {
       'hi': "Hi",
       'noInternet': "Check Your Internet Connection",
       'update': "Update now",
-      'updateLatter': "Update letter",
+      'updateLatter': "Update later",
       'serviceReps': "Service Reps",
       'salesReps': "Sales Reps",
       'noOffline': "Sorry, this feature is only available while online.",
@@ -763,13 +766,19 @@ class StringRes {
       'english': 'English',
       'german': 'German',
       'chinese': 'Chinese',
-      'costSplit': "CostSplit",
+      'costSplit': "Cost Split",
       'sevenDaysDevelopment': "7 days developments",
 
       'cashAtStartOfPeriod': 'Cash at start of Period',
       'subscribedSuccess': 'Subscribed successfully!',
       'unSubscribedSuccess': 'Unsubscribed successfully!',
       'requestDemoAccount': "Request demo Account",
+      'strVersion': "Version",
+      'strUrlExeption': "Could not launch",
+      'strOpen': "Open",
+      'clickOrgChart': 'Click the Org Chart',
+
+
 
     },
     'de': {
@@ -861,8 +870,8 @@ class StringRes {
       'downLoad': 'Herunterladen',
       'size': 'Größe',
       'description': 'Beschreibung',
-      'alertWantToSubscribe1': "Wirklich abmelden ",
-      'alertWantToSubscribe2': "? Alle Fragen gehen verlohren",
+      'alertWantToSubscribe1': "Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ",
+      'alertWantToSubscribe2': "? Alle Fragen gehen verloren",
       'downloading': "Daten werden geladen ...",
       'strDownloadText ': "Dieses Modul benötigt ",
       'strDownloadNewText ': "Dieses Modul benötigt ",
@@ -1166,7 +1175,10 @@ class StringRes {
       'subscribedSuccess': 'Erfolgreich abonniert!',
       'unSubscribedSuccess': 'Erfolgreich abbestellt!',
       'selectLanguage': "Sprache auswählen",
-      'requestDemoAccount': "Request demo Account",
+      'requestDemoAccount': "Demozugang beantragen",
+      'strVersion': "Version",
+      'strUrlExeption': "Konnte nicht gestartet werden",
+      'strOpen': "Offen",
 
     },
     'zh': {
@@ -1225,8 +1237,8 @@ class StringRes {
       'forgotPassword': '忘记密码?',
 
       //organization
-      'fireEmp': "开除解雇 10 名员工",
-      'hireEmp': "开除解雇 10 名员工",
+      'fireEmp': "解雇10名员工",
+      'hireEmp': "雇用10名员工",
 
       //new customer
       'sector': '部门',
@@ -1245,7 +1257,7 @@ class StringRes {
       'searchForKeywords': '关键词搜索',
       'somethingWrong': '出了问题',
       'friend': '夥伴朋友',
-      'alertFriendSuccess': "添加朋友成功",
+      'alertFriendSuccess': "成功添加朋友",
       'alertUnFriendSuccess': "成功取消朋友",
       'alertUChallengeSent': "挑战已成功发送",
 
@@ -1273,7 +1285,7 @@ class StringRes {
       'friends': '夥伴朋友',
       'competitor': '竞争对手',
       'sendChallenge': '送出挑战寄发战帖',
-      'next': '下一步',
+      'next': '下一页',
 
       //  engage customer
       'answers': '答案',
@@ -1309,9 +1321,8 @@ class StringRes {
       'brand': "品牌",
 
       //pl
-      'cashAtStartOfPeriod': "开始期间的现金",
+      'cashAtStartOfPeriod': "期初现金",
       'cashAtTheEndOfPeriod': "Cash at end of Period",
-      'costSplit': "CostSplit",
       'revenueSplit': "revenueSplit",
       'employees': "员工",
       'salaries': "薪水",
@@ -1444,9 +1455,8 @@ class StringRes {
               "。\n",
 
       //Organization screen Dialog
-      'hireHrEmp': '招聘HR员工',
-      'hireHrEmpDetails':
-          ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人,\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
+      'hireHrEmp': '招聘人力资源员工',
+      'hireHrEmpDetails': ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
 
       'hireHrEmpDetailsSeconds':
           '听听您的团队的建议，为什么您应该招聘更多的员工，\n点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后选择“雇用10名员工”。',
@@ -1473,7 +1483,7 @@ class StringRes {
       'meetYourTeam': '认识您的团队',
       'meetYourTeamDetails':
           "单击组织结构图以了解您的组织概况。\n只要您想，您可以雇用和解雇员工！\n开始之前，您将需要聘请一些HR、销售和服务的员工。",
-      'clickOrgChart': '单击组织结构图',
+      'clickOrgChart': '点击组织结构图',
       'getReadyApproach': '准备接触客户',
       'getReadyApproachDetails':
           '"为了赢得新的客户，您需要有销售代表。\n\n我们点击“销售”，然后点击""雇用10名员工""来雇用10名销售代表。"',
@@ -1501,9 +1511,7 @@ class StringRes {
 
       //lock feature
       'unLockOrg': 'Unlocks when Sales or Service capacities empty first time.',
-      'unLockPl': 'Unlocks 1 week after 1st login.',
       'unLockRanking': 'Unlocks after three days in row login',
-      'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
       'dashboardProfile': '更改个人资料\n名字，语言',
@@ -1515,9 +1523,9 @@ class StringRes {
       'dashboardExistingCustomer': '3. 现有客户\n复习问题',
       'alertChangePassword': '密码已更改。',
       'unLockOrg': '销售或服务点数第一次清零时解锁。',
-      'unLockPl': '第一次登录一周后解锁',
+      'unLockPl': '在第一次登录一周后解锁',
       'unLockRanking': '连续三天登录后解锁',
-      'unLockReward': '达成第一个成就后解锁',
+      'unLockReward': '在达成第一个成就后解锁',
       'unLockChallenge': '雇用第一个律师后解锁',
 
 
@@ -1551,7 +1559,10 @@ class StringRes {
       'selectLanguages': '选择语言',
       'subscribedSuccess': '订阅成功！',
       'unSubscribedSuccess': '取消订阅！',
-      'requestDemoAccount': "Request demo Account",
+      'requestDemoAccount': "申请模拟账户",
+      'strVersion': "版本",
+      'strUrlExeption': "无法启动",
+      'strOpen': "打开",
     }
   };
 
@@ -1760,7 +1771,7 @@ class StringRes {
       'hi': "Dear",
       'noInternet': 'Please check your Internet connection',
       'update': "Update Application",
-      'updateLatter': "Update letter",
+      'updateLatter': "Update later",
       'noOffline': "Sorry, this feature is only available while online.",
       'my': "My",
       'mHis': "His",
@@ -1790,7 +1801,7 @@ class StringRes {
       'brand': '%Correct',
       'customers': 'Questions',
       'Profit': 'Knowledge Points (KP)',
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost.",
+      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': '? You will lose all the questions from the ',
       'answers': 'Answers',
       'bonusPoint': "Bonus Point",
@@ -1800,6 +1811,7 @@ class StringRes {
 
       'cashAtStartOfPeriod': 'Knowledge Points at start',
       'subscribedSuccess': 'Subscribed successfully!',
+      'alertFriendSuccess': 'Friend added successfully',
       'unSubscribedSuccess': 'Unsubscribed successfully!',
 
 
@@ -1815,7 +1827,10 @@ class StringRes {
       'chinese':"Chinese",
       'costSplit':"Cost Split",
       'sevenDaysDevelopment':"7 days developments",
-
+      'strVersion': "Version",
+      'strUrlExeption': "Could not launch",
+      'strOpen': "Open",
+      'hireHrEmp': "Improve Max. Power-Ups (PU)",
 
     },
     'de': {
@@ -1887,7 +1902,7 @@ class StringRes {
       'downLoad': 'Herunterladen',
       'size': 'Größe',
       'description': 'Beschreibung',
-      'alertWantToSubscribe1': 'Wirklich abmelden',
+      'alertWantToSubscribe1': 'Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ',
       'alertWantToSubscribe2': '? Alle Fragen gehen verloren',
       'downloading': 'Daten werden geladen ...',
       'strDownloadText': 'Dieses Modul benötigt',
@@ -2157,8 +2172,10 @@ class StringRes {
       'subscribedSuccess': 'Erfolgreich abonniert!',
       'unSubscribedSuccess': 'Erfolgreich abbestellt!',
       'selectLanguages': 'Sprache auswählen',
-      'requestDemoAccount': "Request demo Account",
-
+      'requestDemoAccount': "Demozugang beantragen",
+      'strVersion': "Version",
+      'strUrlExeption': "Konnte nicht gestartet werden",
+      'strOpen': "Offen",
 
     },
     'zh': {
@@ -2220,7 +2237,7 @@ class StringRes {
       'searchForKeywords': '搜索关键字',
       'somethingWrong': '出了问题',
       'friend': '朋友',
-      'alertFriendSuccess': '添加朋友成功',
+      'alertFriendSuccess': '成功添加朋友',
       'alertUnFriendSuccess': '成功取消朋友',
       'alertUChallengeSent': '挑战已成功发送',
       'subscribe': '加入',
@@ -2270,7 +2287,7 @@ class StringRes {
       'revenue': '#问题',
       'hashCustomers': '%正确',
       'brand': '%正确',
-      'cashAtStartOfPeriod': '威力升级点数',
+      'cashAtStartOfPeriod': '期初知识点数',
       'employees': '费用',
       'salaries': '问题',
       'customers': '日',
@@ -2444,9 +2461,9 @@ class StringRes {
       'dashboardExistingCustomer': '3. 现有问题\n复习问题',
       'alertChangePassword': '密码已更改。',
       'unLockOrg': '学习或记忆点数第一次清零时解锁。',
-      'unLockPl': '第一次登录一周后解锁',
+      'unLockPl': '在第一次登录一周后解锁',
       'unLockRanking': '连续三天登录后解锁',
-      'unLockReward': '达成第一个成就后解锁',
+      'unLockReward': '在达成第一个成就后解锁',
       'unLockChallenge': '最大挑战威力升级点数增加后解锁',
 
       'dear': "亲爱的",
@@ -2478,7 +2495,10 @@ class StringRes {
       'subscribedSuccess': '订阅成功！',
       'unSubscribedSuccess': '取消订阅！',
       'selectLanguages': '选择语言',
-      'requestDemoAccount': "Request demo Account",
+      'requestDemoAccount': "申请模拟账户",
+      'strVersion': "版本",
+      'strUrlExeption': "无法启动",
+      'strOpen': "打开",
 
     }
   };
