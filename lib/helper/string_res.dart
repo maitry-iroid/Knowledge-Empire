@@ -106,6 +106,7 @@ class StringRes {
   static var category = "category";
   static var achievement = "achievement";
   static var nextLevel = "nextLevel";
+
   static var friends = "friends";
   static var competitor = "competitor";
   static var sendChallenge = "sendChallenge";
