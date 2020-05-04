@@ -11,6 +11,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/screens/help_pro_screen.dart';
 import 'package:ke_employee/screens/help_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -241,7 +242,15 @@ class HeaderViewState extends State<HeaderView> {
       ),
       onTap: () {
         Utils.playClickSound();
-        Navigator.push(context, FadeRouteIntro());
+
+        if(Injector.isBusinessMode) {
+          Navigator.push(context, FadeRouteIntro());
+        } else {
+//          Navigator.push(context, FadeRouteProIntro());
+          HelpProScreen.showChallengeDialog(context);
+
+        }
+
       },
     );
   }

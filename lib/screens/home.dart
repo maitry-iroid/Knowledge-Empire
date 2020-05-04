@@ -23,6 +23,7 @@ import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/help_pro_screen.dart';
 import 'package:ke_employee/screens/help_screen.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
@@ -316,7 +317,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     if (_currentPage != item.key) {
       if (item.key == Const.typeHelp)
-        Navigator.push(context, FadeRouteIntro());
+        if(Injector.isBusinessMode) {
+          Navigator.push(context, FadeRouteIntro());
+        } else {
+//          Navigator.push(context, FadeRouteProIntro());
+//          Navigator.push(context, MaterialPageRoute(builder: (context) => HelpProPage()));
+          HelpProScreen.showChallengeDialog(context);
+        }
       else
         Utils.performDashboardItemClick(context, item.key);
     }

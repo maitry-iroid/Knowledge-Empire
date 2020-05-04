@@ -360,6 +360,26 @@ class StringRes {
   static var kp = "kp";
   static var requestDemoAccount = "requestDemoAccount";
 
+  //help screen
+  static var helpProProfile = "helpProProfile";
+  static var helpProEmployMeter = "helpProEmployMeter";
+  static var helpProSalesMeter = "helpProSalesMeter";
+  static var helpProServiceMeter = "helpProServiceMeter";
+  static var helpProBrandValue = "helpProBrandValue";
+  static var helpProCash = "helpProCash";
+  static var helpProBusinessSector = "helpProBusinessSector";
+  static var helpProNewCustomers = "helpProNewCustomers";
+  static var helpProExistingCustomer = "helpProExistingCustomer";
+  static var helpProRewards = "helpProRewards";
+  static var helpProTeam = "helpProTeam";
+  static var helpProChallenges = "helpProChallenges";
+  static var helpProOrganization = "helpProOrganization";
+  static var helpProP = "helpProP";
+  static var helpProRanking = "helpProRanking";
+
+
+
+
 //  static var empOMasterDetails = "empOMasterDetails";
 
   static Map<String, Map<String, String>> localizedValues = {
@@ -1817,6 +1837,26 @@ class StringRes {
       'sevenDaysDevelopment':"7 days developments",
 
 
+
+      //help screen
+
+      'helpProProfile' : '"Profile: \n- Change your company name \n- switch to game mode \n- switch company \n- request a restart"',
+      'helpProEmployMeter':'"Power-Up Bar (xx/yy):  \n- xx = currently free Power-Up Points  \n- yy = total Power-Up capacity  \n- Every Power-Up Point cost you 200 (increasing) per day  \n- Click on Power-Up Bar brings you to Power Up Screen"',
+      'helpProSalesMeter':'"Study Points Bar(xx/yy):  \n- xx = currently free Study Points  \n- yy = total Study Points  \n- Used Study Points will refill after 8 hours \n- Click onStudy Point Bar brings you to List of open questions"',
+      'helpProServiceMeter':'"Memory Points Bar (xx/yy):  \n- xx = currently free Memory Points  \n- yy = totalMemory Points  \n- 1 free Memory Point needed per Question  \n- Click on Memory Point Bar brings you to list of answered questions"',
+      'helpProBrandValue':'"%Correct Answers:  \n- Percentage of correctly answered questions  \n- Click on %Correct Answers brings you to Ranking Screen"',
+      'helpProCash':'"Knowledge Points:  \n- Increases by answering Questions correct and earning achievements  \n- Decreases through Power-Up costs"',
+
+      'helpProBusinessSector':'"Learning Modules: \n- Find new Learning Module \n- Subscribe / Unsubscribe \n- Download for offline availability"',
+      'helpProNewCustomers':'"Open Learnings: \n- Find new Questions to answer \n- Each Question requires free Study and Memory Points \n- Repetition of Questions increases if you answer them correctly"',
+      'helpProExistingCustomer':'"Compleeted Learnings: \n- review all your correctly answered questions \n- Repetition of Questions increases if you answer them correctly"',
+      'helpProRewards':'"Rewards: \n- Rewards are earned by completing certain task \n- Rewards pay extra Knowledge Points if you reach a new level"',
+      'helpProTeam': '"Team (only visible to managers):  \n- list of your direct reports  \n- high level reporting and KPI  \n- Allow bailout / reset"',
+      'helpProChallenges': '"Challenges: \n- Challenge friends \n- Selected % value determined # of questions and payout \n- increasing % = Increasing ammount of questions to be answered \n- higher % = higher payout for competitor if he wins and lower payout for you if he looses"',
+      'helpProOrganization': '"Power-Ups:  \n- select additional Power-Ups  \n- you need Power-Up capacities (HR) to Spend Power-Up points  \n- Every Power-Up Point spend costs you 100 Knowledge Points per day"',
+      'helpProP&L': '"Performance:  \n- Monitor your performance and progress  \n- Ensure you earn enough Knowledge Points"',
+      'helpProRanking': '"Ranking:  \n- See and compare your rank  \n- you can check multiple timelines and comparison groups"',
+
     },
     'de': {
       //region German
@@ -2159,6 +2199,23 @@ class StringRes {
       'selectLanguages': 'Sprache auswählen',
       'requestDemoAccount': "Request demo Account",
 
+      //help screen
+      'helpProProfile': '"Profil:  \n- Firmenname ändern  \n- Zu gamifizierter Version wechseln  \n- Neustart beantragen"',
+      'helpProEmployMeter': '"Bonuskapazitäten (xx/yy):  \n- xx = noch verfuegbare Bonuspunkte  \n- yy = totale Bonuskapazitaet  \n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag  \n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln"',
+      'helpProSalesMeter': '"Lernkapazitäten (xx/yy):  \n- xx = noch verfuegbare Lernkapazität  \n- yy = totale Lernkapazität  \n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf  \n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln"',
+      'helpProServiceMeter': '"Bestandsfragenkapazitäten (xx/yy):  \n- xx = noch verfügbare Bestandsfragenkapazität  \n- yy = totale Bestandsfragenkapazität  \n- Jeder Frage bindet eine Bestandsfragenkapazität  \n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln"',
+      'helpProBrandValue': '"% richtige Antworten:  \n- Anteil richtig beantworteter Fragen  \n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln"',
+      'helpProCash': '"Wissenspunkte:  \n- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen  \n- Verringert sich duch Kosten fuer Bonuspunkte"',
+
+      'helpProBusinessSector': '"Lernmodule:  \n- Neue Lernmodule finden  \n- Abonnieren / abmelden  \n- Herunterladen zur Nutzung ohne Internet Zugang"',
+      'helpProNewCustomers': '"Fragenkatalog:  \n- Neue unbeantwortete Fragen finden und beantworten  \n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
+      'helpProExistingCustomer': '"Bestandsfragen:  \n- Bestandsfragen liste enthält richtig beantwortete Fragen  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
+      'helpProRewards': '"Auszeichnungen:  \n- Gibt es für gewisse Aktionen  \n- Steigen im Wert in höheren Leveln"',
+      'helpProTeam': '"Teamperformance (nur Sichtbar wenn Mitarbeiterführung besteht):  \n- Liste der Mitarbeiter im Team  \n- Basis Reporting und KPIs  \n- Neustarts gewähren"',
+      'helpProChallenges': '"Herausforderungen:  \n- Kollegen herausfordern  \n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten  \n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte"',
+      'helpProOrganization': '"Lernbonus:  \n- Bonuspunkte auf Bonusbereiche verteilen  \n- ""Max. Bonuspunkte"" erhöhen um mehr Bonuspunkte verteilen zu koennen  \n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend"',
+      'helpProP': '"Entwicklung: \n- Überwache die Entwicklung deines Fortschritts  \n- Sorge dafür, dass deine Wissenpunkte zunehmen"',
+      'helpProRanking': '"Rangliste:  \n- Rang einsehen und vergleichen  \n- Unterschiedliche Zeitlinien können angezeigt werden"',
 
     },
     'zh': {
@@ -2480,6 +2537,23 @@ class StringRes {
       'selectLanguages': '选择语言',
       'requestDemoAccount': "Request demo Account",
 
+      //help pro screen :
+      'helpProProfile': '"个人资料: \n- 更改您的公司名称 \n- 切换到游戏模式 \n- 切换公司 \n- 申请重新开始"',
+      'helpProEmployMeter': '"威力升级点数条 (xx/yy): \n- xx = 当前可用威力升级点数 \n- yy = 威力升级总量 \n- 每一个威力升级点数每天花费您200 (逐渐增加) \n- 点击威力升级点数条将前往威力升级界面"',
+      'helpProSalesMeter': '"学习点数条 (xx/yy): \n- xx = 当前可用学习点数 \n- yy = 总学习点数 \n- 8小时候已使用的学习点数会重新填充 \n- 点击学习点数条将前往开放问题列表"',
+      'helpProServiceMeter': '"记忆点数条 (xx/yy): \n- xx = 当前可用记忆点数 \n- yy =  总记忆点数 \n- 每个问题需要一个可用的记忆点数 \n-  点击记忆点数条将前往已回答问题列表"',
+      'helpProBrandValue': '"%正确答案: \n- 正确回答问题的百分比 \n- 点击%正确答案将前往排名界面 "',
+      'helpProCash': '"知识点数: \n- 正确回答问题和达成成就都可以增加知识点数 \n- 进行威力升级会减少知识点数"',
+
+      'helpProBusinessSector': '"学习模块: \n- 寻找新的学习模块 \n- 加入 / 取消加入 \n- 下载以供离线使用"',
+      'helpProNewCustomers': '"开放学习: \n- 寻找新的问题来回答 \n- 每个问题都需要可用的学习和记忆点数 \n- 如果您答对了问题，问题重复的次数就会增加"',
+      'helpProExistingCustomer': '"完成的学习: \n- 复习您所有正确回答的问题 \n- 如果您答对了问题，问题重复的次数就会增加"',
+      'helpProRewards': '"奖励: \n- 通过完成某些任务获得奖励 \n- 如果您达到新的级别，您将获得额外的知识点数奖励"',
+      'helpProTeam': '"团队 (仅对经理可见): \n- 您的直接下属名单 \n- 高级别报告和KPI \n- 允许纾困/重置"',
+      'helpProChallenges': '"挑战: \n- 挑战好友 \n- 选择%价值，确定问题的数量#和奖励 \n- 增加% = 增加要回答的问题的数量 \n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少"',
+      'helpProOrganization': '"威力升级: \n- 选择额外的威力升级 \n- 您需要威力升级容量 (PU) 才能使用威力升级点数 \n- 每天每使用一个威力升级点数花费您100个知识点数"',
+      'helpProP': '"表现: \n- 监控您的表现和进步 \n- 确保您赚取足够的知识点数"',
+      'helpProRanking': '"排名: \n- 查看和比较您的排名 \n- 您可以检查多个时间段和比较多个群组"',
     }
   };
 }
