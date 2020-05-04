@@ -141,12 +141,15 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       Expanded(
                         child: Text(
                           org != null && org.name != null ? org.name : "",
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
                           style: TextStyle(
                               fontSize: 12,
+
                               color: Injector.isBusinessMode
                                   ? ColorRes.textBlue
                                   : ColorRes.hintColor),
-                          overflow: TextOverflow.ellipsis,
+
                         ),
                       ),
                       SizedBox(
