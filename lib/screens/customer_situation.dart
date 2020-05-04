@@ -81,7 +81,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     correctWrongImage();
 
-    if (questionData.isAnsweredCorrect == true) {
+    if (questionDataCustSituation.isAnsweredCorrect == true) {
       if (Injector.introData == null ||
           Injector.introData.customerSituation == null ||
           Injector.introData.customerSituation == 0) {
@@ -91,12 +91,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       }
 
       if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionData.isAnsweredCorrect);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect);
       }
       setState(() {});
     } else {
       if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionData.isAnsweredCorrect);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect);
       }
     }
   }
@@ -104,7 +104,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   String error;
 
   correctWrongImage() {
-    if (questionData.isAnsweredCorrect == true || !widget.homeData.isCameFromNewCustomer) {
+    if (questionDataCustSituation.isAnsweredCorrect == true || !widget.homeData.isCameFromNewCustomer) {
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;
@@ -147,38 +147,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     );
   }
 
-//
-//  gifImageShow() {
-//    if (questionData.isAnsweredCorrect == true) {
-//      Future.delayed(const Duration(seconds: 5), () {
-//        if (mounted)
-//          setState(() {
-//            isGif = false;
-//          });
-//      });
-//
-//      return Visibility(
-//        child: Container(
-//          child: Column(
-//            children: <Widget>[
-//              Expanded(
-//                child: Container(
-//                  child: Image(
-//                    image: AssetImage("assets/images/dollar.gif"),
-//                    fit: BoxFit.fitHeight,
-//                  ),
-//                ),
-//              ),
-//            ],
-//          ),
-//        ),
-//        visible: isGif,
-//      );
-//    } else {
-//      return Container();
-//    }
-//  }
-
   showSubHeader(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 10, left: 20, right: 20),
@@ -195,17 +163,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: questionData.profileImage != null &&
-                                        questionData.profileImage.isNotEmpty
+                                image: questionDataCustSituation.profileImage != null &&
+                                    questionDataCustSituation.profileImage.isNotEmpty
                                     ? Utils.getCacheNetworkImage(
-                                        questionData.profileImage)
+                                    questionDataCustSituation.profileImage)
                                     : AssetImage(
                                         Utils.getAssetsImg('user_org')),
                                 fit: BoxFit.fill),
                             border: Border.all(color: ColorRes.textLightBlue)),
                       ),
                       Text(
-                        questionData.firstName + " " + questionData.lastName,
+                        questionDataCustSituation.firstName + " " + questionDataCustSituation.lastName,
                         style: TextStyle(color: ColorRes.white, fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
@@ -283,7 +251,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   bool isAnswerCorrect(int index) {
     bool isAnswerCorrect = true;
 
-    var arr = questionData.correctAnswerId.split(',');
+    var arr = questionDataCustSituation.correctAnswerId.split(',');
 
     if (!arr.contains(arrAnswerSituation[index].option.toString())) {
       isAnswerCorrect = false;
@@ -464,56 +432,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       );
     } else
       return Container();
-//    else if (Utils.isVideo(correctWrongImage()) &&
-//        _controller.value.initialized) {
-//      return AspectRatio(
-//        aspectRatio: _controller.value.aspectRatio,
-//        child: Stack(
-//          alignment: Alignment.center,
-//          children: <Widget>[
-//            Container(
-//              child: VideoPlayer(_controller),
-//            ),
-//            Container(
-//              child: MaterialButton(
-//                height: 100,
-//                onPressed: () {
-//                  questionData.videoPlay == 1
-//                      ? if (mounted)setState(() {
-//                          _controller.value.isPlaying
-//                              ? _controller.pause()
-//                              : _controller.play();
-//                        })
-//                      : if (mounted)setState(() {
-//                          _controller.play();
-//                        });
-//                },
-//                child: Container(
-//                  width: Utils.getDeviceHeight(context) / 7,
-//                  height: Utils.getDeviceHeight(context) / 7,
-//                  decoration: BoxDecoration(
-//                      image: DecorationImage(
-//                          image: AssetImage(
-//                            _controller.value.isPlaying
-//                                ? Utils.getAssetsImg("") //add_emp_check
-//                                : Utils.getAssetsImg("play_button"),
-//                          ),
-//                          fit: BoxFit.scaleDown)),
-//                ),
-//              ),
-//            )
-//          ],
-//        ),
-//      );
-//    }
-//    else if (Utils.isPdf(questionData.mediaLink)) {
-//      return SimplePdfViewerWidget(
-//        completeCallback: (bool result) {
-//          print("completeCallback,result:$result");
-//        },
-//        initialUrl: questionData.mediaLink,
-//      );
-//    }
+
   }
 
   showSecondHalf(BuildContext context) {
@@ -743,7 +662,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   bool isAnswerCorrect(int index) {
     bool isAnswerCorrect = true;
 
-    var arr = questionData.correctAnswerId.split(',');
+    var arr = questionDataCustSituation.correctAnswerId.split(',');
 
     if (!arr.contains(arrAnswerSituation[index].option.toString())) {
       isAnswerCorrect = false;
@@ -898,7 +817,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   bool checkimg = true;
 
   correctWrongImage() {
-    if (questionData.isAnsweredCorrect == true) {
+    if (questionDataCustSituation.isAnsweredCorrect == true) {
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;
@@ -918,7 +837,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
             });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1
+      questionDataCustSituation.videoLoop == 1
           ? _controller.setLooping(true)
           : _controller.setLooping(false);
 
@@ -1047,7 +966,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                 height: 100,
                 onPressed: () {
                   setState(() {
-                    questionData.videoPlay == 1
+                    questionDataCustSituation.videoPlay == 1
                         ? _controller.value.isPlaying
                             ? _controller.pause()
                             : _controller.play()
