@@ -75,7 +75,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           arrQuestions.removeAt(index);
           getQuestionsBloc?.updateQuestions(arrQuestions);
         } else {
-          Utils.showToast('hello');
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {

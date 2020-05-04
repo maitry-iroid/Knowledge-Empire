@@ -747,56 +747,110 @@ class Utils {
 
   static String getQueValidationToast(int salesCount) {
     String language = Injector.userData.language;
+    bool isBusinessMode = Injector.isBusinessMode;
 
-    switch (language) {
-      case "English":
-        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
-        break;
-      case "German":
-        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
-        break;
-      case "Chinese":
-        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
-        break;
-      default:
-        return "You need atleast $salesCount Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.";
-        break;
+    if (isBusinessMode) {
+      switch (language) {
+        case "English":
+          return "You need atleast ${salesCount} free Sales Reps and 1 free Service Reps to attempt this Question. You can add more Sales and Service Reps from the Organization.";
+          break;
+        case "German":
+          return "Du brauchst mindestens ${salesCount} freie Vertriebsmitarbeiter und 1 freien Servicemitarbeiter, um diese Frage zu beantworten. Du kannst weitere Vertriebs- und Servicemitarbeiter im Organisationmenü hinzufügen.";
+          break;
+        case "Chinese":
+          return "您需要至少${salesCount}个销售代表和1个服务代表来回答此问题。您可以从组织中添加更多销售代表。";
+          break;
+        default:
+          return "You need atleast ${salesCount} free Sales Reps and 1 free Service Reps to attempt this Question. You can add more Sales and Service Reps from the Organization.";
+          break;
+      }
+    } else {
+      switch (language) {
+        case "English":
+          return "You need at least ${salesCount} free Study Points and 1 free Memory Point to attempt this Question. You can add more Study and Memory Points in the Power-Up section.";
+          break;
+        case "German":
+          return "Du brauchst mindestens ${salesCount} freie Lernpunkte und 1 freie Bestandsfragenkapazität, um diese Frage zu beantworten. Du kannst weitere Kapazitä im Lernbonusmenü hinzufügen.";
+          break;
+        case "Chinese":
+          return "您需要至少${salesCount}个学习点数和1个记忆点数来回答此问题。您可以从威力升级中添加更多学习点数。";
+          break;
+        default:
+          return "You need at least ${salesCount} free Study Points and 1 free Memory Point to attempt this Question. You can add more Study and Memory Points in the Power-Up section.";
+          break;
+      }
     }
   }
 
   static String challengeString(int question, int earn, int totalValue) {
     String language = Injector.userData.language;
-    switch (language) {
-      case "English":
-        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
-        break;
-      case "German":
-        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
-        break;
-      case "Chinese":
-        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
-        break;
-      default:
-        return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
-        break;
+    bool isBusinessMode = Injector.isBusinessMode;
+    if (isBusinessMode) {
+      switch (language) {
+        case "English":
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+        case "German":
+          return "Dein Freund muss ${question} Fragen beantworten. Wenn er gewinnt, verdient er ${earn} % seines Vermögen. Wenn du gewinnst, erhältst du ${totalValue} % deines Vermögens.";
+          break;
+        case "Chinese":
+          return "您的朋友将必须回答${question}个问题。如果他赢了，那么他将获得他的总价值的${earn} ％。如果您赢了，那么您将获得您的总价值的${totalValue} ％。";
+          break;
+        default:
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+      }
+    } else {
+      switch (language) {
+        case "English":
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+        case "German":
+          return "Dein Freund muss ${question} Fragen beantworten. Wenn er gewinnt, verdient er ${earn} % seines Vermögen. Wenn du gewinnst, erhältst du ${totalValue} % deines Vermögens.";
+          break;
+        case "Chinese":
+          return "您的朋友将必须回答${question}个问题。如果他赢了，那么他将获得他的总价值的${earn} ％。如果您赢了，那么您将获得您的总价值的${totalValue} ％。";
+          break;
+        default:
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+      }
     }
   }
 
   static String subscribeText(String moduleName) {
     String language = Injector.userData.language;
-    switch (language) {
-      case "English":
-        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
-        break;
-      case "German":
-        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
-        break;
-      case "Chinese":
-        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
-        break;
-      default:
-        return "Are you sure, you want to unsubscribe $moduleName ? You will lose all the questions from the New Customers";
-        break;
+    bool isBusinessMode = Injector.isBusinessMode;
+    if (isBusinessMode) {
+      switch (language) {
+        case "English":
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+        case "German":
+          return 'Wirklich vom Modul $moduleName abmelden? Aller Fortschritt geht verlohren.';
+          break;
+        case "Chinese":
+          return "您确定要退订学习模块 $moduleName吗? 所有的进步都将丢失.";
+          break;
+        default:
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+      }
+    } else {
+      switch (language) {
+        case "English":
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+        case "German":
+          return "Wirklich vom Modul $moduleName abmelden? Aller Fortschritt geht verlohren.";
+          break;
+        case "Chinese":
+          return "您确定要退订学习模块 $moduleName吗? 所有的进步都将丢失.";
+          break;
+        default:
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+      }
     }
   }
 
@@ -893,5 +947,4 @@ class Utils {
       if (isConnected) customerValueBloc?.getCustomerValue(rq);
     });
   }
-
 }

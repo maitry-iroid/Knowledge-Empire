@@ -398,6 +398,12 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+    _scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+
     LoginRequest loginRequest = LoginRequest();
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
