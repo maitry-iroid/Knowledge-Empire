@@ -217,9 +217,9 @@ class HeaderViewState extends State<HeaderView> {
             ),
           ),
           onTap: () {
-
             Utils.playClickSound();
-            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeProfile));
+            navigationBloc
+                .updateNavigation(HomeData(initialPageType: Const.typeProfile));
           }),
     );
   }
@@ -237,14 +237,13 @@ class HeaderViewState extends State<HeaderView> {
       onTap: () {
         Utils.playClickSound();
 
-        if(Injector.isBusinessMode) {
+        Navigator.push(context, FadeRouteIntro());
+
+       /* if (Injector.isBusinessMode) {
           Navigator.push(context, FadeRouteIntro());
         } else {
-//          Navigator.push(context, FadeRouteProIntro());
           HelpProScreen.showChallengeDialog(context);
-
-        }
-
+        }*/
       },
     );
   }

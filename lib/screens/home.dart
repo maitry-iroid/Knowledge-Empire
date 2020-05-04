@@ -318,13 +318,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     if (_currentPage != item.key) {
       if (item.key == Const.typeHelp)
-        if(Injector.isBusinessMode) {
+        Navigator.push(context, FadeRouteIntro());
+       /* if(Injector.isBusinessMode) {
           Navigator.push(context, FadeRouteIntro());
         } else {
-//          Navigator.push(context, FadeRouteProIntro());
-//          Navigator.push(context, MaterialPageRoute(builder: (context) => HelpProPage()));
           HelpProScreen.showChallengeDialog(context);
-        }
+        }*/
       else
         Utils.performDashboardItemClick(context, item.key);
     }

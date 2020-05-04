@@ -130,101 +130,84 @@ class HelpPageState extends State<HelpPage> {
       child: Container(
         foregroundDecoration: null,
         padding:
-            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 3 : 2),
+            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
         decoration: BoxDecoration(
             image: Injector.isBusinessMode
                 ? DecorationImage(
                     image: AssetImage(Utils.getAssetsImg("bg_header_card")),
                     fit: BoxFit.fill)
                 : null),
-        child: InkResponse(
-          child: Row(
-            children: <Widget>[
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Injector.isBusinessMode
-                      ? Container()
-                      : Container(
-                          alignment: Alignment.center,
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                              color: ColorRes.titleBlueProf,
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1),
-                              borderRadius: BorderRadius.circular(12.5)),
+        child: Row(
+          children: <Widget>[
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Injector.isBusinessMode
+                    ? Container()
+                    : Container(
+                        alignment: Alignment.center,
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                            color: ColorRes.titleBlueProf,
+                            border: Border.all(color: ColorRes.white, width: 1),
+                            borderRadius: BorderRadius.circular(12.5)),
+                      ),
+                Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                  height: 26,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            type != Const.typeMoney
+                ? Stack(
+                    alignment: Alignment.centerLeft,
+                    children: <Widget>[
+                      Container(
+                        height: Injector.isBusinessMode ? 22 : 23,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: ColorRes.greyText,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(color: ColorRes.white, width: 1)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: Injector.isBusinessMode ? 0 : 1),
+                        child: LinearPercentIndicator(
+                          width: Utils.getDeviceWidth(context) / 12,
+                          lineHeight: 22.0,
+                          percent:
+                              HeaderUtils.getProgressInt(type)?.toDouble() ??
+                                  0.toDouble(),
+                          backgroundColor: Colors.transparent,
+                          progressColor: Injector.isBusinessMode
+                              ? Colors.blue
+                              : ColorRes.titleBlueProf,
                         ),
-                  Injector.isBusinessMode
-                      ? Image(
-                          image: AssetImage(Utils.getAssetsImg(
-                              HeaderUtils.getHeaderIcon(type))),
-                          height: 26,
-                        )
-                      : Text(
-                          HeaderUtils.getHeadText(type),
-                          style: TextStyle(fontSize: 15, color: ColorRes.white),
+                      ),
+                      Positioned(
+                        left: 4,
+                        child: Text(
+                          HeaderUtils.getProgress(type).toString() +
+                              (type == Const.typeBrandValue ? "%" : ""),
+                          style: TextStyle(color: ColorRes.white, fontSize: 17),
                         ),
-                ],
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              type != Const.typeMoney
-                  ? Stack(
-                      alignment: Alignment.centerLeft,
-                      children: <Widget>[
-                        Container(
-                          height: Injector.isBusinessMode ? 19 : 21,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: ColorRes.greyText,
-//                          image: Injector.isBusinessMode
-//                              ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_progress')),
-//                                  fit: BoxFit.fill)
-//                              : null,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Injector.isBusinessMode
-                                  ? null
-                                  : Border.all(
-                                      color: ColorRes.white, width: 1)),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: Injector.isBusinessMode ? 1 : 1),
-                          child: LinearPercentIndicator(
-                            width: Utils.getDeviceWidth(context) / 12,
-                            lineHeight: 19.0,
-                            percent:
-                                HeaderUtils.getProgressInt(type)?.toDouble() ??
-                                    0.toDouble(),
-                            backgroundColor: Colors.transparent,
-                            progressColor: Injector.isBusinessMode
-                                ? Colors.blue
-                                : ColorRes.titleBlueProf,
-                          ),
-                        ),
-                        Positioned(
-                          left: 4,
-                          child: Text(
-                            HeaderUtils.getProgress(type).toString() +
-                                (type == Const.typeBrandValue ? "%" : ""),
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 14),
-                          ),
-                        )
-                      ],
-                    )
-                  : Text(
-                      Injector.customerValueData != null
-                          ? Injector.customerValueData.totalBalance.toString()
-                          : "00.00",
-                      style: TextStyle(color: ColorRes.white, fontSize: 16),
-                    ),
-            ],
-          ),
-          onTap: () {},
+                      )
+                    ],
+                  )
+                : Text(
+                    Injector.customerValueData != null
+                        ? Injector.customerValueData.totalBalance.toString()
+                        : "00.00",
+                    style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  ),
+          ],
         ),
       ),
     );
@@ -891,7 +874,6 @@ class HelpPageState extends State<HelpPage> {
                         onTap: () {
                           Utils.playClickSound();
                           if (Navigator.canPop(context)) Navigator.pop(context);
-
                         },
                       )))
         ],
