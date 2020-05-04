@@ -111,9 +111,13 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      type != Const.typeLegal &&
+                      type == Const.typeLegal &&
                               !Utils.isFeatureOn(Const.typeChallenges)
                           ? Container(
+                              width: 18,
+                              height: 18,
+                            )
+                          : Container(
                               margin: EdgeInsets.only(left: 5, right: 5),
                               width: 18,
                               height: 18,
@@ -133,10 +137,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                                         ? ColorRes.white
                                         : ColorRes.hintColor),
                               ),
-                            )
-                          : Container(
-                              width: 18,
-                              height: 18,
                             ),
                       Expanded(
                         child: Text(

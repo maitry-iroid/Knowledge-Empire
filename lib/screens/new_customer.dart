@@ -299,20 +299,18 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                 onTap: () {
                   Utils.playClickSound();
 
-                  if (!Utils.isFeatureOn(Const.typeOrg) ||
-                      (Injector.customerValueData.remainingSalesPerson >=
-                              arrQuestions[index].resources &&
-                          Injector.customerValueData.remainingCustomerCapacity >
-                              0)) {
-                    HomeData homeData = HomeData(
-                        initialPageType: Const.typeEngagement,
-                        questionHomeData: arrQuestions[index],
-                        value: arrQuestions[index].value);
-
-                    navigationBloc.updateNavigation(homeData);
+                  if (Utils.isFeatureOn(Const.typeOrg)) {
+                    if ((Injector.customerValueData.remainingSalesPerson >=
+                            arrQuestions[index].resources &&
+                        Injector.customerValueData.remainingCustomerCapacity >
+                            0)) {
+                      attemptQuestion(index);
+                    } else {
+                      Utils.showToast(Utils.getQueValidationToast(
+                          arrQuestions[index].resources));
+                    }
                   } else {
-                    Utils.showToast(Utils.getQueValidationToast(
-                        arrQuestions[index].resources));
+                    attemptQuestion(index);
                   }
                 },
               ),
@@ -333,7 +331,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 //                    FadeRouteHome(homeData: homeData));
               navigationBloc.updateNavigation(homeData);
             } else {
-              Utils.showToast(Utils.getQueValidationToast(arrQuestions[index].resources));
+              Utils.showToast(
+                  Utils.getQueValidationToast(arrQuestions[index].resources));
             }
           },
         ),
@@ -384,5 +383,14 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         return showItem(index);
       },
     );
+  }
+
+  void attemptQuestion(int index) {
+    HomeData homeData = HomeData(
+        initialPageType: Const.typeEngagement,
+        questionHomeData: arrQuestions[index],
+        value: arrQuestions[index].value);
+
+    navigationBloc.updateNavigation(homeData);
   }
 }
