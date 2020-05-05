@@ -485,6 +485,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Utils.getText(context, StringRes.existingCustomers),
           Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer",
           Const.typeExistingCustomer),
+
     );
 
     if (Utils.isFeatureOn(Const.typeReward))

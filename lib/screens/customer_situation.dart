@@ -459,7 +459,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           Utils.playClickSound();
           showDialog(
             context: context,
-            builder: (_) => CorrectWrongMediaAlert(),
+            builder: (_) => CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
           );
         },
         child: Stack(
@@ -507,7 +507,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           showDialog(
             context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
-            builder: (_) => CorrectWrongMediaAlert(),
+            builder: (_) => CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
           );
         },
       ),
@@ -781,6 +781,9 @@ checkAnswer(int index) {
 //image show  in alert
 
 class CorrectWrongMediaAlert extends StatefulWidget {
+  final bool isFromExistingCustomer;
+
+  const CorrectWrongMediaAlert(this.isFromExistingCustomer);
   @override
   State<StatefulWidget> createState() => CorrectWrongMediaAlertState();
 }
@@ -817,7 +820,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   bool checkimg = true;
 
   correctWrongImage() {
-    if (questionDataCustSituation.isAnsweredCorrect == true) {
+    if (questionDataCustSituation.isAnsweredCorrect == true || !widget.isFromExistingCustomer) {
       return questionDataCustSituation.correctAnswerImage;
     } else {
       return questionDataCustSituation.inCorrectAnswerImage;
