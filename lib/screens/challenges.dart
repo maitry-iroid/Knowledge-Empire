@@ -67,7 +67,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   Future showIntroDialog() async {
     if (Injector.introData == null || Injector.introData.challenge1 == 0)
-      await DisplayDialogs.showYourWillIsAtYourCommand(context);
+      await DisplayDialogs.showIntroChallenge1(context);
   }
 
   TextEditingController searchController = TextEditingController();

@@ -85,7 +85,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (Injector.introData == null ||
           Injector.introData.customerSituation == null ||
           Injector.introData.customerSituation == 0) {
-        await DisplayDialogs.showImpactOnSalesAndService(context);
+        await DisplayDialogs.showIntroCustomerSituation(context);
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);
       }

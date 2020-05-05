@@ -102,8 +102,8 @@ class DisplayDialogs {
         ));
   }*/
 
-  static showChallengeDialog(BuildContext context, String userName
-      , QuestionData questionData) {
+  static showChallengeDialog(
+      BuildContext context, String userName, QuestionData questionData) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -116,8 +116,9 @@ class DisplayDialogs {
               height: Utils.getDeviceHeight(context) / 1.4,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(
-                          "challenges_bg_alert")),fit: BoxFit.cover)),
+                      image:
+                          AssetImage(Utils.getAssetsImg("challenges_bg_alert")),
+                      fit: BoxFit.cover)),
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -129,14 +130,16 @@ class DisplayDialogs {
                           top: 30, left: 10, right: 10, bottom: 10),
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
                             new Container(
                               height: 30,
                               padding: EdgeInsets.all(8),
-                              margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 22),
+                              margin: EdgeInsets.only(
+                                  top: Utils.getDeviceHeight(context) / 22),
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(Utils.getAssetsImg(
@@ -144,23 +147,35 @@ class DisplayDialogs {
                               child: Center(
                                 child: Text(
                                     Utils.getText(context, StringRes.challenge),
-                                    style:
-                                        TextStyle(color: ColorRes.textRecordBlue)),
+                                    style: TextStyle(
+                                        color: ColorRes.textRecordBlue)),
                               ),
                             ),
                             SizedBox(height: 9),
-                            challengesRow(Utils.getText(context, StringRes.by)+": ", userName),
-                            challengesRow(Utils.getText(context, StringRes.inText)+": ", "${questionData.moduleName ?? ""}"),
-                            challengesRow(Utils.getText(context, StringRes.toWin)+": ", questionData.winningAmount.toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
-                            challengesRow(Utils.getText(context, StringRes.questions)+": ", "${questionData.totalQuestion ?? ""}"),
+                            challengesRow(
+                                Utils.getText(context, StringRes.by) + ": ",
+                                userName),
+                            challengesRow(
+                                Utils.getText(context, StringRes.inText) + ": ",
+                                "${questionData.moduleName ?? ""}"),
+                            challengesRow(
+                                Utils.getText(context, StringRes.toWin) + ": ",
+                                questionData.winningAmount
+                                    .toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
+                            challengesRow(
+                                Utils.getText(context, StringRes.questions) +
+                                    ": ",
+                                "${questionData.totalQuestion ?? ""}"),
                             InkResponse(
                               child: Container(
-                                padding: EdgeInsets.only(left: 35, right: 35, top: 10, bottom: 10),
+                                padding: EdgeInsets.only(
+                                    left: 35, right: 35, top: 10, bottom: 10),
                                 margin: EdgeInsets.only(top: 5),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(Utils.getAssetsImg(
-                                            'chhellages_alert_next_bg')),fit: BoxFit.fill)),
+                                            'chhellages_alert_next_bg')),
+                                        fit: BoxFit.fill)),
                                 child: Text(
                                     Utils.getText(context, StringRes.next),
                                     style: TextStyle(color: ColorRes.white)),
@@ -227,7 +242,6 @@ class DisplayDialogs {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Row(
-
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -338,7 +352,7 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Profile screen
-  static Future<Widget> showIntroDialog(BuildContext context) async {
+  static showIntroProfile1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -357,8 +371,8 @@ class DisplayDialogs {
                 Utils.playClickSound();
                 Injector.introData.profile1 = 1;
                 await Injector.setIntroData(Injector.introData);
-                showSettingsDialog(context);
                 Navigator.of(context).pop();
+                showIntroProfile2(context);
               } catch (e) {
                 print(e);
               }
@@ -367,7 +381,7 @@ class DisplayDialogs {
         });
   }
 
-  static showSettingsDialog(BuildContext context) async {
+  static showIntroProfile2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -395,7 +409,7 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Organization screen
-  static Future showHireHRDialog(BuildContext context) async {
+  static Future showIntroOrg1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -415,13 +429,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org1 = 1;
               await Injector.setIntroData(Injector.introData);
-              showHireHRBoardDialog(context);
+              showIntroOrg2(context);
             },
           );
         });
   }
 
-  static Future<Widget> showHireHRBoardDialog(BuildContext context) async {
+  static showIntroOrg2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -441,13 +455,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org2 = 1;
               await Injector.setIntroData(Injector.introData);
-              showEmployOMeterDialog(context);
+              showIntroOrg3(context);
             },
           );
         });
   }
 
-  static Future<Widget> showEmployOMeterDialog(BuildContext context) async {
+  static showIntroOrg3(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -467,13 +481,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org3 = 1;
               await Injector.setIntroData(Injector.introData);
-              showCostOfEmployees(context);
+              showIntroOrg4(context);
             },
           );
         });
   }
 
-  static Future<Widget> showCostOfEmployees(BuildContext context) async {
+  static showIntroOrg4(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -613,7 +627,7 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Business sector screen
-  static showCustomerRelationshipManagement(BuildContext context) async {
+  static showIntroLearningModule1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -637,13 +651,13 @@ class DisplayDialogs {
               Injector.introData.learningModule1 = 1;
               await Injector.setIntroData(Injector.introData);
 
-              showAreaOfCompetency(context);
+              showIntroLearningModule2(context);
             },
           );
         });
   }
 
-  static showAreaOfCompetency(BuildContext context) async {
+  static showIntroLearningModule2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -720,7 +734,7 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for New Customer screen
-  static showIntroHeartOfTheBusiness(BuildContext context) async {
+  static showIntroNewCustomer1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -741,13 +755,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.newCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
-              showListOfPotentialCustomers(context);
+              showIntroNewCustomers2(context);
             },
           );
         });
   }
 
-  static showListOfPotentialCustomers(BuildContext context) async {
+  static showIntroNewCustomers2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -801,7 +815,7 @@ class DisplayDialogs {
   }
 
   //todo  customer situation
-  static showImpactOnSalesAndService(BuildContext context) async {
+  static showIntroCustomerSituation(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -880,7 +894,7 @@ class DisplayDialogs {
   }
 
   //todo  This dialogs only for Existing Customer screen
-  static showServingYourExistingCustomers(BuildContext context) async {
+  static showIntroExisting1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -903,13 +917,13 @@ class DisplayDialogs {
               Injector.introData.existingCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
 //              await Injector.updateIntroDialogType(Const.introListOfExistingCustomers);
-              showListOfExistingCustomers(context);
+              showIntroExisting2(context);
             },
           );
         });
   }
 
-  static showListOfExistingCustomers(BuildContext context) async {
+  static showIntroExisting2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -987,7 +1001,7 @@ class DisplayDialogs {
   }
 
   //todo This dialogs only for Challenges screen
-  static showYourWillIsAtYourCommand(BuildContext context) async {
+  static showIntroChallenge1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1009,13 +1023,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.challenge1 = 1;
               await Injector.setIntroData(Injector.introData);
-              showIntroChallenge(context);
+              showIntroChallenge2(context);
             },
           );
         });
   }
 
-  static showIntroChallenge(BuildContext context) async {
+  static showIntroChallenge2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1043,7 +1057,7 @@ class DisplayDialogs {
   }
 
   //todo This dialogs only for Ranking screen
-  static showMarketingAndCommunications(BuildContext context) async {
+  static showIntroRanking1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1067,13 +1081,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.ranking1 = 1;
               await Injector.setIntroData(Injector.introData);
-              showRanking(context);
+              showIntroRanking2(context);
             },
           );
         });
   }
 
-  static showRanking(BuildContext context) async {
+  static showIntroRanking2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1101,7 +1115,7 @@ class DisplayDialogs {
   }
 
   //todo This dialogs only for Team screen
-  static showYourTeamsPerformance(BuildContext context) async {
+  static showIntroTeam1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1124,13 +1138,13 @@ class DisplayDialogs {
 
               Injector.introData.team1 = 1;
               await Injector.setIntroData(Injector.introData);
-              showYourTeams(context);
+              showIntroTeam2(context);
             },
           );
         });
   }
 
-  static showYourTeams(BuildContext context) async {
+  static showIntroTeam2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1151,13 +1165,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.team2 = 1;
               await Injector.setIntroData(Injector.introData);
-              showYourTeams2(context);
+              showYourTeam3(context);
             },
           );
         });
   }
 
-  static showYourTeams2(BuildContext context) async {
+  static showYourTeam3(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1185,7 +1199,7 @@ class DisplayDialogs {
   }
 
   //todo This dialogs only for P+L screen
-  static showThePersonYouCanCountOn(BuildContext context) async {
+  static showIntroPL1(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -1207,13 +1221,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.pl1 = 1;
               await Injector.setIntroData(Injector.introData);
-              showIntroPL(context);
+              showIntroPL2(context);
             },
           );
         });
   }
 
-  static showIntroPL(BuildContext context) async {
+  static showIntroPL2(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,

@@ -36,7 +36,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   Future<void> showIntroDialog() async {
     if (Injector.introData == null || Injector.introData.newCustomer1 == 0)
-      await DisplayDialogs.showIntroHeartOfTheBusiness(context);
+      await DisplayDialogs.showIntroNewCustomer1(context);
 
     initData();
   }

@@ -38,7 +38,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   Future initContent() async {
     if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
-      await DisplayDialogs.showServingYourExistingCustomers(context);
+      await DisplayDialogs.showIntroExisting1(context);
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;

@@ -583,7 +583,7 @@ class _RankingPageState extends State<RankingPage> {
 
   void getData() async {
     if (Injector.introData == null || Injector.introData.ranking1 == 0)
-      await DisplayDialogs.showMarketingAndCommunications(context);
+      await DisplayDialogs.showIntroRanking1(context);
 
     bool isConnected = await Utils.isInternetConnectedWithAlert(context);
 

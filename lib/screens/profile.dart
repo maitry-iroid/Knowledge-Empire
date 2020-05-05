@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> showIntroDialog() async {
     if (Injector.introData == null || Injector.introData.profile1 == 0)
-      await DisplayDialogs.showIntroDialog(context);
+      await DisplayDialogs.showIntroProfile1(context);
 
     myFocusNode = FocusNode();
 

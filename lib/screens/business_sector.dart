@@ -51,18 +51,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   Future<void> showIntroDialog() async {
     if (Injector.introData == null || Injector.introData.learningModule1 == 0)
-      await DisplayDialogs.showCustomerRelationshipManagement(context);
+      await DisplayDialogs.showIntroLearningModule1(context);
 
     //TODO for testing
-//    await DisplayDialogs.showThePersonYouCanCountOn(context); //  PL
-//    await DisplayDialogs.showServingYourExistingCustomers(context); // existing
-//    await DisplayDialogs.showIntroHeartOfTheBusiness(context); //new
-//    await DisplayDialogs.showHireHRDialog(context);  //org
+//    await DisplayDialogs.showIntroPL1(context); //  PL
+//    await DisplayDialogs.showIntroOrg1(context); //  org
+//    await DisplayDialogs.showIntroCustomerSituation(context); //  customer situation
+//    await DisplayDialogs.showIntroExisting1(context); // existing
+//    await DisplayDialogs.showIntroNewCustomer1(context); //new
+//    await DisplayDialogs.showIntroOrg1(context);  //org
 //    await DisplayDialogs.showIntroRewards(context);  //reward
-//    await DisplayDialogs.showMarketingAndCommunications(context);  //ranking
-//    await DisplayDialogs.showYourWillIsAtYourCommand(context);  //challenge
-//    await DisplayDialogs.showYourTeamsPerformance(context);  //team
-//    await DisplayDialogs.showIntroDialog(context); // profile
+//    await DisplayDialogs.showIntroRanking1(context);  //ranking
+//    await DisplayDialogs.showIntroChallenge1(context);  //challenge
+//    await DisplayDialogs.showIntroTeam1(context);  //team
+//    await DisplayDialogs.showIntroProfile1(context); // profile
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
       if (isConnected) {

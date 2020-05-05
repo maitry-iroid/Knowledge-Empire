@@ -67,7 +67,7 @@ class _PLPageState extends State<PLPage> {
     await Future.delayed(Duration(milliseconds: 50));
 
     if (Injector.introData == null || Injector.introData.pl1 == 0)
-      await DisplayDialogs.showThePersonYouCanCountOn(context);
+      await DisplayDialogs.showIntroPL1(context);
 
     getPerformanceData(Const.plDay);
   }

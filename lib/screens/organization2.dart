@@ -36,7 +36,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   Future showIntroDialog() async {
     if (Injector.introData == null || Injector.introData.org1 == 0)
-      await DisplayDialogs.showHireHRDialog(context);
+      await DisplayDialogs.showIntroOrg1(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
