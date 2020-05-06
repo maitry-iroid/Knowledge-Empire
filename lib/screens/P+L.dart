@@ -219,7 +219,7 @@ class _PLPageState extends State<PLPage> {
                       fit: BoxFit.fill)),
               child: Text(
                 Utils.getText(context, StringRes.sevenDaysDevelopment),
-                style: TextStyle(color: ColorRes.white),
+                style: TextStyle(color:  ColorRes.white ),
               ),
             ),
             Expanded(
@@ -272,7 +272,7 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.revenue),
-              style: TextStyle(color: ColorRes.white),
+              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
             ),
           ),
           Image.asset(
@@ -283,7 +283,7 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.cash),
-              style: TextStyle(color: ColorRes.white),
+              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
             ),
           )
         ],

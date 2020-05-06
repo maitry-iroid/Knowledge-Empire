@@ -1,3 +1,7 @@
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+
 class QuestionRequest {
   int userId;
 
@@ -82,6 +86,7 @@ class QuestionData {
   int videoLoop;
   int totalQuestion;
   int isFirstQuestion;
+  int questionCurrentIndex;
 
   var winningAmount;
 
@@ -109,6 +114,7 @@ class QuestionData {
       this.videoPlay,
       this.videoLoop,
       this.winningAmount,
+      this.questionCurrentIndex,
       this.totalQuestion,
       this.isFirstQuestion,
       this.attemptTime});
@@ -126,6 +132,7 @@ class QuestionData {
     companyId = json['companyId'];
     daysInList = json['daysInlist'];
     counter = json['counter'];
+    questionCurrentIndex = json['questionCurrentIndex'];
     description = json['description'];
     correctAnswerId = json['correctAnswerId'];
     loyalty = json['loyalty'];
@@ -133,6 +140,15 @@ class QuestionData {
     resources = json['resources'];
     mediaLink = json['mediaLink'];
     winningAmount = json['winningAmount'];
+    if (json.containsKey("questionAnswerStatus") &&
+        json['questionAnswerStatus'] != null) {
+      List ansList = json['questionAnswerStatus'];
+      if (ansList != null && ansList.length > 0) {
+        Injector.countList = ansList.map((e) => QuestionCountWithData.fromJson(e)).toList();
+
+      }
+    }
+
     if (json['answer'] != null) {
       answer = new List<Answer>();
       json['answer'].forEach((v) {

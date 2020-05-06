@@ -16,11 +16,21 @@ import 'package:ke_employee/screens/help_pro_screen.dart';
 import 'package:ke_employee/screens/help_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import 'challenge_header.dart';
+
 class HeaderView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
+  final bool isChallenge;
+  final int challengeCount;
+  final int currentIndex;
 
-  HeaderView({this.scaffoldKey, this.isShowMenu});
+  HeaderView(
+      {this.scaffoldKey,
+      this.isShowMenu,
+      this.isChallenge,
+      this.challengeCount,
+      this.currentIndex});
 
 //  List<Organization> arrOrganization = Injector.customerValueData.organization;
 
@@ -298,6 +308,19 @@ class HeaderViewState extends State<HeaderView> {
   }
 
   _buildSearchResults(CustomerValueData data) {
+    if (widget.isChallenge != null && widget.isChallenge) {
+      if (widget.challengeCount != null) {
+        int indexData = Injector.countList.indexWhere(
+            (QuestionCountWithData questionCountWithData) =>
+                questionCountWithData.questionIndex == widget.currentIndex);
+        if (indexData == -1) {
+          indexData = 0;
+        }
+        return ChallengeHeader(
+            challengeCount: widget.challengeCount, currentIndex: indexData);
+      }
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[

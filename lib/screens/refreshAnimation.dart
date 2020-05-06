@@ -1,3 +1,5 @@
+/*
 abstract class RefreshAnimation {
-  onRefresh() {}
+  onRefreshAchievement(){}
 }
+*/
