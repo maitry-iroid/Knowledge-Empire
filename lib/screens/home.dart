@@ -596,6 +596,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initContent() async {
+
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
 
