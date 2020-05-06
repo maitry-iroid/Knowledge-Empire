@@ -34,7 +34,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       getIntroData();
     }
 
-    Injector.isSoundEnable = false;
   }
 
   @override
@@ -64,7 +63,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
             if (response.data.isNotEmpty) {
               Injector.prefs.setString(
-                  PrefKeys.onOffStatusData, jsonEncode(response.toJson()));
+                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
               Injector.dashboardStatusResponse = response;
 
               arrType = initFeatureDataArray();

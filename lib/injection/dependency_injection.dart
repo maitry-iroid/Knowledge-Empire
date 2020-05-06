@@ -32,6 +32,7 @@ import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
+
 class Injector {
 //  static final Injector _singleton = new Injector._internal();
 
@@ -84,7 +85,6 @@ class Injector {
   static List<QuestionCountWithData> countList = new List();
 
   static getInstance() async {
-
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
 
@@ -100,12 +100,6 @@ class Injector {
     deviceId = await DeviceId.getID;
     print(deviceId);
 
-    if (prefs.getBool(PrefKeys.isSoundEnable) == null) {
-      await prefs.setBool(PrefKeys.isSoundEnable, true);
-    }
-
-    isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
-
     updateInstance();
     init();
   }
@@ -116,7 +110,7 @@ class Injector {
 
   static Future<Null> init() async {
     final ByteData data =
-    await rootBundle.load(Utils.getAssetsImg("small_coin"));
+        await rootBundle.load(Utils.getAssetsImg("small_coin"));
     image = await loadImage(new Uint8List.view(data.buffer));
   }
 
@@ -137,23 +131,28 @@ class Injector {
       isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
       dialogType = prefs.getInt(PrefKeys.dialogTypes);
 
-      if (prefs.getString(PrefKeys.customerValueData) != null)
+      if (prefs.getString(PrefKeys.customerValueData) != null) {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
+        
+        isSoundEnable  = customerValueData.isEnableSound==1;
+      }
 
       if (prefs.getString(PrefKeys.introData) != null) {
-        introData = IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+        introData =
+            IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
 
         updateIntroData();
       }
 
       if (prefs.getString(PrefKeys.introModel) != null) {
-        introModel = IntroModel.fromJson(jsonDecode(prefs.getString(PrefKeys.introModel)));
+        introModel = IntroModel.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.introModel)));
       }
 
-      if (prefs.getString(PrefKeys.onOffStatusData) != null) {
+      if (prefs.getString(PrefKeys.dashboardStatusData) != null) {
         dashboardStatusResponse = DashboardStatusResponse.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.onOffStatusData)));
+            jsonDecode(prefs.getString(PrefKeys.dashboardStatusData)));
       }
 
       headerStreamController = StreamController.broadcast();

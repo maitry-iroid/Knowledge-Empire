@@ -660,7 +660,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
             if (response.data.isNotEmpty) {
               Injector.prefs.setString(
-                  PrefKeys.onOffStatusData, jsonEncode(response.toJson()));
+                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
               Injector.dashboardStatusResponse = response;
 
               if (mounted) setState(() {});

@@ -50,7 +50,6 @@ class WebApi {
   static String rqGameIntro = "gameIntro";
   static String forceUpdate = "forceUpdate";
   static String updateUserSetting = "updateUserSetting";
-//  static String rqDashboardLockStatus = "dashboardLockStatus";
   static String rqGetDashboardStatus = "getDashboardStatus";
   static String getIntroText = "getIntroText";
 

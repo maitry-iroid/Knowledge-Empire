@@ -433,8 +433,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             value: Injector.isSoundEnable,
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
-                              await Injector.prefs
-                                  .setBool(PrefKeys.isSoundEnable, value);
+                              Injector.customerValueData.isEnableSound = Injector.isSoundEnable?1:0;
+                              Injector.setCustomerValueData(Injector.customerValueData);
+
                               Utils.playBackgroundMusic();
 
                               updateType = 2.toString();
@@ -1408,7 +1409,6 @@ class _ProfilePageState extends State<ProfilePage> {
     Injector.prefs.remove(PrefKeys.customerValueData);
     Injector.prefs.remove(PrefKeys.learningModles);
     Injector.prefs.remove(PrefKeys.download);
-    Injector.prefs.remove(PrefKeys.isSoundEnable);
     Injector.prefs.remove(PrefKeys.isIntroRemaining);
     Injector.prefs.remove(PrefKeys.currentIntroType);
     Injector.prefs.remove(PrefKeys.deviceToken);
