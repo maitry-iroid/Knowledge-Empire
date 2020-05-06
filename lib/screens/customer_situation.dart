@@ -70,6 +70,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   void initState() {
     questionDataCustomerSituation = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge;
+    isCameFromNewCustomer = widget.homeData.isCameFromNewCustomer;
     homeData = widget.homeData;
     showIntroDialog();
 
@@ -96,16 +97,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (isCameFromNewCustomer || isChallenge) {
         Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
         if (!isChallenge ||
-            (Injector.countList.length == questionData.questionCurrentIndex)) {
+            (Injector.countList.length == questionDataCustSituation.questionCurrentIndex)) {
           Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
         }
-        Utils.checkAudio(questionData.isAnsweredCorrect==1);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
       }
 
       int index = Injector.countList.indexWhere(
           (QuestionCountWithData questionCountWithData) =>
               questionCountWithData.questionIndex ==
-              questionData.questionCurrentIndex);
+                  questionDataCustSituation.questionCurrentIndex);
 
       if (index != -1) {
         Injector.countList[index].color = ColorRes.greenDot;
@@ -117,13 +118,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         int index = Injector.countList.indexWhere(
             (QuestionCountWithData questionCountWithData) =>
                 questionCountWithData.questionIndex ==
-                questionData.questionCurrentIndex);
+                    questionDataCustSituation.questionCurrentIndex);
         if (index != -1) {
           Injector.countList[index].color = ColorRes.red;
           getChallengeQueBloc?.updateQuestions(index, false);
         }
 
-        Utils.checkAudio(questionData.isAnsweredCorrect==1);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
       }
     }
     setState(() {});

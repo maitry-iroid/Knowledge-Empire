@@ -244,7 +244,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     if (first || second) {
       if (!homeData.isChallenge ||
-          (Injector.countList.length == questionData.questionCurrentIndex)) {
+          (Injector.countList.length == homeData.questionHomeData.questionCurrentIndex)) {
         int index = Injector.countList.indexWhere(
             (QuestionCountWithData mQuestionCountWithData) =>
                 mQuestionCountWithData.isCorrect != null
