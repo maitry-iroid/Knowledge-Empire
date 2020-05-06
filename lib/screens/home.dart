@@ -110,7 +110,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   HomeData homeData;
 
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -251,7 +250,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     ? !mQuestionCountWithData.isCorrect
                     : false);
         if (!homeData.isChallenge || index == -1) {
-            isCoinViseble = true;
+          isCoinViseble = true;
         }
       }
     } else
@@ -376,11 +375,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       top: !isCoinViseble ? top : 5,
       left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
-
         isCoinViseble = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
         setState(() {});
+
       },
       child: Container(
         child: isCoinViseble
@@ -596,7 +595,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initContent() async {
-
 //    BackgroundFetch.start().then((int status) async {
 //      print('[BackgroundFetch] start success: $status');
 
