@@ -376,6 +376,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       top: !isCoinViseble ? top : 5,
       left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
+
         isCoinViseble = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
