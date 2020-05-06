@@ -232,7 +232,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       first = _currentPage == Const.typeCustomerSituation &&
           ((homeData.isCameFromNewCustomer != null &&
               homeData.isCameFromNewCustomer &&
-              homeData.questionHomeData.isAnsweredCorrect));
+              homeData.questionHomeData.isAnsweredCorrect==1));
       second = homeData.isChallenge != null &&
               homeData.isChallenge &&
               homeData.questionHomeData != null

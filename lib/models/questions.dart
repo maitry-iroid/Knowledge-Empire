@@ -79,7 +79,7 @@ class QuestionData {
   List<Answer> answer;
   String correctAnswerImage;
   String inCorrectAnswerImage;
-  bool isAnsweredCorrect;
+  int isAnsweredCorrect;
   int resources;
   String attemptTime;
   int videoPlay;
@@ -114,6 +114,7 @@ class QuestionData {
       this.videoPlay,
       this.videoLoop,
       this.winningAmount,
+      this.isAnsweredCorrect,
       this.questionCurrentIndex,
       this.totalQuestion,
       this.isFirstQuestion,
@@ -139,6 +140,7 @@ class QuestionData {
     value = json['value'];
     resources = json['resources'];
     mediaLink = json['mediaLink'];
+    isAnsweredCorrect = json['isAnsweredCorrect'];
     winningAmount = json['winningAmount'];
     if (json.containsKey("questionAnswerStatus") &&
         json['questionAnswerStatus'] != null) {
@@ -187,6 +189,7 @@ class QuestionData {
     data['videoPlay'] = this.videoPlay;
     data['videoLoop'] = this.videoLoop;
     data['mediaLink'] = this.mediaLink;
+    data['isAnsweredCorrect'] = this.isAnsweredCorrect;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();
     }

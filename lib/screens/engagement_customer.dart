@@ -248,7 +248,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       return;
     }
 
-    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer)?1:0;
 
     SubmitAnswerRequest rq =
         Injector.prefs.getString(PrefKeys.answerData) != null
@@ -261,7 +261,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     await Injector.prefs
         .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
 
-    if (questionData.isAnsweredCorrect) {
+    if (questionData.isAnsweredCorrect==1) {
       Injector.customerValueData.totalBalance =
           Injector.customerValueData.totalBalance + questionData.value;
 
@@ -294,14 +294,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       return;
     }
 
-    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer)?1:0;
 
     SubmitChallengesRequest rq = SubmitChallengesRequest();
 
     rq.userId = Injector.userData.userId;
     rq.challengeId = questionDataEngCustomer.challengeId;
     rq.questionId = questionDataEngCustomer.questionId;
-    rq.isAnsweredCorrect = questionData.isAnsweredCorrect ? 1 : 0;
+    rq.isAnsweredCorrect = questionData.isAnsweredCorrect ;
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -506,7 +506,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.moduleId = questionData.moduleId;
     if (!isChallenge) {
       submitAnswer.counter = max(
-          questionData.isAnsweredCorrect
+          questionData.isAnsweredCorrect==1
               ? (questionData.counter + 1)
               : (questionData.counter ~/ 2).round(),
           0);
@@ -514,7 +514,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
     }
-    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
+    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect==1;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();

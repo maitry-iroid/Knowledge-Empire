@@ -7,17 +7,11 @@ import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/commonview/header.dart';
-import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
-
-//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
 import '../helper/constant.dart';
@@ -41,13 +35,9 @@ FileInfo fileInfo;
 HomeData homeData;
 
 correctWrongImage() {
-  if (homeData != null && homeData.isCameFromNewCustomer) {
-    return questionDataCustSituation.correctAnswerImage;
-  } else {
-    return questionDataCustSituation.isAnsweredCorrect == true
-        ? questionDataCustSituation.correctAnswerImage
-        : questionDataCustSituation.inCorrectAnswerImage;
-  }
+  return questionDataCustSituation.isAnsweredCorrect == 1
+      ? questionDataCustSituation.correctAnswerImage
+      : questionDataCustSituation.inCorrectAnswerImage;
 }
 
 class CustomerSituationPage extends StatefulWidget {
@@ -64,7 +54,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   QuestionData questionDataCustomerSituation;
   bool isChallenge;
-  bool isCameFromNewCustomer;
+  bool isCameFromNewCustomer = false;
 
   int index = 1;
 
@@ -80,7 +70,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   void initState() {
     questionDataCustomerSituation = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge;
-    isCameFromNewCustomer = widget.homeData.isCameFromNewCustomer;
     homeData = widget.homeData;
     showIntroDialog();
 
@@ -95,7 +84,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     correctWrongImage();
 
-    if (questionDataCustSituation.isAnsweredCorrect == true) {
+    if (questionDataCustSituation.isAnsweredCorrect == 1) {
       if (Injector.introData == null ||
           Injector.introData.customerSituation == null ||
           Injector.introData.customerSituation == 0) {
@@ -487,8 +476,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           Utils.playClickSound();
           showDialog(
             context: context,
-            builder: (_) =>
-                CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
+            builder: (_) => CorrectWrongMediaAlert(),
           );
         },
         child: Stack(
@@ -536,8 +524,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           showDialog(
             context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
-            builder: (_) =>
-                CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
+            builder: (_) => CorrectWrongMediaAlert(),
           );
         },
       ),
@@ -811,9 +798,7 @@ checkAnswer(int index) {
 //image show  in alert
 
 class CorrectWrongMediaAlert extends StatefulWidget {
-  final bool isFromExistingCustomer;
-
-  const CorrectWrongMediaAlert(this.isFromExistingCustomer);
+  const CorrectWrongMediaAlert();
 
   @override
   State<StatefulWidget> createState() => CorrectWrongMediaAlertState();
