@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/header_utils.dart';
@@ -236,14 +237,10 @@ class HeaderViewState extends State<HeaderView> {
       ),
       onTap: () {
         Utils.playClickSound();
+        Injector.isBusinessMode
+            ? Navigator.push(context, FadeRouteIntro())
+            : DisplayDialogs.professionalDialog(context);
 
-        Navigator.push(context, FadeRouteIntro());
-
-       /* if (Injector.isBusinessMode) {
-          Navigator.push(context, FadeRouteIntro());
-        } else {
-          HelpProScreen.showChallengeDialog(context);
-        }*/
       },
     );
   }

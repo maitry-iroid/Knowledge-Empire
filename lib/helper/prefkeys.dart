@@ -14,6 +14,7 @@ class PrefKeys {
   static var badgeCount= "badgeCount";
   static var dialogTypes= "dialogTypes";
   static var introData= "introData";
+  static var introModel= "introModel";
   static var isCancelDialog= "isCancelDialog";
   static var lockStatusData= "lockStatusData";
     static var unreadBubbleCountData= "unreadBubbleCountData";

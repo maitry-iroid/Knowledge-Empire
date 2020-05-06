@@ -19,6 +19,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/intro.dart';
+import 'package:ke_employee/models/intro_model.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:package_info/package_info.dart';
@@ -64,6 +65,7 @@ class Injector {
 
   static PackageInfo packageInfo;
   static BuildContext buildContext;
+  static IntroModel introModel;
 
 //  factory Injector {
 //    return _singleton;
@@ -114,10 +116,13 @@ class Injector {
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
       if (prefs.getString(PrefKeys.introData) != null) {
-        introData =
-            IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+        introData = IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
 
         updateIntroData();
+      }
+
+      if (prefs.getString(PrefKeys.introModel) != null) {
+        introModel = IntroModel.fromJson(jsonDecode(prefs.getString(PrefKeys.introModel)));
       }
 
       if (prefs.getString(PrefKeys.onOffStatusData) != null) {
@@ -134,6 +139,7 @@ class Injector {
       isBusinessMode = mode == Const.businessMode;
 
       getIntroData();
+      getIntroText();
     }
   }
 
@@ -160,8 +166,7 @@ class Injector {
 
     userId = _user.userId;
 
-   updateMode(_user.mode);
-
+    updateMode(_user.mode);
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
@@ -186,8 +191,6 @@ class Injector {
     if (_introData != null) {
       await Injector.prefs
           .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
-
-//      updateIntroData();
       introData = _introData;
     }
   }
@@ -213,6 +216,24 @@ class Injector {
         }).catchError((e) {
           print("getIntro" + e.toString());
           // Utils.showToast(e.toString());
+        });
+      }
+    });
+  }
+
+  static getIntroText() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 1;
+
+        WebApi().callAPI(WebApi.getIntroText, rq.toJson()).then((data) async {
+          if (data != null) {
+            introModel = IntroModel.fromJson(data);
+          }
+        }).catchError((e) {
+          print("getIntro" + e.toString());
         });
       }
     });

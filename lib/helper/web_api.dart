@@ -52,6 +52,7 @@ class WebApi {
   static String updateUserSetting = "updateUserSetting";
 //  static String rqDashboardLockStatus = "dashboardLockStatus";
   static String rqGetDashboardStatus = "getDashboardStatus";
+  static String getIntroText = "getIntroText";
 
   static getRequest(String req, String data) {
     return {

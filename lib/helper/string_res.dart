@@ -3,6 +3,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 class StringRes {
   static String username = Injector.userData?.name ?? "";
 
+  //<editor-fold desc="old strings">
   //main options
   static var home = "home";
   static var businessSector = "businessSector";
@@ -55,6 +56,7 @@ class StringRes {
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
+
 //  static var selectLanguages = "selectLanguages"; //onlu define english
 
   //organization
@@ -319,7 +321,6 @@ class StringRes {
 
   //index
 
-
   //validation
   static var emailEmpty = "emailEmpty";
   static var passWordEmpty = "passWordEmpty";
@@ -364,8 +365,6 @@ class StringRes {
   static var strUrlExeption = "strUrlExeption";
   static var strOpen = "strOpen";
 
-
-
   //help screen
   static var helpProProfile = "helpProProfile";
   static var helpProEmployMeter = "helpProEmployMeter";
@@ -383,14 +382,13 @@ class StringRes {
   static var helpProP = "helpProP";
   static var helpProRanking = "helpProRanking";
 
+  //</editor-fold>
 
-
-
-//  static var empOMasterDetails = "empOMasterDetails";
+  static String strProProfile="strProProfile";
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
-      //region english
+      //<editor-fold desc="english">
       //main options
       'home': "Home",
       'businessSector': "Business Sector",
@@ -471,7 +469,6 @@ class StringRes {
       'alertUnFriendSuccess': "Unfriend successfully",
       'alertUChallengeSent': "Challenge sent successfully!",
 
-
       //learning module
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
@@ -479,12 +476,13 @@ class StringRes {
       'downLoad': 'DownLoad',
       'size': 'Size',
       'description': 'Description',
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
+      'alertWantToSubscribe1':
+          "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
       'strDownloadText': "This module will occupie ",
       'strDownloadNewText': "This module will occupie ",
-      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
+      'alertNotAllowed': "You can not unsubscribe assigned Business Segments.",
 
       //engage customer
       'engagement': 'Situation',
@@ -535,13 +533,11 @@ class StringRes {
       'employees': "Employees",
       'salaries': "Salaries",
       'customers': "Customers",
-      'customers': "Customers",
       'day': "Day",
       'month': "Month",
       'year': "Year",
       'lastPeriod': "Last Period",
       'thisPeriod': "This Period",
-
 
       //alerts
       'alertWantToBailOut': "Are you sure you want to Bail Out.",
@@ -706,7 +702,6 @@ class StringRes {
       'meetYourTeamDetails':
           "Click the orgchart to have an overview of your organisation.\nYou get to hire and fire people as you want!\nTo get started you will need to hire some HR, Sales and Service employees.",
 
-
       'getReadyApproach': 'Get ready to approach customers',
       'getReadyApproachDetails':
           "In order to win new customers you need to have Sales Reps.\n\nLet's hire 10 Sales Reps by clicking on Sales and then “Hire 10 employees”.",
@@ -728,9 +723,6 @@ class StringRes {
       'readyForSeriousDetails':
           '"Great, you are all set for business.\nLet\'s head over to the newspaper to select the first business sector that you want to engage in.\n\nYou can click on the menu “>” and then “Business Sectors”"',
       'goToBusiness': 'Go to ”Business Sectors”',
-
-
-
 
       //question index
       'aIndex': 'A',
@@ -762,7 +754,6 @@ class StringRes {
           '5 Business Segments subscribed to” then we say “Bonus:',
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
 
-
       'bonusPoint': "Bonus Point",
       'dear': "Dear",
       'hi': "Hi",
@@ -774,16 +765,14 @@ class StringRes {
       'noOffline': "Sorry, this feature is only available while online.",
       'my': "My",
       'mHis': "His",
-      'by':'By',
-      'inText':'In',
-      'toWin':'To Win',
-      'questions':'Questions',
+      'by': 'By',
+      'inText': 'In',
+      'toWin': 'To Win',
       'sizeInKb': "kb",
-      //endregion
 
       'cashAtTheEndOfPeriod': "Cash at end of Period",
       'sizeInKb': "kb",
-      'questions':'Questions',
+      'questions': 'Questions',
       'english': 'English',
       'german': 'German',
       'chinese': 'Chinese',
@@ -798,12 +787,15 @@ class StringRes {
       'strUrlExeption': "Could not launch",
       'strOpen': "Open",
       'clickOrgChart': 'Click the Org Chart',
-
-
+      'requestBailOut': 'Request Bail Out',
+      'debrief': 'Debriefing',
+      'alertChangePassword': 'Password changed Successfully.',
+      'servicePerson': 'Service Reps',
+      //</editor-fold>
 
     },
     'de': {
-      //region german
+      //<editor-fold desc="german">
       //main options
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
@@ -881,8 +873,7 @@ class StringRes {
       'friends': 'Freunde',
       'alertFriendSuccess': 'Friend added successfully',
       'alertUnFriendSuccess': 'Unfriend successfully',
-      'alertUChallengeSent': 'Challenge sent successfully!',
-
+      'alertUChallengeSent': 'Herausforderung erfolgreich gesendet!',
 
       //learning module
       'subscribe': 'Abonnieren',
@@ -891,12 +882,14 @@ class StringRes {
       'downLoad': 'Herunterladen',
       'size': 'Größe',
       'description': 'Beschreibung',
-      'alertWantToSubscribe1': "Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ",
+      'alertWantToSubscribe1':
+          "Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ",
       'alertWantToSubscribe2': "? Alle Fragen gehen verloren",
       'downloading': "Daten werden geladen ...",
       'strDownloadText ': "Dieses Modul benötigt ",
       'strDownloadNewText ': "Dieses Modul benötigt ",
-      'alertNotAllowed': "You can not unsubscribe assigned Learning Modules.",
+      'alertNotAllowed':
+          "Zugeordnete Geschäftsbereiche können nicht abgemeldet werden",
 
       //engage customer
       'engagement': 'Nachbesprechung',
@@ -945,11 +938,9 @@ class StringRes {
       //pl
       'cashAtStartOfPeriod': "Startvermögen",
 
-
       'revenueSplit': "revenueSplit",
       'employees': "Mitarbeiter",
       'salaries': "Gehälter",
-      'customers': "Kunden",
       'customers': "Kunden",
       'engageSegment': 'Segment bearbeiten',
       'day': "Tag",
@@ -957,7 +948,6 @@ class StringRes {
       'year': "Jahr",
       'lastPeriod': "Letzte Periode",
       'thisPeriod': "Aktuelle Periode",
-
 
       //alerts
       'alertWantToBailOut': "Wirklich Konkurs anmelden?",
@@ -1111,13 +1101,6 @@ class StringRes {
       'settingDetails':
           'Du kannst zur professionellen Ansicht wechseln (kein virtuelles Unternehmen) und den Ton ein und aus schalten.',
 
-      //lock feature
-      'unLockOrg': 'Unlocks when Sales or Service capacities empty first time.',
-      'unLockPl': 'Unlocks 1 week after 1st login.',
-      'unLockRanking': 'Unlocks after three days in row login',
-      'unLockReward': 'Unlocks if first Achievement is reached',
-      'unLockChallenge': 'Unlocks when first lawyer hired',
-
       //Dashboard Game screen
       'welcomeToKnow': 'Willkommen bei Knowledge Empire',
       'welcomeToKnowDetails':
@@ -1165,7 +1148,6 @@ class StringRes {
       'unLockChallenge':
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
 
-
       'dear': "Hallo",
       'hi': "Hallo",
       'noInternet': 'Bitte Internetverbindung prüfen',
@@ -1181,17 +1163,14 @@ class StringRes {
       'servicePerson': 'Servicemitarbeiter',
       'salesReps': 'Vertriebler',
 
-
-      //endregion
-
-      'cashAtTheEndOfPeriod':"Vermögen am Ende der Periode",
-      'sizeInKb':"kb",
-      'questions':"Fragen",
-      'english':"English",
-      'german':"German",
-      'chinese':"Chinese",
-      'costSplit':"Kosten",
-      'sevenDaysDevelopment':"7 Tage Überblick",
+      'cashAtTheEndOfPeriod': "Vermögen am Ende der Periode",
+      'sizeInKb': "kb",
+      'questions': "Fragen",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+      'costSplit': "Kosten",
+      'sevenDaysDevelopment': "7 Tage Überblick",
 
       'subscribedSuccess': 'Erfolgreich abonniert!',
       'unSubscribedSuccess': 'Erfolgreich abbestellt!',
@@ -1200,10 +1179,14 @@ class StringRes {
       'strVersion': "Version",
       'strUrlExeption': "Konnte nicht gestartet werden",
       'strOpen': "Offen",
+      'requestBailOut': 'Konkurs anmelden',
+      'debrief': 'Nachbesprechung',
+      //</editor-fold>
+
 
     },
     'zh': {
-      //      region chinese
+      //<editor-fold desc="chinese">
       //main options
       'home': "首页",
       'businessSector': "业务部门",
@@ -1282,7 +1265,6 @@ class StringRes {
       'alertUnFriendSuccess': "成功取消朋友",
       'alertUChallengeSent': "挑战已成功发送",
 
-
       //learning module
       'subscribe': '订阅',
       'unSubscribe': '取消订阅',
@@ -1328,7 +1310,7 @@ class StringRes {
       'correct': "%正确",
       'department_': "部门:",
       'resets_': "重启:",
-      'name_': "Name:",
+      'name_': "名字::",
       'cost': "成本",
 
       //ranking
@@ -1353,7 +1335,6 @@ class StringRes {
       'year': "年",
       'lastPeriod': "上一时期",
       'thisPeriod': "这一时期",
-
 
       //alerts
       'alertWantToBailOut': "您确定要申请纾困.",
@@ -1451,16 +1432,6 @@ class StringRes {
           '让我们前往笔记本电脑中您可以联络的新客户列表页面。\n\n您可以使用导航菜单“>”，点击您的销售代表指示图，\n或者点击后退然后选择笔记本电脑。',
       'readyForCustomerBtn': '点击您的销售代表指示图',
 
-      // dashboard intro popup
-
-      'dashboardProfile': 'Change Profile\n name, Language',
-      'dashboardSales': '"Sales-o-meter"\navailable Sales Reps',
-      'dashboardServices': '"services-o-meter"\navailable Services Reps',
-      'dashboardBalance': 'Answering Questions\n increases your Cash',
-      'dashboardBusiness': '1. Business Segment\nSelect Learning Module',
-      'dashboardNewCustomer': '2. New Customer\nAnswer Questions',
-      'dashboardExistingCustomer': '3. Existing Customer\nReview Questions',
-
       'customersRelationShip': "客户关系管理",
 
       'customersRelationShipContent':
@@ -1477,7 +1448,8 @@ class StringRes {
 
       //Organization screen Dialog
       'hireHrEmp': '招聘人力资源员工',
-      'hireHrEmpDetails': ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
+      'hireHrEmpDetails':
+          ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
 
       'hireHrEmpDetailsSeconds':
           '听听您的团队的建议，为什么您应该招聘更多的员工，\n点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后选择“雇用10名员工”。',
@@ -1549,7 +1521,6 @@ class StringRes {
       'unLockReward': '在达成第一个成就后解锁',
       'unLockChallenge': '雇用第一个律师后解锁',
 
-
       'dear': "亲爱的",
       'hi': "您好",
       'noInternet': '请确认是否连接到互联网',
@@ -1565,17 +1536,14 @@ class StringRes {
       'servicePerson': '服务代表',
       'salesReps': '销售代表',
 
-      //endregion
-
-      'cashAtTheEndOfPeriod':"期末现金",
-      'sizeInKb':"kb",
-      'questions':"问题",
-      'english':"English",
-      'german':"German",
-      'chinese':"Chinese",
-      'costSplit':"花费",
-      'sevenDaysDevelopment':"过去7天的概览",
-
+      'cashAtTheEndOfPeriod': "期末现金",
+      'sizeInKb': "kb",
+      'questions': "问题",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+      'costSplit': "花费",
+      'sevenDaysDevelopment': "过去7天的概览",
 
       'selectLanguages': '选择语言',
       'subscribedSuccess': '订阅成功！',
@@ -1584,12 +1552,17 @@ class StringRes {
       'strVersion': "版本",
       'strUrlExeption': "无法启动",
       'strOpen': "打开",
+      'requestBailOut': '申请纾困',
+      'debrief': '任务报告',
+      //</editor-fold>
+
+
     }
   };
 
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
-      //region english
+      //<editor-fold desc="english">
       'home': "Home",
       'businessSector': "Learning Module",
       'newCustomers': "Open Learnings",
@@ -1787,7 +1760,6 @@ class StringRes {
       'unLockReward': 'Unlocks if first Achievement is reached',
       'unLockChallenge': 'Unlocks when max. Challenge Power-Up is increased',
 
-
       'dear': "Dear",
       'hi': "Dear",
       'noInternet': 'Please check your Internet connection',
@@ -1804,15 +1776,11 @@ class StringRes {
       'servicePerson': 'Memory Points',
       'salesReps': 'Study Points',
 
-
       'yourName': 'Your Name',
       'yourEmail': 'Your Email',
 
       'strDownloadText': 'This module will occupy ',
       'strDownloadNewText': 'This module will occupy ',
-      //endregion
-
-
 
       'cost': 'Deductions',
       'employees': 'Power-Ups',
@@ -1822,60 +1790,155 @@ class StringRes {
       'brand': '%Correct',
       'customers': 'Questions',
       'Profit': 'Knowledge Points (KP)',
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
+      'alertWantToSubscribe1':
+          "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': '? You will lose all the questions from the ',
       'answers': 'Answers',
       'bonusPoint': "Bonus Point",
-
-
-
 
       'cashAtStartOfPeriod': 'Knowledge Points at start',
       'subscribedSuccess': 'Subscribed successfully!',
       'alertFriendSuccess': 'Friend added successfully',
       'unSubscribedSuccess': 'Unsubscribed successfully!',
 
-
       'selectCompany': 'Select Company',
       'selectLanguages': 'Select Language',
       'requestDemoAccount': "Request demo Account",
 
-      'cashAtTheEndOfPeriod':"Knowledge Points at end of Period",
-      'sizeInKb':"kb",
-      'questions':"Questions",
-      'english':"English",
-      'german':"German",
-      'chinese':"Chinese",
-      'costSplit':"Cost Split",
-      'sevenDaysDevelopment':"7 days developments",
+      'cashAtTheEndOfPeriod': "Knowledge Points at end of Period",
+      'sizeInKb': "kb",
+      'questions': "Questions",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+      'costSplit': "Cost Split",
+      'sevenDaysDevelopment': "7 days developments",
       'strVersion': "Version",
       'strUrlExeption': "Could not launch",
       'strOpen': "Open",
       'hireHrEmp': "Improve Max. Power-Ups (PU)",
 
+      'helpProProfile':
+          '"Profile: \n- Change your company name \n- switch to game mode \n- switch company \n- request a restart"',
+      'helpProEmployMeter':
+          '"Power-Up Bar (xx/yy):  \n- xx = currently free Power-Up Points  \n- yy = total Power-Up capacity  \n- Every Power-Up Point cost you 200 (increasing) per day  \n- Click on Power-Up Bar brings you to Power Up Screen"',
+      'helpProSalesMeter':
+          '"Study Points Bar(xx/yy):  \n- xx = currently free Study Points  \n- yy = total Study Points  \n- Used Study Points will refill after 8 hours \n- Click onStudy Point Bar brings you to List of open questions"',
+      'helpProServiceMeter':
+          '"Memory Points Bar (xx/yy):  \n- xx = currently free Memory Points  \n- yy = totalMemory Points  \n- 1 free Memory Point needed per Question  \n- Click on Memory Point Bar brings you to list of answered questions"',
+      'helpProBrandValue':
+          '"%Correct Answers:  \n- Percentage of correctly answered questions  \n- Click on %Correct Answers brings you to Ranking Screen"',
+      'helpProCash':
+          '"Knowledge Points:  \n- Increases by answering Questions correct and earning achievements  \n- Decreases through Power-Up costs"',
 
-      //help screen
+      'helpProBusinessSector':
+          '"Learning Modules: \n- Find new Learning Module \n- Subscribe / Unsubscribe \n- Download for offline availability"',
+      'helpProNewCustomers':
+          '"Open Learnings: \n- Find new Questions to answer \n- Each Question requires free Study and Memory Points \n- Repetition of Questions increases if you answer them correctly"',
+      'helpProExistingCustomer':
+          '"Compleeted Learnings: \n- review all your correctly answered questions \n- Repetition of Questions increases if you answer them correctly"',
+      'helpProRewards':
+          '"Rewards: \n- Rewards are earned by completing certain task \n- Rewards pay extra Knowledge Points if you reach a new level"',
+      'helpProTeam':
+          '"Team (only visible to managers):  \n- list of your direct reports  \n- high level reporting and KPI  \n- Allow bailout / reset"',
+      'helpProChallenges':
+          '"Challenges: \n- Challenge friends \n- Selected % value determined # of questions and payout \n- increasing % = Increasing ammount of questions to be answered \n- higher % = higher payout for competitor if he wins and lower payout for you if he looses"',
+      'helpProOrganization':
+          '"Power-Ups:  \n- select additional Power-Ups  \n- you need Power-Up capacities (HR) to Spend Power-Up points  \n- Every Power-Up Point spend costs you 100 Knowledge Points per day"',
+      'helpProP&L':
+          '"Performance:  \n- Monitor your performance and progress  \n- Ensure you earn enough Knowledge Points"',
+      'helpProRanking':
+          '"Ranking:  \n- See and compare your rank  \n- you can check multiple timelines and comparison groups"',
+      'emailId': 'Email Id',
+      'editProfile': 'Edit Profile',
+      'changePassword': 'Change Password',
+      'save': 'Save',
 
-      'helpProProfile' : '"Profile: \n- Change your company name \n- switch to game mode \n- switch company \n- request a restart"',
-      'helpProEmployMeter':'"Power-Up Bar (xx/yy):  \n- xx = currently free Power-Up Points  \n- yy = total Power-Up capacity  \n- Every Power-Up Point cost you 200 (increasing) per day  \n- Click on Power-Up Bar brings you to Power Up Screen"',
-      'helpProSalesMeter':'"Study Points Bar(xx/yy):  \n- xx = currently free Study Points  \n- yy = total Study Points  \n- Used Study Points will refill after 8 hours \n- Click onStudy Point Bar brings you to List of open questions"',
-      'helpProServiceMeter':'"Memory Points Bar (xx/yy):  \n- xx = currently free Memory Points  \n- yy = totalMemory Points  \n- 1 free Memory Point needed per Question  \n- Click on Memory Point Bar brings you to list of answered questions"',
-      'helpProBrandValue':'"%Correct Answers:  \n- Percentage of correctly answered questions  \n- Click on %Correct Answers brings you to Ranking Screen"',
-      'helpProCash':'"Knowledge Points:  \n- Increases by answering Questions correct and earning achievements  \n- Decreases through Power-Up costs"',
+      'settings': 'Settings',
+      'privacyPolicy': 'Privacy & Policy',
+      'termsConditions': 'Terms & Conditions',
+      'contactUs': 'Contact Us',
+      'switchProfMode': 'Switch to Professional Mode',
+      'switchBusinessMode': 'Switch to Business Mode',
+      'logout': 'Log out',
+      'choosePhoto': 'Choose photo',
+      'takePhoto': 'Take photo',
+      'sound': 'Sound',
+      'bailout': 'Start new',
+      'requestBailOut': 'Request new start',
+      'alertBailOut': 'Are you sure you want to restart?',
+      'successProfileUpdate': 'Profile updated successfully!',
+      'login': 'Login',
+      'enterRegisteredEmail': 'Enter Registered Email Id',
+      'password': 'Password',
+      'newPassword': 'New Password',
+      'currentPassword': 'Current Password',
+      'reEnterPassword': 'Re-enter new Password',
+      'cancel': 'Cancel',
+      'send': 'Send',
+      'forgotPassword': 'Forgot Password?',
+      'fireEmp': 'Reduce Level',
+      'hireEmp': 'Increase Level',
+      'name': 'Name',
+      'engage': 'Answer',
+      'engageNow': 'Answer Now',
+      'alertReleaseResources':
+          'This question will be removed, not generate any more Knowledge Points and only be accessible again after next repetition time ended',
+      'searchForKeywords': 'Search for keywords',
+      'somethingWrong': 'Something went wrong',
+      'friend': 'Friend',
+      'alertUChallengeSent': 'Challenge sent successfully!',
+      'subscribe': 'Subscribe',
+      'unSubscribe': 'Unsubscribe',
+      'subscribed': 'Subscribed',
+      'downLoad': 'DownLoad',
+      'description': 'Description',
+      'downloading': 'Downloading...',
+      'alertNotAllowed': 'You can not unsubscribe assigned Learning Modules.',
+      'debrief': 'Debriefing',
+      'category': 'Category',
+      'achievement': 'Achievement',
+      'nextLevel': 'Next Level',
+      'friends': 'Friends',
+      'sendChallenge': 'Send Challenge',
+      'explanation': 'Explanation',
+      'profit': 'Knowledge Points (KP)',
+      'learningModule': 'Learning Module',
+      'levels': 'Levels',
+      'complete': '%Complete',
+      'qLevel': 'Q Level',
+      'qStatus': 'Q Status',
+      'lastLog': 'Last Log',
+      'points': 'Points',
+      'correct': '%Correct',
+      'department_': 'Category:',
+      'resets_': 'Resets:',
+      'name_': 'Name:',
+      'cost': 'Deductions',
+      'you': 'You',
+      'world': 'World',
+      'country': 'Country',
+      'score': 'Score',
+      'companyName': 'Nickname',
+      'day': 'Day',
+      'month': 'Month',
+      'year': 'Year',
+      'lastPeriod': 'Last Period',
+      'thisPeriod': 'his Period',
+      'alertWantToBailOut': 'Are you sure you want to restart',
+      'alertNoModuleFound': 'Oops..No learning module found for this user.',
+      'ok': 'Ok',
+      'yes': 'Yes',
+      'no': 'No',
+      'comingSoon': 'Coming Soon..',
+      'close': 'Close',
+      //</editor-fold>
+      'strProProfile': "- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
 
-      'helpProBusinessSector':'"Learning Modules: \n- Find new Learning Module \n- Subscribe / Unsubscribe \n- Download for offline availability"',
-      'helpProNewCustomers':'"Open Learnings: \n- Find new Questions to answer \n- Each Question requires free Study and Memory Points \n- Repetition of Questions increases if you answer them correctly"',
-      'helpProExistingCustomer':'"Compleeted Learnings: \n- review all your correctly answered questions \n- Repetition of Questions increases if you answer them correctly"',
-      'helpProRewards':'"Rewards: \n- Rewards are earned by completing certain task \n- Rewards pay extra Knowledge Points if you reach a new level"',
-      'helpProTeam': '"Team (only visible to managers):  \n- list of your direct reports  \n- high level reporting and KPI  \n- Allow bailout / reset"',
-      'helpProChallenges': '"Challenges: \n- Challenge friends \n- Selected % value determined # of questions and payout \n- increasing % = Increasing ammount of questions to be answered \n- higher % = higher payout for competitor if he wins and lower payout for you if he looses"',
-      'helpProOrganization': '"Power-Ups:  \n- select additional Power-Ups  \n- you need Power-Up capacities (HR) to Spend Power-Up points  \n- Every Power-Up Point spend costs you 100 Knowledge Points per day"',
-      'helpProP&L': '"Performance:  \n- Monitor your performance and progress  \n- Ensure you earn enough Knowledge Points"',
-      'helpProRanking': '"Ranking:  \n- See and compare your rank  \n- you can check multiple timelines and comparison groups"',
 
     },
     'de': {
-      //region German
+      //<editor-fold desc="German">
       'home': 'Start',
       'businessSector': 'Lernmodule',
       'newCustomers': 'Fragen',
@@ -1943,7 +2006,8 @@ class StringRes {
       'downLoad': 'Herunterladen',
       'size': 'Größe',
       'description': 'Beschreibung',
-      'alertWantToSubscribe1': 'Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ',
+      'alertWantToSubscribe1':
+          'Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ',
       'alertWantToSubscribe2': '? Alle Fragen gehen verloren',
       'downloading': 'Daten werden geladen ...',
       'strDownloadText': 'Dieses Modul benötigt',
@@ -2184,7 +2248,6 @@ class StringRes {
       'unLockChallenge':
           'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
 
-
       'dear': "Hallo",
       'hi': "Hallo",
       'noInternet': 'Bitte Internetverbindung prüfen',
@@ -2199,16 +2262,15 @@ class StringRes {
       'challenge': 'Herausforderung',
       'servicePerson': 'Bestandsfragen',
       'salesReps': 'Lernpunkte ',
-      //endregion
 
-      'cashAtTheEndOfPeriod':"Wissenspunkte am Ende der Periode",
-      'sizeInKb':"kb",
-      'questions':"Fragen",
-      'english':"English",
-      'german':"German",
-      'chinese':"Chinese",
-      'costSplit':"Kosten",
-      'sevenDaysDevelopment':"7 Tage Überblick",
+      'cashAtTheEndOfPeriod': "Wissenspunkte am Ende der Periode",
+      'sizeInKb': "kb",
+      'questions': "Fragen",
+      'english': "English",
+      'german': "German",
+      'chinese': "Chinese",
+      'costSplit': "Kosten",
+      'sevenDaysDevelopment': "7 Tage Überblick",
 
       'subscribedSuccess': 'Erfolgreich abonniert!',
       'unSubscribedSuccess': 'Erfolgreich abbestellt!',
@@ -2220,26 +2282,44 @@ class StringRes {
       'strOpen': "Offen",
 
       //help screen
-      'helpProProfile': '"Profil:  \n- Firmenname ändern  \n- Zu gamifizierter Version wechseln  \n- Neustart beantragen"',
-      'helpProEmployMeter': '"Bonuskapazitäten (xx/yy):  \n- xx = noch verfuegbare Bonuspunkte  \n- yy = totale Bonuskapazitaet  \n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag  \n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln"',
-      'helpProSalesMeter': '"Lernkapazitäten (xx/yy):  \n- xx = noch verfuegbare Lernkapazität  \n- yy = totale Lernkapazität  \n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf  \n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln"',
-      'helpProServiceMeter': '"Bestandsfragenkapazitäten (xx/yy):  \n- xx = noch verfügbare Bestandsfragenkapazität  \n- yy = totale Bestandsfragenkapazität  \n- Jeder Frage bindet eine Bestandsfragenkapazität  \n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln"',
-      'helpProBrandValue': '"% richtige Antworten:  \n- Anteil richtig beantworteter Fragen  \n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln"',
-      'helpProCash': '"Wissenspunkte:  \n- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen  \n- Verringert sich duch Kosten fuer Bonuspunkte"',
+      'helpProProfile':
+          '"Profil:  \n- Firmenname ändern  \n- Zu gamifizierter Version wechseln  \n- Neustart beantragen"',
+      'helpProEmployMeter':
+          '"Bonuskapazitäten (xx/yy):  \n- xx = noch verfuegbare Bonuspunkte  \n- yy = totale Bonuskapazitaet  \n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag  \n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln"',
+      'helpProSalesMeter':
+          '"Lernkapazitäten (xx/yy):  \n- xx = noch verfuegbare Lernkapazität  \n- yy = totale Lernkapazität  \n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf  \n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln"',
+      'helpProServiceMeter':
+          '"Bestandsfragenkapazitäten (xx/yy):  \n- xx = noch verfügbare Bestandsfragenkapazität  \n- yy = totale Bestandsfragenkapazität  \n- Jeder Frage bindet eine Bestandsfragenkapazität  \n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln"',
+      'helpProBrandValue':
+          '"% richtige Antworten:  \n- Anteil richtig beantworteter Fragen  \n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln"',
+      'helpProCash':
+          '"Wissenspunkte:  \n- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen  \n- Verringert sich duch Kosten fuer Bonuspunkte"',
 
-      'helpProBusinessSector': '"Lernmodule:  \n- Neue Lernmodule finden  \n- Abonnieren / abmelden  \n- Herunterladen zur Nutzung ohne Internet Zugang"',
-      'helpProNewCustomers': '"Fragenkatalog:  \n- Neue unbeantwortete Fragen finden und beantworten  \n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
-      'helpProExistingCustomer': '"Bestandsfragen:  \n- Bestandsfragen liste enthält richtig beantwortete Fragen  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
-      'helpProRewards': '"Auszeichnungen:  \n- Gibt es für gewisse Aktionen  \n- Steigen im Wert in höheren Leveln"',
-      'helpProTeam': '"Teamperformance (nur Sichtbar wenn Mitarbeiterführung besteht):  \n- Liste der Mitarbeiter im Team  \n- Basis Reporting und KPIs  \n- Neustarts gewähren"',
-      'helpProChallenges': '"Herausforderungen:  \n- Kollegen herausfordern  \n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten  \n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte"',
-      'helpProOrganization': '"Lernbonus:  \n- Bonuspunkte auf Bonusbereiche verteilen  \n- ""Max. Bonuspunkte"" erhöhen um mehr Bonuspunkte verteilen zu koennen  \n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend"',
-      'helpProP': '"Entwicklung: \n- Überwache die Entwicklung deines Fortschritts  \n- Sorge dafür, dass deine Wissenpunkte zunehmen"',
-      'helpProRanking': '"Rangliste:  \n- Rang einsehen und vergleichen  \n- Unterschiedliche Zeitlinien können angezeigt werden"',
+      'helpProBusinessSector':
+          '"Lernmodule:  \n- Neue Lernmodule finden  \n- Abonnieren / abmelden  \n- Herunterladen zur Nutzung ohne Internet Zugang"',
+      'helpProNewCustomers':
+          '"Fragenkatalog:  \n- Neue unbeantwortete Fragen finden und beantworten  \n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
+      'helpProExistingCustomer':
+          '"Bestandsfragen:  \n- Bestandsfragen liste enthält richtig beantwortete Fragen  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
+      'helpProRewards':
+          '"Auszeichnungen:  \n- Gibt es für gewisse Aktionen  \n- Steigen im Wert in höheren Leveln"',
+      'helpProTeam':
+          '"Teamperformance (nur Sichtbar wenn Mitarbeiterführung besteht):  \n- Liste der Mitarbeiter im Team  \n- Basis Reporting und KPIs  \n- Neustarts gewähren"',
+      'helpProChallenges':
+          '"Herausforderungen:  \n- Kollegen herausfordern  \n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten  \n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte"',
+      'helpProOrganization':
+          '"Lernbonus:  \n- Bonuspunkte auf Bonusbereiche verteilen  \n- ""Max. Bonuspunkte"" erhöhen um mehr Bonuspunkte verteilen zu koennen  \n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend"',
+      'helpProP':
+          '"Entwicklung: \n- Überwache die Entwicklung deines Fortschritts  \n- Sorge dafür, dass deine Wissenpunkte zunehmen"',
+      'helpProRanking':
+          '"Rangliste:  \n- Rang einsehen und vergleichen  \n- Unterschiedliche Zeitlinien können angezeigt werden"',
+      //</editor-fold>
+      'strProProfile': "- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
+
 
     },
     'zh': {
-      //region chines
+      //<editor-fold desc="chines">
       'home': '首页',
       'businessSector': '学习模块',
       'newCustomers': '开放学习',
@@ -2540,12 +2620,10 @@ class StringRes {
       'challenge': '挑战',
       'servicePerson': '记忆点数',
       'salesReps': '学习点数',
-      //endregion
-
 
       'cashAtTheEndOfPeriod': "期末知识点数",
       'sizeInKb': "kb",
-      'questions':"问题",
+      'questions': "问题",
       'english': "English",
       'german': "German",
       'chinese': "Chinese",
@@ -2562,21 +2640,33 @@ class StringRes {
 
       //help pro screen :
       'helpProProfile': '"个人资料: \n- 更改您的公司名称 \n- 切换到游戏模式 \n- 切换公司 \n- 申请重新开始"',
-      'helpProEmployMeter': '"威力升级点数条 (xx/yy): \n- xx = 当前可用威力升级点数 \n- yy = 威力升级总量 \n- 每一个威力升级点数每天花费您200 (逐渐增加) \n- 点击威力升级点数条将前往威力升级界面"',
-      'helpProSalesMeter': '"学习点数条 (xx/yy): \n- xx = 当前可用学习点数 \n- yy = 总学习点数 \n- 8小时候已使用的学习点数会重新填充 \n- 点击学习点数条将前往开放问题列表"',
-      'helpProServiceMeter': '"记忆点数条 (xx/yy): \n- xx = 当前可用记忆点数 \n- yy =  总记忆点数 \n- 每个问题需要一个可用的记忆点数 \n-  点击记忆点数条将前往已回答问题列表"',
+      'helpProEmployMeter':
+          '"威力升级点数条 (xx/yy): \n- xx = 当前可用威力升级点数 \n- yy = 威力升级总量 \n- 每一个威力升级点数每天花费您200 (逐渐增加) \n- 点击威力升级点数条将前往威力升级界面"',
+      'helpProSalesMeter':
+          '"学习点数条 (xx/yy): \n- xx = 当前可用学习点数 \n- yy = 总学习点数 \n- 8小时候已使用的学习点数会重新填充 \n- 点击学习点数条将前往开放问题列表"',
+      'helpProServiceMeter':
+          '"记忆点数条 (xx/yy): \n- xx = 当前可用记忆点数 \n- yy =  总记忆点数 \n- 每个问题需要一个可用的记忆点数 \n-  点击记忆点数条将前往已回答问题列表"',
       'helpProBrandValue': '"%正确答案: \n- 正确回答问题的百分比 \n- 点击%正确答案将前往排名界面 "',
       'helpProCash': '"知识点数: \n- 正确回答问题和达成成就都可以增加知识点数 \n- 进行威力升级会减少知识点数"',
 
-      'helpProBusinessSector': '"学习模块: \n- 寻找新的学习模块 \n- 加入 / 取消加入 \n- 下载以供离线使用"',
-      'helpProNewCustomers': '"开放学习: \n- 寻找新的问题来回答 \n- 每个问题都需要可用的学习和记忆点数 \n- 如果您答对了问题，问题重复的次数就会增加"',
-      'helpProExistingCustomer': '"完成的学习: \n- 复习您所有正确回答的问题 \n- 如果您答对了问题，问题重复的次数就会增加"',
+      'helpProBusinessSector':
+          '"学习模块: \n- 寻找新的学习模块 \n- 加入 / 取消加入 \n- 下载以供离线使用"',
+      'helpProNewCustomers':
+          '"开放学习: \n- 寻找新的问题来回答 \n- 每个问题都需要可用的学习和记忆点数 \n- 如果您答对了问题，问题重复的次数就会增加"',
+      'helpProExistingCustomer':
+          '"完成的学习: \n- 复习您所有正确回答的问题 \n- 如果您答对了问题，问题重复的次数就会增加"',
       'helpProRewards': '"奖励: \n- 通过完成某些任务获得奖励 \n- 如果您达到新的级别，您将获得额外的知识点数奖励"',
       'helpProTeam': '"团队 (仅对经理可见): \n- 您的直接下属名单 \n- 高级别报告和KPI \n- 允许纾困/重置"',
-      'helpProChallenges': '"挑战: \n- 挑战好友 \n- 选择%价值，确定问题的数量#和奖励 \n- 增加% = 增加要回答的问题的数量 \n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少"',
-      'helpProOrganization': '"威力升级: \n- 选择额外的威力升级 \n- 您需要威力升级容量 (PU) 才能使用威力升级点数 \n- 每天每使用一个威力升级点数花费您100个知识点数"',
+      'helpProChallenges':
+          '"挑战: \n- 挑战好友 \n- 选择%价值，确定问题的数量#和奖励 \n- 增加% = 增加要回答的问题的数量 \n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少"',
+      'helpProOrganization':
+          '"威力升级: \n- 选择额外的威力升级 \n- 您需要威力升级容量 (PU) 才能使用威力升级点数 \n- 每天每使用一个威力升级点数花费您100个知识点数"',
       'helpProP': '"表现: \n- 监控您的表现和进步 \n- 确保您赚取足够的知识点数"',
       'helpProRanking': '"排名: \n- 查看和比较您的排名 \n- 您可以检查多个时间段和比较多个群组"',
+      //</editor-fold>
+      'strProProfile':"- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
+
+
     }
   };
 }

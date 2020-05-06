@@ -403,12 +403,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 updateType = 1.toString();
                                 updateMode = Injector.mode.toString();
-                                callApiForUpdateUserSetting(updateType, null);
+                                await Injector.getIntroText();
+                                await callApiForUpdateUserSetting(updateType, null);
 
                                 Utils.playBackgroundMusic();
 
-                                localeBloc.setLocale(Utils.getIndexLocale(
-                                    Injector.userData.language));
+                                localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
                                 setState(() {});
                               },
@@ -1372,6 +1372,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     localeBloc.setLocale(index);
+    await Injector.getIntroText();
     await Injector.setUserData(Injector.userData);
   }
 

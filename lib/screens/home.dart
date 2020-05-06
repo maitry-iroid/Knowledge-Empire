@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           onTap: () => _onSelectItem(drawerItems[i])));
     }
 
-    print("current___"+_currentPage);
+    print("current___" + _currentPage);
 
     return StreamBuilder(
         stream: navigationBloc?.navigationKey,
@@ -153,8 +153,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     onTap: () => _onSelectItem(drawerItems[i])));
               }
 
-              print("current_page :  " + _currentPage);
-
               if (_currentPage == Const.typeCustomerSituation &&
                   ((homeData.isCameFromNewCustomer != null &&
                           homeData.isCameFromNewCustomer &&
@@ -163,8 +161,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           homeData.isChallenge &&
                           homeData.questionHomeData.isAnsweredCorrect))) {
                 isCoinViseble = true;
-              } else
+              } else {
                 isCoinViseble = false;
+              }
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -318,12 +317,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     if (_currentPage != item.key) {
       if (item.key == Const.typeHelp)
-        Navigator.push(context, FadeRouteIntro());
-       /* if(Injector.isBusinessMode) {
-          Navigator.push(context, FadeRouteIntro());
-        } else {
-          HelpProScreen.showChallengeDialog(context);
-        }*/
+        Injector.isBusinessMode
+            ? Navigator.push(context, FadeRouteIntro())
+            : DisplayDialogs.professionalDialog(context);
       else
         Utils.performDashboardItemClick(context, item.key);
     }
@@ -339,7 +335,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
 
-        setState(() {});
+        setState(() {
+          print("-------------------------->" + isCoinViseble.toString());
+        });
       },
       child: Container(
         child: isCoinViseble ? MyHomePage() : Container(),
@@ -451,7 +449,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               }
             } else {
               // if there are no more question to attempt then navigate to HOME
-              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+              navigationBloc
+                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           }
         }).catchError((e) {
@@ -485,7 +484,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           Utils.getText(context, StringRes.existingCustomers),
           Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer",
           Const.typeExistingCustomer),
-
     );
 
     if (Utils.isFeatureOn(Const.typeReward))
@@ -568,8 +566,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     initCheckNetworkConnectivity();
 
     initPlatformState();
-
-
   }
 
   void updateVersionDialog() async {
