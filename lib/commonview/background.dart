@@ -947,8 +947,7 @@ class CommonView {
         })*/
   }
 
-  collectorDialog(BuildContext context, PushModel mPushModel, String btnText,
-      explosionWidgetStateKey) {
+  collectorDialog(BuildContext context, PushModel mPushModel, String btnText, explosionWidgetStateKey) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
         barrierDismissible: false,

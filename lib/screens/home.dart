@@ -184,7 +184,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         HeaderView(
                           scaffoldKey: _scaffoldKey,
                           isShowMenu: true,
-//                      openProfile: openProfile,
                         ),
                         Stack(
                           fit: StackFit.expand,
@@ -349,9 +348,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     if (_currentPage != item.key) {
       if (item.key == Const.typeHelp)
-        Injector.isBusinessMode
+        Navigator.push(context, FadeRouteIntro());
+        /*Injector.isBusinessMode
             ? Navigator.push(context, FadeRouteIntro())
-            : DisplayDialogs.professionalDialog(context);
+            : DisplayDialogs.professionalDialog(context);*/
       else
         Utils.performDashboardItemClick(context, item.key);
     }
