@@ -379,6 +379,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
         setState(() {});
+
       },
       child: Container(
         child: isCoinViseble
