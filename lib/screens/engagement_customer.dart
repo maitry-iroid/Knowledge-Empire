@@ -692,7 +692,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       border: Border.all(color: ColorRes.white, width: 1)),
                   child: showMediaView(context)),
             ),
-            showExpandIcon(context)
+            showMediaExpandIcon(context)
           ],
         ));
   }
@@ -776,7 +776,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //    }
   }
 
-  showExpandIcon(BuildContext context) {
+  showMediaExpandIcon(BuildContext context) {
     return Positioned(
       bottom: 0,
       right: 0,
@@ -1323,7 +1323,7 @@ class ExpandMediaState extends State<ExpandMedia>
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
                               )
-                            : Utils.pdfShow(doc),
+                            : (Utils.isPdf(questionData.mediaLink)?Utils.pdfShow(doc):null),
                       ),
                     ),
 
