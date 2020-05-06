@@ -219,7 +219,7 @@ class HeaderViewState extends State<HeaderView> {
                               ? AssetImage(Utils.getAssetsImg('user_org'))
                               : Utils.getCacheNetworkImage(
                                   Injector.userData.profileImage),
-                          fit: BoxFit.fill),
+                          fit: BoxFit.cover),
                       border: Border.all(color: ColorRes.textLightBlue)),
                 ),
                 showUserNameCompanyName(context),
