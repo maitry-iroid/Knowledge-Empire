@@ -27,6 +27,7 @@ class PushNotificationHelper {
   }
 
   void initPush() async {
+
     firebaseCloudMessagingListeners();
 
     var initializationSettingsAndroid =

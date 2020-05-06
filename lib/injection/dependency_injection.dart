@@ -53,7 +53,6 @@ class Injector {
   static bool isIntroRemaining = true;
   static int currentIntroType = 0;
   static String deviceType = "";
-  static List<UnreadBubbleCountData> unreadBubbleCountData = new List();
   static ui.Image image;
 
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;

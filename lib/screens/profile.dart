@@ -462,15 +462,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: EdgeInsets.only(left: 8, right: 8),
                           alignment: Alignment.center,
                           child: Text(
-                            Utils.getText(
-                                context,
-                                Injector.customerValueData == null ||
-                                        Injector.customerValueData?.manager ==
-                                            null ||
-                                        Injector
-                                            .customerValueData.manager.isEmpty
-                                    ? StringRes.bailout //todo
-                                    : StringRes.requestBailOut), //todo
                             bailOutText(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -488,24 +479,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 fontSize: 15,
                                 letterSpacing: 0.7),
                           ),
-                          decoration: Injector.customerValueData.totalBalance <=
-                                  0
-                              ? BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(Utils.getAssetsImg(
-                                          'bg_switch_to_prfsnl'))))
-                              : BoxDecoration(
-                                  color: Injector.isBusinessMode
-                                      ? null
-                                      : ColorRes.bgSettings,
-                                  borderRadius: Injector.isBusinessMode
-                                      ? null
-                                      : BorderRadius.circular(20),
-                                  image: Injector.isBusinessMode
-                                      ? DecorationImage(
-                                          image: AssetImage(
-                                              Utils.getAssetsImg('bg_privacy')))
-                                      : null),
                           decoration: bailOutDecoration(),
                         ),
                         onTap: Injector.customerValueData.totalBalance <= 0
