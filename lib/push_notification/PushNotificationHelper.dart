@@ -19,11 +19,9 @@ import 'package:ke_employee/models/register_for_push.dart';
 class PushNotificationHelper {
   BuildContext context;
   PushModel mPushModel;
-  GlobalKey<ExplosionWidgetState> explosionWidgetStateKey;
 
-  PushNotificationHelper(BuildContext _context, GlobalKey<ExplosionWidgetState> explosionWidgetStateKey) {
+  PushNotificationHelper(BuildContext _context) {
     this.context = _context;
-    this.explosionWidgetStateKey = explosionWidgetStateKey;
   }
 
   void initPush() async {
@@ -214,7 +212,7 @@ class PushNotificationHelper {
 //      rq.userId = Injector.userId;
 //      customerValueBloc.getCustomerValue(rq);
 
-      CommonView().collectorDialog(context, mPushModel,btnText,explosionWidgetStateKey);
+      CommonView().collectorDialog(context, mPushModel,btnText);
 
       Utils.playAchievementSound();
     } else {

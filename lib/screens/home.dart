@@ -380,7 +380,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         isCoinViseble = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
-
         setState(() {});
       },
       child: Container(
@@ -602,7 +601,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     Future.delayed(const Duration(milliseconds: 500), () {
       PushNotificationHelper pushNotificationHelper =
-          PushNotificationHelper(context, explosionWidgetStateKey);
+          PushNotificationHelper(context);
 
       if (pushNotificationHelper != null) {
         pushNotificationHelper.initPush();
