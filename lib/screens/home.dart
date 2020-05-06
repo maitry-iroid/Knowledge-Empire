@@ -238,7 +238,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               homeData.isChallenge &&
               homeData.questionHomeData != null
           ? homeData.questionHomeData.isAnsweredCorrect != null
-              ? homeData.questionHomeData.isAnsweredCorrect
+              ? homeData.questionHomeData.isAnsweredCorrect==1
               : false
           : false;
     }

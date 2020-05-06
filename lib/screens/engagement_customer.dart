@@ -303,6 +303,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     rq.questionId = questionDataEngCustomer.questionId;
     rq.isAnsweredCorrect = questionData.isAnsweredCorrect ;
 
+
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         callSubmitChallengeApi(context, rq);
@@ -348,6 +349,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void callSubmitChallengeApi(
       BuildContext context, SubmitChallengesRequest rq) {
+
+    questionData.isAnsweredCorrect = rq.isAnsweredCorrect;
+
+
     if (mounted)
       setState(() {
         isLoading = true;
