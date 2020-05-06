@@ -390,6 +390,7 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
+
       //region english
       //main options
       'home': "Home",

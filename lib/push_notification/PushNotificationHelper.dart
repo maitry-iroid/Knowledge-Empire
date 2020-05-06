@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -18,9 +19,11 @@ import 'package:ke_employee/models/register_for_push.dart';
 class PushNotificationHelper {
   BuildContext context;
   PushModel mPushModel;
+  GlobalKey<ExplosionWidgetState> explosionWidgetStateKey;
 
-  PushNotificationHelper(BuildContext _context) {
+  PushNotificationHelper(BuildContext _context, GlobalKey<ExplosionWidgetState> explosionWidgetStateKey) {
     this.context = _context;
+    this.explosionWidgetStateKey = explosionWidgetStateKey;
   }
 
   void initPush() async {
@@ -210,7 +213,8 @@ class PushNotificationHelper {
 //      rq.userId = Injector.userId;
 //      customerValueBloc.getCustomerValue(rq);
 
-      CommonView().collectorDialog(context, mPushModel, btnText);
+      CommonView().collectorDialog(context, mPushModel,btnText,explosionWidgetStateKey);
+
       Utils.playAchievementSound();
     } else {
       showLocalNotification(Injector.notificationID, body);

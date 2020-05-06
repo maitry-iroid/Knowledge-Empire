@@ -12,6 +12,7 @@ class HomeData {
   bool isChallenge;
   bool isCameFromDashboard;
   bool isCameFromNewCustomer;
+  bool isReadyForChallenge;
   List<GetFriendsData> arrFriends = List();
 
   HomeData({
@@ -21,6 +22,7 @@ class HomeData {
     this.value,
     this.friendId,
     this.isChallenge,
+    this.isReadyForChallenge,
     this.isCameFromDashboard,
     this.isCameFromNewCustomer,
     this.arrFriends,

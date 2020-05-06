@@ -99,6 +99,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
             children: <Widget>[
               CommonView.showDashboardView(context),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+              CommonView.showDashboardView(context, unreadBubbleCountData),
+             // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
         ),

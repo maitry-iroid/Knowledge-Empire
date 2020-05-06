@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/commonview/header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
@@ -92,13 +94,38 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
       if (isCameFromNewCustomer || isChallenge) {
         Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect);
+        if (!isChallenge ||
+            (Injector.countList.length == questionData.questionCurrentIndex)) {
+          Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
+        }
+        Utils.checkAudio(questionData.isAnsweredCorrect);
       }
-      setState(() {});
+
+      int index = Injector.countList.indexWhere(
+          (QuestionCountWithData questionCountWithData) =>
+              questionCountWithData.questionIndex ==
+              questionData.questionCurrentIndex);
+
+      if (index != -1) {
+        Injector.countList[index].color = ColorRes.greenDot;
+        getChallengeQueBloc?.updateQuestions(index, true);
+      }
     } else {
       if (isCameFromNewCustomer || isChallenge) {
         Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect);
+        int index = Injector.countList.indexWhere(
+            (QuestionCountWithData questionCountWithData) =>
+                questionCountWithData.questionIndex ==
+                questionData.questionCurrentIndex);
+        if (index != -1) {
+          Injector.countList[index].color = ColorRes.red;
+          getChallengeQueBloc?.updateQuestions(index, false);
+        }
+
+        Utils.checkAudio(questionData.isAnsweredCorrect);
       }
     }
+    setState(() {});
   }
 
   String error;
@@ -126,10 +153,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 : CommonView.showBackground(context),
             Column(
               children: <Widget>[
-                HeaderView(
-                  isShowMenu: true,
-                  scaffoldKey: _scaffoldKey,
-                ),
                 showSubHeader(context),
                 Expanded(
                     child: Row(
@@ -149,7 +172,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 10, left: 20, right: 20),
+        margin: EdgeInsets.only(
+            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -223,10 +247,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               onTap: () {
                 Utils.playClickSound();
                 if (isChallenge != null && isChallenge) {
+                  Injector.homeStreamController
+                      ?.add("${Const.openPendingChallengeDialog}");
 
-                  Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
-
-                 /* if (nextChallengeQuestionData != null &&
+                  /* if (nextChallengeQuestionData != null &&
                       nextChallengeQuestionData.challengeId != null) {
 
                     navigationBloc.updateNavigation(HomeData(
@@ -450,8 +474,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           ],
         ));
   }
-
-
 
   showQueMedia(BuildContext context) {
     return InkResponse(

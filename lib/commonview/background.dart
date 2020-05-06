@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
-
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -947,7 +947,8 @@ class CommonView {
         })*/
   }
 
-  collectorDialog(BuildContext context, PushModel mPushModel, String btnText) {
+  collectorDialog(BuildContext context, PushModel mPushModel, String btnText,
+      explosionWidgetStateKey) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
         barrierDismissible: false,
@@ -961,65 +962,79 @@ class CommonView {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(200),
                 ),
-                child: Container(
-                  padding: EdgeInsets.only(top: 25),
-                  width: Utils.getDeviceWidth(context) / 2.2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: ColorRes.fontDarkGrey,
-                                borderRadius: BorderRadius.circular(18),
-                                border: Border.all(
-                                    color: ColorRes.borderRewardsName)),
-                            child: Text(mPushModel.achievementName ?? "",
-                                style: TextStyle(
-                                    color: ColorRes.white, fontSize: 15)),
-                          ),
-                          SizedBox(height: 15),
-                          Container(
-                            width: Utils.getDeviceWidth(context) / 3.5,
-                            height: Utils.getDeviceHeight(context) / 3.5,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("bg_collector")))),
-                            child: Image.asset(imageFomType(mPushModel.level),
-                                fit: BoxFit.contain),
-                          ),
-                          SizedBox(height: 15),
-                          Text("${mPushModel.achievementText ?? ""}",
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.body2.copyWith(
-                                  color: ColorRes.white, fontSize: 20)),
-                          SizedBox(height: 10),
-                          InkResponse(
-                            child: Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  color: ColorRes.header,
-                                  borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(color: ColorRes.white)),
-                              child: Text(btnText,
-                                  style: TextStyle(
-                                      color: ColorRes.white, fontSize: 15)),
+                child: Stack(
+                  children: <Widget>[
+                    Center(
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(top: 25),
+                        width: Utils.getDeviceWidth(context) / 2.2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: ColorRes.fontDarkGrey,
+                                      borderRadius: BorderRadius.circular(18),
+                                      border: Border.all(
+                                          color: ColorRes.borderRewardsName)),
+                                  child: Text(mPushModel.achievementName ?? "",
+                                      style: TextStyle(
+                                          color: ColorRes.white, fontSize: 15)),
+                                ),
+                                SizedBox(height: 15),
+                                Container(
+                                  width: Utils.getDeviceWidth(context) / 3.5,
+                                  height: Utils.getDeviceHeight(context) / 3.5,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(Utils.getAssetsImg(
+                                              "bg_collector")))),
+                                  child: Image.asset(
+                                      imageFomType(mPushModel.level),
+                                      fit: BoxFit.contain),
+                                ),
+                                SizedBox(height: 15),
+                                Text("${mPushModel.achievementText ?? ""}",
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .body2
+                                        .copyWith(
+                                            color: ColorRes.white, fontSize: 20)),
+                                SizedBox(height: 10),
+                                InkResponse(
+                                  child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        color: ColorRes.header,
+                                        borderRadius: BorderRadius.circular(18),
+                                        border:
+                                            Border.all(color: ColorRes.white)),
+                                    child: Text(btnText,
+                                        style: TextStyle(
+                                            color: ColorRes.white, fontSize: 15)),
+                                  ),
+                                  onTap: () {
+//                                    explosionWidgetStateKey.currentState.onTap();
+                                  Navigator.pop(context);
+                                  },
+                                )
+                              ],
                             ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    createItem(context),
+                  ],
                 ),
               ),
             ),
@@ -1029,6 +1044,22 @@ class CommonView {
         barrierLabel: '',
         context: context,
         pageBuilder: (context, animation1, animation2) {});
+  }
+  Widget createItem(BuildContext context) {
+    return ExplosionWidget(
+        tag: "RAnim",
+        child: Container(
+            alignment: Alignment.center,
+            color: Colors.green,
+            height: 20,
+            width: 80,
+            child: Text(
+              "RAnim",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold),
+            )));
   }
 
   imageFomType(String level) {

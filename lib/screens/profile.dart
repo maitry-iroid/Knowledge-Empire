@@ -471,10 +471,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                             .customerValueData.manager.isEmpty
                                     ? StringRes.bailout //todo
                                     : StringRes.requestBailOut), //todo
+                            bailOutText(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: !Injector.isManager() &&
+                                        Injector.customerValueData != null &&
+                                        Injector.customerValueData
+                                                .totalBalance !=
+                                            null &&
                                         Injector.customerValueData
                                                 .totalBalance <=
                                             0
@@ -501,6 +506,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           image: AssetImage(
                                               Utils.getAssetsImg('bg_privacy')))
                                       : null),
+                          decoration: bailOutDecoration(),
                         ),
                         onTap: Injector.customerValueData.totalBalance <= 0
                             ? () async {
@@ -538,6 +544,33 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  bailOutDecoration() {
+    if (!Injector.isManager() && Injector.customerValueData.totalBalance <= 0) {
+      return BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(Utils.getAssetsImg('bg_switch_to_prfsnl'))));
+    } else {
+      return BoxDecoration(
+          color: Injector.isBusinessMode ? null : ColorRes.bgSettings,
+          borderRadius:
+              Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode
+              ? DecorationImage(
+                  image: AssetImage(Utils.getAssetsImg('bg_privacy')))
+              : null);
+    }
+  }
+
+  String bailOutText() {
+    if (Injector.customerValueData == null ||
+        Injector.customerValueData?.manager == null ||
+        Injector.customerValueData.manager.isEmpty) {
+      return Utils.getText(context, StringRes.bailout);
+    } else {
+      return Utils.getText(context, StringRes.requestBailOut);
+    }
   }
 
   _asyncConfirmDialog(BuildContext context) async {
@@ -767,7 +800,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 border: Border.all(width: 2, color: Color(0xff7ab1cb)),
                 shape: BoxShape.circle,
                 image: new DecorationImage(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   image: _image != null
                       ? FileImage(_image)
                       : photoUrl != null

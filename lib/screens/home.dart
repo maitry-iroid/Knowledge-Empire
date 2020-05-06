@@ -1,19 +1,26 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:background_fetch/background_fetch.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/animation/Explostion.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/get_challenges.dart';
+import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -95,11 +102,16 @@ List<DrawerItem> drawerItems = List();
 
 class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey =
+      new GlobalKey<ExplosionWidgetState>();
+  int _selectedDrawerIndex = 0;
   String _currentPage = Const.typeHome;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool startAnim = false;
   int duration = 1;
   bool isCoinViseble = false;
+  bool isReadyForChallenge = false;
+  DashboardLockStatusData dashboardLockStatusData;
 
   HomeData homeData;
 
@@ -123,9 +135,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          title: showMainItem(drawerItems[i]),
-          selected: drawerItems[i].key == _currentPage,
-          onTap: () => _onSelectItem(drawerItems[i])));
+          title: showMainItem(drawerItems[i], i),
+          selected: i == _selectedDrawerIndex,
+          onTap: () => _onSelectItem(i, drawerItems[i])));
     }
 
     print("current___"+_currentPage);
@@ -140,6 +152,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           } else if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
               homeData = snapshot.data;
+              _selectedDrawerIndex =
+                  Utils.getHomePageIndex(snapshot.data.initialPageType);
               _currentPage = snapshot.data.initialPageType;
 
               initDrawerItems();
@@ -155,16 +169,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
               print("current_page :  " + _currentPage);
 
-              if (_currentPage == Const.typeCustomerSituation &&
-                  ((homeData.isCameFromNewCustomer != null &&
-                          homeData.isCameFromNewCustomer &&
-                          homeData.questionHomeData.isAnsweredCorrect) ||
-                      (homeData.isChallenge != null &&
-                          homeData.isChallenge &&
-                          homeData.questionHomeData.isAnsweredCorrect))) {
-                isCoinViseble = true;
-              } else
-                isCoinViseble = false;
+              getAnimationStatus();
 
               return Scaffold(
                 key: _scaffoldKey,
@@ -182,12 +187,23 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 body: SafeArea(
                     child: Stack(
                   children: <Widget>[
-                    getDrawerItemWidget(),
+                    getPage(),
                     HeaderView(
-                      scaffoldKey: _scaffoldKey,
-                      isShowMenu: true,
-//                      openProfile: openProfile,
-                    ),
+                        scaffoldKey: _scaffoldKey,
+                        isShowMenu: true,
+                        isChallenge: homeData.isChallenge,
+                        currentIndex: homeData != null &&
+                                homeData.questionHomeData != null &&
+                                homeData.questionHomeData
+                                        .questionCurrentIndex !=
+                                    null
+                            ? homeData.questionHomeData.questionCurrentIndex
+                            : 0,
+                        challengeCount: homeData != null &&
+                                homeData.questionHomeData != null &&
+                                homeData.questionHomeData.totalQuestion != null
+                            ? homeData.questionHomeData.totalQuestion
+                            : 0),
                     Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
@@ -213,6 +229,39 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             return Container();
           }
         });
+  }
+
+  void getAnimationStatus() {
+    bool first = false;
+    bool second = false;
+    if (homeData != null) {
+      print(homeData);
+      first = _currentPage == Const.typeCustomerSituation &&
+          ((homeData.isCameFromNewCustomer != null &&
+              homeData.isCameFromNewCustomer &&
+              homeData.questionHomeData.isAnsweredCorrect));
+      second = homeData.isChallenge != null &&
+              homeData.isChallenge &&
+              homeData.questionHomeData != null
+          ? homeData.questionHomeData.isAnsweredCorrect != null
+              ? homeData.questionHomeData.isAnsweredCorrect
+              : false
+          : false;
+    }
+    if (first || second) {
+      if (!homeData.isChallenge ||
+          (Injector.countList.length == questionData.questionCurrentIndex)) {
+        int index = Injector.countList.indexWhere(
+            (QuestionCountWithData mQuestionCountWithData) =>
+                mQuestionCountWithData.isCorrect != null
+                    ? !mQuestionCountWithData.isCorrect
+                    : false);
+        if (!homeData.isChallenge || index == -1) {
+          isCoinViseble = true;
+        }
+      }
+    } else
+      isCoinViseble = false;
   }
 
   Future<void> initStateMethods() async {
@@ -273,46 +322,139 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  getDrawerItemWidget() {
-    if (_currentPage == Const.typeHome) {
-      return Injector.isBusinessMode
-          ? DashboardGamePage()
-          : DashboardProfPage();
-    } else if (_currentPage == Const.typeBusinessSector) {
-      return BusinessSectorPage();
-    } else if (_currentPage == Const.typeNewCustomer) {
-      return NewCustomerPage();
-    } else if (_currentPage == Const.typeExistingCustomer) {
-      return ExistingCustomerPage();
-    } else if (_currentPage == Const.typeTeam) {
-      return TeamPage();
-    } else if (_currentPage == Const.typeChallenges) {
-      return ChallengesPage(homeData: homeData);
-    } else if (_currentPage == Const.typeReward) {
-      return RewardsPage();
-    } else if (_currentPage == Const.typeOrg) {
-      return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
-    } else if (_currentPage == Const.typeRanking) {
-      return RankingPage();
-    } else if (_currentPage == Const.typePl) {
-      return PLPage();
-    } else if (_currentPage == Const.typeProfile) {
-      return ProfilePage();
-    } else if (_currentPage == Const.typeEngagement) {
-      return EngagementCustomer(homeData: homeData);
-    } else if (_currentPage == Const.typeCustomerSituation) {
-      return CustomerSituationPage(homeData: homeData);
-    } else if (_currentPage == Const.typeCustomerSituation) {
-      return ProfilePage();
-    } else {
-      return Injector.isBusinessMode
-          ? DashboardGamePage()
-          : DashboardProfPage();
+  _getDrawerItemWidget(int pos) {
+    switch (pos) {
+      case 0:
+        return Injector.isBusinessMode
+            ? DashboardGamePage()
+            : DashboardProfPage();
+      case 1:
+        return BusinessSectorPage();
+      case 2:
+        return NewCustomerPage();
+      case 3:
+        return ExistingCustomerPage();
+      case 4:
+        return RewardsPage();
+      case 5:
+        return Injector.isManager() ? TeamPage() : ChallengesPage();
+      case 6:
+        return (Injector.isManager()
+            ? ChallengesPage()
+            : (Injector.isBusinessMode
+                ? OrganizationsPage2()
+                : PowerUpsPage()));
+
+      case 7:
+        return Injector.isManager()
+            ? Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage()
+            : PLPage();
+      case 8:
+        return Injector.isManager() ? PLPage() : RankingPage();
+
+      case 9:
+        return RankingPage();
+//      case 10:
+//        return ProfilePage();
+//      case 11:
+//        return IntroPage();
+//        return FadeRouteIntro();
+//        return Navigator.push(context, FadeRouteIntro());
+      default:
+        return Text("");
     }
   }
 
+//
+//  openProfile() {
+//    if (mounted)
+//      setState(() =>
+//          _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
+//  }
+
+  _onSelectItem(int index, DrawerItem item) {
+    _currentPage = item.key;
+
   _onSelectItem(DrawerItem item) {
     Utils.playClickSound();
+    if (_selectedDrawerIndex != index) {
+      if (index == Utils.getHomePageIndex(Const.typeOrg) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.organization != null &&
+          dashboardLockStatusData.organization != 1) {
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeOrg, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
+      } else if (index == Utils.getHomePageIndex(Const.typePl) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.pl != null &&
+          dashboardLockStatusData.pl != 1) {
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typePl, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
+      } else if (index == Utils.getHomePageIndex(Const.typeRanking) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.ranking != null &&
+          dashboardLockStatusData.ranking != 1) {
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeRanking, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
+      } else if (index == Utils.getHomePageIndex(Const.typeReward) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.achievement != null &&
+          dashboardLockStatusData.achievement != 1) {
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeReward, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
+      } else if (index == Utils.getHomePageIndex(Const.typeChallenges) &&
+          dashboardLockStatusData != null &&
+          dashboardLockStatusData.challenge != null &&
+          dashboardLockStatusData.challenge != 1) {
+        Utils.isInternetConnected().then((isConnected) {
+          if (isConnected) {
+            Utils.showLockReasonDialog(Const.typeChallenges, context, false);
+          } else {
+            Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          }
+        });
+      } else {
+        if (index == Utils.getHomePageIndex(Const.typeOrg) ||
+            index == Utils.getHomePageIndex(Const.typeChallenges) ||
+            index == Utils.getHomePageIndex(Const.typeReward) ||
+            index == Utils.getHomePageIndex(Const.typeRanking) ||
+            index == Utils.getHomePageIndex(Const.typeProfile) ||
+            index == Utils.getHomePageIndex(Const.typePl)) {
+          Utils.isInternetConnected().then((isConnected) {
+            if (isConnected) {
+              navigationOnScreen(item);
+            } else {
+              Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+            }
+          });
+        } else {
+          navigationOnScreen(item);
+        }
+      }
+    } else {
+      if (_scaffoldKey.currentState.isDrawerOpen) {
+        _scaffoldKey.currentState.openEndDrawer();
+      }
     if (_scaffoldKey.currentState.isDrawerOpen) {
       _scaffoldKey.currentState.openEndDrawer();
     }
@@ -326,6 +468,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         }*/
       else
         Utils.performDashboardItemClick(context, item.key);
+  }
+
+  void navigationOnScreen(DrawerItem item) {
+//    setState(() => _selectedDrawerIndex = index);
+    Navigator.of(context).pop(); //
+    navigationBloc.updateNavigation(
+        HomeData(initialPageType: _currentPage)); // close the drawer
+    if (_selectedDrawerIndex == Utils.getHomePageIndex(Const.typeHelp)) {
+      Navigator.push(context, FadeRouteIntro());
     }
   }
 
@@ -349,7 +500,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  showMainItem(DrawerItem item) {
+  showMainItem(DrawerItem item, int i) {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
@@ -357,10 +508,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode
               ? null
-              : item.key == _currentPage
+              : i == _selectedDrawerIndex
                   ? ColorRes.blueMenuSelected
                   : ColorRes.blueMenuUnSelected,
-          border: (!Injector.isBusinessMode && item.key == _currentPage)
+          border: (!Injector.isBusinessMode && i == _selectedDrawerIndex)
               ? Border.all(
                   color: ColorRes.white,
                   width: 1,
@@ -369,7 +520,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           borderRadius: BorderRadius.circular(10),
           image: Injector.isBusinessMode
               ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg(item.key == _currentPage
+                  image: AssetImage(Utils.getAssetsImg(i == _selectedDrawerIndex
                       ? "slide_menu_highlight"
                       : "bg_menu")),
                   fit: BoxFit.fill)
@@ -404,10 +555,39 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
+  getPage() {
+    if (_currentPage == Const.typeProfile)
+      return ProfilePage();
+    else if (_currentPage == Const.typeEngagement) {
+      return EngagementCustomer(homeData: homeData);
+    } else if (_currentPage == Const.typeCustomerSituation)
+      return CustomerSituationPage(homeData: homeData);
+    else if (_currentPage == Const.typeChallenges)
+      return ChallengesPage(homeData: homeData);
+    else
+      return _getDrawerItemWidget(_selectedDrawerIndex);
+  }
+
+  void getCustomerValues() {
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) customerValueBloc?.getCustomerValue(rq);
+    });
+  }
+
+  void setSelectedIndex() {
+    if (homeData != null) {
+      _selectedDrawerIndex = Utils.getHomePageIndex(homeData?.initialPageType);
+      _currentPage = homeData?.initialPageType;
+    }
+  }
+
   void initStreamController() async {
     Injector.homeStreamController.stream.listen((data) async {
       if (data == "${Const.openPendingChallengeDialog}") {
-        getPendingChallenges();
+        await getPendingChallenges();
       }
     }, onDone: () {}, onError: (error) {});
   }
@@ -427,14 +607,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void getPendingChallenges() {
     if (!Utils.isFeatureOn(Const.typeChallenges)) return;
 
+  Future<void> getPendingChallenges() async {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         GetChallengesRequest rq = GetChallengesRequest();
         rq.userId = Injector.userData.userId;
-
-        WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) {
-          if (data != null) {
+        WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) async {
+          if (data != null && data.toString() != "{}") {
             QuestionData questionData = QuestionData.fromJson(data);
+            new Future.delayed(const Duration(seconds: 5), () async {
+              await getChallengeQueBloc.getChallengeQuestion();
+            });
             if (questionData != null && questionData.challengeId != null) {
               if (questionData.isFirstQuestion == 1) {
                 DisplayDialogs.showChallengeDialog(
@@ -450,9 +633,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ));
               }
             } else {
+              navigationBloc
+                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
               // if there are no more question to attempt then navigate to HOME
               navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
+          } else {
+            navigationBloc
+                .updateNavigation(HomeData(initialPageType: Const.typeHome));
           }
         }).catchError((e) {
           // Utils.showToast(e.toString());
@@ -553,7 +741,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     Future.delayed(const Duration(milliseconds: 500), () {
       PushNotificationHelper pushNotificationHelper =
-          PushNotificationHelper(context);
+          PushNotificationHelper(context, explosionWidgetStateKey);
 
       if (pushNotificationHelper != null) {
         pushNotificationHelper.initPush();
@@ -570,6 +758,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     initPlatformState();
 
 
+  }
+
+  @override
+  onRefresh() {
+    setState(() {
+      isCoinViseble = true;
+    });
   }
 
   void updateVersionDialog() async {
