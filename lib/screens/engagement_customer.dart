@@ -46,12 +46,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   QuestionData questionDataEngCustomer;
   bool isChallenge;
 
-  List alphaIndex = [
-    "A",
-    "B",
-    "C",
-    "D"
-  ];
+  List alphaIndex = ["A", "B", "C", "D"];
 
   String urlPDFPath = "";
   String assetPDFPath = "";
@@ -239,7 +234,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitAnswer(BuildContext context) async {
-
     List<Answer> selectedAnswer =
         arrAnswer.where((answer) => answer.isSelected).toList();
 
@@ -248,7 +242,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       return;
     }
 
-    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer)?1:0;
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer) ? 1 : 0;
 
     SubmitAnswerRequest rq =
         Injector.prefs.getString(PrefKeys.answerData) != null
@@ -261,7 +255,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     await Injector.prefs
         .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
 
-    if (questionData.isAnsweredCorrect==1) {
+    if (questionData.isAnsweredCorrect == 1) {
       Injector.customerValueData.totalBalance =
           Injector.customerValueData.totalBalance + questionData.value;
 
@@ -285,7 +279,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitChallenge(BuildContext context) async {
-
     List<Answer> selectedAnswer =
         arrAnswer.where((answer) => answer.isSelected).toList();
 
@@ -294,15 +287,14 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       return;
     }
 
-    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer)?1:0;
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer) ? 1 : 0;
 
     SubmitChallengesRequest rq = SubmitChallengesRequest();
 
     rq.userId = Injector.userData.userId;
     rq.challengeId = questionDataEngCustomer.challengeId;
     rq.questionId = questionDataEngCustomer.questionId;
-    rq.isAnsweredCorrect = questionData.isAnsweredCorrect ;
-
+    rq.isAnsweredCorrect = questionData.isAnsweredCorrect;
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -349,9 +341,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   void callSubmitChallengeApi(
       BuildContext context, SubmitChallengesRequest rq) {
-
     questionData.isAnsweredCorrect = rq.isAnsweredCorrect;
-
 
     if (mounted)
       setState(() {
@@ -511,7 +501,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.moduleId = questionData.moduleId;
     if (!isChallenge) {
       submitAnswer.counter = max(
-          questionData.isAnsweredCorrect==1
+          questionData.isAnsweredCorrect == 1
               ? (questionData.counter + 1)
               : (questionData.counter ~/ 2).round(),
           0);
@@ -519,7 +509,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
     }
-    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect==1;
+    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect == 1;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
@@ -1268,7 +1258,8 @@ class ExpandMediaState extends State<ExpandMedia>
     });
 
     controller.forward();
-    getPdf();
+
+    if (Utils.isPdf(questionData.mediaLink)) getPdf();
   }
 
   Future getPdf() async {
@@ -1328,7 +1319,9 @@ class ExpandMediaState extends State<ExpandMedia>
                                 aspectRatio: _controller.value.aspectRatio,
                                 child: VideoPlayer(_controller),
                               )
-                            : (Utils.isPdf(questionData.mediaLink)?Utils.pdfShow(doc):null),
+                            : (Utils.isPdf(questionData.mediaLink)
+                                ? Utils.pdfShow(doc)
+                                : null),
                       ),
                     ),
 

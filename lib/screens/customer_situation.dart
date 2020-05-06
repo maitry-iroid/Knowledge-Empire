@@ -94,12 +94,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       }
 
       if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
         if (!isChallenge ||
             (Injector.countList.length == questionData.questionCurrentIndex)) {
           Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
         }
-        Utils.checkAudio(questionData.isAnsweredCorrect);
+        Utils.checkAudio(questionData.isAnsweredCorrect==1);
       }
 
       int index = Injector.countList.indexWhere(
@@ -113,7 +113,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       }
     } else {
       if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
         int index = Injector.countList.indexWhere(
             (QuestionCountWithData questionCountWithData) =>
                 questionCountWithData.questionIndex ==
@@ -123,7 +123,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           getChallengeQueBloc?.updateQuestions(index, false);
         }
 
-        Utils.checkAudio(questionData.isAnsweredCorrect);
+        Utils.checkAudio(questionData.isAnsweredCorrect==1);
       }
     }
     setState(() {});
