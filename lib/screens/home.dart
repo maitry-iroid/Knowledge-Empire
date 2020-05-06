@@ -225,6 +225,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void getAnimationStatus() {
+
     bool first = false;
     bool second = false;
     if (homeData != null) {
