@@ -38,6 +38,18 @@ List abcdList = List();
 
 FileInfo fileInfo;
 
+HomeData homeData;
+
+correctWrongImage() {
+  if (homeData != null && homeData.isCameFromNewCustomer) {
+    return questionDataCustSituation.correctAnswerImage;
+  } else {
+    return questionDataCustSituation.isAnsweredCorrect == true
+        ? questionDataCustSituation.correctAnswerImage
+        : questionDataCustSituation.inCorrectAnswerImage;
+  }
+}
+
 class CustomerSituationPage extends StatefulWidget {
   final HomeData homeData;
 
@@ -69,7 +81,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     questionDataCustomerSituation = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge;
     isCameFromNewCustomer = widget.homeData.isCameFromNewCustomer;
-
+    homeData = widget.homeData;
     showIntroDialog();
 
     super.initState();
@@ -130,14 +142,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   String error;
 
-  correctWrongImage() {
-    if (questionDataCustSituation.isAnsweredCorrect == true || !widget.homeData.isCameFromNewCustomer) {
-      return questionDataCustSituation.correctAnswerImage;
-    } else {
-      return questionDataCustSituation.inCorrectAnswerImage;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,7 +150,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Stack(
           children: <Widget>[
             isChallenge != null && isChallenge
-
                 ? Container(
                     color: ColorRes.colorBgDark,
                   )
@@ -187,17 +190,21 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: questionDataCustSituation.profileImage != null &&
-                                    questionDataCustSituation.profileImage.isNotEmpty
+                                image: questionDataCustSituation.profileImage !=
+                                            null &&
+                                        questionDataCustSituation
+                                            .profileImage.isNotEmpty
                                     ? Utils.getCacheNetworkImage(
-                                    questionDataCustSituation.profileImage)
+                                        questionDataCustSituation.profileImage)
                                     : AssetImage(
                                         Utils.getAssetsImg('user_org')),
                                 fit: BoxFit.fill),
                             border: Border.all(color: ColorRes.textLightBlue)),
                       ),
                       Text(
-                        questionDataCustSituation.firstName + " " + questionDataCustSituation.lastName,
+                        questionDataCustSituation.firstName +
+                            " " +
+                            questionDataCustSituation.lastName,
                         style: TextStyle(color: ColorRes.white, fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
@@ -260,7 +267,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   }*/
                 } else if (isCameFromNewCustomer != null &&
                     isCameFromNewCustomer) {
-                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
+                  navigationBloc.updateNavigation(
+                      HomeData(initialPageType: Const.typeNewCustomer));
                 } else {
                   navigationBloc.updateNavigation(
                       HomeData(initialPageType: Const.typeExistingCustomer));
@@ -455,7 +463,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       );
     } else
       return Container();
-
   }
 
   showSecondHalf(BuildContext context) {
@@ -480,7 +487,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           Utils.playClickSound();
           showDialog(
             context: context,
-            builder: (_) => CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
+            builder: (_) =>
+                CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
           );
         },
         child: Stack(
@@ -528,7 +536,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           showDialog(
             context: context,
 //              builder: (_) => ImageCorrectIncorrectAlert()
-            builder: (_) => CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
+            builder: (_) =>
+                CorrectWrongMediaAlert(widget.homeData.isCameFromNewCustomer),
           );
         },
       ),
@@ -805,6 +814,7 @@ class CorrectWrongMediaAlert extends StatefulWidget {
   final bool isFromExistingCustomer;
 
   const CorrectWrongMediaAlert(this.isFromExistingCustomer);
+
   @override
   State<StatefulWidget> createState() => CorrectWrongMediaAlertState();
 }
@@ -839,14 +849,6 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
   }
 
   bool checkimg = true;
-
-  correctWrongImage() {
-    if (questionDataCustSituation.isAnsweredCorrect == true || !widget.isFromExistingCustomer) {
-      return questionDataCustSituation.correctAnswerImage;
-    } else {
-      return questionDataCustSituation.inCorrectAnswerImage;
-    }
-  }
 
   void initVideoController1() async {
     if (Utils.isVideo(correctWrongImage())) {
