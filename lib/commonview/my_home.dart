@@ -3,8 +3,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class MyHomePage extends StatefulWidget {
+  final bool isCoinViseble;
+
+  const MyHomePage({Key key, this.isCoinViseble}) : super(key: key);
+
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
@@ -19,11 +24,17 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
-        duration: Duration(milliseconds: 61100), vsync: this);
-    flipAnim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
-        parent: controller, curve: Interval(0.0, 0.5, curve: Curves.linear)));
-    controller.forward();
+    if (widget.isCoinViseble) {
+      controller = AnimationController(
+          duration: Duration(milliseconds: 61100), vsync: this);
+      flipAnim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
+          parent: controller, curve: Interval(0.0, 0.5, curve: Curves.linear)));
+      controller.forward();
+    } else {
+      if(controller!=null){
+        controller.dispose();
+      }
+    }
   }
 
   @override
@@ -41,7 +52,8 @@ class _MyHomePageState extends State<MyHomePage>
                 ..rotateY(2 * pi * flipAnim.value),
               alignment: Alignment.center,
               child: Image.asset(
-                Utils.getAssetsImg("ic_dollar"),
+                Utils.getAssetsImg(
+                    Injector.isBusinessMode ? "ic_dollar" : "brain"),
                 height: 25,
                 width: 25,
               ),

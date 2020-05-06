@@ -317,8 +317,7 @@ class HeaderViewState extends State<HeaderView> {
         if (indexData == -1) {
           indexData = 0;
         }
-        return ChallengeHeader(
-            challengeCount: widget.challengeCount, currentIndex: indexData);
+        return ChallengeHeader(challengeCount: widget.challengeCount, currentIndex: indexData);
       }
     }
 

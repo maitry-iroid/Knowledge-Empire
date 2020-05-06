@@ -204,7 +204,7 @@ class PushNotificationHelper {
           mPushModel.type == "0" &&
           mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
-        btnText = "${mPushModel.bonus} \$" ;
+        btnText = "${mPushModel.bonus} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}";
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);

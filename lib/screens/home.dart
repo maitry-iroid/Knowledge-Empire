@@ -53,26 +53,26 @@ class FadeRouteHome extends PageRouteBuilder {
 
   FadeRouteHome(/*{this.homeData}*/)
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    /*homeData.page,*/
-    HomePage(),
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: HomePage(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              /*homeData.page,*/
+              HomePage(),
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: HomePage(
 //              homeData: homeData,
+                ),
           ),
-        ),
-  );
+        );
 }
 
 class HomePage extends StatefulWidget {
@@ -109,6 +109,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool isReadyForChallenge = false;
 
   HomeData homeData;
+
 
   @override
   void didChangeDependencies() {
@@ -154,7 +155,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               for (var i = 0; i < drawerItems.length; i++) {
                 drawerOptions.add(new ListTile(
                     contentPadding:
-                    EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                        EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                     title: showMainItem(drawerItems[i]),
                     selected: drawerItems[i].key == _currentPage,
                     onTap: () => _onSelectItem(drawerItems[i])));
@@ -170,37 +171,49 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   width: Utils.getDeviceWidth(context) / 2.5,
                   child: Drawer(
                       child: Container(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.bgMenu
-                            : ColorRes.headerBlue,
-                        child: new ListView(children: drawerOptions),
-                      )),
+                    color: Injector.isBusinessMode
+                        ? ColorRes.bgMenu
+                        : ColorRes.headerBlue,
+                    child: new ListView(children: drawerOptions),
+                  )),
                 ),
                 backgroundColor: ColorRes.colorBgDark,
                 body: SafeArea(
                     child: Stack(
+                  children: <Widget>[
+                    getDrawerItemWidget(),
+                    HeaderView(
+                        scaffoldKey: _scaffoldKey,
+                        isShowMenu: true,
+                        isChallenge: homeData.isChallenge,
+                        currentIndex: homeData != null &&
+                                homeData.questionHomeData != null &&
+                                homeData.questionHomeData
+                                        .questionCurrentIndex !=
+                                    null
+                            ? homeData.questionHomeData.questionCurrentIndex
+                            : 0,
+                        challengeCount: homeData != null &&
+                                homeData.questionHomeData != null &&
+                                homeData.questionHomeData.totalQuestion != null
+                            ? homeData.questionHomeData.totalQuestion
+                            : 0),
+                    Stack(
+                      fit: StackFit.expand,
                       children: <Widget>[
-                        getDrawerItemWidget(),
-                        HeaderView(
-                          scaffoldKey: _scaffoldKey,
-                          isShowMenu: true,
-                        ),
-                        Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            coinWidget(250, 150),
-                            coinWidget(310, 50),
-                            coinWidget(70, 50),
-                            coinWidget(150, 20),
-                            coinWidget(350, 320),
-                            coinWidget(350, 450),
-                            coinWidget(180, 300),
-                            coinWidget(200, 550),
-                            coinWidget(350, 650),
-                          ],
-                        ),
+                        coinWidget(250, 150),
+                        coinWidget(310, 50),
+                        coinWidget(70, 50),
+                        coinWidget(150, 20),
+                        coinWidget(350, 320),
+                        coinWidget(350, 450),
+                        coinWidget(180, 300),
+                        coinWidget(200, 550),
+                        coinWidget(350, 650),
                       ],
-                    )),
+                    ),
+                  ],
+                )),
               );
             } else
               return Container();
@@ -238,7 +251,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     ? !mQuestionCountWithData.isCorrect
                     : false);
         if (!homeData.isChallenge || index == -1) {
-          isCoinViseble = true;
+            isCoinViseble = true;
         }
       }
     } else
@@ -349,7 +362,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (_currentPage != item.key) {
       if (item.key == Const.typeHelp)
         Navigator.push(context, FadeRouteIntro());
-        /*Injector.isBusinessMode
+      /*Injector.isBusinessMode
             ? Navigator.push(context, FadeRouteIntro())
             : DisplayDialogs.professionalDialog(context);*/
       else
@@ -370,7 +383,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         setState(() {});
       },
       child: Container(
-        child: isCoinViseble ? MyHomePage() : Container(),
+        child: isCoinViseble
+            ? MyHomePage(isCoinViseble: isCoinViseble)
+            : Container(),
         width: 40,
         height: 40,
       ),
@@ -386,21 +401,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           color: Injector.isBusinessMode
               ? null
               : item.key == _currentPage
-              ? ColorRes.blueMenuSelected
-              : ColorRes.blueMenuUnSelected,
+                  ? ColorRes.blueMenuSelected
+                  : ColorRes.blueMenuUnSelected,
           border: (!Injector.isBusinessMode && item.key == _currentPage)
               ? Border.all(
-            color: ColorRes.white,
-            width: 1,
-          )
+                  color: ColorRes.white,
+                  width: 1,
+                )
               : null,
           borderRadius: BorderRadius.circular(10),
           image: Injector.isBusinessMode
               ? DecorationImage(
-              image: AssetImage(Utils.getAssetsImg(item.key == _currentPage
-                  ? "slide_menu_highlight"
-                  : "bg_menu")),
-              fit: BoxFit.fill)
+                  image: AssetImage(Utils.getAssetsImg(item.key == _currentPage
+                      ? "slide_menu_highlight"
+                      : "bg_menu")),
+                  fit: BoxFit.fill)
               : null),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -481,7 +496,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               }
             } else {
               // if there are no more question to attempt then navigate to HOME
-              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+              navigationBloc
+                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           } else {
             navigationBloc
@@ -612,7 +628,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 context, status.headlineText, status.message, true);
           } else {
             DateTime clickedTime =
-            DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+                DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
             if (DateTime.now().difference(clickedTime).inDays >= 1) {
               DisplayDialogs.showUpdateDialog(
                   context, status.headlineText, status.message, true);
@@ -640,7 +656,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
             DashboardStatusResponse response =
-            DashboardStatusResponse.fromJson(data);
+                DashboardStatusResponse.fromJson(data);
 
             if (response.data.isNotEmpty) {
               Injector.prefs.setString(

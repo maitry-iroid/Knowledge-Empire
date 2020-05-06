@@ -260,8 +260,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   }*/
                 } else if (isCameFromNewCustomer != null &&
                     isCameFromNewCustomer) {
-                  navigationBloc.updateNavigation(
-                      HomeData(initialPageType: Const.typeNewCustomer));
+                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
                 } else {
                   navigationBloc.updateNavigation(
                       HomeData(initialPageType: Const.typeExistingCustomer));

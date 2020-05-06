@@ -191,8 +191,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
         color: ColorRes.bgProf,
         shape: getBorderShape(),
         child: Container(
+          height: double.infinity,
           decoration: getBoxDecoration(),
-          child: Column(
+          child: ListView (
+            shrinkWrap: true,
+            primary: false,
             children: <Widget>[
               Container(
                 width: double.infinity,
@@ -213,13 +216,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 ),
               ),
               showSearchView(),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: arrFriendsToShow.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return showFriendItem(index);
-                  },
-                ),
+              ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: arrFriendsToShow.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return showFriendItem(index);
+                },
               ),
             ],
           ),
