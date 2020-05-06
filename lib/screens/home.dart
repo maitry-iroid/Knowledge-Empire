@@ -249,7 +249,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 mQuestionCountWithData.isCorrect != null
                     ? !mQuestionCountWithData.isCorrect
                     : false);
-        if (!homeData.isChallenge || index == -1) {
+        if (homeData.isCameFromNewCustomer || index == -1) {
           isCoinViseble = true;
         }
       }
@@ -378,8 +378,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         isCoinViseble = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
+        homeData.isCameFromNewCustomer=false;
         setState(() {});
-
       },
       child: Container(
         child: isCoinViseble
