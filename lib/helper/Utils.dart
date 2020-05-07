@@ -266,7 +266,7 @@ class Utils {
   static playBackgroundMusic() async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
-    if (Injector.isBusinessMode && Injector.isSoundEnable) {
+    if (Injector.isBusinessMode && Injector.isSoundEnable!=null && Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
@@ -296,12 +296,12 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable)
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
       Injector.audioCache.play("achievement_music.mp3");
   }
 
-  static playClickSound() async {
-    if (Injector.isSoundEnable)
+  static playClickSound() {
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
       Injector.audioCache.play("all_button_clicks.wav");
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
@@ -309,20 +309,20 @@ class Utils {
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static procorrectAnswerSound() async {
-    if (Injector.isSoundEnable)
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
       Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proincorrectAnswerSound() async {
-    if (Injector.isSoundEnable)
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
       Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
@@ -561,7 +561,9 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) async {
-    Utils.playClickSound();
+    if (Injector.isSoundEnable) {
+      Injector.audioCache.play("all_button_clicks.wav");
+    }
 
     if (type == Const.typeOrg ||
         type == Const.typeChallenges ||
@@ -946,6 +948,5 @@ class Utils {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) customerValueBloc?.getCustomerValue(rq);
     });
-
   }
 }

@@ -434,13 +434,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
                               Injector.customerValueData.isEnableSound = Injector.isSoundEnable?1:0;
-                              Injector.setCustomerValueData(Injector.customerValueData);
+                              //Injector.setCustomerValueData(Injector.customerValueData);
 
                               Utils.playBackgroundMusic();
 
                               updateType = 2.toString();
-                              updateIsSoundEnable =
-                                  value ? 1.toString() : 0.toString();
+                              updateIsSoundEnable = value ? 1.toString() : 0.toString();
+                              updateMode = Injector.mode.toString();
                               callApiForUpdateUserSetting(updateType, null);
 
                               setState(() {});
