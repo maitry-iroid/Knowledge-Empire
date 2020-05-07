@@ -411,6 +411,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
                                 setState(() {});
+
                               },
                             )
                           : Container(),
