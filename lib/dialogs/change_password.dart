@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -29,6 +30,12 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   bool isLoading = false;
 
   @override
+  void initState() {
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent.withOpacity(0.8),
@@ -36,13 +43,14 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     );
   }
 
+
+
   showSetupPin(BuildContext context) {
     return Center(
       child: Stack(
         fit: StackFit.loose,
         children: <Widget>[
           Container(
-//            height: Utils.getDeviceHeight(context),
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
@@ -228,6 +236,8 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       ),
     );
   }
+
+
 
   Widget showCircularProgress() {
     if (isLoading) {

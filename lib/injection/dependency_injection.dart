@@ -145,10 +145,7 @@ class Injector {
         updateIntroData();
       }
 
-      if (prefs.getString(PrefKeys.introModel) != null) {
-        introModel = IntroModel.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.introModel)));
-      }
+
 
       if (prefs.getString(PrefKeys.dashboardStatusData) != null) {
         dashboardStatusResponse = DashboardStatusResponse.fromJson(
@@ -165,6 +162,11 @@ class Injector {
 
       getIntroData();
       getIntroText();
+
+      if (prefs.getString(PrefKeys.introModel) != null) {
+        introModel = IntroModel.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.introModel)));
+      }
     }
   }
 
@@ -220,6 +222,14 @@ class Injector {
     }
   }
 
+  static setIntroModel(IntroModel _introModel) async {
+    if (_introModel != null) {
+      await Injector.prefs
+          .setString(PrefKeys.introModel, jsonEncode(_introModel.toJson()));
+      introModel = _introModel;
+    }
+  }
+
   static isManager() {
     return userData?.isManager == 1;
   }
@@ -256,6 +266,7 @@ class Injector {
         WebApi().callAPI(WebApi.getIntroText, rq.toJson()).then((data) async {
           if (data != null) {
             introModel = IntroModel.fromJson(data);
+            await Injector.setIntroModel(introModel);
           }
         }).catchError((e) {
           print("getIntro" + e.toString());

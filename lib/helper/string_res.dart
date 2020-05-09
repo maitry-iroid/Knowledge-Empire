@@ -1183,6 +1183,8 @@ class StringRes {
       'debrief': 'Nachbesprechung',
       //</editor-fold>
 
+      'passwordChange': 'Passwort erfolgreich geändert.',
+
 
     },
     'zh': {
@@ -1556,6 +1558,7 @@ class StringRes {
       'debrief': '任务报告',
       //</editor-fold>
 
+      'passwordChange': '密码已更改。',
 
     }
   };
@@ -1935,7 +1938,7 @@ class StringRes {
       //</editor-fold>
       'strProProfile': "- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
 
-
+      'passwordChange': 'Password changed Successfully.',
     },
     'de': {
       //<editor-fold desc="German">
@@ -2316,7 +2319,7 @@ class StringRes {
       //</editor-fold>
       'strProProfile': "- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
 
-
+      'passwordChange': 'Passwort erfolgreich geändert.',
     },
     'zh': {
       //<editor-fold desc="chines">
@@ -2666,7 +2669,7 @@ class StringRes {
       //</editor-fold>
       'strProProfile':"- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
 
-
+      'passwordChange': '密码已更改。',
     }
   };
 }
