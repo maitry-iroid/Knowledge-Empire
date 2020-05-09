@@ -382,6 +382,7 @@ class StringRes {
   static var helpProP = "helpProP";
   static var helpProRanking = "helpProRanking";
 
+
   //</editor-fold>
 
   static String strProProfile="strProProfile";
