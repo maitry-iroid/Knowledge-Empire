@@ -57,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData == null || Injector.introData.profile1 == 0)
+    if (Injector.introData != null && Injector.introData.profile1 == 0)
       await DisplayDialogs.showIntroProfile1(context);
 
     myFocusNode = FocusNode();
@@ -403,7 +403,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 updateType = 1.toString();
                                 updateMode = Injector.mode.toString();
-                                await Injector.getIntroText();
                                 await callApiForUpdateUserSetting(updateType, null);
 
                                 Utils.playBackgroundMusic();
@@ -1360,6 +1359,7 @@ class _ProfilePageState extends State<ProfilePage> {
       CommonView.showCircularProgress(false, context);
       print(data);
       if (data != null) {
+        await Injector.getIntroText();
         switch (updateType) {
           case "1":
             await setMode();
@@ -1395,8 +1395,8 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     localeBloc.setLocale(index);
-    await Injector.getIntroText();
     await Injector.setUserData(Injector.userData);
+    await Injector.getIntroText();
   }
 
   removeKeys() {

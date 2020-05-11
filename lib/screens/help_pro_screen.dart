@@ -16,7 +16,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
   String title;
   String description;
   static int selectedIndex = 0;
-  static List<HelpModel> helpList = List<HelpModel>();
+  List<HelpModel> helpList = List<HelpModel>();
 
   PageController pageController = PageController(
     initialPage: selectedIndex,
@@ -28,42 +28,10 @@ class _HelpProScreenState extends State<HelpProScreen> {
     keepPage: true,
   );
 
-  List<String> arrType = List();
   HelpModel helpModel;
 
-
-
-  void getText() {
-    helpModel = new HelpModel();
-    helpModel.title = "title 1";
-    helpModel.icons = "ic_pro_profile.png";
-    helpModel.description = Utils.getText(context, StringRes.strProProfile);
-    helpList.add(helpModel);
-
-    helpModel = new HelpModel();
-    helpModel.title = "title 1";
-    helpModel.icons = "ic_pro_profile.png";
-    helpModel.description = Utils.getText(context, StringRes.strProProfile);
-    helpList.add(helpModel);
-
-    helpModel = new HelpModel();
-    helpModel.title = "title 1";
-    helpModel.icons = "ic_pro_profile.png";
-    helpModel.description = Utils.getText(context, StringRes.strProProfile);
-    helpList.add(helpModel);
-
-    helpModel = new HelpModel();
-    helpModel.title = "title 1";
-    helpModel.icons = "ic_pro_profile.png";
-    helpModel.description = Utils.getText(context, StringRes.strProProfile);
-    helpList.add(helpModel);
-
-    helpModel = new HelpModel();
-    helpModel.title = "title 1";
-    helpModel.icons = "ic_pro_profile.png";
-    helpModel.description = Utils.getText(context, StringRes.strProProfile);
-    helpList.add(helpModel);
-
+  Future<void> getText() async {
+    await initFeatureDataArray();
     print(helpList);
   }
 
@@ -99,33 +67,39 @@ class _HelpProScreenState extends State<HelpProScreen> {
             color: Colors.white,
             border: Border.all(color: ColorRes.helpProBox, width: 5),
             borderRadius: BorderRadius.all(Radius.circular(30.0))),
-        child: Center(
-          child: PageView.builder(
-            controller: pageController,
-            itemCount: helpList.length,
-            itemBuilder: (context, position) {
-              return Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(helpList[position].title,
+        child: PageView.builder(
+          physics: new NeverScrollableScrollPhysics(),
+          controller: pageController,
+          itemCount: helpList.length,
+          itemBuilder: (context, position) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: Utils.getDeviceWidth(context) / 16),
+                  Center(
+                    child: Text(helpList[position].title,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .title
+                            .copyWith(color: ColorRes.helpProBox)),
+                  ),
+                  SizedBox(height: 9),
+                  Padding(
+                      padding: EdgeInsets.only(
+                          left: 50, right: 50, top: 8, bottom: 8),
+                      child: Text(helpList[position].description,
                           style: Theme.of(context)
                               .textTheme
-                              .title
-                              .copyWith(color: ColorRes.helpProBox)),
-                      SizedBox(height: 9),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 50, right: 50, top: 8, bottom: 8),
-                          child: Text(helpList[position].description)),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
+                              .subhead
+                              .copyWith(fontWeight: FontWeight.w400))),
+                  SizedBox(height: Utils.getDeviceWidth(context) / 21),
+                ],
+              ),
+            );
+          },
         ));
   }
 
@@ -139,6 +113,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
             width: Utils.getDeviceHeight(context) / 5,
             child: Center(
                 child: PageView.builder(
+              physics: new NeverScrollableScrollPhysics(),
               controller: pageIconController,
               itemCount: helpList.length,
               itemBuilder: (context, position) {
@@ -157,7 +132,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
   Widget next(BuildContext context) {
     if (selectedIndex == helpList.length) {
       return Align(
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.centerRight,
         child: InkResponse(
           child: Container(
             width: Utils.getDeviceHeight(context) / 10,
@@ -165,7 +140,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
             decoration: BoxDecoration(
                 color: ColorRes.whiteTransparent,
                 borderRadius: BorderRadius.all(Radius.circular(35))),
-            child: Icon(Icons.chevron_left),
+            child: Icon(Icons.chevron_right),
           ),
         ),
       );
@@ -234,72 +209,84 @@ class _HelpProScreenState extends State<HelpProScreen> {
     );
   }
 
-  static showIcons() {
-    return 'ic_pro_home_organization';
-    /*if (getSelectedType() == Const.typeOrg) {
-      return 'ic_pro_home_organization';
-    } else if (getSelectedType() == Const.typePl) {
-      return 'ic_pro_home_pl';
-    } else if (getSelectedType() == Const.typeRanking) {
-      return 'ic_pro_home_ranking';
-    } else if (getSelectedType() == Const.typeReward) {
-      return 'ic_pro_home_rewards';
-    } else if (getSelectedType() == Const.typeTeam) {
-      return 'ic_pro_home_team';
-    } else if (getSelectedType() == Const.typeChallenges) {
-      return 'ic_pro_home_challenges';
-    } else if (getSelectedType() == Const.typeBusinessSector) {
-      return 'ic_pro_home_business';
-    } else if (getSelectedType() == Const.typeNewCustomer) {
-      return 'ic_pro_home_customer';
-    } else if (getSelectedType() == Const.typeExistingCustomer) {
-      return 'ic_pro_home_exis_customer';
-    } else if (getSelectedType() == Const.typeProfile) {
-      return '';
-    } else if (getSelectedType() == Const.typeEmployee) {
-      return '';
-    } else if (getSelectedType() == Const.typeSalesPersons) {
-      return '';
-    } else if (getSelectedType() == Const.typeServicesPerson) {
-      return '';
-    } else if (getSelectedType() == Const.typeBrandValue) {
-      return '';
-    } else if (getSelectedType() == Const.typeMoney) {
-      return '';
-    }*/
-  }
+  List<HelpModel> initFeatureDataArray() {
+    helpList = new List<HelpModel>();
 
-  List<String> initFeatureDataArray() {
-    List<String> arrTypeData = List();
-
-    arrTypeData.add(Const.typeProfile);
-    arrTypeData.add(Const.typeName);
+    addInModel(Utils.getText(context, StringRes.profile), "ic_pro_profile",
+        Utils.getText(context, StringRes.strProProfile));
 
     if (Utils.isFeatureOn(Const.typeOrg)) {
-      arrTypeData.add(Const.typeEmployee);
-      arrTypeData.add(Const.typeSalesPersons);
-      arrTypeData.add(Const.typeServicesPerson);
+      addInModel(Utils.getText(context, StringRes.empOMaster), "book",
+          Utils.getText(context, StringRes.strEmpOMeter));
+      addInModel(Utils.getText(context, StringRes.salesOMeter), "employee_prof_ic",
+          Utils.getText(context, StringRes.strSalesOMeter));
+      addInModel(Utils.getText(context, StringRes.serviceOMeter), "bulb",
+          Utils.getText(context, StringRes.strServiceOMeter));
     }
-    arrTypeData.add(Const.typeBrandValue);
-    arrTypeData.add(Const.typeMoney);
+    addInModel(
+        Utils.getText(context, StringRes.strBrandValueTitle),
+        "question",
+        Utils.getText(context, StringRes.strBrandValue));
 
-    arrTypeData.add(Const.typeBusinessSector);
-    arrTypeData.add(Const.typeNewCustomer);
-    arrTypeData.add(Const.typeExistingCustomer);
+    addInModel(Utils.getText(context, StringRes.cash), "brain",
+        Utils.getText(context, StringRes.strCash));
 
-    if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
+    addInModel(
+        Utils.getText(context, StringRes.businessSector),
+        "ic_pro_home_business",
+        Utils.getText(context, StringRes.strBusinessSector));
 
-    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
-      arrTypeData.add(Const.typeTeam);
-    if (Utils.isFeatureOn(Const.typeChallenges))
-      arrTypeData.add(Const.typeChallenges);
+    addInModel(
+        Utils.getText(context, StringRes.newCustomers),
+        "ic_pro_home_customer",
+        Utils.getText(context, StringRes.strNewCustomer));
 
-    if (Utils.isFeatureOn(Const.typeOrg)) arrTypeData.add(Const.typeOrg);
-    if (Utils.isFeatureOn(Const.typePl)) arrTypeData.add(Const.typePl);
+    addInModel(
+        Utils.getText(context, StringRes.existingCustomers),
+        "ic_pro_home_exis_customer",
+        Utils.getText(context, StringRes.strExistingCustomer));
 
-    if (Utils.isFeatureOn(Const.typeRanking))
-      arrTypeData.add(Const.typeRanking);
+    if (Utils.isFeatureOn(Const.typeReward)) {
+      addInModel(Utils.getText(context, StringRes.rewards),
+          "ic_pro_home_rewards", Utils.getText(context, StringRes.strRewards));
+    }
 
-    return arrTypeData;
+    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager()) {
+      addInModel(Utils.getText(context, StringRes.team), "ic_pro_home_team",
+          Utils.getText(context, StringRes.strTeam));
+    }
+
+    if (Utils.isFeatureOn(Const.typeChallenges)) {
+      addInModel(
+          Utils.getText(context, StringRes.challenges),
+          "ic_pro_home_challenges",
+          Utils.getText(context, StringRes.strChallenges));
+    }
+
+    if (Utils.isFeatureOn(Const.typeOrg)) {
+      addInModel(
+          Utils.getText(context, StringRes.organizations),
+          "ic_pro_home_organization",
+          Utils.getText(context, StringRes.strOrganization));
+    }
+    if (Utils.isFeatureOn(Const.typePl)) {
+      addInModel(Utils.getText(context, StringRes.pl), "ic_pro_home_pl",
+          Utils.getText(context, StringRes.strPL));
+    }
+
+    if (Utils.isFeatureOn(Const.typeRanking)) {
+      addInModel(Utils.getText(context, StringRes.ranking),
+          "ic_pro_home_ranking", Utils.getText(context, StringRes.strRanking));
+    }
+
+    return helpList;
+  }
+
+  addInModel(String title, String icon, String description) {
+    helpModel = new HelpModel();
+    helpModel.title = title;
+    helpModel.icons = icon;
+    helpModel.description = description;
+    helpList.add(helpModel);
   }
 }

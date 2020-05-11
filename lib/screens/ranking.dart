@@ -139,7 +139,6 @@ class _RankingPageState extends State<RankingPage> {
     );
   }
 
-
   final _height = 100.0;
 
   showSecondColumn() {
@@ -270,7 +269,6 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   getFriends(bool isScrollDown, bool isToAddData) async {
-
     if (await Utils.isInternetConnectedWithAlert(context)) {
       CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
@@ -311,7 +309,10 @@ class _RankingPageState extends State<RankingPage> {
     }
   }
 
-  void friendUnFriendUser(int index, int i,) async {
+  void friendUnFriendUser(
+    int index,
+    int i,
+  ) async {
     if (await Utils.isInternetConnectedWithAlert(context)) {
 //    CommonView.showCircularProgress(true, _scaffoldKey.currentContext);
 
@@ -369,36 +370,38 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showFriendUnFriendButton(int index) {
-    return Utils.isFeatureOn(Const.typeChallenges) ? Expanded(
-      flex: 3,
-      child: InkResponse(
-        onTap: () {
-          Utils.playClickSound();
+    return Utils.isFeatureOn(Const.typeChallenges)
+        ? Expanded(
+            flex: 3,
+            child: InkResponse(
+              onTap: () {
+                Utils.playClickSound();
 
-          if (!isCurrentUser(index)) {
-            if (mounted)
-              setState(() {
-                if (arrFriends[index].isFriend == 0) {
-                  arrFriends[index].isFriend = 1;
-                  friendUnFriendUser(index, 1);
-                } else {
+                if (!isCurrentUser(index)) {
+                  if (mounted)
+                    setState(() {
+                      if (arrFriends[index].isFriend == 0) {
+                        arrFriends[index].isFriend = 1;
+                        friendUnFriendUser(index, 1);
+                      } else {
 //                  unFriend(context, index);
 
-                  _showUnFriend(context, index);
+                        _showUnFriend(context, index);
+                      }
+                    });
                 }
-              });
-          }
-        },
-        child: Image(
-            height: Utils.getDeviceWidth(context) / 20,
-            width: Utils.getDeviceWidth(context) / 20,
-            image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
-                ? "add_frnd_disable"
-                : selectedUser != null && arrFriends[index].isFriend == 0
-                    ? 'add_emplyee'
-                    : 'remove_friend'))),
-      ),
-    ):Container();
+              },
+              child: Image(
+                  height: Utils.getDeviceWidth(context) / 20,
+                  width: Utils.getDeviceWidth(context) / 20,
+                  image: AssetImage(Utils.getAssetsImg(isCurrentUser(index)
+                      ? "add_frnd_disable"
+                      : selectedUser != null && arrFriends[index].isFriend == 0
+                          ? 'add_emplyee'
+                          : 'remove_friend'))),
+            ),
+          )
+        : Container();
   }
 
   showUserDetails(int index) {
@@ -582,7 +585,7 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   void getData() async {
-    if (Injector.introData == null || Injector.introData.ranking1 == 0)
+    if (Injector.introData != null && Injector.introData.ranking1 == 0)
       await DisplayDialogs.showIntroRanking1(context);
 
     bool isConnected = await Utils.isInternetConnectedWithAlert(context);
@@ -814,25 +817,27 @@ class _RankingPageState extends State<RankingPage> {
             : Container(),
         Utils.isFeatureOn(Const.typeChallenges)
             ? Expanded(
-          flex: 3,
-          child: Container(
-            width: 45,
-            height: 30,
-            margin: EdgeInsets.only(left: 2, right: 5),
+                flex: 3,
+                child: Container(
+                  width: 45,
+                  height: 30,
+                  margin: EdgeInsets.only(left: 2, right: 5),
 //        padding: EdgeInsets.symmetric(horizontal: 20),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode
-                        ? "bg_ranking_header_1"
-                        : "bg_pro_ranking_header_1")),
-                    fit: BoxFit.fill)),
-            child: Text(
-              Utils.getText(context, StringRes.friend),
-              style: TextStyle(color: ColorRes.white, fontSize: 15),
-            ),
-          ),
-        ):Container(),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg(
+                              Injector.isBusinessMode
+                                  ? "bg_ranking_header_1"
+                                  : "bg_pro_ranking_header_1")),
+                          fit: BoxFit.fill)),
+                  child: Text(
+                    Utils.getText(context, StringRes.friend),
+                    style: TextStyle(color: ColorRes.white, fontSize: 15),
+                  ),
+                ),
+              )
+            : Container(),
       ],
     );
   }

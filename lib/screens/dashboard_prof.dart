@@ -33,7 +33,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     if (Injector.introData == null) {
       getIntroData();
     }
-
   }
 
   @override
@@ -238,17 +237,15 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
     if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
 
-    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
-      arrTypeData.add(Const.typeTeam);
-    if (Utils.isFeatureOn(Const.typeChallenges))
-      arrTypeData.add(Const.typeChallenges);
+    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager()) arrTypeData.add(Const.typeTeam);
+
+    if (Utils.isFeatureOn(Const.typeChallenges)) arrTypeData.add(Const.typeChallenges);
 
     if (Utils.isFeatureOn(Const.typeOrg)) arrTypeData.add(Const.typeOrg);
 
     if (Utils.isFeatureOn(Const.typePl)) arrTypeData.add(Const.typePl);
 
-    if (Utils.isFeatureOn(Const.typeRanking))
-      arrTypeData.add(Const.typeRanking);
+    if (Utils.isFeatureOn(Const.typeRanking)) arrTypeData.add(Const.typeRanking);
 
     return arrTypeData;
   }

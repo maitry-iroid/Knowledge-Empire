@@ -39,11 +39,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
     });
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   void getOrganization() {
     Utils.isInternetConnectedWithAlert(context).then((_) {

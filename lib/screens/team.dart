@@ -586,7 +586,7 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-    if (Injector.introData == null || Injector.introData.team1 == 0)
+    if (Injector.introData != null && Injector.introData.team1 == 0)
       await DisplayDialogs.showIntroTeam1(context);
 
     Utils.isInternetConnected().then((isConnected) {

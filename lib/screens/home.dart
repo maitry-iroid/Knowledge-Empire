@@ -225,7 +225,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void getAnimationStatus() {
-
     bool first = false;
     bool second = false;
     if (homeData != null) {
@@ -233,18 +232,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       first = _currentPage == Const.typeCustomerSituation &&
           ((homeData.isCameFromNewCustomer != null &&
               homeData.isCameFromNewCustomer &&
-              homeData.questionHomeData.isAnsweredCorrect==1));
+              homeData.questionHomeData.isAnsweredCorrect == 1));
       second = homeData.isChallenge != null &&
               homeData.isChallenge &&
               homeData.questionHomeData != null
           ? homeData.questionHomeData.isAnsweredCorrect != null
-              ? homeData.questionHomeData.isAnsweredCorrect==1
+              ? homeData.questionHomeData.isAnsweredCorrect == 1
               : false
           : false;
     }
     if (first || second) {
       if (!homeData.isChallenge ||
-          (Injector.countList.length == homeData.questionHomeData.questionCurrentIndex)) {
+          (Injector.countList.length ==
+              homeData.questionHomeData.questionCurrentIndex)) {
         int index = Injector.countList.indexWhere(
             (QuestionCountWithData mQuestionCountWithData) =>
                 mQuestionCountWithData.isCorrect != null
@@ -361,10 +361,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
     if (_currentPage != item.key) {
       if (item.key == Const.typeHelp)
-        Navigator.push(context, FadeRouteIntro());
-      /*Injector.isBusinessMode
+        Injector.isBusinessMode
             ? Navigator.push(context, FadeRouteIntro())
-            : DisplayDialogs.professionalDialog(context);*/
+            : DisplayDialogs.professionalDialog(context);
       else
         Utils.performDashboardItemClick(context, item.key);
     }
@@ -379,7 +378,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         isCoinViseble = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
-        homeData.isCameFromNewCustomer=false;
+        homeData.isCameFromNewCustomer = false;
         setState(() {});
       },
       child: Container(

@@ -86,9 +86,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionDataCustSituation.isAnsweredCorrect == 1) {
-      if (Injector.introData == null ||
-          Injector.introData.customerSituation == null ||
-          Injector.introData.customerSituation == 0) {
+      print(Injector.introData);
+      if (Injector.introData != null && Injector.introData.customerSituation != null && Injector.introData.customerSituation == 0) {
         await DisplayDialogs.showIntroCustomerSituation(context);
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);

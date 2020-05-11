@@ -28,6 +28,7 @@ class ExistingCustomerPage extends StatefulWidget {
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -37,8 +38,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   }
 
   Future initContent() async {
-    if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
+    if (Injector.introData != null &&
+        Injector.introData.existingCustomer1 == 0) {
       await DisplayDialogs.showIntroExisting1(context);
+    }
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
@@ -58,7 +61,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       rq.value = questionData.value;
 
 //      customerValueBloc?.releaseResource(rq);
-
 
       CommonView.showCircularProgress(true, context);
       WebApi()
@@ -88,15 +90,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+        key: _scaffoldKey,
         backgroundColor: ColorRes.colorBgDark,
         body: Stack(
           children: <Widget>[
             CommonView.showBackground(context),
             Container(
               margin: EdgeInsets.only(
-                  left: 30, right: 30, top: Utils.getHeaderHeight(context)
-              ),
+                  left: 30, right: 30, top: Utils.getHeaderHeight(context)),
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -266,7 +267,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        arrQuestions[index].value.toString() + ' ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}',
+                        arrQuestions[index].value.toString() +
+                            ' ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.kp) : "\$"}',
                         style: TextStyle(
                           color: ColorRes.blue,
                           fontSize: 18,
@@ -296,7 +298,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //              Navigator.push(context, FadeRouteHome(homeData: homeData));
 //              Navigator.push(_scaffoldKey.currentContext,
 //                  FadeRouteHome(homeData: homeData));
-            navigationBloc.updateNavigation(homeData);
+              navigationBloc.updateNavigation(homeData);
             },
           ),
         ),

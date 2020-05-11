@@ -35,8 +35,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData != null || Injector.introData.newCustomer1 == 0)
+    if (Injector.introData != null && Injector.introData.newCustomer1 == 0) {
       await DisplayDialogs.showIntroNewCustomer1(context);
+    }
 
     initData();
   }
@@ -185,18 +186,17 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   Widget showItem(int index) {
     return InkResponse(
-      onTap: (){
+      onTap: () {
         Utils.playClickSound();
 
         if (Utils.isFeatureOn(Const.typeOrg)) {
           if ((Injector.customerValueData.remainingSalesPerson >=
-              arrQuestions[index].resources &&
-              Injector.customerValueData.remainingCustomerCapacity >
-                  0)) {
+                  arrQuestions[index].resources &&
+              Injector.customerValueData.remainingCustomerCapacity > 0)) {
             attemptQuestion(index);
           } else {
-            Utils.showToast(Utils.getQueValidationToast(
-                arrQuestions[index].resources));
+            Utils.showToast(
+                Utils.getQueValidationToast(arrQuestions[index].resources));
           }
         } else {
           attemptQuestion(index);
@@ -295,9 +295,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   margin: EdgeInsets.only(left: 10, right: 2),
                   padding: EdgeInsets.only(left: 15, right: 15),
                   decoration: BoxDecoration(
-                      color: Injector.isBusinessMode
-                          ? null
-                          : ColorRes.headerBlue,
+                      color:
+                          Injector.isBusinessMode ? null : ColorRes.headerBlue,
                       borderRadius: Injector.isBusinessMode
                           ? null
                           : BorderRadius.circular(20),

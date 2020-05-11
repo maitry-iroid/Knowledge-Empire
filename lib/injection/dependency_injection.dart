@@ -134,8 +134,8 @@ class Injector {
       if (prefs.getString(PrefKeys.customerValueData) != null) {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
-        
-        isSoundEnable  = customerValueData.isEnableSound==1;
+
+        isSoundEnable = customerValueData.isEnableSound == 1;
       }
 
       if (prefs.getString(PrefKeys.introData) != null) {
@@ -144,8 +144,6 @@ class Injector {
 
         updateIntroData();
       }
-
-
 
       if (prefs.getString(PrefKeys.dashboardStatusData) != null) {
         dashboardStatusResponse = DashboardStatusResponse.fromJson(
@@ -301,6 +299,7 @@ class Injector {
     if (isConnected) {
       bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
       Map<String, dynamic> map = {
+        "userId": Injector.userId != null ? Injector.userId.toString() : null,
         "appVersion": packageInfo.version,
         "deviceType": isIOS ? "ios" : "android",
         "language":

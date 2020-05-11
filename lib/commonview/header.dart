@@ -247,10 +247,9 @@ class HeaderViewState extends State<HeaderView> {
       ),
       onTap: () {
         Utils.playClickSound();
-        Navigator.push(context, FadeRouteIntro());
-        /*Injector.isBusinessMode
+        Injector.isBusinessMode
             ? Navigator.push(context, FadeRouteIntro())
-            : DisplayDialogs.professionalDialog(context);*/
+            : DisplayDialogs.professionalDialog(context);
 
       },
     );

@@ -66,7 +66,7 @@ class _PLPageState extends State<PLPage> {
   Future openIntroDialog() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData == null || Injector.introData.pl1 == 0)
+    if (Injector.introData != null && Injector.introData.pl1 == 0)
       await DisplayDialogs.showIntroPL1(context);
 
     getPerformanceData(Const.plDay);
@@ -195,52 +195,55 @@ class _PLPageState extends State<PLPage> {
   }
 
   showLinearHybridGraph() {
-    return performanceData.graph.isNotEmpty?Container(
-        height: 310,
-        padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-        margin: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: ColorRes.white),
-          borderRadius: BorderRadius.circular(12.0),
-          color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
-        ),
-        width: Utils.getDeviceWidth(context),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 30,
-              width: Utils.getDeviceWidth(context) / 4,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 0.2, color: ColorRes.white),
-                  borderRadius: BorderRadius.circular(5.0),
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
-                      fit: BoxFit.fill)),
-              child: Text(
-                Utils.getText(context, StringRes.sevenDaysDevelopment),
-                style: TextStyle(color:  ColorRes.white ),
-              ),
+    return performanceData.graph.isNotEmpty
+        ? Container(
+            height: 310,
+            padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: ColorRes.white),
+              borderRadius: BorderRadius.circular(12.0),
+              color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: OrdinalComboBarLineChart.withSampleData(performanceData),
-              ),
-            ),
-            Container(
-              height: 30,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  bottomOption(),
-                ],
-              ),
-            )
-          ],
-        )):Container();
+            width: Utils.getDeviceWidth(context),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 30,
+                  width: Utils.getDeviceWidth(context) / 4,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.2, color: ColorRes.white),
+                      borderRadius: BorderRadius.circular(5.0),
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
+                          fit: BoxFit.fill)),
+                  child: Text(
+                    Utils.getText(context, StringRes.sevenDaysDevelopment),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: OrdinalComboBarLineChart.withSampleData(
+                        performanceData),
+                  ),
+                ),
+                Container(
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      bottomOption(),
+                    ],
+                  ),
+                )
+              ],
+            ))
+        : Container();
   }
 
   bottomOption() {
@@ -272,7 +275,10 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.revenue),
-              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
+              style: TextStyle(
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : ColorRes.black),
             ),
           ),
           Image.asset(
@@ -283,7 +289,10 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.cash),
-              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
+              style: TextStyle(
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : ColorRes.black),
             ),
           )
         ],
@@ -529,7 +538,7 @@ class _PLPageState extends State<PLPage> {
     return Container(
 //      height: type == Const.typeCost ? 160 : 120,
       child: ListView.builder(
-        primary: false,
+          primary: false,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemCount: type == Const.typeCost
@@ -630,7 +639,7 @@ class _PLPageState extends State<PLPage> {
   showProfitCash(int type) {
     return Container(
       height: 25,
-      margin: EdgeInsets.only( right: 0, bottom: 5, top: 5),
+      margin: EdgeInsets.only(right: 0, bottom: 5, top: 5),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
