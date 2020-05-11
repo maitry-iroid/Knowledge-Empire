@@ -31,8 +31,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
   HelpModel helpModel;
 
   Future<void> getText() async {
-    await initFeatureDataArray();
-    print(helpList);
+    initFeatureDataArray();
   }
 
   @override
