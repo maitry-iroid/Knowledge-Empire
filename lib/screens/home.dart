@@ -48,17 +48,15 @@ import '../models/get_friends.dart';
 import 'package:flutter/services.dart';
 
 class FadeRouteHome extends PageRouteBuilder {
-//  final HomeData homeData;
   List<GetFriendsData> arrFriends = List();
 
-  FadeRouteHome(/*{this.homeData}*/)
+  FadeRouteHome()
       : super(
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              /*homeData.page,*/
               HomePage(),
           transitionsBuilder: (
             BuildContext context,
@@ -259,10 +257,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   Future<void> initStateMethods() async {
+    getDashboardStatus();
     updateVersionDialog();
     initContent();
     navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
-    getDashboardStatus();
     Utils.removeBadge();
   }
 
@@ -641,11 +639,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  /*
-  * we need to call thi API here because we want to restrict features from
-  * menu-drawer items as well as top Header
-  *
-  * */
   getDashboardStatus() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {

@@ -118,7 +118,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextField(
                                 controller: pass2Controller,
-//                                  textAlignVertical: TextAlignVertical.center,
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 obscureText: true,
@@ -161,20 +160,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                         ],
                       ),
                     ),
-//                        Positioned(
-//                          right: 50,
-//                          top: 10,
-//                          child: GestureDetector(
-//                            child: Image(
-//                              image: AssetImage(
-//                                  Utils.getAssetsImg("close_dialog")),
-//                              width: 20,
-//                            ),
-//                            onTap: () {
-//                              Navigator.pop(context);
-//                            },
-//                          ),
-//                        ),
                     Positioned(
                       top: Utils.getDeviceHeight(context) / 11,
                       right: 0,
@@ -198,7 +183,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               onTap: () {
                                 Utils.playClickSound();
                                 Utils.hideKeyboard(context);
-
                                 validateData();
                               }),
                           SizedBox(
@@ -222,7 +206,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               onTap: () {
                                 Utils.playClickSound();
                                 Utils.hideKeyboard(context);
-
                                 Navigator.pop(context);
                               })
                         ],

@@ -268,7 +268,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                       flex: 3,
                       child: Text(
                         arrQuestions[index].value.toString() +
-                            ' ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.kp) : "\$"}',
+                            ' ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}',
                         style: TextStyle(
                           color: ColorRes.blue,
                           fontSize: 18,

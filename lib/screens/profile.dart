@@ -403,14 +403,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 updateType = 1.toString();
                                 updateMode = Injector.mode.toString();
-                                await callApiForUpdateUserSetting(updateType, null);
+                                await callApiForUpdateUserSetting(
+                                    updateType, null);
 
                                 Utils.playBackgroundMusic();
 
-                                localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+                                localeBloc.setLocale(Utils.getIndexLocale(
+                                    Injector.userData.language));
 
                                 setState(() {});
-
                               },
                             )
                           : Container(),
@@ -433,13 +434,15 @@ class _ProfilePageState extends State<ProfilePage> {
                             value: Injector.isSoundEnable,
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
-                              Injector.customerValueData.isEnableSound = Injector.isSoundEnable?1:0;
+                              Injector.customerValueData.isEnableSound =
+                                  Injector.isSoundEnable ? 1 : 0;
                               //Injector.setCustomerValueData(Injector.customerValueData);
 
                               Utils.playBackgroundMusic();
 
                               updateType = 2.toString();
-                              updateIsSoundEnable = value ? 1.toString() : 0.toString();
+                              updateIsSoundEnable =
+                                  value ? 1.toString() : 0.toString();
                               updateMode = Injector.mode.toString();
                               callApiForUpdateUserSetting(updateType, null);
 
@@ -656,12 +659,14 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
-  void performBailOut() {
+  Future<void> performBailOut() async {
     BailOutRequest rq = BailOutRequest();
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
 
-    customerValueBloc?.bailOut(rq);
+    await customerValueBloc?.bailOut(rq);
+
+    setState(() {});
   }
 
   logout() async {
@@ -1316,7 +1321,6 @@ class _ProfilePageState extends State<ProfilePage> {
   * Y= For bigger updated (e.g. new features implemented). Falls back to 000 when X goes up by one
   * Z= for smaller updates and bug fixes. Falls back to 000 when Y goes up by one.
   * */
-
 
   String getVersion() {
     String mode = Injector.isDev ? "D" : "P";

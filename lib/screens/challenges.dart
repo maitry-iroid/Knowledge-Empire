@@ -324,7 +324,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}",
+                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -345,7 +345,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       ),
                     ),
                     Text(
-                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.kp):"\$"}",
+                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white

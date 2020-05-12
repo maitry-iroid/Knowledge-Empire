@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/get_question_bloc.dart';
@@ -35,9 +36,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData != null && Injector.introData.newCustomer1 == 0) {
+   if (Injector.introData != null && Injector.introData.newCustomer1 == 0) {
       await DisplayDialogs.showIntroNewCustomer1(context);
-    }
+  }
 
     initData();
   }
@@ -113,10 +114,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         children: <Widget>[
           Expanded(
             flex: 4,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.name),
-              overflow: TextOverflow.fade,
-              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -124,10 +123,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           ),
           Expanded(
             flex: 5,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.sector),
-              overflow: TextOverflow.fade,
-              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -135,10 +132,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           ),
           Expanded(
             flex: 4,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.value),
-              overflow: TextOverflow.fade,
-              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -146,10 +141,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           ),
           Expanded(
             flex: 3,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.loyalty),
-              overflow: TextOverflow.fade,
-              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -158,10 +151,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Utils.isFeatureOn(Const.typeOrg)
               ? Expanded(
                   flex: 3,
-                  child: Text(
+                  child: AutoSizeText(
                     Utils.getText(context, StringRes.resources),
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
                     style: TextStyle(color: Colors.white, fontSize: 18),
                     textAlign: TextAlign.center,
                     maxLines: 1,
@@ -170,10 +161,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               : Container(),
           Expanded(
             flex: 3,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.engage),
-              overflow: TextOverflow.fade,
-              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -256,7 +245,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            ("${arrQuestions[index].value.toString()} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.kp) : "\$"}"),
+                            ("${arrQuestions[index].value.toString()} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}"),
                             style: TextStyle(
                                 color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,

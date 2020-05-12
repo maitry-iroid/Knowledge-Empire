@@ -381,7 +381,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
     return GestureDetector(
       onTap: widget.onTapBtn,
       child: Container(
-          width: size.width / 3.5,
+          width: size.width / 3.2,
           margin: EdgeInsets.symmetric(horizontal: 5),
           padding: EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(

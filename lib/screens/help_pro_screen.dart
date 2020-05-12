@@ -49,7 +49,23 @@ class _HelpProScreenState extends State<HelpProScreen> {
             centerCard(context),
             titleImage(context),
             previous(context),
-            next(context)
+            next(context),
+            Positioned(
+                right: 10,
+                top: 30,
+                child: InkResponse(
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg('close_dialog')),
+                      width: 20,
+                    ),
+                  ),
+                  onTap: () {
+                    Utils.playClickSound();
+                    Navigator.pop(context, null);
+                  },
+                ))
           ],
         ),
       ),
@@ -227,7 +243,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
         "question",
         Utils.getText(context, StringRes.strBrandValue));
 
-    addInModel(Utils.getText(context, StringRes.cash), "brain",
+    addInModel(Utils.getText(context, StringRes.value), "brain",
         Utils.getText(context, StringRes.strCash));
 
     addInModel(

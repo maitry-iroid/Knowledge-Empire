@@ -359,7 +359,7 @@ class StringRes {
   static var mHis = "mHis";
   static var needAtList = "needAtList";
   static var sizeInKb = "sizeInKb";
-  static var kp = "kp";
+  static var strKp = "strKp";
   static var requestDemoAccount = "requestDemoAccount";
   static var strVersion = "strVersion";
   static var strUrlExeption = "strUrlExeption";
@@ -808,6 +808,7 @@ class StringRes {
       'alertChangePassword': 'Password changed Successfully.',
       'servicePerson': 'Service Reps',
       //</editor-fold>
+      'strKp':"Kp",
 
     },
     'de': {
@@ -1201,6 +1202,7 @@ class StringRes {
 
       'passwordChange': 'Passwort erfolgreich geändert.',
       'serviceReps': "Servicemitarbeiter",
+      'strKp':"Kp",
 
 
     },
@@ -1577,6 +1579,7 @@ class StringRes {
 
       'passwordChange': '密码已更改。',
       'serviceReps': "服务代表",
+      'strKp':"Kp",
 
     }
   };
@@ -1803,10 +1806,10 @@ class StringRes {
       'strDownloadText': 'This module will occupy ',
       'strDownloadNewText': 'This module will occupy ',
 
-      'cost': 'Deductions',
+      'cost': 'KP Cost',
       'employees': 'Power-Ups',
-      'salaries': 'Cost',
-      'revenue': 'Additions',
+      'salaries': 'KP Cost',
+      'revenue': 'KP Gain',
       'hashCustomers': '#Questions',
       'brand': '%Correct',
       'customers': 'Questions',
@@ -1832,7 +1835,7 @@ class StringRes {
       'english': "English",
       'german': "German",
       'chinese': "Chinese",
-      'costSplit': "Cost Split",
+      'costSplit': "KP Cost",
       'sevenDaysDevelopment': "7 days developments",
       'strVersion': "Version",
       'strUrlExeption': "Could not launch",
@@ -1923,7 +1926,7 @@ class StringRes {
       'friends': 'Friends',
       'sendChallenge': 'Send Challenge',
       'explanation': 'Explanation',
-      'profit': 'Knowledge Points (KP)',
+      'profit': 'Gain/Loss',
       'learningModule': 'Learning Module',
       'levels': 'Levels',
       'complete': '%Complete',
@@ -1957,7 +1960,7 @@ class StringRes {
       'passwordChange': 'Password changed Successfully.',
       'serviceReps': "Memory Points",
 
-      'strProProfile': "- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
+      'strProProfile': "- Change your company name\n- switch to game mode\n- switch company\n- request a restart",
       'strEmpOMeter':"- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
       'strSalesOMeter':"- xx = currently free Study Points\n- yy = total Study Points\n- Used Study Points will refill after 8 hours\n- Click onStudy Point Bar brings you to List of open questions",
       'strServiceOMeter':"- xx = currently free Memory Points\n- yy = totalMemory Points\n- 1 free Memory Point needed per Question\n- Click on Memory Point Bar brings you to list of answered questions",
@@ -1974,7 +1977,7 @@ class StringRes {
       'strPL':"- Monitor your performance and progress\n- Ensure you earn enough Knowledge Points",
       'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
       'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
-
+      'strKp':"Kp",
 
     },
     'de': {
@@ -2358,7 +2361,7 @@ class StringRes {
       'serviceReps': "Bestandsfragen",
 
 
-      'strProProfile': "- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
+      'strProProfile': "- Firmenname ändern\n- Zu gamifizierter Version wechseln\n- Neustart beantragen",
       'strEmpOMeter':"- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
       'strSalesOMeter':"- xx = noch verfuegbare Lernkapazität\n- yy = totale Lernkapazität\n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf\n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln",
       'strServiceOMeter':"- xx = noch verfügbare Bestandsfragenkapazität\n- yy = totale Bestandsfragenkapazität\n- Jeder Frage bindet eine Bestandsfragenkapazität\n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln",
@@ -2371,11 +2374,11 @@ class StringRes {
       'strRewards':"- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
       'strTeam':"- Liste der Mitarbeiter im Team\n- Basis Reporting und KPIs\n- Neustarts gewähren",
       'strChallenges':"- Kollegen herausfordern\n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten\n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte",
-      'strOrganization':"- Bonuspunkte auf Bonusbereiche verteilen\n- \"\"Max. Bonuspunkte\" erhöhen um mehr Bonuspunkte verteilen zu koennen\n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend",
+      'strOrganization':"- Bonuspunkte auf Bonusbereiche verteilen\n- \"Max. Bonuspunkte\" erhöhen um mehr Bonuspunkte verteilen zu koennen\n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend",
       'strPL':"- Überwache die Entwicklung deines Fortschritts\n- Sorge dafür, dass deine Wissenpunkte zunehmen",
       'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
       'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
-
+      'strKp':"Kp",
 
     },
     'zh': {
@@ -2727,7 +2730,7 @@ class StringRes {
       'passwordChange': '密码已更改。',
       'serviceReps': "记忆点数",
 
-      'strProProfile':"- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
+      'strProProfile':" - 更改您的公司名称\n- 切换到游戏模式\n- 切换公司\n- 申请重新开始",
       'strEmpOMeter':"- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
       'strSalesOMeter':"- xx = 当前可用学习点数\n- yy = 总学习点数\n- 8小时候已使用的学习点数会重新填充\n- 点击学习点数条将前往开放问题列表",
       'strServiceOMeter':"- xx = 当前可用记忆点数\n- yy =  总记忆点数\n- 每个问题需要一个可用的记忆点数\n-  点击记忆点数条将前往已回答问题列表",
@@ -2744,7 +2747,7 @@ class StringRes {
       'strPL':"- 监控您的表现和进步\n- 确保您赚取足够的知识点数",
       'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
       'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
-
+      'strKp':"Kp",
 
     }
   };
