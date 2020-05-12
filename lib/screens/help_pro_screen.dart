@@ -75,7 +75,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
   Widget centerCard(BuildContext context) {
     return Container(
         width: Utils.getDeviceWidth(context) / 1.5,
-        height: Utils.getDeviceHeight(context) / 2.2,
+        height: Utils.getDeviceHeight(context) / 1.6,
         alignment: Alignment.center,
         margin: EdgeInsets.only(top: 28, left: 10, right: 10, bottom: 10),
         decoration: BoxDecoration(
@@ -92,14 +92,14 @@ class _HelpProScreenState extends State<HelpProScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: Utils.getDeviceWidth(context) / 16),
+                  SizedBox(height: Utils.getDeviceWidth(context) / 13),
                   Center(
                     child: Text(helpList[position].title,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
                             .title
-                            .copyWith(color: ColorRes.helpProBox)),
+                            .copyWith(color: ColorRes.helpProBox,fontSize: 20)),
                   ),
                   SizedBox(height: 9),
                   Padding(
@@ -109,7 +109,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
                           style: Theme.of(context)
                               .textTheme
                               .subhead
-                              .copyWith(fontWeight: FontWeight.w400))),
+                              .copyWith(fontWeight: FontWeight.w400,fontSize: 20))),
                   SizedBox(height: Utils.getDeviceWidth(context) / 21),
                 ],
               ),
@@ -120,12 +120,12 @@ class _HelpProScreenState extends State<HelpProScreen> {
 
   Widget titleImage(BuildContext context) {
     return Positioned(
-        top: Utils.getDeviceWidth(context) / 11,
+        top: Utils.getDeviceWidth(context) / 18,
         child: Align(
           alignment: Alignment.topCenter,
           child: Container(
-            height: Utils.getDeviceHeight(context) / 5,
-            width: Utils.getDeviceHeight(context) / 5,
+            height: Utils.getDeviceHeight(context) / 4.5,
+            width: Utils.getDeviceHeight(context) / 4.5,
             child: Center(
                 child: PageView.builder(
               physics: new NeverScrollableScrollPhysics(),
