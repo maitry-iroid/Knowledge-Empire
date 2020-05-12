@@ -93,6 +93,7 @@ class _HelpProScreenState extends State<HelpProScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: Utils.getDeviceWidth(context) / 13),
+
                   Center(
                     child: Text(helpList[position].title,
                         textAlign: TextAlign.center,
