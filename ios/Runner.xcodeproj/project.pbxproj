@@ -449,7 +449,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0E7C8761CF6D7B08160E9C97 /* Pods-Runner.profile-dev.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Knowledge Empire";
+				APP_DISPLAY_NAME = "KE dev";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
@@ -862,7 +862,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DA1B692A72FD598F2C6B062F /* Pods-Runner.debug-dev.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Knowledge Empire";
+				APP_DISPLAY_NAME = "KE dev";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
@@ -900,7 +900,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0DDB81AD2A27B340121E4C97 /* Pods-Runner.release-dev.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Knowledge Empire";
+				APP_DISPLAY_NAME = "KE dev";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";

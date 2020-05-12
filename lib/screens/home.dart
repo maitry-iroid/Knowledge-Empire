@@ -358,11 +358,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _scaffoldKey.currentState.openEndDrawer();
     }
     if (_currentPage != item.key) {
-      if (item.key == Const.typeHelp)
-        Injector.isBusinessMode
-            ? Navigator.push(context, FadeRouteIntro())
-            : DisplayDialogs.professionalDialog(context);
-      else
+      if (item.key == Const.typeHelp) {
+        if (Injector.isBusinessMode) {
+          Navigator.push(context, FadeRouteIntro());
+        } else {
+          navigationBloc
+              .updateNavigation(HomeData(initialPageType: Const.typeHome));
+          DisplayDialogs.professionalDialog(context);
+        }
+      } else
         Utils.performDashboardItemClick(context, item.key);
     }
   }
