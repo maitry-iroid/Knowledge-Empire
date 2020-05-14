@@ -58,6 +58,7 @@ dependencies:
   open_appstore: ^1.0.2
   flutter_plugin_pdf_viewer: ^1.0.7
   auto_size_text: ^2.1.0
+  chewie: ^0.9.10
 
 
 

@@ -14,7 +14,8 @@ class CustomerValueBloc {
 
   final _assignModuleSubject = PublishSubject<CustomerValueData>();
 
-  Observable<CustomerValueData> get customerValue => _assignModuleSubject.stream;
+  Observable<CustomerValueData> get customerValue =>
+      _assignModuleSubject.stream;
 
   getCustomerValue(CustomerValueRequest rq) async {
     dynamic data = await _repository.getCustomerValue(rq);
@@ -27,7 +28,7 @@ class CustomerValueBloc {
         Injector.homeStreamController
             ?.add("${Const.openPendingChallengeDialog}");
 
-      _assignModuleSubject.sink.add(customerValueData);
+      _assignModuleSubject.add(customerValueData);
     }
   }
 
@@ -38,17 +39,8 @@ class CustomerValueBloc {
     }
   }
 
-  bailOut(BailOutRequest rq) async {
-    dynamic data = await _repository.bailOut(rq);
-
-    if (data != null) {
-      if (data is Map) {
-        CustomerValueData customerValueData = CustomerValueData.fromJson(data);
-        _assignModuleSubject.sink.add(customerValueData);
-      } else if (data is String) {
-        Utils.showToast(data.toString());
-      }
-    }
+  updateCustomerValue(CustomerValueData customerValueData) {
+    _assignModuleSubject.sink.add(customerValueData);
   }
 
   releaseResource(ReleaseResourceRequest rq) async {

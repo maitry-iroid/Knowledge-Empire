@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
-  String tempLanguage = Const.english;
+  String tempLanguage = StringRes.strDefault;
 
   ScrollController _scrollController = new ScrollController();
   UpdateDialogModel status;
@@ -379,6 +379,8 @@ class _LoginPageState extends State<LoginPage> {
           tempLanguage = Const.german;
         } else if (index == 2) {
           tempLanguage = Const.chinese;
+        } else {
+          tempLanguage = null;
         }
 
         localeBloc.setLocale(Utils.getIndexLocale(tempLanguage));
@@ -412,7 +414,7 @@ class _LoginPageState extends State<LoginPage> {
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret =
         Utils.getSecret(loginRequest.email, loginRequest.password);
-    loginRequest.language = tempLanguage;
+    loginRequest.language = tempLanguage == StringRes.strDefault ? null : tempLanguage;
 //    tempLanguage
 
 //    String udid = await FlutterUdid.udid;
@@ -427,7 +429,7 @@ class _LoginPageState extends State<LoginPage> {
       if (data != null) {
         UserData userData = UserData.fromJson(data);
 
-        await Injector.setUserData(userData);
+        await Injector.setUserData(userData, false);
 
         await Injector.updateInstance();
 

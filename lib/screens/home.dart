@@ -18,6 +18,7 @@ import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
+import 'package:ke_employee/screens/VideoPlayerScreen.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/dashboard_prof.dart';
@@ -195,6 +196,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 homeData.questionHomeData.totalQuestion != null
                             ? homeData.questionHomeData.totalQuestion
                             : 0),
+                    /*Center(
+                      child: RaisedButton(onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => VideoPlayerScreen()),
+                        );
+                      },child: Text("video"),),
+                    ),*/
                     Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
@@ -358,11 +367,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _scaffoldKey.currentState.openEndDrawer();
     }
     if (_currentPage != item.key) {
-      if (item.key == Const.typeHelp)
-        Injector.isBusinessMode
-            ? Navigator.push(context, FadeRouteIntro())
-            : DisplayDialogs.professionalDialog(context);
-      else
+      if (item.key == Const.typeHelp) {
+        if (Injector.isBusinessMode) {
+          Navigator.push(context, FadeRouteIntro());
+        } else {
+          navigationBloc
+              .updateNavigation(HomeData(initialPageType: Const.typeHome));
+          DisplayDialogs.professionalDialog(context);
+        }
+      } else
         Utils.performDashboardItemClick(context, item.key);
     }
   }

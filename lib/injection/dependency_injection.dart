@@ -184,14 +184,14 @@ class Injector {
     isBusinessMode = _mode == Const.businessMode;
   }
 
-  static setUserData(UserData _user) async {
+  static setUserData(UserData _user, bool isLanguage) async {
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
     userData = _user;
 
     userId = _user.userId;
 
-    updateMode(_user.mode);
+    if (!isLanguage) updateMode(_user.mode);
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {

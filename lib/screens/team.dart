@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/team_user.dart';
 import 'package:ke_employee/models/team_user_by_id.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -712,6 +713,17 @@ class _TeamPageState extends State<TeamPage> {
     rq.mode = Injector.mode;
     rq.teamUserId = selectedTeamUserId != -1 ? selectedTeamUserId : null;
 
-    customerValueBloc?.bailOut(rq);
+    WebApi().callAPI(WebApi.rqBailOut, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+      if (data != null) {
+        if (data is Map) {
+          CustomerValueData customerValueData =
+          CustomerValueData.fromJson(data);
+          await customerValueBloc?.updateCustomerValue(customerValueData);
+        } else if (data is String) {
+          Utils.showToast(data.toString());
+        }
+      }
+    }).catchError((e) {});
   }
 }

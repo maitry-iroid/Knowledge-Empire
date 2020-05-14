@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
@@ -427,7 +428,10 @@ class _PLPageState extends State<PLPage> {
           Container(
             width: 150,
             padding: EdgeInsets.only(left: 10),
-            child: Text(Utils.getText(context, StringRes.cashAtStartOfPeriod),
+            child: AutoSizeText(Utils.getText(context, StringRes.cashAtStartOfPeriod),
+                maxLines: 1,
+                overflow: TextOverflow.fade,
+                minFontSize: 4,
                 style: TextStyle(
                     fontSize: 13,
                     color: Injector.isBusinessMode
@@ -649,12 +653,15 @@ class _PLPageState extends State<PLPage> {
           Container(
             width: 160,
             padding: EdgeInsets.only(left: 10),
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(
                   context,
                   type == Const.typeCost
                       ? StringRes.profit
                       : StringRes.cashAtTheEndOfPeriod),
+              maxLines: 1,
+              overflow: TextOverflow.fade,
+              minFontSize: 4,
               style: TextStyle(
                 fontSize: 13,
                 color: ColorRes.white,

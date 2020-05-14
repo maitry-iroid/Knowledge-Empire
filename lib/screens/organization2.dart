@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
@@ -79,148 +80,135 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
     Organization org = arrOrganization.firstWhere((org) => org.type == type);
 
-    return Stack(
-      fit: StackFit.loose,
-      children: <Widget>[
-        InkResponse(
-          child: Container(
-            height: 110,
-            width: 110,
-//            color: Colors.black,
-            child: Card(
-              margin: EdgeInsets.only(
-                  left: 4,
-                  right: 4,
-                  top: type == Const.typeSales ||
-                          type == Const.typeOperations ||
-                          type == Const.typeFinance
-                      ? 60
-                      : 4,
-                  bottom: type == Const.typeSales ||
-                          type == Const.typeOperations ||
-                          type == Const.typeFinance
-                      ? 4
-                      : 60),
-//              margin: EdgeInsets.all(4),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return InkResponse(
+      child: Container(
+        height: 110,
+        width: 110,
+        child: Card(
+          margin: EdgeInsets.only(
+              left: 4,
+              right: 4,
+              top: type == Const.typeSales ||
+                      type == Const.typeOperations ||
+                      type == Const.typeFinance
+                  ? 60
+                  : 4,
+              bottom: type == Const.typeSales ||
+                      type == Const.typeOperations ||
+                      type == Const.typeFinance
+                  ? 4
+                  : 60),
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8)),
+          child:  Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      type == Const.typeLegal &&
-                              !Utils.isFeatureOn(Const.typeChallenges)
-                          ? Container(
-                              width: 18,
-                              height: 18,
-                            )
-                          : Container(
-                              margin: EdgeInsets.only(left: 5, right: 5),
-                              width: 18,
-                              height: 18,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
-                                  color: ColorRes.headerBlue),
-                              child: Text(
-                                org != null && org.level != null
-                                    ? org.level.toString()
-                                    : "",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Injector.isBusinessMode
-                                        ? ColorRes.white
-                                        : ColorRes.hintColor),
+                 Container(
+                          margin: EdgeInsets.only(left: 5, right: 5),
+                          width: 18,
+                          height: 18,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
                               ),
-                            ),
-                      Expanded(
-                        child: Text(
-                          org != null && org.name != null ? org.name : "",
-                            maxLines: 1,
-                            overflow: TextOverflow.fade,
-                          style: TextStyle(
-                              fontSize: 12,
-
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.textBlue
-                                  : ColorRes.hintColor),
-
+                              color: ColorRes.headerBlue),
+                          child: Text(
+                            org != null && org.level != null
+                                ? org.level.toString()
+                                : "",
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Injector.isBusinessMode
+                                    ? ColorRes.white
+                                    : ColorRes.hintColor),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                    ],
+                  Expanded(
+                    child: AutoSizeText(
+                      org != null && org.name != null ? org.name : "",
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                      minFontSize: 4,
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.textBlue
+                              : ColorRes.hintColor),
+
+                    ),
                   ),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 15,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('bg_progress_2')),
-                                fit: BoxFit.fill)),
-                      ),
-                      LinearPercentIndicator(
-                        alignment: MainAxisAlignment.center,
-                        lineHeight: 15.0,
-                        percent: Utils.getProgress(org),
-                        backgroundColor: Colors.transparent,
-                        progressColor: Colors.blue,
-                      )
-                    ],
-//                    ),
-                  )
+                  SizedBox(
+                    width: 5,
+                  ),
                 ],
               ),
-            ),
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 15,
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                Utils.getAssetsImg('bg_progress_2')),
+                            fit: BoxFit.fill)),
+                  ),
+                  LinearPercentIndicator(
+                    alignment: MainAxisAlignment.center,
+                    lineHeight: 15.0,
+                    percent: Utils.getProgress(org),
+                    backgroundColor: Colors.transparent,
+                    progressColor: Colors.blue,
+                  )
+                ],
+//                    ),
+              )
+            ],
           ),
-          onTap: () async {
-            if (type == Const.typeLegal &&
-                !Utils.isFeatureOn(Const.typeChallenges)) return;
-
-            var data = await showDialog(
-                context: _scaffoldKey.currentContext,
-                builder: (BuildContext context) => OrgInfoDialog(
-                      text: org.description,
-                      isForIntroDialog: false,
-                    ));
-            if (data != null) manageLevel(org, data);
-          },
         ),
-      ],
+      ),
+      onTap: () async {
+        if (type == Const.typeLegal &&
+            !Utils.isFeatureOn(Const.typeChallenges)) return;
+
+        var data = await showDialog(
+            context: _scaffoldKey.currentContext,
+            builder: (BuildContext context) => OrgInfoDialog(
+                  text: org.description,
+                  isForIntroDialog: false,
+                ));
+        if (data != null) manageLevel(org, data);
+      },
     );
   }
 
   showItems() {
     return Padding(
       padding: EdgeInsets.only(
-          left: Utils.getDeviceWidth(context) / 10,
+          left: Utils.getDeviceWidth(context) / 12,
           right: Utils.getDeviceWidth(context) / 10),
       child: Stack(
         children: <Widget>[
           Positioned(
-            left: 10,
+            left: 0,
             top: 50,
             child: showItem(Const.typeCRM),
           ),
           Positioned(
             right: 5,
             top: 50,
-            child: showItem(Const.typeLegal),
+            child:  Utils.isFeatureOn(Const.typeChallenges)?showItem(Const.typeLegal):Container(),
           ),
           Positioned(
-            left: Utils.getDeviceWidth(context) / 7.0,
+            left: Utils.getDeviceWidth(context) / 6,
             top: 20,
             child: showItem(Const.typeHR),
           ),

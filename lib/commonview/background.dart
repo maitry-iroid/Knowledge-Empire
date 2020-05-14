@@ -140,7 +140,6 @@ class CommonView {
           );
       },
       child: Stack(
-        fit: StackFit.expand,
         children: <Widget>[
           Card(
             elevation: 10,
@@ -149,13 +148,14 @@ class CommonView {
             margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 10),
             child: Container(
               margin: EdgeInsets.only(top: 0),
-              padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 23,bottom: 20),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: ColorRes.white, width: 1),
               ),
-              child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
                 child: Text(
                   content,
                   style: TextStyle(
@@ -200,7 +200,6 @@ class CommonView {
               ),
             ),
           ),
-          //Full Screen Alert Show
           Align(
             alignment:
                 (checking == true ? Alignment.bottomRight : Alignment.topRight),

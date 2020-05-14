@@ -640,6 +640,8 @@ class Utils {
 
   static Widget pdfShow(PDFDocument doc) {
     return PDFViewer(
+      showNavigation: true,
+      showPicker: false,
       document: doc,
     );
   }
@@ -754,7 +756,7 @@ class Utils {
     if (isBusinessMode) {
       switch (language) {
         case "English":
-          return "You need atleast ${salesCount} free Sales Reps and 1 free Service Reps to attempt this Question. You can add more Sales and Service Reps from the Organization.";
+          return "You need at least ${salesCount} free Sales Reps and 1 free Service Reps to attempt this Question. You can add more Sales and Service Reps from the Organization.";
           break;
         case "German":
           return "Du brauchst mindestens ${salesCount} freie Vertriebsmitarbeiter und 1 freien Servicemitarbeiter, um diese Frage zu beantworten. Du kannst weitere Vertriebs- und Servicemitarbeiter im Organisationmenü hinzufügen.";

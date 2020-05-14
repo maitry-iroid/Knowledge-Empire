@@ -146,6 +146,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             Column(
               children: <Widget>[
                 showSubHeader(context),
+                SizedBox(height: 8,),
                 Expanded(
                     child: Row(
                   children: <Widget>[
@@ -293,9 +294,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   Widget showItemC(int index) {
     return Container(
-      height: 47,
       margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-      padding: EdgeInsets.only(left: 10, right: 10, top: 6, bottom: 6),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius:
@@ -319,8 +319,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               : null),
       child: Row(
         children: <Widget>[
-          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-          Title(
+          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: Title(
               color: ColorRes.greenDot,
               child: new Text(
                 abcdList[index],
@@ -328,17 +327,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   fontSize: 15,
                   color: (checkTextColor(index)),
                 ),
-              )),
-          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              )),),
           Expanded(
-            child: SingleChildScrollView(
-              child: new Text(
-                arrAnswerSituation[index].answer,
-                style: TextStyle(fontSize: 15, color: (checkTextColor(index))),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            child: Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: new Text(
+              arrAnswerSituation[index].answer,
+              style: TextStyle(fontSize: 17, color: (checkTextColor(index))),
+            )),
           )
         ],
       ),
@@ -349,7 +343,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     return Expanded(
       flex: 1,
       child: Stack(
-        fit: StackFit.expand,
         children: <Widget>[
           Card(
             color: ColorRes.bgProf,
@@ -370,7 +363,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               ),
               child: ListView.builder(
                 shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
+                primary: false,
+                physics: const AlwaysScrollableScrollPhysics(), //
                 itemCount: arrAnswerSituation.length,
                 itemBuilder: (BuildContext context, index) {
                   return showItemC(index);
@@ -457,16 +451,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   showSecondHalf(BuildContext context) {
     return Expanded(
         flex: 1,
-        child: Column(
-          children: <Widget>[
-            showQueMedia(context),
-            Expanded(
-                child: CommonView.questionAndExplanation(
-                    context,
-                    Utils.getText(context, StringRes.explanation),
-                    true,
-                    questionDataCustSituation.description))
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              showQueMedia(context),
+              CommonView.questionAndExplanation(
+                  context,
+                  Utils.getText(context, StringRes.explanation),
+                  true,
+                  questionDataCustSituation.description)
+            ],
+          ),
         ));
   }
 
@@ -701,61 +696,50 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   }
 
   Widget showItemsFullScreen(int index) {
-    return GestureDetector(
-        onTap: () {},
-        child: Container(
-//          height: 50,
-          margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(
-                      width: 1,
-                      color: isAnswerCorrect(index) ||
-                              arrAnswerSituation[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.fontGrey),
-              color: Injector.isBusinessMode
-                  ? null
-                  : checkAnswerBusinessMode(index),
-              image: Injector.isBusinessMode
-                  ? (DecorationImage(
-                      image: AssetImage(
-                        checkAnswer(index),
-                      ),
-                      fit: BoxFit.fill))
-                  : null),
-
-          child: Row(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Title(
-                  color: ColorRes.greenDot,
-                  child: new Text(
-                    abcdList[index],
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: (checkTextColor(index)),
-                    ),
-                  )),
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: new Text(
-                    arrAnswerSituation[index].answer,
-                    style:
-                        TextStyle(fontSize: 18, color: (checkTextColor(index))),
-                    overflow: TextOverflow.fade,
-                  ),
+      return Container(
+      margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius:
+          Injector.isBusinessMode ? null : BorderRadius.circular(15),
+          border: Injector.isBusinessMode
+              ? null
+              : Border.all(
+              width: 1,
+              color: isAnswerCorrect(index) ||
+                  arrAnswerSituation[index].isSelected
+                  ? ColorRes.white
+                  : ColorRes.fontGrey),
+          color:
+          Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
+          image: Injector.isBusinessMode
+              ? (DecorationImage(
+              image: AssetImage(
+                checkAnswer(index),
+              ),
+              fit: BoxFit.fill))
+              : null),
+      child: Row(
+        children: <Widget>[
+          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: Title(
+              color: ColorRes.greenDot,
+              child: new Text(
+                abcdList[index],
+                style: TextStyle(
+                  fontSize: 15,
+                  color: (checkTextColor(index)),
                 ),
-              )
-            ],
-          ),
-        ));
+              )),),
+          Expanded(
+            child: Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: new Text(
+              arrAnswerSituation[index].answer,
+              style: TextStyle(fontSize: 17, color: (checkTextColor(index))),
+            )),
+          )
+        ],
+      ),
+    );
   }
 }
 
