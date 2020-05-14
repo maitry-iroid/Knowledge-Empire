@@ -80,6 +80,7 @@ class WebApi {
     initDio();
 
     print(apiReq + "_" + json.encode(jsonMap));
+
     final response = await dio
         .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
         .catchError((e) {
