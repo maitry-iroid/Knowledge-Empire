@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/commonview/pdf_viewer.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -233,9 +233,8 @@ class Utils {
         (Route<dynamic> route) => false);
   }
 
-  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      bool isFromProfile, bool isOldPasswordRequired) async {
-    await showDialog(
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) {
+     showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog(
             isFromProfile: isFromProfile,
@@ -314,6 +313,9 @@ class Utils {
 
   static incorrectAnswerSound() async {
     if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
+  }
+  static achievementSound() async {
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static procorrectAnswerSound() async {
@@ -638,13 +640,15 @@ class Utils {
     );
   }*/
 
-  static Widget pdfShow(PDFDocument doc) {
-    return PDFViewer(
-      showNavigation: true,
-      showPicker: false,
-      document: doc,
+  static Widget pdfShow(String pdfPath,bool _isLoading) {
+   return new TemplatePageWidget(
+      height: double.infinity,
+      isLoading: _isLoading,
+      width: double.infinity,
+      previewPath: pdfPath,
     );
   }
+
 
   static isImage(String path) {
     return extension(path).toLowerCase() == ".png".toLowerCase() ||

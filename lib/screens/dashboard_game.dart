@@ -42,10 +42,11 @@ class DashboardGamePageState extends State<DashboardGamePage>
     if (Injector.introData == null) {
       getIntroData();
     } else if (Injector.introData.dashboard == 0) {
-      showIntroDialog();
+      if (Injector.isPasswordChange) {
+        showIntroDialog();
+      }
     }
     getDashboardStatus();
-
   }
 
   getIntroData() {
@@ -99,7 +100,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             children: <Widget>[
               CommonView.showDashboardView(context),
               HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
-             // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+              // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
         ),
@@ -115,7 +116,8 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
         WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            DashboardStatusResponse response = DashboardStatusResponse.fromJson(data);
+            DashboardStatusResponse response =
+                DashboardStatusResponse.fromJson(data);
 
             if (response.data.isNotEmpty) {
               Injector.prefs.setString(
@@ -131,5 +133,4 @@ class DashboardGamePageState extends State<DashboardGamePage>
       }
     });
   }
-
 }

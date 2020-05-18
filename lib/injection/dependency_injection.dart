@@ -46,6 +46,7 @@ class Injector {
   static DashboardStatusResponse dashboardStatusResponse;
   static int mode;
   static bool isBusinessMode = true;
+  static bool isPasswordChange = false;
   static DefaultCacheManager cacheManager;
   static StreamController<String> headerStreamController;
   static StreamController<String> homeStreamController =
@@ -76,9 +77,6 @@ class Injector {
   static BuildContext buildContext;
   static IntroModel introModel;
 
-//  factory Injector {
-//    return _singleton;
-//  }
 
   Injector._internal();
 

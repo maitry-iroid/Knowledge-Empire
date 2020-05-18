@@ -97,22 +97,18 @@ List<DrawerItem> drawerItems = List();
 
 class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey =
-      new GlobalKey<ExplosionWidgetState>();
-  int _selectedDrawerIndex = 0;
+  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey = new GlobalKey<ExplosionWidgetState>();
   String _currentPage = Const.typeHome;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool startAnim = false;
   int duration = 1;
-  bool isCoinViseble = false;
+  bool isCoinVisible = false;
   bool isReadyForChallenge = false;
 
   HomeData homeData;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
+  var drawerOptions = <Widget>[];
+
 
   @override
   void initState() {
@@ -124,18 +120,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    initDrawerItems();
-    var drawerOptions = <Widget>[];
-    for (var i = 0; i < drawerItems.length; i++) {
-      drawerOptions.add(new ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          title: showMainItem(drawerItems[i]),
-          selected: drawerItems[i].key == _currentPage,
-          onTap: () => _onSelectItem(drawerItems[i])));
-    }
-
-    print("current___" + _currentPage);
-
+    drawerLayout();
     return StreamBuilder(
         stream: navigationBloc?.navigationKey,
         builder: (context, AsyncSnapshot<HomeData> snapshot) {
@@ -148,19 +133,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               homeData = snapshot.data;
               _currentPage = snapshot.data.initialPageType;
 
-              initDrawerItems();
-              var drawerOptions = <Widget>[];
-              for (var i = 0; i < drawerItems.length; i++) {
-                drawerOptions.add(new ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-                    title: showMainItem(drawerItems[i]),
-                    selected: drawerItems[i].key == _currentPage,
-                    onTap: () => _onSelectItem(drawerItems[i])));
-              }
-
-              print("current_page :  " + _currentPage);
-
+              drawerLayout();
               getAnimationStatus();
 
               return Scaffold(
@@ -196,14 +169,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                                 homeData.questionHomeData.totalQuestion != null
                             ? homeData.questionHomeData.totalQuestion
                             : 0),
-                    /*Center(
-                      child: RaisedButton(onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => VideoPlayerScreen()),
-                        );
-                      },child: Text("video"),),
-                    ),*/
                     Stack(
                       fit: StackFit.expand,
                       children: <Widget>[
@@ -231,99 +196,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         });
   }
 
-  void getAnimationStatus() {
-    bool first = false;
-    bool second = false;
-    if (homeData != null) {
-      print(homeData);
-      first = _currentPage == Const.typeCustomerSituation &&
-          ((homeData.isCameFromNewCustomer != null &&
-              homeData.isCameFromNewCustomer &&
-              homeData.questionHomeData.isAnsweredCorrect == 1));
-      second = homeData.isChallenge != null &&
-              homeData.isChallenge &&
-              homeData.questionHomeData != null
-          ? homeData.questionHomeData.isAnsweredCorrect != null
-              ? homeData.questionHomeData.isAnsweredCorrect == 1
-              : false
-          : false;
-    }
-    if (first || second) {
-      if (!homeData.isChallenge ||
-          (Injector.countList.length ==
-              homeData.questionHomeData.questionCurrentIndex)) {
-        int index = Injector.countList.indexWhere(
-            (QuestionCountWithData mQuestionCountWithData) =>
-                mQuestionCountWithData.isCorrect != null
-                    ? !mQuestionCountWithData.isCorrect
-                    : false);
-        if (homeData.isCameFromNewCustomer || index == -1) {
-          isCoinViseble = true;
-        }
-      }
-    } else
-      isCoinViseble = false;
-  }
-
-  Future<void> initStateMethods() async {
-    getDashboardStatus();
-    updateVersionDialog();
-    initContent();
-    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
-    Utils.removeBadge();
-  }
-
-//push notification
-
-  String _appBadgeSupported = 'Unknown';
-
-  initPlatformState() async {
-    String appBadgeSupported;
-    try {
-      bool res = await FlutterAppBadger.isAppBadgeSupported();
-      if (res) {
-        appBadgeSupported = 'Supported';
-      } else {
-        appBadgeSupported = 'Not supported';
-      }
-    } on PlatformException {
-      appBadgeSupported = 'Failed to get badge support.';
-    }
-//    if (!mounted) return;
-//    _appBadgeSupported = appBadgeSupported;
-//    if (_appBadgeSupported != null) {
-//      _addBadge();
-//    }
-//    if (mounted)setState(() {});
-  }
-
-  //--- push
-
-  @override
-  void dispose() {
-    Injector.homeStreamController.close();
-    _connectivitySubscription?.cancel();
-    super.dispose();
-  }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-//      print("====== resume ======");
       Utils.removeBadge();
       if (Injector.isSoundEnable) {
         Injector.audioPlayerBg.resume();
       }
     } else if (state == AppLifecycleState.inactive) {
       Injector.audioPlayerBg.pause();
-//      print("====== inactive ======");
     } else if (state == AppLifecycleState.paused) {
-//      print("====== paused ======");
       Injector.updateIntroData();
     }
   }
 
-  getDrawerItemWidget() {
+  Widget getDrawerItemWidget() {
     if (_currentPage == Const.typeHome) {
       return Injector.isBusinessMode
           ? DashboardGamePage()
@@ -361,40 +248,21 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  _onSelectItem(DrawerItem item) {
-    Utils.playClickSound();
-    if (_scaffoldKey.currentState.isDrawerOpen) {
-      _scaffoldKey.currentState.openEndDrawer();
-    }
-    if (_currentPage != item.key) {
-      if (item.key == Const.typeHelp) {
-        if (Injector.isBusinessMode) {
-          Navigator.push(context, FadeRouteIntro());
-        } else {
-          navigationBloc
-              .updateNavigation(HomeData(initialPageType: Const.typeHome));
-          DisplayDialogs.professionalDialog(context);
-        }
-      } else
-        Utils.performDashboardItemClick(context, item.key);
-    }
-  }
-
   Widget coinWidget(double top, double left) {
     return AnimatedPositioned(
       duration: Duration(seconds: duration),
-      top: !isCoinViseble ? top : 5,
-      left: !isCoinViseble ? left : Utils.getDeviceWidth(context) / 1.1,
+      top: !isCoinVisible ? top : 5,
+      left: !isCoinVisible ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
-        isCoinViseble = false;
+        isCoinVisible = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
         homeData.isCameFromNewCustomer = false;
         setState(() {});
       },
       child: Container(
-        child: isCoinViseble
-            ? MyHomePage(isCoinViseble: isCoinViseble)
+        child: isCoinVisible
+            ? MyHomePage(isCoinViseble: isCoinVisible)
             : Container(),
         width: 40,
         height: 40,
@@ -402,7 +270,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  showMainItem(DrawerItem item) {
+  Widget showMainItem(DrawerItem item) {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
@@ -457,6 +325,100 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
+  @override
+  void dispose() {
+    Injector.homeStreamController.close();
+    _connectivitySubscription?.cancel();
+    super.dispose();
+  }
+
+  void drawerLayout() {
+    initDrawerItems();
+    for (var i = 0; i < drawerItems.length; i++) {
+      drawerOptions.add(new ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          title: showMainItem(drawerItems[i]),
+          selected: drawerItems[i].key == _currentPage,
+          onTap: () => onSelectItem(drawerItems[i])));
+    }
+  }
+
+  void getAnimationStatus() {
+    bool first = false;
+    bool second = false;
+    if (homeData != null) {
+      print(homeData);
+      first = _currentPage == Const.typeCustomerSituation &&
+          ((homeData.isCameFromNewCustomer != null &&
+              homeData.isCameFromNewCustomer &&
+              homeData.questionHomeData.isAnsweredCorrect == 1));
+      second = homeData.isChallenge != null &&
+          homeData.isChallenge &&
+          homeData.questionHomeData != null
+          ? homeData.questionHomeData.isAnsweredCorrect != null
+          ? homeData.questionHomeData.isAnsweredCorrect == 1
+          : false
+          : false;
+    }
+    if (first || second) {
+      if (!homeData.isChallenge ||
+          (Injector.countList.length ==
+              homeData.questionHomeData.questionCurrentIndex)) {
+        int index = Injector.countList.indexWhere(
+                (QuestionCountWithData mQuestionCountWithData) =>
+            mQuestionCountWithData.isCorrect != null
+                ? !mQuestionCountWithData.isCorrect
+                : false);
+        if (homeData.isCameFromNewCustomer || index == -1) {
+          isCoinVisible = true;
+        }
+      }
+    } else
+      isCoinVisible = false;
+  }
+
+  void
+  initStateMethods() async {
+    getDashboardStatus();
+    updateVersionDialog();
+    initContent();
+    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
+    Utils.removeBadge();
+  }
+
+  void initPlatformState() async {
+    String appBadgeSupported;
+    try {
+      bool res = await FlutterAppBadger.isAppBadgeSupported();
+      if (res) {
+        appBadgeSupported = 'Supported';
+      } else {
+        appBadgeSupported = 'Not supported';
+      }
+    } on PlatformException {
+      appBadgeSupported = 'Failed to get badge support.';
+    }
+  }
+
+  void onSelectItem(DrawerItem item) {
+    Utils.playClickSound();
+    if (_scaffoldKey.currentState.isDrawerOpen) {
+      _scaffoldKey.currentState.openEndDrawer();
+    }
+    if (_currentPage != item.key) {
+      if (item.key == Const.typeHelp) {
+        if (Injector.isBusinessMode) {
+          Navigator.push(context, FadeRouteIntro());
+        } else {
+          navigationBloc
+              .updateNavigation(HomeData(initialPageType: Const.typeHome));
+          DisplayDialogs.professionalDialog(context);
+        }
+      } else
+        Utils.performDashboardItemClick(context, item.key);
+    }
+  }
+
   void initStreamController() async {
     Injector.homeStreamController.stream.listen((data) async {
       if (data == "${Const.openPendingChallengeDialog}") {
@@ -497,7 +459,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     questionData.firstName + " " + questionData.lastName,
                     questionData);
               } else {
-//                Utils.showChallengeQuestionDialog(context, questionData);
                 navigationBloc.updateNavigation(HomeData(
                   initialPageType: Const.typeEngagement,
                   questionHomeData: questionData,
@@ -505,16 +466,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ));
               }
             } else {
-              // if there are no more question to attempt then navigate to HOME
-              navigationBloc
-                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
+              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           } else {
             navigationBloc
                 .updateNavigation(HomeData(initialPageType: Const.typeHome));
           }
         }).catchError((e) {
-          // Utils.showToast(e.toString());
           print("getChallenges_" + e.toString());
         });
       }
@@ -606,9 +564,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initContent() async {
-//    BackgroundFetch.start().then((int status) async {
-//      print('[BackgroundFetch] start success: $status');
-
     Future.delayed(const Duration(milliseconds: 500), () {
       PushNotificationHelper pushNotificationHelper =
           PushNotificationHelper(context);
@@ -652,7 +607,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  getDashboardStatus() {
+  void getDashboardStatus() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         DashboardStatusRequest rq = DashboardStatusRequest();

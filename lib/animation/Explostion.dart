@@ -17,7 +17,8 @@ class ExplosionWidget extends StatefulWidget {
   final Rect bound;
   final String tag;
 
-  const ExplosionWidget({Key key, this.child, this.bound, this.tag})
+
+  ExplosionWidget({Key key, this.child, this.bound, this.tag})
       : super(key: key);
 
   @override
@@ -31,12 +32,11 @@ class ExplosionWidgetState extends State<ExplosionWidget>
 
   AnimationController _animationController;
 
-  GlobalObjectKey globalKey;
+
 
   @override
   void initState() {
     super.initState();
-    globalKey = GlobalObjectKey(widget.tag);
     _animationController =
         AnimationController(duration: Duration(seconds: 2), vsync: this)
           ..addStatusListener(
@@ -57,8 +57,7 @@ class ExplosionWidgetState extends State<ExplosionWidget>
 
   void onTap() {
     if (_byteData == null || _imageSize == null) {
-      RenderRepaintBoundary boundary =
-          globalKey.currentContext.findRenderObject();
+      RenderRepaintBoundary boundary = context.findRenderObject();
       boundary.toImage().then((image) {
         _imageSize = Size(image.width.toDouble(), image.height.toDouble());
         image.toByteData().then((byteData) {
@@ -81,7 +80,6 @@ class ExplosionWidgetState extends State<ExplosionWidget>
     if (widget.tag != oldWidget.tag) {
       _byteData = null;
       _imageSize = null;
-      globalKey = GlobalObjectKey(widget.tag);
     }
   }
 
@@ -89,6 +87,8 @@ class ExplosionWidgetState extends State<ExplosionWidget>
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: InkWell(
           onTap: onTap,
           child: AnimatedBuilder(
@@ -96,8 +96,10 @@ class ExplosionWidgetState extends State<ExplosionWidget>
               builder: (context, child) {
                 return ExplosionRenderObjectWidget(
                   image: Injector.image,
-                  key: globalKey,
-                  child: widget.child,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                  ),
                   byteData: _byteData,
                   imageSize: _imageSize,
                   progress: _animationController.value,
