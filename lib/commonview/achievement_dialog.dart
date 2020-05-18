@@ -32,6 +32,7 @@ class _AchievementDialogState extends State<AchievementDialog>
   @override
   void initState() {
     super.initState();
+
     _animationController =
         AnimationController(duration: Duration(seconds: 2), vsync: this)
           ..addStatusListener(
