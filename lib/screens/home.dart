@@ -200,8 +200,7 @@ class HomePageState extends State<HomePage>
   }
 
   Widget animatedPositioned(
-      Size size, String icon, double left, bool isVisible) {
-
+      Size size, String icon, double left) {
       return ValueListenableBuilder(
         valueListenable: isDrainCoinVisibleListner,
         builder: (BuildContext context, value, Widget child) {
@@ -386,28 +385,31 @@ class HomePageState extends State<HomePage>
   }
 
   Widget drainAnimation(Size size) {
-    return Stack(
+    // todo  badha animation thase fire karo tyare
+   /* return Stack(
       children: <Widget>[
         animatedPositioned(
-            size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.2, true),
+            size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.2),
         animatedPositioned(size,
-            HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.212, false),
+            HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.212),
         animatedPositioned(size,
-            HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.69, false)
+            HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.69)
       ],
-    );
+    );*/
+
+    //todo type wise animation thase fire karo tyare
     return ValueListenableBuilder(
       valueListenable: isWidgetVisible,
       builder: (BuildContext context, value, Widget child) {
         if (isWidgetVisible.value == Const.typeEmployee) {
           return animatedPositioned(
-              size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.36, true);
+              size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.36);
         } else if (isWidgetVisible.value == Const.typeSalesPersons) {
           return animatedPositioned(size,
-              HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.29, true);
+              HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.29);
         } else if (isWidgetVisible.value == Const.typeServicesPerson) {
           return animatedPositioned(size,
-              HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.73, true);
+              HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.73);
         } else {
           return Container();
         }
