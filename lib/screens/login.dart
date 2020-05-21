@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
-  String tempLanguage = Const.english;
+  String tempLanguage = StringRes.strDefault;
 
   ScrollController _scrollController = new ScrollController();
   UpdateDialogModel status;
@@ -379,6 +379,8 @@ class _LoginPageState extends State<LoginPage> {
           tempLanguage = Const.german;
         } else if (index == 2) {
           tempLanguage = Const.chinese;
+        } else {
+          tempLanguage = null;
         }
 
         localeBloc.setLocale(Utils.getIndexLocale(tempLanguage));
@@ -410,12 +412,8 @@ class _LoginPageState extends State<LoginPage> {
     LoginRequest loginRequest = LoginRequest();
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
-    loginRequest.secret =
-        Utils.getSecret(loginRequest.email, loginRequest.password);
-    loginRequest.language = tempLanguage;
-//    tempLanguage
-
-//    String udid = await FlutterUdid.udid;
+    loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
+    loginRequest.language = tempLanguage == StringRes.strDefault ? null : tempLanguage;
 
     Utils.hideKeyboard(context);
 
@@ -427,29 +425,23 @@ class _LoginPageState extends State<LoginPage> {
       if (data != null) {
         UserData userData = UserData.fromJson(data);
 
-        await Injector.setUserData(userData);
+        await Injector.setUserData(userData, false);
 
         await Injector.updateInstance();
 
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
-        if (userData.isFirstTimeLogin)
-          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
+        if (userData.isFirstTimeLogin){
+          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);}
 
         if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
-//          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-//          if (userData.isFirstTimeLogin)
-//            Utils.navigateToIntro(context);
-//          else
           navigateToDashboard();
         }
       }
     }).catchError((e) {
-      print("login_" + e.toString());
       CommonView.showCircularProgress(false, context);
-//      // Utils.showToast(e.toString());
     });
   }
 
@@ -471,7 +463,6 @@ class _LoginPageState extends State<LoginPage> {
                 height: 45,
                 decoration: BoxDecoration(
                     color: ColorRes.white,
-//                    color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(left: 8),
@@ -479,7 +470,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: emailController,
                     autocorrect: Platform.isAndroid ? true : false,
-//                    autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
@@ -494,7 +484,6 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     decoration: InputDecoration(
-//                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.emailId)

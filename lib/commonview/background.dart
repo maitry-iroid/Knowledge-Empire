@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ke_employee/animation/Explostion.dart';
+import 'package:ke_employee/commonview/achievement_dialog.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -140,7 +141,6 @@ class CommonView {
           );
       },
       child: Stack(
-        fit: StackFit.expand,
         children: <Widget>[
           Card(
             elevation: 10,
@@ -149,13 +149,14 @@ class CommonView {
             margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 10),
             child: Container(
               margin: EdgeInsets.only(top: 0),
-              padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 23,bottom: 20),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: ColorRes.white, width: 1),
               ),
-              child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
                 child: Text(
                   content,
                   style: TextStyle(
@@ -200,7 +201,6 @@ class CommonView {
               ),
             ),
           ),
-          //Full Screen Alert Show
           Align(
             alignment:
                 (checking == true ? Alignment.bottomRight : Alignment.topRight),
@@ -718,47 +718,6 @@ class CommonView {
                                   height: 50,
                                   fit: BoxFit.fill),
                             ),
-//                            InkResponse(
-//                              child: Container(
-//                                width: 100,
-//                                height: 30,
-//                                padding: EdgeInsets.only(
-//                                    left: 10, right: 10, top: 3, bottom: 3),
-//                                margin: EdgeInsets.only(
-//                                    left: 10, right: 10, top: 3, bottom: 3),
-//                                decoration: BoxDecoration(
-//                                    color: ColorRes.borderRewardsName,
-//                                    border: Border.all(
-//                                        width: 2,
-//                                        color: ColorRes.borderRewardsName),
-//                                    borderRadius:
-//                                        BorderRadius.all(Radius.circular(20)),
-//                                    boxShadow: [
-//                                      BoxShadow(
-//                                        color: Colors.grey,
-//                                        blurRadius: 5.0,
-//                                      ),
-//                                    ]),
-//                                child: Center(
-//                                  child: Text(Utils.getText(context, "CLAIM"),
-//                                      style: TextStyle(
-//                                          color: ColorRes.white, fontSize: 17)),
-//                                ),
-//                              ),
-//                              onTap: () {
-//                                switch (type) {
-//                                  case 0:
-//                                    break;
-//                                  case 1:
-//                                    break;
-//                                  case 3:
-//                                    break;
-//                                  case 8:
-//                                    break;
-//                                }
-//                                Navigator.pop(context, Const.add);
-//                              },
-//                            ),
                           ],
                         ),
                       )),
@@ -783,53 +742,6 @@ class CommonView {
             ),
           );
         });
-    /*showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: ColorRes.blackTransparentColor,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: Container(
-                  width: Utils.getDeviceWidth(context) / 2,
-                  height: Utils.getDeviceHeight(context) / 2,
-                  decoration: BoxDecoration(
-                      color: ColorRes.greyText,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 50,
-                        child: Text("Notification Alert"),
-                      ),
-                      Expanded(child: Text("Count of Notification.")),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 50,
-                        width: 100,
-                        padding: EdgeInsets.only(bottom: 0),
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            color: ColorRes.blue,
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                        ),
-                        child: InkResponse(
-                          child: Text("hello", textAlign: TextAlign.center,),
-                          onTap: () {
-                              Navigator.pop(context);
-                          },
-                        ),
-                      )
-                    ],
-                  )),
-            ),
-          );
-        })*/
   }
 
   pushNotificationAlert2(BuildContext context, String bonus, String level,
@@ -947,92 +859,12 @@ class CommonView {
         })*/
   }
 
-    collectorDialog(BuildContext context, PushModel mPushModel, String btnText) {
+    collectorDialog(BuildContext context, PushModel mPushModel, String btnText)   {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
         barrierDismissible: false,
         transitionBuilder: (context, a1, a2, widget) {
-          return Transform.scale(
-            scale: a1.value,
-            child: Opacity(
-              opacity: a1.value,
-              child: Dialog(
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(200),
-                ),
-                child: Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 25),
-                    width: Utils.getDeviceWidth(context) / 2.2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  color: ColorRes.fontDarkGrey,
-                                  borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(
-                                      color: ColorRes.borderRewardsName)),
-                              child: Text(mPushModel.achievementName ?? "",
-                                  style: TextStyle(
-                                      color: ColorRes.white, fontSize: 15)),
-                            ),
-                            SizedBox(height: 15),
-                            Container(
-                              width: Utils.getDeviceWidth(context) / 3.5,
-                              height: Utils.getDeviceHeight(context) / 3.5,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(Utils.getAssetsImg(
-                                          "bg_collector")))),
-                              child: Image.asset(
-                                  imageFomType(mPushModel.level),
-                                  fit: BoxFit.contain),
-                            ),
-                            SizedBox(height: 15),
-                            Text("${mPushModel.achievementText ?? ""}",
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .body2
-                                    .copyWith(
-                                        color: ColorRes.white, fontSize: 20)),
-                            SizedBox(height: 10),
-                            InkResponse(
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    color: ColorRes.header,
-                                    borderRadius: BorderRadius.circular(18),
-                                    border:
-                                        Border.all(color: ColorRes.white)),
-                                child: Text(btnText,
-                                    style: TextStyle(
-                                        color: ColorRes.white, fontSize: 15)),
-                              ),
-                              onTap: () {
-//                                    explosionWidgetStateKey.currentState.onTap();
-                              Navigator.pop(context);
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
+          return AchievementDialog(a1: a1,btnText: btnText,mPushModel: mPushModel);
         },
         transitionDuration: Duration(milliseconds: 300),
         barrierLabel: '',
@@ -1056,43 +888,7 @@ class CommonView {
             )));
   }
 
-  imageFomType(String level) {
-    switch (level) {
-      case "0":
-        return Utils.getAssetsImg("trophy0");
-        break;
-      case "1":
-        return Utils.getAssetsImg("trophy1");
-        break;
-      case "2":
-        return Utils.getAssetsImg("trophy2");
-        break;
-      case "3":
-        return Utils.getAssetsImg("trophy3");
-        break;
-      case "4":
-        return Utils.getAssetsImg("trophy4");
-        break;
-      case "5":
-        return Utils.getAssetsImg("trophy5");
-        break;
-      case "6":
-        return Utils.getAssetsImg("trophy6");
-        break;
-      case "7":
-        return Utils.getAssetsImg("trophy7");
-        break;
-      case "8":
-        return Utils.getAssetsImg("trophy8");
-        break;
-      case "9":
-        return Utils.getAssetsImg("trophy9");
-        break;
-      case "10":
-        return Utils.getAssetsImg("trophy10");
-        break;
-    }
-  }
+
 
   static showShimmer() {
     return Container(

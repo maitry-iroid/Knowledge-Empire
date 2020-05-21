@@ -50,7 +50,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData != null || Injector.introData.learningModule1 == 0)
+    if (Injector.introData != null && Injector.introData.learningModule1 == 0)
       await DisplayDialogs.showIntroLearningModule1(context);
 
     //TODO for testing

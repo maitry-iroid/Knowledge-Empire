@@ -1,5 +1,3 @@
-/*
 abstract class RefreshAnimation {
-  onRefreshAchievement(){}
+  onRefreshAchievement(int type){}
 }
-*/

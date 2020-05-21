@@ -46,6 +46,7 @@ class Injector {
   static DashboardStatusResponse dashboardStatusResponse;
   static int mode;
   static bool isBusinessMode = true;
+  static bool isPasswordChange = false;
   static DefaultCacheManager cacheManager;
   static StreamController<String> headerStreamController;
   static StreamController<String> homeStreamController =
@@ -76,9 +77,6 @@ class Injector {
   static BuildContext buildContext;
   static IntroModel introModel;
 
-//  factory Injector {
-//    return _singleton;
-//  }
 
   Injector._internal();
 
@@ -184,14 +182,14 @@ class Injector {
     isBusinessMode = _mode == Const.businessMode;
   }
 
-  static setUserData(UserData _user) async {
+  static setUserData(UserData _user, bool isLanguage) async {
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
     userData = _user;
 
     userId = _user.userId;
 
-    updateMode(_user.mode);
+    if (!isLanguage) updateMode(_user.mode);
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {

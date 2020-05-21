@@ -32,18 +32,23 @@ class HeaderView extends StatefulWidget {
       this.challengeCount,
       this.currentIndex});
 
-//  List<Organization> arrOrganization = Injector.customerValueData.organization;
 
   @override
   HeaderViewState createState() => HeaderViewState();
 }
 
 class HeaderViewState extends State<HeaderView> {
+
   @override
-  void initState() {
-    super.initState();
+  void didUpdateWidget(HeaderView oldWidget) {
+    print("init didUpdateWidget========>");
     if (Injector.headerStreamController == null)
       Injector.headerStreamController = StreamController.broadcast();
+
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+    customerValueBloc?.getCustomerValue(rq);
+
 
     Injector.headerStreamController.stream.listen((data) {
       if (mounted) setState(() {});
@@ -52,40 +57,24 @@ class HeaderViewState extends State<HeaderView> {
     }, onError: (error) {
       print("Some Error1");
     });
-
-//    updateProfileBrodCast();
+    super.didUpdateWidget(oldWidget);
   }
 
-  /*updateProfileBrodCast() {
-    Injector.streamController = StreamController.broadcast();
 
-    Injector.streamController.stream.listen((data) {
-      if (data == Const.updateProfileBrod) {
-        showHeaderView(context);
-      }});
-  }*/
-
-  @override
-  void dispose() {
-    super.dispose();
-
-//    if (Injector.streamController != null) Injector.streamController.close();
-  }
 
   @override
   Widget build(BuildContext context) {
     return showHeaderView(context);
   }
 
-  showHeaderView(BuildContext context) {
+  Widget showHeaderView(BuildContext context) {
     return Container(
       height: Utils.getHeaderHeight(context),
-//      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       color: Injector.isBusinessMode
           ? ColorRes.headerDashboard
           : ColorRes.headerBlue,
       child: StreamBuilder(
-          stream: customerValueBloc?.customerValue,
+          stream: customerValueBloc.customerValue,
           builder: (context, AsyncSnapshot<CustomerValueData> snapshot) {
             if (snapshot.hasData) {
               return _buildSearchResults(snapshot?.data);
@@ -93,7 +82,6 @@ class HeaderViewState extends State<HeaderView> {
               return Text(snapshot.error.toString());
             }
             return _buildSearchResults(snapshot?.data);
-//            return Center(child: CircularProgressIndicator());
           }),
     );
   }
@@ -101,8 +89,7 @@ class HeaderViewState extends State<HeaderView> {
   showHeaderItem(String type, BuildContext context) {
     return Container(
       foregroundDecoration: null,
-      padding:
-          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       decoration: BoxDecoration(
           image: Injector.isBusinessMode
               ? DecorationImage(
@@ -229,8 +216,7 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            navigationBloc
-                .updateNavigation(HomeData(initialPageType: Const.typeProfile));
+            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeProfile));
           }),
     );
   }
@@ -250,7 +236,6 @@ class HeaderViewState extends State<HeaderView> {
         Injector.isBusinessMode
             ? Navigator.push(context, FadeRouteIntro())
             : DisplayDialogs.professionalDialog(context);
-
       },
     );
   }
@@ -316,7 +301,8 @@ class HeaderViewState extends State<HeaderView> {
         if (indexData == -1) {
           indexData = 0;
         }
-        return ChallengeHeader(challengeCount: widget.challengeCount, currentIndex: indexData);
+        return ChallengeHeader(
+            challengeCount: widget.challengeCount, currentIndex: indexData);
       }
     }
 

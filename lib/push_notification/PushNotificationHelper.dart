@@ -214,13 +214,9 @@ class PushNotificationHelper {
 
       CommonView().collectorDialog(context, mPushModel,btnText);
 
-      Utils.playAchievementSound();
     } else {
       showLocalNotification(Injector.notificationID, body);
     }
-
-    print(title);
-    print(body);
   }
 
   showLocalNotification(int id, String body) async {

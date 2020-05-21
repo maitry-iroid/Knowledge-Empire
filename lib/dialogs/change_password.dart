@@ -38,7 +38,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent.withOpacity(0.8),
+      backgroundColor: Colors.transparent,
       body: showSetupPin(context),
     );
   }
@@ -274,11 +274,11 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
       if (data != null) {
         Utils.showToast(Utils.getText(context, StringRes.passwordChange));
+        Injector.isPasswordChange = true;
 
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
-//          Utils.navigateToIntro(context);
           Navigator.pushAndRemoveUntil(
               context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
@@ -288,7 +288,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         setState(() {
           isLoading = false;
         });
-      // Utils.showToast(e.toString());
     });
   }
 

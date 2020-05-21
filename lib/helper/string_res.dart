@@ -18,6 +18,7 @@ class StringRes {
   static var team = "team";
   static var profile = "profile";
   static var help = "help";
+    static var strDefault = "Default";
 
   //profile
   static var emailId = "emailId";
@@ -75,6 +76,7 @@ class StringRes {
   //existing customer
   static var endRel = "endRel";
   static var alertReleaseResources = "alertReleaseResources";
+
 
   //challenges
   static var searchForKeywords = "searchForKeywords";
@@ -401,6 +403,7 @@ class StringRes {
   static String strPL="strPL";
   static String strBrandValueTitle="strBrandValueTitle";
   static String strRanking="strRanking";
+  static String strBalance="strBalance";
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -808,7 +811,8 @@ class StringRes {
       'alertChangePassword': 'Password changed Successfully.',
       'servicePerson': 'Service Reps',
       //</editor-fold>
-      'strKp':"Kp",
+      'strKp':"\$",
+      'strBalance':"Cash",
 
     },
     'de': {
@@ -1202,7 +1206,8 @@ class StringRes {
 
       'passwordChange': 'Passwort erfolgreich geändert.',
       'serviceReps': "Servicemitarbeiter",
-      'strKp':"Kp",
+      'strKp':"\$",
+      'strBalance':"Vermögen",
 
 
     },
@@ -1579,7 +1584,8 @@ class StringRes {
 
       'passwordChange': '密码已更改。',
       'serviceReps': "服务代表",
-      'strKp':"Kp",
+      'strKp':"\$",
+      'strBalance':"现金",
 
     }
   };
@@ -1820,7 +1826,7 @@ class StringRes {
       'answers': 'Answers',
       'bonusPoint': "Bonus Point",
 
-      'cashAtStartOfPeriod': 'Knowledge Points at start',
+      'cashAtStartOfPeriod': 'Knowledge Points at start of Period',
       'subscribedSuccess': 'Subscribed successfully!',
       'alertFriendSuccess': 'Friend added successfully',
       'unSubscribedSuccess': 'Unsubscribed successfully!',
@@ -1978,6 +1984,7 @@ class StringRes {
       'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
       'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
       'strKp':"Kp",
+      'strBalance':"Knowledge Points",
 
     },
     'de': {
@@ -2029,7 +2036,7 @@ class StringRes {
       'hireEmp': 'Level erhöhen',
       'sector': 'Lernmodule',
       'name': 'Name',
-      'value': 'Wissenspunkte (WP)',
+      'value': 'Wissenspunkte (KP)',
       'loyalty': 'Wiederholung in ...',
       'resources': 'Lernpunkte (LP)',
       'engage': 'Beantworten',
@@ -2378,7 +2385,8 @@ class StringRes {
       'strPL':"- Überwache die Entwicklung deines Fortschritts\n- Sorge dafür, dass deine Wissenpunkte zunehmen",
       'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
       'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
-      'strKp':"Kp",
+      'strKp':"WP",
+      'strBalance':"Wissenspunkte",
 
     },
     'zh': {
@@ -2747,7 +2755,8 @@ class StringRes {
       'strPL':"- 监控您的表现和进步\n- 确保您赚取足够的知识点数",
       'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
       'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
-      'strKp':"Kp",
+      'strKp':"知识点数",
+      'strBalance':"知识点数",
 
     }
   };

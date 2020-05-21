@@ -30,8 +30,6 @@ class _RankingPageState extends State<RankingPage> {
   List<GetFriendsData> arrFriends = List();
   List<GetUserGroupData> arrGroups = List();
 
-  List<String> allCategoryList = List();
-
   int selectedUser = -1;
 
   bool isCheckFriend = false;
@@ -127,14 +125,17 @@ class _RankingPageState extends State<RankingPage> {
       color: Injector.isBusinessMode
           ? Colors.transparent
           : ColorRes.rankingBackGround,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          showLeftItem(0, StringRes.revenue),
-          showLeftItem(1, StringRes.profit),
-          showLeftItem(2, StringRes.hashCustomers),
-          showLeftItem(3, StringRes.brand),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            showLeftItem(0, StringRes.revenue),
+            showLeftItem(1, StringRes.profit),
+            showLeftItem(2, StringRes.hashCustomers),
+            showLeftItem(3, StringRes.brand),
+            showLeftItem(4, StringRes.strBalance),
+          ],
+        ),
       ),
     );
   }
@@ -194,54 +195,51 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showLeftItem(int index, String title) {
-    return Expanded(
-      flex: 1,
-      child: InkResponse(
-        onTap: () {
-          if (selectedLeftCategory != index) {
-            if (mounted)
-              setState(() {
-                Utils.playClickSound();
-                selectedLeftCategory = index;
-              });
+    return InkResponse(
+      onTap: () {
+        if (selectedLeftCategory != index) {
+          if (mounted)
+            setState(() {
+              Utils.playClickSound();
+              selectedLeftCategory = index;
+            });
 
-            getFriends(true, false);
-          }
-        },
-        child: Container(
+          getFriends(true, false);
+        }
+      },
+      child: Container(
 //          width: Utils.getDeviceHeight(context)/5,
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: Utils.getDeviceHeight(context) / 7,
-                width: Utils.getDeviceHeight(context) / 7,
-                padding: Injector.isBusinessMode
-                    ? EdgeInsets.all(15)
-                    : EdgeInsets.all(15),
-                margin: Injector.isBusinessMode
-                    ? EdgeInsets.all(0)
-                    : EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    image: DecorationImage(image: getBgImage(index))),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                        child: Image(
-                      image:
-                          AssetImage(Utils.getAssetsImg(getInnerImage(index))),
-                    )),
-                    Container()
-                  ],
-                ),
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: Utils.getDeviceHeight(context) / 7,
+              width: Utils.getDeviceHeight(context) / 7,
+              padding: Injector.isBusinessMode
+                  ? EdgeInsets.all(15)
+                  : EdgeInsets.all(15),
+              margin: Injector.isBusinessMode
+                  ? EdgeInsets.all(0)
+                  : EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  image: DecorationImage(image: getBgImage(index))),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: Image(
+                    image:
+                        AssetImage(Utils.getAssetsImg(getInnerImage(index))),
+                  )),
+                  Container()
+                ],
               ),
-              Text(
-                Utils.getText(context, title),
-                style: TextStyle(color: ColorRes.white, fontSize: 13),
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
-          ),
+            ),
+            Text(
+              Utils.getText(context, title),
+              style: TextStyle(color: ColorRes.white, fontSize: 13),
+              overflow: TextOverflow.ellipsis,
+            )
+          ],
         ),
       ),
     );
@@ -256,6 +254,8 @@ class _RankingPageState extends State<RankingPage> {
       return "ic_bs_rk_communication";
     } else if (type == 3) {
       return "ic_bs_rk_price_tag";
+    } else if (type == 4) {
+      return "balance_grey_png";
     } else {
       return "ic_bs_rk_revenue";
     }
