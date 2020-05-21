@@ -718,47 +718,6 @@ class CommonView {
                                   height: 50,
                                   fit: BoxFit.fill),
                             ),
-//                            InkResponse(
-//                              child: Container(
-//                                width: 100,
-//                                height: 30,
-//                                padding: EdgeInsets.only(
-//                                    left: 10, right: 10, top: 3, bottom: 3),
-//                                margin: EdgeInsets.only(
-//                                    left: 10, right: 10, top: 3, bottom: 3),
-//                                decoration: BoxDecoration(
-//                                    color: ColorRes.borderRewardsName,
-//                                    border: Border.all(
-//                                        width: 2,
-//                                        color: ColorRes.borderRewardsName),
-//                                    borderRadius:
-//                                        BorderRadius.all(Radius.circular(20)),
-//                                    boxShadow: [
-//                                      BoxShadow(
-//                                        color: Colors.grey,
-//                                        blurRadius: 5.0,
-//                                      ),
-//                                    ]),
-//                                child: Center(
-//                                  child: Text(Utils.getText(context, "CLAIM"),
-//                                      style: TextStyle(
-//                                          color: ColorRes.white, fontSize: 17)),
-//                                ),
-//                              ),
-//                              onTap: () {
-//                                switch (type) {
-//                                  case 0:
-//                                    break;
-//                                  case 1:
-//                                    break;
-//                                  case 3:
-//                                    break;
-//                                  case 8:
-//                                    break;
-//                                }
-//                                Navigator.pop(context, Const.add);
-//                              },
-//                            ),
                           ],
                         ),
                       )),
@@ -783,53 +742,6 @@ class CommonView {
             ),
           );
         });
-    /*showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: ColorRes.blackTransparentColor,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: Container(
-                  width: Utils.getDeviceWidth(context) / 2,
-                  height: Utils.getDeviceHeight(context) / 2,
-                  decoration: BoxDecoration(
-                      color: ColorRes.greyText,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 50,
-                        child: Text("Notification Alert"),
-                      ),
-                      Expanded(child: Text("Count of Notification.")),
-                      Container(
-                        alignment: Alignment.center,
-                        height: 50,
-                        width: 100,
-                        padding: EdgeInsets.only(bottom: 0),
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                            color: ColorRes.blue,
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                        ),
-                        child: InkResponse(
-                          child: Text("hello", textAlign: TextAlign.center,),
-                          onTap: () {
-                              Navigator.pop(context);
-                          },
-                        ),
-                      )
-                    ],
-                  )),
-            ),
-          );
-        })*/
   }
 
   pushNotificationAlert2(BuildContext context, String bonus, String level,

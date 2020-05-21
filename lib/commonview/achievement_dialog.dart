@@ -213,15 +213,4 @@ class _AchievementDialogState extends State<AchievementDialog>
     }
   }
 
-  Widget createItem(Widget child,
-      {VoidCallback onTap, Color bgColor = Colors.transparent}) {
-    return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          color: bgColor,
-          child: child,
-          height: 100,
-          alignment: Alignment.center,
-        ));
-  }
 }

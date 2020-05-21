@@ -20,7 +20,7 @@ class HeaderUtils {
 
   static String getHeaderIcon(String type) {
     if (type == Const.typeSalesPersons)
-      return Injector.isBusinessMode ? "ic_sales_header" : "employee_prof_ic";
+        return Injector.isBusinessMode ? "ic_sales_header" : "employee_prof_ic";
     else if (type == Const.typeEmployee)
       return Injector.isBusinessMode ? "ic_people" : "book";
     else if (type == Const.typeBrandValue)

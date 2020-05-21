@@ -32,21 +32,13 @@ class HeaderView extends StatefulWidget {
       this.challengeCount,
       this.currentIndex});
 
-//  List<Organization> arrOrganization = Injector.customerValueData.organization;
 
   @override
   HeaderViewState createState() => HeaderViewState();
 }
 
 class HeaderViewState extends State<HeaderView> {
-  @override
-  void initState() {
-    super.initState();
-    print("init called========>");
 
-
-//    updateProfileBrodCast();
-  }
   @override
   void didUpdateWidget(HeaderView oldWidget) {
     print("init didUpdateWidget========>");
@@ -70,22 +62,6 @@ class HeaderViewState extends State<HeaderView> {
 
 
 
-  /*updateProfileBrodCast() {
-    Injector.streamController = StreamController.broadcast();
-
-    Injector.streamController.stream.listen((data) {
-      if (data == Const.updateProfileBrod) {
-        showHeaderView(context);
-      }});
-  }*/
-
-  @override
-  void dispose() {
-    super.dispose();
-
-//    if (Injector.streamController != null) Injector.streamController.close();
-  }
-
   @override
   Widget build(BuildContext context) {
     return showHeaderView(context);
@@ -94,7 +70,6 @@ class HeaderViewState extends State<HeaderView> {
   Widget showHeaderView(BuildContext context) {
     return Container(
       height: Utils.getHeaderHeight(context),
-//      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       color: Injector.isBusinessMode
           ? ColorRes.headerDashboard
           : ColorRes.headerBlue,
@@ -107,7 +82,6 @@ class HeaderViewState extends State<HeaderView> {
               return Text(snapshot.error.toString());
             }
             return _buildSearchResults(snapshot?.data);
-//            return Center(child: CircularProgressIndicator());
           }),
     );
   }
@@ -115,8 +89,7 @@ class HeaderViewState extends State<HeaderView> {
   showHeaderItem(String type, BuildContext context) {
     return Container(
       foregroundDecoration: null,
-      padding:
-          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       decoration: BoxDecoration(
           image: Injector.isBusinessMode
               ? DecorationImage(

@@ -12,13 +12,14 @@ import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/ResponsiveUi.dart';
+import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
-import 'package:ke_employee/screens/VideoPlayerScreen.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
 import 'package:ke_employee/screens/dashboard_prof.dart';
@@ -27,15 +28,14 @@ import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/existing_customers.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/help_pro_screen.dart';
 import 'package:ke_employee/screens/help_screen.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/screens/new_customer.dart';
 import 'package:ke_employee/screens/organization2.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 import 'P+L.dart';
@@ -53,32 +53,18 @@ class FadeRouteHome extends PageRouteBuilder {
 
   FadeRouteHome()
       : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
+          pageBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation) =>
               HomePage(),
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: HomePage(
-//              homeData: homeData,
-                ),
-          ),
+          transitionsBuilder: (BuildContext context,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                  Widget child) =>
+              FadeTransition(opacity: animation, child: HomePage()),
         );
 }
 
 class HomePage extends StatefulWidget {
-//  final HomeData homeData;
-//
-//  HomePage({Key key, this.homeData}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
     return new HomePageState();
@@ -95,105 +81,37 @@ class DrawerItem {
 
 List<DrawerItem> drawerItems = List();
 
-class HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class HomePageState extends State<HomePage>
+    with WidgetsBindingObserver, TickerProviderStateMixin
+    implements RefreshAnimation {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey = new GlobalKey<ExplosionWidgetState>();
+  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey =
+      new GlobalKey<ExplosionWidgetState>();
   String _currentPage = Const.typeHome;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  ValueNotifier<String> isWidgetVisible = ValueNotifier<String>("");
+  final ValueNotifier<bool> isDrainCoinVisibleListner =
+      ValueNotifier<bool>(false);
+
   bool startAnim = false;
   int duration = 1;
   bool isCoinVisible = false;
+
   bool isReadyForChallenge = false;
-
   HomeData homeData;
-
+  Timer animTimer;
   var drawerOptions = <Widget>[];
 
+  RefreshAnimation mRefreshAnimation;
 
   @override
   void initState() {
     super.initState();
+    mRefreshAnimation = this;
     Future.delayed(Duration(seconds: 1)).then((d) {
       initStateMethods();
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    drawerLayout();
-    return StreamBuilder(
-        stream: navigationBloc?.navigationKey,
-        builder: (context, AsyncSnapshot<HomeData> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              color: ColorRes.white,
-            );
-          } else if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData) {
-              homeData = snapshot.data;
-              _currentPage = snapshot.data.initialPageType;
-
-              drawerLayout();
-              getAnimationStatus();
-
-              return Scaffold(
-                key: _scaffoldKey,
-                drawer: new SizedBox(
-                  width: Utils.getDeviceWidth(context) / 2.5,
-                  child: Drawer(
-                      child: Container(
-                    color: Injector.isBusinessMode
-                        ? ColorRes.bgMenu
-                        : ColorRes.headerBlue,
-                    child: new ListView(children: drawerOptions),
-                  )),
-                ),
-                backgroundColor: ColorRes.colorBgDark,
-                body: SafeArea(
-                    child: Stack(
-                  children: <Widget>[
-                    getDrawerItemWidget(),
-                    HeaderView(
-                        scaffoldKey: _scaffoldKey,
-                        isShowMenu: true,
-                        isChallenge: homeData.isChallenge,
-                        currentIndex: homeData != null &&
-                                homeData.questionHomeData != null &&
-                                homeData.questionHomeData
-                                        .questionCurrentIndex !=
-                                    null
-                            ? homeData.questionHomeData.questionCurrentIndex
-                            : 0,
-                        challengeCount: homeData != null &&
-                                homeData.questionHomeData != null &&
-                                homeData.questionHomeData.totalQuestion != null
-                            ? homeData.questionHomeData.totalQuestion
-                            : 0),
-                    Stack(
-                      fit: StackFit.expand,
-                      children: <Widget>[
-                        coinWidget(250, 150),
-                        coinWidget(310, 50),
-                        coinWidget(70, 50),
-                        coinWidget(150, 20),
-                        coinWidget(350, 320),
-                        coinWidget(350, 450),
-                        coinWidget(180, 300),
-                        coinWidget(200, 550),
-                        coinWidget(350, 650),
-                      ],
-                    ),
-                  ],
-                )),
-              );
-            } else
-              return Container();
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return Container();
-          }
-        });
   }
 
   @override
@@ -210,63 +128,108 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  Widget getDrawerItemWidget() {
-    if (_currentPage == Const.typeHome) {
-      return Injector.isBusinessMode
-          ? DashboardGamePage()
-          : DashboardProfPage();
-    } else if (_currentPage == Const.typeBusinessSector) {
-      return BusinessSectorPage();
-    } else if (_currentPage == Const.typeNewCustomer) {
-      return NewCustomerPage();
-    } else if (_currentPage == Const.typeExistingCustomer) {
-      return ExistingCustomerPage();
-    } else if (_currentPage == Const.typeTeam) {
-      return TeamPage();
-    } else if (_currentPage == Const.typeChallenges) {
-      return ChallengesPage(homeData: homeData);
-    } else if (_currentPage == Const.typeReward) {
-      return RewardsPage();
-    } else if (_currentPage == Const.typeOrg) {
-      return Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage();
-    } else if (_currentPage == Const.typeRanking) {
-      return RankingPage();
-    } else if (_currentPage == Const.typePl) {
-      return PLPage();
-    } else if (_currentPage == Const.typeProfile) {
-      return ProfilePage();
-    } else if (_currentPage == Const.typeEngagement) {
-      return EngagementCustomer(homeData: homeData);
-    } else if (_currentPage == Const.typeCustomerSituation) {
-      return CustomerSituationPage(homeData: homeData);
-    } else if (_currentPage == Const.typeCustomerSituation) {
-      return ProfilePage();
-    } else {
-      return Injector.isBusinessMode
-          ? DashboardGamePage()
-          : DashboardProfPage();
-    }
+  @override
+  Widget build(BuildContext context) {
+    drawerLayout();
+    return StreamBuilder(
+        stream: navigationBloc?.navigationKey,
+        builder: (context, AsyncSnapshot<HomeData> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              color: ColorRes.white,
+            );
+          } else if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              homeData = snapshot.data;
+              _currentPage = snapshot.data.initialPageType;
+              drawerLayout();
+              getAnimationStatus();
+              return mainLayout(context);
+            } else
+              return Container();
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return Container();
+          }
+        });
   }
 
-  Widget coinWidget(double top, double left) {
-    return AnimatedPositioned(
-      duration: Duration(seconds: duration),
-      top: !isCoinVisible ? top : 5,
-      left: !isCoinVisible ? left : Utils.getDeviceWidth(context) / 1.1,
-      onEnd: () {
-        isCoinVisible = false;
-        if (Injector.customerValueData != null)
-          customerValueBloc.setCustomerValue(Injector.customerValueData);
-        homeData.isCameFromNewCustomer = false;
-        setState(() {});
+  Widget mainLayout(BuildContext context) {
+    return ResponsiveUi(
+      builder: (context, size) {
+        return Scaffold(
+          key: _scaffoldKey,
+          drawer: new SizedBox(
+            width: Utils.getDeviceWidth(context) / 2.5,
+            child: Drawer(
+                child: Container(
+              color: Injector.isBusinessMode
+                  ? ColorRes.bgMenu
+                  : ColorRes.headerBlue,
+              child: new ListView(children: drawerOptions),
+            )),
+          ),
+          backgroundColor: ColorRes.colorBgDark,
+          body: SafeArea(
+              child: Stack(
+            children: <Widget>[
+              getDrawerItemWidget(),
+              buildHeaderView(),
+              coinAnimation(),
+              drainAnimation(size),
+              RaisedButton(onPressed: () {
+                Future.delayed(Duration(milliseconds: 500)).then((_) {
+                  animTimer = Timer.periodic(Duration(milliseconds: 500), (_) {
+                    isDrainCoinVisibleListner.value = true;
+                    isDrainCoinVisibleListner.notifyListeners();
+                    print("called");
+                  });
+                  Timer(Duration(seconds: 3), () {
+                    if (animTimer != null) {
+                      animTimer.cancel();
+                    }
+                  });
+                });
+              })
+            ],
+          )),
+        );
       },
-      child: Container(
-        child: isCoinVisible
-            ? MyHomePage(isCoinViseble: isCoinVisible)
-            : Container(),
-        width: 40,
-        height: 40,
-      ),
+    );
+  }
+
+  Widget animatedPositioned(
+      Size size, String icon, double left, bool isVisible) {
+
+      return ValueListenableBuilder(
+        valueListenable: isDrainCoinVisibleListner,
+        builder: (BuildContext context, value, Widget child) {
+          return AnimatedPositioned(
+            top: value ? 50.0 : size.height / 32,
+            left: size.width / left,
+            duration: Duration(milliseconds: value ? 400 : 0),
+            onEnd: () {
+              isDrainCoinVisibleListner.value = false;
+              isDrainCoinVisibleListner.notifyListeners();
+            },
+            child: Container(
+              width: 26.0,
+              height: 26.0,
+              child: AnimatedOpacity(
+                  duration: Duration(milliseconds: value ? 400 : 0),
+                  opacity: value ? 0.0 : 1.0,
+                  child: Image.asset(Utils.getAssetsImg(icon),
+                      width: 26, height: 26)),
+            ),
+          );
+        },
+      );
+
+    return Container(
+      width: 26.0,
+      height: 26.0,
+      child: Image.asset(Utils.getAssetsImg(icon), width: 26, height: 26),
     );
   }
 
@@ -325,11 +288,130 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  @override
-  void dispose() {
-    Injector.homeStreamController.close();
-    _connectivitySubscription?.cancel();
-    super.dispose();
+  Widget getDrawerItemWidget() {
+    if (_currentPage == Const.typeHome) {
+      return Injector.isBusinessMode
+          ? DashboardGamePage()
+          : DashboardProfPage();
+    } else if (_currentPage == Const.typeBusinessSector) {
+      return BusinessSectorPage();
+    } else if (_currentPage == Const.typeNewCustomer) {
+      return NewCustomerPage();
+    } else if (_currentPage == Const.typeExistingCustomer) {
+      return ExistingCustomerPage();
+    } else if (_currentPage == Const.typeTeam) {
+      return TeamPage();
+    } else if (_currentPage == Const.typeChallenges) {
+      return ChallengesPage(homeData: homeData);
+    } else if (_currentPage == Const.typeReward) {
+      return RewardsPage();
+    } else if (_currentPage == Const.typeOrg) {
+      return Injector.isBusinessMode
+          ? OrganizationsPage2(mRefreshAnimation: mRefreshAnimation)
+          : PowerUpsPage();
+    } else if (_currentPage == Const.typeRanking) {
+      return RankingPage();
+    } else if (_currentPage == Const.typePl) {
+      return PLPage();
+    } else if (_currentPage == Const.typeProfile) {
+      return ProfilePage();
+    } else if (_currentPage == Const.typeEngagement) {
+      return EngagementCustomer(homeData: homeData);
+    } else if (_currentPage == Const.typeCustomerSituation) {
+      return CustomerSituationPage(homeData: homeData);
+    } else if (_currentPage == Const.typeCustomerSituation) {
+      return ProfilePage();
+    } else {
+      return Injector.isBusinessMode
+          ? DashboardGamePage()
+          : DashboardProfPage();
+    }
+  }
+
+  Widget buildHeaderView() {
+    return HeaderView(
+        scaffoldKey: _scaffoldKey,
+        isShowMenu: true,
+        isChallenge: homeData.isChallenge,
+        currentIndex: homeData != null &&
+                homeData.questionHomeData != null &&
+                homeData.questionHomeData.questionCurrentIndex != null
+            ? homeData.questionHomeData.questionCurrentIndex
+            : 0,
+        challengeCount: homeData != null &&
+                homeData.questionHomeData != null &&
+                homeData.questionHomeData.totalQuestion != null
+            ? homeData.questionHomeData.totalQuestion
+            : 0);
+  }
+
+  Widget coinAnimation() {
+    return Stack(
+      fit: StackFit.expand,
+      children: <Widget>[
+        coinWidget(250, 150),
+        coinWidget(310, 50),
+        coinWidget(70, 50),
+        coinWidget(150, 20),
+        coinWidget(350, 320),
+        coinWidget(350, 450),
+        coinWidget(180, 300),
+        coinWidget(200, 550),
+        coinWidget(350, 650),
+      ],
+    );
+  }
+
+  Widget coinWidget(double top, double left) {
+    return AnimatedPositioned(
+      duration: Duration(seconds: duration),
+      top: !isCoinVisible ? top : 5,
+      left: !isCoinVisible ? left : Utils.getDeviceWidth(context) / 1.1,
+      onEnd: () {
+        isCoinVisible = false;
+        if (Injector.customerValueData != null)
+          customerValueBloc.setCustomerValue(Injector.customerValueData);
+        homeData.isCameFromNewCustomer = false;
+        setState(() {});
+      },
+      child: Container(
+        child: isCoinVisible
+            ? MyHomePage(isCoinViseble: isCoinVisible)
+            : Container(),
+        width: 40,
+        height: 40,
+      ),
+    );
+  }
+
+  Widget drainAnimation(Size size) {
+    return Stack(
+      children: <Widget>[
+        animatedPositioned(
+            size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.2, true),
+        animatedPositioned(size,
+            HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.212, false),
+        animatedPositioned(size,
+            HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.69, false)
+      ],
+    );
+    return ValueListenableBuilder(
+      valueListenable: isWidgetVisible,
+      builder: (BuildContext context, value, Widget child) {
+        if (isWidgetVisible.value == Const.typeEmployee) {
+          return animatedPositioned(
+              size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.36, true);
+        } else if (isWidgetVisible.value == Const.typeSalesPersons) {
+          return animatedPositioned(size,
+              HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.29, true);
+        } else if (isWidgetVisible.value == Const.typeServicesPerson) {
+          return animatedPositioned(size,
+              HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.73, true);
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 
   void drawerLayout() {
@@ -353,11 +435,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               homeData.isCameFromNewCustomer &&
               homeData.questionHomeData.isAnsweredCorrect == 1));
       second = homeData.isChallenge != null &&
-          homeData.isChallenge &&
-          homeData.questionHomeData != null
+              homeData.isChallenge &&
+              homeData.questionHomeData != null
           ? homeData.questionHomeData.isAnsweredCorrect != null
-          ? homeData.questionHomeData.isAnsweredCorrect == 1
-          : false
+              ? homeData.questionHomeData.isAnsweredCorrect == 1
+              : false
           : false;
     }
     if (first || second) {
@@ -365,10 +447,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           (Injector.countList.length ==
               homeData.questionHomeData.questionCurrentIndex)) {
         int index = Injector.countList.indexWhere(
-                (QuestionCountWithData mQuestionCountWithData) =>
-            mQuestionCountWithData.isCorrect != null
-                ? !mQuestionCountWithData.isCorrect
-                : false);
+            (QuestionCountWithData mQuestionCountWithData) =>
+                mQuestionCountWithData.isCorrect != null
+                    ? !mQuestionCountWithData.isCorrect
+                    : false);
         if (homeData.isCameFromNewCustomer || index == -1) {
           isCoinVisible = true;
         }
@@ -377,8 +459,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       isCoinVisible = false;
   }
 
-  void
-  initStateMethods() async {
+  void initStateMethods() async {
     getDashboardStatus();
     updateVersionDialog();
     initContent();
@@ -466,7 +547,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ));
               }
             } else {
-              navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+              navigationBloc
+                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
             }
           } else {
             navigationBloc
@@ -631,5 +713,43 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    Injector.homeStreamController.close();
+    _connectivitySubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  onRefreshAchievement(int type) {
+    try {
+      if (type == Const.typeHR) {
+        isWidgetVisible.value = Const.typeEmployee;
+      } else if (type == Const.typeSales) {
+        isWidgetVisible.value = Const.typeSalesPersons;
+      } else if (type == Const.typeServices) {
+        isWidgetVisible.value = Const.typeServicesPerson;
+      } else {
+        isWidgetVisible.value = "";
+      }
+      isWidgetVisible.notifyListeners();
+
+      Future.delayed(Duration(milliseconds: 500)).then((_) {
+        animTimer = Timer.periodic(Duration(milliseconds: 500), (_) {
+          isDrainCoinVisibleListner.value = true;
+          isDrainCoinVisibleListner.notifyListeners();
+          print("called");
+        });
+        Timer(Duration(seconds: 3), () {
+          if (animTimer != null) {
+            animTimer.cancel();
+          }
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

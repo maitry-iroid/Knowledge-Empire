@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -72,7 +73,7 @@ class MyAppState extends State<MyApp> {
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home: Injector.userId != null ? HomePage() : LoginPage(),
+          home:  Injector.userId != null ? HomePage() : LoginPage(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),

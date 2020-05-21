@@ -60,6 +60,7 @@ dependencies:
   auto_size_text: ^2.1.0
   chewie: ^0.9.10
   like_button: ^0.2.0
+  simple_animations: ^2.2.1
 
 
 

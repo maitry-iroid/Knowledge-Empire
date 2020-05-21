@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
@@ -8,6 +10,10 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
+import 'package:ke_employee/screens/home.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
@@ -19,6 +25,9 @@ int position1;
 bool isCheckLoad = false;
 
 class OrganizationsPage2 extends StatefulWidget {
+  final RefreshAnimation mRefreshAnimation;
+
+  const OrganizationsPage2({Key key, this.mRefreshAnimation}) : super(key: key);
   @override
   _OrganizationsPage2State createState() => _OrganizationsPage2State();
 }
@@ -28,6 +37,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   List<Organization> arrOrganization = List();
   bool isLoading = false;
+
+
+
 
   @override
   initState() {
@@ -99,47 +111,45 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                   ? 4
                   : 60),
           elevation: 5,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8)),
-          child:  Column(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
                 children: <Widget>[
-                 Container(
-                          margin: EdgeInsets.only(left: 5, right: 5),
-                          width: 18,
-                          height: 18,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20),
-                              ),
-                              color: ColorRes.headerBlue),
-                          child: Text(
-                            org != null && org.level != null
-                                ? org.level.toString()
-                                : "",
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Injector.isBusinessMode
-                                    ? ColorRes.white
-                                    : ColorRes.hintColor),
-                          ),
+                  Container(
+                    margin: EdgeInsets.only(left: 5, right: 5),
+                    width: 18,
+                    height: 18,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
+                        color: ColorRes.headerBlue),
+                    child: Text(
+                      org != null && org.level != null
+                          ? org.level.toString()
+                          : "",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.hintColor),
+                    ),
+                  ),
                   Expanded(
                     child: AutoSizeText(
                       org != null && org.name != null ? org.name : "",
-                        maxLines: 1,
-                        overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
                       minFontSize: 4,
                       style: TextStyle(
                           fontSize: 12,
                           color: Injector.isBusinessMode
                               ? ColorRes.textBlue
                               : ColorRes.hintColor),
-
                     ),
                   ),
                   SizedBox(
@@ -152,13 +162,12 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                 children: <Widget>[
                   Container(
                     height: 15,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg('bg_progress_2')),
+                            image:
+                                AssetImage(Utils.getAssetsImg('bg_progress_2')),
                             fit: BoxFit.fill)),
                   ),
                   LinearPercentIndicator(
@@ -176,8 +185,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         ),
       ),
       onTap: () async {
-        if (type == Const.typeLegal &&
-            !Utils.isFeatureOn(Const.typeChallenges)) return;
+        if (type == Const.typeLegal && !Utils.isFeatureOn(Const.typeChallenges))
+          return;
 
         var data = await showDialog(
             context: _scaffoldKey.currentContext,
@@ -185,7 +194,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                   text: org.description,
                   isForIntroDialog: false,
                 ));
-        if (data != null) manageLevel(org, data);
+        if (data != null) manageLevel(org, data, type);
       },
     );
   }
@@ -205,7 +214,9 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Positioned(
             right: 5,
             top: 50,
-            child:  Utils.isFeatureOn(Const.typeChallenges)?showItem(Const.typeLegal):Container(),
+            child: Utils.isFeatureOn(Const.typeChallenges)
+                ? showItem(Const.typeLegal)
+                : Container(),
           ),
           Positioned(
             left: Utils.getDeviceWidth(context) / 6,
@@ -299,7 +310,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     }
   }
 
-  manageLevel(Organization organization, int action) {
+  void manageLevel(Organization organization, int action, int type) {
     Utils.isInternetConnectedWithAlert(context).then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
@@ -331,6 +342,11 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           }
 
           if (mounted) setState(() {});
+
+          if (action == Const.subtract) {
+            triggerAnimation(type);
+          }
+
           Utils.performManageLevel(manageOrgData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
@@ -345,7 +361,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     });
   }
 
-  showBack() {
+  Widget showBack() {
     return Positioned(
       top: DimenRes.titleBarHeight,
       child: InkResponse(
@@ -362,6 +378,16 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         },
       ),
     );
+  }
+
+  void triggerAnimation(int type) {
+    try {
+
+      widget.mRefreshAnimation.onRefreshAchievement(type);
+
+    } catch (e) {
+      print(e);
+    }
   }
 }
 

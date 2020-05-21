@@ -812,7 +812,7 @@ class StringRes {
       'servicePerson': 'Service Reps',
       //</editor-fold>
       'strKp':"\$",
-      'strBalance':"Balance",
+      'strBalance':"Cash",
 
     },
     'de': {
@@ -1207,7 +1207,7 @@ class StringRes {
       'passwordChange': 'Passwort erfolgreich geändert.',
       'serviceReps': "Servicemitarbeiter",
       'strKp':"\$",
-      'strBalance':"Balance",
+      'strBalance':"Vermögen",
 
 
     },
@@ -1585,7 +1585,7 @@ class StringRes {
       'passwordChange': '密码已更改。',
       'serviceReps': "服务代表",
       'strKp':"\$",
-      'strBalance':"Balance",
+      'strBalance':"现金",
 
     }
   };
@@ -1984,7 +1984,7 @@ class StringRes {
       'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
       'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
       'strKp':"Kp",
-      'strBalance':"Balance",
+      'strBalance':"Knowledge Points",
 
     },
     'de': {
@@ -2386,7 +2386,7 @@ class StringRes {
       'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
       'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
       'strKp':"WP",
-      'strBalance':"Balance",
+      'strBalance':"Wissenspunkte",
 
     },
     'zh': {
@@ -2756,7 +2756,7 @@ class StringRes {
       'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
       'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
       'strKp':"知识点数",
-      'strBalance':"Balance",
+      'strBalance':"知识点数",
 
     }
   };
