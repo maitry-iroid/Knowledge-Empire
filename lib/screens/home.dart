@@ -684,6 +684,7 @@ class HomePageState extends State<HomePage>
                   context, status.headlineText, status.message, true);
             }
           }
+
         } else {
           DisplayDialogs.showUpdateDialog(
               context, status.headlineText, status.message, false);
