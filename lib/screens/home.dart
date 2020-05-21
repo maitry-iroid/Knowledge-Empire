@@ -231,6 +231,7 @@ class HomePageState extends State<HomePage>
       height: 26.0,
       child: Image.asset(Utils.getAssetsImg(icon), width: 26, height: 26),
     );
+
   }
 
   Widget showMainItem(DrawerItem item) {
