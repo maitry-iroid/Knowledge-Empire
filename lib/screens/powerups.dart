@@ -4,6 +4,7 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
@@ -13,6 +14,11 @@ import '../models/manage_organization.dart';
 import '../models/organization.dart';
 
 class PowerUpsPage extends StatefulWidget {
+
+  final RefreshAnimation mRefreshAnimation;
+
+  const PowerUpsPage({Key key, this.mRefreshAnimation}) : super(key: key);
+
   @override
   _PowerUpsPageState createState() => _PowerUpsPageState();
 }
@@ -475,6 +481,10 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
           Utils.performManageLevel(manageOrgData);
 
+          if (action == Const.subtract) {
+            triggerAnimation(selectedOrg.type);
+          }
+
           if (mounted)setState(() {});
         } else {
           Utils.getText(context, StringRes.somethingWrong);
@@ -488,5 +498,15 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         // Utils.showToast(e.toString());
       });
     });
+  }
+
+  void triggerAnimation(int type) {
+    try {
+
+      widget.mRefreshAnimation.onRefreshAchievement(type);
+
+    } catch (e) {
+      print(e);
+    }
   }
 }

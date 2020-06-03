@@ -99,7 +99,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           child: Stack(
             children: <Widget>[
               CommonView.showDashboardView(context),
-              HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+            //  HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
               // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -120,8 +120,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
                 DashboardStatusResponse.fromJson(data);
 
             if (response.data.isNotEmpty) {
-              Injector.prefs.setString(
-                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
+              Injector.prefs.setString(PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
               Injector.dashboardStatusResponse = response;
 
               if (mounted) setState(() {});

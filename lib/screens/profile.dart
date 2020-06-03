@@ -170,7 +170,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: <Widget>[
                       Container(
                         width: 150,
-//                        padding: EdgeInsets.symmetric(horizontal: 15),
                         height: Injector.isBusinessMode ? 30 : 30,
                         margin: EdgeInsets.only(top: 15, left: 65, right: 65),
                         alignment: Alignment.center,
@@ -198,23 +197,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Container(
                         height: 30,
-//                        alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10, bottom: 10),
                         child: Container(
-                          /* decoration: BoxDecoration(
-                              color: Injector.isBusinessMode
-                                  ? null
-                                  : ColorRes.bgSettings,
-                              borderRadius: Injector.isBusinessMode
-                                  ? null
-                                  : BorderRadius.circular(20),
-//                              image: Injector.isBusinessMode
-//                                  ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_privacy')))
-//                                  : null
-                          ),*/
-
                           child: Center(
                             child: Text(
                               getVersion(),
@@ -406,8 +390,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           updateType = 1.toString();
                           updateMode = Injector.mode.toString();
-                          await callApiForUpdateUserSetting(
-                              updateType, null);
+                          await callApiForUpdateUserSetting(updateType, null);
 
                           Utils.playBackgroundMusic();
 
@@ -1345,9 +1328,9 @@ class _ProfilePageState extends State<ProfilePage> {
     String customerSpecificVersion = "BES"; //Blue Elephants Solutions
     String os = Injector.deviceType == "ios" ? "I" : "A";
 
-    String x = "002";
-    String y = "001";
-    String z = "000";
+    String x = "003";
+    String y = "000";
+    String z = "001";
 
     return mode +
         "-" +
@@ -1392,6 +1375,8 @@ class _ProfilePageState extends State<ProfilePage> {
             await setCompany();
             break;
         }
+
+        Utils.getCustomerValues();
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }

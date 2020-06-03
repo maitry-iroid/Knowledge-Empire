@@ -317,9 +317,6 @@ class CommonView {
 
 
   static Widget showDashboardView(BuildContext context) {
-//    DashboardLockStatusData dashboardLockStatusData =
-//        Injector.dashboardLockStatusData;
-//    data = Injector.unreadBubbleCountData;
     return ResponsiveUi(
       builder: (context, size) {
         return Container(

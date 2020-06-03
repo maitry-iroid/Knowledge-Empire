@@ -58,13 +58,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   int index = 1;
 
-//  bool isGif = true;
-
   List alphaIndex = ['A', 'B', 'C', 'D'];
 
   selectItem(index) {}
-
-//  int duration = 4;
 
   @override
   void initState() {
@@ -86,47 +82,42 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     correctWrongImage();
 
     if (questionDataCustSituation.isAnsweredCorrect == 1) {
-      print(Injector.introData);
-      if (Injector.introData != null && Injector.introData.customerSituation != null && Injector.introData.customerSituation == 0) {
+      if (Injector.introData != null &&
+          Injector.introData.customerSituation != null &&
+          Injector.introData.customerSituation == 0) {
         await DisplayDialogs.showIntroCustomerSituation(context);
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);
       }
 
       if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
-        if (!isChallenge ||
-            (Injector.countList.length == questionDataCustSituation.questionCurrentIndex)) {
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect == 1);
+        if (!isChallenge || (Injector.countList.length == questionDataCustSituation.questionCurrentIndex)) {
           Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
         }
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
       }
 
-      int index = Injector.countList.indexWhere(
-          (QuestionCountWithData questionCountWithData) =>
-              questionCountWithData.questionIndex ==
-                  questionDataCustSituation.questionCurrentIndex);
-
-      if (index != -1) {
-        Injector.countList[index].color = ColorRes.greenDot;
-        getChallengeQueBloc?.updateQuestions(index, true);
-      }
+      updateChallenge(true);
     } else {
       if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
-        int index = Injector.countList.indexWhere(
-            (QuestionCountWithData questionCountWithData) =>
-                questionCountWithData.questionIndex ==
-                    questionDataCustSituation.questionCurrentIndex);
-        if (index != -1) {
-          Injector.countList[index].color = ColorRes.red;
-          getChallengeQueBloc?.updateQuestions(index, false);
-        }
-
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect==1);
+        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect == 1);
+        updateChallenge(false);
       }
     }
     setState(() {});
+  }
+
+  void updateChallenge(bool isAnswere) {
+    int index = Injector.countList.indexWhere(
+        (QuestionCountWithData questionCountWithData) =>
+            questionCountWithData.questionIndex ==
+            questionDataCustSituation.questionCurrentIndex);
+
+    if (index != -1) {
+      Injector.countList[index].color =
+          isAnswere ? ColorRes.greenDot : ColorRes.red;
+      getChallengeQueBloc?.updateQuestions(index, isAnswere);
+    }
   }
 
   String error;
@@ -146,7 +137,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             Column(
               children: <Widget>[
                 showSubHeader(context),
-                SizedBox(height: 8,),
+                SizedBox(
+                  height: 8,
+                ),
                 Expanded(
                     child: Row(
                   children: <Widget>[
@@ -319,20 +312,26 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               : null),
       child: Row(
         children: <Widget>[
-          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: Title(
-              color: ColorRes.greenDot,
-              child: new Text(
-                abcdList[index],
-                style: TextStyle(
-                  fontSize: 15,
-                  color: (checkTextColor(index)),
-                ),
-              )),),
+          Padding(
+            padding: EdgeInsets.only(left: 5.0, right: 5.0),
+            child: Title(
+                color: ColorRes.greenDot,
+                child: new Text(
+                  abcdList[index],
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: (checkTextColor(index)),
+                  ),
+                )),
+          ),
           Expanded(
-            child: Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: new Text(
-              arrAnswerSituation[index].answer,
-              style: TextStyle(fontSize: 17, color: (checkTextColor(index))),
-            )),
+            child: Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: new Text(
+                  arrAnswerSituation[index].answer,
+                  style:
+                      TextStyle(fontSize: 17, color: (checkTextColor(index))),
+                )),
           )
         ],
       ),
@@ -342,90 +341,93 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   showFirstHalf(BuildContext context) {
     return Expanded(
       flex: 1,
-      child: Stack(
-        children: <Widget>[
-          Card(
-            color: ColorRes.bgProf,
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
-            child: Container(
-              alignment: Alignment.center,
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
-              decoration: BoxDecoration(
-                color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                borderRadius: BorderRadius.circular(12),
-                border: Injector.isBusinessMode
-                    ? Border.all(color: ColorRes.white, width: 1)
-                    : null,
-              ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                primary: false,
-                physics: const AlwaysScrollableScrollPhysics(), //
-                itemCount: arrAnswerSituation.length,
-                itemBuilder: (BuildContext context, index) {
-                  return showItemC(index);
-                },
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              alignment: Alignment.center,
-              height: 30,
-              margin: EdgeInsets.symmetric(
-                  horizontal: Utils.getDeviceWidth(context) / 6),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  border: Injector.isBusinessMode
-                      ? null
-                      : Border.all(width: 1, color: ColorRes.white),
-                  color:
-                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                Utils.getText(context, StringRes.answers),
-                style: TextStyle(color: ColorRes.white, fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: InkResponse(
-              onTap: () {
-                Utils.playClickSound();
-                showDialog(
-                  context: context,
-                  builder: (_) => AlertCheckAnswersCorrect(),
-                );
-              },
+      child: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Stack(
+          children: <Widget>[
+            Card(
+              color: ColorRes.bgProf,
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
               child: Container(
                 alignment: Alignment.center,
-                height: Utils.getDeviceWidth(context) / 20,
-                width: Utils.getDeviceWidth(context) / 20,
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(Injector.isBusinessMode
-                            ? Utils.getAssetsImg("full_expand_question_answers")
-                            : Utils.getAssetsImg("expand_pro")),
-                        fit: BoxFit.fill)),
+                  color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Injector.isBusinessMode
+                      ? Border.all(color: ColorRes.white, width: 1)
+                      : null,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: arrAnswerSituation.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return showItemC(index);
+                  },
+                ),
               ),
             ),
-          )
-        ],
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                alignment: Alignment.center,
+                height: 30,
+                margin: EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 6),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    border: Injector.isBusinessMode
+                        ? null
+                        : Border.all(width: 1, color: ColorRes.white),
+                    color:
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                            image:
+                                AssetImage(Utils.getAssetsImg("eddit_profile")),
+                            fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(context, StringRes.answers),
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: InkResponse(
+                onTap: () {
+                  Utils.playClickSound();
+                  showDialog(
+                    context: context,
+                    builder: (_) => AlertCheckAnswersCorrect(),
+                  );
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: Utils.getDeviceWidth(context) / 20,
+                  width: Utils.getDeviceWidth(context) / 20,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Injector.isBusinessMode
+                              ? Utils.getAssetsImg("full_expand_question_answers")
+                              : Utils.getAssetsImg("expand_pro")),
+                          fit: BoxFit.fill)),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -696,46 +698,52 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
   }
 
   Widget showItemsFullScreen(int index) {
-      return Container(
+    return Container(
       margin: EdgeInsets.only(left: 6, right: 6, top: 6),
       padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius:
-          Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
           border: Injector.isBusinessMode
               ? null
               : Border.all(
-              width: 1,
-              color: isAnswerCorrect(index) ||
-                  arrAnswerSituation[index].isSelected
-                  ? ColorRes.white
-                  : ColorRes.fontGrey),
+                  width: 1,
+                  color: isAnswerCorrect(index) ||
+                          arrAnswerSituation[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
           color:
-          Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
+              Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
-              image: AssetImage(
-                checkAnswer(index),
-              ),
-              fit: BoxFit.fill))
+                  image: AssetImage(
+                    checkAnswer(index),
+                  ),
+                  fit: BoxFit.fill))
               : null),
       child: Row(
         children: <Widget>[
-          Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: Title(
-              color: ColorRes.greenDot,
-              child: new Text(
-                abcdList[index],
-                style: TextStyle(
-                  fontSize: 15,
-                  color: (checkTextColor(index)),
-                ),
-              )),),
+          Padding(
+            padding: EdgeInsets.only(left: 5.0, right: 5.0),
+            child: Title(
+                color: ColorRes.greenDot,
+                child: new Text(
+                  abcdList[index],
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: (checkTextColor(index)),
+                  ),
+                )),
+          ),
           Expanded(
-            child: Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0),child: new Text(
-              arrAnswerSituation[index].answer,
-              style: TextStyle(fontSize: 17, color: (checkTextColor(index))),
-            )),
+            child: Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: new Text(
+                  arrAnswerSituation[index].answer,
+                  style:
+                      TextStyle(fontSize: 17, color: (checkTextColor(index))),
+                )),
           )
         ],
       ),

@@ -24,9 +24,10 @@ class CustomerValueBloc {
       CustomerValueData customerValueData = CustomerValueData.fromJson(data);
       await Injector.setCustomerValueData(customerValueData);
 
-      if (customerValueData.isChallengeAvailable == 1)
+      if (customerValueData.isChallengeAvailable == 1) {
         Injector.homeStreamController
             ?.add("${Const.openPendingChallengeDialog}");
+      }
 
       _assignModuleSubject.add(customerValueData);
     }

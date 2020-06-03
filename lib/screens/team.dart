@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -9,6 +10,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/team_user.dart';
 import 'package:ke_employee/models/team_user_by_id.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -53,7 +55,7 @@ class _TeamPageState extends State<TeamPage> {
 
   @override
   void initState() {
-    getTeamUsers();
+     getTeamUsers();
     super.initState();
   }
 
@@ -691,6 +693,7 @@ class _TeamPageState extends State<TeamPage> {
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
+
                 performBailOut();
               },
             ),
@@ -708,6 +711,7 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   void performBailOut() {
+    CommonView.showCircularProgress(true, context);
     BailOutRequest rq = BailOutRequest();
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
@@ -720,6 +724,8 @@ class _TeamPageState extends State<TeamPage> {
           CustomerValueData customerValueData =
           CustomerValueData.fromJson(data);
           await customerValueBloc?.updateCustomerValue(customerValueData);
+          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeTeam));
+          setState(() {});
         } else if (data is String) {
           Utils.showToast(data.toString());
         }

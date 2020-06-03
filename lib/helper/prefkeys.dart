@@ -16,6 +16,7 @@ class PrefKeys {
   static var introModel = "introModel";
   static var isCancelDialog = "isCancelDialog";
   static var dashboardStatusData = "dashboardStatusData";
+  static var isAudioPlaying = "isAudioPlaying";
 
 //  static var learningModule1= "learningModule1";
 //  static var learningModule2= "learningModule2";
