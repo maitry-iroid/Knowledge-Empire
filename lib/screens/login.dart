@@ -18,7 +18,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/login.dart';
 
-import 'package:ke_employee/screens/intro_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {

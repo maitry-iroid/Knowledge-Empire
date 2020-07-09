@@ -11,6 +11,13 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../commonview/header.dart';
 import '../helper/constant.dart';
 
+/*
+*   created by Riddhi
+*
+*   User can get brief details about all the features here
+*
+* */
+
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
 

@@ -32,7 +32,6 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
-import 'package:ke_employee/screens/intro_page.dart';
 import 'package:ke_employee/screens/organization.dart';
 import 'package:path/path.dart';
 
@@ -226,11 +225,6 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
-  static void navigateToIntro(BuildContext context) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => IntroPage()),
-        (Route<dynamic> route) => false);
-  }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
       bool isFromProfile, bool isOldPasswordRequired) {

@@ -6,6 +6,13 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/help_model.dart';
 
+/*
+*   created by Riddhi
+*
+*   User can get brief details about all the features here
+*
+* */
+
 class HelpProScreen extends StatefulWidget {
   @override
   _HelpProScreenState createState() => _HelpProScreenState();

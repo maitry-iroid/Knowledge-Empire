@@ -20,6 +20,15 @@ import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 
+/*
+*   created by Riddhi
+*
+*   Game mode Dashboard UI for Game version of the app.
+*   User can increase and decrease the level of diff departments
+*
+* */
+
+
 int position1;
 
 bool isCheckLoad = false;

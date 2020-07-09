@@ -49,6 +49,14 @@ import '../helper/string_res.dart';
 import '../models/get_friends.dart';
 import 'package:flutter/services.dart';
 
+/*
+*  created by Riddhi
+*
+* This class contained menu drawer in left side, and Common header, Basic feature logic are added here like
+*  Lock- unlock status, intro dialog status, customer value Header data, push notification setup
+*
+* */
+
 class FadeRouteHome extends PageRouteBuilder {
   List<GetFriendsData> arrFriends = List();
 
