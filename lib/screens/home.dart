@@ -32,7 +32,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/help_screen.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/screens/new_customer.dart';
-import 'package:ke_employee/screens/organization2.dart';
+import 'package:ke_employee/screens/organization.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
