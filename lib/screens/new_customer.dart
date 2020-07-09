@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/get_question_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -12,14 +14,6 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../models/questions.dart';
-
-/*
-*   created by Riddhi
-*
-*   All questions will be fetched from the API of the subscribe module
-*   By click on Engage Now , user will navigate to EngagementCustomer Page and can attempt their
-*
-* */
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -43,59 +37,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData == null || Injector.introData.newCustomer1 == 0)
-      await DisplayDialogs.showIntroHeartOfTheBusiness(context);
+    if (Injector.introData != null && Injector.introData.newCustomer1 == 0) {
+      await DisplayDialogs.showIntroNewCustomer1(context);
+    }
 
     initData();
   }
 
-//  getQuestions(BuildContext context) {
-//    CommonView.showCircularProgress(true, context);
-//    QuestionRequest rq = QuestionRequest();
-//    rq.userId = Injector.userData.userId;
-//
-//    rq.type = Const.getNewQueType;
-//
-//    WebApi().callAPI(WebApi.rqGetQuestions, rq.toJson()).then((data) async {
-//      CommonView.showCircularProgress(false, context);
-//
-//      if (data != null) {
-//        arrQuestions.clear();
-//
-//        data.forEach((v) {
-//          arrQuestions.add(QuestionData.fromJson(v));
-//        });
-//
-//        for (int i = 0; i < arrQuestions.length; i++) {
-//          arrQuestions[i].value = Utils.getValue(arrQuestions[i]);
-//          arrQuestions[i].loyalty = Utils.getLoyalty(arrQuestions[i]);
-//          arrQuestions[i].resources = Utils.getResource(arrQuestions[i]);
-//
-//          print(arrQuestions[i].value);
-//        }
-//
-//        if (mounted) setState(() {});
-//      } else {
-////        Utils.showToast(Utils.getText(
-////            _scaffoldKey?.currentContext, StringRes.somethingWrong));
-//
-//      }
-//    }).catchError((e) {
-//      print("getQuestions_" + e.toString());
-//      if (mounted) {
-//        CommonView.showCircularProgress(false, context);
-//      }
-//      // Utils.showToast(e.toString());
-//    });
-//  }
-
   @override
   Widget build(BuildContext context) {
-//    showCupertinoDialog<String>(
-//      context: context,
-//      builder: (BuildContext context) => Particles(),
-//    );
-
     return Scaffold(
         key: _scaffoldKey,
         body: SafeArea(
@@ -165,52 +115,62 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         children: <Widget>[
           Expanded(
             flex: 4,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.name),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Expanded(
             flex: 5,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.sector),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Expanded(
-            flex: 3,
-            child: Text(
+            flex: 4,
+            child: AutoSizeText(
               Utils.getText(context, StringRes.value),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Expanded(
             flex: 3,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.loyalty),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
+          Utils.isFeatureOn(Const.typeOrg)
+              ? Expanded(
+                  flex: 3,
+                  child: AutoSizeText(
+                    Utils.getText(context, StringRes.resources),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                  ),
+                )
+              : Container(),
           Expanded(
             flex: 3,
-            child: Text(
-              Utils.getText(context, StringRes.resources),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(context, StringRes.engage),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
@@ -223,14 +183,29 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Widget showItem(int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        showValueText("counter : " + arrQuestions[index].counter.toString()),
-        showValueText(
-            "daysInList : " + arrQuestions[index].daysInList.toString()),
-        InkResponse(
-          child: Row(
+    return InkResponse(
+      onTap: () {
+        Utils.playClickSound();
+
+        if (Utils.isFeatureOn(Const.typeOrg)) {
+          if ((Injector.customerValueData.remainingSalesPerson >=
+                  arrQuestions[index].resources &&
+              Injector.customerValueData.remainingCustomerCapacity > 0)) {
+            attemptQuestion(index);
+          } else {
+            Utils.showToast(Utils.getQueValidationToast(arrQuestions[index].resources));
+          }
+        } else {
+          attemptQuestion(index);
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          showValueText("counter : " + arrQuestions[index].counter.toString()),
+          showValueText(
+              "daysInList : " + arrQuestions[index].daysInList.toString()),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
@@ -277,13 +252,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(
-                            ("${arrQuestions[index].value.toString()} \$"),
-                            style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 18),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                          ),
+                          child: kePoint(index),
                         ),
                         Expanded(
                           flex: 3,
@@ -295,88 +264,65 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                             maxLines: 1,
                           ),
                         ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            arrQuestions[index].resources.toString(),
-                            style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 18),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                          ),
-                        ),
+                        Utils.isFeatureOn(Const.typeOrg)
+                            ? Expanded(
+                                flex: 3,
+                                child: Text(
+                                  arrQuestions[index].resources.toString(),
+                                  style: TextStyle(
+                                      color: ColorRes.textRecordBlue,
+                                      fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                ),
+                              )
+                            : Container(),
                       ],
                     )),
               ),
-              InkResponse(
-                child: Container(
-                    height: Injector.isBusinessMode ? 35 : 28,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(left: 10, right: 2),
-                    padding: EdgeInsets.only(left: 15, right: 15),
-                    decoration: BoxDecoration(
-                        color: Injector.isBusinessMode
-                            ? null
-                            : ColorRes.headerBlue,
-                        borderRadius: Injector.isBusinessMode
-                            ? null
-                            : BorderRadius.circular(20),
-                        image: Injector.isBusinessMode
-                            ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("bg_engage_now")),
-                                fit: BoxFit.fill)
-                            : null),
-                    child: Text(
-                      Utils.getText(
-                          _scaffoldKey.currentContext, StringRes.engageNow),
-                      style: TextStyle(color: ColorRes.white, fontSize: 16),
-                    )),
-                onTap: () {
-                  Utils.playClickSound();
-
-                  if (Injector.customerValueData.remainingSalesPerson >=
-                          arrQuestions[index].resources &&
-                      Injector.customerValueData.remainingCustomerCapacity >
-                          0) {
-                    HomeData homeData = HomeData(
-                        initialPageType: Const.typeEngagement,
-                        questionHomeData: arrQuestions[index],
-                        value: arrQuestions[index].value);
-
-//                    Navigator.push(_scaffoldKey.currentContext,
-//                        FadeRouteHome(homeData: homeData));
-                  navigationBloc.updateNavigation(homeData);
-                  } else {
-                    Utils.showToast("You need atleast " +
-                        arrQuestions[index].resources.toString() +
-                        " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-                  }
-                },
-              ),
+              Container(
+                  height: Injector.isBusinessMode ? 35 : 28,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(left: 10, right: 2),
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  decoration: BoxDecoration(
+                      color:
+                          Injector.isBusinessMode ? null : ColorRes.headerBlue,
+                      borderRadius: Injector.isBusinessMode
+                          ? null
+                          : BorderRadius.circular(20),
+                      image: Injector.isBusinessMode
+                          ? DecorationImage(
+                              image: AssetImage(
+                                  Utils.getAssetsImg("bg_engage_now")),
+                              fit: BoxFit.fill)
+                          : null),
+                  child: Text(
+                    Utils.getText(
+                        _scaffoldKey.currentContext, StringRes.engageNow),
+                    style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  )),
             ],
           ),
-          onTap: () {
-            {
-              Utils.playClickSound();
+        ],
+      ),
+    );
+  }
 
-              if (Injector.customerValueData.remainingSalesPerson >=
-                      arrQuestions[index].resources &&
-                  Injector.customerValueData.remainingCustomerCapacity > 0) {
-                HomeData homeData = HomeData(
-                    initialPageType: Const.typeEngagement,
-                    questionHomeData: arrQuestions[index],
-                    value: arrQuestions[index].value);
-              navigationBloc.updateNavigation(homeData);
-              } else {
-                Utils.showToast("You need atleast " +
-                    arrQuestions[index].resources.toString() +
-                    " Sales persons and 1 Service person to attempt this Question. You can add more Sales persons from the Organization.");
-              }
-            }
-          },
-        ),
-      ],
+  Widget kePoint(int index) {
+    if (Injector.userData.language == "Chinese") {
+      return Text(
+        ("${arrQuestions[index].value.toString()}"),
+        style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+        textAlign: TextAlign.center,
+        maxLines: 1,
+      );
+    }
+    return Text(
+      ("${arrQuestions[index].value.toString()} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}"),
+      style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+      textAlign: TextAlign.center,
+      maxLines: 1,
     );
   }
 
@@ -423,5 +369,14 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         return showItem(index);
       },
     );
+  }
+
+  void attemptQuestion(int index) {
+    HomeData homeData = HomeData(
+        initialPageType: Const.typeEngagement,
+        questionHomeData: arrQuestions[index],
+        value: arrQuestions[index].value);
+
+    navigationBloc.updateNavigation(homeData);
   }
 }

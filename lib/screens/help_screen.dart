@@ -1,26 +1,15 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_introduction_tooltip/flutter_introduction_tooltip.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../commonview/header.dart';
-import 'dashboard_game.dart';
 import '../helper/constant.dart';
-
-/*
-*   created by Riddhi
-*
-*   User can get brief details about all the features here
-*
-* */
 
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;
@@ -54,39 +43,19 @@ class HelpPage extends StatefulWidget {
 
 class HelpPageState extends State<HelpPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String selectedType = Const.typeProfile;
+  int selectedIndex = 0;
 
   AnimationController controller;
   Animation<double> animation;
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-//    _notifier.notify('updateHeaderValue', 'Sending data from notfier!');
-  }
+  List<String> arrType = List();
 
   @override
   void initState() {
     super.initState();
 
+    arrType = initFeatureDataArray();
+
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
-
-
-//    controller = AnimationController(
-//      duration: const Duration(milliseconds: 1000),
-//    );
-//    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
-
-    /*animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        controller.forward();
-      }
-    });*/
-
-//    controller.forward();
   }
 
   @override
@@ -100,7 +69,7 @@ class HelpPageState extends State<HelpPage> {
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, null),
+              CommonView.showDashboardView(context),
               HeaderView(
                 scaffoldKey: _scaffoldKey,
                 isShowMenu: true,
@@ -138,296 +107,178 @@ class HelpPageState extends State<HelpPage> {
             ),
             opacity: 0.1,
           ),
-          SizedBox(
-            width: 7,
-          ),
-          Opacity(
-            child: showProfile(context),
-            opacity: selectedType == Const.typeProfile ? 1 : 0,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: Opacity(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    Injector.userData != null
-                        ? Injector.userData.companyName
-                        : "",
-                    style: TextStyle(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.textLightBlue
-                            : ColorRes.white,
-                        fontSize: 16),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    Injector.userData != null ? Injector.userData.name : "",
-                    style: TextStyle(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.white
-                            : ColorRes.textLightBlue,
-                        fontSize: 16),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ],
-              ),
-              opacity: selectedType == Const.typeName ? 1 : 0,
-            ),
-          ),
+          showProfile(context),
           showHeaderItem(Const.typeEmployee, context),
           showHeaderItem(Const.typeSalesPersons, context),
           showHeaderItem(Const.typeServicesPerson, context),
           showHeaderItem(Const.typeBrandValue, context),
           showHeaderItem(Const.typeMoney, context),
           Opacity(
-//            child: showProfile(context),
             child: Container(
               width: 20,
             ),
-            opacity: selectedType == Const.typeProfile ? 0 : 0,
+            opacity: getSelectedType() == Const.typeProfile ? 0 : 0,
           ),
         ],
       ),
     );
   }
 
-//  showHeaderItem(String type, BuildContext context) {
-//    return Opacity(
-//      opacity: selectedType == type ? 1 : 0,
-//      child: Container(
-//        height: 40,
-//        padding:
-//            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 0 : 2),
-//        margin: EdgeInsets.symmetric(horizontal: 1),
-//        decoration: BoxDecoration(
-//            image: Injector.isBusinessMode
-//                ? DecorationImage(
-//                    image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-//                    fit: BoxFit.fill)
-//                : null),
-//        child: Row(
-//          children: <Widget>[
-//            Stack(
-//              alignment: Alignment.center,
-//              children: <Widget>[
-//                Injector.isBusinessMode
-//                    ? Container()
-//                    : Container(
-//                        width: 24,
-//                        height: 24,
-//                        decoration: BoxDecoration(
-//                            border: Border.all(color: ColorRes.white, width: 1),
-//                            borderRadius: BorderRadius.circular(12.5)),
-//                      ),
-//                Image(
-//                  image: AssetImage(
-//                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
-//                  height: 26,
-//                ),
-//              ],
-//            ),
-//            SizedBox(
-//              width: 4,
-//            ),
-//            type != Const.typeMoney
-//                ? Stack(
-//                    alignment: Alignment.centerLeft,
-//                    children: <Widget>[
-//                      Container(
-//                        height: Injector.isBusinessMode ? 19 : 21,
-//                        alignment: Alignment.center,
-//                        decoration: BoxDecoration(
-//                            color: ColorRes.greyText,
-////                          image: Injector.isBusinessMode
-////                              ? DecorationImage(
-////                                  image: AssetImage(
-////                                      Utils.getAssetsImg('bg_progress')),
-////                                  fit: BoxFit.fill)
-////                              : null,
-//                            borderRadius: BorderRadius.circular(12),
-//                            border: Injector.isBusinessMode
-//                                ? null
-//                                : Border.all(color: ColorRes.white, width: 1)),
-//                        padding: EdgeInsets.symmetric(
-//                            vertical: 0,
-//                            horizontal: Injector.isBusinessMode ? 0 : 1),
-//                        child: LinearPercentIndicator(
-//                          width: Utils.getDeviceWidth(context) / 12,
-//                          lineHeight: 19.0,
-//                          percent: HeaderUtils.getProgressInt(type) >= 0 &&
-//                                  HeaderUtils.getProgressInt(type) <= 1
-//                              ? HeaderUtils.getProgressInt(type)
-//                              : 0.0,
-//                          backgroundColor: Colors.transparent,
-//                          progressColor: Colors.blue,
-//                        ),
-//                      ),
-//                      Positioned(
-//                        left: 4,
-//                        child: Text(
-//                          HeaderUtils.getProgress(type),
-//                          style: TextStyle(color: ColorRes.white, fontSize: 14),
-//                        ),
-//                      )
-//                    ],
-//                  )
-//                : Text(
-//                    ' \$ ' +
-//                        (Injector.customerValueData != null
-//                            ? Injector.customerValueData.totalBalance.toString()
-//                            : "50000"),
-//                    style: TextStyle(color: ColorRes.white, fontSize: 16),
-//                  ),
-//          ],
-//        ),
-//      ),
-//    );
-//  }
-
   showHeaderItem(String type, BuildContext context) {
     return Opacity(
-      opacity: selectedType == type ? 1 : 0,
+      opacity: getSelectedType() == type ? 1 : 0,
       child: Container(
-        foregroundDecoration:
-            /*BoxDecoration(color: ColorRes.white.withOpacity(0.5))*/ null,
+        foregroundDecoration: null,
         padding:
-            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 3 : 2),
+            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
         decoration: BoxDecoration(
             image: Injector.isBusinessMode
                 ? DecorationImage(
                     image: AssetImage(Utils.getAssetsImg("bg_header_card")),
                     fit: BoxFit.fill)
                 : null),
-        child: InkResponse(
-          child: Row(
-            children: <Widget>[
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Injector.isBusinessMode
-                      ? Container()
-                      : Container(
-                          alignment: Alignment.center,
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                              color: ColorRes.titleBlueProf,
-                              border:
-                                  Border.all(color: ColorRes.white, width: 1),
-                              borderRadius: BorderRadius.circular(12.5)),
+        child: Row(
+          children: <Widget>[
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Injector.isBusinessMode
+                    ? Container()
+                    : Container(
+                        alignment: Alignment.center,
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                            color: ColorRes.titleBlueProf,
+                            border: Border.all(color: ColorRes.white, width: 1),
+                            borderRadius: BorderRadius.circular(12.5)),
+                      ),
+                Image(
+                  image: AssetImage(
+                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                  height: 26,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            type != Const.typeMoney
+                ? Stack(
+                    alignment: Alignment.centerLeft,
+                    children: <Widget>[
+                      Container(
+                        height: Injector.isBusinessMode ? 22 : 23,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: ColorRes.greyText,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(color: ColorRes.white, width: 1)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: Injector.isBusinessMode ? 0 : 1),
+                        child: LinearPercentIndicator(
+                          width: Utils.getDeviceWidth(context) / 12,
+                          lineHeight: 22.0,
+                          percent:
+                              HeaderUtils.getProgressInt(type)?.toDouble() ??
+                                  0.toDouble(),
+                          backgroundColor: Colors.transparent,
+                          progressColor: Injector.isBusinessMode
+                              ? Colors.blue
+                              : ColorRes.titleBlueProf,
                         ),
-                  Injector.isBusinessMode
-                      ? Image(
-                          image: AssetImage(Utils.getAssetsImg(
-                              HeaderUtils.getHeaderIcon(type))),
-                          height: 26,
-                        )
-                      : Text(
-                          HeaderUtils.getHeadText(type),
-                          style: TextStyle(fontSize: 15, color: ColorRes.white),
+                      ),
+                      Positioned(
+                        left: 4,
+                        child: Text(
+                          HeaderUtils.getProgress(type).toString() +
+                              (type == Const.typeBrandValue ? "%" : ""),
+                          style: TextStyle(color: ColorRes.white, fontSize: 17),
                         ),
-                ],
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              type != Const.typeMoney
-                  ? Stack(
-                      alignment: Alignment.centerLeft,
-                      children: <Widget>[
-                        Container(
-                          height: Injector.isBusinessMode ? 19 : 21,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: ColorRes.greyText,
-//                          image: Injector.isBusinessMode
-//                              ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_progress')),
-//                                  fit: BoxFit.fill)
-//                              : null,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Injector.isBusinessMode
-                                  ? null
-                                  : Border.all(
-                                      color: ColorRes.white, width: 1)),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: Injector.isBusinessMode ? 1 : 1),
-                          child: LinearPercentIndicator(
-                            width: Utils.getDeviceWidth(context) / 12,
-                            lineHeight: 19.0,
-                            percent:
-                                HeaderUtils.getProgressInt(type)?.toDouble() ??
-                                    0.toDouble(),
-                            backgroundColor: Colors.transparent,
-                            progressColor: Injector.isBusinessMode
-                                ? Colors.blue
-                                : ColorRes.titleBlueProf,
-                          ),
-                        ),
-                        Positioned(
-                          left: 4,
-                          child: Text(
-                            HeaderUtils.getProgress(type).toString() +
-                                (type == Const.typeBrandValue ? "%" : ""),
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 14),
-                          ),
-                        )
-                      ],
-                    )
-                  : Text(
-                      Injector.customerValueData != null
-                          ? Injector.customerValueData.totalBalance.toString()
-                          : "00.00",
-                      style: TextStyle(color: ColorRes.white, fontSize: 16),
-                    ),
-            ],
-          ),
-          onTap: () {
-
-          },
+                      )
+                    ],
+                  )
+                : Text(
+                    Injector.customerValueData != null
+                        ? Injector.customerValueData.totalBalance.toString()
+                        : "00.00",
+                    style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  ),
+          ],
         ),
       ),
     );
   }
 
   showProfile(BuildContext context) {
-    return InkResponse(
-        child: Container(
-          width: 30,
-          height: 30,
-          margin: EdgeInsets.symmetric(horizontal: 0),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: Injector.userData.profileImage != null
-                      ? NetworkImage(Injector.userData.profileImage)
-                      : AssetImage(Utils.getAssetsImg('user_org')),
-                  fit: BoxFit.fill),
-              border: Border.all(color: ColorRes.textLightBlue)),
+    return Expanded(
+      child: Container(
+        foregroundDecoration: null,
+        child: Row(
+          children: <Widget>[
+            Opacity(
+              opacity: getSelectedType() == Const.typeProfile ? 1 : 0,
+              child: Container(
+                width: 40,
+                height: 40,
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: Injector.userData == null ||
+                                Injector.userData.profileImage == null ||
+                                Injector.userData.profileImage.isEmpty
+                            ? AssetImage(Utils.getAssetsImg('user_org'))
+                            : Utils.getCacheNetworkImage(
+                                Injector.userData.profileImage),
+                        fit: BoxFit.fill),
+                    border: Border.all(color: ColorRes.textLightBlue)),
+              ),
+            ),
+            showUserNameCompanyName(context),
+          ],
         ),
-        onTap: () {}
-        /*openProfile () {
-        openProfile
-//        Route route1 = MaterialPageRoute(builder: (context) => ProfilePage());
-//        print(route1.isCurrent);
-//        if (!route1.isCurrent) {
-//          Navigator.push(context, route1);
-//        }
-      },*/
-        );
+      ),
+    );
+  }
+
+  showUserNameCompanyName(BuildContext context) {
+    return Expanded(
+        child: Opacity(
+      opacity: getSelectedType() == Const.typeName ? 1 : 0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            Injector.userData != null ? Injector.userData.companyName : "",
+            style: TextStyle(
+                color: Injector.isBusinessMode
+                    ? ColorRes.textLightBlue
+                    : ColorRes.white,
+                fontSize: 17),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(
+            height: 2,
+          ),
+          Text(
+            Injector.userData != null ? Injector.userData.name : "",
+            style: TextStyle(
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.textLightBlue,
+                fontSize: 17),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
+      ),
+    ));
   }
 
   showSelectedMainView() {
@@ -437,10 +288,9 @@ class HelpPageState extends State<HelpPage> {
       children: <Widget>[
         Positioned(
           top: 40,
-//            right: Utils.getDeviceWidth(context) / 10,
           child: Row(
             children: <Widget>[
-              selectedType == Const.typeOrg
+              getSelectedType() == Const.typeOrg
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("organization")),
@@ -451,7 +301,7 @@ class HelpPageState extends State<HelpPage> {
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.5,
                     ),
-              selectedType == Const.typePl
+              getSelectedType() == Const.typePl
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("profit-loss")),
@@ -462,7 +312,7 @@ class HelpPageState extends State<HelpPage> {
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.5,
                     ),
-              selectedType == Const.typeRanking
+              getSelectedType() == Const.typeRanking
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("ranking")),
@@ -487,11 +337,10 @@ class HelpPageState extends State<HelpPage> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 40, left: 38),
-                child: selectedType == Const.typeReward
+                child: getSelectedType() == Const.typeReward
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("rewards")),
-//                      height: Utils.getDeviceHeight(context) / 2.9,
                           width: Utils.getDeviceHeight(context) / 3.0,
                         ),
                       )
@@ -501,11 +350,10 @@ class HelpPageState extends State<HelpPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 15, left: 55, right: 0),
-                child: selectedType == Const.typeTeam
+                child: getSelectedType() == Const.typeTeam
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("team")),
-//                      height: Utils.getDeviceHeight(context) / 2.4,
                           width: Utils.getDeviceHeight(context) / 3.0,
                         ),
                       )
@@ -516,11 +364,10 @@ class HelpPageState extends State<HelpPage> {
               Padding(
                 padding:
                     EdgeInsets.only(bottom: 0, left: 0, right: 28, top: 00),
-                child: selectedType == Const.typeChallenges
+                child: getSelectedType() == Const.typeChallenges
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("challenges")),
-//                      height: Utils.getDeviceHeight(context) / 3.3,
                           width: Utils.getDeviceHeight(context) / 2.6,
                         ),
                         onTap: () {})
@@ -530,30 +377,27 @@ class HelpPageState extends State<HelpPage> {
           ),
         ),
         Container(
-//            color: ColorRes.blue,
           width: Utils.getDeviceWidth(context),
           alignment: Alignment.bottomCenter,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              selectedType == Const.typeBusinessSector
+              getSelectedType() == Const.typeBusinessSector
                   ? Image(
                       image: AssetImage(Utils.getAssetsImg("business_sectors")),
-//                      height: Utils.getDeviceHeight(context) / 2.85,
                       width: Utils.getDeviceWidth(context) / 3.3,
                     )
                   : Container(width: Utils.getDeviceWidth(context) / 3.8),
-              selectedType == Const.typeNewCustomer
+              getSelectedType() == Const.typeNewCustomer
                   ? Image(
-                    image: AssetImage(Utils.getAssetsImg("new-customer")),
-                    width: Utils.getDeviceWidth(context) / 4.3,
-                  )
+                      image: AssetImage(Utils.getAssetsImg("new-customer")),
+                      width: Utils.getDeviceWidth(context) / 4.3,
+                    )
                   : Container(
                       width: Utils.getDeviceWidth(context) / 4.2,
                     ),
-              selectedType == Const.typeExistingCustomer
-//              selectedType == Utils.getHomePageIndex(Const.typeExistingCustomer)
+              getSelectedType() == Const.typeExistingCustomer
                   ? InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("existing")),
@@ -584,7 +428,6 @@ class HelpPageState extends State<HelpPage> {
         children: <Widget>[
           Positioned(
             top: 40,
-//            right: Utils.getDeviceWidth(context) / 10,
             child: Row(
               children: <Widget>[
                 InkResponse(
@@ -592,8 +435,7 @@ class HelpPageState extends State<HelpPage> {
                     image: AssetImage(Utils.getAssetsImg("organization")),
                     width: Utils.getDeviceWidth(context) / 4.3,
                   ),
-                  onTap: () {
-                  },
+                  onTap: () {},
                 ),
                 InkResponse(
                   child: Image(
@@ -632,7 +474,6 @@ class HelpPageState extends State<HelpPage> {
                     child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("rewards")),
-//                      height: Utils.getDeviceHeight(context) / 2.9,
                         width: Utils.getDeviceHeight(context) / 3.0,
                       ),
                     )),
@@ -641,7 +482,6 @@ class HelpPageState extends State<HelpPage> {
                     child: InkResponse(
                       child: Image(
                         image: AssetImage(Utils.getAssetsImg("team")),
-//                      height: Utils.getDeviceHeight(context) / 2.4,
                         width: Utils.getDeviceHeight(context) / 3.9,
                       ),
                     )),
@@ -651,7 +491,6 @@ class HelpPageState extends State<HelpPage> {
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("challenges")),
-//                      height: Utils.getDeviceHeight(context) / 3.3,
                       width: Utils.getDeviceHeight(context) / 2.6,
                     ),
                   ),
@@ -666,20 +505,15 @@ class HelpPageState extends State<HelpPage> {
             child: Container(
               width: Utils.getDeviceWidth(context),
               alignment: Alignment.bottomCenter,
-//              color: ColorRes.black,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   InkResponse(
-//                    child: FadeTransition(
-//                      opacity: animation,
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("business_sectors")),
-//                      height: Utils.getDeviceHeight(context) / 2.85,
                       width: Utils.getDeviceWidth(context) / 3.4,
                     ),
-//                    ),
                   ),
                   InkResponse(
                     child: Image(
@@ -687,13 +521,9 @@ class HelpPageState extends State<HelpPage> {
                       width: Utils.getDeviceWidth(context) / 4.2,
                     ),
                   ),
-//                SizedBox(
-//                  width: Utils.getDeviceWidth(context) / 20,
-//                ),
                   InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("existing")),
-//                      height: Utils.getDeviceHeight(context) / 3.1,
                       width: Utils.getDeviceWidth(context) / 4.6,
                     ),
                   ),
@@ -738,59 +568,21 @@ class HelpPageState extends State<HelpPage> {
     );
   }
 
-
-
-  bool isShowing = false;
-
-  void showTutorial(BuildContext context) async {
-    if (!isShowing) {
-      new Timer(Duration(milliseconds: 100), () async {
-        try {
-          FlutterIntroductionTooltip.showTopTutorialOnWidget(
-              context,
-              _scaffoldKey,
-              Colors.blue,
-              () => popAndNextTutorial(context),
-              "MAMA",
-              "MAMA IS A LOREM IPSUM",
-              "ALRIGHT");
-          print("SHOWING");
-          setState(() {
-            isShowing = true;
-          });
-        } catch (e) {
-          print("ERROR $e");
-        }
-      });
-    }
-  }
-
   popAndNextTutorial(BuildContext context) {}
-
-  //----------------------
 
   showIntroBubbleView() {
     double headerBubHeight = Utils.getDeviceHeight(context) - 70;
     double topMargin = DimenRes.titleBarHeight + 10;
 
     return Container(
-//      width: double.infinity,
-//      height: double.infinity,
-//      decoration: BoxDecoration(
-//          image: DecorationImage(
-//              image: AssetImage(Utils.getAssetsImg("dashboard-background")),
-//              fit: BoxFit.fill)),
       child: Stack(
         fit: StackFit.expand,
         alignment: Alignment.center,
         children: <Widget>[
-          //-----------
-
-          selectedType == Const.typeProfile
+          getSelectedType() == Const.typeProfile
               ? Positioned(
                   top: topMargin,
                   left: 40,
-//            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -804,7 +596,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeName
+          getSelectedType() == Const.typeName
               ? Positioned(
                   top: topMargin,
                   left: 60,
@@ -819,7 +611,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeEmployee
+          getSelectedType() == Const.typeEmployee
               ? Positioned(
                   top: topMargin,
                   left: Utils.getDeviceWidth(context) / 3.0,
@@ -834,7 +626,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeSalesPersons
+          getSelectedType() == Const.typeSalesPersons
               ? Positioned(
                   top: topMargin,
                   left: Utils.getDeviceWidth(context) / 2,
@@ -849,11 +641,10 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeServicesPerson
+          getSelectedType() == Const.typeServicesPerson
               ? Positioned(
                   top: topMargin,
                   right: 0,
-//            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -865,11 +656,10 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeBrandValue
+          getSelectedType() == Const.typeBrandValue
               ? Positioned(
                   top: topMargin,
                   right: 50,
-//            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(
@@ -881,7 +671,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeMoney
+          getSelectedType() == Const.typeMoney
               ? Positioned(
                   top: topMargin,
                   right: 20,
@@ -899,7 +689,7 @@ class HelpPageState extends State<HelpPage> {
 
 //--------------------------------------------------------------------------------------------------------------
 
-          selectedType == Const.typeBusinessSector
+          getSelectedType() == Const.typeBusinessSector
               ? Positioned(
                   bottom: 30,
                   left: Utils.getDeviceWidth(context) / 3.2,
@@ -913,7 +703,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeNewCustomer
+          getSelectedType() == Const.typeNewCustomer
               ? Positioned(
                   bottom: 50,
                   left: Utils.getDeviceWidth(context) / 3.4,
@@ -921,14 +711,13 @@ class HelpPageState extends State<HelpPage> {
                       child: Image(
                         image: AssetImage(
                             Utils.getAssetsImg(introShowBubbleNewCustomer())),
-//                        height: Utils.getDeviceHeight(context) / 1.4,
                         height: headerBubHeight,
                       ),
                       onTap: () {}),
                 )
               : Container(),
 
-          selectedType == Const.typeExistingCustomer
+          getSelectedType() == Const.typeExistingCustomer
               ? Positioned(
                   bottom: 15,
                   left: Utils.getDeviceWidth(context) / 3.6,
@@ -942,7 +731,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeReward
+          getSelectedType() == Const.typeReward
               ? Positioned(
                   bottom: Utils.getDeviceHeight(context) / 4.2,
                   left: Utils.getDeviceWidth(context) / 3.5,
@@ -957,10 +746,9 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeTeam
+          getSelectedType() == Const.typeTeam
               ? Positioned(
                   bottom: 80,
-//                  top: Utils.getDeviceHeight(context) / 6.4,
                   left: Utils.getDeviceWidth(context) / 1.8,
                   child: InkResponse(
                     child: Image(
@@ -973,10 +761,9 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeChallenges
+          getSelectedType() == Const.typeChallenges
               ? Positioned(
                   top: 00,
-//                  left: Utils.getDeviceWidth(context) / 4,
                   right: Utils.getDeviceWidth(context) / 4,
                   child: InkResponse(
                     child: Image(
@@ -989,7 +776,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeOrg
+          getSelectedType() == Const.typeOrg
               ? Positioned(
                   top: topMargin,
                   left: Utils.getDeviceWidth(context) / 2.7,
@@ -1003,7 +790,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typePl
+          getSelectedType() == Const.typePl
               ? Positioned(
                   top: 40,
                   left: Utils.getDeviceWidth(context) / 3.8,
@@ -1017,10 +804,9 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          selectedType == Const.typeRanking
+          getSelectedType() == Const.typeRanking
               ? Positioned(
                   top: 50,
-//            left: Utils.getDeviceWidth(context) / 1.9,
                   right: Utils.getDeviceWidth(context) / 2.7,
                   child: InkResponse(
                     child: Image(
@@ -1034,12 +820,10 @@ class HelpPageState extends State<HelpPage> {
               : Container(),
 //-------------------------------------------------------------------------------------------------------
 
-          selectedType == Const.typeProfile
-              ? Container()
-              : Positioned(
+          selectedIndex > 0
+              ? Positioned(
                   top: Utils.getDeviceHeight(context) / 2.35,
                   left: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg(introShowBack())),
@@ -1050,51 +834,34 @@ class HelpPageState extends State<HelpPage> {
                       Utils.playClickSound();
 //                      }
 
-                      setState(() {
-                        if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeRanking;
-                        } else if (selectedType == Const.typeRanking) {
-                          selectedType = Const.typePl;
-                        } else if (selectedType == Const.typePl) {
-                          selectedType = Const.typeOrg;
-                        } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeChallenges) {
-                          Injector.isManager()
-                              ? selectedType = Const.typeTeam
-                              : selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeTeam) {
-                          selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeReward) {
-                          selectedType = Const.typeExistingCustomer;
-                        } else if (selectedType == Const.typeExistingCustomer) {
-                          selectedType = Const.typeNewCustomer;
-                        } else if (selectedType == Const.typeNewCustomer) {
-                          selectedType = Const.typeBusinessSector;
-                        } else if (selectedType == Const.typeBusinessSector) {
-//                          selectedType = Const.typeProfile;
-//                        } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeMoney;
-                        } else if (selectedType == Const.typeMoney) {
-                          selectedType = Const.typeBrandValue;
-                        } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBrandValue) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeSalesPersons) {
-                          selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeName;
-                        } else if (selectedType == Const.typeName) {
-                          selectedType = Const.typeProfile;
-                        }
-                      });
+                      if (selectedIndex > 0) {
+                        selectedIndex -= 1;
+                        setState(() {});
+                      }
                     },
                   ),
-                ),
+                )
+              : Container(),
 
-          selectedType == Const.typeRanking
-              ? Container(
+          selectedIndex < arrType.length - 1
+              ? Positioned(
+                  top: Utils.getDeviceHeight(context) / 2.35,
+                  right: 10,
+                  child: InkResponse(
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg(introShowNext())),
+                      height: Utils.getDeviceHeight(context) / 10,
+                    ),
+                    onTap: () {
+                      Utils.playClickSound();
+                      if (selectedIndex < arrType.length - 1) {
+                        selectedIndex += 1;
+                        setState(() {});
+                      }
+                    },
+                  ),
+                )
+              : Container(
                   child: Positioned(
                       top: Utils.getDeviceHeight(context) / 2.35,
                       right: 10,
@@ -1105,73 +872,10 @@ class HelpPageState extends State<HelpPage> {
                           height: Utils.getDeviceHeight(context) / 10,
                         ),
                         onTap: () {
-//                          if(currentVol != 0) {
                           Utils.playClickSound();
-//                          }
-                          setState(() {
-                            Navigator.pushAndRemoveUntil(context,
-                                FadeRouteHome(), ModalRoute.withName("/home"));
-                          });
+                          if (Navigator.canPop(context)) Navigator.pop(context);
                         },
                       )))
-              : Positioned(
-                  top: Utils.getDeviceHeight(context) / 2.35,
-                  right: 10,
-//            right: Utils.getDeviceWidth(context) / 1.62,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowNext())),
-                      height: Utils.getDeviceHeight(context) / 10,
-                    ),
-                    onTap: () {
-//                      AudioManager.STREAM_SYSTEM;
-
-//                      if(currentVol != 0) {
-                      Utils.playClickSound();
-//                      }
-
-                      setState(() {
-                        if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeName;
-                        } else if (selectedType == Const.typeName) {
-                          selectedType = Const.typeEmployee;
-                        } else if (selectedType == Const.typeSalesPersons) {
-                          selectedType = Const.typeServicesPerson;
-                        } else if (selectedType == Const.typeEmployee) {
-                          selectedType = Const.typeSalesPersons;
-                        } else if (selectedType == Const.typeBrandValue) {
-                          selectedType = Const.typeMoney;
-                        } else if (selectedType == Const.typeServicesPerson) {
-                          selectedType = Const.typeBrandValue;
-                        } else if (selectedType == Const.typeMoney) {
-//                          selectedType = Const.typeProfile;
-//                        } else if (selectedType == Const.typeProfile) {
-                          selectedType = Const.typeBusinessSector;
-                        } else if (selectedType == Const.typeBusinessSector) {
-                          selectedType = Const.typeNewCustomer;
-                        } else if (selectedType == Const.typeNewCustomer) {
-                          selectedType = Const.typeExistingCustomer;
-                        } else if (selectedType == Const.typeExistingCustomer) {
-                          selectedType = Const.typeReward;
-                        } else if (selectedType == Const.typeReward) {
-                          Injector.isManager()
-                              ? selectedType = Const.typeTeam
-                              : selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeTeam) {
-                          selectedType = Const.typeChallenges;
-                        } else if (selectedType == Const.typeChallenges) {
-                          selectedType = Const.typeOrg;
-                        } else if (selectedType == Const.typeOrg) {
-                          selectedType = Const.typePl;
-                        } else if (selectedType == Const.typePl) {
-                          selectedType = Const.typeRanking;
-                        } else if (selectedType == Const.typeRanking) {
-                          DashboardGamePage();
-                        }
-                      });
-                    },
-                  ),
-                ),
         ],
       ),
     );
@@ -1181,7 +885,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleProfile() {
     if (Injector.userData.language == "English") {
-//        return "intro_bub_profile";
       return "intro_bub_profile_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_profile_de";
@@ -1202,7 +905,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleEmp() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_emp_stat";
       return "intro_bub_emp_stat_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_emp_stat_de";
@@ -1213,7 +915,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleSales() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_sales_stat";
       return "intro_bub_sales_stat_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_sales_stat_de";
@@ -1224,7 +925,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleCustomer() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_customer_stat";
       return "intro_bub_customer_stat_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_customer_stat_de";
@@ -1235,7 +935,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleBrandValue() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_brand_value";
       return "intro_bub_brand_value_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_brand_value_de";
@@ -1246,7 +945,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleCash() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_cash";
       return "intro_bub_cash_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_cash_de";
@@ -1257,7 +955,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleBusinessSectors() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_business_sectors";
       return "intro_bub_business_sectors_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_business_sectors_de";
@@ -1268,7 +965,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleNewCustomer() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_new_customer";
       return "intro_bub_new_customer_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_new_customer_de";
@@ -1279,7 +975,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleExistingCustomer() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_existing_customer";
       return "intro_bub_existing_customer_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_existing_customer_de";
@@ -1290,7 +985,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleRewards() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_rewards";
       return "intro_bub_rewards_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_rewards_de";
@@ -1301,7 +995,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleTeam() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_team";
       return "intro_bub_team_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_team_de";
@@ -1312,7 +1005,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleChallenges() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_challenges";
       return "intro_bub_challenges_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_challenges_de";
@@ -1323,7 +1015,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleOrganization() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_organization";
       return "intro_bub_organization_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_organization_de";
@@ -1334,7 +1025,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubblePl() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_pl";
       return "intro_bub_pl_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_pl_de";
@@ -1345,7 +1035,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBubbleRanking() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_ranking";
       return "intro_bub_ranking_en";
     } else if (Injector.userData.language == "German") {
       return "intro_bub_ranking_de";
@@ -1356,7 +1045,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowBack() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_back";
       return "back_eng";
     } else if (Injector.userData.language == "German") {
       return "back_de";
@@ -1367,7 +1055,6 @@ class HelpPageState extends State<HelpPage> {
 
   introShowEnter() {
     if (Injector.userData.language == "English") {
-//      return "intro_bub_enter";
       return "enter_eng";
     } else if (Injector.userData.language == "German") {
       return "enter_de";
@@ -1387,4 +1074,41 @@ class HelpPageState extends State<HelpPage> {
     }
   }
 
+  getSelectedType() {
+    return arrType[selectedIndex];
+  }
+
+  List<String> initFeatureDataArray() {
+    List<String> arrTypeData = List();
+
+    arrTypeData.add(Const.typeProfile);
+    arrTypeData.add(Const.typeName);
+
+    if (Utils.isFeatureOn(Const.typeOrg)) {
+      arrTypeData.add(Const.typeEmployee);
+      arrTypeData.add(Const.typeSalesPersons);
+      arrTypeData.add(Const.typeServicesPerson);
+    }
+    arrTypeData.add(Const.typeBrandValue);
+    arrTypeData.add(Const.typeMoney);
+
+    arrTypeData.add(Const.typeBusinessSector);
+    arrTypeData.add(Const.typeNewCustomer);
+    arrTypeData.add(Const.typeExistingCustomer);
+
+    if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
+
+    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
+      arrTypeData.add(Const.typeTeam);
+    if (Utils.isFeatureOn(Const.typeChallenges))
+      arrTypeData.add(Const.typeChallenges);
+
+    if (Utils.isFeatureOn(Const.typeOrg)) arrTypeData.add(Const.typeOrg);
+    if (Utils.isFeatureOn(Const.typePl)) arrTypeData.add(Const.typePl);
+
+    if (Utils.isFeatureOn(Const.typeRanking))
+      arrTypeData.add(Const.typeRanking);
+
+    return arrTypeData;
+  }
 }

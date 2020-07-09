@@ -54,6 +54,7 @@ class ColorRes {
   static Color rankingProValueBg  = Color(0xFFcfe5ff);
   static Color rankingProDeSelectDay  = Color(0xFFc6ced8);
   static Color blackTransparentColor  = Color(0x73000000);
+  static Color helpProBox  = const Color(0xFF75c0fb);
 
   static Color chartTen = Color(0xFF5CA793);
   static Color chartNine = Color(0xFF1395BA);

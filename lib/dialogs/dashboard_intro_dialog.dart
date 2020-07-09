@@ -4,10 +4,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/home.dart';
-import 'package:ke_employee/models/change_password.dart';
 
 class DashboardIntroDialog extends StatefulWidget {
   DashboardIntroDialog({
@@ -45,16 +42,16 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
           top: 50,
           child: showItem(Const.typeName),
         ),
-        Positioned(
+        Utils.isFeatureOn(Const.typeOrg)?Positioned(
           left: Utils.getDeviceWidth(context) / 3.5,
           top: 50,
           child: showItem(Const.typeSalesPersons),
-        ),
-        Positioned(
+        ):Container(),
+        Utils.isFeatureOn(Const.typeOrg)?Positioned(
           left: Utils.getDeviceWidth(context) / 1.9,
           top: 50,
           child: showItem(Const.typeServicesPerson),
-        ),
+        ):Container(),
         Positioned(
           right: 0,
           top: 50,

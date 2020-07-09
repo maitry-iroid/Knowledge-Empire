@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
+import 'package:ke_employee/models/language.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -16,6 +17,9 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/login.dart';
+
+import 'package:ke_employee/screens/intro_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
@@ -55,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
-  String tempLanguage = Const.english;
+  String tempLanguage = StringRes.strDefault;
 
   ScrollController _scrollController = new ScrollController();
   UpdateDialogModel status;
@@ -70,19 +74,23 @@ class _LoginPageState extends State<LoginPage> {
 
   Future initStateMethods() async {
     status = await Injector.getCurrentVersion(context);
-    if (status.status != "0" || status.status == "2") {
+    if (status != null && status.status != null && status.status != "0" ||
+        status != null && status.status != null && status.status == "2") {
       if (status.status == "2") {
         if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-          DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
+          DisplayDialogs.showUpdateDialog(
+              context, status.headlineText, status.message, true);
         } else {
           DateTime clickedTime =
               DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
           if (DateTime.now().difference(clickedTime).inDays >= 1) {
-            DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, true);
+            DisplayDialogs.showUpdateDialog(
+                context, status.headlineText, status.message, true);
           }
         }
       } else {
-        DisplayDialogs.showUpdateDialog(context, status.headlineText,status.message, false);
+        DisplayDialogs.showUpdateDialog(
+            context, status.headlineText, status.message, false);
       }
     }
     localeBloc.setLocale(0);
@@ -128,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(height: Utils.getDeviceHeight(context) / 8),
                         Container(
                           width: double.infinity,
-                          height: Utils.getDeviceHeight(context) / 1.5,
+                          height: Utils.getDeviceHeight(context) / 1.3,
                           margin: EdgeInsets.only(left: 20, right: 20),
                           decoration: BoxDecoration(
                             color: ColorRes.loginBg,
@@ -201,14 +209,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onTap: () {
-                          Utils.isInternetConnectedWithAlert()
+                          Utils.isInternetConnectedWithAlert(context)
                               .then((isConnected) async {
                             if (isConnected) validateForm();
                           });
                         }),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   Align(
                     alignment: Alignment.topRight,
@@ -244,11 +252,34 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkResponse(
+                      child: Text(
+                        Utils.getText(context, StringRes.requestDemoAccount),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                      ),
+                      onTap: () {
+                        _launchEmail("support@knowledge-empire.com");
+                      },
+                    ),
+                  ),
                 ],
               )),
         ),
       ],
     );
+  }
+
+  _launchEmail(String email) async {
+    if (await canLaunch("mailto:$email")) {
+      await launch("mailto:$email");
+    } else {
+      throw 'Could not launch';
+    }
   }
 
   selectLanguagesAlert(BuildContext context) {
@@ -349,6 +380,8 @@ class _LoginPageState extends State<LoginPage> {
           tempLanguage = Const.german;
         } else if (index == 2) {
           tempLanguage = Const.chinese;
+        } else {
+          tempLanguage = null;
         }
 
         localeBloc.setLocale(Utils.getIndexLocale(tempLanguage));
@@ -371,15 +404,19 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+    _scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+
     LoginRequest loginRequest = LoginRequest();
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret =
         Utils.getSecret(loginRequest.email, loginRequest.password);
-    loginRequest.language = tempLanguage;
-//    tempLanguage
-
-//    String udid = await FlutterUdid.udid;
+    loginRequest.language =
+        tempLanguage == StringRes.strDefault ? null : tempLanguage;
 
     Utils.hideKeyboard(context);
 
@@ -391,27 +428,20 @@ class _LoginPageState extends State<LoginPage> {
       if (data != null) {
         UserData userData = UserData.fromJson(data);
 
-        await Injector.setUserData(userData);
+        await Injector.setUserData(userData, false);
 
         await Injector.updateInstance();
 
-        if (userData.isFirstTimeLogin)
-          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
+        localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
         if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {
-//          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-//          if (userData.isFirstTimeLogin)
-//            Utils.navigateToIntro(context);
-//          else
           navigateToDashboard();
         }
       }
     }).catchError((e) {
-      print("login_" + e.toString());
       CommonView.showCircularProgress(false, context);
-//      // Utils.showToast(e.toString());
     });
   }
 
@@ -433,7 +463,6 @@ class _LoginPageState extends State<LoginPage> {
                 height: 45,
                 decoration: BoxDecoration(
                     color: ColorRes.white,
-//                    color: ColorRes.bgTextBox,
                     border: Border.all(width: 1, color: ColorRes.white),
                     borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(left: 8),
@@ -441,7 +470,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: emailController,
                     autocorrect: Platform.isAndroid ? true : false,
-//                    autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
@@ -456,7 +484,6 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     decoration: InputDecoration(
-//                          contentPadding: EdgeInsets.only(left: 8, right: 8),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.emailId)

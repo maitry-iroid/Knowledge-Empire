@@ -1,14 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/intro.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 
 import '../helper/constant.dart';
 
@@ -28,19 +30,18 @@ class DashboardProfPage extends StatefulWidget {
 }
 
 class DashboardProfPageState extends State<DashboardProfPage> {
-  List<UnreadBubbleCountData> arrDashboardData = List();
+  List<String> arrType = List();
 
   @override
   void initState() {
     super.initState();
-    getUnreadBubbleCount();
-    getLockStatus();
+
+    arrType = initFeatureDataArray();
+    getDashboardStatus();
 
     if (Injector.introData == null) {
       getIntroData();
     }
-
-    Injector.isSoundEnable = false;
   }
 
   @override
@@ -57,20 +58,26 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-  void getUnreadBubbleCount() {
+  getDashboardStatus() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        DashboardRequest rq = DashboardRequest();
+        DashboardStatusRequest rq = DashboardStatusRequest();
         rq.userId = Injector.userData.userId;
-        rq.mode = Injector.mode ?? Injector.isBusinessMode;
 
-        WebApi().callAPI(WebApi.rqUnreadBubbleCount, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            data.forEach((v) {
-              arrDashboardData.add(UnreadBubbleCountData.fromJson(v));
-            });
+            DashboardStatusResponse response =
+                DashboardStatusResponse.fromJson(data);
 
-            if (arrDashboardData.isNotEmpty) if (mounted) setState(() {});
+            if (response.data.isNotEmpty) {
+              Injector.prefs.setString(
+                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
+              Injector.dashboardStatusResponse = response;
+
+              arrType = initFeatureDataArray();
+
+              if (mounted) setState(() {});
+            }
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());
@@ -90,29 +97,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     );
   }
 
-  var arrTypeManager = [
-    Const.typeBusinessSector,
-    Const.typeNewCustomer,
-    Const.typeExistingCustomer,
-    Const.typeReward,
-    Const.typeTeam,
-    Const.typeChallenges,
-    Const.typeOrg,
-    Const.typePl,
-    Const.typeRanking
-  ];
-  var arrType = [
-    Const.typeBusinessSector,
-    Const.typeNewCustomer,
-    Const.typeExistingCustomer,
-    Const.typeReward,
-//    Const.typeTeam,
-    Const.typeChallenges,
-    Const.typeOrg,
-    Const.typePl,
-    Const.typeRanking
-  ];
-
   showMainView() {
     return Container(
         margin: EdgeInsets.all(5),
@@ -122,17 +106,13 @@ class DashboardProfPageState extends State<DashboardProfPage> {
           childAspectRatio: 2.1,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
-          children: List.generate(
-              Injector.isManager() ? arrTypeManager.length : arrType.length,
-              (index) {
-            return showMainItem(
-                Injector.isManager() ? arrTypeManager[index] : arrType[index]);
+          children: List.generate(arrType.length, (index) {
+            return showMainItem(arrType[index]);
           }),
         ));
   }
 
   showMainItem(String type) {
-    print(Injector.dashboardLockStatusData);
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
@@ -153,7 +133,12 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                       image: AssetImage(Utils.getAssetsImg(getImage(type))),
                       width: Utils.getDeviceHeight(context) / 5.8,
                     ),
-                    Utils.showUnreadCount(type, 2, 2, arrDashboardData)
+                    Utils.isShowUnreadCount(type)
+                        ? Utils.showUnreadCount(type, 2, 2)
+                        : Container(
+                            width: 25,
+                            height: 25,
+                          )
                   ],
                 ),
                 SizedBox(
@@ -172,38 +157,12 @@ class DashboardProfPageState extends State<DashboardProfPage> {
             ),
           ),
           onTap: () {
-            Utils.playClickSound();
             Utils.performDashboardItemClick(context, type);
           },
         ),
-        Utils.ifIsLocked(type,context),
-
+        Utils.isShowLock(type) ? Utils.lockUi(type, context) : Container(),
       ],
     );
-  }
-
-  DashboardLockStatusData dashboardLockStatusData;
-
-  void getLockStatus() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
-
-        WebApi()
-            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) {
-          if (data != null) {
-            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            Injector.dashboardLockStatusData = dashboardLockStatusData;
-            if (mounted) setState(() {});
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
   }
 
   getTitle(String type) {
@@ -268,8 +227,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
           if (data != null) {
             IntroData introData = IntroData.fromJson(data);
             await Injector.setIntroData(introData);
-
-
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
@@ -278,5 +235,27 @@ class DashboardProfPageState extends State<DashboardProfPage> {
         });
       }
     });
+  }
+
+  List<String> initFeatureDataArray() {
+    List<String> arrTypeData = List();
+
+    arrTypeData.add(Const.typeBusinessSector);
+    arrTypeData.add(Const.typeNewCustomer);
+    arrTypeData.add(Const.typeExistingCustomer);
+
+    if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
+
+    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager()) arrTypeData.add(Const.typeTeam);
+
+    if (Utils.isFeatureOn(Const.typeChallenges)) arrTypeData.add(Const.typeChallenges);
+
+    if (Utils.isFeatureOn(Const.typeOrg)) arrTypeData.add(Const.typeOrg);
+
+    if (Utils.isFeatureOn(Const.typePl)) arrTypeData.add(Const.typePl);
+
+    if (Utils.isFeatureOn(Const.typeRanking)) arrTypeData.add(Const.typeRanking);
+
+    return arrTypeData;
   }
 }

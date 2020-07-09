@@ -8,22 +8,21 @@ class Const {
   static var deviceType = "android";
   static Environment envType;
 
-  static var typeHome = "home";
-  static var typeBusinessSector = "businessSector";
-  static var typeNewCustomer = "newCustomer";
-  static var typeExistingCustomer = "existingCustomer";
-  static var typeReward = "reward";
-  static var typeTeam = "team";
-  static var typeChallenges = "challenge";
-  static var typeOrg = "org";
-  static var typePl = "pl";
-  static var typeRanking = "ranking";
-  static var typeProfile = "profile";
-  static var typeHelp = "help";
-  static var typeEngagement = "engagement";
-  static var typeCustomerSituation = "customerSituation";
-  static var updateProfileBrod = "updateProfileBrod";
-
+  static var typeHome = "0";
+  static var typeBusinessSector = "1";
+  static var typeNewCustomer = "2";
+  static var typeExistingCustomer = "3";
+  static var typeReward = "4";
+  static var typeTeam = "5";
+  static var typeChallenges = "6";
+  static var typeOrg = "7";
+  static var typePl = "8";
+  static var typeRanking = "9";
+  static var typeProfile = "10";
+  static var typeHelp = "11";
+  static var typeEngagement = "12";
+  static var typeCustomerSituation = "13";
+  static var updateProfileBrod = "14";
 
   // push type
 
@@ -36,16 +35,15 @@ class Const {
   static var pushTypeUnansweredQuestion = 6;
   static var pushTypeModule = 7;
 
-  static var openPendingChallengeDialog = 101;
+  static var openPendingChallengeDialog = 201;
 
-  static var typeName = "26";
-  static var typeSideMenu = 27;
+  static var typeName = "100";
 
-  static var typeSalesPersons = "11";
-  static var typeEmployee = "12";
-  static var typeBrandValue = "13";
-  static var typeServicesPerson = "14";
-  static var typeMoney = "15";
+  static var typeSalesPersons = "101";
+  static var typeEmployee = "102";
+  static var typeBrandValue = "103";
+  static var typeServicesPerson = "104";
+  static var typeMoney = "105";
 
   static var typeHR = 1;
   static var typeMarketing = 2;

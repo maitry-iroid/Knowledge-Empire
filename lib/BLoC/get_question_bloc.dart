@@ -45,7 +45,7 @@ class GetQuestionsBloc {
     }
   }
 
-  updateQuestions(List<QuestionData> arrQuestions) async {
+  updateQuestions(List<QuestionData> arrQuestions){
     _getQuestionSubject.sink.add(arrQuestions);
   }
 

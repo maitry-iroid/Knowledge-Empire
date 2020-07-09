@@ -75,7 +75,7 @@ android {
         dev {
             dimension "default"
             applicationId "com.keemployee.app.dev"
-            resValue "string", "app_name", "Knowledge Empire"
+            resValue "string", "app_name", "KE dev"
         }
         prod {
             dimension "default"

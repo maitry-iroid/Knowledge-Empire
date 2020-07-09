@@ -6,6 +6,7 @@ import 'package:ke_employee/helper/ResponsiveUi.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class IntroScreenDialog extends StatefulWidget {
   final String titleText, desTextLine, btnName, imageName;
@@ -108,7 +109,9 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                     children: <Widget>[
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            right: getPaddingByImage(),
+                                            right: Injector.isBusinessMode
+                                                ? getPaddingByImage()
+                                                : size.height / 30.7,
                                             left: size.height / 30.7),
                                         child: Text(widget.desTextLine,
                                             textAlign: TextAlign.start,
@@ -136,7 +139,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                   ),
                 ),
               ),
-              widget.imageName != null
+              widget.imageName != null && Injector.isBusinessMode
                   ? Positioned(
                       right: size.width / getImageRightMargin(),
                       bottom: size.height / getImageBottomMargin(),
@@ -378,7 +381,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
     return GestureDetector(
       onTap: widget.onTapBtn,
       child: Container(
-          width: size.width / 3.5,
+          width: size.width / 3.2,
           margin: EdgeInsets.symmetric(horizontal: 5),
           padding: EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(

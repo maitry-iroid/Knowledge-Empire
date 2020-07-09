@@ -25,7 +25,7 @@ class GetRankingDataBloc {
   Observable<List<GetFriendsData>> get getFriends => _getFriendsSubject.stream;
 //
 //  getFriendsData(GetFriendsRequest rq) async {
-//    bool isInternetConnected = await Utils.isInternetConnectedWithAlert();
+//    bool isInternetConnected = await Utils.isInternetConnectedWithAlert(context);
 //
 //    List<GetUserGroupData> arrGroups = List();
 //
@@ -44,7 +44,7 @@ class GetRankingDataBloc {
 //  }
 
   getUserGroupData(GetUserGroupRequest rq, BuildContext context) async {
-    bool isInternetConnected = await Utils.isInternetConnectedWithAlert();
+    bool isInternetConnected = await Utils.isInternetConnectedWithAlert(context);
     List<GetUserGroupData> arrGroups = List();
 
     GetUserGroupData grp1 = GetUserGroupData();

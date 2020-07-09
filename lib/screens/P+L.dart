@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
@@ -35,6 +36,7 @@ class _PLPageState extends State<PLPage> {
   PerformanceData performanceData;
 
   int selectedDay = 0;
+  bool isLoading = false;
 
   List<Color> colorOpenCloseList = [
     ColorRes.chartOne,
@@ -67,8 +69,8 @@ class _PLPageState extends State<PLPage> {
   Future openIntroDialog() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData == null || Injector.introData.pl1 == 0)
-      await DisplayDialogs.showThePersonYouCanCountOn(context);
+    if (Injector.introData != null && Injector.introData.pl1 == 0)
+      await DisplayDialogs.showIntroPL1(context);
 
     getPerformanceData(Const.plDay);
   }
@@ -114,32 +116,23 @@ class _PLPageState extends State<PLPage> {
             ],
           ),
         ),
+        CommonView.showLoderView(isLoading)
       ],
     );
   }
 
   mainBody() {
-//    return Expanded(
-//        child: ListView(
-//          children: <Widget>[
-//            Expanded(child: Text("hello")),
-//            Container(
-//              height: 300,
-//              child: Text("hello"),
-//            )
-//          ],
-//        ));
     return Expanded(
         child: SingleChildScrollView(
       child: Column(
-        children: <Widget>[showFirstHalf(), showSecondHalf()],
+        children: <Widget>[showListAndPieChart(), showLinearHybridGraph()],
       ),
     ));
   }
 
-  showFirstHalf() {
+  showListAndPieChart() {
     return Container(
-        height: 500,
+//        height: Utils.isFeatureOn(Const.typeOrg)?500:300,
         width: Utils.getDeviceWidth(context),
         child: Row(
           children: <Widget>[
@@ -151,16 +144,30 @@ class _PLPageState extends State<PLPage> {
                   children: <Widget>[
                     showDayLine(),
                     showCashLine(),
-                    showListHeader(
-                        Utils.getText(context, StringRes.cost),
-                        Utils.getText(context, StringRes.employees),
-                        Utils.getText(context, StringRes.salaries)),
-                    showListView(1),
-                    showListHeader(
-                        Utils.getText(context, StringRes.revenue),
-                        Utils.getText(context, StringRes.customers),
-                        Utils.getText(context, StringRes.revenue)),
-                    showListView(2),
+
+                    // cost section
+                    Utils.isFeatureOn(Const.typeOrg) &&
+                            performanceData.cost.isNotEmpty
+                        ? showListHeader(
+                            Utils.getText(context, StringRes.cost),
+                            Utils.getText(context, StringRes.employees),
+                            Utils.getText(context, StringRes.salaries))
+                        : Container(),
+                    Utils.isFeatureOn(Const.typeOrg) &&
+                            performanceData.cost.isNotEmpty
+                        ? showListView(1)
+                        : Container(),
+
+                    // revenue list section
+                    performanceData.revenue.isNotEmpty
+                        ? showListHeader(
+                            Utils.getText(context, StringRes.revenue),
+                            Utils.getText(context, StringRes.customers),
+                            Utils.getText(context, StringRes.revenue))
+                        : Container(),
+                    performanceData.revenue.isNotEmpty
+                        ? showListView(2)
+                        : Container(),
                     showProfitCash(1),
                     showProfitCash(2),
 //                  showCashEnd(),
@@ -171,7 +178,6 @@ class _PLPageState extends State<PLPage> {
             Expanded(
               flex: 5,
               child: Container(
-                height: 500,
                 margin: EdgeInsets.only(right: 20),
                 decoration: BoxDecoration(
                   border: Border.all(width: 1, color: ColorRes.white),
@@ -181,9 +187,8 @@ class _PLPageState extends State<PLPage> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    firstPieChart(),
-                    secondPieChart(),
-//                    bottomBusinessList()
+                    showCostPieChart(),
+                    showRevenuePieChart(),
                   ],
                 ),
               ),
@@ -192,71 +197,78 @@ class _PLPageState extends State<PLPage> {
         ));
   }
 
-  showSecondHalf() {
-    return Container(
-        height: 310,
-        padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-        margin: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: ColorRes.white),
-          borderRadius: BorderRadius.circular(12.0),
-          color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
-        ),
-        width: Utils.getDeviceWidth(context),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 30,
-              width: Utils.getDeviceWidth(context) / 4,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 0.2, color: ColorRes.white),
-                  borderRadius: BorderRadius.circular(5.0),
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
-                      fit: BoxFit.fill)),
-              child: Text(
-                Utils.getText(context, StringRes.sevenDaysDevelopment),
-                style: TextStyle(color:  ColorRes.white ),
-              ),
+  showLinearHybridGraph() {
+    return performanceData.graph.isNotEmpty
+        ? Container(
+            height: 310,
+            padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: ColorRes.white),
+              borderRadius: BorderRadius.circular(12.0),
+              color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: OrdinalComboBarLineChart.withSampleData(performanceData),
-              ),
-            ),
-            Container(
-              height: 30,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  bottomOption(),
-                ],
-              ),
-            )
-          ],
-        ));
+            width: Utils.getDeviceWidth(context),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 30,
+                  width: Utils.getDeviceWidth(context) / 4,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.2, color: ColorRes.white),
+                      borderRadius: BorderRadius.circular(5.0),
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
+                          fit: BoxFit.fill)),
+                  child: Text(
+                    Utils.getText(context, StringRes.sevenDaysDevelopment),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: OrdinalComboBarLineChart.withSampleData(
+                        performanceData),
+                  ),
+                ),
+                Container(
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      bottomOption(),
+                    ],
+                  ),
+                )
+              ],
+            ))
+        : Container();
   }
 
   bottomOption() {
     return Container(
       child: Row(
         children: <Widget>[
-          Container(
-            width: 50,
-            height: 15,
-            color: Colors.amber,
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              Utils.getText(context, StringRes.cost),
-              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
-            ),
-          ),
+          Utils.isFeatureOn(Const.typeOrg)
+              ? Container(
+                  width: 50,
+                  height: 15,
+                  color: Colors.amber,
+                )
+              : Container(),
+          Utils.isFeatureOn(Const.typeOrg)
+              ? Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    Utils.getText(context, StringRes.cost),
+                    style: TextStyle(color: ColorRes.white),
+                  ),
+                )
+              : Container(),
           Container(
             width: 50,
             height: 15,
@@ -266,7 +278,10 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.revenue),
-              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
+              style: TextStyle(
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : ColorRes.black),
             ),
           ),
           Image.asset(
@@ -277,7 +292,10 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.cash),
-              style: TextStyle(color: Injector.isBusinessMode?ColorRes.white:ColorRes.black),
+              style: TextStyle(
+                  color: Injector.isBusinessMode
+                      ? ColorRes.white
+                      : ColorRes.black),
             ),
           )
         ],
@@ -412,7 +430,10 @@ class _PLPageState extends State<PLPage> {
           Container(
             width: 150,
             padding: EdgeInsets.only(left: 10),
-            child: Text(Utils.getText(context, StringRes.cashAtStartOfPeriod),
+            child: AutoSizeText(Utils.getText(context, StringRes.cashAtStartOfPeriod),
+                maxLines: 1,
+                overflow: TextOverflow.fade,
+                minFontSize: 4,
                 style: TextStyle(
                     fontSize: 13,
                     color: Injector.isBusinessMode
@@ -523,8 +544,8 @@ class _PLPageState extends State<PLPage> {
     return Container(
 //      height: type == Const.typeCost ? 160 : 120,
       child: ListView.builder(
-        shrinkWrap: true,
           primary: false,
+          shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemCount: type == Const.typeCost
               ? performanceData?.cost?.length
@@ -624,7 +645,7 @@ class _PLPageState extends State<PLPage> {
   showProfitCash(int type) {
     return Container(
       height: 25,
-      margin: EdgeInsets.only( right: 0, bottom: 5, top: 5),
+      margin: EdgeInsets.only(right: 0, bottom: 5, top: 5),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
@@ -634,12 +655,15 @@ class _PLPageState extends State<PLPage> {
           Container(
             width: 160,
             padding: EdgeInsets.only(left: 10),
-            child: Text(
+            child: AutoSizeText(
               Utils.getText(
                   context,
                   type == Const.typeCost
                       ? StringRes.profit
                       : StringRes.cashAtTheEndOfPeriod),
+              maxLines: 1,
+              overflow: TextOverflow.fade,
+              minFontSize: 4,
               style: TextStyle(
                 fontSize: 13,
                 color: ColorRes.white,
@@ -687,16 +711,18 @@ class _PLPageState extends State<PLPage> {
     );
   }
 
-  firstPieChart() {
-    return Container(
-      height: 180,
-      padding: EdgeInsets.only(left: 5),
-      child:
-          pieChart(Utils.getText(context, StringRes.costSplit), Const.typeCost),
-    );
+  showCostPieChart() {
+    return Utils.isFeatureOn(Const.typeOrg) && dataMap.isNotEmpty
+        ? Container(
+            height: 180,
+            padding: EdgeInsets.only(left: 5),
+            child: pieChart(
+                Utils.getText(context, StringRes.costSplit), Const.typeCost),
+          )
+        : Container();
   }
 
-  secondPieChart() {
+  showRevenuePieChart() {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 0),
@@ -811,7 +837,11 @@ class _PLPageState extends State<PLPage> {
   Future getPerformanceData(int plDay) async {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        CommonView.showCircularProgress(true, context);
+        if (mounted) {
+          setState(() {
+            isLoading = true;
+          });
+        }
 
         PerformanceRequest rq = PerformanceRequest();
         rq.userId = Injector.userId;
@@ -819,9 +849,15 @@ class _PLPageState extends State<PLPage> {
         rq.type = plDay;
 
         WebApi().callAPI(WebApi.rqGetPerformance, rq.toJson()).then((data) {
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
+
           if (data != null) {
             print(jsonEncode(data));
-            CommonView.showCircularProgress(false, context);
+
             if (mounted)
               setState(() {
 //                performanceData = new PerformanceData();
@@ -842,7 +878,11 @@ class _PLPageState extends State<PLPage> {
               });
           }
         }).catchError((e) {
-          CommonView.showCircularProgress(false, context);
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+          }
         });
       }
     });

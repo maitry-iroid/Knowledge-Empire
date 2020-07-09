@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -15,12 +18,14 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
+import 'package:pdf_previewer/pdf_previewer.dart';
 import '../commonview/background.dart';
 import 'package:video_player/video_player.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
+import 'package:http/http.dart' as http;
 
 /*
 *   created by Riddhi
@@ -38,6 +43,7 @@ QuestionData questionData = QuestionData();
 
 List abcdList = List();
 VideoPlayerController _controller;
+ChewieController _chewieController;
 
 class EngagementCustomer extends StatefulWidget {
   final HomeData homeData;
@@ -54,12 +60,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   QuestionData questionDataEngCustomer;
   bool isChallenge;
 
-  List alphaIndex = [
-    StringRes.aIndex,
-    StringRes.bIndex,
-    StringRes.cIndex,
-    StringRes.dIndex
-  ];
+  List alphaIndex = ["A", "B", "C", "D"];
 
   String urlPDFPath = "";
   String assetPDFPath = "";
@@ -68,7 +69,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   FileInfo fileInfo;
   String error;
-  PDFDocument doc;
+
+  //todo pdf viewer
+  String _pdfPath = '';
+  String _previewPath;
+  bool _isLoading = false;
+  int _pageNumber = 1;
 
   @override
   void initState() {
@@ -94,12 +100,23 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         questionData.mediaLink != null &&
         Utils.isPdf(questionData.mediaLink)) {
       if (Utils.getCacheFile(questionData.mediaLink) != null) {
-        doc = await PDFDocument.fromFile(
-            Utils.getCacheFile(questionData.mediaLink).file);
+        File fetchedFile = Utils
+            .getCacheFile(questionData.mediaLink)
+            .file;
+        _pdfPath = fetchedFile.path;
+        _previewPath = await PdfPreviewer.getPagePreview(
+            filePath: _pdfPath, pageNumber: _pageNumber);
       } else {
-        doc =
-            await PDFDocument.fromURL(questionData.mediaLink).catchError(() {});
+        File fetchedFile = await await DefaultCacheManager()
+            .getSingleFile(questionData.mediaLink);
+        _pdfPath = fetchedFile.path;
       }
+      _previewPath = await PdfPreviewer.getPagePreview(
+          filePath: _pdfPath, pageNumber: _pageNumber);
+
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -120,19 +137,27 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           .then((fileInfo) {
         _controller = Utils.getCacheFile(questionData.mediaLink) != null
             ? VideoPlayerController.file(
-                Utils.getCacheFile(questionData.mediaLink).file)
+            Utils
+                .getCacheFile(questionData.mediaLink)
+                .file)
             : VideoPlayerController.network(questionData.mediaLink)
           ..initialize().then((_) {
             if (mounted)
               setState(() {
-                _controller.play();
+                _chewieController.play();
               });
           });
-
         _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
         questionData.videoLoop == 1
             ? _controller.setLooping(true)
             : _controller.setLooping(false);
+        _chewieController = ChewieController(
+            videoPlayerController: _controller,
+            autoPlay: true,
+            allowFullScreen: false,
+            materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+            cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+            looping: true);
       });
     }
   }
@@ -148,12 +173,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         children: <Widget>[
           isChallenge
               ? Container(
-                  color: ColorRes.colorBgDark,
-                )
+            color: ColorRes.colorBgDark,
+          )
               : CommonView.showBackground(context),
           Column(
             children: <Widget>[
               showSubHeader(context),
+              SizedBox(
+                height: 8,
+              ),
               showMainBody(context),
             ],
           ),
@@ -185,46 +213,47 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             });
         },
         child: Container(
-          height: 48,
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 0),
-          alignment: Alignment.center,
+          padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           decoration: BoxDecoration(
               borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                      width: 1,
-                      color: arrAnswer[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.fontGrey),
+                  width: 1,
+                  color: arrAnswer[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : (arrAnswer[index].isSelected
-                      ? ColorRes.blueMenuSelected
-                      : ColorRes.white),
+                  ? ColorRes.blueMenuSelected
+                  : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
+                  image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
                   : null),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Title(
-                  color: ColorRes.greenDot,
-                  child: new Text(
-                    Utils.getText(context, abcdList[index]),
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: (arrAnswer[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf),
-                    ),
-                  )),
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Title(
+                    color: ColorRes.greenDot,
+                    child: new Text(
+                      Utils.getText(context, abcdList[index]),
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf),
+                      ),
+                    )),
+              ),
               Expanded(
-                child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
@@ -232,45 +261,37 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               )
             ],
           ),
-//        Text(
-//          widget.title,
-//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-//        ),
         ));
   }
 
   void performSubmitAnswer(BuildContext context) async {
-    Utils.playClickSound();
-
     List<Answer> selectedAnswer =
-        arrAnswer.where((answer) => answer.isSelected).toList();
+    arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
       Utils.showToast(Utils.getText(context, StringRes.alertSelectOneOption));
       return;
     }
 
-    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer) ? 1 : 0;
 
     SubmitAnswerRequest rq =
-        Injector.prefs.getString(PrefKeys.answerData) != null
-            ? SubmitAnswerRequest.fromJson(
-                jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
-            : SubmitAnswerRequest();
+    Injector.prefs.getString(PrefKeys.answerData) != null
+        ? SubmitAnswerRequest.fromJson(
+        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
+        : SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
 
     await Injector.prefs
         .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
 
-    if (questionData.isAnsweredCorrect) {
+    if (questionData.isAnsweredCorrect == 1) {
       Injector.customerValueData.totalBalance =
           Injector.customerValueData.totalBalance + questionData.value;
 
@@ -294,24 +315,22 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitChallenge(BuildContext context) async {
-    Utils.playClickSound();
-
     List<Answer> selectedAnswer =
-        arrAnswer.where((answer) => answer.isSelected).toList();
+    arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
       Utils.showToast(Utils.getText(context, StringRes.alertSelectOneOption));
       return;
     }
 
-    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer);
+    questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer) ? 1 : 0;
 
     SubmitChallengesRequest rq = SubmitChallengesRequest();
 
     rq.userId = Injector.userData.userId;
     rq.challengeId = questionDataEngCustomer.challengeId;
     rq.questionId = questionDataEngCustomer.questionId;
-    rq.isAnsweredCorrect = questionData.isAnsweredCorrect ? 1 : 0;
+    rq.isAnsweredCorrect = questionData.isAnsweredCorrect;
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -341,7 +360,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         CustomerValueData customerValueData = CustomerValueData.fromJson(data);
 
         await Injector.prefs.remove(PrefKeys.answerData);
-        Injector.setCustomerValueData(customerValueData);
+       Injector.setCustomerValueData(customerValueData);
 
         navigateToSituation(context, null);
       }
@@ -356,8 +375,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     });
   }
 
-  void callSubmitChallengeApi(
-      BuildContext context, SubmitChallengesRequest rq) {
+  void callSubmitChallengeApi(BuildContext context,
+      SubmitChallengesRequest rq) {
+    questionData.isAnsweredCorrect = rq.isAnsweredCorrect;
+
     if (mounted)
       setState(() {
         isLoading = true;
@@ -374,6 +395,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (data != null) {
 //        QuestionData questionData = QuestionData.fromJson(data);
         navigateToSituation(context, questionData);
+        Utils.getCustomerValues();
       }
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
@@ -395,35 +417,35 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           children: <Widget>[
             isChallenge
                 ? Row(
-                    children: <Widget>[
-                      Container(
-                        width: 30,
-                        height: 30,
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: questionData.profileImage != null &&
-                                        questionData.profileImage.isNotEmpty
-                                    ? Utils.getCacheNetworkImage(
-                                        questionData.profileImage)
-                                    : AssetImage(
-                                        Utils.getAssetsImg('user_org')),
-                                fit: BoxFit.fill),
-                            border: Border.all(color: ColorRes.textLightBlue)),
-                      ),
-                      Text(
-                        questionData.firstName.toString() +
-                            " " +
-                            questionData.lastName.toString(),
-                        style: TextStyle(color: ColorRes.white, fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  )
+              children: <Widget>[
+                Container(
+                  width: 30,
+                  height: 30,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: questionData.profileImage != null &&
+                              questionData.profileImage.isNotEmpty
+                              ? Utils.getCacheNetworkImage(
+                              questionData.profileImage)
+                              : AssetImage(
+                              Utils.getAssetsImg('user_org')),
+                          fit: BoxFit.fill),
+                      border: Border.all(color: ColorRes.textLightBlue)),
+                ),
+                Text(
+                  questionData.firstName.toString() +
+                      " " +
+                      questionData.lastName.toString(),
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
                 : Container(
-                    width: 100,
-                  ),
+              width: 100,
+            ),
             Container(
               alignment: Alignment.center,
               height: 30,
@@ -437,9 +459,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-                          fit: BoxFit.fill))
+                      image:
+                      AssetImage(Utils.getAssetsImg("eddit_profile")),
+                      fit: BoxFit.fill))
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.engagement),
@@ -478,11 +500,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMainBody(BuildContext context) {
     return Expanded(
         child: Row(
-      children: <Widget>[
-        showFirstHalf(context),
-        showSecondHalf(context),
-      ],
-    ));
+          children: <Widget>[
+            showFirstHalf(context),
+            showSecondHalf(context),
+          ],
+        ));
   }
 
   bool isAnswerCorrect(List<Answer> selectedAnswer) {
@@ -515,7 +537,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.moduleId = questionData.moduleId;
     if (!isChallenge) {
       submitAnswer.counter = max(
-          questionData.isAnsweredCorrect
+          questionData.isAnsweredCorrect == 1
               ? (questionData.counter + 1)
               : (questionData.counter ~/ 2).round(),
           0);
@@ -523,7 +545,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
     }
-    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect;
+    submitAnswer.isAnsweredCorrect = questionData.isAnsweredCorrect == 1;
     submitAnswer.attemptTime = Utils.getCurrentFormattedDate();
 
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
@@ -541,8 +563,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     return rq;
   }
 
-  void navigateToSituation(
-      BuildContext context, QuestionData nextChallengeQuestionData) {
+  void navigateToSituation(BuildContext context,
+      QuestionData nextChallengeQuestionData) {
     if (!isChallenge) {
       HomeData homeData = HomeData(
           initialPageType: Const.typeCustomerSituation,
@@ -564,117 +586,119 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showFirstHalf(BuildContext context) {
     return Expanded(
         flex: 1,
-        child: Column(
-          children: <Widget>[
-            showQueMedia(context),
-            showQueDescription(context)
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              showQueMedia(context),
+              showQueDescription(context)
+            ],
+          ),
         ));
   }
 
   showSecondHalf(BuildContext context) {
     return Expanded(
       flex: 1,
-      child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Card(
-            elevation: 10,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
-            child: Container(
-                alignment: Alignment.center,
-                padding:
-                    EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
-                decoration: BoxDecoration(
-                  color:
-                      Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: ColorRes.white, width: 1),
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: arrAnswer.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return showItem(index);
-                  },
-                )),
-          ),
-
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              alignment: Alignment.center,
-              height: 30,
-              margin: EdgeInsets.symmetric(
-                  horizontal: Utils.getDeviceWidth(context) / 6, vertical: 0),
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  border: Injector.isBusinessMode
-                      ? null
-                      : Border.all(width: 1, color: ColorRes.white),
-                  color:
-                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                Utils.getText(context, StringRes.answers),
-                style: TextStyle(color: ColorRes.white, fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          //Full Screen Alert Show Question : -
-          Align(
-            alignment: Alignment.bottomRight,
-            child: InkResponse(
-              onTap: () {
-//                if(currentVol != 0) {
-                Utils.playClickSound();
-//                }
-                showDialog(
-                  context: context,
-                  builder: (_) =>
-                      FunkyOverlayAnswers(engagementCustomerState: this),
-                );
-              },
+      child: SingleChildScrollView(
+        physics: ScrollPhysics(),
+        child: Stack(
+          children: <Widget>[
+            Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
               child: Container(
                   alignment: Alignment.center,
-                  height: Utils.getDeviceWidth(context) / 20,
-                  width: Utils.getDeviceWidth(context) / 20,
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                   decoration: BoxDecoration(
-                      image:
-//                                  Injector.isBusinessMode ?
-                          DecorationImage(
-                              image: AssetImage(Injector.isBusinessMode
-                                  ? Utils.getAssetsImg(
-                                      "full_expand_question_answers")
-                                  : Utils.getAssetsImg("expand_pro")),
-                              fit: BoxFit.fill))),
+                    color:
+                    Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: ColorRes.white, width: 1),
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: arrAnswer.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return showItem(index);
+                    },
+                  )),
             ),
-          )
-        ],
+
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                alignment: Alignment.center,
+                height: 30,
+                margin: EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 6, vertical: 0),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    border: Injector.isBusinessMode
+                        ? null
+                        : Border.all(width: 1, color: ColorRes.white),
+                    color:
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image:
+                        AssetImage(Utils.getAssetsImg("eddit_profile")),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(context, StringRes.answers),
+                  style: TextStyle(color: ColorRes.white, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            //Full Screen Alert Show Question : -
+            Align(
+              alignment: Alignment.topRight,
+              child: InkResponse(
+                onTap: () {
+//                if(currentVol != 0) {
+                  Utils.playClickSound();
+//                }
+                  showDialog(
+                    context: context,
+                    builder: (_) =>
+                        FunkyOverlayAnswers(engagementCustomerState: this),
+                  );
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    height: Utils.getDeviceWidth(context) / 20,
+                    width: Utils.getDeviceWidth(context) / 20,
+                    decoration: BoxDecoration(
+                        image:
+//                                  Injector.isBusinessMode ?
+                        DecorationImage(
+                            image: AssetImage(Injector.isBusinessMode
+                                ? Utils.getAssetsImg(
+                                "full_expand_question_answers")
+                                : Utils.getAssetsImg("expand_pro")),
+                            fit: BoxFit.fill))),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   showQueDescription(BuildContext context) {
-    return Expanded(
-      child: CommonView.questionAndExplanation(
-          context,
-          Utils.getText(context, StringRes.question),
-          true,
-          questionData.question),
-    );
+    return CommonView.questionAndExplanation(
+        context,
+        Utils.getText(context, StringRes.question),
+        true,
+        questionData.question);
   }
 
   showQueMedia(BuildContext context) {
@@ -692,16 +716,19 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   borderRadius: BorderRadius.circular(10.0)),
               margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
               child: Container(
-                  height: MediaQuery.of(context).size.height / 2.5,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2.5,
                   alignment: Alignment.center,
                   padding:
-                      EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: ColorRes.white, width: 1)),
                   child: showMediaView(context)),
             ),
-            showExpandIcon(context)
+            showMediaExpandIcon(context)
           ],
         ));
   }
@@ -727,23 +754,23 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     } else if (Utils.isVideo(questionData.mediaLink) &&
         _controller != null &&
         _controller.value.initialized) {
-      return AspectRatio(
-        aspectRatio: _controller.value.aspectRatio,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Container(
-              child: VideoPlayer(_controller),
+      return Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            child: Chewie(
+              controller: _chewieController,
             ),
-            Container(
-              child: MaterialButton(
-                height: 100,
-                onPressed: () {
-                  _controller.value.isPlaying
-                      ? _controller.pause()
-                      : _controller.play();
+          ),
+          Container(
+            child: MaterialButton(
+              height: 100,
+              onPressed: () {
+                _controller.value.isPlaying
+                    ? _controller.pause()
+                    : _controller.play();
 
-                  if (mounted) setState(() {});
+                if (mounted) setState(() {});
 
 //                  questionData.videoPlay == 1
 //                      ? if (mounted)setState(() {
@@ -754,30 +781,29 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                      : setState(() {
 //                          _controller.play();
 //                        });
-                },
-                child: Container(
-                  width: Utils.getDeviceHeight(context) / 7,
-                  height: Utils.getDeviceHeight(context) / 7,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                            _controller.value.isPlaying
-                                ? Utils.getAssetsImg("") //add_emp_check
-                                : Utils.getAssetsImg("play_button"),
-                          ),
-                          fit: BoxFit.scaleDown)),
-                ),
+              },
+              child: Container(
+                width: Utils.getDeviceHeight(context) / 7,
+                height: Utils.getDeviceHeight(context) / 7,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                          _controller.value.isPlaying
+                              ? Utils.getAssetsImg("") //add_emp_check
+                              : Utils.getAssetsImg("play_button"),
+                        ),
+                        fit: BoxFit.scaleDown)),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       );
     } else if (Utils.isPdf(questionData.mediaLink)) {
       return Container(
         padding: EdgeInsets.all(3),
         decoration:
-            BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: Utils.pdfShow(doc),
+        BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
+        child: Utils.pdfShow(_previewPath, isLoading),
       );
     }
 //    else {
@@ -785,7 +811,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //    }
   }
 
-  showExpandIcon(BuildContext context) {
+  showMediaExpandIcon(BuildContext context) {
     return Positioned(
       bottom: 0,
       right: 0,
@@ -802,7 +828,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     fit: BoxFit.fill))),
         onTap: () {
           Utils.playClickSound();
-          showDialog(context: context, builder: (_) => ExpandMedia());
+          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: _pdfPath));
         },
       ),
     );
@@ -812,9 +838,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     Utils.playClickSound();
     Utils.isImage(questionData.mediaLink)
         ? showDialog(
-            context: context,
-            builder: (_) => ExpandMedia(),
-          )
+      context: context,
+      builder: (_) => ExpandMedia(),
+    )
         : Container();
   }
 }
@@ -898,7 +924,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             },
                           )
 //                          })
-                          ),
+                      ),
                     ),
                     Positioned(
                       top: 0,
@@ -922,9 +948,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("eddit_profile")),
-                                    fit: BoxFit.fill)
+                                image: AssetImage(
+                                    Utils.getAssetsImg("eddit_profile")),
+                                fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
@@ -948,12 +974,12 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                    DecorationImage(
-                                        image: AssetImage(
-                                            Utils.getAssetsImg("close_dialog")),
-                                        fit: BoxFit.fill)
+                                DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("close_dialog")),
+                                    fit: BoxFit.fill)
 //                                    : null
-                                )),
+                            )),
                       ),
                     )
                   ],
@@ -975,67 +1001,59 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
           widget.engagementCustomerState.refresh();
         },
         child: Container(
-//          height: 45,
-          margin: EdgeInsets.only(left: 6, right: 6, top: 6, bottom: 6),
-          padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
-          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 6, right: 6, top: 6),
+          padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           decoration: BoxDecoration(
-//              borderRadius:
-//                  Injector.isBusinessMode ? null : BorderRadius.circular(15),
               borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(18),
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
               border: Injector.isBusinessMode
                   ? null
                   : Border.all(
-                      width: 1,
-                      color: arrAnswer[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.fontGrey),
+                  width: 1,
+                  color: arrAnswer[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
               color: Injector.isBusinessMode
                   ? null
                   : (arrAnswer[index].isSelected
-                      ? ColorRes.blueMenuSelected
-                      : ColorRes.white),
+                  ? ColorRes.blueMenuSelected
+                  : ColorRes.white),
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                      image: AssetImage(checkAnswerAlert(index)),
-                      fit: BoxFit.fill))
+                  image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
                   : null),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
-              Title(
-                  color: ColorRes.greenDot,
-                  child: new Text(
-                    Utils.getText(context, abcdList[index]),
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: (arrAnswer[index].isSelected
-                          ? ColorRes.white
-                          : ColorRes.textProf),
-                    ),
-                  )),
-              Padding(padding: EdgeInsets.only(left: 5.0, right: 5.0)),
+              Padding(
+                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                child: Title(
+                    color: ColorRes.greenDot,
+                    child: new Text(
+                      Utils.getText(context, abcdList[index]),
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf),
+                      ),
+                    )),
+              ),
               Expanded(
-                child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
                   child: new Text(
                     arrAnswer[index].answer,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 17,
                         color: (arrAnswer[index].isSelected
                             ? ColorRes.white
                             : ColorRes.textProf)),
-//                    maxLines: 3,
-                    overflow: TextOverflow.fade,
                   ),
                 ),
               )
             ],
           ),
-//        Text(
-//          widget.title,
-//          style: TextStyle(color: (widget.isSelected ? ColorRes.white : ColorRes.black), fontSize: 15),
-//        ),
         ));
   }
 }
@@ -1152,9 +1170,9 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         height: 35,
                         margin: (checkimg == true
                             ? EdgeInsets.symmetric(
-                                horizontal: Utils.getDeviceWidth(context) / 6)
+                            horizontal: Utils.getDeviceWidth(context) / 6)
                             : EdgeInsets.symmetric(
-                                horizontal: Utils.getDeviceWidth(context) / 3)),
+                            horizontal: Utils.getDeviceWidth(context) / 3)),
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
                             borderRadius: Injector.isBusinessMode
@@ -1168,9 +1186,9 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("eddit_profile")),
-                                    fit: BoxFit.fill)
+                                image: AssetImage(
+                                    Utils.getAssetsImg("eddit_profile")),
+                                fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, widget.title),
@@ -1201,39 +1219,39 @@ class FunkyOverlayState extends State<FunkyOverlay>
                           },
                           child: (checkimg == true
                               ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
 //                                          : null
-                                      ))
+                              ))
                               : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
 //                                          : null
-                                      )))),
+                              )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-                ),
+            ),
           ),
         ),
       ),
@@ -1241,11 +1259,11 @@ class FunkyOverlayState extends State<FunkyOverlay>
   }
 }
 
-//======================================
-//image show  in alert
-
 class ExpandMedia extends StatefulWidget {
-//  bool CheckQuestion;
+  final String pdfPath;
+
+  ExpandMedia({Key key, this.pdfPath}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => ExpandMediaState();
@@ -1256,12 +1274,14 @@ class ExpandMediaState extends State<ExpandMedia>
   AnimationController controller;
   Animation<double> scaleAnimation;
 
-  PDFDocument doc;
+  String _pdfPath = '';
+  String _previewPath;
+  bool _isLoading = false;
+  int _pageNumber = 1;
 
   @override
   void initState() {
     super.initState();
-
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 450));
     scaleAnimation =
@@ -1272,16 +1292,16 @@ class ExpandMediaState extends State<ExpandMedia>
     });
 
     controller.forward();
-    getPdf();
+
+    if (Utils.isPdf(questionData.mediaLink)) getPdf();
   }
 
   Future getPdf() async {
-    if (Utils.getCacheFile(questionData.mediaLink) != null) {
-      doc = await PDFDocument.fromFile(
-          Utils.getCacheFile(questionData.mediaLink).file);
-    } else {
-      doc = await PDFDocument.fromURL(questionData.mediaLink);
-    }
+    _pdfPath = widget.pdfPath;
+    _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   bool checkimg = true;
@@ -1320,23 +1340,22 @@ class ExpandMediaState extends State<ExpandMedia>
                               : ColorRes.white,
                           image: Utils.isImage(questionData.mediaLink)
                               ? DecorationImage(
-                                  image: Utils.getCacheNetworkImage(
-                                      questionData.mediaLink),
-                                  fit: BoxFit.cover)
+                              image: Utils.getCacheNetworkImage(
+                                  questionData.mediaLink),
+                              fit: BoxFit.cover)
                               : null,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Utils.isVideo(questionData.mediaLink) &&
-                                _controller.value.initialized
-                            ? AspectRatio(
-                                aspectRatio: _controller.value.aspectRatio,
-                                child: VideoPlayer(_controller),
-                              )
-                            : Utils.pdfShow(doc),
+                            _controller.value.initialized
+                            ? Chewie(
+                          controller: _chewieController,
+                        )
+                            : (Utils.isPdf(questionData.mediaLink)
+                            ? Utils.pdfShow(_previewPath, _isLoading)
+                            : null),
                       ),
                     ),
-
-                    //Full Screen Alert Show
                     Positioned(
                       top: 0,
                       right: 0,
@@ -1347,33 +1366,29 @@ class ExpandMediaState extends State<ExpandMedia>
                           },
                           child: (checkimg == true
                               ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
-//                                      Injector.isBusinessMode ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
-//                                          : null
-                                      ))
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
+                              ))
                               : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
-//                                      Injector.isBusinessMode ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
-//                                          : null
-                                      )))),
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
+                              )))),
                     )
                   ],
                 )),

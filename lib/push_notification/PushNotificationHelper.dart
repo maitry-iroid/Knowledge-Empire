@@ -19,11 +19,9 @@ import 'package:ke_employee/models/register_for_push.dart';
 class PushNotificationHelper {
   BuildContext context;
   PushModel mPushModel;
-  GlobalKey<ExplosionWidgetState> explosionWidgetStateKey;
 
-  PushNotificationHelper(BuildContext _context, GlobalKey<ExplosionWidgetState> explosionWidgetStateKey) {
+  PushNotificationHelper(BuildContext _context) {
     this.context = _context;
-    this.explosionWidgetStateKey = explosionWidgetStateKey;
   }
 
   void initPush() async {
@@ -94,7 +92,7 @@ class PushNotificationHelper {
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
-            child: Text('Ok'),
+            child: Text(Utils.getText(context, StringRes.ok)),
             onPressed: () async {
               Navigator.of(context, rootNavigator: true).pop();
 //              await Navigator.push(
@@ -124,7 +122,6 @@ class PushNotificationHelper {
         WebApi().callAPI(WebApi.rqRegisterForPush, rq.toJson()).then((data) {
           if (data != null) {}
         }).catchError((e) {
-          print("registerForPush_" + e.toString());
           // Utils.showToast(e.toString());
         });
       }
@@ -163,30 +160,49 @@ class PushNotificationHelper {
       }
     }
 
-    String btnText="";
-    if (mPushModel.notificationType == Const.pushTypeChallenge.toString()) {
+    String btnText = "";
+    if (mPushModel.notificationType == Const.pushTypeChallenge.toString() &&
+        Utils.isFeatureOn(Const.typeChallenges)) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
     } else if (mPushModel.notificationType ==
-        Const.pushTypeAchievement.toString()) {
-      if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
-        Injector.customerValueData.totalEmployeeCapacity +=int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingEmployeeCapacity +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.employees);
+            Const.pushTypeAchievement.toString() &&
+        Utils.isFeatureOn(Const.typeReward)) {
+      if (mPushModel.type != null &&
+          mPushModel.type == "1" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalEmployeeCapacity +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingEmployeeCapacity +=
+            int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.employees);
       }
-      if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
-        Injector.customerValueData.totalSalesPerson +=int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingSalesPerson +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.salesReps);
+      if (mPushModel.type != null &&
+          mPushModel.type == "3" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalSalesPerson +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingSalesPerson +=
+            int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.salesReps);
       }
 
-      if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
-        Injector.customerValueData.totalCustomerCapacity +=int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingCustomerCapacity +=int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.serviceReps);
+      if (mPushModel.type != null &&
+          mPushModel.type == "8" &&
+          mPushModel.bonus != null) {
+        Injector.customerValueData.totalCustomerCapacity +=
+            int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingCustomerCapacity +=
+            int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " +
+            Utils.getText(context, StringRes.serviceReps);
       }
-      if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
+      if (mPushModel.type != null &&
+          mPushModel.type == "0" &&
+          mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
-        btnText="${mPushModel.bonus} "+Utils.getText(context, StringRes.bonusPoint);
+        btnText = "${mPushModel.bonus} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}";
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);
@@ -196,15 +212,11 @@ class PushNotificationHelper {
 //      rq.userId = Injector.userId;
 //      customerValueBloc.getCustomerValue(rq);
 
-      CommonView().collectorDialog(context, mPushModel,btnText,explosionWidgetStateKey);
+      CommonView().collectorDialog(context, mPushModel,btnText);
 
-      Utils.playAchievementSound();
     } else {
       showLocalNotification(Injector.notificationID, body);
     }
-
-    print(title);
-    print(body);
   }
 
   showLocalNotification(int id, String body) async {

@@ -7,25 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/commonview/pdf_viewer.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -33,6 +32,7 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
+import 'package:ke_employee/screens/intro_page.dart';
 import 'package:ke_employee/screens/organization.dart';
 import 'package:path/path.dart';
 
@@ -56,17 +56,36 @@ class Utils {
     return "assets/images/" + name + ".jpg";
   }
 
+  static showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
+//    _scaffoldKey.currentState.showSnackBar(SnackBar(
+//      content: Text(message),
+//      duration: const Duration(milliseconds: 2000),
+//    ));
+
+//    Fluttertoast.showToast(
+//        msg: message,
+//        toastLength: Toast.LENGTH_SHORT,
+//        gravity: ToastGravity.BOTTOM,
+//        timeInSecForIos: 3,
+//        backgroundColor: Colors.black87,
+//        textColor: Colors.white);
+  }
+
   static showToast(String message) {
+//    _scaffoldKey.currentState.showSnackBar(SnackBar(
+//      content: Text(message),
+//      duration: const Duration(milliseconds: 2000),
+//    ));
+
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 3,
         backgroundColor: Colors.black87,
         textColor: Colors.white);
   }
 
-  static Future<bool> isInternetConnectedWithAlert() async {
+  static Future<bool> isInternetConnectedWithAlert(BuildContext context) async {
     bool isConnected = false;
 
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -74,7 +93,7 @@ class Utils {
         connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
     } else {
-      showToast("Please check your internet connectivity.");
+      showToast(Utils.getText(context, StringRes.noInternet));
       isConnected = false;
     }
 
@@ -207,9 +226,15 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
+  static void navigateToIntro(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => IntroPage()),
+        (Route<dynamic> route) => false);
+  }
+
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      bool isFromProfile, bool isOldPasswordRequired) async {
-    await showDialog(
+      bool isFromProfile, bool isOldPasswordRequired) {
+    showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog(
             isFromProfile: isFromProfile,
@@ -223,9 +248,6 @@ class Utils {
   static getSecret(String email, String password) {
     String text =
         email.split('').reversed.join() + password.split('').reversed.join();
-
-    print('secret' + text);
-
     return generateMd5(text);
   }
 
@@ -243,7 +265,9 @@ class Utils {
   static playBackgroundMusic() async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
-    if (Injector.isBusinessMode && Injector.isSoundEnable) {
+    if (Injector.isBusinessMode &&
+        Injector.isSoundEnable != null &&
+        Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
@@ -254,8 +278,7 @@ class Utils {
   static Future playSound(bool isPlaySound) async {
     try {
       if (isPlaySound) {
-        final file =
-            new File('${(await getTemporaryDirectory()).path}/music.mp3');
+        final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
         print(file.path);
         await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
         await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
@@ -273,33 +296,41 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable)
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
       Injector.audioCache.play("achievement_music.mp3");
   }
 
-  static playClickSound() async {
-    if (Injector.isSoundEnable)
+  static playClickSound() {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
       Injector.audioCache.play("all_button_clicks.wav");
+    }
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
+      Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
+      Injector.audioCache.play("wrong_answer.wav");
   }
 
-  static procorrectAnswerSound() async {
-    if (Injector.isSoundEnable)
+  static achievementSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
+      Injector.audioCache.play("achievement_music.mp3");
+  }
+
+  static proCorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
       Injector.audioCache.play("pro_right_answer.mp3");
   }
 
-  static proincorrectAnswerSound() async {
-    if (Injector.isSoundEnable)
+  static proIncorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
       Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
@@ -428,17 +459,12 @@ class Utils {
   static void performManageLevel(ManageOrgData organizationData) async {
     CustomerValueData customerValueData = Injector.customerValueData;
     customerValueData.totalBalance = organizationData.totalBalance;
-    customerValueData.totalEmployeeCapacity =
-        organizationData.totalEmployeeCapacity;
-    customerValueData.remainingEmployeeCapacity =
-        organizationData.remainingEmployeeCapacity;
+    customerValueData.totalEmployeeCapacity = organizationData.totalEmployeeCapacity;
+    customerValueData.remainingEmployeeCapacity = organizationData.remainingEmployeeCapacity;
     customerValueData.totalSalesPerson = organizationData.totalSalesPerson;
-    customerValueData.remainingSalesPerson =
-        organizationData.remainingSalesPerson;
-    customerValueData.totalCustomerCapacity =
-        organizationData.totalCustomerCapacity;
-    customerValueData.remainingCustomerCapacity =
-        organizationData.remainingCustomerCapacity;
+    customerValueData.remainingSalesPerson = organizationData.remainingSalesPerson;
+    customerValueData.totalCustomerCapacity = organizationData.totalCustomerCapacity;
+    customerValueData.remainingCustomerCapacity = organizationData.remainingCustomerCapacity;
 
     customerValueBloc?.setCustomerValue(customerValueData);
 //    Injector.streamController.add("manage level");
@@ -491,8 +517,6 @@ class Utils {
         } else {
           DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss")
               .parse(questionData.attemptTime);
-          print("question date string : -    ${questionData.attemptTime}");
-
           if (type == Const.getNewQueType
               ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
               : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
@@ -539,102 +563,38 @@ class Utils {
     );
   }
 
-  static performDashboardItemClick(BuildContext context, String type) {
+  static performDashboardItemClick(BuildContext context, String type) async {
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
+      Injector.audioCache.play("all_button_clicks.wav");
+    }
+
     if (type == Const.typeOrg ||
         type == Const.typeChallenges ||
         type == Const.typeReward ||
         type == Const.typeRanking ||
-        type == Const.typeProfile ||
+        type == Const.typeTeam ||
         type == Const.typePl) {
-      Utils.isInternetConnected().then((isConnected) {
-        if (isConnected) {
-          clickWithValidation(type, context);
-        } else {
+      bool isConnected = await isInternetConnected();
+
+      if (Injector.dashboardStatusResponse != null) {
+        OnOffFeatureData data = Injector.dashboardStatusResponse.data
+            .where((obj) => obj.type == int.parse(type))
+            ?.first;
+
+        if (data != null && data.isFeatureOn == 0) return;
+
+        if (!isConnected) {
           Utils.showLockReasonDialog(StringRes.noOffline, context, true);
+          return;
         }
-      });
-    } else {
-      clickWithValidation(type, context);
-    }
-  }
 
-  static void clickWithValidation(String type, BuildContext context) {
-    DashboardLockStatusData dashboardLockStatusData =
-        Injector.dashboardLockStatusData;
-
-    if (type == Const.typeOrg &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.organization != null &&
-        dashboardLockStatusData.organization != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typePl &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.pl != null &&
-        dashboardLockStatusData.pl != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typeRanking &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.ranking != null &&
-        dashboardLockStatusData.ranking != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typeReward &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.achievement != null &&
-        dashboardLockStatusData.achievement != 1) {
-      showLockReasonDialog(type, context, false);
-    } else if (type == Const.typeChallenges &&
-        dashboardLockStatusData != null &&
-        dashboardLockStatusData.challenge != null &&
-        dashboardLockStatusData.challenge != 1) {
-      showLockReasonDialog(type, context, false);
-    } else {
-      performNavigation(type, context);
+        if (data != null && data.isUnlock == 0) {
+          showLockReasonDialog(type, context, false);
+          return;
+        }
+      }
     }
-  }
-
-  static Widget ifIsLocked(String type, BuildContext context) {
-    DashboardLockStatusData dashboardLockStatusData =
-        Injector.dashboardLockStatusData;
-    switch (type) {
-      case "reward":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.achievement != null &&
-                dashboardLockStatusData.achievement != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "challenge":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.challenge != null &&
-                dashboardLockStatusData.challenge != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "org":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.organization != null &&
-                dashboardLockStatusData.organization != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "pl":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.pl != null &&
-                dashboardLockStatusData.pl != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      case "ranking":
-        return dashboardLockStatusData != null &&
-                dashboardLockStatusData.ranking != null &&
-                dashboardLockStatusData.ranking != 1
-            ? lockUi(type, context)
-            : Container();
-        break;
-      default:
-        return Container();
-        break;
-    }
+    performNavigation(type, context);
   }
 
   static Widget lockUi(String type, BuildContext context) {
@@ -665,9 +625,9 @@ class Utils {
       }
     } else {
       if (isAnsweredCorrect) {
-        return Utils.procorrectAnswerSound();
+        return Utils.proCorrectAnswerSound();
       } else {
-        return Utils.proincorrectAnswerSound();
+        return Utils.proIncorrectAnswerSound();
       }
     }
   }
@@ -681,9 +641,12 @@ class Utils {
     );
   }*/
 
-  static Widget pdfShow(PDFDocument doc) {
-    return PDFViewer(
-      document: doc,
+  static Widget pdfShow(String pdfPath, bool _isLoading) {
+    return new TemplatePageWidget(
+      height: double.infinity,
+      isLoading: _isLoading,
+      width: double.infinity,
+      previewPath: pdfPath,
     );
   }
 
@@ -728,8 +691,7 @@ class Utils {
 //            ));
 //  }
 
-  static showUnreadCount(
-      String type, double top, double right, List<UnreadBubbleCountData> data) {
+  static showUnreadCount(String type, double top, double right) {
     return Positioned(
         right: right,
         top: top,
@@ -738,17 +700,14 @@ class Utils {
             minHeight: 25.0,
             minWidth: 25.0,
           ),
-
-//TODO comment below code fro prod mode
-
-          child: getCount(type, data) > 0
+          child: getCount(type) > 0
               ? new DecoratedBox(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: ColorRes.greenDot),
                   child: Center(
                     child: Text(
-                      getCount(type, data).toString(),
+                      getCount(type).toString(),
                       style: TextStyle(color: ColorRes.white),
                     ),
                   ))
@@ -756,79 +715,20 @@ class Utils {
         ));
   }
 
-  static int getCount(String _type, List<UnreadBubbleCountData> data) {
-    if (data != null) {
-      int type = 0;
-      if (_type == Const.typeHome)
-        type = 0;
-      else if (_type == Const.typeBusinessSector)
-        type = 1;
-      else if (_type == Const.typeNewCustomer)
-        type = 2;
-      else if (_type == Const.typeExistingCustomer)
-        type = 3;
-      else if (_type == Const.typeReward)
-        type = 4;
-      else if (_type == Const.typeTeam)
-        type = 5;
-      else if (_type == Const.typeChallenges)
-        type = 6;
-      else if (_type == Const.typeOrg)
-        type = 7;
-      else if (_type == Const.typePl)
-        type = 8;
-      else if (_type == Const.typeRanking)
-        type = 9;
-      else
-        type = 0;
-
-      return data.length > 0
-          ? (data?.where((obj) => obj.type == type)?.first?.count ?? 00)
+  static int getCount(String _type) {
+    if (Injector.dashboardStatusResponse != null) {
+      return Injector.dashboardStatusResponse.data.length > 0
+          ? (Injector.dashboardStatusResponse.data
+                  ?.where((obj) => obj.type == int.parse(_type))
+                  ?.first
+                  ?.unreadCount ??
+              00)
           : 00;
     } else
       return 0;
   }
 
-  static int getHomePageIndex(String key) {
-    if (key == Const.typeHome) {
-      return 0;
-    } else if (key == Const.typeBusinessSector) {
-      return 1;
-    } else if (key == Const.typeNewCustomer) {
-      return 2;
-    } else if (key == Const.typeExistingCustomer) {
-      return 3;
-    } else if (key == Const.typeReward) {
-      return 4;
-    } else if (key == Const.typeTeam) {
-      return 5;
-    } else if (key == Const.typeChallenges) {
-      return Injector.isManager() ? 6 : 5;
-    } else if (key == Const.typeOrg) {
-      return Injector.isManager() ? 7 : 6;
-    } else if (key == Const.typePl) {
-      return Injector.isManager() ? 8 : 7;
-    } else if (key == Const.typeRanking) {
-      return Injector.isManager() ? 9 : 8;
-    } else if (key == Const.typeProfile) {
-      return Injector.isManager() ? 10 : 9;
-    } else if (key == Const.typeHelp) {
-      return Injector.isManager() ? 11 : 10;
-    } else if (key == Const.typeEngagement) {
-      return Injector.isManager() ? 12 : 11;
-    } else if (key == Const.typeCustomerSituation) {
-      return Injector.isManager() ? 13 : 12;
-    }
-    return 0;
-  }
-
   static void performNavigation(String type, BuildContext context) {
-//    HomeData homeData =
-//        HomeData(initialPageType: type, isCameFromDashboard: true);
-//
-//    Navigator.pushAndRemoveUntil(context, FadeRouteHome(homeData: homeData),
-//        ModalRoute.withName("/home"));
-
     navigationBloc.updateNavigation(HomeData(initialPageType: type));
   }
 
@@ -853,9 +753,117 @@ class Utils {
     return index;
   }
 
+  static String getQueValidationToast(int salesCount) {
+    String language = Injector.userData.language;
+    bool isBusinessMode = Injector.isBusinessMode;
+
+    if (isBusinessMode) {
+      switch (language) {
+        case "English":
+          return "You need at least ${salesCount} free Sales Reps and 1 free Service Reps to attempt this Question. You can add more Sales and Service Reps from the Organization.";
+          break;
+        case "German":
+          return "Du brauchst mindestens ${salesCount} freie Vertriebsmitarbeiter und 1 freien Servicemitarbeiter, um diese Frage zu beantworten. Du kannst weitere Vertriebs- und Servicemitarbeiter im Organisationmenü hinzufügen.";
+          break;
+        case "Chinese":
+          return "您需要至少${salesCount}个销售代表和1个服务代表来回答此问题。您可以从组织中添加更多销售代表。";
+          break;
+        default:
+          return "You need atleast ${salesCount} free Sales Reps and 1 free Service Reps to attempt this Question. You can add more Sales and Service Reps from the Organization.";
+          break;
+      }
+    } else {
+      switch (language) {
+        case "English":
+          return "You need at least ${salesCount} free Study Points and 1 free Memory Point to attempt this Question. You can add more Study and Memory Points in the Power-Up section.";
+          break;
+        case "German":
+          return "Du brauchst mindestens ${salesCount} freie Lernpunkte und 1 freie Bestandsfragenkapazität, um diese Frage zu beantworten. Du kannst weitere Kapazitä im Lernbonusmenü hinzufügen.";
+          break;
+        case "Chinese":
+          return "您需要至少${salesCount}个学习点数和1个记忆点数来回答此问题。您可以从威力升级中添加更多学习点数。";
+          break;
+        default:
+          return "You need at least ${salesCount} free Study Points and 1 free Memory Point to attempt this Question. You can add more Study and Memory Points in the Power-Up section.";
+          break;
+      }
+    }
+  }
+
+  static String challengeString(int question, int earn, int totalValue) {
+    String language = Injector.userData.language;
+    bool isBusinessMode = Injector.isBusinessMode;
+    if (isBusinessMode) {
+      switch (language) {
+        case "English":
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+        case "German":
+          return "Dein Freund muss ${question} Fragen beantworten. Wenn er gewinnt, verdient er ${earn} % seines Vermögen. Wenn du gewinnst, erhältst du ${totalValue} % deines Vermögens.";
+          break;
+        case "Chinese":
+          return "您的朋友将必须回答${question}个问题。如果他赢了，那么他将获得他的总价值的${earn} ％。如果您赢了，那么您将获得您的总价值的${totalValue} ％。";
+          break;
+        default:
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+      }
+    } else {
+      switch (language) {
+        case "English":
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+        case "German":
+          return "Dein Freund muss ${question} Fragen beantworten. Wenn er gewinnt, verdient er ${earn} % seines Vermögen. Wenn du gewinnst, erhältst du ${totalValue} % deines Vermögens.";
+          break;
+        case "Chinese":
+          return "您的朋友将必须回答${question}个问题。如果他赢了，那么他将获得他的总价值的${earn} ％。如果您赢了，那么您将获得您的总价值的${totalValue} ％。";
+          break;
+        default:
+          return "Your friend will have to answer ${question} questions. If he wins then he will earn ${earn} % of his total value. If you win then you will earn ${totalValue} % of your total value.";
+          break;
+      }
+    }
+  }
+
+  static String subscribeText(String moduleName) {
+    String language = Injector.userData.language;
+    bool isBusinessMode = Injector.isBusinessMode;
+    if (isBusinessMode) {
+      switch (language) {
+        case "English":
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+        case "German":
+          return 'Wirklich vom Modul $moduleName abmelden? Aller Fortschritt geht verlohren.';
+          break;
+        case "Chinese":
+          return "您确定要退订学习模块 $moduleName吗? 所有的进步都将丢失.";
+          break;
+        default:
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+      }
+    } else {
+      switch (language) {
+        case "English":
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+        case "German":
+          return "Wirklich vom Modul $moduleName abmelden? Aller Fortschritt geht verlohren.";
+          break;
+        case "Chinese":
+          return "您确定要退订学习模块 $moduleName吗? 所有的进步都将丢失.";
+          break;
+        default:
+          return 'Are you sure, you want to unsubscribe from Module $moduleName? All progress will be lost.';
+          break;
+      }
+    }
+  }
+
   static void addBadge() {
     int count = Injector.badgeCount + 1;
-    print('badge_Count' + count.toString());
     FlutterAppBadger.updateBadgeCount(count);
     Injector.prefs.setInt(PrefKeys.badgeCount, count);
     Injector.badgeCount = Injector.prefs.getInt(PrefKeys.badgeCount);
@@ -897,5 +905,54 @@ class Utils {
       return StringRes.unLockReward;
     else
       return "";
+  }
+
+  static bool isFeatureOn(String type) {
+    if (Injector.dashboardStatusResponse != null) {
+      List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
+
+      if (data.length > 0) {
+        int status = data
+            .where((obj) => obj.type == int.parse(type))
+            ?.first
+            ?.isFeatureOn;
+
+        return status == 1;
+      }
+    }
+
+    return true;
+  }
+
+  static bool isLocked(String type) {
+    if (Injector.dashboardStatusResponse != null) {
+      List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
+
+      if (data.length > 0) {
+        int status =
+            data.where((obj) => obj.type == int.parse(type))?.first?.isUnlock;
+
+        return status == 0;
+      }
+    }
+
+    return true;
+  }
+
+  static isShowUnreadCount(String type) {
+    return Utils.isFeatureOn(type) && !Utils.isLocked(type);
+  }
+
+  static isShowLock(String type) {
+    return Utils.isFeatureOn(type) && Utils.isLocked(type);
+  }
+
+  static void getCustomerValues() {
+    CustomerValueRequest rq = CustomerValueRequest();
+    rq.userId = Injector.userData.userId;
+
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) customerValueBloc?.getCustomerValue(rq);
+    });
   }
 }

@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:wasm';
-
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:device_id/device_id.dart';
@@ -11,83 +9,117 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-
-//import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/force_update.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/intro.dart';
+import 'package:ke_employee/models/intro_model.dart';
 import 'package:ke_employee/models/login.dart';
-import 'package:ke_employee/models/register_for_push.dart';
-import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:package_info/package_info.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
+
+/*
+*
+* single Instance class - called once when app opens
+*
+* */
+
 class Injector {
-//  static final Injector _singleton = new Injector._internal();
+
 
   static SharedPreferences prefs;
+
+  // Device's Unique Id
   static String deviceId = "";
+
+  // Android or Ios
+  static String deviceType = "";
+
+  // local Notification Id
   static int notificationID = 0;
+
+  //loggedIn user's data
   static UserData userData;
   static int userId;
+
+  // for Header Values
   static CustomerValueData customerValueData;
+
+  // Introduction dialog status data - to show when user first visits the screen
   static IntroData introData;
-  static DashboardLockStatusData dashboardLockStatusData;
+
+  // Lock-Unlock feature status
+  static DashboardStatusResponse dashboardStatusResponse;
+
+  // app is in Game mode or Business(Professional) Mode
   static int mode;
+
+  // Is business Mode selected
   static bool isBusinessMode = true;
+
+  // Is password changed by user when first time login? - it is necessary coz initially admin generated password is assigned to every user.
+  static bool isPasswordChange = false;
+
+  // To store Images, Videos in Cache for offline mode
   static DefaultCacheManager cacheManager;
+
+  // to notify header values when any changes made related to their value occurs.
   static StreamController<String> headerStreamController;
+
+  // to notify Home UI values when any changes made related to their value occurs.
   static StreamController<String> homeStreamController =
       new StreamController<String>();
-  static StreamController<String> newCustomerStreamController;
-  static FirebaseMessaging firebaseMessaging;
-  static bool isIntroRemaining = true;
-  static int currentIntroType = 0;
-  static String deviceType = "";
-  static List<UnreadBubbleCountData> unreadBubbleCountData = new List();
+
   static ui.Image image;
 
+  // Firebase Push notification
+  static FirebaseMessaging firebaseMessaging;
+
+  // Local Push notification
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+  // Is sound enabled from Profile > Settings bt the user (tap sound or background sound, achievement sound etc..)
   static bool isSoundEnable;
+
+  // For caching sound files once so it won't load every time
   static AudioCache audioCache = AudioCache(prefix: 'sounds/');
   static AudioCache audioCacheBg = AudioCache(prefix: 'sounds/');
 
+  // To play sound files
   static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
 
+  // is Development environment
   static bool isDev = true;
 
+  //Badge count that shows up on App Launcher icon on phone.
   static int badgeCount = 0;
 
-  static int dialogType = 0;
-
+  // Web API client to call the APIs
   static WebApi webApi;
 
+  // to get app version details
   static PackageInfo packageInfo;
+
+  // Global context of the application
   static BuildContext buildContext;
 
-//  factory Injector {
-//    return _singleton;
-//  }
+  static IntroModel introModel;
 
   Injector._internal();
 
+  // Pending challenge question count to Attempt
   static List<QuestionCountWithData> countList = new List();
 
   static getInstance() async {
-
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
 
@@ -103,14 +135,6 @@ class Injector {
     deviceId = await DeviceId.getID;
     print(deviceId);
 
-    if (prefs.getBool(PrefKeys.isSoundEnable) == null) {
-      await prefs.setBool(PrefKeys.isSoundEnable, true);
-    }
-
-    isSoundEnable = prefs.getBool(PrefKeys.isSoundEnable);
-
-    await Utils.playBackgroundMusic();
-
     updateInstance();
     init();
   }
@@ -121,7 +145,7 @@ class Injector {
 
   static Future<Null> init() async {
     final ByteData data =
-    await rootBundle.load(Utils.getAssetsImg("small_coin"));
+        await rootBundle.load(Utils.getAssetsImg("small_coin"));
     image = await loadImage(new Uint8List.view(data.buffer));
   }
 
@@ -139,12 +163,12 @@ class Injector {
 
       userId = userData.userId;
 
-      isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
-      dialogType = prefs.getInt(PrefKeys.dialogTypes);
-
-      if (prefs.getString(PrefKeys.customerValueData) != null)
+      if (prefs.getString(PrefKeys.customerValueData) != null) {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
+
+        isSoundEnable = customerValueData.isEnableSound == 1;
+      }
 
       if (prefs.getString(PrefKeys.introData) != null) {
         introData =
@@ -152,23 +176,13 @@ class Injector {
 
         updateIntroData();
       }
-      if (prefs.getString(PrefKeys.lockStatusData) != null) {
-        dashboardLockStatusData = DashboardLockStatusData.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.lockStatusData)));
-      }
 
-      if (prefs.getString(PrefKeys.unreadBubbleCountData) != null) {
-        List<String> countList =
-            prefs.getStringList(PrefKeys.unreadBubbleCountData);
-        unreadBubbleCountData = new List();
-        countList.forEach((v) {
-          unreadBubbleCountData
-              .add(UnreadBubbleCountData.fromJson(jsonDecode(v)));
-        });
+      if (prefs.getString(PrefKeys.dashboardStatusData) != null) {
+        dashboardStatusResponse = DashboardStatusResponse.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.dashboardStatusData)));
       }
 
       headerStreamController = StreamController.broadcast();
-      newCustomerStreamController = StreamController.broadcast();
       homeStreamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
@@ -176,6 +190,12 @@ class Injector {
       isBusinessMode = mode == Const.businessMode;
 
       getIntroData();
+      getIntroText();
+
+      if (prefs.getString(PrefKeys.introModel) != null) {
+        introModel = IntroModel.fromJson(
+            jsonDecode(prefs.getString(PrefKeys.introModel)));
+      }
     }
   }
 
@@ -195,12 +215,14 @@ class Injector {
     isBusinessMode = _mode == Const.businessMode;
   }
 
-  static setUserData(UserData _user) async {
+  static setUserData(UserData _user, bool isLanguage) async {
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
     userData = _user;
 
     userId = _user.userId;
+
+    if (!isLanguage) updateMode(_user.mode);
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
@@ -208,15 +230,28 @@ class Injector {
         PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
+
+    isSoundEnable = customerValueData.isEnableSound == 1;
+
+    if (mode != _customerValueData.mode) {
+      updateMode(customerValueData.mode);
+      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    }
   }
 
   static setIntroData(IntroData _introData) async {
     if (_introData != null) {
       await Injector.prefs
           .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
-
-//      updateIntroData();
       introData = _introData;
+    }
+  }
+
+  static setIntroModel(IntroModel _introModel) async {
+    if (_introModel != null) {
+      await Injector.prefs
+          .setString(PrefKeys.introModel, jsonEncode(_introModel.toJson()));
+      introModel = _introModel;
     }
   }
 
@@ -241,6 +276,25 @@ class Injector {
         }).catchError((e) {
           print("getIntro" + e.toString());
           // Utils.showToast(e.toString());
+        });
+      }
+    });
+  }
+
+  static getIntroText() {
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        IntroRequest rq = IntroRequest();
+        rq.userId = Injector.userId;
+        rq.type = 1;
+
+        WebApi().callAPI(WebApi.getIntroText, rq.toJson()).then((data) async {
+          if (data != null) {
+            introModel = IntroModel.fromJson(data);
+            await Injector.setIntroModel(introModel);
+          }
+        }).catchError((e) {
+          print("getIntro" + e.toString());
         });
       }
     });
@@ -272,6 +326,7 @@ class Injector {
     if (isConnected) {
       bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
       Map<String, dynamic> map = {
+        "userId": Injector.userId != null ? Injector.userId.toString() : null,
         "appVersion": packageInfo.version,
         "deviceType": isIOS ? "ios" : "android",
         "language":

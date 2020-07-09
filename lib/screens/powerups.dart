@@ -4,6 +4,7 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
@@ -21,40 +22,36 @@ import '../models/organization.dart';
 * */
 
 class PowerUpsPage extends StatefulWidget {
+  final RefreshAnimation mRefreshAnimation;
+
+  const PowerUpsPage({Key key, this.mRefreshAnimation}) : super(key: key);
+
   @override
   _PowerUpsPageState createState() => _PowerUpsPageState();
 }
 
 class _PowerUpsPageState extends State<PowerUpsPage> {
-
   TextEditingController searchController = TextEditingController();
   String searchText = "";
   Organization selectedOrg = Organization();
   int selectedIndex = 0;
 
-
   OrganizationData organizationData;
 
   List<Organization> arrOrganization = List();
-  bool isLoading  = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
     });
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   void getOrganization() {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
@@ -74,10 +71,9 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           arrOrganization = organizationData.organization;
           selectedOrg = arrOrganization[0];
 
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
         }
       }).catchError((e) {
-        print("getOrganizations_" + e.toString());
         if (mounted)
           setState(() {
             isLoading = false;
@@ -234,10 +230,11 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       ),
       onTap: () {
         Utils.playClickSound();
-        if (mounted)setState(() {
-          selectedOrg = arrOrganization[index];
-          selectedIndex = index;
-        });
+        if (mounted)
+          setState(() {
+            selectedOrg = arrOrganization[index];
+            selectedIndex = index;
+          });
       },
     );
   }
@@ -306,7 +303,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
-                                  : ColorRes.textProf,fontSize: 18),
+                                  : ColorRes.textProf,
+                              fontSize: 18),
                         ),
                       ),
                     ),
@@ -370,12 +368,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   color: ColorRes.greyText,
-//                          image: Injector.isBusinessMode
-//                              ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_progress')),
-//                                  fit: BoxFit.fill)
-//                              : null,
                                   borderRadius: BorderRadius.circular(20),
                                   border: Injector.isBusinessMode
                                       ? null
@@ -462,7 +454,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   }
 
   manageLevel(int action) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.action = action;
@@ -485,11 +477,19 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
           arrOrganization[selectedIndex] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
-          selectedOrg =  manageOrgData.organization[0];
+          selectedOrg = manageOrgData.organization[0];
 
           Utils.performManageLevel(manageOrgData);
 
-          if (mounted)setState(() {});
+          if (action == Const.subtract) {
+            triggerAnimation(selectedOrg.type);
+          } else if (action == Const.add) {
+            if (selectedOrg.type != Const.typeHR) {
+              triggerAnimation(Const.typeHR);
+            }
+          }
+
+          if (mounted) setState(() {});
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
@@ -502,5 +502,13 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         // Utils.showToast(e.toString());
       });
     });
+  }
+
+  void triggerAnimation(int type) {
+    try {
+      widget.mRefreshAnimation.onRefreshAchievement(type);
+    } catch (e) {
+      print(e);
+    }
   }
 }

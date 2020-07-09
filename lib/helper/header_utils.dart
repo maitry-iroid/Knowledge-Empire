@@ -3,8 +3,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'constant.dart';
 
 class HeaderUtils {
-
-  static  String getHeadText(String type) {
+  static String getHeadText(String type) {
     if (type == Const.typeEmployee)
       return "PU";
     else if (type == Const.typeSalesPersons)
@@ -14,22 +13,22 @@ class HeaderUtils {
     else if (type == Const.typeBrandValue)
       return "%";
     else if (type == Const.typeMoney)
-      return "LP";
+      return "KP";
     else
       return "";
   }
 
   static String getHeaderIcon(String type) {
     if (type == Const.typeSalesPersons)
-      return "ic_sales_header";
+        return Injector.isBusinessMode ? "ic_sales_header" : "employee_prof_ic";
     else if (type == Const.typeEmployee)
-      return "ic_people";
+      return Injector.isBusinessMode ? "ic_people" : "book";
     else if (type == Const.typeBrandValue)
-      return "ic_badge";
+      return Injector.isBusinessMode ? "ic_badge" : "question";
     else if (type == Const.typeServicesPerson)
-      return "ic_resourses";
+      return Injector.isBusinessMode ? "ic_resourses" : "bulb";
     else if (type == Const.typeMoney)
-      return "ic_dollar";
+      return Injector.isBusinessMode ? "ic_dollar" : "brain";
     else
       return "";
   }
@@ -101,7 +100,6 @@ class HeaderUtils {
                   Injector.customerValueData?.totalAttemptedQuestion == 0)
               ? 1
               : Injector.customerValueData?.totalAttemptedQuestion);
-
 
       return value <= 1 || value >= 0 ? value : 0.0;
     } catch (e) {

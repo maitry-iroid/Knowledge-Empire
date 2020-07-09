@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -29,9 +30,15 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   bool isLoading = false;
 
   @override
+  void initState() {
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent.withOpacity(0.8),
+      backgroundColor: Colors.transparent,
       body: showSetupPin(context),
     );
   }
@@ -42,7 +49,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         fit: StackFit.loose,
         children: <Widget>[
           Container(
-//            height: Utils.getDeviceHeight(context),
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
@@ -110,7 +116,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextField(
                                 controller: pass2Controller,
-//                                  textAlignVertical: TextAlignVertical.center,
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 obscureText: true,
@@ -153,20 +158,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                         ],
                       ),
                     ),
-//                        Positioned(
-//                          right: 50,
-//                          top: 10,
-//                          child: GestureDetector(
-//                            child: Image(
-//                              image: AssetImage(
-//                                  Utils.getAssetsImg("close_dialog")),
-//                              width: 20,
-//                            ),
-//                            onTap: () {
-//                              Navigator.pop(context);
-//                            },
-//                          ),
-//                        ),
                     Positioned(
                       top: Utils.getDeviceHeight(context) / 11,
                       right: 0,
@@ -190,12 +181,9 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               onTap: () {
                                 Utils.playClickSound();
                                 Utils.hideKeyboard(context);
-
                                 validateData();
                               }),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          SizedBox(height: 10),
                           InkResponse(
                               child: Container(
                                   alignment: Alignment.center,
@@ -214,7 +202,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                               onTap: () {
                                 Utils.playClickSound();
                                 Utils.hideKeyboard(context);
-
                                 Navigator.pop(context);
                               })
                         ],
@@ -281,22 +268,20 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
 
       if (data != null) {
         Utils.showToast(Utils.getText(context, StringRes.passwordChange));
+        Injector.isPasswordChange = true;
 
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
-//          Utils.navigateToIntro(context);
           Navigator.pushAndRemoveUntil(
               context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {
-      print("changePassword_" + e.toString());
       if (mounted)
         setState(() {
           isLoading = false;
         });
-      // Utils.showToast(e.toString());
     });
   }
 

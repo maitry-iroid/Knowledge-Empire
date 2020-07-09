@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 #version: 1.0.4+2
-version: 1.1.2+10
+version: 1.2.0+18
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -24,7 +24,7 @@ dependencies:
   intl:
   device_id: ^0.2.0
   percent_indicator: ^2.1.1
-  fluttertoast: ^3.1.3
+  fluttertoast: ^4.0.1
   shared_preferences: ^0.5.4+5
   bubble_tab_indicator: ^0.1.4
   flutter_localizations:
@@ -42,13 +42,13 @@ dependencies:
   firebase_core: ^0.4.4+3
   flutter_local_notifications: ^1.3.0
   connectivity: ^0.4.5+7
-  audioplayers: ^0.14.2
+  audioplayers: ^0.15.1
   #simple_animations: ^1.2.0
   pie_chart: ^3.1.1
   package_info: ^0.4.0+13
   rxdart: ^0.21.0
   charts_flutter: ^0.8.1
-  #http: 0.12.0+4
+  http: 0.12.0+4
   flutter_spinkit: ^4.1.1
   flutter_app_badger: ^1.1.2
   carousel_slider: ^1.4.1
@@ -56,7 +56,11 @@ dependencies:
   #animated_background:
   shimmer: 1.1.0
   open_appstore: ^1.0.2
-  flutter_plugin_pdf_viewer: ^1.0.7
+  pdf_previewer: ^0.1.0
+  auto_size_text: ^2.1.0
+  chewie: ^0.9.10
+  like_button: ^0.2.0
+  simple_animations: ^2.2.1
 
 
 

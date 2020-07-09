@@ -1,4 +1,6 @@
 import 'package:ke_employee/BLoC/repository.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -21,7 +23,13 @@ class CustomerValueBloc {
     if (data != null) {
       CustomerValueData customerValueData = CustomerValueData.fromJson(data);
       await Injector.setCustomerValueData(customerValueData);
-      _assignModuleSubject.sink.add(customerValueData);
+
+      if (customerValueData.isChallengeAvailable == 1) {
+        Injector.homeStreamController
+            ?.add("${Const.openPendingChallengeDialog}");
+      }
+
+      _assignModuleSubject.add(customerValueData);
     }
   }
 
@@ -32,13 +40,8 @@ class CustomerValueBloc {
     }
   }
 
-  bailOut(BailOutRequest rq) async {
-    dynamic data = await _repository.bailOut(rq);
-
-    if (data != null) {
-      CustomerValueData customerValueData = CustomerValueData.fromJson(data);
-      _assignModuleSubject.sink.add(customerValueData);
-    }
+  updateCustomerValue(CustomerValueData customerValueData) {
+    _assignModuleSubject.sink.add(customerValueData);
   }
 
   releaseResource(ReleaseResourceRequest rq) async {

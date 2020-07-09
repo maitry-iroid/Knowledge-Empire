@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
@@ -7,35 +10,36 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
+import 'package:ke_employee/screens/home.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 
-/*
-*   created by Riddhi
-*
-*   Game mode Dashboard UI for Game version of the app.
-*   User can increase and decrease the level of diff departments
-*
-* */
-
 int position1;
 
 bool isCheckLoad = false;
 
+class OrganizationsPage2 extends StatefulWidget {
+  final RefreshAnimation mRefreshAnimation;
 
-class OrganizationsPage extends StatefulWidget {
+  const OrganizationsPage2({Key key, this.mRefreshAnimation}) : super(key: key);
   @override
-  _OrganizationsPageState createState() => _OrganizationsPageState();
+  _OrganizationsPage2State createState() => _OrganizationsPage2State();
 }
 
-class _OrganizationsPageState extends State<OrganizationsPage> {
+class _OrganizationsPage2State extends State<OrganizationsPage2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<Organization> arrOrganization = List();
   bool isLoading = false;
+
+
+
 
   @override
   initState() {
@@ -44,10 +48,10 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   Future showIntroDialog() async {
-    if (Injector.introData == null || Injector.introData.org1 == 0)
-      await DisplayDialogs.showHireHRDialog(context);
+    if (Injector.introData != null && Injector.introData.org1 == 0)
+      await DisplayDialogs.showIntroOrg1(context);
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
     });
   }
@@ -88,142 +92,134 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
 
     Organization org = arrOrganization.firstWhere((org) => org.type == type);
 
-    return Stack(
-      fit: StackFit.loose,
-      children: <Widget>[
-        InkResponse(
-          child: Container(
-            height: 110,
-            width: 110,
-//            color: Colors.black,
-            child: Card(
-              margin: EdgeInsets.only(
-                  left: 4,
-                  right: 4,
-                  top: type == Const.typeSales ||
-                          type == Const.typeOperations ||
-                          type == Const.typeFinance
-                      ? 60
-                      : 4,
-                  bottom: type == Const.typeSales ||
-                          type == Const.typeOperations ||
-                          type == Const.typeFinance
-                      ? 4
-                      : 60),
-//              margin: EdgeInsets.all(4),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return InkResponse(
+      child: Container(
+        height: 110,
+        width: 110,
+        child: Card(
+          margin: EdgeInsets.only(
+              left: 4,
+              right: 4,
+              top: type == Const.typeSales ||
+                      type == Const.typeOperations ||
+                      type == Const.typeFinance
+                  ? 60
+                  : 4,
+              bottom: type == Const.typeSales ||
+                      type == Const.typeOperations ||
+                      type == Const.typeFinance
+                  ? 4
+                  : 60),
+          elevation: 5,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 5, right: 5),
-                        width: 18,
-                        height: 18,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            color: ColorRes.headerBlue),
-                        child: Text(
-                          org.level.toString(),
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.hintColor),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          org.name,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.textBlue
-                                  : ColorRes.hintColor),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                    ],
-                  ),
-                  Stack(
+                  Container(
+                    margin: EdgeInsets.only(left: 5, right: 5),
+                    width: 18,
+                    height: 18,
                     alignment: Alignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 15,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg('bg_progress_2')),
-                                fit: BoxFit.fill)),
-                      ),
-                      LinearPercentIndicator(
-                        alignment: MainAxisAlignment.center,
-                        lineHeight: 15.0,
-                        percent: Utils.getProgress(org),
-                        backgroundColor: Colors.transparent,
-                        progressColor: Colors.blue,
-                      )
-                    ],
-//                    ),
-                  )
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        color: ColorRes.headerBlue),
+                    child: Text(
+                      org != null && org.level != null
+                          ? org.level.toString()
+                          : "",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.hintColor),
+                    ),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
+                      org != null && org.name != null ? org.name : "",
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      minFontSize: 4,
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.textBlue
+                              : ColorRes.hintColor),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
                 ],
               ),
-            ),
+              Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 15,
+                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage(Utils.getAssetsImg('bg_progress_2')),
+                            fit: BoxFit.fill)),
+                  ),
+                  LinearPercentIndicator(
+                    alignment: MainAxisAlignment.center,
+                    lineHeight: 15.0,
+                    percent: Utils.getProgress(org),
+                    backgroundColor: Colors.transparent,
+                    progressColor: Colors.blue,
+                  )
+                ],
+//                    ),
+              )
+            ],
           ),
-          onTap: () async {
-//            showBody(context, arrOrganization[position].description);
-
-            var data = await showDialog(
-                context: _scaffoldKey.currentContext,
-                builder: (BuildContext context) => OrgInfoDialog(
-                      text: org.description,
-                      isForIntroDialog: false,
-                    ));
-
-
-            if (data != null) manageLevel(org, data);
-          },
         ),
-      ],
-    );
-  }
+      ),
+      onTap: () async {
+        if (type == Const.typeLegal && !Utils.isFeatureOn(Const.typeChallenges))
+          return;
 
-  String getTitle(int position) {
-    return Utils.getText(context, arrOrganization[position].name);
+        var data = await showDialog(
+            context: _scaffoldKey.currentContext,
+            builder: (BuildContext context) => OrgInfoDialog(
+                  text: org.description,
+                  isForIntroDialog: false,
+                ));
+        if (data != null) manageLevel(org, data, type);
+      },
+    );
   }
 
   showItems() {
     return Padding(
       padding: EdgeInsets.only(
-          left: Utils.getDeviceWidth(context) / 10,
+          left: Utils.getDeviceWidth(context) / 12,
           right: Utils.getDeviceWidth(context) / 10),
       child: Stack(
         children: <Widget>[
           Positioned(
-            left: 10,
+            left: 0,
             top: 50,
             child: showItem(Const.typeCRM),
           ),
           Positioned(
             right: 5,
             top: 50,
-            child: showItem(Const.typeLegal),
+            child: Utils.isFeatureOn(Const.typeChallenges)
+                ? showItem(Const.typeLegal)
+                : Container(),
           ),
           Positioned(
-            left: Utils.getDeviceWidth(context) / 7.0,
+            left: Utils.getDeviceWidth(context) / 6,
             top: 20,
             child: showItem(Const.typeHR),
           ),
@@ -264,7 +260,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
   }
 
   void getOrganization() {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       GetOrganizationRequest rq = GetOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.mode = Injector.isBusinessMode ? 1 : 2;
@@ -314,8 +310,8 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     }
   }
 
-  manageLevel(Organization organization, int action) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+  void manageLevel(Organization organization, int action, int type) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       ManageOrganizationRequest rq = ManageOrganizationRequest();
       rq.userId = Injector.userData.userId;
       rq.action = action;
@@ -346,6 +342,11 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
           }
 
           if (mounted) setState(() {});
+
+          if (action == Const.subtract) {
+            triggerAnimation(type);
+          }
+
           Utils.performManageLevel(manageOrgData);
         } else {
           Utils.getText(context, StringRes.somethingWrong);
@@ -360,7 +361,7 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
     });
   }
 
-  showBack() {
+  Widget showBack() {
     return Positioned(
       top: DimenRes.titleBarHeight,
       child: InkResponse(
@@ -378,6 +379,14 @@ class _OrganizationsPageState extends State<OrganizationsPage> {
       ),
     );
   }
+
+  void triggerAnimation(int type) {
+    try {
+      widget.mRefreshAnimation.onRefreshAchievement(type);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 //alert dialog open
@@ -392,7 +401,7 @@ class OrgInfoDialog extends StatefulWidget {
   }) : super(key: key);
 
   final String text;
-  final _OrganizationsPageState organizationsPage2;
+  final _OrganizationsPage2State organizationsPage2;
   final int position;
   final bool isForIntroDialog;
 

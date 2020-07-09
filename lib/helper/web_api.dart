@@ -40,17 +40,18 @@ class WebApi {
   static String rqGetDownloadQuestions = "getDownloadQuestions";
   static String rqSearchFriends = "searchFriends";
   static String rqRegisterForPush = "registerForPush";
-  static String rqUnreadBubbleCount = "unreadBubbleCount";
+//  static String rqUnreadBubbleCount = "unreadBubbleCount";
   static String rqGetTeamUsers = "getTeamUsers";
   static String rqGetTeamUserById = "getTeamUserById";
   static String rqGetPerformance = "getPerformance";
   static String rqGetCompany = "getCompany";
-  static String updateLanguage = "updateLanguage";
-  static String updateMode = "updateMode";
+  static String updateModeAndSoundStatus = "updateModeAndSoundStatus";
   static String switchCompanyProfile = "switchCompanyProfile";
   static String rqGameIntro = "gameIntro";
   static String forceUpdate = "forceUpdate";
-  static String rqDashboardLockStatus = "dashboardLockStatus";
+  static String updateUserSetting = "updateUserSetting";
+  static String rqGetDashboardStatus = "getDashboardStatus";
+  static String getIntroText = "getIntroText";
 
   static getRequest(String req, String data) {
     return {
@@ -79,6 +80,7 @@ class WebApi {
     initDio();
 
     print(apiReq + "_" + json.encode(jsonMap));
+
     final response = await dio
         .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
         .catchError((e) {
@@ -94,9 +96,12 @@ class WebApi {
 
       if (_response != null) {
         if (_response.flag == "true") {
-          if (!isUserRemovedFromCompany(_response.flag, _response.msg))
+          if (!isUserRemovedFromCompany(_response.flag, _response.msg)) {
+            if(apiReq== rqGetDashboardStatus)
+              return jsonDecode(response.data);
+            else
             return _response.data;
-          else {
+          } else {
             Utils.showToast(_response.msg);
             return null;
           }
@@ -115,9 +120,6 @@ class WebApi {
   Future<UserData> updateProfile(
       Map<String, dynamic> jsonMap, File file) async {
     initDio();
-
-    print("updateProfile_request__" + json.encode(jsonMap));
-    print("headers" + dio.options.headers.toString());
 
     try {
       FormData formData = await getUploadProfileRequest(

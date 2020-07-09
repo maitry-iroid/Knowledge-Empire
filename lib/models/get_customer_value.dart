@@ -1,3 +1,5 @@
+import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class CustomerValueRequest {
   int userId;
@@ -30,23 +32,30 @@ class CustomerValueData {
   int correctAnswerCount;
   int totalSalesPerson;
   String introText;
+  int isSwitchEnable = 1;
+  int isEnableSound = 1;
+  int mode = Const.businessMode;
+  int isChallengeAvailable = 0;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
-        this.manager,
-        this.remainingEmployeeCapacity,
-        this.totalCustomerCapacity,
-        this.remainingCustomerCapacity,
-        this.remainingSalesPerson,
-        this.totalBalance,
-        this.loyaltyBonus,
-        this.valueBonus,
-        this.resourceBonus,
-        this.totalAttemptedQuestion,
-        this.correctAnswerCount,
-        this.introText,
-        this.totalSalesPerson
-      });
+      this.manager,
+      this.remainingEmployeeCapacity,
+      this.totalCustomerCapacity,
+      this.remainingCustomerCapacity,
+      this.remainingSalesPerson,
+      this.totalBalance,
+      this.loyaltyBonus,
+      this.valueBonus,
+      this.resourceBonus,
+      this.totalAttemptedQuestion,
+      this.correctAnswerCount,
+      this.introText,
+      this.totalSalesPerson,
+      this.isSwitchEnable,
+      this.isEnableSound,
+      this.mode,
+      this.isChallengeAvailable});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
@@ -63,6 +72,10 @@ class CustomerValueData {
     correctAnswerCount = json['correctAnswerCount'];
     totalSalesPerson = json['totalSalesPerson'];
     introText = json['introText'];
+    isSwitchEnable = json['isSwitchEnable'];
+    isEnableSound = json['isEnableSound'];
+    mode = json['mode'];
+    isChallengeAvailable = json['isChallengeAvailable'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,7 +94,10 @@ class CustomerValueData {
     data['correctAnswerCount'] = this.correctAnswerCount;
     data['totalSalesPerson'] = this.totalSalesPerson;
     data['introText'] = this.introText;
+    data['isSwitchEnable'] = this.isSwitchEnable;
+    data['isEnableSound'] = this.isEnableSound;
+    data['mode'] = this.mode;
+    data['isChallengeAvailable'] = this.isChallengeAvailable;
     return data;
   }
 }
-

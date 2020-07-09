@@ -7,14 +7,18 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/language.dart';
 import 'package:ke_employee/models/switch_company.dart';
 import 'package:ke_employee/models/update_mode.dart';
+import 'package:ke_employee/models/update_user_setting.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,6 +53,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
+  String updateUserID;
+  String updateType;
+  String updateMode;
+  String updateIsSoundEnable;
+  String updateLanguage;
+  int updateCompanyId;
+
   @override
   void initState() {
     showIntroDialog();
@@ -56,12 +67,19 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData == null || Injector.introData.profile1 == 0)
-      await DisplayDialogs.showIntroDialog(context);
+    if (Injector.introData != null && Injector.introData.profile1 == 0)
+      await DisplayDialogs.showIntroProfile1(context);
 
     myFocusNode = FocusNode();
 
     companyController.text = Injector.userData?.companyName;
+    updateUserID = Injector.userId.toString();
+    updateIsSoundEnable =
+        Injector.isSoundEnable != null && Injector.isSoundEnable
+            ? 1.toString()
+            : 0.toString();
+    updateMode = Injector.mode.toString();
+    updateLanguage = Injector.userData.language;
 
     photoUrl = Injector.userData != null
         ? Injector.userData?.profileImage != null
@@ -162,7 +180,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: <Widget>[
                       Container(
                         width: 150,
-//                        padding: EdgeInsets.symmetric(horizontal: 15),
                         height: Injector.isBusinessMode ? 30 : 30,
                         margin: EdgeInsets.only(top: 15, left: 65, right: 65),
                         alignment: Alignment.center,
@@ -190,23 +207,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Container(
                         height: 30,
-//                        alignment: Alignment.center,
                         margin: EdgeInsets.only(top: 10, bottom: 10),
                         child: Container(
-                          /* decoration: BoxDecoration(
-                              color: Injector.isBusinessMode
-                                  ? null
-                                  : ColorRes.bgSettings,
-                              borderRadius: Injector.isBusinessMode
-                                  ? null
-                                  : BorderRadius.circular(20),
-//                              image: Injector.isBusinessMode
-//                                  ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_privacy')))
-//                                  : null
-                          ),*/
-
                           child: Center(
                             child: Text(
                               getVersion(),
@@ -363,47 +365,56 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
-                      InkResponse(
-                        child: Container(
-                          height: 35,
-                          margin: EdgeInsets.only(top: 15),
-                          alignment: Alignment.center,
-                          child: Text(
-                            Utils.getText(
-                                context,
-                                Injector.isBusinessMode
-                                    ? StringRes.switchProfMode
-                                    : StringRes.switchBusinessMode),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: ColorRes.white,
-                                fontSize: 15,
-                                letterSpacing: 0.7),
-                          ),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(Utils.getAssetsImg(
-                                      'bg_switch_to_prfsnl')),
-                                  fit: BoxFit.fill)),
-                        ),
-                        onTap: () async {
-                          Utils.playClickSound();
+                      Injector.customerValueData != null &&
+                              Injector.customerValueData.isSwitchEnable !=
+                                  null &&
+                              Injector.customerValueData.isSwitchEnable == 1
+                          ? InkResponse(
+                              child: Container(
+                                height: 35,
+                                margin: EdgeInsets.only(top: 15),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  Utils.getText(
+                                      context,
+                                      Injector.isBusinessMode
+                                          ? StringRes.switchProfMode
+                                          : StringRes.switchBusinessMode),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: ColorRes.white,
+                                      fontSize: 15,
+                                      letterSpacing: 0.7),
+                                ),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            'bg_switch_to_prfsnl')),
+                                        fit: BoxFit.fill)),
+                              ),
+                              onTap: () async {
+                                Utils.playClickSound();
 
-                          await Injector.updateMode(Injector.isBusinessMode
-                              ? Const.professionalMode
-                              : Const.businessMode);
+                                await Injector.updateMode(
+                                    Injector.isBusinessMode
+                                        ? Const.professionalMode
+                                        : Const.businessMode);
 
-                          switchModeApi();
+                                updateType = 1.toString();
+                                updateMode = Injector.mode.toString();
+                                await callApiForUpdateUserSetting(
+                                    updateType, null);
 
-                          Utils.playBackgroundMusic();
+                                Utils.playBackgroundMusic();
 
-                          localeBloc.setLocale(
-                              Utils.getIndexLocale(Injector.userData.language));
+                                localeBloc.setLocale(Utils.getIndexLocale(
+                                    Injector.userData.language));
 
-                          setState(() {});
-                        },
-                      ),
+                                setState(() {});
+                              },
+                            )
+                          : Container(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -420,13 +431,20 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                           ),
                           Switch(
-                            value: Injector.isSoundEnable,
+                            value: Injector.isSoundEnable!=null && Injector.isSoundEnable,
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
-                              await Injector.prefs
-                                  .setBool(PrefKeys.isSoundEnable, value);
+                              Injector.customerValueData.isEnableSound =
+                                  Injector.isSoundEnable ? 1 : 0;
+                              //Injector.setCustomerValueData(Injector.customerValueData);
 
                               Utils.playBackgroundMusic();
+
+                              updateType = 2.toString();
+                              updateIsSoundEnable =
+                                  value ? 1.toString() : 0.toString();
+                              updateMode = Injector.mode.toString();
+                              callApiForUpdateUserSetting(updateType, null);
 
                               setState(() {});
                             },
@@ -467,8 +485,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           decoration: bailOutDecoration(),
                         ),
-                        onTap: !Injector.isManager() &&
-                                Injector.customerValueData.totalBalance <= 0
+                        onTap: Injector.customerValueData!=null && Injector.customerValueData.totalBalance <= 0
                             ? () async {
                                 Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
@@ -547,6 +564,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
+                CommonView.showCircularProgress(true, context);
                 performBailOut();
               },
             ),
@@ -590,7 +608,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           Injector.userData.companyName =
                               companyList[index].companyName;
 
-                          switchCompanyList(companyList[index].companyId);
+                          updateType = 4.toString();
+                          updateCompanyId = companyList[index].companyId;
+                          callApiForUpdateUserSetting(updateType, null);
 
                           Navigator.pop(context);
                         },
@@ -640,12 +660,25 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
-  void performBailOut() {
+  Future<void> performBailOut() async {
     BailOutRequest rq = BailOutRequest();
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
 
-    customerValueBloc?.bailOut(rq);
+    WebApi().callAPI(WebApi.rqBailOut, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+      if (data != null) {
+        if (data is Map) {
+          CustomerValueData customerValueData =
+              CustomerValueData.fromJson(data);
+          await customerValueBloc?.updateCustomerValue(customerValueData);
+          navigationBloc
+              .updateNavigation(HomeData(initialPageType: Const.typeProfile));
+        } else if (data is String) {
+          Utils.showToast(data.toString());
+        }
+      }
+    }).catchError((e) {});
   }
 
   logout() async {
@@ -1106,7 +1139,7 @@ class _ProfilePageState extends State<ProfilePage> {
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
     } else {
-      throw 'Could not launch $url';
+      throw '${Utils.getText(context, StringRes.strUrlExeption)} $url';
     }
   }
 
@@ -1114,7 +1147,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (await canLaunch("mailto:$email")) {
       await launch("mailto:$email");
     } else {
-      throw 'Could not launch';
+      throw Utils.getText(context, StringRes.strUrlExeption);
     }
   }
 
@@ -1141,13 +1174,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       return GestureDetector(
                         onTap: () async {
                           try {
-                            if (index == 0) {
-                              await languageChangeAPI(Const.english, index);
-                            } else if (index == 1) {
-                              await languageChangeAPI(Const.german, index);
-                            } else if (index == 2) {
-                              await languageChangeAPI(Const.chinese, index);
-                            }
+                            updateType = 3.toString();
+                            await setLanguage(index);
+                            Navigator.pop(context);
+                            callApiForUpdateUserSetting(updateType, index);
                           } catch (e) {
                             print(e);
                           }
@@ -1247,7 +1277,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.userData.profileImage = data.profileImage;
         Injector.userData.companyName = data.companyName;
 
-        await Injector.setUserData(Injector.userData);
+        await Injector.setUserData(Injector.userData, false);
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
 
@@ -1290,21 +1320,35 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  /*
+  *           IMPORTANT
+  * We introduced the "App version", so that we have a reference we can use to have a common understanding which version we are talking about.
+  * The versioning could work like this:
+  * "A-BBB-C Version: XXX.YYY-ZZZ"
+  * A is replaced with P for Productive, T for Testing (which we do not have at the moment) and D for Development.
+  * BBB is replaced if we have customer specific versions. Standard is BES (for Blue Elephants Solutions)
+  * C is replaced with the target operating system (I for iOS and A for Android). is this enough or should we have more coding for the operating system
+  * (e.g. in case of mayor changes of operating system and we need to have different versions ready for different operating systems?
+  * X= is version numbering for mayor releases. Currently 000. Once we have a version to really go live with it will be 001.
+  * Y= For bigger updated (e.g. new features implemented). Falls back to 000 when X goes up by one
+  * Z= for smaller updates and bug fixes. Falls back to 000 when Y goes up by one.
+  * */
+
   String getVersion() {
     String mode = Injector.isDev ? "D" : "P";
     String customerSpecificVersion = "BES"; //Blue Elephants Solutions
     String os = Injector.deviceType == "ios" ? "I" : "A";
 
-    String x = "000";
+    String x = "003";
     String y = "000";
-    String z = "012";
+    String z = "001";
 
     return mode +
         "-" +
         customerSpecificVersion +
         "-" +
         os +
-        " Version: " +
+        " ${Utils.getText(context, StringRes.strVersion)}: " +
         x +
         "." +
         y +
@@ -1312,64 +1356,65 @@ class _ProfilePageState extends State<ProfilePage> {
         z;
   }
 
-  //Update Language API
-
-  languageChangeAPI(String language, int index) {
+  callApiForUpdateUserSetting(String updateType, int index) {
     Utils.playClickSound();
 
-    LanguageRequest rq = LanguageRequest();
-    rq.userId = Injector.userId.toString();
-    rq.language = language;
+    UpdateUserSetting rq = UpdateUserSetting();
+    rq.userId = updateUserID;
+    rq.type = updateType;
+    rq.mode = updateMode;
+    rq.isSoundEnable = updateIsSoundEnable;
+    rq.language = updateLanguage;
+    if (updateCompanyId != null) {
+      rq.companyId = updateCompanyId;
+    }
 
-//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
+    print(rq);
     CommonView.showCircularProgress(true, context);
-    WebApi().callAPI(WebApi.updateLanguage, rq.toJson()).then((data) async {
+    WebApi().callAPI(WebApi.updateUserSetting, rq.toJson()).then((data) async {
       CommonView.showCircularProgress(false, context);
-      Navigator.pop(context);
-
+      print(data);
       if (data != null) {
-        localeBloc.setLocale(index);
-        Injector.userData.language = language;
-        await Injector.setUserData(Injector.userData);
-        setState(() {});
+        await Injector.getIntroText();
+        switch (updateType) {
+          case "1":
+            await setMode();
+            break;
+          case "3":
+            break;
+          case "4":
+            await setCompany();
+            break;
+        }
+
+        Utils.getCustomerValues();
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
-      Utils.performBack(context);
     }).catchError((e) {
-      Utils.performBack(context);
-      print("updatePorfile_" + e.toString());
       CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
     });
   }
 
-  //Update Language API
+  Future setLanguage(int index) async {
+    switch (index) {
+      case 0:
+        Injector.userData.language = Const.english;
+        updateLanguage = Const.english;
+        break;
+      case 1:
+        Injector.userData.language = Const.german;
+        updateLanguage = Const.german;
+        break;
+      case 2:
+        Injector.userData.language = Const.chinese;
+        updateLanguage = Const.chinese;
+        break;
+    }
 
-  switchModeApi() {
-    Utils.playClickSound();
-
-    UpdateModeRequest rq = UpdateModeRequest();
-    rq.userId = Injector.userId.toString();
-    rq.mode = Injector.mode ?? Const.businessMode;
-
-    CommonView.showCircularProgress(true, context);
-    WebApi().callAPI(WebApi.updateMode, rq.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-        Injector.userData.mode = Injector.mode;
-        await Injector.setUserData(Injector.userData);
-        setState(() {});
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-      }
-    }).catchError((e) {
-      Utils.performBack(context);
-      print("updatePorfile_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
-    });
+    localeBloc.setLocale(index);
+    await Injector.setUserData(Injector.userData, true);
+    await Injector.getIntroText();
   }
 
   removeKeys() {
@@ -1383,42 +1428,19 @@ class _ProfilePageState extends State<ProfilePage> {
     Injector.prefs.remove(PrefKeys.customerValueData);
     Injector.prefs.remove(PrefKeys.learningModles);
     Injector.prefs.remove(PrefKeys.download);
-    Injector.prefs.remove(PrefKeys.isSoundEnable);
-    Injector.prefs.remove(PrefKeys.isIntroRemaining);
     Injector.prefs.remove(PrefKeys.currentIntroType);
     Injector.prefs.remove(PrefKeys.deviceToken);
     Injector.prefs.remove(PrefKeys.badgeCount);
-    Injector.prefs.remove(PrefKeys.dialogTypes);
   }
 
   //switch Company List
 
-  switchCompanyList(int companyId) {
-    Utils.playClickSound();
+  setMode() async {
+    Injector.userData.mode = Injector.mode;
+    await Injector.setUserData(Injector.userData, false);
+  }
 
-    SwitchCompanyRequest rq = SwitchCompanyRequest();
-    rq.userId = Injector.userId.toString();
-    rq.companyId = companyId.toString();
-
-//    Map<String, dynamic> map = {"userId": Injector.userId, "language": };
-    CommonView.showCircularProgress(true, context);
-    WebApi()
-        .callAPI(WebApi.switchCompanyProfile, rq.toJson())
-        .then((data) async {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-//        await Injector.setUserData(Injector.userData);
-
-        localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
-      }
-//      Utils.performBack(context);
-    }).catchError((e) {
-      print("updatePorfile_" + e.toString());
-      CommonView.showCircularProgress(false, context);
-      // Utils.showToast(e.toString());
-    });
+  setCompany() {
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
   }
 }

@@ -9,9 +9,8 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/intro.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 
 import '../helper/constant.dart';
 
@@ -35,11 +34,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
   AnimationController rotationController;
 
-  List<UnreadBubbleCountData> unreadBubbleCountData = new List();
   bool startAnim = false;
   int duration = 4;
   bool isCoinViseble = false;
-  DashboardLockStatusData dashboardLockStatusData;
 
   @override
   void initState() {
@@ -52,11 +49,11 @@ class DashboardGamePageState extends State<DashboardGamePage>
     if (Injector.introData == null) {
       getIntroData();
     } else if (Injector.introData.dashboard == 0) {
-      showIntroDialog();
+      if (Injector.isPasswordChange) {
+        showIntroDialog();
+      }
     }
-    getUnreadBubbleCount();
-    getLockStatus();
-
+    getDashboardStatus();
   }
 
   getIntroData() {
@@ -98,12 +95,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
   }
 
   @override
-  void dispose() {
-    print("dispose=======");
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -114,8 +105,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
           width: double.infinity,
           child: Stack(
             children: <Widget>[
-              CommonView.showDashboardView(context, unreadBubbleCountData),
-             // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+              CommonView.showDashboardView(context),
+            //  HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+              // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
         ),
@@ -123,50 +115,23 @@ class DashboardGamePageState extends State<DashboardGamePage>
     );
   }
 
-  void getUnreadBubbleCount() {
+  getDashboardStatus() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        DashboardRequest rq = DashboardRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
+        DashboardStatusRequest rq = DashboardStatusRequest();
+        rq.userId = Injector.userData.userId;
 
-        WebApi()
-            .callAPI(WebApi.rqUnreadBubbleCount, rq.toJson())
-            .then((data) async {
+        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            List<String> listCount = new List();
-            data.forEach((v) {
-              unreadBubbleCountData.add(UnreadBubbleCountData.fromJson(v));
-              listCount.add(jsonEncode(v));
-            });
+            DashboardStatusResponse response =
+                DashboardStatusResponse.fromJson(data);
 
+            if (response.data.isNotEmpty) {
+              Injector.prefs.setString(PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
+              Injector.dashboardStatusResponse = response;
 
-            await Injector.prefs
-                .setStringList(PrefKeys.unreadBubbleCountData, listCount);
-            Injector.unreadBubbleCountData = unreadBubbleCountData;
-            if (unreadBubbleCountData.isNotEmpty) if (mounted) setState(() {});
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
-  }
-
-  void getLockStatus() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardLockStatusRequest rq = DashboardLockStatusRequest();
-        rq.userId = Injector.userId;
-        rq.mode = Injector.mode ?? Const.businessMode;
-
-        WebApi()
-            .callAPI(WebApi.rqDashboardLockStatus, rq.toJson())
-            .then((data) {
-          if (data != null) {
-            dashboardLockStatusData = DashboardLockStatusData.fromJson(data);
-            Injector.dashboardLockStatusData = dashboardLockStatusData;
-            if (mounted) setState(() {});
+              if (mounted) setState(() {});
+            }
           }
         }).catchError((e) {
           print("getDashboardValue_" + e.toString());

@@ -36,6 +36,7 @@ class ExistingCustomerPage extends StatefulWidget {
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -45,8 +46,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   }
 
   Future initContent() async {
-    if (Injector.introData == null || Injector.introData.existingCustomer1 == 0)
-      await DisplayDialogs.showServingYourExistingCustomers(context);
+    if (Injector.introData != null &&
+        Injector.introData.existingCustomer1 == 0) {
+      await DisplayDialogs.showIntroExisting1(context);
+    }
 
     QuestionRequest rq = QuestionRequest();
     rq.userId = Injector.userData.userId;
@@ -55,7 +58,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   }
 
   void releaseResource(int index) {
-    Utils.isInternetConnectedWithAlert().then((_) {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
       QuestionData questionData = arrQuestions[index];
 
       ReleaseResourceRequest rq = ReleaseResourceRequest();
@@ -66,7 +69,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       rq.value = questionData.value;
 
 //      customerValueBloc?.releaseResource(rq);
-
 
       CommonView.showCircularProgress(true, context);
       WebApi()
@@ -83,7 +85,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           arrQuestions.removeAt(index);
           getQuestionsBloc?.updateQuestions(arrQuestions);
         } else {
-          Utils.showToast('hello');
           Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
         }
       }).catchError((e) {
@@ -97,15 +98,14 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+        key: _scaffoldKey,
         backgroundColor: ColorRes.colorBgDark,
         body: Stack(
           children: <Widget>[
             CommonView.showBackground(context),
             Container(
               margin: EdgeInsets.only(
-                  left: 30, right: 30, top: Utils.getHeaderHeight(context)
-              ),
+                  left: 30, right: 30, top: Utils.getHeaderHeight(context)),
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -172,6 +172,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 6,
             child: Text(
               Utils.getText(context, StringRes.name),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -181,6 +183,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 7,
             child: Text(
               Utils.getText(context, StringRes.sector),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -190,6 +194,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.value),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -199,6 +205,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 4,
             child: Text(
               Utils.getText(context, StringRes.loyalty),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -208,6 +216,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             flex: 2,
             child: Text(
               Utils.getText(context, StringRes.endRel),
+              overflow: TextOverflow.fade,
+              softWrap: false,
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               maxLines: 1,
@@ -265,7 +275,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        arrQuestions[index].value.toString() + ' \$',
+                        arrQuestions[index].value.toString() +
+                            ' ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}',
                         style: TextStyle(
                           color: ColorRes.blue,
                           fontSize: 18,
@@ -295,7 +306,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //              Navigator.push(context, FadeRouteHome(homeData: homeData));
 //              Navigator.push(_scaffoldKey.currentContext,
 //                  FadeRouteHome(homeData: homeData));
-            navigationBloc.updateNavigation(homeData);
+              navigationBloc.updateNavigation(homeData);
             },
           ),
         ),
@@ -312,7 +323,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     fit: BoxFit.fill)),
           ),
           onTap: () {
-            Utils.isInternetConnectedWithAlert().then((isConnected) {
+            Utils.isInternetConnectedWithAlert(context).then((isConnected) {
               if (isConnected) {
                 _asyncConfirmDialog(context, index);
               }

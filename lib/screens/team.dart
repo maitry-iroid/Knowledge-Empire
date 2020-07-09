@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -8,6 +9,8 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/bailout.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/team_user.dart';
 import 'package:ke_employee/models/team_user_by_id.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -31,7 +34,6 @@ class TeamPage extends StatefulWidget {
 }
 
 class _TeamPageState extends State<TeamPage> {
-  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   bool secondScreen = false;
 
@@ -58,13 +60,11 @@ class _TeamPageState extends State<TeamPage> {
   List<Color> colorOpenCloseList = [
     ColorRes.chartClose,
     ColorRes.chartOpen,
-//    ColorRes.chartClose,
-//    ColorRes.chartOpen,
   ];
 
   @override
   void initState() {
-    getTeamUsers();
+     getTeamUsers();
     super.initState();
   }
 
@@ -598,8 +598,8 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   Future getTeamUsers() async {
-    if (Injector.introData == null || Injector.introData.team1 == 0)
-      await DisplayDialogs.showYourTeamsPerformance(context);
+    if (Injector.introData != null && Injector.introData.team1 == 0)
+      await DisplayDialogs.showIntroTeam1(context);
 
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
@@ -637,9 +637,9 @@ class _TeamPageState extends State<TeamPage> {
       });
 
       openCloseMap.putIfAbsent(
-          "Open", () => teamUserData.qStatus.open.toDouble());
+          Utils.getText(context, StringRes.strOpen), () => teamUserData.qStatus.open.toDouble());
       openCloseMap.putIfAbsent(
-          "Close", () => teamUserData.qStatus.closed.toDouble());
+          Utils.getText(context, StringRes.close), () => teamUserData.qStatus.closed.toDouble());
     } else {
       teamUserByIdData?.qLevel?.forEach((element) {
         dataMap.putIfAbsent(
@@ -648,16 +648,16 @@ class _TeamPageState extends State<TeamPage> {
 
       if (teamUserByIdData?.qStatus?.open?.toDouble() != null) {
         openCloseMap.putIfAbsent(
-            "Open", () => teamUserByIdData?.qStatus?.open?.toDouble());
+            Utils.getText(context, StringRes.strOpen), () => teamUserByIdData?.qStatus?.open?.toDouble());
       } else {
-        openCloseMap.putIfAbsent("Open", () => 0.0);
+        openCloseMap.putIfAbsent(Utils.getText(context, StringRes.strOpen), () => 0.0);
       }
 
       if (teamUserByIdData?.qStatus?.closed?.toDouble() != null) {
         openCloseMap.putIfAbsent(
-            "Close", () => teamUserByIdData?.qStatus?.closed?.toDouble());
+            Utils.getText(context, StringRes.close), () => teamUserByIdData?.qStatus?.closed?.toDouble());
       } else {
-        openCloseMap.putIfAbsent("Close", () => 0.0);
+        openCloseMap.putIfAbsent(Utils.getText(context, StringRes.close), () => 0.0);
       }
     }
   }
@@ -702,6 +702,7 @@ class _TeamPageState extends State<TeamPage> {
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();
+
                 performBailOut();
               },
             ),
@@ -719,11 +720,25 @@ class _TeamPageState extends State<TeamPage> {
   }
 
   void performBailOut() {
+    CommonView.showCircularProgress(true, context);
     BailOutRequest rq = BailOutRequest();
     rq.userId = Injector.userData.userId;
     rq.mode = Injector.mode;
     rq.teamUserId = selectedTeamUserId != -1 ? selectedTeamUserId : null;
 
-    customerValueBloc?.bailOut(rq);
+    WebApi().callAPI(WebApi.rqBailOut, rq.toJson()).then((data) async {
+      CommonView.showCircularProgress(false, context);
+      if (data != null) {
+        if (data is Map) {
+          CustomerValueData customerValueData =
+          CustomerValueData.fromJson(data);
+          await customerValueBloc?.updateCustomerValue(customerValueData);
+          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeTeam));
+          setState(() {});
+        } else if (data is String) {
+          Utils.showToast(data.toString());
+        }
+      }
+    }).catchError((e) {});
   }
 }

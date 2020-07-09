@@ -59,21 +59,23 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData == null || Injector.introData.learningModule1 == 0)
-      await DisplayDialogs.showCustomerRelationshipManagement(context);
+    if (Injector.introData != null && Injector.introData.learningModule1 == 0)
+      await DisplayDialogs.showIntroLearningModule1(context);
 
     //TODO for testing
-//    await DisplayDialogs.showThePersonYouCanCountOn(context); //  PL
-//    await DisplayDialogs.showServingYourExistingCustomers(context); // existing
-//    await DisplayDialogs.showIntroHeartOfTheBusiness(context); //new
-//    await DisplayDialogs.showHireHRDialog(context);  //org
+//    await DisplayDialogs.showIntroPL1(context); //  PL
+//    await DisplayDialogs.showIntroOrg1(context); //  org
+//    await DisplayDialogs.showIntroCustomerSituation(context); //  customer situation
+//    await DisplayDialogs.showIntroExisting1(context); // existing
+//    await DisplayDialogs.showIntroNewCustomer1(context); //new
+//    await DisplayDialogs.showIntroOrg1(context);  //org
 //    await DisplayDialogs.showIntroRewards(context);  //reward
-//    await DisplayDialogs.showMarketingAndCommunications(context);  //ranking
-//    await DisplayDialogs.showYourWillIsAtYourCommand(context);  //challenge
-//    await DisplayDialogs.showYourTeamsPerformance(context);  //team
-//    await DisplayDialogs.showIntroDialog(context); // profile
+//    await DisplayDialogs.showIntroRanking1(context);  //ranking
+//    await DisplayDialogs.showIntroChallenge1(context);  //challenge
+//    await DisplayDialogs.showIntroTeam1(context);  //team
+//    await DisplayDialogs.showIntroProfile1(context); // profile
 
-    Utils.isInternetConnectedWithAlert().then((isConnected) async {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
       if (isConnected) {
         fetchLearningModules();
       } else {
@@ -111,6 +113,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ],
           ),
         ),
+        CommonView.showLoderView(isLoading)
       ],
     );
   }
@@ -269,9 +272,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       flex: 1,
       child: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           CommonView.showTitle(context, StringRes.businessSector),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
@@ -358,7 +359,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void fetchLearningModules() async {
-    CommonView.showCircularProgress(true, context);
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
     GetLearningModuleRequest rq = GetLearningModuleRequest();
     rq.userId = Injector.userId;
@@ -366,7 +370,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetLearningModule, rq.toJson())
         .then((data) async {
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
         List<LearningModuleData> arrData = new List<LearningModuleData>();
@@ -400,7 +407,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       }
     }).catchError((e) {
       print("getLeariningModule_" + e.toString());
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       // Utils.showToast(e.toString());
     });
   }
@@ -442,8 +452,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         if (mounted) setState(() {});
       }
     }).catchError((e) {
-      print("assignUserModule_" + e.toString());
-
       if (mounted)
         setState(() {
           isLoading = false;
@@ -500,8 +508,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   List<QuestionData> arrQuestions = List();
 
   downloadQuestions(int moduleId) {
-    CommonView.showCircularProgress(true, context);
-
     if (mounted)
       setState(() {
         isLoading = true;
@@ -514,7 +520,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     WebApi()
         .callAPI(WebApi.rqGetDownloadQuestions, rq.toJson())
         .then((data) async {
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
       if (data != null) {
         List<QuestionData> arrQuestions = new List<QuestionData>();
@@ -562,11 +571,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //              });
 
               await Injector.prefs.setString("datta", "scsdc");
-              print("URL=====>"+arrQuestions[i].mediaLink);
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
-              print("complted");
+              await Injector.cacheManager
+                  .getSingleFile(arrQuestions[i].mediaLink);
             }).catchError((e) {
-              print('[BackgroundFetch] setSpentTime start FAILURE: $e');
               if (moduleId != null) {
 //                if (mounted)setState(() {
 //                  arrLearningModules
@@ -604,10 +611,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         }
       }
     }).catchError((e) {
-      print("downloadQuestion_" + e.toString());
-
-      CommonView.showCircularProgress(false, context);
-
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       // Utils.showToast(e.toString());
     });
   }
@@ -627,15 +634,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showConfirmDialog() {
+    String message = Utils.subscribeText(selectedModule.moduleName);
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            content: Text(
-                Utils.getText(context, StringRes.alertWantToSubscribe1) +
-                    selectedModule.moduleName +
-                    Utils.getText(context, StringRes.alertWantToSubscribe2) +
-                    Utils.getText(context, StringRes.newCustomers)),
+            content: Text(message),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,
@@ -656,7 +660,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   void performSubscribeUnsubscribe() {
-    Utils.isInternetConnectedWithAlert().then((isConnected) {
+    Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) {
         if (selectedModule.isAssign == 0) {
           assignUserToModule(Const.subscribe);
@@ -759,7 +763,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             ? Switch(
                 value: isSwitched,
                 onChanged: (value) {
-                  Utils.isInternetConnectedWithAlert().then((isConnected) {
+                  Utils.isInternetConnectedWithAlert(context)
+                      .then((isConnected) {
                     if (isConnected) {
                       if (mounted)
                         setState(() {
@@ -858,10 +863,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-            Utils.getText(context, StringRes.thisModuleWillOccupie) +
-                selectedModule.fileSize.toString()+ " " +
+            Utils.getText(context, StringRes.strDownloadNewText) +
+                " " +
+                selectedModule.fileSize.toString() +
                 Utils.getText(context, StringRes.sizeInKb),
-            style: TextStyle(color: ColorRes.white, fontSize: 17),
+            style: TextStyle(
+                color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+                fontSize: 17),
           )
         : Container();
   }
@@ -869,6 +877,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   void saveModulesLocally(List<LearningModuleData> arrLearningModules) async {
     LearningModuleResponse learningModuleResponse = LearningModuleResponse();
     learningModuleResponse.data = arrLearningModules;
+
     await Injector.prefs.setString(
         PrefKeys.learningModles, jsonEncode(learningModuleResponse.toJson()));
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/performance.dart';
 
@@ -36,18 +38,18 @@ class OrdinalComboBarLineChart extends StatelessWidget {
 
                 // Change the line colors to match text color.
                 lineStyle: new charts.LineStyleSpec(
-                    color: charts.MaterialPalette.white))),
+                    color: charts.Color.fromHex(code: "#484848")))),
         primaryMeasureAxis: new charts.NumericAxisSpec(
             renderSpec: new charts.GridlineRendererSpec(
 
-              // Tick and Label styling here.
+                // Tick and Label styling here.
                 labelStyle: new charts.TextStyleSpec(
                     fontSize: 15, // size in Pts.
                     color: Injector.isBusinessMode?charts.MaterialPalette.white:charts.MaterialPalette.black),
 
                 // Change the line colors to match text color.
                 lineStyle: new charts.LineStyleSpec(
-                    color: charts.MaterialPalette.black))),
+                    color: charts.Color.fromHex(code: "#484848")))),
         defaultRenderer: new charts.BarRendererConfig(
           groupingType: charts.BarGroupingType.grouped,
         ),
@@ -69,9 +71,10 @@ class OrdinalComboBarLineChart extends StatelessWidget {
     List<OrdinalSales> cashData = List();
 
     performanceData.graph?.forEach((graph) {
-      costData.add(
-        new OrdinalSales(graph.day.toString(), graph.cost),
-      );
+      if (Utils.isFeatureOn(Const.typeOrg))
+        costData.add(
+          new OrdinalSales(graph.day.toString(), graph.cost),
+        );
       revenueData.add(
         new OrdinalSales(graph.day.toString(), graph.revenue),
       );
