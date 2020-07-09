@@ -12,14 +12,21 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
 
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/getDownloadQuestions.dart';
 import '../models/get_learning_module.dart';
+
+/*
+*   created by Riddhi
+*
+*   - This class will fetch all the business sectors modules added for this company/user
+*   - User can subscribe /unsubscribe any module
+*   - Mange download setting to attempt questions in offline mode as well
+*
+* */
 
 class BusinessSectorPage extends StatefulWidget {
   const BusinessSectorPage({Key key}) : super(key: key);
@@ -31,7 +38,6 @@ class BusinessSectorPage extends StatefulWidget {
 enum DownloadingStatus { download, downloading, downloded }
 
 class _BusinessSectorPageState extends State<BusinessSectorPage> {
-//  var arrSector = ["Healthcare", "Industrials", "Technology", "Financials"];
 
   List<LearningModuleData> arrLearningModules = List();
   List<LearningModuleData> arrFinalLearningModules = List();

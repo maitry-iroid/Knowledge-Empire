@@ -7,16 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/screens/intro_page.dart';
 import 'package:ke_employee/screens/login.dart';
 
 import 'home.dart';
@@ -78,7 +74,6 @@ class MyAppState extends State<MyApp> {
             '/home': (BuildContext context) => HomePage(),
             '/engage': (BuildContext ext) => EngagementCustomer(),
             '/dashboard': (BuildContext context) => DashboardGamePage(),
-            '/intro': (BuildContext context) => IntroPage(),
           },
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [

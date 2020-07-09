@@ -17,6 +17,15 @@ import 'package:ke_employee/models/get_user_group.dart';
 import '../commonview/background.dart';
 import '../helper/constant.dart';
 
+/*
+*   created by Riddhi
+*
+*   All the users will be displayed here By Rank based on different categories here
+*   User can send friend Request and can send challenge to other users. an can see the scores
+*
+* */
+
+
 class RankingPage extends StatefulWidget {
   @override
   _RankingPageState createState() => _RankingPageState();

@@ -12,6 +12,15 @@ import 'package:ke_employee/models/intro.dart';
 
 import '../helper/constant.dart';
 
+
+/*
+*   created by Riddhi
+*
+*   Business mode Dashboard UI for professional version of the app.
+*   By clicking on any of the features user will navigate to that feature based on lock-unlock status
+*   User can not access the feature which is locked by admin
+* */
+
 class DashboardProfPage extends StatefulWidget {
   DashboardProfPage({Key key}) : super(key: key);
 

@@ -7,12 +7,19 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../models/questions.dart';
+
+/*
+*   created by Riddhi
+*
+*   All questions will be fetched from the API of the subscribe module
+*   By click on Engage Now , user will navigate to EngagementCustomer Page and can attempt their
+*
+* */
 
 class NewCustomerPage extends StatefulWidget {
   @override
@@ -360,9 +367,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     initialPageType: Const.typeEngagement,
                     questionHomeData: arrQuestions[index],
                     value: arrQuestions[index].value);
-
-//                Navigator.push(_scaffoldKey.currentContext,
-//                    FadeRouteHome(homeData: homeData));
               navigationBloc.updateNavigation(homeData);
               } else {
                 Utils.showToast("You need atleast " +

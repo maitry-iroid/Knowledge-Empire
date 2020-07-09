@@ -20,6 +20,14 @@ import '../models/questions.dart';
 import '../models/releaseResource.dart';
 import 'home.dart';
 
+/*
+*   created by Riddhi
+*
+*   All Correct attempted questions will b displayed here until its locality finishes
+*   User can stop getting locality by and can release the resource to attempt other questions
+*
+* */
+
 class ExistingCustomerPage extends StatefulWidget {
   @override
   _ExistingCustomerPageState createState() => _ExistingCustomerPageState();

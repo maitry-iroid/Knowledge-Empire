@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_tooltip/flutter_introduction_tooltip.dart';
@@ -8,16 +7,20 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/dashboard_lock_status.dart';
-import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../commonview/header.dart';
 import 'dashboard_game.dart';
 import '../helper/constant.dart';
+
+/*
+*   created by Riddhi
+*
+*   User can get brief details about all the features here
+*
+* */
 
 class FadeRouteIntro extends PageRouteBuilder {
   final Widget page;

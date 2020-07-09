@@ -12,6 +12,14 @@ import '../helper/res.dart';
 import '../models/manage_organization.dart';
 import '../models/organization.dart';
 
+/*
+*   created by Riddhi
+*
+*   Business mode Dashboard UI for Professional version of the app.
+*   User can increase and decrease the level of diff departments
+*
+* */
+
 class PowerUpsPage extends StatefulWidget {
   @override
   _PowerUpsPageState createState() => _PowerUpsPageState();

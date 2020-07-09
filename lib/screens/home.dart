@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:background_fetch/background_fetch.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +16,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_challenges.dart';
-import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -34,11 +30,10 @@ import 'package:ke_employee/screens/help_screen.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/screens/new_customer.dart';
-import 'package:ke_employee/screens/organization2.dart';
+import 'package:ke_employee/screens/organization.dart';
 import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 import 'P+L.dart';
@@ -51,18 +46,25 @@ import '../helper/string_res.dart';
 import '../models/get_friends.dart';
 import 'package:flutter/services.dart';
 
+
+/*
+*  created by Riddhi
+*
+* This class contained menu drawer in left side, and Common header, Basic feature logic are added here like
+*  Lock- unlock status, intro dialog status, customer value Header data, push notification setup
+*
+* */
+
 class FadeRouteHome extends PageRouteBuilder {
-//  final HomeData homeData;
   List<GetFriendsData> arrFriends = List();
 
-  FadeRouteHome(/*{this.homeData}*/)
+  FadeRouteHome()
       : super(
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              /*homeData.page,*/
               HomePage(),
           transitionsBuilder: (
             BuildContext context,
@@ -72,18 +74,12 @@ class FadeRouteHome extends PageRouteBuilder {
           ) =>
               FadeTransition(
             opacity: animation,
-            child: HomePage(
-//              homeData: homeData,
-                ),
+            child: HomePage(),
           ),
         );
 }
 
 class HomePage extends StatefulWidget {
-//  final HomeData homeData;
-//
-//  HomePage({Key key, this.homeData}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
     return new HomePageState();
@@ -136,7 +132,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          title: showMainItem(drawerItems[i], i),
+          title: showMainMenuDrawerItem(drawerItems[i], i),
           selected: i == _selectedDrawerIndex,
           onTap: () => _onSelectItem(i, drawerItems[i])));
     }
@@ -263,7 +259,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
 //push notification
 
-  String _appBadgeSupported = 'Unknown';
 
   initPlatformState() async {
     String appBadgeSupported;
@@ -277,15 +272,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } on PlatformException {
       appBadgeSupported = 'Failed to get badge support.';
     }
-//    if (!mounted) return;
-//    _appBadgeSupported = appBadgeSupported;
-//    if (_appBadgeSupported != null) {
-//      _addBadge();
-//    }
-//    if (mounted)setState(() {});
   }
-
-  //--- push
 
   @override
   void dispose() {
@@ -296,18 +283,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    print("=============");
-    print(state.toString());
-
     if (state == AppLifecycleState.resumed) {
-//      print("====== resume ======");
       Utils.removeBadge();
       Injector.audioPlayerBg.resume();
     } else if (state == AppLifecycleState.inactive) {
       Injector.audioPlayerBg.pause();
-//      print("====== inactive ======");
     } else if (state == AppLifecycleState.paused) {
-//      print("====== paused ======");
       Injector.updateIntroData();
     }
   }
@@ -332,35 +313,28 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         return (Injector.isManager()
             ? ChallengesPage()
             : (Injector.isBusinessMode
-                ? OrganizationsPage2()
+                ? OrganizationsPage()
                 : PowerUpsPage()));
 
       case 7:
         return Injector.isManager()
-            ? Injector.isBusinessMode ? OrganizationsPage2() : PowerUpsPage()
+            ? Injector.isBusinessMode ? OrganizationsPage() : PowerUpsPage()
             : PLPage();
       case 8:
         return Injector.isManager() ? PLPage() : RankingPage();
 
       case 9:
         return RankingPage();
-//      case 10:
-//        return ProfilePage();
-//      case 11:
-//        return IntroPage();
-//        return FadeRouteIntro();
-//        return Navigator.push(context, FadeRouteIntro());
       default:
         return Text("");
     }
   }
 
-//
-//  openProfile() {
-//    if (mounted)
-//      setState(() =>
-//          _selectedDrawerIndex = Utils.getHomePageIndex(Const.typeProfile));
-//  }
+
+  /*
+  *  access/restrict feature based on lock-unlock status from API
+  *
+  * */
 
   _onSelectItem(int index, DrawerItem item) {
     _currentPage = item.key;
@@ -448,7 +422,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void navigationOnScreen(DrawerItem item) {
-//    setState(() => _selectedDrawerIndex = index);
     Navigator.of(context).pop(); //
     navigationBloc.updateNavigation(
         HomeData(initialPageType: _currentPage)); // close the drawer
@@ -456,6 +429,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       Navigator.push(context, FadeRouteIntro());
     }
   }
+
+  /*
+  * coin animation
+  *
+  * */
 
   Widget coinWidget(double top, double left) {
     return AnimatedPositioned(
@@ -477,7 +455,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     );
   }
 
-  showMainItem(DrawerItem item, int i) {
+  showMainMenuDrawerItem(DrawerItem item, int i) {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
@@ -569,6 +547,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }, onDone: () {}, onError: (error) {});
   }
 
+  /*
+  *
+  * If internet is available then submit answers of the que which are been attempt offline
+  *
+  * */
+
   void initCheckNetworkConnectivity() {
     WidgetsBinding.instance.addObserver(this);
 
@@ -580,6 +564,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       }
     });
   }
+
+
+  /*
+  * Get pending challenges form challengers from API to attempt first
+  *
+  * */
 
   Future<void> getPendingChallenges() async {
     Utils.isInternetConnected().then((isConnected) {
@@ -701,8 +691,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   void initContent() async {
-//    BackgroundFetch.start().then((int status) async {
-//      print('[BackgroundFetch] start success: $status');
 
     Future.delayed(const Duration(milliseconds: 500), () {
       PushNotificationHelper pushNotificationHelper =
@@ -731,9 +719,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           homeData.isChallenge == null ||
           homeData.isChallenge) getPendingChallenges();
     }
-//    }).catchError((e) {
-//      print('[BackgroundFetch] start FAILURE: $e');
-//    });
   }
 
   @override

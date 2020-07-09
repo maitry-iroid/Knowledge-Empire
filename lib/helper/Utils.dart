@@ -27,19 +27,14 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/customer_situation.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
-import 'package:ke_employee/screens/intro_page.dart';
-import 'package:ke_employee/screens/organization2.dart';
+import 'package:ke_employee/screens/organization.dart';
 import 'package:path/path.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -61,27 +56,7 @@ class Utils {
     return "assets/images/" + name + ".jpg";
   }
 
-  static showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
-//    _scaffoldKey.currentState.showSnackBar(SnackBar(
-//      content: Text(message),
-//      duration: const Duration(milliseconds: 2000),
-//    ));
-
-//    Fluttertoast.showToast(
-//        msg: message,
-//        toastLength: Toast.LENGTH_SHORT,
-//        gravity: ToastGravity.BOTTOM,
-//        timeInSecForIos: 3,
-//        backgroundColor: Colors.black87,
-//        textColor: Colors.white);
-  }
-
   static showToast(String message) {
-//    _scaffoldKey.currentState.showSnackBar(SnackBar(
-//      content: Text(message),
-//      duration: const Duration(milliseconds: 2000),
-//    ));
-
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
@@ -195,16 +170,14 @@ class Utils {
   }
 
   static performBack(BuildContext context) {
-
-
     navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
 
-  /*  if (!Navigator.canPop(context)) {
+    /*  if (!Navigator.canPop(context)) {
       Navigator.pop(context);
 
 //      Navigator.pushReplacement(context, FadeRouteHome());
       navigationBloc.updateNavigation(Const.typeHome);
-      *//*showDialog(
+      */ /*showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -225,19 +198,13 @@ class Utils {
                 )
               ],
             );
-          });*//*
+          });*/ /*
     } else
       Navigator.pop(context);*/
   }
 
   static String getText(BuildContext context, String text) {
     return AppLocalizations.of(context).text(text) ?? text;
-  }
-
-  static void navigateToIntro(BuildContext context) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => IntroPage()),
-        (Route<dynamic> route) => false);
   }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
@@ -749,7 +716,6 @@ class Utils {
       return AssetImage(Utils.getAssetsImg("user_org"));
   }
 
-
 //  static showChallengeQuestionDialog(
 //    BuildContext context,
 //    QuestionData questionData,
@@ -864,9 +830,7 @@ class Utils {
 //        ModalRoute.withName("/home"));
 
     navigationBloc.updateNavigation(HomeData(initialPageType: type));
-
   }
-
 
   static int getIndexLocale(String language) {
     int index = 0;

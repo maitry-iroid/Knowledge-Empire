@@ -1,32 +1,31 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/commonview/header.dart';
-import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
-
-//import 'package:simple_pdf_viewer/simple_pdf_viewer.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
-
 import '../commonview/background.dart';
-import 'home.dart';
 import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+
+/*
+*   created by Riddhi
+*
+*   - This class will show the status of the answer of the attempted que either it is correct or wrong with sound and animation
+*
+* */
 
 List<Answer> arrAnswerSituation = List();
 

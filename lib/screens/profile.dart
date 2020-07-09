@@ -27,6 +27,13 @@ import '../helper/string_res.dart';
 import 'login.dart';
 import '../models/logout.dart';
 
+/*
+*   created by Riddhi
+*
+*   User can manage profile data and can update settings here
+*
+* */
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();

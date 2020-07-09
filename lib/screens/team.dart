@@ -16,6 +16,15 @@ import '../helper/Utils.dart';
 import '../helper/res.dart';
 import '../helper/string_res.dart';
 
+/*
+*   created by Riddhi
+*
+*   This section will be visible for Manager only.
+*   All the users under this team will be displayed from API.
+*   They can handle bailout request send from users.
+*
+* */
+
 class TeamPage extends StatefulWidget {
   @override
   _TeamPageState createState() => _TeamPageState();

@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -20,9 +19,18 @@ import '../commonview/background.dart';
 import 'package:video_player/video_player.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
-import 'home.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
+
+/*
+*   created by Riddhi
+*
+*   One Question will be displayed with options.
+*   User have to select the correct answers, It can be multiple
+*   User can see Question media as well like Image,Video or PDF
+*   User can expand the Media, Question details and Answers View for better appearance
+*
+* */
 
 List<Answer> arrAnswer = List();
 

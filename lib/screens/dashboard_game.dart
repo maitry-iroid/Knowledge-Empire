@@ -3,21 +3,25 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/dashboard_intro_dialog.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/dashboard_lock_status.dart';
 import 'package:ke_employee/models/get_dashboard_value.dart';
 import 'package:ke_employee/models/intro.dart';
 
-import '../commonview/header.dart';
 import '../helper/constant.dart';
+
+/*
+*   created by Riddhi
+*
+*   Game mode Dashboard UI for Game version of the app.
+*   By clicking on any of the features user will navigate to that feature based on lock-unlock status
+*   User can not access the feature which is locked by admin
+* */
 
 class DashboardGamePage extends StatefulWidget {
   DashboardGamePage({Key key}) : super(key: key);

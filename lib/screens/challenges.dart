@@ -1,11 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friendUnfriendUser.dart';
@@ -14,12 +10,18 @@ import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-//import 'package:volume/volume.dart';
-
 import '../helper/Utils.dart';
 import '../helper/string_res.dart';
 import '../helper/web_api.dart';
 import '../models/get_friends.dart';
+
+/*
+*   created by Riddhi
+*
+*   - This class will fetch all the Friends and his scores in different Business module so that
+*   - User can SEND CHALLENGE any of his friend in any module by different rewards category.
+*
+* */
 
 class ChallengesPage extends StatefulWidget {
   final HomeData homeData;
