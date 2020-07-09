@@ -192,7 +192,7 @@ const double Y = 20;
 const double W = 1;
 
 List<_Particle> initParticleList(Rect bound, ByteData byteData, Size imageSize) {
-  int partLen = 3;
+  int partLen = 8;
   List<_Particle> particles = List(partLen * partLen);
   Math.Random random = new Math.Random(DateTime.now().millisecondsSinceEpoch);
   int w = imageSize.width ~/ (partLen + 2);
@@ -215,7 +215,7 @@ bool draw(Canvas canvas, List<_Particle> particles, double progress, ui.Image im
     _Particle particle = particles[i];
     particle.advance(progress);
     if (particle.alpha > 0) {
-      paint.color = particle.color.withAlpha((particle.color.alpha * particle.alpha).toInt());
+      //paint.color = particle.color.withAlpha((particle.color.alpha * particle.alpha).toInt());
 //      ByteData data = image.toByteData();
       canvas.drawImage(image, new Offset(particle.cx, particle.cy), paint);
 //      canvas.drawImage(image, new Offset(10.0, 10.0), paint);

@@ -357,7 +357,7 @@ class DisplayDialogs {
             imageMoveTop: 8.5,
             imageMoveRight: 12,
             titleText: Utils.getText(context, StringRes.hireHrEmp) ?? "",
-            btnName: StringRes.next,
+            btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
             desTextLine: Injector.introModel.org2,
             onTapBtn: () async {

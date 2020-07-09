@@ -233,8 +233,9 @@ class Utils {
         (Route<dynamic> route) => false);
   }
 
-  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) {
-     showDialog(
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
+      bool isFromProfile, bool isOldPasswordRequired) {
+    showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog(
             isFromProfile: isFromProfile,
@@ -265,7 +266,9 @@ class Utils {
   static playBackgroundMusic() async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
-    if (Injector.isBusinessMode && Injector.isSoundEnable!=null && Injector.isSoundEnable) {
+    if (Injector.isBusinessMode &&
+        Injector.isSoundEnable != null &&
+        Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
@@ -276,8 +279,7 @@ class Utils {
   static Future playSound(bool isPlaySound) async {
     try {
       if (isPlaySound) {
-        final file =
-            new File('${(await getTemporaryDirectory()).path}/music.mp3');
+        final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
         print(file.path);
         await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
         await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
@@ -295,36 +297,41 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
       Injector.audioCache.play("achievement_music.mp3");
   }
 
   static playClickSound() {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
       Injector.audioCache.play("all_button_clicks.wav");
+    }
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
+      Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
-  }
-  static achievementSound() async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
+      Injector.audioCache.play("wrong_answer.wav");
   }
 
-  static procorrectAnswerSound() async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
+  static achievementSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
+      Injector.audioCache.play("achievement_music.mp3");
+  }
+
+  static proCorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
       Injector.audioCache.play("pro_right_answer.mp3");
   }
 
-  static proincorrectAnswerSound() async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable)
+  static proIncorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
       Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
@@ -453,17 +460,12 @@ class Utils {
   static void performManageLevel(ManageOrgData organizationData) async {
     CustomerValueData customerValueData = Injector.customerValueData;
     customerValueData.totalBalance = organizationData.totalBalance;
-    customerValueData.totalEmployeeCapacity =
-        organizationData.totalEmployeeCapacity;
-    customerValueData.remainingEmployeeCapacity =
-        organizationData.remainingEmployeeCapacity;
+    customerValueData.totalEmployeeCapacity = organizationData.totalEmployeeCapacity;
+    customerValueData.remainingEmployeeCapacity = organizationData.remainingEmployeeCapacity;
     customerValueData.totalSalesPerson = organizationData.totalSalesPerson;
-    customerValueData.remainingSalesPerson =
-        organizationData.remainingSalesPerson;
-    customerValueData.totalCustomerCapacity =
-        organizationData.totalCustomerCapacity;
-    customerValueData.remainingCustomerCapacity =
-        organizationData.remainingCustomerCapacity;
+    customerValueData.remainingSalesPerson = organizationData.remainingSalesPerson;
+    customerValueData.totalCustomerCapacity = organizationData.totalCustomerCapacity;
+    customerValueData.remainingCustomerCapacity = organizationData.remainingCustomerCapacity;
 
     customerValueBloc?.setCustomerValue(customerValueData);
 //    Injector.streamController.add("manage level");
@@ -624,9 +626,9 @@ class Utils {
       }
     } else {
       if (isAnsweredCorrect) {
-        return Utils.procorrectAnswerSound();
+        return Utils.proCorrectAnswerSound();
       } else {
-        return Utils.proincorrectAnswerSound();
+        return Utils.proIncorrectAnswerSound();
       }
     }
   }
@@ -640,15 +642,14 @@ class Utils {
     );
   }*/
 
-  static Widget pdfShow(String pdfPath,bool _isLoading) {
-   return new TemplatePageWidget(
+  static Widget pdfShow(String pdfPath, bool _isLoading) {
+    return new TemplatePageWidget(
       height: double.infinity,
       isLoading: _isLoading,
       width: double.infinity,
       previewPath: pdfPath,
     );
   }
-
 
   static isImage(String path) {
     return extension(path).toLowerCase() == ".png".toLowerCase() ||

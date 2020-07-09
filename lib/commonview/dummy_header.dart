@@ -17,38 +17,42 @@ import 'package:ke_employee/screens/help_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'challenge_header.dart';
-class HeaderView extends StatefulWidget {
+
+ValueNotifier<bool> employeeDrainNotifier = ValueNotifier<bool>(false);
+ValueNotifier<bool> saleDrainNotifier = ValueNotifier<bool>(false);
+ValueNotifier<bool> serviceDrainNotifier = ValueNotifier<bool>(false);
+
+Timer empAnimTimer;
+Timer saleAnimTimer;
+Timer serviceAnimTimer;
+class DummyView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
   final bool isChallenge;
   final int challengeCount;
   final int currentIndex;
 
-  HeaderView(
+  DummyView(
       {this.scaffoldKey,
       this.isShowMenu,
       this.isChallenge,
       this.challengeCount,
       this.currentIndex});
 
-
   @override
-  HeaderViewState createState() => HeaderViewState();
+  DummyViewState createState() => DummyViewState();
 }
 
-class HeaderViewState extends State<HeaderView> {
-
-
+class DummyViewState extends State<DummyView> {
 
   @override
-  void didUpdateWidget(HeaderView oldWidget) {
+  void didUpdateWidget(DummyView oldWidget) {
+
     if (Injector.headerStreamController == null)
       Injector.headerStreamController = StreamController.broadcast();
 
-   /* CustomerValueRequest rq = CustomerValueRequest();
+    CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
-    customerValueBloc?.getCustomerValue(rq);*/
-
 
     Injector.headerStreamController.stream.listen((data) {
       if (mounted) setState(() {});
@@ -61,19 +65,15 @@ class HeaderViewState extends State<HeaderView> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
-    return showHeaderView(context);
+    return showDummyView(context);
   }
 
-  Widget showHeaderView(BuildContext context) {
+  Widget showDummyView(BuildContext context) {
     return Container(
-      height: Utils.getHeaderHeight(context),
-      color: Injector.isBusinessMode
-          ? ColorRes.headerDashboard
-          : ColorRes.headerBlue,
+      height: Utils.getHeaderHeight(context) + 150,
+      color: Colors.transparent,
       child: StreamBuilder(
           stream: customerValueBloc.customerValue,
           builder: (context, AsyncSnapshot<CustomerValueData> snapshot) {
@@ -87,45 +87,38 @@ class HeaderViewState extends State<HeaderView> {
     );
   }
 
-  showHeaderItem(String type, BuildContext context) {
+  Widget showHeaderItem(String type, BuildContext context,valueListenable) {
     return Container(
       foregroundDecoration: null,
+      margin: EdgeInsets.only(top: 13.5),
       padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
-      decoration: BoxDecoration(
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_header_card")),
-                  fit: BoxFit.fill)
-              : null),
-      child: InkResponse(
-        child: Row(
-          children: <Widget>[
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Injector.isBusinessMode
-                    ? Container()
-                    : Container(
-                        alignment: Alignment.center,
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                            color: ColorRes.titleBlueProf,
-                            border: Border.all(color: ColorRes.white, width: 1),
-                            borderRadius: BorderRadius.circular(12.5)),
-                      ),
-                Image(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              Injector.isBusinessMode
+                  ? Container()
+                  : Container(),
+              Opacity(
+                opacity: 0.0,
+                child: Image(
                   image: AssetImage(
                       Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
                   height: 26,
                 ),
-              ],
-            ),
-            SizedBox(
-              width: 4,
-            ),
-            type != Const.typeMoney
-                ? Stack(
+              ),
+              valueListenable!=null?animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable):Container(),
+            ],
+          ),
+          SizedBox(
+            width: 4,
+          ),
+          type != Const.typeMoney
+              ? Opacity(
+                  opacity: 0.0,
+                  child: Stack(
                     alignment: Alignment.centerLeft,
                     children: <Widget>[
                       Container(
@@ -161,71 +154,62 @@ class HeaderViewState extends State<HeaderView> {
                         ),
                       )
                     ],
-                  )
-                : Container(width: Utils.getDeviceWidth(context) / 12,
-                  child: Text(
+                  ),
+                )
+              : Opacity(
+                  opacity: 0.0,
+                  child: Container(
+                    width: Utils.getDeviceWidth(context) / 12,
+                    child: Text(
                       Injector.customerValueData != null
                           ? Injector.customerValueData.totalBalance.toString()
                           : "00.00",
                       style: TextStyle(color: ColorRes.white, fontSize: 18),
                     ),
+                  ),
                 ),
-          ],
-        ),
-        onTap: () {
-          if (type == Const.typeEmployee) {
-            Utils.performDashboardItemClick(context, Const.typeOrg);
-          } else if (type == Const.typeSalesPersons) {
-            Utils.performDashboardItemClick(context, Const.typeNewCustomer);
-          } else if (type == Const.typeServicesPerson) {
-            Utils.performDashboardItemClick(
-                context, Const.typeExistingCustomer);
-          } else if (type == Const.typeBrandValue) {
-            Utils.performDashboardItemClick(context, Const.typeRanking);
-          } else if (type == Const.typeMoney) {
-            Utils.performDashboardItemClick(context, Const.typePl);
-          }
-        },
+        ],
       ),
     );
   }
 
   showProfile(BuildContext context) {
     return Expanded(
-      child: InkResponse(
-          child: Container(
-            foregroundDecoration: null,
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 40,
-                  height: 40,
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: Injector.userData == null ||
-                                  Injector.userData.profileImage == null ||
-                                  Injector.userData.profileImage.isEmpty
-                              ? AssetImage(Utils.getAssetsImg('user_org'))
-                              : Utils.getCacheNetworkImage(
-                                  Injector.userData.profileImage),
-                          fit: BoxFit.cover),
-                      border: Border.all(color: ColorRes.textLightBlue)),
-                ),
-                showUserNameCompanyName(context),
-              ],
-            ),
+      child: Opacity(
+        opacity: 0.0,
+        child: Container(
+          margin: EdgeInsets.only(top: 7.3),
+          foregroundDecoration: null,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: 40,
+                height: 40,
+                margin: EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: Injector.userData == null ||
+                                Injector.userData.profileImage == null ||
+                                Injector.userData.profileImage.isEmpty
+                            ? AssetImage(Utils.getAssetsImg('user_org'))
+                            : Utils.getCacheNetworkImage(
+                                Injector.userData.profileImage),
+                        fit: BoxFit.cover),
+                    border: Border.all(color: ColorRes.textLightBlue)),
+              ),
+              showUserNameCompanyName(context),
+            ],
           ),
-          onTap: () {
-            Utils.playClickSound();
-            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeProfile));
-          }),
+        ),
+      ),
     );
   }
 
   showHelpView(BuildContext context) {
-    return InkResponse(
+    return Opacity(
+      opacity: 0.0,
       child: Container(
         height: 20,
         width: 20,
@@ -234,12 +218,6 @@ class HeaderViewState extends State<HeaderView> {
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg("question_mark_help")))),
       ),
-      onTap: () {
-        Utils.playClickSound();
-        Injector.isBusinessMode
-            ? Navigator.push(context, FadeRouteIntro())
-            : DisplayDialogs.professionalDialog(context);
-      },
     );
   }
 
@@ -247,7 +225,7 @@ class HeaderViewState extends State<HeaderView> {
     return Expanded(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
           Injector.userData != null ? Injector.userData.companyName : "",
@@ -278,20 +256,15 @@ class HeaderViewState extends State<HeaderView> {
 
   showMenuView() {
     return widget.isShowMenu
-        ? InkResponse(
-            child: Image(
-              image: AssetImage(
-                Utils.getAssetsImg("menu"),
-              ),
-              fit: BoxFit.fill,
+        ? Container(
+          height: Utils.getHeaderHeight(context),
+          child: Image(
+            image: AssetImage(
+              Utils.getAssetsImg("menu"),
             ),
-            onTap: () {
-//                    if(currentVol != 0) {
-              Utils.playClickSound();
-//                    }
-              widget.scaffoldKey.currentState.openDrawer();
-            },
-          )
+            fit: BoxFit.fill,
+          ),
+        )
         : Container();
   }
 
@@ -304,29 +277,63 @@ class HeaderViewState extends State<HeaderView> {
         if (indexData == -1) {
           indexData = 0;
         }
-        return ChallengeHeader(
-            challengeCount: widget.challengeCount, currentIndex: indexData);
+        return ChallengeHeader(challengeCount: widget.challengeCount, currentIndex: indexData);
       }
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         showMenuView(),
         showProfile(context),
         Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeEmployee, context)
+            ? showHeaderItem(Const.typeEmployee, context,employeeDrainNotifier)
             : Container(),
         Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeSalesPersons, context)
+            ? showHeaderItem(Const.typeSalesPersons, context,saleDrainNotifier)
             : Container(),
         Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeServicesPerson, context)
+            ? showHeaderItem(Const.typeServicesPerson, context,serviceDrainNotifier)
             : Container(),
-        showHeaderItem(Const.typeBrandValue, context),
-        showHeaderItem(Const.typeMoney, context),
+        Opacity(
+            opacity: 0.0, child: showHeaderItem(Const.typeBrandValue, context,null)),
+        Opacity(opacity: 0.0, child: showHeaderItem(Const.typeMoney, context,null)),
         showHelpView(context)
       ],
     );
   }
+
+  Widget animatedPositioned(String icon, valueListenable) {
+    return ValueListenableBuilder(
+      valueListenable: valueListenable,
+      builder: (BuildContext context, value, Widget child) {
+        return AnimatedPositioned(
+          top: value ? 50.0 : 0,
+          duration: Duration(milliseconds: value ? 400 : 0),
+          onEnd: () {
+            valueListenable.value = false;
+            valueListenable.notifyListeners();
+          },
+          child: Container(
+            width: 26.0,
+            height: 26.0,
+            child: AnimatedOpacity(
+                duration: Duration(milliseconds: value ? 400 : 0),
+                opacity: value ? 0.0 : 1.0,
+                child: Image.asset(Utils.getAssetsImg(icon),
+                    width: 26, height: 26)),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    employeeDrainNotifier.value=false;
+    saleDrainNotifier.value=false;
+    serviceDrainNotifier.value=false;
+    super.dispose();
+  }
+
 }

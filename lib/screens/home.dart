@@ -10,6 +10,7 @@ import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
+import 'package:ke_employee/commonview/dummy_header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
@@ -89,10 +90,7 @@ class HomePageState extends State<HomePage>
       new GlobalKey<ExplosionWidgetState>();
   String _currentPage = Const.typeHome;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
-  ValueNotifier<String> isWidgetVisible = ValueNotifier<String>("");
-  final ValueNotifier<bool> isDrainCoinVisibleListner =
-      ValueNotifier<bool>(false);
+  ValueNotifier<bool> headerNotifier = ValueNotifier<bool>(false);
 
   bool startAnim = false;
   int duration = 1;
@@ -100,7 +98,6 @@ class HomePageState extends State<HomePage>
 
   bool isReadyForChallenge = false;
   HomeData homeData;
-  Timer animTimer;
   var drawerOptions = <Widget>[];
 
   RefreshAnimation mRefreshAnimation;
@@ -142,7 +139,7 @@ class HomePageState extends State<HomePage>
             if (snapshot.hasData) {
               homeData = snapshot.data;
               _currentPage = snapshot.data.initialPageType;
-              drawerLayout();
+              //drawerLayout();
               getAnimationStatus();
               return mainLayout(context);
             } else
@@ -177,21 +174,10 @@ class HomePageState extends State<HomePage>
               getDrawerItemWidget(),
               buildHeaderView(),
               coinAnimation(),
-              drainAnimation(size),
-              RaisedButton(onPressed: () {
-                Future.delayed(Duration(milliseconds: 500)).then((_) {
-                  animTimer = Timer.periodic(Duration(milliseconds: 500), (_) {
-                    isDrainCoinVisibleListner.value = true;
-                    isDrainCoinVisibleListner.notifyListeners();
-                    print("called");
-                  });
-                  Timer(Duration(seconds: 3), () {
-                    if (animTimer != null) {
-                      animTimer.cancel();
-                    }
-                  });
-                });
-              })
+
+              // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeEmployee),   3.16,employeeDrainNotifier),
+              //animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeSalesPersons),   2.38,saleDrainNotifier),
+              // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeServicesPerson),   1.78,serviceDrainNotifier),
             ],
           )),
         );
@@ -200,37 +186,36 @@ class HomePageState extends State<HomePage>
   }
 
   Widget animatedPositioned(
-      Size size, String icon, double left) {
-      return ValueListenableBuilder(
-        valueListenable: isDrainCoinVisibleListner,
-        builder: (BuildContext context, value, Widget child) {
-          return AnimatedPositioned(
-            top: value ? 50.0 : size.height / 32,
-            left: size.width / left,
-            duration: Duration(milliseconds: value ? 400 : 0),
-            onEnd: () {
-              isDrainCoinVisibleListner.value = false;
-              isDrainCoinVisibleListner.notifyListeners();
-            },
-            child: Container(
-              width: 26.0,
-              height: 26.0,
-              child: AnimatedOpacity(
-                  duration: Duration(milliseconds: value ? 400 : 0),
-                  opacity: value ? 0.0 : 1.0,
-                  child: Image.asset(Utils.getAssetsImg(icon),
-                      width: 26, height: 26)),
-            ),
-          );
-        },
-      );
+      Size size, String icon, double left, valueListenable) {
+    return ValueListenableBuilder(
+      valueListenable: valueListenable,
+      builder: (BuildContext context, value, Widget child) {
+        return AnimatedPositioned(
+          top: value ? 50.0 : size.height / 29,
+          left: size.width / left,
+          duration: Duration(milliseconds: value ? 400 : 0),
+          onEnd: () {
+            valueListenable.value = false;
+            valueListenable.notifyListeners();
+          },
+          child: Container(
+            width: 26.0,
+            height: 26.0,
+            child: AnimatedOpacity(
+                duration: Duration(milliseconds: value ? 400 : 0),
+                opacity: value ? 0.0 : 1.0,
+                child: Image.asset(Utils.getAssetsImg(icon),
+                    width: 26, height: 26)),
+          ),
+        );
+      },
+    );
 
     return Container(
       width: 26.0,
       height: 26.0,
       child: Image.asset(Utils.getAssetsImg(icon), width: 26, height: 26),
     );
-
   }
 
   Widget showMainItem(DrawerItem item) {
@@ -308,7 +293,7 @@ class HomePageState extends State<HomePage>
     } else if (_currentPage == Const.typeOrg) {
       return Injector.isBusinessMode
           ? OrganizationsPage2(mRefreshAnimation: mRefreshAnimation)
-          : PowerUpsPage();
+          : PowerUpsPage(mRefreshAnimation: mRefreshAnimation);
     } else if (_currentPage == Const.typeRanking) {
       return RankingPage();
     } else if (_currentPage == Const.typePl) {
@@ -329,20 +314,47 @@ class HomePageState extends State<HomePage>
   }
 
   Widget buildHeaderView() {
-    return HeaderView(
-        scaffoldKey: _scaffoldKey,
-        isShowMenu: true,
-        isChallenge: homeData.isChallenge,
-        currentIndex: homeData != null &&
-                homeData.questionHomeData != null &&
-                homeData.questionHomeData.questionCurrentIndex != null
-            ? homeData.questionHomeData.questionCurrentIndex
-            : 0,
-        challengeCount: homeData != null &&
-                homeData.questionHomeData != null &&
-                homeData.questionHomeData.totalQuestion != null
-            ? homeData.questionHomeData.totalQuestion
-            : 0);
+    return ValueListenableBuilder(
+      valueListenable: headerNotifier,
+      builder: (BuildContext context, value, Widget child) {
+        print(value);
+        return Stack(
+          children: <Widget>[
+            HeaderView(
+                scaffoldKey: _scaffoldKey,
+                isShowMenu: true,
+                isChallenge: homeData.isChallenge,
+                currentIndex: homeData != null &&
+                        homeData.questionHomeData != null &&
+                        homeData.questionHomeData.questionCurrentIndex != null
+                    ? homeData.questionHomeData.questionCurrentIndex
+                    : 0,
+                challengeCount: homeData != null &&
+                        homeData.questionHomeData != null &&
+                        homeData.questionHomeData.totalQuestion != null
+                    ? homeData.questionHomeData.totalQuestion
+                    : 0),
+            value
+                ? DummyView(
+                    scaffoldKey: _scaffoldKey,
+                    isShowMenu: true,
+                    isChallenge: homeData.isChallenge,
+                    currentIndex: homeData != null &&
+                            homeData.questionHomeData != null &&
+                            homeData.questionHomeData.questionCurrentIndex !=
+                                null
+                        ? homeData.questionHomeData.questionCurrentIndex
+                        : 0,
+                    challengeCount: homeData != null &&
+                            homeData.questionHomeData != null &&
+                            homeData.questionHomeData.totalQuestion != null
+                        ? homeData.questionHomeData.totalQuestion
+                        : 0)
+                : Container(),
+          ],
+        );
+      },
+    );
   }
 
   Widget coinAnimation() {
@@ -384,41 +396,9 @@ class HomePageState extends State<HomePage>
     );
   }
 
-  Widget drainAnimation(Size size) {
-    // todo  badha animation thase fire karo tyare
-   /* return Stack(
-      children: <Widget>[
-        animatedPositioned(
-            size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.2),
-        animatedPositioned(size,
-            HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.212),
-        animatedPositioned(size,
-            HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.69)
-      ],
-    );*/
-
-    //todo type wise animation thase fire karo tyare
-    return ValueListenableBuilder(
-      valueListenable: isWidgetVisible,
-      builder: (BuildContext context, value, Widget child) {
-        if (isWidgetVisible.value == Const.typeEmployee) {
-          return animatedPositioned(
-              size, HeaderUtils.getHeaderIcon(Const.typeEmployee), 3.36);
-        } else if (isWidgetVisible.value == Const.typeSalesPersons) {
-          return animatedPositioned(size,
-              HeaderUtils.getHeaderIcon(Const.typeSalesPersons), 2.29);
-        } else if (isWidgetVisible.value == Const.typeServicesPerson) {
-          return animatedPositioned(size,
-              HeaderUtils.getHeaderIcon(Const.typeServicesPerson), 1.73);
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-
   void drawerLayout() {
     initDrawerItems();
+    drawerOptions=new List();
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
@@ -537,7 +517,7 @@ class HomePageState extends State<HomePage>
               await getChallengeQueBloc.getChallengeQuestion();
             });
             if (questionData != null && questionData.challengeId != null) {
-              if (questionData.isFirstQuestion == 1) {
+              if (questionData.isFirstQuestion == 1 ) {
                 DisplayDialogs.showChallengeDialog(
                     context,
                     questionData.firstName + " " + questionData.lastName,
@@ -565,7 +545,12 @@ class HomePageState extends State<HomePage>
   }
 
   void initDrawerItems() {
-    drawerItems = [];
+
+    if (drawerItems != null) {
+      drawerItems.clear();
+    } else {
+      drawerItems = new List();
+    }
 
     drawerItems.add(DrawerItem(
         Utils.getText(context, StringRes.home),
@@ -612,6 +597,7 @@ class HomePageState extends State<HomePage>
             Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges",
             Const.typeChallenges),
       );
+
     if (Utils.isFeatureOn(Const.typeOrg))
       drawerItems.add(
         DrawerItem(
@@ -621,6 +607,7 @@ class HomePageState extends State<HomePage>
                 : "ic_pro_home_organization",
             Const.typeOrg),
       );
+
     if (Utils.isFeatureOn(Const.typePl))
       drawerItems.add(
         DrawerItem(
@@ -628,6 +615,7 @@ class HomePageState extends State<HomePage>
             Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl",
             Const.typePl),
       );
+
     if (Utils.isFeatureOn(Const.typeRanking))
       drawerItems.add(DrawerItem(
           Utils.getText(context, StringRes.ranking),
@@ -640,6 +628,7 @@ class HomePageState extends State<HomePage>
           Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile",
           Const.typeProfile),
     );
+
     drawerItems.add(
       DrawerItem(
           Utils.getText(context, StringRes.help),
@@ -661,7 +650,12 @@ class HomePageState extends State<HomePage>
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
     initStreamController();
+
     Utils.getCustomerValues();
+
+    if (Injector.isSoundEnable) {
+      await Utils.playBackgroundMusic();
+    }
 
     initCheckNetworkConnectivity();
 
@@ -684,7 +678,6 @@ class HomePageState extends State<HomePage>
                   context, status.headlineText, status.message, true);
             }
           }
-
         } else {
           DisplayDialogs.showUpdateDialog(
               context, status.headlineText, status.message, false);
@@ -723,35 +716,55 @@ class HomePageState extends State<HomePage>
   void dispose() {
     Injector.homeStreamController.close();
     _connectivitySubscription?.cancel();
+    headerNotifier.dispose();
     super.dispose();
   }
 
   @override
   onRefreshAchievement(int type) {
     try {
+      headerNotifier.value = true;
+      headerNotifier.notifyListeners();
       if (type == Const.typeHR) {
-        isWidgetVisible.value = Const.typeEmployee;
-      } else if (type == Const.typeSales) {
-        isWidgetVisible.value = Const.typeSalesPersons;
-      } else if (type == Const.typeServices) {
-        isWidgetVisible.value = Const.typeServicesPerson;
-      } else {
-        isWidgetVisible.value = "";
-      }
-      isWidgetVisible.notifyListeners();
-
-      Future.delayed(Duration(milliseconds: 500)).then((_) {
-        animTimer = Timer.periodic(Duration(milliseconds: 500), (_) {
-          isDrainCoinVisibleListner.value = true;
-          isDrainCoinVisibleListner.notifyListeners();
-          print("called");
+        empAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+          employeeDrainNotifier.value = true;
+          employeeDrainNotifier.notifyListeners();
         });
         Timer(Duration(seconds: 3), () {
-          if (animTimer != null) {
-            animTimer.cancel();
+          if (empAnimTimer != null) {
+            empAnimTimer.cancel();
+            headerNotifier.value = false;
+            headerNotifier.notifyListeners();
           }
         });
-      });
+      } else if (type == Const.typeSales) {
+        saleAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+          saleDrainNotifier.value = true;
+          saleDrainNotifier.notifyListeners();
+        });
+        Timer(Duration(seconds: 3), () {
+          if (saleAnimTimer != null) {
+            saleAnimTimer.cancel();
+            headerNotifier.value = false;
+            headerNotifier.notifyListeners();
+          }
+        });
+      } else if (type == Const.typeServices) {
+        serviceAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+          serviceDrainNotifier.value = true;
+          serviceDrainNotifier.notifyListeners();
+        });
+        Timer(Duration(seconds: 3), () {
+          if (serviceAnimTimer != null) {
+            serviceAnimTimer.cancel();
+            headerNotifier.value = false;
+            headerNotifier.notifyListeners();
+          }
+        });
+      } else {
+        headerNotifier.value = false;
+        headerNotifier.notifyListeners();
+      }
     } catch (e) {
       print(e);
     }

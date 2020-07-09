@@ -27,7 +27,7 @@ void backgroundFetchHeadlessTask(String taskId) async {
 Future setupLocator() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Injector.getInstance();
-  Const.setEnvironment(Environment.DEV);
+  Const.setEnvironment(Environment.PROD);
   runApp(MyApp());
 }
 

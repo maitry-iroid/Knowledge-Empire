@@ -205,9 +205,7 @@ class Injector {
       localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     }
 
-    if (isSoundEnable) {
-      await Utils.playBackgroundMusic();
-    }
+
   }
 
   static setIntroData(IntroData _introData) async {

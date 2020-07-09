@@ -6,6 +6,7 @@ import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -36,9 +37,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   Future<void> showIntroDialog() async {
-   if (Injector.introData != null && Injector.introData.newCustomer1 == 0) {
+    if (Injector.introData != null && Injector.introData.newCustomer1 == 0) {
       await DisplayDialogs.showIntroNewCustomer1(context);
-  }
+    }
 
     initData();
   }
@@ -118,7 +119,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.name),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Expanded(
@@ -127,7 +130,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.sector),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Expanded(
@@ -136,7 +141,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.value),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Expanded(
@@ -145,7 +152,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Utils.getText(context, StringRes.loyalty),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
               maxLines: 1,
+              minFontSize: 4,
             ),
           ),
           Utils.isFeatureOn(Const.typeOrg)
@@ -184,8 +193,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               Injector.customerValueData.remainingCustomerCapacity > 0)) {
             attemptQuestion(index);
           } else {
-            Utils.showToast(
-                Utils.getQueValidationToast(arrQuestions[index].resources));
+            Utils.showToast(Utils.getQueValidationToast(arrQuestions[index].resources));
           }
         } else {
           attemptQuestion(index);
@@ -244,13 +252,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(
-                            ("${arrQuestions[index].value.toString()} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}"),
-                            style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 18),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                          ),
+                          child: kePoint(index),
                         ),
                         Expanded(
                           flex: 3,
@@ -304,6 +306,23 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget kePoint(int index) {
+    if (Injector.userData.language == "Chinese") {
+      return Text(
+        ("${arrQuestions[index].value.toString()}"),
+        style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+        textAlign: TextAlign.center,
+        maxLines: 1,
+      );
+    }
+    return Text(
+      ("${arrQuestions[index].value.toString()} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}"),
+      style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+      textAlign: TextAlign.center,
+      maxLines: 1,
     );
   }
 

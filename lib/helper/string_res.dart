@@ -18,7 +18,7 @@ class StringRes {
   static var team = "team";
   static var profile = "profile";
   static var help = "help";
-    static var strDefault = "Default";
+  static var strDefault = "Default";
 
   //profile
   static var emailId = "emailId";
@@ -76,7 +76,6 @@ class StringRes {
   //existing customer
   static var endRel = "endRel";
   static var alertReleaseResources = "alertReleaseResources";
-
 
   //challenges
   static var searchForKeywords = "searchForKeywords";
@@ -384,26 +383,25 @@ class StringRes {
   static var helpProP = "helpProP";
   static var helpProRanking = "helpProRanking";
 
-
   //</editor-fold>
 
-  static String strProProfile="strProProfile";
-  static String strEmpOMeter="strEmpOMeter";
-  static String strSalesOMeter="strSalesOMeter";
-  static String strServiceOMeter="strServiceOMeter";
-  static String strBrandValue="strBrandValue";
-  static String strCash="strCash";
-  static String strBusinessSector="strBusinessSector";
-  static String strNewCustomer="strNewCustomer";
-  static String strExistingCustomer="strExistingCustomer";
-  static String strRewards="strRewards";
-  static String strTeam="strTeam";
-  static String strChallenges="strChallenges";
-  static String strOrganization="strOrganization";
-  static String strPL="strPL";
-  static String strBrandValueTitle="strBrandValueTitle";
-  static String strRanking="strRanking";
-  static String strBalance="strBalance";
+  static String strProProfile = "strProProfile";
+  static String strEmpOMeter = "strEmpOMeter";
+  static String strSalesOMeter = "strSalesOMeter";
+  static String strServiceOMeter = "strServiceOMeter";
+  static String strBrandValue = "strBrandValue";
+  static String strCash = "strCash";
+  static String strBusinessSector = "strBusinessSector";
+  static String strNewCustomer = "strNewCustomer";
+  static String strExistingCustomer = "strExistingCustomer";
+  static String strRewards = "strRewards";
+  static String strTeam = "strTeam";
+  static String strChallenges = "strChallenges";
+  static String strOrganization = "strOrganization";
+  static String strPL = "strPL";
+  static String strBrandValueTitle = "strBrandValueTitle";
+  static String strRanking = "strRanking";
+  static String strBalance = "strBalance";
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -566,8 +564,6 @@ class StringRes {
       'no': "No",
       'comingSoon': "Coming Soon..",
       'close': "Close",
-      'alert': "Alert",
-      'alertUnFriend': "Are you sure, you want to unfriend this user?",
 
       //introDialog
       'gotIt': "Got it",
@@ -811,9 +807,11 @@ class StringRes {
       'alertChangePassword': 'Password changed Successfully.',
       'servicePerson': 'Service Reps',
       //</editor-fold>
-      'strKp':"\$",
-      'strBalance':"Cash",
+      'strKp': "\$",
+      'strBalance': "Cash",
 
+      'alert': "Alert",
+      'alertUnFriend': "Are you sure, you want to unfriend this user?",
     },
     'de': {
       //<editor-fold desc="german">
@@ -1206,10 +1204,13 @@ class StringRes {
 
       'passwordChange': 'Passwort erfolgreich geändert.',
       'serviceReps': "Servicemitarbeiter",
-      'strKp':"\$",
-      'strBalance':"Vermögen",
-
-
+      'strKp': "\$",
+      'strBalance': "Vermögen",
+      'addFriend': 'Freund hinzugefügt',
+      'unFriend': 'Freund entfernt',
+      'alertUnFriend':
+          "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
+      'alert': "Achtung",
     },
     'zh': {
       //<editor-fold desc="chinese">
@@ -1320,7 +1321,7 @@ class StringRes {
       'answers': '答案',
       'question': '问题',
       'explanation': '说明',
-      'alertSelectOneOption': "Please select at least one option.",
+      'alertSelectOneOption': "请至少选择一个选项",
 
       //customer situation
       'profit': "营业收益",
@@ -1584,9 +1585,12 @@ class StringRes {
 
       'passwordChange': '密码已更改。',
       'serviceReps': "服务代表",
-      'strKp':"\$",
-      'strBalance':"现金",
-
+      'strKp': "\$",
+      'strBalance': "现金",
+      'addFriend': '成功添加朋友',
+      'unFriend': '成功添加朋友',
+      'alertUnFriend': "您确定要与该用户成为好友吗？",
+      'alert': "警告",
     }
   };
 
@@ -1966,26 +1970,47 @@ class StringRes {
       'passwordChange': 'Password changed Successfully.',
       'serviceReps': "Memory Points",
 
-      'strProProfile': "- Change your company name\n- switch to game mode\n- switch company\n- request a restart",
-      'strEmpOMeter':"- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
-      'strSalesOMeter':"- xx = currently free Study Points\n- yy = total Study Points\n- Used Study Points will refill after 8 hours\n- Click onStudy Point Bar brings you to List of open questions",
-      'strServiceOMeter':"- xx = currently free Memory Points\n- yy = totalMemory Points\n- 1 free Memory Point needed per Question\n- Click on Memory Point Bar brings you to list of answered questions",
-      'strBrandValue':"- Percentage of correctly answered questions\n- Click on %Correct Answers brings you to Ranking Screen",
-      'strBrandValueTitle':"%Correct Answers",
-      'strCash':"- Increases by answering Questions correct and earning achievements\n- Decreases through Power-Up costs",
-      'strBusinessSector':"- Find new Learning Module\n- Subscribe / Unsubscribe\n- Download for offline availability",
-      'strNewCustomer':"- Find new Questions to answer\n- Each Question requires free Study and Memory Points\n- Repetition of Questions increases if you answer them correctly",
-      'strExistingCustomer':"- review all your correctly answered questions\n- Repetition of Questions increases if you answer them correctly",
-      'strRewards':"- Rewards are earned by completing certain task\n- Rewards pay extra Knowledge Points if you reach a new level",
-      'strTeam':"- list of your direct reports\n- high level reporting and KPI\n- Allow bailout / reset",
-      'strChallenges':"- Challenge friends\n- Selected % value determined # of questions and payout\n- increasing % = Increasing ammount of questions to be answered\n- higher % = higher payout for competitor if he wins and lower payout for you if he looses",
-      'strOrganization':"- select additional Power-Ups\n- you need Power-Up capacities (HR) to Spend Power-Up points\n- Every Power-Up Point spend costs you 100 Knowledge Points per day",
-      'strPL':"- Monitor your performance and progress\n- Ensure you earn enough Knowledge Points",
-      'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
-      'strRanking':"- See and compare your rank\n- you can check multiple timelines and comparison groups",
-      'strKp':"Kp",
-      'strBalance':"Knowledge Points",
-
+      'strProProfile':
+          "- Change your company name\n- switch to game mode\n- switch company\n- request a restart",
+      'strEmpOMeter':
+          "- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
+      'strSalesOMeter':
+          "- xx = currently free Study Points\n- yy = total Study Points\n- Used Study Points will refill after 8 hours\n- Click onStudy Point Bar brings you to List of open questions",
+      'strServiceOMeter':
+          "- xx = currently free Memory Points\n- yy = totalMemory Points\n- 1 free Memory Point needed per Question\n- Click on Memory Point Bar brings you to list of answered questions",
+      'strBrandValue':
+          "- Percentage of correctly answered questions\n- Click on %Correct Answers brings you to Ranking Screen",
+      'strBrandValueTitle': "%Correct Answers",
+      'strCash':
+          "- Increases by answering Questions correct and earning achievements\n- Decreases through Power-Up costs",
+      'strBusinessSector':
+          "- Find new Learning Module\n- Subscribe / Unsubscribe\n- Download for offline availability",
+      'strNewCustomer':
+          "- Find new Questions to answer\n- Each Question requires free Study and Memory Points\n- Repetition of Questions increases if you answer them correctly",
+      'strExistingCustomer':
+          "- review all your correctly answered questions\n- Repetition of Questions increases if you answer them correctly",
+      'strRewards':
+          "- Rewards are earned by completing certain task\n- Rewards pay extra Knowledge Points if you reach a new level",
+      'strTeam':
+          "- list of your direct reports\n- high level reporting and KPI\n- Allow bailout / reset",
+      'strChallenges':
+          "- Challenge friends\n- Selected % value determined # of questions and payout\n- increasing % = Increasing ammount of questions to be answered\n- higher % = higher payout for competitor if he wins and lower payout for you if he looses",
+      'strOrganization':
+          "- select additional Power-Ups\n- you need Power-Up capacities (HR) to Spend Power-Up points\n- Every Power-Up Point spend costs you 100 Knowledge Points per day",
+      'strPL':
+          "- Monitor your performance and progress\n- Ensure you earn enough Knowledge Points",
+      'strRanking':
+          "- See and compare your rank\n- you can check multiple timelines and comparison groups",
+      'strRanking':
+          "- See and compare your rank\n- you can check multiple timelines and comparison groups",
+      'strKp': "Kp",
+      'strBalance': "Knowledge Points",
+      'next': 'Next',
+      'alertUnFriend': "Are you sure, you want to unfriend this user?",
+      'addFriend': 'Friend added successfully',
+      'unFriend': 'Unfriend successfully',
+      'alert': "Alert",
+      'alertSelectOneOption': 'Are you sure, you want to unfriend this user?',
     },
     'de': {
       //<editor-fold desc="German">
@@ -2036,9 +2061,9 @@ class StringRes {
       'hireEmp': 'Level erhöhen',
       'sector': 'Lernmodule',
       'name': 'Name',
-      'value': 'Wissenspunkte (KP)',
+      'value': 'Wissenspunkte (WP)',
       'loyalty': 'Wiederholung in ...',
-      'resources': 'Lernpunkte (LP)',
+      'resources': 'Lernpunkte (SP)',
       'engage': 'Beantworten',
       'engageNow': 'Beantworten',
       'endRel': 'Entfernen',
@@ -2367,27 +2392,46 @@ class StringRes {
       'passwordChange': 'Passwort erfolgreich geändert.',
       'serviceReps': "Bestandsfragen",
 
-
-      'strProProfile': "- Firmenname ändern\n- Zu gamifizierter Version wechseln\n- Neustart beantragen",
-      'strEmpOMeter':"- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
-      'strSalesOMeter':"- xx = noch verfuegbare Lernkapazität\n- yy = totale Lernkapazität\n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf\n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln",
-      'strServiceOMeter':"- xx = noch verfügbare Bestandsfragenkapazität\n- yy = totale Bestandsfragenkapazität\n- Jeder Frage bindet eine Bestandsfragenkapazität\n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln",
-      'strBrandValue':"- Anteil richtig beantworteter Fragen\n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln",
-      'strBrandValueTitle':"% richtige Antworten",
-      'strCash':"- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen\n- Verringert sich duch Kosten fuer Bonuspunkte",
-      'strBusinessSector':"- Neue Lernmodule finden\n- Abonnieren / abmelde\n- Herunterladen zur Nutzung ohne Internet Zugang",
-      'strNewCustomer':"- Neue unbeantwortete Fragen finden und beantworten\n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten\n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu",
-      'strExistingCustomer':"- Bestandsfragen liste enthält richtig beantwortete Fragen\n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu",
-      'strRewards':"- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
-      'strTeam':"- Liste der Mitarbeiter im Team\n- Basis Reporting und KPIs\n- Neustarts gewähren",
-      'strChallenges':"- Kollegen herausfordern\n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten\n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte",
-      'strOrganization':"- Bonuspunkte auf Bonusbereiche verteilen\n- \"Max. Bonuspunkte\" erhöhen um mehr Bonuspunkte verteilen zu koennen\n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend",
-      'strPL':"- Überwache die Entwicklung deines Fortschritts\n- Sorge dafür, dass deine Wissenpunkte zunehmen",
-      'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
-      'strRanking':"- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
-      'strKp':"WP",
-      'strBalance':"Wissenspunkte",
-
+      'strProProfile':
+          "- Firmenname ändern\n- Zu gamifizierter Version wechseln\n- Neustart beantragen",
+      'strEmpOMeter':
+          "- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
+      'strSalesOMeter':
+          "- xx = noch verfuegbare Lernkapazität\n- yy = totale Lernkapazität\n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf\n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln",
+      'strServiceOMeter':
+          "- xx = noch verfügbare Bestandsfragenkapazität\n- yy = totale Bestandsfragenkapazität\n- Jeder Frage bindet eine Bestandsfragenkapazität\n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln",
+      'strBrandValue':
+          "- Anteil richtig beantworteter Fragen\n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln",
+      'strBrandValueTitle': "% richtige Antworten",
+      'strCash':
+          "- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen\n- Verringert sich duch Kosten fuer Bonuspunkte",
+      'strBusinessSector':
+          "- Neue Lernmodule finden\n- Abonnieren / abmelde\n- Herunterladen zur Nutzung ohne Internet Zugang",
+      'strNewCustomer':
+          "- Neue unbeantwortete Fragen finden und beantworten\n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten\n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu",
+      'strExistingCustomer':
+          "- Bestandsfragen liste enthält richtig beantwortete Fragen\n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu",
+      'strRewards':
+          "- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
+      'strTeam':
+          "- Liste der Mitarbeiter im Team\n- Basis Reporting und KPIs\n- Neustarts gewähren",
+      'strChallenges':
+          "- Kollegen herausfordern\n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten\n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte",
+      'strOrganization':
+          "- Bonuspunkte auf Bonusbereiche verteilen\n- \"Max. Bonuspunkte\" erhöhen um mehr Bonuspunkte verteilen zu koennen\n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend",
+      'strPL':
+          "- Überwache die Entwicklung deines Fortschritts\n- Sorge dafür, dass deine Wissenpunkte zunehmen",
+      'strRanking':
+          "- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
+      'strRanking':
+          "- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
+      'strKp': "WP",
+      'strBalance': "Wissenspunkte",
+      'addFriend': 'Freund hinzugefügt',
+      'unFriend': 'Freund entfernt',
+      'alert': "Achtung",
+      'alertUnFriend':
+          "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
     },
     'zh': {
       //<editor-fold desc="chines">
@@ -2438,9 +2482,9 @@ class StringRes {
       'hireEmp': '提高等级',
       'sector': '模块',
       'name': '名字',
-      'value': '知识点数 (KP)',
+      'value': '知识点数',
       'loyalty': '重复...',
-      'resources': '学习点数 (SP)',
+      'resources': '学习点数',
       'engage': '回答',
       'engageNow': '立刻回答',
       'endRel': '解除',
@@ -2738,26 +2782,35 @@ class StringRes {
       'passwordChange': '密码已更改。',
       'serviceReps': "记忆点数",
 
-      'strProProfile':" - 更改您的公司名称\n- 切换到游戏模式\n- 切换公司\n- 申请重新开始",
-      'strEmpOMeter':"- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
-      'strSalesOMeter':"- xx = 当前可用学习点数\n- yy = 总学习点数\n- 8小时候已使用的学习点数会重新填充\n- 点击学习点数条将前往开放问题列表",
-      'strServiceOMeter':"- xx = 当前可用记忆点数\n- yy =  总记忆点数\n- 每个问题需要一个可用的记忆点数\n-  点击记忆点数条将前往已回答问题列表",
-      'strBrandValue':"- 正确回答问题的百分比\n- 点击%正确答案将前往排名界面",
-      'strBrandValueTitle':"%正确答案",
-      'strCash':"- 正确回答问题和达成成就都可以增加知识点数\n- 进行威力升级会减少知识点数",
-      'strBusinessSector':"- 寻找新的学习模块\n- 加入 / 取消加入\n- 下载以供离线使用",
-      'strNewCustomer':"- 寻找新的问题来回答\n- 每个问题都需要可用的学习和记忆点数\n- 如果您答对了问题，问题重复的次数就会增加",
-      'strExistingCustomer':"- 复习您所有正确回答的问题\n- 如果您答对了问题，问题重复的次数就会增加",
-      'strRewards':"- 通过完成某些任务获得奖励\n- 如果您达到新的级别，您将获得额外的知识点数奖励",
-      'strTeam':"- 您的直接下属名单\n- 高级别报告和KPI\n- 允许纾困/重置",
-      'strChallenges':"- 挑战好友\n- 选择%价值，确定问题的数量#和奖励\n- 增加% = 增加要回答的问题的数量\n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少",
-      'strOrganization':"- 选择额外的威力升级\n- 您需要威力升级容量 (PU) 才能使用威力升级点数\n- 每天每使用一个威力升级点数花费您100个知识点数",
-      'strPL':"- 监控您的表现和进步\n- 确保您赚取足够的知识点数",
-      'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
-      'strRanking':"- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
-      'strKp':"知识点数",
-      'strBalance':"知识点数",
-
+      'strProProfile': " - 更改您的公司名称\n- 切换到游戏模式\n- 切换公司\n- 申请重新开始",
+      'strEmpOMeter':
+          "- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
+      'strSalesOMeter':
+          "- xx = 当前可用学习点数\n- yy = 总学习点数\n- 8小时候已使用的学习点数会重新填充\n- 点击学习点数条将前往开放问题列表",
+      'strServiceOMeter':
+          "- xx = 当前可用记忆点数\n- yy =  总记忆点数\n- 每个问题需要一个可用的记忆点数\n-  点击记忆点数条将前往已回答问题列表",
+      'strBrandValue': "- 正确回答问题的百分比\n- 点击%正确答案将前往排名界面",
+      'strBrandValueTitle': "%正确答案",
+      'strCash': "- 正确回答问题和达成成就都可以增加知识点数\n- 进行威力升级会减少知识点数",
+      'strBusinessSector': "- 寻找新的学习模块\n- 加入 / 取消加入\n- 下载以供离线使用",
+      'strNewCustomer':
+          "- 寻找新的问题来回答\n- 每个问题都需要可用的学习和记忆点数\n- 如果您答对了问题，问题重复的次数就会增加",
+      'strExistingCustomer': "- 复习您所有正确回答的问题\n- 如果您答对了问题，问题重复的次数就会增加",
+      'strRewards': "- 通过完成某些任务获得奖励\n- 如果您达到新的级别，您将获得额外的知识点数奖励",
+      'strTeam': "- 您的直接下属名单\n- 高级别报告和KPI\n- 允许纾困/重置",
+      'strChallenges':
+          "- 挑战好友\n- 选择%价值，确定问题的数量#和奖励\n- 增加% = 增加要回答的问题的数量\n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少",
+      'strOrganization':
+          "- 选择额外的威力升级\n- 您需要威力升级容量 (PU) 才能使用威力升级点数\n- 每天每使用一个威力升级点数花费您100个知识点数",
+      'strPL': "- 监控您的表现和进步\n- 确保您赚取足够的知识点数",
+      'strRanking': "- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
+      'strRanking': "- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
+      'strKp': "知识点数",
+      'strBalance': "知识点数",
+      'alert': "警告",
+      'alertUnFriend': "您确定要与该用户成为好友吗？",
+      'addFriend': '成功添加朋友',
+      'unFriend': '成功取消朋友',
     }
   };
 }

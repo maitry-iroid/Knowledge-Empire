@@ -132,6 +132,7 @@ class _AchievementDialogState extends State<AchievementDialog>
                         style: TextStyle(color: ColorRes.white, fontSize: 15)),
                   ),
                   SizedBox(height: 15),
+
                   Container(
                     width: Utils.getDeviceWidth(context) / 3.5,
                     height: Utils.getDeviceHeight(context) / 3.5,
