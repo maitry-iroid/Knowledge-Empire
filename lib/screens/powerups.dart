@@ -14,7 +14,6 @@ import '../models/manage_organization.dart';
 import '../models/organization.dart';
 
 class PowerUpsPage extends StatefulWidget {
-
   final RefreshAnimation mRefreshAnimation;
 
   const PowerUpsPage({Key key, this.mRefreshAnimation}) : super(key: key);
@@ -24,17 +23,15 @@ class PowerUpsPage extends StatefulWidget {
 }
 
 class _PowerUpsPageState extends State<PowerUpsPage> {
-
   TextEditingController searchController = TextEditingController();
   String searchText = "";
   Organization selectedOrg = Organization();
   int selectedIndex = 0;
 
-
   OrganizationData organizationData;
 
   List<Organization> arrOrganization = List();
-  bool isLoading  = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -44,7 +41,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       if (isConnected) getOrganization();
     });
   }
-
 
   void getOrganization() {
     Utils.isInternetConnectedWithAlert(context).then((_) {
@@ -67,7 +63,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
           arrOrganization = organizationData.organization;
           selectedOrg = arrOrganization[0];
 
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
         }
       }).catchError((e) {
         if (mounted)
@@ -226,10 +222,11 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       ),
       onTap: () {
         Utils.playClickSound();
-        if (mounted)setState(() {
-          selectedOrg = arrOrganization[index];
-          selectedIndex = index;
-        });
+        if (mounted)
+          setState(() {
+            selectedOrg = arrOrganization[index];
+            selectedIndex = index;
+          });
       },
     );
   }
@@ -298,7 +295,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                           style: TextStyle(
                               color: Injector.isBusinessMode
                                   ? ColorRes.white
-                                  : ColorRes.textProf,fontSize: 18),
+                                  : ColorRes.textProf,
+                              fontSize: 18),
                         ),
                       ),
                     ),
@@ -362,12 +360,6 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                   color: ColorRes.greyText,
-//                          image: Injector.isBusinessMode
-//                              ? DecorationImage(
-//                                  image: AssetImage(
-//                                      Utils.getAssetsImg('bg_progress')),
-//                                  fit: BoxFit.fill)
-//                              : null,
                                   borderRadius: BorderRadius.circular(20),
                                   border: Injector.isBusinessMode
                                       ? null
@@ -477,15 +469,19 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
           arrOrganization[selectedIndex] = manageOrgData.organization[0];
           organizationData.organization = arrOrganization;
-          selectedOrg =  manageOrgData.organization[0];
+          selectedOrg = manageOrgData.organization[0];
 
           Utils.performManageLevel(manageOrgData);
 
           if (action == Const.subtract) {
             triggerAnimation(selectedOrg.type);
+          } else if (action == Const.add) {
+            if (selectedOrg.type != Const.typeHR) {
+              triggerAnimation(Const.typeHR);
+            }
           }
 
-          if (mounted)setState(() {});
+          if (mounted) setState(() {});
         } else {
           Utils.getText(context, StringRes.somethingWrong);
         }
@@ -502,9 +498,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
 
   void triggerAnimation(int type) {
     try {
-
       widget.mRefreshAnimation.onRefreshAchievement(type);
-
     } catch (e) {
       print(e);
     }

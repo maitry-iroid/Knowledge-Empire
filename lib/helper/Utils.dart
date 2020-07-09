@@ -81,7 +81,6 @@ class Utils {
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 3,
         backgroundColor: Colors.black87,
         textColor: Colors.white);
   }
@@ -565,7 +564,7 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) async {
-    if (Injector.isSoundEnable) {
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
       Injector.audioCache.play("all_button_clicks.wav");
     }
 

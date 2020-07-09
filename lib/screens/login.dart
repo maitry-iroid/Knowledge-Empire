@@ -74,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Future initStateMethods() async {
     status = await Injector.getCurrentVersion(context);
-    if (status.status != "0" || status.status == "2") {
+    if (status != null && status.status != null && status.status != "0" ||
+        status != null && status.status != null && status.status == "2") {
       if (status.status == "2") {
         if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
           DisplayDialogs.showUpdateDialog(
@@ -412,8 +413,10 @@ class _LoginPageState extends State<LoginPage> {
     LoginRequest loginRequest = LoginRequest();
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
-    loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
-    loginRequest.language = tempLanguage == StringRes.strDefault ? null : tempLanguage;
+    loginRequest.secret =
+        Utils.getSecret(loginRequest.email, loginRequest.password);
+    loginRequest.language =
+        tempLanguage == StringRes.strDefault ? null : tempLanguage;
 
     Utils.hideKeyboard(context);
 
@@ -431,8 +434,9 @@ class _LoginPageState extends State<LoginPage> {
 
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
-        if (userData.isFirstTimeLogin){
-          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);}
+        if (userData.isFirstTimeLogin) {
+          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
+        }
 
         if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
