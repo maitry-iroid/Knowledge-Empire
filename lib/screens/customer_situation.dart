@@ -12,6 +12,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:video_player/video_player.dart';
 import 'engagement_customer.dart';
 import '../helper/constant.dart';
@@ -42,8 +43,10 @@ correctWrongImage() {
 
 class CustomerSituationPage extends StatefulWidget {
   final HomeData homeData;
+  final RefreshAnimation mRefreshAnimation;
 
-  CustomerSituationPage({Key key, this.homeData}) : super(key: key);
+  CustomerSituationPage({Key key, this.homeData, this.mRefreshAnimation})
+      : super(key: key);
 
   @override
   _CustomerSituationPageState createState() => _CustomerSituationPageState();
@@ -90,13 +93,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         await Injector.setIntroData(Injector.introData);
       }
 
-      if (isCameFromNewCustomer || isChallenge) {
-        Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect == 1);
-        if (!isChallenge || (Injector.countList.length == questionDataCustSituation.questionCurrentIndex)) {
-          Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
-        }
-      }
-
       updateChallenge(true);
     } else {
       if (isCameFromNewCustomer || isChallenge) {
@@ -118,6 +114,27 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           isAnswere ? ColorRes.greenDot : ColorRes.red;
       getChallengeQueBloc?.updateQuestions(index, isAnswere);
     }
+
+    if (widget.homeData.isCameFromNewCustomer) {
+      if (isAnswere) {
+        widget.mRefreshAnimation.onRefreshAchievement(Const.typeServices);
+        widget.mRefreshAnimation.onRefreshAchievement(Const.typeSales);
+        Future.delayed(Duration(seconds: 1));
+
+        if (isCameFromNewCustomer || isChallenge) {
+          Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect == 1);
+
+          if (!isChallenge ||
+              (Injector.countList.length ==
+                  questionDataCustSituation.questionCurrentIndex)) {
+            Injector.homeStreamController?.add("${Const.typeMoneyAnim}");
+          }
+        }
+
+      } else {
+        widget.mRefreshAnimation.onRefreshAchievement(Const.typeSales);
+      }
+    }
   }
 
   String error;
@@ -130,9 +147,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         child: Stack(
           children: <Widget>[
             isChallenge != null && isChallenge
-                ? Container(
-                    color: ColorRes.colorBgDark,
-                  )
+                ? Container(color: ColorRes.colorBgDark)
                 : CommonView.showBackground(context),
             Column(
               children: <Widget>[
@@ -356,7 +371,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 padding:
                     EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                 decoration: BoxDecoration(
-                  color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                  color:
+                      Injector.isBusinessMode ? ColorRes.bgDescription : null,
                   borderRadius: BorderRadius.circular(12),
                   border: Injector.isBusinessMode
                       ? Border.all(color: ColorRes.white, width: 1)
@@ -420,7 +436,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(Injector.isBusinessMode
-                              ? Utils.getAssetsImg("full_expand_question_answers")
+                              ? Utils.getAssetsImg(
+                                  "full_expand_question_answers")
                               : Utils.getAssetsImg("expand_pro")),
                           fit: BoxFit.fill)),
                 ),

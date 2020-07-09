@@ -43,8 +43,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     );
   }
 
-
-
   showSetupPin(BuildContext context) {
     return Center(
       child: Stack(
@@ -185,9 +183,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                 Utils.hideKeyboard(context);
                                 validateData();
                               }),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          SizedBox(height: 10),
                           InkResponse(
                               child: Container(
                                   alignment: Alignment.center,
@@ -219,8 +215,6 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
       ),
     );
   }
-
-
 
   Widget showCircularProgress() {
     if (isLoading) {

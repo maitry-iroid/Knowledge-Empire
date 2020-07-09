@@ -309,7 +309,7 @@ class DummyViewState extends State<DummyView> {
       builder: (BuildContext context, value, Widget child) {
         return AnimatedPositioned(
           top: value ? 50.0 : 0,
-          duration: Duration(milliseconds: value ? 400 : 0),
+          duration: Duration(milliseconds: value ? 200 : 0),
           onEnd: () {
             valueListenable.value = false;
             valueListenable.notifyListeners();
@@ -318,7 +318,7 @@ class DummyViewState extends State<DummyView> {
             width: 26.0,
             height: 26.0,
             child: AnimatedOpacity(
-                duration: Duration(milliseconds: value ? 400 : 0),
+                duration: Duration(milliseconds: value ? 200 : 0),
                 opacity: value ? 0.0 : 1.0,
                 child: Image.asset(Utils.getAssetsImg(icon),
                     width: 26, height: 26)),

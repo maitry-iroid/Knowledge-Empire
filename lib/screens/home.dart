@@ -115,7 +115,7 @@ class HomePageState extends State<HomePage>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-      if (Injector.isSoundEnable) {
+      if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
         Injector.audioPlayerBg.resume();
       }
     } else if (state == AppLifecycleState.inactive) {
@@ -303,7 +303,7 @@ class HomePageState extends State<HomePage>
     } else if (_currentPage == Const.typeEngagement) {
       return EngagementCustomer(homeData: homeData);
     } else if (_currentPage == Const.typeCustomerSituation) {
-      return CustomerSituationPage(homeData: homeData);
+      return CustomerSituationPage(homeData: homeData,mRefreshAnimation: mRefreshAnimation);
     } else if (_currentPage == Const.typeCustomerSituation) {
       return ProfilePage();
     } else {
@@ -369,7 +369,7 @@ class HomePageState extends State<HomePage>
         coinWidget(350, 450),
         coinWidget(180, 300),
         coinWidget(200, 550),
-        coinWidget(350, 650),
+        coinWidget(350, 650)
       ],
     );
   }
@@ -653,7 +653,7 @@ class HomePageState extends State<HomePage>
 
     Utils.getCustomerValues();
 
-    if (Injector.isSoundEnable) {
+    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
       await Utils.playBackgroundMusic();
     }
 

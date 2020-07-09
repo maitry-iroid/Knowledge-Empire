@@ -28,6 +28,7 @@ class OrganizationsPage2 extends StatefulWidget {
   final RefreshAnimation mRefreshAnimation;
 
   const OrganizationsPage2({Key key, this.mRefreshAnimation}) : super(key: key);
+
   @override
   _OrganizationsPage2State createState() => _OrganizationsPage2State();
 }
@@ -37,9 +38,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   List<Organization> arrOrganization = List();
   bool isLoading = false;
-
-
-
 
   @override
   initState() {
@@ -66,10 +64,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SizedBox(
-                height: Utils.getHeaderHeight(context),
-              ),
-//              CommonView.showTitle(context, StringRes.organizations),
+              SizedBox(height: Utils.getHeaderHeight(context)),
               Expanded(
                 child: Stack(
                   children: <Widget>[
@@ -345,6 +340,10 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
           if (action == Const.subtract) {
             triggerAnimation(type);
+          } else if (action == Const.add) {
+            if (type != Const.typeHR) {
+              triggerAnimation(Const.typeHR);
+            }
           }
 
           Utils.performManageLevel(manageOrgData);
@@ -382,9 +381,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   void triggerAnimation(int type) {
     try {
-
       widget.mRefreshAnimation.onRefreshAchievement(type);
-
     } catch (e) {
       print(e);
     }
