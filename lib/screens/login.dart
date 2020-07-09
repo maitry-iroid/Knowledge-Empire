@@ -434,10 +434,6 @@ class _LoginPageState extends State<LoginPage> {
 
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
-        if (userData.isFirstTimeLogin) {
-          Injector.prefs.setBool(PrefKeys.isIntroRemaining, true);
-        }
-
         if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
         } else {

@@ -1421,11 +1421,9 @@ class _ProfilePageState extends State<ProfilePage> {
     Injector.prefs.remove(PrefKeys.customerValueData);
     Injector.prefs.remove(PrefKeys.learningModles);
     Injector.prefs.remove(PrefKeys.download);
-    Injector.prefs.remove(PrefKeys.isIntroRemaining);
     Injector.prefs.remove(PrefKeys.currentIntroType);
     Injector.prefs.remove(PrefKeys.deviceToken);
     Injector.prefs.remove(PrefKeys.badgeCount);
-    Injector.prefs.remove(PrefKeys.dialogTypes);
   }
 
   //switch Company List

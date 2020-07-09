@@ -7,11 +7,9 @@ class PrefKeys {
   static var customerValueData = "customerValueData";
   static var learningModles = "learningModles";
   static var download = "download";
-  static var isIntroRemaining = "isIntroRemaining";
   static var currentIntroType = "currentIntroType";
   static var deviceToken = "deviceToken";
   static var badgeCount = "badgeCount";
-  static var dialogTypes = "dialogTypes";
   static var introData = "introData";
   static var introModel = "introModel";
   static var isCancelDialog = "isCancelDialog";

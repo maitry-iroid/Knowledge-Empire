@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:wasm';
-
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:device_id/device_id.dart';
@@ -11,14 +9,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-
-//import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -33,53 +27,96 @@ import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
 
+/*
+*
+* single Instance class - called once when app opens
+*
+* */
+
 class Injector {
-//  static final Injector _singleton = new Injector._internal();
+
 
   static SharedPreferences prefs;
+
+  // Device's Unique Id
   static String deviceId = "";
+
+  // Android or Ios
+  static String deviceType = "";
+
+  // local Notification Id
   static int notificationID = 0;
+
+  //loggedIn user's data
   static UserData userData;
   static int userId;
+
+  // for Header Values
   static CustomerValueData customerValueData;
+
+  // Introduction dialog status data - to show when user first visits the screen
   static IntroData introData;
+
+  // Lock-Unlock feature status
   static DashboardStatusResponse dashboardStatusResponse;
+
+  // app is in Game mode or Business(Professional) Mode
   static int mode;
+
+  // Is business Mode selected
   static bool isBusinessMode = true;
+
+  // Is password changed by user when first time login? - it is necessary coz initially admin generated password is assigned to every user.
   static bool isPasswordChange = false;
+
+  // To store Images, Videos in Cache for offline mode
   static DefaultCacheManager cacheManager;
+
+  // to notify header values when any changes made related to their value occurs.
   static StreamController<String> headerStreamController;
+
+  // to notify Home UI values when any changes made related to their value occurs.
   static StreamController<String> homeStreamController =
       new StreamController<String>();
-  static StreamController<String> newCustomerStreamController;
-  static FirebaseMessaging firebaseMessaging;
-  static bool isIntroRemaining = true;
-  static int currentIntroType = 0;
-  static String deviceType = "";
+
   static ui.Image image;
 
+  // Firebase Push notification
+  static FirebaseMessaging firebaseMessaging;
+
+  // Local Push notification
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+  // Is sound enabled from Profile > Settings bt the user (tap sound or background sound, achievement sound etc..)
   static bool isSoundEnable;
+
+  // For caching sound files once so it won't load every time
   static AudioCache audioCache = AudioCache(prefix: 'sounds/');
   static AudioCache audioCacheBg = AudioCache(prefix: 'sounds/');
 
+  // To play sound files
   static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
 
+  // is Development environment
   static bool isDev = true;
 
+  //Badge count that shows up on App Launcher icon on phone.
   static int badgeCount = 0;
 
-  static int dialogType = 0;
-
+  // Web API client to call the APIs
   static WebApi webApi;
 
+  // to get app version details
   static PackageInfo packageInfo;
-  static BuildContext buildContext;
-  static IntroModel introModel;
 
+  // Global context of the application
+  static BuildContext buildContext;
+
+  static IntroModel introModel;
 
   Injector._internal();
 
+  // Pending challenge question count to Attempt
   static List<QuestionCountWithData> countList = new List();
 
   static getInstance() async {
@@ -126,9 +163,6 @@ class Injector {
 
       userId = userData.userId;
 
-      isIntroRemaining = prefs.getBool(PrefKeys.isIntroRemaining);
-      dialogType = prefs.getInt(PrefKeys.dialogTypes);
-
       if (prefs.getString(PrefKeys.customerValueData) != null) {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
@@ -149,7 +183,6 @@ class Injector {
       }
 
       headerStreamController = StreamController.broadcast();
-      newCustomerStreamController = StreamController.broadcast();
       homeStreamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
@@ -204,8 +237,6 @@ class Injector {
       updateMode(customerValueData.mode);
       localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     }
-
-
   }
 
   static setIntroData(IntroData _introData) async {
