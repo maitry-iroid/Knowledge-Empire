@@ -59,6 +59,11 @@ class Const {
   static var businessMode = 1;
   static var professionalMode = 2;
 
+// answer type is text or media
+  static var typeAnswerText = 1;
+  static var typeAnswerMedia = 2;
+
+
   static var typeCamera = 101;
   static var typeGallery = 102;
 

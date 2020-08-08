@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
@@ -33,6 +34,7 @@ List<Answer> arrAnswerSituation = List();
 QuestionData questionDataCustSituation = QuestionData();
 
 VideoPlayerController _controller;
+ChewieController _chewieController;
 
 List abcdList = List();
 
@@ -160,13 +162,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 SizedBox(
                   height: 8,
                 ),
-                Expanded(
-                    child: Row(
-                  children: <Widget>[
-                    showFirstHalf(context),
-                    showSecondHalf(context),
-                  ],
-                )),
+                homeData.questionHomeData.answerType == Const.typeAnswerText
+                    ? showTextAnswer(context)
+                    : showMediaAnswer(context),
               ],
             ),
 //            gifImageShow(),
@@ -174,6 +172,158 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         ),
       ),
     );
+  }
+
+
+  showTextAnswer(BuildContext context){
+    return Expanded(
+        child: Row(
+          children: <Widget>[
+            showFirstHalf(context),
+            showSecondHalf(context),
+          ],
+        ));
+  }
+
+  showMediaAnswer(BuildContext context){
+    print("Show media answer function::::::::::::::");
+//    return Text("test");
+    return Expanded(
+        child: Stack(
+          children: <Widget>[
+            Card(
+              color: ColorRes.bgProf,
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
+              child: Container(
+                  alignment: Alignment.center,
+                  padding:
+                  EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 18),
+                  decoration: BoxDecoration(
+                    color:
+                    Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Injector.isBusinessMode
+                        ? Border.all(color: ColorRes.white, width: 1)
+                        : null,
+                  ),
+                  child: GridView.builder(
+                      itemCount: questionDataCustomerSituation.answer.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10
+                      ),
+                      itemBuilder: (context, index){
+                        return Container(
+                          child: Card(
+                            elevation: 5,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            shape: RoundedRectangleBorder(
+                                side: new BorderSide(
+                                    color: isAnswerCorrect(index) ? ColorRes.greenDot : arrAnswerSituation[index].isSelected
+                                        ? ColorRes.fontGrey : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                                        ? ColorRes.greenDot : ColorRes.white, width: 5.0),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: showMediaAnswersView(context, questionDataCustomerSituation.answer.elementAt(index).answer) ?? showMediaAnswersView(context, "https://www.digitalcitizen.life/sites/default/files/styles/img_amp/public/featured/2016-08/photo_gallery.jpg"),
+                          ),
+                        );
+                      }
+                  )
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                alignment: Alignment.center,
+                height: 30,
+                margin: EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 2.4),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    border: Injector.isBusinessMode
+                        ? null
+                        : Border.all(width: 1, color: ColorRes.white),
+                    color:
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image:
+                        AssetImage(Utils.getAssetsImg("eddit_profile")),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  Utils.getText(context, StringRes.answers),
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+
+  showMediaAnswersView(BuildContext context, String path) {
+    if (Utils.isImage(path)) {
+      print("isImage = true");
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            image: DecorationImage(
+              image: CachedNetworkImageProvider(path,
+                  scale: Const.imgScaleProfile,
+                  cacheManager: Injector.cacheManager),
+              fit: BoxFit.cover,
+            )),
+      );
+    } else if (Utils.isVideo(path) &&
+        _controller != null &&
+        _controller.value.initialized) {
+      print("isVideo = true");
+
+      return Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Container(
+            child: Chewie(
+              controller: _chewieController,
+            ),
+          ),
+          Container(
+            child: MaterialButton(
+              height: 100,
+              onPressed: () {
+                _controller.value.isPlaying
+                    ? _controller.pause()
+                    : _controller.play();
+
+                if (mounted) setState(() {});
+              },
+              child: Container(
+                width: Utils.getDeviceHeight(context) / 7,
+                height: Utils.getDeviceHeight(context) / 7,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                          _controller.value.isPlaying
+                              ? Utils.getAssetsImg("") //add_emp_check
+                              : Utils.getAssetsImg("play_button"),
+                        ),
+                        fit: BoxFit.scaleDown)),
+              ),
+            ),
+          )
+        ],
+      );
+    }
   }
 
   showSubHeader(BuildContext context) {

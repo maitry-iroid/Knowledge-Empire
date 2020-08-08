@@ -181,7 +181,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               SizedBox(
                 height: 8,
               ),
-              showMainBody(context),
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText
+                  ? showMainBody(context)
+                  : showMediaBody(context),
             ],
           ),
           CommonView.showLoderView(isLoading)
@@ -506,6 +508,102 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ));
   }
 
+  showMediaBody(BuildContext context) {
+    return Expanded(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              showMediaQuestion(context),
+              showMediaAnswerOptions(context)
+            ],
+          ),
+        ));
+  }
+
+  showMediaQuestion(BuildContext context){
+    return Padding(
+        padding: EdgeInsets.only(bottom: 5, left: 5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+                Utils.getText(context, StringRes.question) + " :  ",
+                style: TextStyle(
+                    color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.headerBlue,
+                    fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
+            Expanded(child: Text(widget.homeData.questionHomeData.question,
+                maxLines: 5,
+                style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey, fontSize: 16)))
+          ],
+        ));
+  }
+
+  showMediaAnswerOptions(BuildContext context){
+    return Expanded(
+        child: GridView.builder(
+            itemCount: widget.homeData.questionHomeData.answer.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10
+            ),
+            itemBuilder: (context, index){
+              return Stack(
+                alignment: Alignment.topRight,
+                children: <Widget>[
+                  InkResponse(
+                    onTap: (){
+                      Utils.playClickSound();
+                      setState(() {
+                        arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+                      });
+                      print("correct answer Id : ${widget.homeData.questionHomeData.correctAnswerId}");
+                      print( " Array Answer :::  ${arrAnswer.map((e) => e.option).toList()}");
+                      print( " Array Answer :::  ${arrAnswer.map((e) => e.isSelected).toList()}");
+                    },
+                    child: Container(
+                      child: Card(
+                        elevation: 5,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        shape: RoundedRectangleBorder(
+                            side: new BorderSide(color: ColorRes.white, width: 5.0),
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: showMediaView(context, arrAnswer.elementAt(index).answer) ?? showMediaView(context, "https://www.digitalcitizen.life/sites/default/files/styles/img_amp/public/featured/2016-08/photo_gallery.jpg"),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: arrAnswer[index].isSelected  ? true : false,
+                    child: Padding(padding: EdgeInsets.only(top: 5, right: 5),
+                        child: Transform.scale(
+                          scale: 1.7,
+                          child: Checkbox(
+                              checkColor: ColorRes.white,
+                              activeColor: ColorRes.greenDot,
+                              value: arrAnswer[index].isSelected  ? true : false,
+                              onChanged: (value){
+                                Utils.playClickSound();
+                                setState(() {
+                                  arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+                                });
+                                print( " Array Answer :::  ${arrAnswer.map((e) => e.option).toList()}");
+                                print( " Array Answer :::  ${arrAnswer.map((e) => e.isSelected).toList()}");
+                              }
+                          ),
+                        )),
+                  )
+                ],
+              );
+            }
+        )
+    );
+  }
+
   bool isAnswerCorrect(List<Answer> selectedAnswer) {
     bool isAnswerCorrect = true;
 
@@ -725,7 +823,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: ColorRes.white, width: 1)),
-                  child: showMediaView(context)),
+                  child: showMediaView(context, questionData.mediaLink)),
             ),
             showMediaExpandIcon(context)
           ],
@@ -736,23 +834,26 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
 //  PDFDocument doc = await PDFDocument.fromURL('http://www.africau.edu/images/default/sample.pdf');
 
-  showMediaView(BuildContext context) {
-    if (Utils.isImage(questionData.mediaLink)) {
+  showMediaView(BuildContext context, String path) {
+    if (Utils.isImage(path)) {
+      print("isImage = true");
       return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
             image: DecorationImage(
-              image: CachedNetworkImageProvider(questionData.mediaLink,
+              image: CachedNetworkImageProvider(path,
                   scale: Const.imgScaleProfile,
                   cacheManager: Injector.cacheManager),
               fit: BoxFit.cover,
             )),
       );
-    } else if (Utils.isVideo(questionData.mediaLink) &&
+    } else if (Utils.isVideo(path) &&
         _controller != null &&
         _controller.value.initialized) {
+      print("isVideo = true");
+
       return Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -797,7 +898,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           )
         ],
       );
-    } else if (Utils.isPdf(questionData.mediaLink)) {
+    } else if (Utils.isPdf(path)) {
+      print("isPdf = true");
       return Container(
         padding: EdgeInsets.all(3),
         decoration:

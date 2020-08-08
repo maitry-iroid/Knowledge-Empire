@@ -87,6 +87,7 @@ class QuestionData {
   int totalQuestion;
   int isFirstQuestion;
   int questionCurrentIndex;
+  int answerType;
 
   var winningAmount;
 
@@ -118,7 +119,8 @@ class QuestionData {
       this.questionCurrentIndex,
       this.totalQuestion,
       this.isFirstQuestion,
-      this.attemptTime});
+      this.attemptTime,
+      this.answerType});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -141,6 +143,7 @@ class QuestionData {
     resources = json['resources'];
     mediaLink = json['mediaLink'];
     isAnsweredCorrect = json['isAnsweredCorrect'];
+    answerType = json['answerType'];
     winningAmount = json['winningAmount'];
     if (json.containsKey("questionAnswerStatus") &&
         json['questionAnswerStatus'] != null) {
@@ -190,6 +193,7 @@ class QuestionData {
     data['videoLoop'] = this.videoLoop;
     data['mediaLink'] = this.mediaLink;
     data['isAnsweredCorrect'] = this.isAnsweredCorrect;
+    data['answerType'] = this.answerType;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();
     }
