@@ -98,6 +98,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   }
 
   showMainView() {
+    print("Main view");
     return Container(
         margin: EdgeInsets.all(5),
         child: GridView.count(
@@ -157,6 +158,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
             ),
           ),
           onTap: () {
+            print("====================Dashboard click event");
             Utils.performDashboardItemClick(context, type);
           },
         ),

@@ -210,6 +210,7 @@ class Answer {
   int answerId;
   String answer;
   int option;
+  String thumbImage;
   bool isSelected = false;
 
   Answer({this.answerId, this.answer});
@@ -218,6 +219,7 @@ class Answer {
     answerId = json['answerId'];
     answer = json['answer'];
     option = json['option'];
+    thumbImage = json["thumbImage"];
   }
 
   Map<String, dynamic> toJson() {
@@ -225,6 +227,7 @@ class Answer {
     data['answerId'] = this.answerId;
     data['answer'] = this.answer;
     data['option'] = this.option;
+    data['thumbImage'] = this.thumbImage;
     return data;
   }
 }
