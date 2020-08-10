@@ -109,7 +109,7 @@ class DummyViewState extends State<DummyView> {
                   height: 26,
                 ),
               ),
-              valueListenable!=null?animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable):Container(),
+              valueListenable!=null?animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable, context):Container(),
             ],
           ),
           SizedBox(
@@ -303,7 +303,7 @@ class DummyViewState extends State<DummyView> {
     );
   }
 
-  Widget animatedPositioned(String icon, valueListenable) {
+  Widget animatedPositioned(String icon, valueListenable, BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: valueListenable,
       builder: (BuildContext context, value, Widget child) {

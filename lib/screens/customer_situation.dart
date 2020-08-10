@@ -11,6 +11,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:video_player/video_player.dart';
@@ -112,13 +113,13 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   void updateChallenge(bool isAnswere) {
     int index = Injector.countList.indexWhere(
-        (QuestionCountWithData questionCountWithData) =>
-            questionCountWithData.questionIndex ==
+            (QuestionCountWithData questionCountWithData) =>
+        questionCountWithData.questionIndex ==
             questionDataCustSituation.questionCurrentIndex);
 
     if (index != -1) {
       Injector.countList[index].color =
-          isAnswere ? ColorRes.greenDot : ColorRes.red;
+      isAnswere ? ColorRes.greenDot : ColorRes.red;
       getChallengeQueBloc?.updateQuestions(index, isAnswere);
     }
 
@@ -186,14 +187,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   showMediaAnswer(BuildContext context){
-    print("Show media answer function::::::::::::::");
-//    return Text("test");
     return Expanded(
         child: Stack(
           children: <Widget>[
             Card(
               color: ColorRes.bgProf,
-              elevation: 10,
+              elevation: 5,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
@@ -214,23 +213,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10
+                          crossAxisSpacing: 0,
+                          mainAxisSpacing: 0
                       ),
                       itemBuilder: (context, index){
-                        return Container(
-                          child: Card(
-                            elevation: 5,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            shape: RoundedRectangleBorder(
-                                side: new BorderSide(
-                                    color: isAnswerCorrect(index) ? ColorRes.greenDot : arrAnswerSituation[index].isSelected
-                                        ? ColorRes.fontGrey : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
-                                        ? ColorRes.greenDot : ColorRes.white, width: 5.0),
-                                borderRadius: BorderRadius.circular(15.0)),
-                            child: showMediaAnswersView(context, questionDataCustomerSituation.answer.elementAt(index).answer) ?? showMediaAnswersView(context, "https://www.digitalcitizen.life/sites/default/files/styles/img_amp/public/featured/2016-08/photo_gallery.jpg"),
-                          ),
-                        );
+                        return MediaManager().showQueMedia(
+                            context,
+                            isAnswerCorrect(index) ? ColorRes.greenDot : arrAnswerSituation[index].isSelected
+                                ? ColorRes.fontGrey : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                                ? ColorRes.greenDot : ColorRes.white,
+                            questionDataCustomerSituation.answer.elementAt(index).answer,
+                            questionDataCustomerSituation.answer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg");
                       }
                   )
               ),
@@ -335,37 +328,37 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           children: <Widget>[
             isChallenge != null && isChallenge
                 ? Row(
-                    children: <Widget>[
-                      Container(
-                        width: 30,
-                        height: 30,
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: questionDataCustSituation.profileImage !=
-                                            null &&
-                                        questionDataCustSituation
-                                            .profileImage.isNotEmpty
-                                    ? Utils.getCacheNetworkImage(
-                                        questionDataCustSituation.profileImage)
-                                    : AssetImage(
-                                        Utils.getAssetsImg('user_org')),
-                                fit: BoxFit.fill),
-                            border: Border.all(color: ColorRes.textLightBlue)),
-                      ),
-                      Text(
-                        questionDataCustSituation.firstName +
-                            " " +
-                            questionDataCustSituation.lastName,
-                        style: TextStyle(color: ColorRes.white, fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  )
+              children: <Widget>[
+                Container(
+                  width: 30,
+                  height: 30,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: questionDataCustSituation.profileImage !=
+                              null &&
+                              questionDataCustSituation
+                                  .profileImage.isNotEmpty
+                              ? Utils.getCacheNetworkImage(
+                              questionDataCustSituation.profileImage)
+                              : AssetImage(
+                              Utils.getAssetsImg('user_org')),
+                          fit: BoxFit.fill),
+                      border: Border.all(color: ColorRes.textLightBlue)),
+                ),
+                Text(
+                  questionDataCustSituation.firstName +
+                      " " +
+                      questionDataCustSituation.lastName,
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
                 : Container(
-                    width: 100,
-                  ),
+              width: 100,
+            ),
             Container(
               alignment: Alignment.center,
               height: 30,
@@ -379,9 +372,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       : ColorRes.blueMenuSelected,
                   image: Injector.isBusinessMode
                       ? (DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-                          fit: BoxFit.fill))
+                      image:
+                      AssetImage(Utils.getAssetsImg("eddit_profile")),
+                      fit: BoxFit.fill))
                       : null),
               child: Text(
                 Utils.getText(context, StringRes.situation),
@@ -462,23 +455,23 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+          Injector.isBusinessMode ? null : BorderRadius.circular(15),
           border: Injector.isBusinessMode
               ? null
               : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index) ||
-                          arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+              width: 1,
+              color: isAnswerCorrect(index) ||
+                  arrAnswerSituation[index].isSelected
+                  ? ColorRes.white
+                  : ColorRes.fontGrey),
           color:
-              Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
+          Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
-                  ),
-                  fit: BoxFit.fill))
+              image: AssetImage(
+                checkAnswer(index),
+              ),
+              fit: BoxFit.fill))
               : null),
       child: Row(
         children: <Widget>[
@@ -500,7 +493,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 child: new Text(
                   arrAnswerSituation[index].answer,
                   style:
-                      TextStyle(fontSize: 17, color: (checkTextColor(index))),
+                  TextStyle(fontSize: 17, color: (checkTextColor(index))),
                 )),
           )
         ],
@@ -524,10 +517,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               child: Container(
                 alignment: Alignment.center,
                 padding:
-                    EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+                EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                 decoration: BoxDecoration(
                   color:
-                      Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                  Injector.isBusinessMode ? ColorRes.bgDescription : null,
                   borderRadius: BorderRadius.circular(12),
                   border: Injector.isBusinessMode
                       ? Border.all(color: ColorRes.white, width: 1)
@@ -560,12 +553,12 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         ? null
                         : Border.all(width: 1, color: ColorRes.white),
                     color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg("eddit_profile")),
-                            fit: BoxFit.fill)
+                        image:
+                        AssetImage(Utils.getAssetsImg("eddit_profile")),
+                        fit: BoxFit.fill)
                         : null),
                 child: Text(
                   Utils.getText(context, StringRes.answers),
@@ -592,7 +585,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       image: DecorationImage(
                           image: AssetImage(Injector.isBusinessMode
                               ? Utils.getAssetsImg(
-                                  "full_expand_question_answers")
+                              "full_expand_question_answers")
                               : Utils.getAssetsImg("expand_pro")),
                           fit: BoxFit.fill)),
                 ),
@@ -660,7 +653,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height / 2.5,
                   padding:
-                      EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(
 //                              color:
 //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
@@ -801,9 +794,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                                 : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("eddit_profile")),
-                                    fit: BoxFit.fill)
+                                image: AssetImage(
+                                    Utils.getAssetsImg("eddit_profile")),
+                                fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
@@ -829,12 +822,12 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                    DecorationImage(
-                                        image: AssetImage(
-                                            Utils.getAssetsImg("close_dialog")),
-                                        fit: BoxFit.fill)
+                                DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("close_dialog")),
+                                    fit: BoxFit.fill)
 //                                    : null
-                                )),
+                            )),
                       ),
                     )
                   ],
@@ -876,23 +869,23 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+          Injector.isBusinessMode ? null : BorderRadius.circular(15),
           border: Injector.isBusinessMode
               ? null
               : Border.all(
-                  width: 1,
-                  color: isAnswerCorrect(index) ||
-                          arrAnswerSituation[index].isSelected
-                      ? ColorRes.white
-                      : ColorRes.fontGrey),
+              width: 1,
+              color: isAnswerCorrect(index) ||
+                  arrAnswerSituation[index].isSelected
+                  ? ColorRes.white
+                  : ColorRes.fontGrey),
           color:
-              Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
+          Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
-                  ),
-                  fit: BoxFit.fill))
+              image: AssetImage(
+                checkAnswer(index),
+              ),
+              fit: BoxFit.fill))
               : null),
       child: Row(
         children: <Widget>[
@@ -914,7 +907,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect>
                 child: new Text(
                   arrAnswerSituation[index].answer,
                   style:
-                      TextStyle(fontSize: 17, color: (checkTextColor(index))),
+                  TextStyle(fontSize: 17, color: (checkTextColor(index))),
                 )),
           )
         ],
@@ -1003,7 +996,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
     if (Utils.isVideo(correctWrongImage())) {
       _controller = Utils.getCacheFile(correctWrongImage()) != null
           ? VideoPlayerController.file(
-              Utils.getCacheFile(correctWrongImage()).file)
+          Utils.getCacheFile(correctWrongImage()).file)
           : VideoPlayerController.network(correctWrongImage())
         ..initialize().then((_) {
           if (mounted)
@@ -1073,39 +1066,39 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                           },
                           child: (checkimg == true
                               ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
 //                                          : null
-                                      ))
+                              ))
                               : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(
-                                              image: AssetImage(
-                                                  Utils.getAssetsImg(
-                                                      "close_dialog")),
-                                              fit: BoxFit.contain)
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
 //                                          : null
-                                      )))),
+                              )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-                ),
+            ),
           ),
         ),
       ),
@@ -1143,8 +1136,8 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
                   setState(() {
                     questionDataCustSituation.videoPlay == 1
                         ? _controller.value.isPlaying
-                            ? _controller.pause()
-                            : _controller.play()
+                        ? _controller.pause()
+                        : _controller.play()
                         : _controller.play();
                   });
                 },
