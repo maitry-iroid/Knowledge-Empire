@@ -200,7 +200,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             image: Injector.isBusinessMode
                                 ? DecorationImage(
                                     image: AssetImage(Utils.getAssetsImg(
-                                        Injector.userData.language == "German"
+                                        Injector.userData != null &&
+                                                Injector.userData.language ==
+                                                    "German"
                                             ? 'bg_blue'
                                             : 'bg_setting')))
                                 : null),
@@ -271,7 +273,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ? DecorationImage(
                                     image: AssetImage(
                                         Utils.getAssetsImg('bg_privacy')),
-                                    fit: Injector.userData.language == "German"
+                                    fit: Injector.userData != null &&
+                                            Injector.userData.language ==
+                                                "German"
                                         ? BoxFit.fill
                                         : null)
                                 : null),
@@ -344,8 +348,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           alignment: Alignment.center,
                           child: Text(
                             Utils.getText(context, StringRes.selectLanguage) +
-                                "-" +
-                                Injector.userData.language,
+                                "-" + Injector?.userData?.language.toString() ?? "",
                             style: TextStyle(
                               color: ColorRes.white,
                               fontSize: 15,
@@ -408,8 +411,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 Utils.playBackgroundMusic();
 
-                                localeBloc.setLocale(Utils.getIndexLocale(
-                                    Injector.userData.language));
+                                localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
                                 setState(() {});
                               },
@@ -431,7 +433,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                           ),
                           Switch(
-                            value: Injector.isSoundEnable!=null && Injector.isSoundEnable,
+                            value: Injector.isSoundEnable != null &&
+                                Injector.isSoundEnable,
                             onChanged: (value) async {
                               Injector.isSoundEnable = value;
                               Injector.customerValueData.isEnableSound =
@@ -485,7 +488,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           decoration: bailOutDecoration(),
                         ),
-                        onTap: Injector.customerValueData!=null && Injector.customerValueData.totalBalance <= 0
+                        onTap: Injector.customerValueData != null &&
+                                Injector.customerValueData.totalBalance <= 0
                             ? () async {
                                 Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
@@ -524,7 +528,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   bailOutDecoration() {
-    if (!Injector.isManager() && Injector.customerValueData.totalBalance <= 0) {
+    if (!Injector.isManager() && Injector.customerValueData != null && Injector.customerValueData.totalBalance <= 0) {
       return BoxDecoration(
           image: DecorationImage(
               image: AssetImage(Utils.getAssetsImg('bg_switch_to_prfsnl'))));
@@ -697,10 +701,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
           if (data != null) {}
           try {
-            await Injector.logout();
-
             Navigator.pushAndRemoveUntil(
                 context, FadeRouteLogin(), ModalRoute.withName("/home"));
+
+            await Injector.logout();
           } catch (e) {
             print(e);
           }
@@ -751,10 +755,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   image: Injector.isBusinessMode
                       ? DecorationImage(
                           image: AssetImage(
-                            Utils.getAssetsImg(
-                                Injector.userData.language == "German"
-                                    ? "bg_blue"
-                                    : "bg_setting"),
+                            Utils.getAssetsImg(Injector.userData != null &&
+                                    Injector.userData.language == "German"
+                                ? "bg_blue"
+                                : "bg_setting"),
                           ),
                           fit: BoxFit.fill)
                       : null),

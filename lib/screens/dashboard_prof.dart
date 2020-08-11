@@ -158,7 +158,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
             ),
           ),
           onTap: () {
-            print("====================Dashboard click event");
             Utils.performDashboardItemClick(context, type);
           },
         ),

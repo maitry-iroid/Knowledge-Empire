@@ -233,8 +233,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               child: Container(
                 alignment: Alignment.center,
                 height: 30,
-                margin: EdgeInsets.symmetric(
-                    horizontal: Utils.getDeviceWidth(context) / 2.4),
+                width: 120,
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                     borderRadius: Injector.isBusinessMode
