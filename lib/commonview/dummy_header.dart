@@ -25,6 +25,7 @@ ValueNotifier<bool> serviceDrainNotifier = ValueNotifier<bool>(false);
 Timer empAnimTimer;
 Timer saleAnimTimer;
 Timer serviceAnimTimer;
+
 class DummyView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
@@ -44,10 +45,8 @@ class DummyView extends StatefulWidget {
 }
 
 class DummyViewState extends State<DummyView> {
-
   @override
   void didUpdateWidget(DummyView oldWidget) {
-
     if (Injector.headerStreamController == null)
       Injector.headerStreamController = StreamController.broadcast();
 
@@ -63,7 +62,6 @@ class DummyViewState extends State<DummyView> {
     });
     super.didUpdateWidget(oldWidget);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,20 +85,18 @@ class DummyViewState extends State<DummyView> {
     );
   }
 
-  Widget showHeaderItem(String type, BuildContext context,valueListenable) {
+  Widget showHeaderItem(String type, BuildContext context, valueListenable) {
     return Container(
-      foregroundDecoration: null,
       margin: EdgeInsets.only(top: 13.5),
-      padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      padding:
+          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Stack(
             alignment: Alignment.topCenter,
             children: <Widget>[
-              Injector.isBusinessMode
-                  ? Container()
-                  : Container(),
+              Injector.isBusinessMode ? Container() : Container(),
               Opacity(
                 opacity: 0.0,
                 child: Image(
@@ -109,7 +105,10 @@ class DummyViewState extends State<DummyView> {
                   height: 26,
                 ),
               ),
-              valueListenable!=null?animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable, context):Container(),
+              valueListenable != null
+                  ? animatedPositioned(
+                      HeaderUtils.getHeaderIcon(type), valueListenable, context)
+                  : Container(),
             ],
           ),
           SizedBox(
@@ -257,14 +256,14 @@ class DummyViewState extends State<DummyView> {
   showMenuView() {
     return widget.isShowMenu
         ? Container(
-          height: Utils.getHeaderHeight(context),
-          child: Image(
-            image: AssetImage(
-              Utils.getAssetsImg("menu"),
+            height: Utils.getHeaderHeight(context),
+            child: Image(
+              image: AssetImage(
+                Utils.getAssetsImg("menu"),
+              ),
+              fit: BoxFit.fill,
             ),
-            fit: BoxFit.fill,
-          ),
-        )
+          )
         : Container();
   }
 
@@ -277,7 +276,8 @@ class DummyViewState extends State<DummyView> {
         if (indexData == -1) {
           indexData = 0;
         }
-        return ChallengeHeader(challengeCount: widget.challengeCount, currentIndex: indexData);
+        return ChallengeHeader(
+            challengeCount: widget.challengeCount, currentIndex: indexData);
       }
     }
 
@@ -287,28 +287,35 @@ class DummyViewState extends State<DummyView> {
         showMenuView(),
         showProfile(context),
         Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeEmployee, context,employeeDrainNotifier)
+            ? showHeaderItem(Const.typeEmployee, context, employeeDrainNotifier)
             : Container(),
         Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeSalesPersons, context,saleDrainNotifier)
+            ? showHeaderItem(Const.typeSalesPersons, context, saleDrainNotifier)
             : Container(),
         Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeServicesPerson, context,serviceDrainNotifier)
+            ? showHeaderItem(
+                Const.typeServicesPerson, context, serviceDrainNotifier)
             : Container(),
         Opacity(
-            opacity: 0.0, child: showHeaderItem(Const.typeBrandValue, context,null)),
-        Opacity(opacity: 0.0, child: showHeaderItem(Const.typeMoney, context,null)),
+            opacity: 0.0,
+            child: showHeaderItem(Const.typeBrandValue, context, null)),
+        Opacity(
+            opacity: 0.0,
+            child: showHeaderItem(Const.typeMoney, context, null)),
         showHelpView(context)
       ],
     );
   }
 
-  Widget animatedPositioned(String icon, valueListenable, BuildContext context) {
+  Widget animatedPositioned(
+      String icon, valueListenable, BuildContext context) {
+    print("valueAnimation listner " + valueListenable.toString());
     return ValueListenableBuilder(
       valueListenable: valueListenable,
       builder: (BuildContext context, value, Widget child) {
+        print("valueAnimation" + value.toString());
         return AnimatedPositioned(
-          top: value ? 50.0 : 0,
+          top: value != null && value ? 50.0 : 0,
           duration: Duration(milliseconds: value ? 200 : 0),
           onEnd: () {
             valueListenable.value = false;
@@ -330,10 +337,9 @@ class DummyViewState extends State<DummyView> {
 
   @override
   void dispose() {
-    employeeDrainNotifier.value=false;
-    saleDrainNotifier.value=false;
-    serviceDrainNotifier.value=false;
+    employeeDrainNotifier.value = false;
+    saleDrainNotifier.value = false;
+    serviceDrainNotifier.value = false;
     super.dispose();
   }
-
 }
