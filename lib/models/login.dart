@@ -1,3 +1,5 @@
+import 'package:ke_employee/helper/constant.dart';
+
 class LoginRequest {
   String email;
   String password;
@@ -66,7 +68,7 @@ class UserData {
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
   bool isSoundEnable = false;
-  String language ;
+  String language  = Const.english;
   int mode ;
 
   UserData();

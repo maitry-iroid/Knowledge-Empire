@@ -570,7 +570,6 @@ class Utils {
         type == Const.typePl) {
       bool isConnected = await isInternetConnected();
 
-      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
       if (Injector.dashboardStatusResponse != null) {
         OnOffFeatureData data = Injector.dashboardStatusResponse.data
@@ -584,8 +583,6 @@ class Utils {
           return;
         }
 
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        print("Data : $data and lock status : ${data.isUnlock}");
         if (data != null && data.isUnlock == 0) {
           showLockReasonDialog(type, context, false);
           return;
@@ -599,7 +596,6 @@ class Utils {
     return InkResponse(
       onTap: () {
         Utils.playClickSound();
-        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         Utils.performDashboardItemClick(context, type);
       },
       child: Container(
@@ -943,9 +939,6 @@ class Utils {
   }
 
   static isShowLock(String type) {
-    print("**********************************");
-    print("is feature on : ${Utils.isFeatureOn(type)}");
-    print("is locked on : ${Utils.isLocked(type)}");
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
 

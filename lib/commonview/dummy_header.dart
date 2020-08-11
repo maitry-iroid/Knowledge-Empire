@@ -55,7 +55,8 @@ class DummyViewState extends State<DummyView> {
     rq.userId = Injector.userData.userId;
 
     Injector.headerStreamController.stream.listen((data) {
-      if (mounted) setState(() {});
+//      Future.delayed(Duration(seconds: 2), () => setState(() {  }));
+//      if (mounted) setState(() {});
     }, onDone: () {
       print("Task Done1");
     }, onError: (error) {
@@ -109,7 +110,7 @@ class DummyViewState extends State<DummyView> {
                   height: 26,
                 ),
               ),
-              valueListenable!=null?animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable, context):Container(),
+              valueListenable!=null ? animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable, context) : Container(),
             ],
           ),
           SizedBox(
