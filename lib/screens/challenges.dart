@@ -611,7 +611,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       selectedModuleIndex != null &&
                               selectedModuleIndex == index
                           ? Utils.getAssetsImg('challenges_bg_sector')
-                          : null,
+                          : Container(),
                     ),
                     fit: BoxFit.fill)
                 : null),
