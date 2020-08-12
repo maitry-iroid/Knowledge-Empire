@@ -17,11 +17,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     _videoPlayerController1 = VideoPlayerController.network(
         'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
-    _chewieController = ChewieController(
-        videoPlayerController: _videoPlayerController1,
-        aspectRatio: 3 / 2,
-        autoPlay: true,
-        looping: true);
+    _videoPlayerController1.initialize().then((_) {
+      _chewieController = ChewieController(
+          videoPlayerController: _videoPlayerController1,
+          aspectRatio: 3 / 2,
+          autoPlay: true,
+          looping: true);
+    });
+
   }
 
   @override

@@ -53,7 +53,23 @@ class MediaManager{
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor, width: 3)),
-                  child: showMediaView(context, thumbImage)),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      showMediaView(context, thumbImage),
+                      Utils.isVideo(answer)
+                          ? Padding(padding: EdgeInsets.only(bottom: 10),
+                          child: IconButton(
+                              icon: Icon(Icons.play_circle_filled, color: ColorRes.blackTransparent, size: 45),
+                              onPressed: (){
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => ExpandMedia(link: answer));
+                              }
+                          ))
+                          : Container()
+                    ],
+                  )),
             ),
             showMediaExpandIcon(context, answer)
           ],
@@ -125,6 +141,7 @@ class MediaManager{
           Container(
             child: MaterialButton(
               height: 100,
+              color: Colors.red,
               onPressed: () {
                 _controller.value.isPlaying
                     ? _controller.pause()
@@ -134,6 +151,7 @@ class MediaManager{
                 width: Utils.getDeviceHeight(context) / 7,
                 height: Utils.getDeviceHeight(context) / 7,
                 decoration: BoxDecoration(
+                    color: Colors.green,
                     image: DecorationImage(
                         image: AssetImage(
                           _controller.value.isPlaying
@@ -193,7 +211,9 @@ class ExpandMediaState extends State<ExpandMedia>
     controller.forward();
     print("Expand path : ${widget.link}");
 
-    this.initVideoController(widget.link);
+    Future.delayed(Duration.zero, () async {
+      await this.initVideoController(widget.link);
+    });
 
     if (Utils.isPdf(widget.link)) getPdf();
   }
@@ -221,7 +241,7 @@ class ExpandMediaState extends State<ExpandMedia>
             : _controller.setLooping(false);
         _chewieController = ChewieController(
             videoPlayerController: _controller,
-            autoPlay: true,
+//            autoPlay: true,
             allowFullScreen: false,
             materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
             cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
