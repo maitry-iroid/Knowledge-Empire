@@ -61,15 +61,15 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       height: 10,
                     ),
                     CommonView.showTitle(context, StringRes.newCustomers),
-                    showValueText("value bonus : " +
-                        Injector.customerValueData.valueBonus.toString()),
-                    showValueText("loyalty bonus : " +
-                        Injector.customerValueData.loyaltyBonus.toString()),
-                    showValueText("resource bonus : " +
-                        Injector.customerValueData.resourceBonus.toString()),
-                    showValueText("total attempted que : " +
-                        Injector.customerValueData.totalAttemptedQuestion
-                            .toString()),
+//                    showValueText("value bonus : " +
+//                        Injector.customerValueData.valueBonus.toString()),
+//                    showValueText("loyalty bonus : " +
+//                        Injector.customerValueData.loyaltyBonus.toString()),
+//                    showValueText("resource bonus : " +
+//                        Injector.customerValueData.resourceBonus.toString()),
+//                    showValueText("total attempted que : " +
+//                        Injector.customerValueData.totalAttemptedQuestion
+//                            .toString()),
                     showSubHeader(context),
                     showItems(context)
                   ],
@@ -202,9 +202,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          showValueText("counter : " + arrQuestions[index].counter.toString()),
-          showValueText(
-              "daysInList : " + arrQuestions[index].daysInList.toString()),
+//          showValueText("counter : " + arrQuestions[index].counter.toString()),
+//          showValueText(
+//              "daysInList : " + arrQuestions[index].daysInList.toString()),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[

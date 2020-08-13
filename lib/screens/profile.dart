@@ -1374,9 +1374,9 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     print(rq);
-    CommonView.showCircularProgress(true, context);
+//    CommonView.showCircularProgress(true, context);
     WebApi().callAPI(WebApi.updateUserSetting, rq.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
+//      CommonView.showCircularProgress(false, context);
       print(data);
       if (data != null) {
         await Injector.getIntroText();
@@ -1396,7 +1396,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
-      CommonView.showCircularProgress(false, context);
+//      CommonView.showCircularProgress(false, context);
     });
   }
 

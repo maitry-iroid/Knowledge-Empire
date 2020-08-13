@@ -925,7 +925,7 @@ class StringRes {
       'answers': 'Antworten',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
-      'alertSelectOneOption': "Please select at least one option.",
+      'alertSelectOneOption': "Bitte mindestens eine Option auswählen",
 
       //customer situation
       'profit': "Gewinn",
@@ -1936,6 +1936,7 @@ class StringRes {
       'friends': 'Friends',
       'sendChallenge': 'Send Challenge',
       'explanation': 'Explanation',
+      'alertSelectOneOption': "Please select at least one option.",
       'profit': 'Gain/Loss',
       'learningModule': 'Learning Module',
       'levels': 'Levels',
@@ -2009,8 +2010,7 @@ class StringRes {
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
       'addFriend': 'Friend added successfully',
       'unFriend': 'Unfriend successfully',
-      'alert': "Alert",
-      'alertSelectOneOption': 'Are you sure, you want to unfriend this user?',
+      'alert': "Alert"
     },
     'de': {
       //<editor-fold desc="German">
