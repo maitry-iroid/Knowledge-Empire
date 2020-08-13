@@ -943,7 +943,7 @@ class Utils {
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
 
-  static void getCustomerValues() {
+  static void callCustomerValuesApi() {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 

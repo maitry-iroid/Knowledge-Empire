@@ -14,9 +14,10 @@ import 'package:ke_employee/commonview/dummy_header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
-import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/listItem/menu_item.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
+import 'package:ke_employee/models/drawer_item.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
@@ -80,16 +81,6 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class DrawerItem {
-  String title;
-  String icon;
-  String key;
-
-  DrawerItem(this.title, this.icon, this.key);
-}
-
-List<DrawerItem> drawerItems = List();
-
 class HomePageState extends State<HomePage>
     with WidgetsBindingObserver, TickerProviderStateMixin
     implements RefreshAnimation {
@@ -106,7 +97,6 @@ class HomePageState extends State<HomePage>
 
   bool isReadyForChallenge = false;
   HomeData homeData;
-  var drawerOptions = <Widget>[];
 
   RefreshAnimation mRefreshAnimation;
 
@@ -114,16 +104,14 @@ class HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     mRefreshAnimation = this;
-    Future.delayed(Duration(seconds: 1)).then((d) {
-      initStateMethods();
-    });
+    initStateMethods();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-      if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
+      if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
         Injector.audioPlayerBg.resume();
       }
     } else if (state == AppLifecycleState.inactive) {
@@ -135,7 +123,6 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    drawerLayout();
     return StreamBuilder(
         stream: navigationBloc?.navigationKey,
         builder: (context, AsyncSnapshot<HomeData> snapshot) {
@@ -143,15 +130,13 @@ class HomePageState extends State<HomePage>
             return Container(
               color: ColorRes.white,
             );
-          } else if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData) {
-              homeData = snapshot.data;
-              _currentPage = snapshot.data.initialPageType;
-              //drawerLayout();
-              getAnimationStatus();
-              return mainLayout(context);
-            } else
-              return Container();
+          } else if (snapshot.connectionState == ConnectionState.active &&
+              snapshot.hasData) {
+            homeData = snapshot.data;
+            _currentPage = snapshot.data.initialPageType;
+            getAnimationStatus();
+
+            return mainLayout(context);
           } else if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
@@ -172,7 +157,7 @@ class HomePageState extends State<HomePage>
               color: Injector.isBusinessMode
                   ? ColorRes.bgMenu
                   : ColorRes.headerBlue,
-              child: new ListView(children: drawerOptions),
+              child: new ListView(children: getDrawerOptions()),
             )),
           ),
           backgroundColor: ColorRes.colorBgDark,
@@ -226,61 +211,6 @@ class HomePageState extends State<HomePage>
     );
   }
 
-  Widget showMainItem(DrawerItem item) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-          color: Injector.isBusinessMode
-              ? null
-              : item.key == _currentPage
-                  ? ColorRes.blueMenuSelected
-                  : ColorRes.blueMenuUnSelected,
-          border: (!Injector.isBusinessMode && item.key == _currentPage)
-              ? Border.all(
-                  color: ColorRes.white,
-                  width: 1,
-                )
-              : null,
-          borderRadius: BorderRadius.circular(10),
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg(item.key == _currentPage
-                      ? "slide_menu_highlight"
-                      : "bg_menu")),
-                  fit: BoxFit.fill)
-              : null),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Center(
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg(item.icon)),
-              height: Injector.isBusinessMode ? 45 : 45,
-              width: Injector.isBusinessMode ? 80 : 70,
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Expanded(
-            child: Text(
-              item.title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              style: TextStyle(color: ColorRes.white, fontSize: 18),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          )
-        ],
-      ),
-    );
-  }
-
   Widget getDrawerItemWidget() {
     if (_currentPage == Const.typeHome) {
       return Injector.isBusinessMode
@@ -311,7 +241,8 @@ class HomePageState extends State<HomePage>
     } else if (_currentPage == Const.typeEngagement) {
       return EngagementCustomer(homeData: homeData);
     } else if (_currentPage == Const.typeCustomerSituation) {
-      return CustomerSituationPage(homeData: homeData,mRefreshAnimation: mRefreshAnimation);
+      return CustomerSituationPage(
+          homeData: homeData, mRefreshAnimation: mRefreshAnimation);
     } else if (_currentPage == Const.typeCustomerSituation) {
       return ProfilePage();
     } else {
@@ -404,18 +335,6 @@ class HomePageState extends State<HomePage>
     );
   }
 
-  void drawerLayout() {
-    initDrawerItems();
-    drawerOptions=new List();
-    for (var i = 0; i < drawerItems.length; i++) {
-      drawerOptions.add(new ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          title: showMainItem(drawerItems[i]),
-          selected: drawerItems[i].key == _currentPage,
-          onTap: () => onSelectItem(drawerItems[i])));
-    }
-  }
-
   void getAnimationStatus() {
     bool first = false;
     bool second = false;
@@ -451,11 +370,27 @@ class HomePageState extends State<HomePage>
   }
 
   void initStateMethods() async {
-    getDashboardStatus();
-    updateVersionDialog();
-    initContent();
-    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
+    callDashboardStatusApi();
+
+    callVersionApi();
+
+    initPush();
+
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+
+    initPendingChallengeStream();
+
+    Utils.callCustomerValuesApi();
+
+    await Utils.playBackgroundMusic();
+
+    initCheckNetworkConnectivity();
+
+    initPlatformState();
+
     Utils.removeBadge();
+
+    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
   }
 
   void initPlatformState() async {
@@ -491,10 +426,10 @@ class HomePageState extends State<HomePage>
     }
   }
 
-  void initStreamController() async {
+  void initPendingChallengeStream() async {
     Injector.homeStreamController.stream.listen((data) async {
       if (data == "${Const.openPendingChallengeDialog}") {
-        getPendingChallenges();
+        callPendingChallengesApi();
       }
     }, onDone: () {}, onError: (error) {});
   }
@@ -506,59 +441,186 @@ class HomePageState extends State<HomePage>
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
       if (result != ConnectivityResult.none) {
+        Injector.isInternetConnected = true;
         Utils.callSubmitAnswerApi(context);
-      }
+      } else
+        Injector.isInternetConnected = false;
     });
   }
 
-  void getPendingChallenges() {
+  void callPendingChallengesApi() {
     if (!Utils.isFeatureOn(Const.typeChallenges)) return;
 
+    GetChallengesRequest rq = GetChallengesRequest();
+    rq.userId = Injector.userData.userId;
+
+    WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) async {
+      if (data != null && data.toString() != "{}") {
+        QuestionData questionData = QuestionData.fromJson(data);
+        new Future.delayed(const Duration(seconds: 5), () async {
+          await getChallengeQueBloc.getChallengeQuestion();
+        });
+        if (questionData != null && questionData.challengeId != null) {
+          if (questionData.isFirstQuestion == 1) {
+            DisplayDialogs.showChallengeDialog(
+                context,
+                questionData.firstName + " " + questionData.lastName,
+                questionData);
+          } else {
+            navigationBloc.updateNavigation(HomeData(
+              initialPageType: Const.typeEngagement,
+              questionHomeData: questionData,
+              isChallenge: true,
+            ));
+          }
+        } else {
+          navigationBloc
+              .updateNavigation(HomeData(initialPageType: Const.typeHome));
+        }
+      } else {
+        navigationBloc
+            .updateNavigation(HomeData(initialPageType: Const.typeHome));
+      }
+    }).catchError((e) {
+      print("getChallenges_" + e.toString());
+    });
+  }
+
+  void callVersionApi() async {
+    UpdateDialogModel status = await Injector.getCurrentVersion(context);
+    if (status != null) {
+      if (status.status != "0" || status.status == "2") {
+        if (status.status == "2") {
+          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
+            DisplayDialogs.showUpdateDialog(
+                context, status.headlineText, status.message, true);
+          } else {
+            DateTime clickedTime =
+                DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+            if (DateTime.now().difference(clickedTime).inDays >= 1) {
+              DisplayDialogs.showUpdateDialog(
+                  context, status.headlineText, status.message, true);
+            }
+          }
+        } else {
+          DisplayDialogs.showUpdateDialog(
+              context, status.headlineText, status.message, false);
+        }
+      }
+    }
+  }
+
+  void callDashboardStatusApi() {
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
-        GetChallengesRequest rq = GetChallengesRequest();
+        DashboardStatusRequest rq = DashboardStatusRequest();
         rq.userId = Injector.userData.userId;
-        WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) async {
-          if (data != null && data.toString() != "{}") {
-            QuestionData questionData = QuestionData.fromJson(data);
-            new Future.delayed(const Duration(seconds: 5), () async {
-              await getChallengeQueBloc.getChallengeQuestion();
-            });
-            if (questionData != null && questionData.challengeId != null) {
-              if (questionData.isFirstQuestion == 1 ) {
-                DisplayDialogs.showChallengeDialog(
-                    context,
-                    questionData.firstName + " " + questionData.lastName,
-                    questionData);
-              } else {
-                navigationBloc.updateNavigation(HomeData(
-                  initialPageType: Const.typeEngagement,
-                  questionHomeData: questionData,
-                  isChallenge: true,
-                ));
-              }
-            } else {
-              navigationBloc
-                  .updateNavigation(HomeData(initialPageType: Const.typeHome));
+
+        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
+          if (data != null) {
+            DashboardStatusResponse response =
+                DashboardStatusResponse.fromJson(data);
+
+            if (response.data.isNotEmpty) {
+              Injector.prefs.setString(
+                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
+              Injector.dashboardStatusResponse = response;
+
+              if (mounted) setState(() {});
             }
-          } else {
-            navigationBloc
-                .updateNavigation(HomeData(initialPageType: Const.typeHome));
           }
         }).catchError((e) {
-          print("getChallenges_" + e.toString());
+          print("getDashboardValue_" + e.toString());
         });
       }
     });
   }
 
-  void initDrawerItems() {
+  @override
+  void dispose() {
+    Injector.homeStreamController.close();
+    _connectivitySubscription?.cancel();
+    headerNotifier.dispose();
+    super.dispose();
+  }
 
-    if (drawerItems != null) {
-      drawerItems.clear();
-    } else {
-      drawerItems = new List();
+  @override
+  onRefreshAchievement(int type) {
+    try {
+      headerNotifier.value = true;
+      headerNotifier.notifyListeners();
+      if (type == Const.typeHR) {
+        empAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+          employeeDrainNotifier.value = true;
+          employeeDrainNotifier.notifyListeners();
+        });
+        Timer(Duration(seconds: 3), () {
+          if (empAnimTimer != null) {
+            empAnimTimer.cancel();
+            headerNotifier.value = false;
+            headerNotifier.notifyListeners();
+          }
+        });
+      } else if (type == Const.typeSales) {
+        saleAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+          saleDrainNotifier.value = true;
+          saleDrainNotifier.notifyListeners();
+        });
+        Timer(Duration(seconds: 3), () {
+          if (saleAnimTimer != null) {
+            saleAnimTimer.cancel();
+            headerNotifier.value = false;
+            headerNotifier.notifyListeners();
+          }
+        });
+      } else if (type == Const.typeServices) {
+        serviceAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+          serviceDrainNotifier.value = true;
+          serviceDrainNotifier.notifyListeners();
+        });
+        Timer(Duration(seconds: 3), () {
+          if (serviceAnimTimer != null) {
+            serviceAnimTimer.cancel();
+            headerNotifier.value = false;
+            headerNotifier.notifyListeners();
+          }
+        });
+      } else {
+        headerNotifier.value = false;
+        headerNotifier.notifyListeners();
+      }
+    } catch (e) {
+      print(e);
     }
+  }
+
+  void initPush() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      PushNotificationHelper pushNotificationHelper =
+          PushNotificationHelper(context);
+
+      if (pushNotificationHelper != null) {
+        pushNotificationHelper.initPush();
+      }
+    });
+  }
+
+  getDrawerOptions() {
+    var drawerOptions = <Widget>[];
+    List<DrawerItem> drawerItems = initDrawerItems();
+    drawerOptions = new List();
+    for (var i = 0; i < drawerItems.length; i++) {
+      drawerOptions.add(new ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+          title: MenuItem(drawerItems[i], _currentPage),
+          selected: drawerItems[i].key == _currentPage,
+          onTap: () => onSelectItem(drawerItems[i])));
+    }
+    return drawerOptions;
+  }
+
+  List<DrawerItem> initDrawerItems() {
+    List<DrawerItem> drawerItems = List();
 
     drawerItems.add(DrawerItem(
         Utils.getText(context, StringRes.home),
@@ -643,138 +705,6 @@ class HomePageState extends State<HomePage>
           Injector.isBusinessMode ? "help_icon" : "ic_pro_help",
           Const.typeHelp),
     );
-  }
-
-  void initContent() async {
-    Future.delayed(const Duration(milliseconds: 500), () {
-      PushNotificationHelper pushNotificationHelper =
-          PushNotificationHelper(context);
-
-      if (pushNotificationHelper != null) {
-        pushNotificationHelper.initPush();
-      }
-    });
-
-    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
-
-    initStreamController();
-
-    Utils.getCustomerValues();
-
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
-      await Utils.playBackgroundMusic();
-    }
-
-    initCheckNetworkConnectivity();
-
-    initPlatformState();
-  }
-
-  void updateVersionDialog() async {
-    UpdateDialogModel status = await Injector.getCurrentVersion(context);
-    if (status != null) {
-      if (status.status != "0" || status.status == "2") {
-        if (status.status == "2") {
-          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-            DisplayDialogs.showUpdateDialog(
-                context, status.headlineText, status.message, true);
-          } else {
-            DateTime clickedTime =
-                DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
-            if (DateTime.now().difference(clickedTime).inDays >= 1) {
-              DisplayDialogs.showUpdateDialog(
-                  context, status.headlineText, status.message, true);
-            }
-          }
-        } else {
-          DisplayDialogs.showUpdateDialog(
-              context, status.headlineText, status.message, false);
-        }
-      }
-    }
-  }
-
-  void getDashboardStatus() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardStatusRequest rq = DashboardStatusRequest();
-        rq.userId = Injector.userData.userId;
-
-        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
-          if (data != null) {
-            DashboardStatusResponse response =
-                DashboardStatusResponse.fromJson(data);
-
-            if (response.data.isNotEmpty) {
-              Injector.prefs.setString(
-                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
-              Injector.dashboardStatusResponse = response;
-
-              if (mounted) setState(() {});
-            }
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    Injector.homeStreamController.close();
-    _connectivitySubscription?.cancel();
-    headerNotifier.dispose();
-    super.dispose();
-  }
-
-  @override
-  onRefreshAchievement(int type) {
-    try {
-      headerNotifier.value = true;
-      headerNotifier.notifyListeners();
-      if (type == Const.typeHR) {
-        empAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
-          employeeDrainNotifier.value = true;
-          employeeDrainNotifier.notifyListeners();
-        });
-        Timer(Duration(seconds: 3), () {
-          if (empAnimTimer != null) {
-            empAnimTimer.cancel();
-            headerNotifier.value = false;
-            headerNotifier.notifyListeners();
-          }
-        });
-      } else if (type == Const.typeSales) {
-        saleAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
-          saleDrainNotifier.value = true;
-          saleDrainNotifier.notifyListeners();
-        });
-        Timer(Duration(seconds: 3), () {
-          if (saleAnimTimer != null) {
-            saleAnimTimer.cancel();
-            headerNotifier.value = false;
-            headerNotifier.notifyListeners();
-          }
-        });
-      } else if (type == Const.typeServices) {
-        serviceAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
-          serviceDrainNotifier.value = true;
-          serviceDrainNotifier.notifyListeners();
-        });
-        Timer(Duration(seconds: 3), () {
-          if (serviceAnimTimer != null) {
-            serviceAnimTimer.cancel();
-            headerNotifier.value = false;
-            headerNotifier.notifyListeners();
-          }
-        });
-      } else {
-        headerNotifier.value = false;
-        headerNotifier.notifyListeners();
-      }
-    } catch (e) {
-      print(e);
-    }
+    return drawerItems;
   }
 }

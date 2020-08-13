@@ -40,6 +40,7 @@ class WebApi {
   static String rqGetDownloadQuestions = "getDownloadQuestions";
   static String rqSearchFriends = "searchFriends";
   static String rqRegisterForPush = "registerForPush";
+
 //  static String rqUnreadBubbleCount = "unreadBubbleCount";
   static String rqGetTeamUsers = "getTeamUsers";
   static String rqGetTeamUserById = "getTeamUserById";
@@ -81,11 +82,11 @@ class WebApi {
 
     print(apiReq + "_" + json.encode(jsonMap));
 
+    if (!Injector.isInternetConnected) return;
+
     final response = await dio
         .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
         .catchError((e) {
-//      Utils.showToast(apiReq + "_" + e.toString());
-//      Utils.showToast("Something we nt wrong");
       return null;
     });
 
@@ -97,10 +98,10 @@ class WebApi {
       if (_response != null) {
         if (_response.flag == "true") {
           if (!isUserRemovedFromCompany(_response.flag, _response.msg)) {
-            if(apiReq== rqGetDashboardStatus)
+            if (apiReq == rqGetDashboardStatus)
               return jsonDecode(response.data);
             else
-            return _response.data;
+              return _response.data;
           } else {
             Utils.showToast(_response.msg);
             return null;

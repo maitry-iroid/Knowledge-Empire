@@ -114,6 +114,8 @@ class Injector {
 
   static IntroModel introModel;
 
+  static bool isInternetConnected;
+
   Injector._internal();
 
   // Pending challenge question count to Attempt

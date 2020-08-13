@@ -1391,7 +1391,7 @@ class _ProfilePageState extends State<ProfilePage> {
             break;
         }
 
-        Utils.getCustomerValues();
+        Utils.callCustomerValuesApi();
       } else {
         Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
