@@ -91,9 +91,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
       getPdf();
 //    downloadFile();
-      Future.delayed(Duration.zero, () async{
-        await initVideoController(questionData.mediaLink);
-      });
+      if(Utils.isVideo(questionData.mediaLink)){
+        Future.delayed(Duration.zero, () async{
+          await ExpandMediaState().initVideoController(questionData.mediaLink);
+        });
+      }
     }
   }
 
@@ -131,38 +133,38 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
     super.dispose();
   }
-
-  Future<void> initVideoController(String link) async {
-    if (Utils.isVideo(link)) {
-      await Injector.cacheManager
-          .getFileFromCache(link)
-          .then((fileInfo) {
-        _controller = Utils.getCacheFile(link) != null
-            ? VideoPlayerController.file(
-            Utils
-                .getCacheFile(link)
-                .file)
-            : VideoPlayerController.network(link)
-          ..initialize().then((_) {
-            if (mounted)
-              setState(() {
-                _chewieController.play();
-              });
-          });
-        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-        questionData.videoLoop == 1
-            ? _controller.setLooping(true)
-            : _controller.setLooping(false);
-        _chewieController = ChewieController(
-            videoPlayerController: _controller,
-            autoPlay: true,
-            allowFullScreen: false,
-            materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-            cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-            looping: true);
-      });
-    }
-  }
+//
+//  Future<void> initVideoController(String link) async {
+//    if (Utils.isVideo(link)) {
+//      await Injector.cacheManager
+//          .getFileFromCache(link)
+//          .then((fileInfo) {
+//        _controller = Utils.getCacheFile(link) != null
+//            ? VideoPlayerController.file(
+//            Utils
+//                .getCacheFile(link)
+//                .file)
+//            : VideoPlayerController.network(link)
+//          ..initialize().then((_) {
+//            if (mounted)
+//              setState(() {
+//                _chewieController.play();
+//              });
+//          });
+//        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+//        questionData.videoLoop == 1
+//            ? _controller.setLooping(true)
+//            : _controller.setLooping(false);
+//        _chewieController = ChewieController(
+//            videoPlayerController: _controller,
+//            autoPlay: true,
+//            allowFullScreen: false,
+//            materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+//            cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+//            looping: true);
+//      });
+//    }
+//  }
 
   bool isLoading = false;
 
@@ -518,7 +520,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              showMediaQuestion(context),
+//              showMediaQuestion(context),
               showMediaAnswerOptions(context)
             ],
           ),
@@ -526,6 +528,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showMediaQuestion(BuildContext context){
+    print("Question :::::::::: ${widget.homeData.questionHomeData.question}");
     return Padding(
         padding: EdgeInsets.only(bottom: 5, left: 5),
         child: Row(

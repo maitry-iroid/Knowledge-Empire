@@ -648,6 +648,7 @@ class Utils {
   static isImage(String path) {
     return extension(path).toLowerCase() == ".png".toLowerCase() ||
         extension(path).toLowerCase() == ".jpeg".toLowerCase() ||
+        extension(path).toLowerCase() == ".jfif".toLowerCase() ||
         extension(path).toLowerCase() == ".jpg".toLowerCase();
   }
 

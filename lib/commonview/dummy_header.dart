@@ -105,10 +105,10 @@ class DummyViewState extends State<DummyView> {
                   height: 26,
                 ),
               ),
-//              valueListenable != null
-//                  ? animatedPositioned(
-//                      HeaderUtils.getHeaderIcon(type), valueListenable, context)
-//                  : Container(),
+              valueListenable != null
+                  ? animatedPositioned(
+                      HeaderUtils.getHeaderIcon(type), valueListenable, context)
+                  : Container(),
             ],
           ),
           SizedBox(
