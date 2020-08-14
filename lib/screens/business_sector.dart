@@ -62,7 +62,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     if (Injector.introData != null && Injector.introData.learningModule1 == 0)
       await DisplayDialogs.showIntroLearningModule1(context);
 
-    //TODO for testing
+    //TODO for testing, don't remove this
 //    await DisplayDialogs.showIntroPL1(context); //  PL
 //    await DisplayDialogs.showIntroOrg1(context); //  org
 //    await DisplayDialogs.showIntroCustomerSituation(context); //  customer situation
