@@ -890,8 +890,8 @@ class StringRes {
       'searchForKeywords': 'Suche',
       'somethingWrong': 'Da ist was schief gegangen',
       'friends': 'Freunde',
-      'alertFriendSuccess': 'Friend added successfully',
-      'alertUnFriendSuccess': 'Unfriend successfully',
+      'alertFriendSuccess': 'Freund hinzugefügt',
+      'alertUnFriendSuccess': 'Freund entfernt',
       'alertUChallengeSent': 'Herausforderung erfolgreich gesendet!',
 
       //learning module
@@ -1833,6 +1833,7 @@ class StringRes {
       'cashAtStartOfPeriod': 'Knowledge Points at start of Period',
       'subscribedSuccess': 'Subscribed successfully!',
       'alertFriendSuccess': 'Friend added successfully',
+      'alertUnFriendSuccess': "Unfriend successfully",
       'unSubscribedSuccess': 'Unsubscribed successfully!',
 
       'selectCompany': 'Select Company',

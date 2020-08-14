@@ -195,7 +195,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         child: Container(
           height: double.infinity,
           decoration: getBoxDecoration(),
-          child: ListView (
+          child: ListView(
             shrinkWrap: true,
             primary: false,
             children: <Widget>[
@@ -326,7 +326,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}",
+                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -347,7 +347,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       ),
                     ),
                     Text(
-                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}",
+                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}",
                       style: TextStyle(
                           color: Injector.isBusinessMode
                               ? ColorRes.white
@@ -393,7 +393,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
-    String message =Utils.challengeString(arrRewards.length - index,arrRewards[arrRewards.length - (index + 1)],arrRewards[index]);
+    String message = Utils.challengeString(arrRewards.length - index,
+        arrRewards[arrRewards.length - (index + 1)], arrRewards[index]);
     Utils.showLockReasonDialog(message, context, true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
@@ -611,7 +612,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
                       selectedModuleIndex != null &&
                               selectedModuleIndex == index
                           ? Utils.getAssetsImg('challenges_bg_sector')
-                          : Container(),
+                          : Utils.getAssetsImg(''),
                     ),
                     fit: BoxFit.fill)
                 : null),
@@ -757,7 +758,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
             if (arrLearningModules.length > 0) {
               selectedModuleIndex = 0;
-            }
+            } else
+              selectedModuleIndex = -1;
             if (mounted) setState(() {});
           }
         }).catchError((e) {
