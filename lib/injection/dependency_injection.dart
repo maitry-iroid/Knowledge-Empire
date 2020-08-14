@@ -114,7 +114,7 @@ class Injector {
 
   static IntroModel introModel;
 
-  static bool isInternetConnected;
+  static bool isInternetConnected = true;
 
   Injector._internal();
 
@@ -124,6 +124,8 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
+
+    isInternetConnected = await Utils.isInternetConnected();
 
     deviceType = Platform.operatingSystem;
     print(deviceType);
