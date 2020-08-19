@@ -64,7 +64,7 @@ class Injector {
   static int mode;
 
   // Is business Mode selected
-  static bool isBusinessMode = true;
+  static bool isBusinessMode = false;
 
   // Is password changed by user when first time login? - it is necessary coz initially admin generated password is assigned to every user.
   static bool isPasswordChange = false;
@@ -190,6 +190,7 @@ class Injector {
       homeStreamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
+      print("Shared pref ::::::::: ${prefs.getInt(PrefKeys.mode)}");
       mode = prefs.getInt(PrefKeys.mode) ?? Const.businessMode;
       isBusinessMode = mode == Const.businessMode;
 

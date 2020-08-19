@@ -84,11 +84,7 @@ class ColorRes {
   static Color secondColor = Color(0xFF2F4B7C);
   static Color thirdColor = Color(0xFF665191);
 
-
-
-
-
-
+  static Color portraitThemeColor = Color(0xFF5157C0);
 
 
 }

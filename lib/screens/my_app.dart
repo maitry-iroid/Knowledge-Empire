@@ -18,6 +18,7 @@ import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/screens/login.dart';
+import 'package:ke_employee/screens_portrait/login.dart';
 
 import 'home.dart';
 
@@ -41,9 +42,6 @@ class MyAppState extends State<MyApp> {
 
     Injector.getContext(context);
 
-
-
-
 //    if (Injector.userId != null) {
 //      PushNotificationHelper(context,"my app").initPush();
 //    }
@@ -53,9 +51,14 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    print("Mode : ${Injector.isBusinessMode}");
+    Injector.isBusinessMode ?
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeRight
+    ]) : SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp
     ]);
 
     return StreamBuilder(
@@ -66,13 +69,14 @@ class MyAppState extends State<MyApp> {
           title: Const.appName,
           locale: localeSnapshot.data,
           theme: ThemeData(
+            primaryColor: ColorRes.fontGrey,
             accentColor: ColorRes.transparent,
-            fontFamily: 'TrulyMadly',
+            fontFamily: Injector.isBusinessMode ? 'TrulyMadly' : '',
             backgroundColor: Injector.mode == Const.businessMode
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home:  Injector.userId != null ? HomePage() : LoginPage(),
+          home:  Injector.userId != null ? HomePage() : Injector.isBusinessMode ? LoginPage() : LoginPagePortrait(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),

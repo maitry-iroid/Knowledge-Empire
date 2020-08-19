@@ -51,6 +51,7 @@ class StringRes {
   static var login = "login";
   static var enterRegisteredEmail = "enterRegisteredEmail";
   static var password = "password";
+  static var usernameText = "username";
   static var newPassword = "newPassword";
   static var currentPassword = "currentPassword";
   static var reEnterPassword = "reEnterPassword";
@@ -460,6 +461,7 @@ class StringRes {
       'forgotPassword': 'Forgot Password?',
       'selectLanguages': 'Select Language',
 
+
       //organization
       'fireEmp': "Fire 10 employees",
       'hireEmp': "Hire 10 employees",
@@ -860,6 +862,7 @@ class StringRes {
       //login
       'login': 'Einloggen',
       'enterRegisteredEmail': 'Email eingeben',
+      'username' : 'Nutzername',
       'password': 'Passwort',
       'newPassword': 'Neues Passwort',
       'currentPassword': 'Aktuelles Passwort',
@@ -1259,6 +1262,7 @@ class StringRes {
       //login
       'login': '登录',
       'enterRegisteredEmail': '登录账户',
+      'username' : '用户名',
       'password': '密码',
       'newPassword': '新密码',
       'currentPassword': 'Current 密码',
