@@ -163,9 +163,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 SizedBox(
                   height: 8,
                 ),
-                homeData.questionHomeData.answerType == Const.typeAnswerText
+                homeData.questionHomeData.answerType == Const.typeAnswerText || homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                     ? showTextAnswer(context)
-                    : showMediaAnswer(context),
+                    : showMediaAnswer(context, false),
               ],
             ),
 //            gifImageShow(),
@@ -186,7 +186,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         ));
   }
 
-  showMediaAnswer(BuildContext context){
+  showMediaAnswer(BuildContext context, bool isMediaWithQuestion){
     return Expanded(
         child: Stack(
           children: <Widget>[
@@ -211,7 +211,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   child: GridView.builder(
                       itemCount: questionDataCustomerSituation.answer.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                          crossAxisCount: isMediaWithQuestion ? 1 : 2,
                           childAspectRatio: 2,
                           crossAxisSpacing: 0,
                           mainAxisSpacing: 0
@@ -515,17 +515,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
               child: Container(
                 alignment: Alignment.center,
-                padding:
-                EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
+                padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                 decoration: BoxDecoration(
-                  color:
-                  Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                  color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                   borderRadius: BorderRadius.circular(12),
                   border: Injector.isBusinessMode
                       ? Border.all(color: ColorRes.white, width: 1)
                       : null,
                 ),
-                child: ListView.builder(
+                child: widget.homeData.questionHomeData.answerType == Const.typeAnswerText
+                ? ListView.builder(
                   shrinkWrap: true,
                   primary: false,
                   physics: NeverScrollableScrollPhysics(),
@@ -533,6 +532,25 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   itemBuilder: (BuildContext context, index) {
                     return showItemC(index);
                   },
+                ) : GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: questionDataCustomerSituation.answer.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        childAspectRatio: 2,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0
+                    ),
+                    itemBuilder: (context, index){
+                      return MediaManager().showQueMedia(
+                          context,
+                          isAnswerCorrect(index) ? ColorRes.greenDot : arrAnswerSituation[index].isSelected
+                              ? ColorRes.fontGrey : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                              ? ColorRes.greenDot : ColorRes.white,
+                          questionDataCustomerSituation.answer.elementAt(index).answer,
+                          questionDataCustomerSituation.answer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg");
+                    }
                 ),
               ),
             ),

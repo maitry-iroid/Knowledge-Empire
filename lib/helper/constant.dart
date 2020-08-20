@@ -62,7 +62,7 @@ class Const {
 // answer type is text or media
   static var typeAnswerText = 1;
   static var typeAnswerMedia = 2;
-
+  static var typeAnswerMediaWithQuestion = 3;
 
   static var typeCamera = 101;
   static var typeGallery = 102;

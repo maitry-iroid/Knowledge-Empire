@@ -13,6 +13,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/routes/custom_router.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -69,7 +70,7 @@ class MyAppState extends State<MyApp> {
           title: Const.appName,
           locale: localeSnapshot.data,
           theme: ThemeData(
-            primaryColor: ColorRes.fontGrey,
+            primaryColor: ColorRes.portraitThemeColor,
             accentColor: ColorRes.transparent,
             fontFamily: Injector.isBusinessMode ? 'TrulyMadly' : '',
             backgroundColor: Injector.mode == Const.businessMode
@@ -83,6 +84,7 @@ class MyAppState extends State<MyApp> {
             '/engage': (BuildContext ext) => EngagementCustomer(),
             '/dashboard': (BuildContext context) => DashboardGamePage(),
           },
+          onGenerateRoute: CustomRouter.allRoutes,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),

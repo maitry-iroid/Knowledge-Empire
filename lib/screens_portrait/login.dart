@@ -5,6 +5,7 @@ import 'package:ke_employee/baseController/base_textfield.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/routes/route_names.dart';
 
 class LoginPagePortrait extends StatefulWidget {
   @override
@@ -81,7 +82,12 @@ class _LoginPagePortraitState extends State<LoginPagePortrait> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  BaseRaisedButton(buttonColor: ColorRes.blue, buttonText: Utils.getText(context, StringRes.login), onPressed: (){}),
+                  BaseRaisedButton(
+                      buttonColor: ColorRes.blue,
+                      buttonText: Utils.getText(context, StringRes.login),
+                      onPressed: (){
+                        Navigator.of(context).pushNamed(bottomNavigationRoute);
+                      }),
                   SizedBox(height: 10),
                   Center(child: Text(Utils.getText(context, StringRes.requestDemoAccount), style: TextStyle(color: ColorRes.blue, fontWeight: FontWeight.bold)),)
                 ],

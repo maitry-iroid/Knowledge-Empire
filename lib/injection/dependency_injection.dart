@@ -64,7 +64,7 @@ class Injector {
   static int mode;
 
   // Is business Mode selected
-  static bool isBusinessMode = false;
+  static bool isBusinessMode = true;
 
   // Is password changed by user when first time login? - it is necessary coz initially admin generated password is assigned to every user.
   static bool isPasswordChange = false;

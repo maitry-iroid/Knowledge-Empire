@@ -186,7 +186,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               SizedBox(
                 height: 8,
               ),
-              widget.homeData.questionHomeData.answerType == Const.typeAnswerText
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText || widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                   ? showMainBody(context)
                   : showMediaBody(context),
             ],
@@ -311,6 +311,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           jsonEncode(Injector.customerValueData.toJson()));
     }
 
+    print("jjnvmcnmnvm");
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         callSubmitAnswerApi(context);
@@ -503,11 +504,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showMainBody(BuildContext context) {
+    print("++++++++++++++++++++++++++");
+    print(widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion);
     return Expanded(
         child: Row(
           children: <Widget>[
             showFirstHalf(context),
-            showSecondHalf(context),
+            showSecondHalf(context)
           ],
         ));
   }
@@ -521,7 +524,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
 //              showMediaQuestion(context),
-              showMediaAnswerOptions(context)
+              Expanded(child: showMediaAnswerOptions(context, false))
             ],
           ),
         ));
@@ -547,43 +550,43 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ));
   }
 
-  showMediaAnswerOptions(BuildContext context){
-    return Expanded(
-        child: GridView.builder(
-            itemCount: widget.homeData.questionHomeData.answer.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2,
-                crossAxisSpacing: 0,
-                mainAxisSpacing: 0
-            ),
-            itemBuilder: (context, index){
-              return Stack(
-                alignment: Alignment.topRight,
-                children: <Widget>[
-                  MediaManager().showQueMedia(context, ColorRes.white, arrAnswer.elementAt(index).answer, arrAnswer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
-                  Padding(padding: EdgeInsets.only(top: 15, right: 15),
-                      child: Transform.scale(
-                        scale: 1.7,
-                        child: Checkbox(
-                            checkColor: ColorRes.white,
-                            activeColor: ColorRes.greenDot,
-                            value: arrAnswer[index].isSelected  ? true : false,
-                            onChanged: (value){
-                              Utils.playClickSound();
-                              setState(() {
-                                arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-                              });
-//                              print( " Array Answer :::  ${widget.homeData.questionHomeData.correctAnswerId}");
-//                              print( " Array Answer :::  ${arrAnswer.map((e) => e.option).toList()}");
-//                              print( " Array Answer :::  ${arrAnswer.map((e) => e.isSelected).toList()}");
-                            }
-                        ),
-                      ))
-                ],
-              );
-            }
-        )
+  showMediaAnswerOptions(BuildContext context, bool isMediaWithQuestion){
+    return GridView.builder(
+        physics: isMediaWithQuestion ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: widget.homeData.questionHomeData.answer.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: isMediaWithQuestion ? 1 : 2,
+            childAspectRatio: 2,
+            crossAxisSpacing: 0,
+            mainAxisSpacing: 0
+        ),
+        itemBuilder: (context, index){
+          return Stack(
+            alignment: Alignment.topRight,
+            children: <Widget>[
+              MediaManager().showQueMedia(context, ColorRes.white, arrAnswer.elementAt(index).answer, arrAnswer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
+              Padding(padding: EdgeInsets.only(top: 15, right: 15),
+                  child: Transform.scale(
+                    scale: 1.7,
+                    child: Checkbox(
+                        checkColor: ColorRes.white,
+                        activeColor: ColorRes.greenDot,
+                        value: arrAnswer[index].isSelected  ? true : false,
+                        onChanged: (value){
+                          Utils.playClickSound();
+                          setState(() {
+                            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+                          });
+                          print( " Array Answer :::  ${widget.homeData.questionHomeData.correctAnswerId}");
+                          print( " Array Answer :::  ${arrAnswer.map((e) => e.option).toList()}");
+                          print( " Array Answer :::  ${arrAnswer.map((e) => e.isSelected).toList()}");
+                        }
+                    ),
+                  ))
+            ],
+          );
+        }
     );
   }
 
@@ -690,6 +693,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   borderRadius: BorderRadius.circular(10.0)),
               margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
               child: Container(
+//                height: widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion ? Utils.getDeviceHeight(context) / 1.6 : null,
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                   decoration: BoxDecoration(
@@ -698,7 +702,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: ColorRes.white, width: 1),
                   ),
-                  child: ListView.builder(
+                  child: widget.homeData.questionHomeData.answerType == Const.typeAnswerText
+                      ? ListView.builder(
                     shrinkWrap: true,
                     primary: false,
                     physics: NeverScrollableScrollPhysics(),
@@ -706,7 +711,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     itemBuilder: (BuildContext context, int index) {
                       return showItem(index);
                     },
-                  )),
+                  ) : showMediaAnswerOptions(context, true)
+              ),
             ),
 
             Align(
