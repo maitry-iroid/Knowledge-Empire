@@ -222,23 +222,18 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           decoration: BoxDecoration(
-              borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(15),
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
                   width: 1,
                   color: arrAnswer[index].isSelected
                       ? ColorRes.white
                       : ColorRes.fontGrey),
-              color: Injector.isBusinessMode
-                  ? null
-                  : (arrAnswer[index].isSelected
+              color: arrAnswer[index].isSelected
                   ? ColorRes.blueMenuSelected
-                  : ColorRes.white),
+                  : ColorRes.white,
               image: Injector.isBusinessMode
                   ? (DecorationImage(
-                  image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
+                  image: AssetImage(checkAnswer(index)), fit: BoxFit.cover))
                   : null),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
