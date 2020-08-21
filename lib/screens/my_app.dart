@@ -53,13 +53,9 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     print("Mode : ${Injector.isBusinessMode}");
-    Injector.isBusinessMode ?
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight
-    ]) : SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.portraitUp
     ]);
 
     return StreamBuilder(
@@ -72,19 +68,19 @@ class MyAppState extends State<MyApp> {
           theme: ThemeData(
             primaryColor: ColorRes.portraitThemeColor,
             accentColor: ColorRes.transparent,
-            fontFamily: Injector.isBusinessMode ? 'TrulyMadly' : '',
+            fontFamily: 'TrulyMadly',
             backgroundColor: Injector.mode == Const.businessMode
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home:  Injector.userId != null ? HomePage() : Injector.isBusinessMode ? LoginPage() : LoginPagePortrait(),
+          home:  Injector.userId != null ? HomePage() : LoginPage(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),
             '/engage': (BuildContext ext) => EngagementCustomer(),
             '/dashboard': (BuildContext context) => DashboardGamePage(),
           },
-          onGenerateRoute: CustomRouter.allRoutes,
+//          onGenerateRoute: CustomRouter.allRoutes,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
