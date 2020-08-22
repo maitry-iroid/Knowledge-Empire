@@ -127,38 +127,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
     super.dispose();
   }
-//
-//  Future<void> initVideoController(String link) async {
-//    if (Utils.isVideo(link)) {
-//      await Injector.cacheManager
-//          .getFileFromCache(link)
-//          .then((fileInfo) {
-//        _controller = Utils.getCacheFile(link) != null
-//            ? VideoPlayerController.file(
-//            Utils
-//                .getCacheFile(link)
-//                .file)
-//            : VideoPlayerController.network(link)
-//          ..initialize().then((_) {
-//            if (mounted)
-//              setState(() {
-//                _chewieController.play();
-//              });
-//          });
-//        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-//        questionData.videoLoop == 1
-//            ? _controller.setLooping(true)
-//            : _controller.setLooping(false);
-//        _chewieController = ChewieController(
-//            videoPlayerController: _controller,
-//            autoPlay: true,
-//            allowFullScreen: false,
-//            materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-//            cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-//            looping: true);
-//      });
-//    }
-//  }
 
   bool isLoading = false;
 
@@ -655,10 +623,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           child: Column(
             children: <Widget>[
               MediaManager().showQueMedia(context, ColorRes.white,
-                  questionData.mediaLink,
-                  Utils.isImage(questionData.mediaLink)
-                      ? questionData.mediaLink
-                      : "https://www.speedsecuregcc.com/uploads/products/default.jpg",
+                  questionData.mediaLink, questionData.mediaThumbImage,
               pdfPreviewPath: _previewPath,
               isPdfLoading: isLoading,
               pdfFilePath: _pdfPath),

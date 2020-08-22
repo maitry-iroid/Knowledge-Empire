@@ -76,6 +76,7 @@ class QuestionData {
   int loyalty;
   int value;
   String mediaLink;
+  String mediaThumbImage;
   List<Answer> answer;
   String correctAnswerImage;
   String inCorrectAnswerImage;
@@ -93,34 +94,35 @@ class QuestionData {
 
   QuestionData(
       {this.questionId,
-      this.challengeId,
-      this.title,
-      this.firstName,
-      this.lastName,
-      this.profileImage,
-      this.question,
-      this.moduleName,
-      this.moduleId,
-      this.companyId,
-      this.daysInList,
-      this.counter,
-      this.description,
-      this.correctAnswerId,
-      this.loyalty,
-      this.value,
-      this.mediaLink,
-      this.answer,
-      this.correctAnswerImage,
-      this.inCorrectAnswerImage,
-      this.videoPlay,
-      this.videoLoop,
-      this.winningAmount,
-      this.isAnsweredCorrect,
-      this.questionCurrentIndex,
-      this.totalQuestion,
-      this.isFirstQuestion,
-      this.attemptTime,
-      this.answerType});
+        this.challengeId,
+        this.title,
+        this.firstName,
+        this.lastName,
+        this.profileImage,
+        this.question,
+        this.moduleName,
+        this.moduleId,
+        this.companyId,
+        this.daysInList,
+        this.counter,
+        this.description,
+        this.correctAnswerId,
+        this.loyalty,
+        this.value,
+        this.mediaLink,
+        this.mediaThumbImage,
+        this.answer,
+        this.correctAnswerImage,
+        this.inCorrectAnswerImage,
+        this.videoPlay,
+        this.videoLoop,
+        this.winningAmount,
+        this.isAnsweredCorrect,
+        this.questionCurrentIndex,
+        this.totalQuestion,
+        this.isFirstQuestion,
+        this.attemptTime,
+        this.answerType});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -142,6 +144,7 @@ class QuestionData {
     value = json['value'];
     resources = json['resources'];
     mediaLink = json['mediaLink'];
+    mediaThumbImage = json['mediaThumbImage'];
     isAnsweredCorrect = json['isAnsweredCorrect'];
     answerType = json['answerType'];
     winningAmount = json['winningAmount'];

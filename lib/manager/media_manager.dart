@@ -23,12 +23,9 @@ class MediaManager{
 
   MediaManager._internal();
 
-
   String _pdfPath = '';
   String _previewPath;
   bool isLoading = false;
-
-
 
   showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage, {String pdfPreviewPath = "", bool isPdfLoading = false, String pdfFilePath}) {
 
@@ -175,15 +172,12 @@ class MediaManager{
         ],
       );
     }*/ else if (Utils.isPdf(path)) {
-      print("=================== pdf found: ${path.toString()} ======================");
       return Container(
         padding: EdgeInsets.all(3),
         decoration:
         BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
         child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
       );
-    }else{
-      print("+++++++++++++++++++++++  Nothing found : ${path.toString()} +++++++++++++++++++++");
     }
   }
 
@@ -222,7 +216,6 @@ class ExpandMediaState extends State<ExpandMedia>
     });
 
     controller.forward();
-    print("Expand path : ${widget.pdfPath}");
 
     Future.delayed(Duration.zero, () async {
       await this.initVideoController(widget.link);
