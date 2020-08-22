@@ -90,13 +90,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       abcdList = alphaIndex;
 
       getPdf();
-//    downloadFile();
-//      if(Utils.isVideo(questionData.mediaLink)){
-//        print("Is video+++++++++++++++++++++++++");
-//        Future.delayed(Duration.zero, () async{
-//          await ExpandMediaState().initVideoController(questionData.mediaLink);
-//        });
-//      }
     }
   }
 
@@ -307,7 +300,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           jsonEncode(Injector.customerValueData.toJson()));
     }
 
-    print("jjnvmcnmnvm");
     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) {
         callSubmitAnswerApi(context);
@@ -500,8 +492,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showMainBody(BuildContext context) {
-//    print("++++++++++++++++++++++++++");
-//    print(widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion);
     return Expanded(
         child: Row(
           children: <Widget>[
@@ -527,7 +517,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showMediaQuestion(BuildContext context){
-    print("Question :::::::::: ${widget.homeData.questionHomeData.question}");
     return Padding(
         padding: EdgeInsets.only(bottom: 5, left: 5),
         child: Row(
@@ -574,9 +563,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                           setState(() {
                             arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
                           });
-                          print( " Array Answer :::  ${widget.homeData.questionHomeData.correctAnswerId}");
-                          print( " Array Answer :::  ${arrAnswer.map((e) => e.option).toList()}");
-                          print( " Array Answer :::  ${arrAnswer.map((e) => e.isSelected).toList()}");
                         }
                     ),
                   ))
@@ -663,18 +649,16 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showFirstHalf(BuildContext context) {
-    print("PDF path :------------------------ ${_pdfPath}");
     return Expanded(
         flex: 1,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-//              Utils.isPdf(questionData.mediaLink) ? showQueMedia(context, true, questionData.mediaLink, questionData.mediaLink) :
-//              MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, Utils.isImage(questionData.mediaLink) ? questionData.mediaLink : "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
-//              showQueMedia(context, true, questionData.mediaLink, questionData.mediaLink),
               MediaManager().showQueMedia(context, ColorRes.white,
                   questionData.mediaLink,
-                  Utils.isImage(questionData.mediaLink) ? questionData.mediaLink : "https://www.speedsecuregcc.com/uploads/products/default.jpg",
+                  Utils.isImage(questionData.mediaLink)
+                      ? questionData.mediaLink
+                      : "https://www.speedsecuregcc.com/uploads/products/default.jpg",
               pdfPreviewPath: _previewPath,
               isPdfLoading: isLoading,
               pdfFilePath: _pdfPath),
@@ -792,145 +776,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         questionData.question);
   }
 
-  showQueMedia(BuildContext context, bool isExpandIcon, String answer, String thumbImage) {
-    return InkResponse(
-        onTap: () {
-//          Utils.playClickSound();
-          MediaManager().performImageClick(context, answer);
-        },
-        child: Stack(
-          children: <Widget>[
-            Card(
-              elevation: 5,
-              color: ColorRes.transparent.withOpacity(0.4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
-              child: Container(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height / 2.5,
-                  alignment: Alignment.center,
-                  padding:
-                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: ColorRes.white, width: 1)),
-                  child: showMediaView(context, thumbImage)),
-            ),
-            showMediaExpandIcon(context, answer)
-          ],
-        ));
-  }
-
-  String pathPDF = "";
-
-//  PDFDocument doc = await PDFDocument.fromURL('http://www.africau.edu/images/default/sample.pdf');
-
-  showMediaView(BuildContext context, String path) {
-    print("Path : $path");
-    if (Utils.isImage(path)) {
-      print("isImage = true");
-      return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(path,
-                  scale: Const.imgScaleProfile,
-                  cacheManager: Injector.cacheManager),
-              fit: BoxFit.cover,
-            )),
-      );
-    } else if (Utils.isVideo(path) &&
-        _controller != null &&
-        _controller.value.initialized) {
-      print("isVideo = true");
-      return Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Container(
-            child: Chewie(
-              controller: _chewieController,
-            ),
-          ),
-          Container(
-            child: MaterialButton(
-              height: 100,
-              onPressed: () {
-                _controller.value.isPlaying
-                    ? _controller.pause()
-                    : _controller.play();
-
-                if (mounted) setState(() {});
-              },
-              child: Container(
-                width: Utils.getDeviceHeight(context) / 7,
-                height: Utils.getDeviceHeight(context) / 7,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          _controller.value.isPlaying
-                              ? Utils.getAssetsImg("") //add_emp_check
-                              : Utils.getAssetsImg("play_button"),
-                        ),
-                        fit: BoxFit.scaleDown)),
-              ),
-            ),
-          )
-        ],
-      );
-    } else if (Utils.isPdf(path)) {
-      print("isPdf = true");
-      return Container(
-        padding: EdgeInsets.all(3),
-        decoration:
-        BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: Utils.pdfShow(_previewPath, isLoading),
-      );
-    }
-//    else {
-//    return Container();
-//    }
-  }
-//
-  showMediaExpandIcon(BuildContext context, String link) {
-    print("================================pdf path :::::: ${_pdfPath.toString()}");
-    return Positioned(
-      bottom: 0,
-      right: 0,
-      child: InkResponse(
-        child: Container(
-            alignment: Alignment.center,
-            height: Utils.getDeviceWidth(context) / 20,
-            width: Utils.getDeviceWidth(context) / 20,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Injector.isBusinessMode
-                        ? Utils.getAssetsImg("full_expand_question_answers")
-                        : Utils.getAssetsImg("expand_pro")),
-                    fit: BoxFit.fill))),
-        onTap: () {
-
-          print("============:::::::::::::=========pdf path :::::: ${_pdfPath.toString()}");
-          Utils.playClickSound();
-          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: _pdfPath, link: link));
-        },
-      ),
-    );
-  }
-//
-//  void performImageClick(BuildContext context, String link) {
-//    Utils.playClickSound();
-//    Utils.isImage(link)
-//        ? showDialog(
-//      context: context,
-//      builder: (_) => ExpandMedia(link: link),
-//    )
-//        : Container();
-//  }
 }
 
 //------------------------------------------------------------
