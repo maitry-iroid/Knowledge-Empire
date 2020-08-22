@@ -453,24 +453,20 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          borderRadius:
-          Injector.isBusinessMode ? null : BorderRadius.circular(15),
-          border: Injector.isBusinessMode
-              ? null
-              : Border.all(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
               width: 1,
               color: isAnswerCorrect(index) ||
                   arrAnswerSituation[index].isSelected
                   ? ColorRes.white
                   : ColorRes.fontGrey),
-          color:
-          Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
+          color: Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
               image: AssetImage(
                 checkAnswer(index),
               ),
-              fit: BoxFit.fill))
+              fit: BoxFit.cover))
               : null),
       child: Row(
         children: <Widget>[

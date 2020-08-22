@@ -28,11 +28,14 @@ class MediaManager{
   String _previewPath;
   bool isLoading = false;
 
-  showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage) {
+
+
+  showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage, {String pdfPreviewPath = "", bool isPdfLoading = false, String pdfFilePath}) {
+
     return InkResponse(
         onTap: () {
 //          Utils.playClickSound();
-          performImageClick(context, answer);
+          performImageClick(context, answer, pdfFilePath: pdfFilePath);
         },
         child: Stack(
           children: <Widget>[
@@ -53,30 +56,14 @@ class MediaManager{
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor, width: 3)),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      showMediaView(context, thumbImage),
-                      Utils.isVideo(answer)
-                          ? Padding(padding: EdgeInsets.only(bottom: 10),
-                          child: IconButton(
-                              icon: Icon(Icons.play_circle_filled, color: ColorRes.blackTransparent, size: 45),
-                              onPressed: (){
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => ExpandMedia(link: answer));
-                              }
-                          ))
-                          : Container()
-                    ],
-                  )),
+                  child: showMediaView(context, answer, thumbImage, pdfPreviewPath: pdfPreviewPath, isPdfLoading: isPdfLoading)),
             ),
-            showMediaExpandIcon(context, answer)
+            showMediaExpandIcon(context, answer, pdfFilePath: pdfFilePath)
           ],
         ));
   }
 
-  showMediaExpandIcon(BuildContext context, String link) {
+  showMediaExpandIcon(BuildContext context, String link, {String pdfFilePath}) {
     return Positioned(
       bottom: 0,
       right: 0,
@@ -93,13 +80,13 @@ class MediaManager{
                     fit: BoxFit.fill))),
         onTap: () {
           Utils.playClickSound();
-          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: _pdfPath, link: link));
+          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link));
         },
       ),
     );
   }
 
-  void performImageClick(BuildContext context, String link) {
+  void performImageClick(BuildContext context, String link, {String pdfFilePath}) {
     Utils.playClickSound();
 //    Utils.isImage(link)
 //        ? showDialog(
@@ -110,26 +97,49 @@ class MediaManager{
 
     showDialog(
         context: context,
-        builder: (_) => ExpandMedia(link: link));
+        builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath,));
   }
 
-  showMediaView(BuildContext context, String path) {
-    if (Utils.isImage(path)) {
-      return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
+  showMediaView(BuildContext context, String path, String thumbImage, {String pdfPreviewPath = "", bool isPdfLoading = false}) {
+    if (Utils.isImage(path) || Utils.isVideo(path)) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                image: DecorationImage(
+                  image: CachedNetworkImageProvider(thumbImage ,
+                      scale: Const.imgScaleProfile,
+                      cacheManager: Injector.cacheManager),
+                  fit: BoxFit.cover,
+                )),
+          ),
+          Utils.isVideo(path) ? Container(
+            child: MaterialButton(
+              height: 60,
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (_) => ExpandMedia(link: path));
+              },
+              child: Container(
+                width: Utils.getDeviceHeight(context) / 10,
+                height: Utils.getDeviceHeight(context) / 10,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("play_button")),
+                        fit: BoxFit.scaleDown)),
+              ),
             ),
-            image: DecorationImage(
-              image: CachedNetworkImageProvider(path,
-                  scale: Const.imgScaleProfile,
-                  cacheManager: Injector.cacheManager),
-              fit: BoxFit.cover,
-            )),
-      );
-    } else if (Utils.isVideo(path) &&
-        _controller != null &&
-        _controller.value.initialized) {
+          ) : Container()
+        ],
+      ) ;
+
+    }/*else if (Utils.isVideo(path)) {
+      print("IsVideo true ++++++++++++++++++");
       return Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -164,13 +174,16 @@ class MediaManager{
           )
         ],
       );
-    } else if (Utils.isPdf(path)) {
+    }*/ else if (Utils.isPdf(path)) {
+      print("=================== pdf found: ${path.toString()} ======================");
       return Container(
         padding: EdgeInsets.all(3),
         decoration:
         BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: Utils.pdfShow(_previewPath, isLoading),
+        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
       );
+    }else{
+      print("+++++++++++++++++++++++  Nothing found : ${path.toString()} +++++++++++++++++++++");
     }
   }
 
@@ -209,7 +222,7 @@ class ExpandMediaState extends State<ExpandMedia>
     });
 
     controller.forward();
-    print("Expand path : ${widget.link}");
+    print("Expand path : ${widget.pdfPath}");
 
     Future.delayed(Duration.zero, () async {
       await this.initVideoController(widget.link);
@@ -246,6 +259,7 @@ class ExpandMediaState extends State<ExpandMedia>
             materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
             cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
             looping: true);
+        print("========================= video controller initialized =================");
       });
     }
   }
@@ -301,7 +315,7 @@ class ExpandMediaState extends State<ExpandMedia>
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Utils.isVideo(widget.link) &&
-                            _controller.value.initialized
+                            (_controller?.value?.initialized ?? false)
                             ? Chewie(
                           controller: _chewieController,
                         )
