@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -202,6 +203,8 @@ class ExpandMediaState extends State<ExpandMedia>
   String _previewPath;
   bool _isLoading = false;
   int _pageNumber = 1;
+  PDFDocument document;
+  bool isPdfLoading = true;
 
   @override
   void initState() {
@@ -221,7 +224,8 @@ class ExpandMediaState extends State<ExpandMedia>
       await this.initVideoController(widget.link);
     });
 
-    if (Utils.isPdf(widget.link)) getPdf();
+    if (Utils.isPdf(widget.link)) loadPdf();
+
   }
 
   Future<void> initVideoController(String link) async {
@@ -257,12 +261,22 @@ class ExpandMediaState extends State<ExpandMedia>
     }
   }
 
-  Future getPdf() async {
-    _pdfPath = widget.pdfPath;
-    _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+//  Future getPdf() async {
+//    _pdfPath = widget.pdfPath;
+//    _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+//    setState(() {
+//      _isLoading = false;
+//    });
+//  }
+
+  Future<void> loadPdf() async {
+    print("----------------  pdf path :: ${widget.link}");
+    PDFDocument doc = await PDFDocument.fromURL(widget.link);
     setState(() {
-      _isLoading = false;
+      this.document = doc;
+      isPdfLoading = false;
     });
+
   }
 
   bool checkimg = true;
@@ -275,6 +289,7 @@ class ExpandMediaState extends State<ExpandMedia>
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: ShapeDecoration(
                 color: Colors.transparent,
                 shape: RoundedRectangleBorder(
@@ -292,6 +307,7 @@ class ExpandMediaState extends State<ExpandMedia>
                       margin: EdgeInsets.only(
                           top: 35, bottom: 15, right: 25, left: 25),
                       child: Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
                         margin: EdgeInsets.only(
                             top: 0, bottom: 0, left: 0, right: 0),
                         height: Utils.getDeviceHeight(context) / 1.5,
@@ -313,7 +329,7 @@ class ExpandMediaState extends State<ExpandMedia>
                           controller: _chewieController,
                         )
                             : (Utils.isPdf(widget.link)
-                            ? Utils.pdfShow(_previewPath, _isLoading)
+                            ? isPdfLoading ? CircularProgressIndicator() : PDFViewer(document: document, showPicker: false,)
                             : null),
                       ),
                     ),
