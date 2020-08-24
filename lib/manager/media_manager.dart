@@ -31,6 +31,7 @@ class MediaManager{
   showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage, {String pdfPreviewPath = "", bool isPdfLoading = false, String pdfFilePath}) {
 
     return InkResponse(
+
         onTap: () {
 //          Utils.playClickSound();
           performImageClick(context, answer, pdfFilePath: pdfFilePath);
@@ -220,45 +221,46 @@ class ExpandMediaState extends State<ExpandMedia>
 
     controller.forward();
 
-    Future.delayed(Duration.zero, () async {
-      await this.initVideoController(widget.link);
-    });
+    if(Utils.isVideo(widget.link)){
+      Injector.audioPlayerBg.stop();
+      Future.delayed(Duration.zero, () async {
+        await this.initVideoController(widget.link);
+      });
+    }
 
     if (Utils.isPdf(widget.link)) loadPdf();
 
   }
 
   Future<void> initVideoController(String link) async {
-    if (Utils.isVideo(link)) {
-      await Injector.cacheManager
-          .getFileFromCache(link)
-          .then((fileInfo) {
-        _controller = Utils.getCacheFile(link) != null
-            ? VideoPlayerController.file(
-            Utils
-                .getCacheFile(link)
-                .file)
-            : VideoPlayerController.network(link)
-          ..initialize().then((_) {
-            if (mounted)
-              setState(() {
-                _chewieController.play();
-              });
-          });
-        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-        questionData.videoLoop == 1
-            ? _controller.setLooping(true)
-            : _controller.setLooping(false);
-        _chewieController = ChewieController(
-            videoPlayerController: _controller,
+    await Injector.cacheManager
+        .getFileFromCache(link)
+        .then((fileInfo) {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(
+          Utils
+              .getCacheFile(link)
+              .file)
+          : VideoPlayerController.network(link)
+        ..initialize().then((_) {
+          if (mounted)
+            setState(() {
+              _chewieController.play();
+            });
+        });
+      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+      _chewieController = ChewieController(
+          videoPlayerController: _controller,
 //            autoPlay: true,
-            allowFullScreen: false,
-            materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-            cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-            looping: true);
-        print("========================= video controller initialized =================");
-      });
-    }
+          allowFullScreen: false,
+          materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          looping: true);
+      print("========================= video controller initialized =================");
+    });
   }
 
 //  Future getPdf() async {
@@ -272,10 +274,14 @@ class ExpandMediaState extends State<ExpandMedia>
   Future<void> loadPdf() async {
     print("----------------  pdf path :: ${widget.link}");
     PDFDocument doc = await PDFDocument.fromURL(widget.link);
-    setState(() {
-      this.document = doc;
-      isPdfLoading = false;
-    });
+    await doc.get(page: 1);
+    if(mounted){
+      setState(() {
+        this.document = doc;
+        isPdfLoading = false;
+      });
+    }
+
 
   }
 
@@ -283,92 +289,96 @@ class ExpandMediaState extends State<ExpandMedia>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Material(
-        color: Colors.transparent,
-        child: ScaleTransition(
-          scale: scaleAnimation,
-          child: Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: ShapeDecoration(
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
-            child: Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Stack(
-                  fit: StackFit.loose,
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.only(
-                          top: 35, bottom: 15, right: 25, left: 25),
-                      child: Container(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        margin: EdgeInsets.only(
-                            top: 0, bottom: 0, left: 0, right: 0),
-                        height: Utils.getDeviceHeight(context) / 1.5,
-                        decoration: BoxDecoration(
-                          color: Injector.isBusinessMode
-                              ? ColorRes.black
-                              : ColorRes.white,
-                          image: Utils.isImage(widget.link)
-                              ? DecorationImage(
-                              image: Utils.getCacheNetworkImage(
-                                  widget.link),
-                              fit: BoxFit.cover)
-                              : null,
-                          borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: (){
+        Utils.playClickSound();
+        Injector.audioPlayerBg.resume();
+        if(Utils.isVideo(widget.link)) {
+          _chewieController.pause();
+          _controller.pause();
+        }
+        Navigator.pop(context);
+      },
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Material(
+            color: Colors.transparent,
+            child: ScaleTransition(
+              scale: scaleAnimation,
+              child: Container(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: ShapeDecoration(
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0))),
+                child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Stack(
+                      fit: StackFit.loose,
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          margin: EdgeInsets.only(
+                              top: 35, bottom: 15, right: 25, left: 25),
+                          child: Container(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            margin: EdgeInsets.only(
+                                top: 0, bottom: 0, left: 0, right: 0),
+                            height: Utils.getDeviceHeight(context) / 1.5,
+                            width: Utils.getDeviceWidth(context) ,
+                            decoration: BoxDecoration(
+                              color: ColorRes.white,
+                              image: Utils.isImage(widget.link)
+                                  ? DecorationImage(
+                                  image: Utils.getCacheNetworkImage(
+                                      widget.link),
+                                  fit: BoxFit.cover)
+                                  : null,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Utils.isVideo(widget.link) &&
+                                (_controller?.value?.initialized ?? false)
+                                ? Chewie(
+                              controller: _chewieController,
+                            )
+                                : (Utils.isPdf(widget.link)
+                                ? PDFViewer(document: document, showPicker: false,)
+                                : Container(color: Colors.white)),
+                          ),
                         ),
-                        child: Utils.isVideo(widget.link) &&
-                            (_controller?.value?.initialized ?? false)
-                            ? Chewie(
-                          controller: _chewieController,
-                        )
-                            : (Utils.isPdf(widget.link)
-                            ? isPdfLoading ? CircularProgressIndicator() : PDFViewer(document: document, showPicker: false,)
-                            : null),
-                      ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: InkResponse(
-                          onTap: () {
-                            Utils.playClickSound();
-                            Navigator.pop(context);
-                          },
-                          child: (checkimg == true
-                              ? Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 30,
-                              width: Utils.getDeviceWidth(context) / 30,
-                              decoration: BoxDecoration(
-                                  image:
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
-                              ))
-                              : Container(
-                              alignment: Alignment.center,
-                              height: Utils.getDeviceWidth(context) / 30,
-                              width: Utils.getDeviceWidth(context) / 30,
-                              decoration: BoxDecoration(
-                                  image:
-                                  DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg(
-                                              "close_dialog")),
-                                      fit: BoxFit.contain)
-                              )))),
-                    )
-                  ],
-                )),
+                        Positioned(
+                            top: 0,
+                            right: 10,
+                            child: InkResponse(
+                                onTap: () {
+                                  Utils.playClickSound();
+                                  Injector.audioPlayerBg.resume();
+                                  if(Utils.isVideo(widget.link)) {
+                                    _chewieController.pause();
+                                    _controller.pause();
+                                  }
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    height: Utils.getDeviceWidth(context) / 30,
+                                    width: Utils.getDeviceWidth(context) / 30,
+                                    decoration: BoxDecoration(
+                                        image:
+                                        DecorationImage(
+                                            image: AssetImage(
+                                                Utils.getAssetsImg(
+                                                    "close_dialog")),
+                                            fit: BoxFit.contain)
+                                    )))),
+                      ],
+                    )),
+              ),
+            ),
           ),
         ),
       ),
