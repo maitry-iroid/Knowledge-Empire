@@ -1,43 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/routes/route_names.dart';
+import 'package:ke_employee/manager/screens_manager.dart';
 import 'package:ke_employee/screens_portrait/drawer.dart';
-import 'package:ke_employee/screens_portrait/module.dart';
-import 'package:ke_employee/screens_portrait/other.dart';
-import 'package:ke_employee/screens_portrait/profile_and_settings.dart';
-import 'package:ke_employee/screens_portrait/questions.dart';
 
 class BottomNavigationPortrait extends StatefulWidget {
   @override
-  _BottomNavigationPortraitState createState() => _BottomNavigationPortraitState();
+  BottomNavigationPortraitState createState() => BottomNavigationPortraitState();
 }
 
-class _BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
-  int _currentIndex;
-  List<Widget> _children;
-  List<String> _titles;
+class BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
+  final CupertinoTabController _controller = CupertinoTabController();
+
+  int currentIndex;
+  List<BottomItems> _children;
 
   @override
   void initState() {
-    _currentIndex = 0;
+    currentIndex = 0;
     _children = [
-      QuestionsPagePortrait(),
-      ModulePagePortrait(),
-      OtherPagePortrait(),
-      ProfileAndSettingsPagePortrait(),
+      BottomItems.questions,
+      BottomItems.modules,
+      BottomItems.others,
+      BottomItems.profileAndSettings
     ];
-    _titles = [""];
     super.initState();
+    ScreensManager().bottomNavigationPortraitState = this;
   }
-
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         backgroundColor: ColorRes.portraitThemeColor,
-        middle: Text(""),
+        middle: Text(_children[currentIndex].title, style: TextStyle(color: ColorRes.white)),
         leading: GestureDetector(
           onTap: (){
             Navigator.of(context).push(
@@ -48,15 +44,16 @@ class _BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
                     }
                 ));
           },
-          child: Icon(Icons.menu, size: 24, color: ColorRes.white,),
+          child: Icon(Icons.menu, size: 24, color: ColorRes.white),
         ),
       ),
       child : CupertinoTabScaffold(
+          controller: _controller,
           tabBar: CupertinoTabBar(
             backgroundColor: ColorRes.portraitThemeColor,
             activeColor: ColorRes.white,
             inactiveColor: ColorRes.whiteTransparent,
-            currentIndex: _currentIndex,
+            currentIndex: currentIndex,
             onTap: onTabTapped,
             items: [
               BottomNavigationBarItem(
@@ -83,7 +80,7 @@ class _BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
                 return SafeArea(
                   top: false,
                   bottom: false,
-                  child: _children[_currentIndex],
+                  child: _children[currentIndex].page,
                 );
               },
             );
@@ -94,9 +91,16 @@ class _BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
 
   void onTabTapped(int index) {
     setState(() {
-      _currentIndex = index;
+      currentIndex = index;
+      _controller.index = index;
     });
   }
+
+  void selectBottomItem(BottomItems bottomItem) {
+    int index =  _children.indexOf(bottomItem);
+    this.onTabTapped(index);
+  }
+
 }
 
 

@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/manager/screens_manager.dart';
 
 class DrawerPortrait extends StatefulWidget {
   @override
   _DrawerPortraitState createState() => _DrawerPortraitState();
 }
 
-class _DrawerPortraitState extends State<DrawerPortrait> {
+ const List<DrawerItems> _drawerItems = [
+  DrawerItems.profile,
+  DrawerItems.learnings,
+  DrawerItems.modules,
+  DrawerItems.ranking,
+  DrawerItems.achievements,
+  DrawerItems.awards,
+  DrawerItems.performance,
+  DrawerItems.team,
+  DrawerItems.challenges,
+  DrawerItems.logout
+];
 
-  static const List<String> _drawerItemTitles = ["Profile", "Learnings", "Modules", "Ranking", "Achievements", "Awards", "Performance", "Team", "Challenges", "Logout"];
+class _DrawerPortraitState extends State<DrawerPortrait> {
 
   @override
   void initState() {
@@ -68,16 +80,20 @@ class _DrawerPortraitState extends State<DrawerPortrait> {
         child: Container(
           padding: EdgeInsets.only(left: 15),
           child: ListView.builder(
-              itemCount: _drawerItemTitles.length,
+              itemCount: _drawerItems.length,
               itemBuilder: (context, index){
                 return InkResponse(
                   onTap: (){
-                    print(_drawerItemTitles[index]);
+                    print(_drawerItems[index].title);
+                    if(_drawerItems[index].bottomItem != null){
+                      ScreensManager().bottomNavigationPortraitState?.selectBottomItem(_drawerItems[index].bottomItem);
+                    }
+                    Navigator.of(context).pop();
                   },
                   child: ListTile(
                     contentPadding: EdgeInsets.all(0),
                     dense: true,
-                    title: Text(_drawerItemTitles[index], style: TextStyle(color: ColorRes.white, fontSize: 14)),
+                    title: Text(_drawerItems[index].title, style: TextStyle(color: ColorRes.white, fontSize: 14)),
                   ),
                 );
               }
