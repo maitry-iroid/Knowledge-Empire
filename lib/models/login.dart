@@ -70,6 +70,7 @@ class UserData {
   bool isSoundEnable = false;
   String language  = Const.english;
   int mode ;
+  int isAnonymousName = 0;
 
   UserData();
 
@@ -91,6 +92,7 @@ class UserData {
     isFirstTimeLogin = json['isFirstTimeLogin'];
     language = json['language'];
     mode = json['mode'];
+    isAnonymousName = json['isAnonymousName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -112,6 +114,7 @@ class UserData {
     data['isFirstTimeLogin'] = this.isFirstTimeLogin;
     data['language'] = this.language;
     data['mode'] = this.mode;
+    data['isAnonymousName'] = this.isAnonymousName;
     return data;
   }
 }

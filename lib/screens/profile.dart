@@ -47,8 +47,9 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   TextEditingController companyController = TextEditingController();
-  FocusNode myFocusNode;
-
+  TextEditingController nameController = TextEditingController();
+  FocusNode companyNameFocusNode;
+  FocusNode nameFocusNode;
   List<Company> companyList = new List();
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
@@ -70,9 +71,11 @@ class _ProfilePageState extends State<ProfilePage> {
     if (Injector.introData != null && Injector.introData.profile1 == 0)
       await DisplayDialogs.showIntroProfile1(context);
 
-    myFocusNode = FocusNode();
+    companyNameFocusNode = FocusNode();
+    nameFocusNode = FocusNode();
 
     companyController.text = Injector.userData?.companyName;
+    nameController.text = Injector.userData?.name;
     updateUserID = Injector.userId.toString();
     updateIsSoundEnable =
         Injector.isSoundEnable != null && Injector.isSoundEnable
@@ -95,7 +98,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void dispose() {
-    myFocusNode.dispose();
+    companyNameFocusNode.dispose();
+    nameFocusNode.dispose();
     super.dispose();
   }
 
@@ -874,7 +878,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: TextField(
                                 controller: companyController,
                                 obscureText: false,
-                                focusNode: myFocusNode,
+                                focusNode: companyNameFocusNode,
                                 style: TextStyle(
                                   color: ColorRes.white,
                                   fontSize: 15,
@@ -901,7 +905,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   onTap: () {
                     Utils.playClickSound();
-                    FocusScope.of(context).requestFocus(myFocusNode);
+                    FocusScope.of(context).requestFocus(companyNameFocusNode);
                   },
                 )
               ],
@@ -950,10 +954,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fit: BoxFit.fill),
                               ),
                               child: TextField(
-                                enabled: false,
+                                controller: nameController,
+                                enabled: Injector.userData?.isAnonymousName == 1 ? true : false,
                                 obscureText: false,
+                                focusNode: nameFocusNode,
                                 style: TextStyle(
-                                  color: ColorRes.white,
+                                  color: Injector.userData?.isAnonymousName == 1 ? ColorRes.white : ColorRes.hintColor,
                                   fontSize: 15,
                                 ),
                                 decoration: InputDecoration(
@@ -969,7 +975,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                InkResponse(
+                Injector.userData?.isAnonymousName == 1 ? InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg("edit")),
+                    width: 40,
+                  ),
+                  onTap: () {
+                    Utils.playClickSound();
+                    FocusScope.of(context).requestFocus(nameFocusNode);
+                  },
+                ) : InkResponse(
                     child: Container(
                   width: 40,
                 ))
@@ -1271,6 +1286,7 @@ class _ProfilePageState extends State<ProfilePage> {
     var req = {
       'userId': Injector.userId,
       'companyName': companyController.text.trim(),
+      'name': nameController.text
     };
 
     CommonView.showCircularProgress(true, context);
@@ -1280,7 +1296,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (data != null) {
         Injector.userData.profileImage = data.profileImage;
         Injector.userData.companyName = data.companyName;
-
+        Injector.userData.name = data.name;
         await Injector.setUserData(Injector.userData, false);
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));

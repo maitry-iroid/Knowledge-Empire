@@ -69,6 +69,9 @@ class Injector {
   // Is password changed by user when first time login? - it is necessary coz initially admin generated password is assigned to every user.
   static bool isPasswordChange = false;
 
+  // Is nickname changed by user when first time login? - it is necessary coz initially admin generated nickname is assigned to every user.
+  static bool isNickNameChange = false;
+
   // To store Images, Videos in Cache for offline mode
   static DefaultCacheManager cacheManager;
 

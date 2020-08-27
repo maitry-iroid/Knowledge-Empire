@@ -18,6 +18,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:ke_employee/dialogs/nickname_dialog.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ke_employee/dialogs/loader.dart';
@@ -227,6 +228,13 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
+
+  static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) {
+    showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => NickNameDialog(
+            isFromProfile: isFromProfile));
+  }
 
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
       bool isFromProfile, bool isOldPasswordRequired) {

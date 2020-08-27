@@ -58,6 +58,7 @@ class StringRes {
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
+  static var newNickName = "nickname";
 
 //  static var selectLanguages = "selectLanguages"; //onlu define english
 
@@ -331,7 +332,9 @@ class StringRes {
   static var enterNewPassword = "enterNewPassword ";
   static var enterRePassword = "enterRePassword";
   static var enterSameNewPassword = "enterSameNewPassword";
+  static var enterNickName = "enterNickName";
   static var passwordChange = "passwordChange";
+  static var nicknameChange = "nicknameChange";
 
   //intro page
   static var skipTutorial = "skipTutorial";
@@ -460,6 +463,7 @@ class StringRes {
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
       'selectLanguages': 'Select Language',
+      'nickname': 'New Nickname',
 
 
       //organization
@@ -755,7 +759,9 @@ class StringRes {
       'enterNewPassword ': 'Please enter new Password.',
       'enterRePassword': 'Please re-eneter new Password.',
       'enterSameNewPassword': 'Please enter same new password.',
+      'enterNickName': 'Please enter nickname',
       'passwordChange': 'Password changed Successfully.',
+      'nicknameChange': 'Nickname changed Successfully',
 
       //intro page
       'skipTutorial': 'Skip Tutorial',
@@ -870,6 +876,7 @@ class StringRes {
       'cancel': 'Abbrechen',
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
+      'nickname': 'Neuer Spitzname',
 
       //organization
       'fireEmp': "10 Mitarbeiter entlassen",
@@ -1206,6 +1213,7 @@ class StringRes {
       //</editor-fold>
 
       'passwordChange': 'Passwort erfolgreich geändert.',
+      'nicknameChange': 'Spitzname erfolgreich geändert',
       'serviceReps': "Servicemitarbeiter",
       'strKp': "\$",
       'strBalance': "Vermögen",
@@ -1270,6 +1278,8 @@ class StringRes {
       'cancel': '取消',
       'send': '发送',
       'forgotPassword': '忘记密码?',
+      'nickname': '新昵称',
+
 
       //organization
       'fireEmp': "解雇10名员工",
@@ -1588,6 +1598,7 @@ class StringRes {
       //</editor-fold>
 
       'passwordChange': '密码已更改。',
+      'nicknameChange': '昵称已成功更改',
       'serviceReps': "服务代表",
       'strKp': "\$",
       'strBalance': "现金",
@@ -1916,6 +1927,7 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
+      'nickname': 'New Nickname',
       'fireEmp': 'Reduce Level',
       'hireEmp': 'Increase Level',
       'name': 'Name',
@@ -1974,6 +1986,7 @@ class StringRes {
       'close': 'Close',
       //</editor-fold>
       'passwordChange': 'Password changed Successfully.',
+      'nicknameChange': 'Nickname changed Successfully',
       'serviceReps': "Memory Points",
 
       'strProProfile':
@@ -2062,6 +2075,7 @@ class StringRes {
       'cancel': 'Abbrechen',
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
+      'nickname': 'Neuer Spitzname',
       'fireEmp': 'Level reduzieren',
       'hireEmp': 'Level erhöhen',
       'sector': 'Lernmodule',
@@ -2395,6 +2409,7 @@ class StringRes {
           '"Rangliste:  \n- Rang einsehen und vergleichen  \n- Unterschiedliche Zeitlinien können angezeigt werden"',
       //</editor-fold>
       'passwordChange': 'Passwort erfolgreich geändert.',
+      'nicknameChange': 'Spitzname erfolgreich geändert',
       'serviceReps': "Bestandsfragen",
 
       'strProProfile':
@@ -2483,6 +2498,7 @@ class StringRes {
       'cancel': '取消',
       'send': '发送',
       'forgotPassword': '忘记密码？',
+      'nickname': '新昵称',
       'fireEmp': '降低等级',
       'hireEmp': '提高等级',
       'sector': '模块',
@@ -2785,6 +2801,7 @@ class StringRes {
       'helpProRanking': '"排名: \n- 查看和比较您的排名 \n- 您可以检查多个时间段和比较多个群组"',
       //</editor-fold>
       'passwordChange': '密码已更改。',
+      'nicknameChange': '昵称已成功更改',
       'serviceReps': "记忆点数",
 
       'strProProfile': " - 更改您的公司名称\n- 切换到游戏模式\n- 切换公司\n- 申请重新开始",

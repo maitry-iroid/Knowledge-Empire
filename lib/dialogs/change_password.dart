@@ -24,6 +24,7 @@ class ChangePasswordDialog extends StatefulWidget {
 }
 
 class ChangePasswordDialogState extends State<ChangePasswordDialog> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final pass1Controller = TextEditingController();
   final pass2Controller = TextEditingController();
   final pass3Controller = TextEditingController();
@@ -38,6 +39,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.transparent,
       body: showSetupPin(context),
     );
@@ -273,8 +275,10 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
-          Navigator.pushAndRemoveUntil(
-              context, FadeRouteHome(), ModalRoute.withName("/login"));
+          Navigator.pop(context);
+          Utils.showNickNameDialog(_scaffoldKey, false);
+//          Navigator.pushAndRemoveUntil(
+//              context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {
