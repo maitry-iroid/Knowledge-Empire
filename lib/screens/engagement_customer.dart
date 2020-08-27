@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -73,6 +72,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   //todo pdf viewer
   String _pdfPath = '';
   String _previewPath;
+  PDFDocument _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -102,8 +102,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             .getCacheFile(questionData.mediaLink)
             .file;
         _pdfPath = fetchedFile.path;
-        _previewPath = await PdfPreviewer.getPagePreview(
-            filePath: _pdfPath, pageNumber: _pageNumber);
       } else {
         File fetchedFile = await await DefaultCacheManager()
             .getSingleFile(questionData.mediaLink);
@@ -111,6 +109,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       }
       _previewPath = await PdfPreviewer.getPagePreview(
           filePath: _pdfPath, pageNumber: _pageNumber);
+
+      // Load from URL
+      _pdfDocument = await PDFDocument.fromAsset(_pdfPath);
 
       setState(() {
         _isLoading = false;
@@ -624,7 +625,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             children: <Widget>[
               MediaManager().showQueMedia(context, ColorRes.white,
                   questionData.mediaLink, questionData.mediaThumbImage,
-              pdfPreviewPath: _previewPath,
+              pdfDocument: _pdfDocument,
               isPdfLoading: isLoading,
               pdfFilePath: _pdfPath),
               showQueDescription(context)

@@ -7,7 +7,6 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
-import 'package:pdf_previewer/pdf_previewer.dart';
 import 'package:video_player/video_player.dart';
 
 VideoPlayerController _controller;
@@ -24,16 +23,13 @@ class MediaManager{
 
   MediaManager._internal();
 
-  String _pdfPath = '';
-  String _previewPath;
   bool isLoading = false;
 
-  showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage, {String pdfPreviewPath = "", bool isPdfLoading = false, String pdfFilePath}) {
+  showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage, {PDFDocument pdfDocument, bool isPdfLoading = false, String pdfFilePath}) {
 
     return InkResponse(
 
         onTap: () {
-//          Utils.playClickSound();
           performImageClick(context, answer, pdfFilePath: pdfFilePath);
         },
         child: Stack(
@@ -55,7 +51,7 @@ class MediaManager{
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor, width: 3)),
-                  child: showMediaView(context, answer, thumbImage, pdfPreviewPath: pdfPreviewPath, isPdfLoading: isPdfLoading)),
+                  child: showMediaView(context, answer, thumbImage, pdfDocument: pdfDocument, isPdfLoading: isPdfLoading)),
             ),
             showMediaExpandIcon(context, answer, pdfFilePath: pdfFilePath)
           ],
@@ -99,7 +95,7 @@ class MediaManager{
         builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath,));
   }
 
-  showMediaView(BuildContext context, String path, String thumbImage, {String pdfPreviewPath = "", bool isPdfLoading = false}) {
+  showMediaView(BuildContext context, String path, String thumbImage, {PDFDocument pdfDocument, bool isPdfLoading = false}) {
     if (Utils.isImage(path) || Utils.isVideo(path)) {
       return Stack(
         alignment: Alignment.center,
@@ -136,49 +132,14 @@ class MediaManager{
           ) : Container()
         ],
       ) ;
-
-    }/*else if (Utils.isVideo(path)) {
-      print("IsVideo true ++++++++++++++++++");
-      return Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Container(
-            child: Chewie(
-              controller: _chewieController,
-            ),
-          ),
-          Container(
-            child: MaterialButton(
-              height: 100,
-              color: Colors.red,
-              onPressed: () {
-                _controller.value.isPlaying
-                    ? _controller.pause()
-                    : _controller.play();
-              },
-              child: Container(
-                width: Utils.getDeviceHeight(context) / 7,
-                height: Utils.getDeviceHeight(context) / 7,
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    image: DecorationImage(
-                        image: AssetImage(
-                          _controller.value.isPlaying
-                              ? Utils.getAssetsImg("") //add_emp_check
-                              : Utils.getAssetsImg("play_button"),
-                        ),
-                        fit: BoxFit.scaleDown)),
-              ),
-            ),
-          )
-        ],
-      );
-    }*/ else if (Utils.isPdf(path)) {
+    }else if (Utils.isPdf(path)) {
       return Container(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         padding: EdgeInsets.all(3),
         decoration:
         BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
+//        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
+      child: PDFViewer(document: pdfDocument, showPicker: false),
       );
     }
   }
@@ -200,10 +161,6 @@ class ExpandMediaState extends State<ExpandMedia>
   AnimationController controller;
   Animation<double> scaleAnimation;
 
-  String _pdfPath = '';
-  String _previewPath;
-  bool _isLoading = false;
-  int _pageNumber = 1;
   PDFDocument document;
   bool isPdfLoading = true;
 
@@ -263,14 +220,6 @@ class ExpandMediaState extends State<ExpandMedia>
     });
   }
 
-//  Future getPdf() async {
-//    _pdfPath = widget.pdfPath;
-//    _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
-//    setState(() {
-//      _isLoading = false;
-//    });
-//  }
-
   Future<void> loadPdf() async {
     print("----------------  pdf path :: ${widget.link}");
     PDFDocument doc = await PDFDocument.fromURL(widget.link);
@@ -281,8 +230,6 @@ class ExpandMediaState extends State<ExpandMedia>
         isPdfLoading = false;
       });
     }
-
-
   }
 
   bool checkimg = true;
@@ -292,7 +239,9 @@ class ExpandMediaState extends State<ExpandMedia>
     return GestureDetector(
       onTap: (){
         Utils.playClickSound();
-        Injector.audioPlayerBg.resume();
+        if(Injector.isSoundEnable){
+          Injector.audioPlayerBg.resume();
+        }
         if(Utils.isVideo(widget.link)) {
           _chewieController.pause();
           _controller.pause();
@@ -356,7 +305,9 @@ class ExpandMediaState extends State<ExpandMedia>
                             child: InkResponse(
                                 onTap: () {
                                   Utils.playClickSound();
-                                  Injector.audioPlayerBg.resume();
+                                  if(Injector.isSoundEnable){
+                                    Injector.audioPlayerBg.resume();
+                                  }
                                   if(Utils.isVideo(widget.link)) {
                                     _chewieController.pause();
                                     _controller.pause();
