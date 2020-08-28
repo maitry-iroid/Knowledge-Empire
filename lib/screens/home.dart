@@ -38,6 +38,7 @@ import 'package:ke_employee/screens/powerups.dart';
 import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/ranking.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:ke_employee/screens/achievement.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
 import 'P+L.dart';
@@ -227,6 +228,8 @@ class HomePageState extends State<HomePage>
     } else if (_currentPage == Const.typeChallenges) {
       return ChallengesPage(homeData: homeData);
     } else if (_currentPage == Const.typeAchievement) {
+      return AchievementPage();
+    } else if (_currentPage == Const.typeReward) {
       return RewardsPage();
     } else if (_currentPage == Const.typeOrg) {
       return Injector.isBusinessMode
@@ -648,7 +651,7 @@ class HomePageState extends State<HomePage>
       drawerItems.add(
         DrawerItem(
             Utils.getText(context, StringRes.achievement),
-            Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards",
+            Injector.isBusinessMode ? "rewards" : "ic_pro_home_achievement",
             Const.typeAchievement),
       );
 

@@ -575,6 +575,7 @@ class Utils {
     if (type == Const.typeOrg ||
         type == Const.typeChallenges ||
         type == Const.typeAchievement ||
+        type == Const.typeReward ||
         type == Const.typeRanking ||
         type == Const.typeTeam ||
         type == Const.typePl) {
@@ -908,6 +909,8 @@ class Utils {
     else if (type == Const.typeRanking)
       return StringRes.unLockRanking;
     else if (type == Const.typeAchievement)
+      return StringRes.unLockReward;
+    else if (type == Const.typeReward)
       return StringRes.unLockReward;
     else
       return "";

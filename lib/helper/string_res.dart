@@ -91,6 +91,12 @@ class StringRes {
   static var toWin = "toWin";
   static var questions = "questions";
 
+  //Rewards module
+  static var redeem = "redeem";
+  static var pointsNeededToRedeem = "pointsNeededToRedeem";
+  static var unitsLeft = "unitsLeft";
+  static var categories = "categories";
+
   //learning module
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
@@ -491,6 +497,14 @@ class StringRes {
       'alertFriendSuccess': "Friend added successfully",
       'alertUnFriendSuccess': "Unfriend successfully",
       'alertUChallengeSent': "Challenge sent successfully!",
+
+
+      // Rewards module
+      'redeem': 'Redeem',
+      'pointsNeededToRedeem': 'Points needed to redeem',
+      'unitsLeft': "Units left",
+      'categories': 'Categories',
+
 
       //learning module
       'subscribe': 'Subscribe',
@@ -904,6 +918,12 @@ class StringRes {
       'alertUnFriendSuccess': 'Freund entfernt',
       'alertUChallengeSent': 'Herausforderung erfolgreich gesendet!',
 
+      //Rewards module
+      'redeem': 'Redeem',
+      'pointsNeededToRedeem': 'Points needed to redeem',
+      'unitsLeft': "Units left",
+      'categories': 'Categories',
+
       //learning module
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
@@ -1305,6 +1325,12 @@ class StringRes {
       'alertFriendSuccess': "成功添加朋友",
       'alertUnFriendSuccess': "成功取消朋友",
       'alertUChallengeSent': "挑战已成功发送",
+
+      //Rewards module
+      'redeem': 'Redeem',
+      'pointsNeededToRedeem': 'Points needed to redeem',
+      'unitsLeft': "Units left",
+      'categories': 'Categories',
 
       //learning module
       'subscribe': '订阅',
@@ -1939,6 +1965,13 @@ class StringRes {
       'somethingWrong': 'Something went wrong',
       'friend': 'Friend',
       'alertUChallengeSent': 'Challenge sent successfully!',
+      //Rewards module
+      'redeem': 'Redeem',
+      'pointsNeededToRedeem': 'Points needed to redeem',
+      'unitsLeft': "Units left",
+      'categories': 'Categories',
+
+
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
       'subscribed': 'Subscribed',
@@ -2094,6 +2127,13 @@ class StringRes {
       'alertFriendSuccess': 'Freund hinzugefügt',
       'alertUnFriendSuccess': 'Freund entfernt',
       'alertUChallengeSent': 'Herausforderung erfolgreich gesendet!',
+      //Rewards module
+      'redeem': 'Redeem',
+      'pointsNeededToRedeem': 'Points needed to redeem',
+      'unitsLeft': "Units left",
+      'categories': 'Categories',
+
+
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
       'subscribed': 'abonniert',
@@ -2516,6 +2556,13 @@ class StringRes {
       'alertFriendSuccess': '成功添加朋友',
       'alertUnFriendSuccess': '成功取消朋友',
       'alertUChallengeSent': '挑战已成功发送',
+      //Rewards module
+      'redeem': 'Redeem',
+      'pointsNeededToRedeem': 'Points needed to redeem',
+      'unitsLeft': "Units left",
+      'categories': 'Categories',
+
+
       'subscribe': '加入',
       'unSubscribe': '取消加入',
       'subscribed': '已加入',

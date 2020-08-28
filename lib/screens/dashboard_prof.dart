@@ -205,9 +205,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     else if (type == Const.typePl)
       return "ic_pro_home_pl";
     else if (type == Const.typeAchievement)
-      return "ic_pro_home_rewards";
+      return "ic_pro_home_achievement";
     else if (type == Const.typeReward)
-      //TODO change icon for reward
       return "ic_pro_home_rewards";
     else if (type == Const.typeRanking)
       return "ic_pro_home_ranking";

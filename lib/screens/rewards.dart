@@ -1,47 +1,35 @@
- import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_achievement.dart';
+import 'package:ke_employee/manager/media_manager.dart';
+import 'package:ke_employee/models/get_rewards.dart';
 
-import '../commonview/background.dart';
-import '../helper/Utils.dart';
-import '../helper/res.dart';
-import '../helper/string_res.dart';
-
-/*
-*   created by Riddhi
-*
-*   Achievement will be shown here form API.
-*
-* */
 
 class RewardsPage extends StatefulWidget {
   @override
   _RewardsPageState createState() => _RewardsPageState();
 }
 
-List<GetAchievementData> arrAchievementData = List();
-GetAchievementData selectedAchievement;
-SubCategory selectedSubCategory;
-
 class _RewardsPageState extends State<RewardsPage> {
-  List<RewardsModel> rewardsList = [
-    RewardsModel(image: "trophy0"),
-    RewardsModel(image: "trophy1"),
-    RewardsModel(image: "trophy2"),
-    RewardsModel(image: "trophy3"),
-    RewardsModel(image: "trophy4"),
-    RewardsModel(image: "trophy5"),
-    RewardsModel(image: "trophy6"),
-    RewardsModel(image: "trophy7"),
-    RewardsModel(image: "trophy8"),
-    RewardsModel(image: "trophy9"),
-    RewardsModel(image: "trophy10"),
-  ];
+
+  List<RewardData> arrRewards = List();
+  List<RewardData> arrFinalRewards = List();
+  RewardData selectedModule = RewardData();
+
+  TextEditingController searchController = TextEditingController();
+  bool isLoading = false;
+  String searchText = "";
+
 
   @override
   void initState() {
@@ -56,9 +44,10 @@ class _RewardsPageState extends State<RewardsPage> {
       await DisplayDialogs.showIntroRewards(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
-      getAchievements();
+      fetchRewardsModules();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,140 +57,144 @@ class _RewardsPageState extends State<RewardsPage> {
         Padding(
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
           child: Row(
-            children: <Widget>[showFirstHalf(), showSecondHalf()],
+            children: <Widget>[
+              showFirstHalf(),
+              Expanded(
+                flex: 1,
+                child: Injector.isBusinessMode
+                    ? Card(
+                  color: Colors.transparent,
+                  elevation: 20,
+                  child: showSecondHalf(context),
+                )
+                    : showSecondHalf(context),
+              )
+            ],
           ),
         ),
+        CommonView.showLoderView(isLoading)
       ],
     );
-  }
-
-  int _selectedItem = 0;
-
-  int _subSelectedItem = 0;
-
-  selectItem(index) {
-    if (mounted)
-      setState(() {
-        _selectedItem = index;
-        print(selectItem.toString());
-        selectedAchievement = arrAchievementData[_selectedItem];
-
-        if (selectedAchievement.subCategory.isNotEmpty) {
-          _subSelectedItem = 0;
-          selectedSubCategory =
-              selectedAchievement.subCategory[_subSelectedItem];
-        }
-      });
-  }
-
-  subCatSelectItem(index) {
-    if (mounted)
-      setState(() {
-        _subSelectedItem = index;
-        selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
-//      isSelectSubCat = false;
-      });
   }
 
   showFirstHalf() {
     return Expanded(
       flex: 1,
-      child: Card(
-        color: Injector.isBusinessMode ? ColorRes.colorBgDark : ColorRes.bgProf,
-        margin: EdgeInsets.all(0),
-        elevation: 10,
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                height: 30,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('bg_reward_sub')),
-                            fit: BoxFit.fill)
-                        : null),
-                child: Text(
-                  Utils.getText(context, StringRes.category),
-                  style: TextStyle(color: ColorRes.white, fontSize: 17),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: Container(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: arrAchievementData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return showCategoryItem(index);
-                    },
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  showSecondHalf() {
-    return Expanded(
-      flex: 3,
-      child: Column(
+      child: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           CommonView.showTitle(context, StringRes.rewards),
-          Expanded(
-            flex: 1,
-            child: Card(
-              color: ColorRes.colorBgDark,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: ColorRes.white),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: ListView.builder(
-//                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: selectedAchievement != null
-                      ? selectedAchievement.subCategory.length
-                      : 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    return showRewardItem(index);
-                  },
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5),
+            padding: EdgeInsets.only(left: 20, right: 10, top: 2, bottom: 2),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                    child: Container(
+                        height: 33,
+                        padding: EdgeInsets.only(top: 13, left: 10),
+                        margin:
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: ColorRes.white),
+                        child: Theme(
+                            data: ThemeData(accentColor: ColorRes.colorPrimary),
+                            child: TextField(
+                                onChanged: (text) {
+                                  arrFinalRewards.clear();
+                                  searchText = text;
+
+                                  if (mounted)
+                                    setState(() {
+                                      if (text.isEmpty) {
+                                        arrFinalRewards.addAll(arrRewards);
+                                      } else {
+                                        searchData();
+                                      }
+                                    });
+                                },
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                controller: searchController,
+                                style: TextStyle(
+                                    fontSize: 16, color: ColorRes.hintColor),
+                                decoration: InputDecoration(
+                                    hintText: Utils.getText(
+                                        context, StringRes.searchForKeywords),
+                                    hintStyle:
+                                    TextStyle(color: ColorRes.hintColor),
+                                    border: InputBorder.none))))),
+                SizedBox(
+                  width: 5,
                 ),
-              ),
+                Image(
+                    height: 35,
+                    image: AssetImage(
+                      Utils.getAssetsImg(
+                          Injector.isBusinessMode ? "search" : 'search_prof'),
+                    ),
+                    fit: BoxFit.fill)
+              ],
+            ),
+          ),
+          showSubHeader(),
+          ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: arrFinalRewards.length,
+            itemBuilder: (BuildContext context, int index) {
+              return showItem(index);
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  showSecondHalf(BuildContext context) {
+    return Container(
+      color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
+      child: ListView(
+        children: <Widget>[
+          showImageView(context),
+          showDescriptionView(),
+          showDownloadSubscribeOptions()
+        ],
+      ),
+    );
+  }
+
+  Container showSubHeader() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      margin: EdgeInsets.only(left: 20, right: 10, bottom: 10),
+      decoration: BoxDecoration(
+          color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+          borderRadius:
+          Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode
+              ? DecorationImage(
+              image: AssetImage(Utils.getAssetsImg("business_sec_header")),
+              fit: BoxFit.fill)
+              : null),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 8,
+            child: Text(
+              Utils.getText(context, StringRes.rewards),
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              textAlign: TextAlign.center,
             ),
           ),
           Expanded(
-            flex: 1,
-            child: Container(
-              height: double.infinity,
-              margin: EdgeInsets.only(left: 5, right: 5, top: 5),
-              child: Row(
-                children: <Widget>[
-                  showAchievementBox(1),
-                  showAchievementBox(2)
-                ],
-              ),
+            flex: 3,
+            child: Text(
+              Utils.getText(context, StringRes.points),
+              style: TextStyle(color: ColorRes.white, fontSize: 17),
+              textAlign: TextAlign.center,
             ),
           ),
         ],
@@ -209,312 +202,354 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  showSecondHalfSecondCategory() {
-    return Expanded(
-      flex: 3,
+  showDownloadSubscribeOptions() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Card(
-            color: ColorRes.whiteDarkBg,
-            margin: EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Container(
-              height: Utils.getDeviceHeight(context) / 3.6,
-              width: Utils.getDeviceWidth(context) / 1.4,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: selectedAchievement.subCategory.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return showRewardItem(index);
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              height: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              child: Row(
-                children: <Widget>[
-                  showAchievementBox(1),
-                  showAchievementBox(2)
-                ],
-              ),
-            ),
-          ),
+          showDetailView(),
+          showRedeemView()
         ],
       ),
     );
   }
 
-  showAchievementBox(int type) {
-    return Expanded(
-      flex: 1,
-      child: Stack(
-        fit: StackFit.expand,
-        alignment: Alignment.center,
-        children: <Widget>[
-          Card(
-            elevation: 10,
-            color: ColorRes.bgDescription,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(
-                top: 14,
-                bottom: Utils.getDeviceHeight(context) / 15,
-                right: 2.5,
-                left: 2.5),
-            child: Container(
-              width: Utils.getDeviceWidth(context) / 3,
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 18, bottom: 18),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: ColorRes.white, width: 1),
-              ),
-              child: SingleChildScrollView(
-                child: Text(
-                  selectedSubCategory != null
-                      ? type == 1
-                          ? selectedSubCategory.currentLevelText
-                          : selectedSubCategory.nextLevelText
-                      : "",
-                  style: TextStyle(color: ColorRes.white, fontSize: 16),
-                  textAlign: TextAlign.justify,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            child: Container(
-              alignment: Alignment.center,
-              height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_achivement")),
-                      fit: BoxFit.fill)),
-              child: Text(
-                Utils.getText(context,
-                    type == 1 ? StringRes.achievement : StringRes.nextLevel),
-                style: TextStyle(color: ColorRes.white, fontSize: 17),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              alignment: Alignment.center,
-              height: 32,
-              width: 120,
-              margin: EdgeInsets.only(bottom: 10),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_innovation")),
-                      fit: BoxFit.fill)),
-              child: Text(
-                Utils.getText(
-                    context,
-                    selectedSubCategory != null
-                        ? type == 1
-                            ? selectedSubCategory.currentLevelBlonus.toString()
-                            : selectedSubCategory.nextLevelBlonus.toString()
-                        : "null Innovation"),
-                style: TextStyle(color: ColorRes.white, fontSize: 17),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-//  GetAchievementResponse getAchievementResponse = GetAchievementResponse();
-
-  void getAchievements() {
-    CommonView.showCircularProgress(true, context);
-
-    GetAchievementRequest rq = GetAchievementRequest();
-    rq.userId = Injector.userId;
-    rq.mode = Injector.mode.toString();
-
-    WebApi().callAPI(WebApi.rqGetUserAchievement, rq.toJson()).then((data) {
-      CommonView.showCircularProgress(false, context);
-
-      if (data != null) {
-        arrAchievementData.clear();
-
-        data.forEach((v) {
-          arrAchievementData.add(GetAchievementData.fromJson(v));
-        });
-
-        if (arrAchievementData.isNotEmpty) {
-          selectedAchievement = arrAchievementData[0];
-          selectedSubCategory = selectedAchievement.subCategory[0];
-          if (mounted) setState(() {});
-        }
-      }
-    }).catchError((e) {
-      CommonView.showCircularProgress(false, context);
-    });
-  }
-
-  showRewardItem(int index) {
-    return GestureDetector(
-      child: Container(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 0),
+  showDetailView(){
+    if((selectedModule?.points ?? "") != "" && (selectedModule?.leftUnits ?? "") != ""){
+      return Padding(padding: EdgeInsets.symmetric(horizontal: 26),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              Utils.getText(context, StringRes.pointsNeededToRedeem) + " : " + selectedModule.points.toString() + "  Kpt",
+              style: TextStyle(
+                  color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+                  fontSize: 17),
+            ),
+            SizedBox(height: 10),
+            Text(
+              Utils.getText(context, StringRes.unitsLeft) + " : " + selectedModule.leftUnits.toString(),
+              style: TextStyle(
+                  color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+                  fontSize: 17),
+            ),
+            SizedBox(height: 10),
+//            Text(
+//              Utils.getText(context, StringRes.categories) + " : " + selectedModule.leftUnits.toString(),
+//              style: TextStyle(
+//                  color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+//                  fontSize: 17),
+//            ),
+//            SizedBox(height: 10),
+          ],
+        ));
+    }else{
+      return Container();
+    }
+  }
+
+  showRedeemView() {
+    return InkResponse(
+        child: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+                color: Injector.isBusinessMode
+                    ? null
+                    : selectedModule.isRedeem == 0
+                    ? ColorRes.greyText
+                    : ColorRes.headerBlue,
+                borderRadius:
+                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(
+                        selectedModule.isRedeem == 0
+                            ? "bg_disable_subscribe"
+                            : "bg_subscribe")),
+                    fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(context, StringRes.redeem),
+              style: TextStyle(color: ColorRes.white, fontSize: 20),
+              textAlign: TextAlign.center,
+            )),
+        onTap: () {
+          Utils.playClickSound();
+
+//          if (selectedModule.isSubscribedFromBackend == 0) {
+//            if (selectedModule.isAssign == 1)
+//              showConfirmDialog();
+//            else
+//              performSubscribeUnsubscribe();
+//          } else {
+//            Utils.showToast(Utils.getText(context, StringRes.alertNotAllowed));
+//          }
+        });
+  }
+
+  Widget showItem(int index) {
+    return InkResponse(
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(left: 20, right: 10),
+        padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
+        decoration: BoxDecoration(
+            image: (selectedModule.rewardId ==
+                arrFinalRewards[index].rewardId)
+                ? DecorationImage(
+                image: AssetImage(Utils.getAssetsImg(
+                    Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
+                fit: BoxFit.fill)
+                : null),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              flex: 2,
+              flex: 9,
               child: Container(
-                width: Utils.getDeviceWidth(context) / 6,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                        color: _subSelectedItem == index
-                            ? ColorRes.borderRewardsName
-                            : ColorRes.white,
-                        width: 1)),
-//                 child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-
-                child: Center(
-                    child: Text(
-                  selectedAchievement.subCategory[index].achievementName,
-                  style: TextStyle(fontSize: 17, color: ColorRes.white),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                )),
-//                 ),
-              ),
+                  height: Injector.isBusinessMode ? 33 : 35,
+                  margin: EdgeInsets.only(top: Injector.isBusinessMode ? 2 : 0),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Injector.isBusinessMode ? null : ColorRes.white,
+                      borderRadius: Injector.isBusinessMode
+                          ? null
+                          : BorderRadius.circular(20),
+                      image: Injector.isBusinessMode
+                          ? DecorationImage(
+                          image: AssetImage(
+                              Utils.getAssetsImg("bg_bus_sector_item")),
+                          fit: BoxFit.fill)
+                          : null),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Text(
+                        arrFinalRewards[index].reward,
+                        style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.blue
+                              : ColorRes.textProf,
+                          fontSize: 15,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+//                      Opacity(
+//                        opacity: arrFinalRewards[index].isRedeem == 1
+//                            ? 1.0
+//                            : 0.0,
+//                        child: Align(
+//                            alignment: Alignment.topRight,
+//                            child: Text(
+//                              Utils.getText(context, StringRes.subscribed),
+//                              style: TextStyle(
+//                                color: Injector.isBusinessMode
+//                                    ? ColorRes.bgHeader
+//                                    : ColorRes.blue,
+//                                fontSize: 10,
+//                              ),
+//                              maxLines: 1,
+//                              overflow: TextOverflow.ellipsis,
+//                            )),
+//                      )
+                    ],
+                  )),
             ),
             Expanded(
-              flex: 7,
+              flex: 4,
               child: Container(
-                  padding: EdgeInsets.only(bottom: 0),
-//                    width: Utils.getDeviceWidth(context) / 10,
-//                height: Utils.getDeviceHeight(context) / 4,
-                  child: Image(
-                    image: AssetImage(
-                      Utils.getAssetsImg(rewardsList[selectedAchievement
-                              .subCategory[index].currentLevel]
-                          .image),
-                    ),
-//                  fit: BoxFit.fill,
-                  )),
-            )
+                height: 30,
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: BoxDecoration(
+                    color:
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("value")),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  arrFinalRewards[index].points.toString(),
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 16,
+                  ),
+                  maxLines: 1,
+                ),
+              ),
+            ),
           ],
         ),
       ),
       onTap: () {
-//        if(currentVol != 0) {
         Utils.playClickSound();
-//        }
-        subCatSelectItem(index);
+        if (mounted)
+          setState(() {
+            selectedModule = arrFinalRewards[index];
+//            isSwitched = selectedModule.isDownloadEnable == 1;
+          });
       },
     );
   }
 
-  showCategoryItem(int index) {
-    return Center(
-      child: CategoryItem(
-        selectItem, // callback function, if (mounted)setState for parent
-        index: index,
-        isSelected: _selectedItem == index ? true : false,
-        title: arrAchievementData[index].achievementCategory,
+  showImageView(BuildContext context){
+
+    if((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != ""){
+      return Container(
+        margin: EdgeInsets.only(top: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb),
+      );
+    }else{
+      return Container();
+    }
+  }
+
+  showDescriptionView() {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color:
+            Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            margin: EdgeInsets.only(top: 20),
+            child: Container(
+              padding:
+              EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode
+                    ? ColorRes.bgDescription
+                    : ColorRes.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Injector.isBusinessMode
+                    ? Border.all(color: ColorRes.white, width: 1)
+                    : null,
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  selectedModule.description,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: Injector.isBusinessMode
+                          ? ColorRes.white
+                          : ColorRes.textProf,
+                      fontSize: 17),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  top: Injector.isBusinessMode ? 3 : 5,
+                  left: Utils.getDeviceWidth(context) / 9,
+                  right: Utils.getDeviceWidth(context) / 9),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color:
+                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.circular(20),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
+                      fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                Utils.getText(context, StringRes.description),
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-//  -----------------------------
+  void fetchRewardsModules() async {
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
-}
+    GetRewardRequest rq = GetRewardRequest();
+    rq.userId = Injector.userId;
 
-class RewardsModel {
-//  String levelName = "";
-  String image = "";
+    WebApi()
+        .callAPI(WebApi.rqGetRewards, rq.toJson())
+        .then((data) async {
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
-//  bool isSelected = false;
+      if (data != null) {
+        List<RewardData> arrData = new List<RewardData>();
 
-  RewardsModel({/*this.levelName,*/ this.image});
-}
+        int i = 0;
+        data.forEach((v) {
+          RewardData module = RewardData.fromJson(v);
+//          module.index = i;
+          arrData.add(module);
+          i++;
+        });
 
-//-----------------------
+//        saveModulesLocally(arrData);
 
-class CategoryItem extends StatefulWidget {
-  final String title;
-  final int index;
-  final bool isSelected;
-  final Function(int) selectItem;
+        if (mounted)
+          setState(() {
+            arrRewards.clear();
+            arrFinalRewards.clear();
 
-  CategoryItem(
-    this.selectItem, {
-    Key key,
-    this.title,
-    this.index,
-    this.isSelected,
-  }) : super(key: key);
+            arrRewards.addAll(arrData);
+            arrFinalRewards.addAll(arrData);
 
-  _CategoryItemState createState() => _CategoryItemState();
-}
+            if (arrRewards.length > 0 &&
+                (selectedModule.rewardId == null)) {
+              selectedModule = arrRewards[0];
+            }
+          });
 
-class _CategoryItemState extends State<CategoryItem> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-//        if(currentVol != 0) {
-        Utils.playClickSound();
-//        }
-        widget.selectItem(widget.index);
-      },
-      child: Container(
-          height: Injector.isBusinessMode ? 50 : 40,
-          margin: EdgeInsets.only(
-              left: 5,
-              right: 5,
-              top: Injector.isBusinessMode ? 0 : 5,
-              bottom: 10),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Injector.isBusinessMode
-                  ? null
-                  : widget.isSelected ? ColorRes.titleBlueProf : null,
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(width: 1, color: ColorRes.titleBlueProf),
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(10),
-              image: Injector.isBusinessMode
-                  ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                          ? "bg_reward_sub_selected"
-                          : "bg_reward_sub2")),
-                      fit: BoxFit.fill)
-                  : null),
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Center(
-            child: Text(
-              widget.title,
-              style: TextStyle(
-                  color: Injector.isBusinessMode
-                      ? ColorRes.white
-                      : widget.isSelected ? ColorRes.white : ColorRes.textBlue,
-                  fontSize: 17),
-              textAlign: TextAlign.center,
-            ),
-          )),
-    );
+//        downloadQuestions(null);
+      }
+    }).catchError((e) {
+      print("getRewards_" + e.toString());
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+      // Utils.showToast(e.toString());
+    });
   }
+
+  void searchData() {
+    var data = arrRewards
+        .where((module) =>
+        module.reward.toLowerCase().contains(searchText.toLowerCase()))
+        .toList();
+
+    arrFinalRewards.addAll(data);
+  }
+
 }

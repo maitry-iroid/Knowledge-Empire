@@ -20,6 +20,7 @@ class WebApi {
   static String rqChangePassword = "change_password";
 
   static String rqGetLearningModule = "getLearningModule";
+  static String rqGetRewards = "getRewards";
   static String rqAssignUserToModule = "assignUserToModule";
   static String rqGetQuestions = "getQuestions";
   static String rqGetOrganization = "getOrganization";
