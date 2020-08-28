@@ -12,13 +12,14 @@ class Const {
   static var typeBusinessSector = "1";
   static var typeNewCustomer = "2";
   static var typeExistingCustomer = "3";
-  static var typeReward = "4";
+  static var typeAchievement = "4";
   static var typeTeam = "5";
   static var typeChallenges = "6";
   static var typeOrg = "7";
   static var typePl = "8";
   static var typeRanking = "9";
-  static var typeProfile = "10";
+  static var typeReward = "10";
+  static var typeProfile = "15";
   static var typeHelp = "11";
   static var typeEngagement = "12";
   static var typeCustomerSituation = "13";

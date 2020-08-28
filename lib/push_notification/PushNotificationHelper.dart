@@ -166,7 +166,7 @@ class PushNotificationHelper {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
     } else if (mPushModel.notificationType ==
             Const.pushTypeAchievement.toString() &&
-        Utils.isFeatureOn(Const.typeReward)) {
+        Utils.isFeatureOn(Const.typeAchievement)) {
       if (mPushModel.type != null &&
           mPushModel.type == "1" &&
           mPushModel.bonus != null) {

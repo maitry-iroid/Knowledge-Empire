@@ -269,6 +269,12 @@ class _HelpProScreenState extends State<HelpProScreen> {
         "ic_pro_home_exis_customer",
         Utils.getText(context, StringRes.strExistingCustomer));
 
+
+    //TODO change strReward based on achievement text from client
+    if (Utils.isFeatureOn(Const.typeAchievement)) {
+      addInModel(Utils.getText(context, StringRes.achievement),
+          "ic_pro_home_rewards", Utils.getText(context, StringRes.strRewards));
+    }
     if (Utils.isFeatureOn(Const.typeReward)) {
       addInModel(Utils.getText(context, StringRes.rewards),
           "ic_pro_home_rewards", Utils.getText(context, StringRes.strRewards));

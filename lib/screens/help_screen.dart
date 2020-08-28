@@ -344,7 +344,7 @@ class HelpPageState extends State<HelpPage> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 40, left: 38),
-                child: getSelectedType() == Const.typeReward
+                child: getSelectedType() == Const.typeAchievement
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("rewards")),
@@ -738,7 +738,7 @@ class HelpPageState extends State<HelpPage> {
                 )
               : Container(),
 
-          getSelectedType() == Const.typeReward
+          getSelectedType() == Const.typeAchievement
               ? Positioned(
                   bottom: Utils.getDeviceHeight(context) / 4.2,
                   left: Utils.getDeviceWidth(context) / 3.5,
@@ -1103,7 +1103,7 @@ class HelpPageState extends State<HelpPage> {
     arrTypeData.add(Const.typeNewCustomer);
     arrTypeData.add(Const.typeExistingCustomer);
 
-    if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
+    if (Utils.isFeatureOn(Const.typeAchievement)) arrTypeData.add(Const.typeAchievement);
 
     if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
       arrTypeData.add(Const.typeTeam);

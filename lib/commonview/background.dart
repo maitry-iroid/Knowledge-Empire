@@ -442,15 +442,15 @@ class CommonView {
                                       AssetImage(Utils.getAssetsImg("rewards")),
                                   width: Utils.getDeviceHeight(context) / 3.0,
                                 ),
-                                Utils.isShowUnreadCount(Const.typeReward)
+                                Utils.isShowUnreadCount(Const.typeAchievement)
                                     ? Utils.showUnreadCount(
-                                        Const.typeReward, 17, size.width / 20)
+                                        Const.typeAchievement, 17, size.width / 20)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
                                         minWidth: 25.0,
                                       )),
-                                Utils.isShowLock(Const.typeReward)
+                                Utils.isShowLock(Const.typeAchievement)
                                     ? Image(
                                         image: AssetImage(
                                             Utils.getAssetsImg("lock_rewards")),
@@ -466,7 +466,7 @@ class CommonView {
                             ),
                             onTap: () {
                               Utils.performDashboardItemClick(
-                                  context, Const.typeReward);
+                                  context, Const.typeAchievement);
                             },
                           )),
                     ),

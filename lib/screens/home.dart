@@ -226,7 +226,7 @@ class HomePageState extends State<HomePage>
       return TeamPage();
     } else if (_currentPage == Const.typeChallenges) {
       return ChallengesPage(homeData: homeData);
-    } else if (_currentPage == Const.typeReward) {
+    } else if (_currentPage == Const.typeAchievement) {
       return RewardsPage();
     } else if (_currentPage == Const.typeOrg) {
       return Injector.isBusinessMode
@@ -643,6 +643,14 @@ class HomePageState extends State<HomePage>
           Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer",
           Const.typeExistingCustomer),
     );
+
+    if (Utils.isFeatureOn(Const.typeAchievement))
+      drawerItems.add(
+        DrawerItem(
+            Utils.getText(context, StringRes.achievement),
+            Injector.isBusinessMode ? "rewards" : "ic_pro_home_rewards",
+            Const.typeAchievement),
+      );
 
     if (Utils.isFeatureOn(Const.typeReward))
       drawerItems.add(

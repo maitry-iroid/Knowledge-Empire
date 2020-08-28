@@ -179,6 +179,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return Utils.getText(context, StringRes.challenges);
     else if (type == Const.typePl)
       return Utils.getText(context, StringRes.pl);
+    else if (type == Const.typeAchievement)
+      return Utils.getText(context, StringRes.achievement);
     else if (type == Const.typeReward)
       return Utils.getText(context, StringRes.rewards);
     else if (type == Const.typeRanking)
@@ -202,7 +204,10 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "ic_pro_home_challenges";
     else if (type == Const.typePl)
       return "ic_pro_home_pl";
+    else if (type == Const.typeAchievement)
+      return "ic_pro_home_rewards";
     else if (type == Const.typeReward)
+      //TODO change icon for reward
       return "ic_pro_home_rewards";
     else if (type == Const.typeRanking)
       return "ic_pro_home_ranking";
@@ -244,6 +249,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     arrTypeData.add(Const.typeBusinessSector);
     arrTypeData.add(Const.typeNewCustomer);
     arrTypeData.add(Const.typeExistingCustomer);
+
+    if (Utils.isFeatureOn(Const.typeAchievement)) arrTypeData.add(Const.typeAchievement);
 
     if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
 

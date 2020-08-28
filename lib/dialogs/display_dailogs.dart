@@ -625,7 +625,7 @@ class DisplayDialogs {
           return IntroScreenDialog(
             menuView: false,
             imageName: "john",
-            titleText: Utils.getText(context, StringRes.rewards),
+            titleText: Utils.getText(context, StringRes.achievement),
             btnName: Utils.getText(context, StringRes.gotIt),
             desTextLine: Injector.introModel.rewards,
             btnColor: ColorRes.blue,
