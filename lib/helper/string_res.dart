@@ -725,6 +725,7 @@ class StringRes {
       'unLockPl': 'Unlocks 1 week after 1st login.',
       'unLockRanking': 'Unlocks after three days in row login',
       'unLockReward': 'Unlocks if first Achievement is reached',
+      //TODO add unLockReward dialog text
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
       //Dashboard Game screen

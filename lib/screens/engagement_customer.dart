@@ -473,7 +473,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMediaBody(BuildContext context) {
     return Expanded(
         child: Padding(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
