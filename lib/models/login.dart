@@ -53,6 +53,7 @@ class BaseResponse<T> {
 class UserData {
   int userId;
   String name;
+  String nickName;
   String email;
   String phone;
   String address;
@@ -77,6 +78,7 @@ class UserData {
   UserData.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     name = json['name'];
+    nickName = json['nickName'];
     email = json['email'];
     phone = json['phone'];
     address = json['address'];
@@ -99,6 +101,7 @@ class UserData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
     data['name'] = this.name;
+    data['nickName'] = this.nickName;
     data['email'] = this.email;
     data['phone'] = this.phone;
     data['address'] = this.address;

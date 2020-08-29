@@ -39,6 +39,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     arrType = initFeatureDataArray();
     getDashboardStatus();
 
+    Utils.callCustomerValuesApi();
+
     if (Injector.introData == null) {
       getIntroData();
     }

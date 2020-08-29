@@ -161,8 +161,7 @@ class NickNameDialogState extends State<NickNameDialog> {
 
     UpdateProfileRequest rq = UpdateProfileRequest();
     rq.userId = Injector.userData.userId.toString();
-    rq.name = nickNameController.text;
-    Injector.userData.name = Injector.userData.isAnonymousName == 1 ? nickNameController.text : Injector.userData.name;
+    rq.nickName = nickNameController.text;
 
     WebApi().callAPI(WebApi.rqUpdateProfile, rq.toJson()).then((data) {
       if (mounted)

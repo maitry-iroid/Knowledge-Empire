@@ -54,6 +54,9 @@ class DashboardGamePageState extends State<DashboardGamePage>
       }
     }
     getDashboardStatus();
+
+    Utils.callCustomerValuesApi();
+
   }
 
   getIntroData() {

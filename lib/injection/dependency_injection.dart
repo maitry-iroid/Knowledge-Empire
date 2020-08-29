@@ -239,6 +239,9 @@ class Injector {
 
     customerValueData = _customerValueData;
 
+    userData.name = customerValueData.name;
+    userData.nickName = customerValueData.nickName;
+
     isSoundEnable = customerValueData.isEnableSound == 1;
 
     if (mode != _customerValueData.mode) {

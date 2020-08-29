@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   TextEditingController companyController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController nickNameController = TextEditingController();
   FocusNode companyNameFocusNode;
   FocusNode nameFocusNode;
   List<Company> companyList = new List();
@@ -75,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
     nameFocusNode = FocusNode();
 
     companyController.text = Injector.userData?.companyName;
-    nameController.text = Injector.userData?.name;
+    nickNameController.text = Injector.userData?.nickName;
     updateUserID = Injector.userId.toString();
     updateIsSoundEnable =
         Injector.isSoundEnable != null && Injector.isSoundEnable
@@ -931,12 +931,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: <Widget>[
                           SizedBox(
-                            width: 13,
+                            width: 15,
                           ),
                           Text(
                             Utils.getText(context, StringRes.yourName),
                             style:
-                                TextStyle(color: ColorRes.white, fontSize: 15),
+                            TextStyle(color: ColorRes.white, fontSize: 15),
                           ),
                           SizedBox(
                             width: 10,
@@ -954,19 +954,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fit: BoxFit.fill),
                               ),
                               child: TextField(
-                                controller: nameController,
-                                enabled: Injector.userData?.isAnonymousName == 1 ? true : false,
+                                enabled: false,
                                 obscureText: false,
-                                focusNode: nameFocusNode,
                                 style: TextStyle(
-                                  color: Injector.userData?.isAnonymousName == 1 ? ColorRes.white : ColorRes.hintColor,
+                                  color: ColorRes.hintColor,
                                   fontSize: 15,
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: Injector.userData?.name,
                                     hintStyle:
-                                        TextStyle(color: ColorRes.hintColor)),
+                                    TextStyle(color: ColorRes.hintColor)),
                               ),
                             ),
                           )
@@ -975,7 +973,78 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                Injector.userData?.isAnonymousName == 1 ? InkResponse(
+                InkResponse(
+                    child: Container(
+                      width: 40,
+                    ))
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        height: 36,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: ColorRes.lightBg.withOpacity(0.5),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 13,
+                          ),
+                          Text(
+                            "Nick name",
+                            style:
+                            TextStyle(color: ColorRes.white, fontSize: 15),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 38,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 1),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("bg_name_email")),
+                                    fit: BoxFit.fill),
+                              ),
+                              child: TextField(
+                                controller: nickNameController,
+                                enabled: true,
+                                obscureText: false,
+                                focusNode: nameFocusNode,
+                                style: TextStyle(
+                                  color: ColorRes.white ,
+                                  fontSize: 15,
+                                ),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: Injector.userData?.nickName,
+                                    hintStyle:
+                                    TextStyle(color: ColorRes.hintColor)),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                InkResponse(
                   child: Image(
                     image: AssetImage(Utils.getAssetsImg("edit")),
                     width: 40,
@@ -984,10 +1053,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Utils.playClickSound();
                     FocusScope.of(context).requestFocus(nameFocusNode);
                   },
-                ) : InkResponse(
-                    child: Container(
-                  width: 40,
-                ))
+                )
               ],
             ),
             SizedBox(
@@ -1286,7 +1352,7 @@ class _ProfilePageState extends State<ProfilePage> {
     var req = {
       'userId': Injector.userId,
       'companyName': companyController.text.trim(),
-      'name': nameController.text
+      'name': nickNameController.text
     };
 
     CommonView.showCircularProgress(true, context);
