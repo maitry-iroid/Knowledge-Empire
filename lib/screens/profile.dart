@@ -1352,8 +1352,10 @@ class _ProfilePageState extends State<ProfilePage> {
     var req = {
       'userId': Injector.userId,
       'companyName': companyController.text.trim(),
-      'name': nickNameController.text
+      'nickName': nickNameController.text
     };
+
+    print("Request ::::::::::::::::::::::::: \n${req.toString()}");
 
     CommonView.showCircularProgress(true, context);
     WebApi().updateProfile(req, _image).then((data) async {
@@ -1363,6 +1365,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.userData.profileImage = data.profileImage;
         Injector.userData.companyName = data.companyName;
         Injector.userData.name = data.name;
+        Injector.userData.nickName = data.nickName;
         await Injector.setUserData(Injector.userData, false);
 
         Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
