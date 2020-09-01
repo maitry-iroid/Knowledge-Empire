@@ -52,7 +52,7 @@ class _AchievementPageState extends State<AchievementPage> {
   Future showDialogForCallApi() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData != null && Injector.introData.rewards == 0)
+//    if (Injector.introData != null && Injector.introData.rewards == 0)
       await DisplayDialogs.showIntroRewards(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
@@ -164,7 +164,7 @@ class _AchievementPageState extends State<AchievementPage> {
           SizedBox(
             height: 10,
           ),
-          CommonView.showTitle(context, StringRes.rewards),
+          CommonView.showTitle(context, StringRes.achievement),
           Expanded(
             flex: 1,
             child: Card(

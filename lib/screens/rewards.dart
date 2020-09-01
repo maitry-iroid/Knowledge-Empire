@@ -223,7 +223,7 @@ class _RewardsPageState extends State<RewardsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Utils.getText(context, StringRes.pointsNeededToRedeem) + " : " + selectedModule.points.toString() + "  Kpt",
+              Utils.getText(context, StringRes.costReward) + " : " + selectedModule.points.toString() + "  " + Utils.getText(context, StringRes.costUnit),
               style: TextStyle(
                   color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
                   fontSize: 17),

@@ -740,17 +740,32 @@ class HelpPageState extends State<HelpPage> {
 
           getSelectedType() == Const.typeAchievement
               ? Positioned(
-                  bottom: Utils.getDeviceHeight(context) / 4.2,
-                  left: Utils.getDeviceWidth(context) / 3.5,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(
-                          Utils.getAssetsImg(introShowBubbleRewards())),
-                      height: headerBubHeight,
-                    ),
-                    onTap: () {},
-                  ),
-                )
+            bottom: Utils.getDeviceHeight(context) / 4.2,
+            left: Utils.getDeviceWidth(context) / 3.5,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleRewards())),
+                height: headerBubHeight,
+              ),
+              onTap: () {},
+            ),
+          )
+              : Container(),
+
+          getSelectedType() == Const.typeReward
+              ? Positioned(
+            bottom: Utils.getDeviceHeight(context) / 4.2,
+            left: Utils.getDeviceWidth(context) / 3.5,
+            child: InkResponse(
+              child: Image(
+                image: AssetImage(
+                    Utils.getAssetsImg(introShowBubbleRewards())),
+                height: headerBubHeight,
+              ),
+              onTap: () {},
+            ),
+          )
               : Container(),
 
           getSelectedType() == Const.typeTeam
@@ -1104,6 +1119,8 @@ class HelpPageState extends State<HelpPage> {
     arrTypeData.add(Const.typeExistingCustomer);
 
     if (Utils.isFeatureOn(Const.typeAchievement)) arrTypeData.add(Const.typeAchievement);
+
+    if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
 
     if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
       arrTypeData.add(Const.typeTeam);
