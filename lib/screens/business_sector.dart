@@ -63,7 +63,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       await DisplayDialogs.showIntroLearningModule1(context);
 
     //TODO for testing, don't remove this
-    await DisplayDialogs.showIntroPL1(context); //  PL
+//    await DisplayDialogs.showIntroPL1(context); //  PL
 //    await DisplayDialogs.showIntroOrg1(context); //  org
 //    await DisplayDialogs.showIntroCustomerSituation(context); //  customer situation
 //    await DisplayDialogs.showIntroExisting1(context); // existing
