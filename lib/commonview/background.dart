@@ -331,6 +331,37 @@ class CommonView {
             alignment: Alignment.center,
             children: <Widget>[
               Positioned(
+                top: 70,
+                left: 10,
+                child: Row(
+                  children: <Widget>[
+                    InkResponse(
+                      child: Stack(
+                        children: <Widget>[
+                          //TODO Put Rewards Image instead of button
+                         RaisedButton(
+                           child:  Text("Rewards", style: TextStyle(color: ColorRes.white, fontSize: 16)),
+                         ),
+                          Utils.isShowUnreadCount(Const.typeReward)
+                              ? Utils.showUnreadCount(Const.typeReward, 17, 5)
+                              : Container(),
+                          Utils.isShowLock(Const.typeReward)
+                              ? Image(
+                            image: AssetImage(
+                                Utils.getAssetsImg("lock_org")),
+                            width: Utils.getDeviceWidth(context) / 4.5,
+                          )
+                              : Container(),
+                        ],
+                      ),
+                      onTap: () {
+                        Utils.performDashboardItemClick(context, Const.typeReward);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
                 top: 40,
 //            right: Utils.getDeviceWidth(context) / 10,
                 child: Row(
