@@ -17,6 +17,7 @@ import 'package:ke_employee/screens/help_screen.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'challenge_header.dart';
+
 class HeaderView extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isShowMenu;
@@ -31,24 +32,19 @@ class HeaderView extends StatefulWidget {
       this.challengeCount,
       this.currentIndex});
 
-
   @override
   HeaderViewState createState() => HeaderViewState();
 }
 
 class HeaderViewState extends State<HeaderView> {
-
-
-
   @override
   void didUpdateWidget(HeaderView oldWidget) {
     if (Injector.headerStreamController == null)
       Injector.headerStreamController = StreamController.broadcast();
 
-   /* CustomerValueRequest rq = CustomerValueRequest();
+    /* CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
     customerValueBloc?.getCustomerValue(rq);*/
-
 
     Injector.headerStreamController.stream.listen((data) {
       if (mounted) setState(() {});
@@ -59,9 +55,6 @@ class HeaderViewState extends State<HeaderView> {
     });
     super.didUpdateWidget(oldWidget);
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +83,8 @@ class HeaderViewState extends State<HeaderView> {
   showHeaderItem(String type, BuildContext context) {
     return Container(
       foregroundDecoration: null,
-      padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      padding:
+          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       decoration: BoxDecoration(
           image: Injector.isBusinessMode
               ? DecorationImage(
@@ -162,14 +156,15 @@ class HeaderViewState extends State<HeaderView> {
                       )
                     ],
                   )
-                : Container(width: Utils.getDeviceWidth(context) / 12,
-                  child: Text(
+                : Container(
+                    width: Utils.getDeviceWidth(context) / 12,
+                    child: Text(
                       Injector.customerValueData != null
                           ? Injector.customerValueData.totalBalance.toString()
                           : "00.00",
                       style: TextStyle(color: ColorRes.white, fontSize: 18),
                     ),
-                ),
+                  ),
           ],
         ),
         onTap: () {
@@ -219,7 +214,8 @@ class HeaderViewState extends State<HeaderView> {
           ),
           onTap: () {
             Utils.playClickSound();
-            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeProfile));
+            navigationBloc
+                .updateNavigation(HomeData(initialPageType: Const.typeProfile));
           }),
     );
   }
@@ -263,7 +259,9 @@ class HeaderViewState extends State<HeaderView> {
           height: 2,
         ),
         Text(
-          Injector.userData != null ? Injector.userData.name : "",
+          Injector.userData != null && Injector.userData.name != null
+              ? Injector.userData.name
+              : "",
           style: TextStyle(
               color: Injector.isBusinessMode
                   ? ColorRes.white
