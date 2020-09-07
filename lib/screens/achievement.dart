@@ -52,8 +52,8 @@ class _AchievementPageState extends State<AchievementPage> {
   Future showDialogForCallApi() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-//    if (Injector.introData != null && Injector.introData.rewards == 0)
-      await DisplayDialogs.showIntroRewards(context);
+    if (Injector.introData != null && Injector.introData.rewards == 0)
+      await DisplayDialogs.showIntroAchievement(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       getAchievements();

@@ -616,8 +616,8 @@ class DisplayDialogs {
         });
   }
 
-  //todo This dialogs only for Reward screen
-  static showIntroRewards(BuildContext context) async {
+  //todo This dialogs only for Achievement screen
+  static showIntroAchievement(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
         context: context,
@@ -634,6 +634,29 @@ class DisplayDialogs {
               Navigator.pop(context);
 
               Injector.introData.rewards = 1;
+              await Injector.setIntroData(Injector.introData);
+            },
+          );
+        });
+  }
+
+  static showIntroRewards(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 50));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroScreenDialog(
+            menuView: false,
+            imageName: "john",
+            titleText: Utils.getText(context, StringRes.rewards),
+            btnName: Utils.getText(context, StringRes.gotIt),
+            desTextLine: Injector.introModel.reward2,
+            btnColor: ColorRes.blue,
+            onTapBtn: () async {
+              Utils.playClickSound();
+              Navigator.pop(context);
+
+              Injector.introData.reward2 = 1;
               await Injector.setIntroData(Injector.introData);
             },
           );

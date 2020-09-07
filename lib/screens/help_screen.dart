@@ -745,7 +745,7 @@ class HelpPageState extends State<HelpPage> {
             child: InkResponse(
               child: Image(
                 image: AssetImage(
-                    Utils.getAssetsImg(introShowBubbleRewards())),
+                    Utils.getAssetsImg(introShowBubbleAchievements())),
                 height: headerBubHeight,
               ),
               onTap: () {},
@@ -1002,6 +1002,16 @@ class HelpPageState extends State<HelpPage> {
       return "intro_bub_existing_customer_de";
     } else if (Injector.userData.language == "Chinese") {
       return "intro_bub_existing_customer_zh";
+    }
+  }
+
+  introShowBubbleAchievements() {
+    if (Injector.userData.language == "English") {
+      return "intro_bub_achievement_en";
+    } else if (Injector.userData.language == "German") {
+      return "intro_bub_achievement_de";
+    } else if (Injector.userData.language == "Chinese") {
+      return "intro_bub_achievement_zh";
     }
   }
 

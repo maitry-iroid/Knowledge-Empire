@@ -40,7 +40,7 @@ class _RewardsPageState extends State<RewardsPage> {
   Future showDialogForCallApi() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData != null && Injector.introData.rewards == 0)
+    if (Injector.introData != null && Injector.introData.reward2 == 0)
       await DisplayDialogs.showIntroRewards(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {

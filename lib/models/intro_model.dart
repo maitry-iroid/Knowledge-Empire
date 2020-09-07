@@ -22,6 +22,7 @@ class IntroModel {
   String team1;
   String team2;
   String team3;
+  String reward2;
 
   IntroModel(
       {this.learningModule1,
@@ -46,7 +47,9 @@ class IntroModel {
         this.challenge2,
         this.team1,
         this.team2,
-        this.team3});
+        this.team3,
+        this.reward2
+      });
 
   IntroModel.fromJson(Map<String, dynamic> json) {
     learningModule1 = json['learningModule1'];
@@ -72,6 +75,7 @@ class IntroModel {
     team1 = json['team1'];
     team2 = json['team2'];
     team3 = json['team3'];
+    reward2 = json['reward2'];
   }
 
   Map<String, dynamic> toJson() {
@@ -99,6 +103,7 @@ class IntroModel {
     data['team1'] = this.team1;
     data['team2'] = this.team2;
     data['team3'] = this.team3;
+    data['reward2'] = this.reward2;
     return data;
   }
 }

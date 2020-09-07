@@ -2051,7 +2051,7 @@ class StringRes {
       'strAchievement':
       "- Achievements are earned by completing certain task\n- Achievements pay extra Knowledge Points if you reach a new level",
       'strReward':
-      "- Rewards are earned by completing certain task\n- Rewards pay extra Knowledge Points if you reach a new level",
+      "- Redeem Knowledge Points to receive real world rewards",
       'strTeam':
       "- list of your direct reports\n- high level reporting and KPI\n- Allow bailout / reset",
       'strChallenges':
@@ -2485,7 +2485,7 @@ class StringRes {
       'strAchievement':
       "- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
       'strReward':
-      "- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
+      "- Tausche Wissenspunkte ein, um echte Belohnungen zu erhalten",
       'strTeam':
       "- Liste der Mitarbeiter im Team\n- Basis Reporting und KPIs\n- Neustarts gewähren",
       'strChallenges':
@@ -2880,7 +2880,7 @@ class StringRes {
       "- 寻找新的问题来回答\n- 每个问题都需要可用的学习和记忆点数\n- 如果您答对了问题，问题重复的次数就会增加",
       'strExistingCustomer': "- 复习您所有正确回答的问题\n- 如果您答对了问题，问题重复的次数就会增加",
       'strAchievement': "- 通过完成某些任务获得奖励\n- 如果您达到新的级别，您将获得额外的知识点数奖励",
-      'strReward': "- 通过完成某些任务获得奖励\n- 如果您达到新的级别，您将获得额外的知识点数奖励",
+      'strReward': "- 兑换知识点数以获得真实世界的奖赏",
       'strTeam': "- 您的直接下属名单\n- 高级别报告和KPI\n- 允许纾困/重置",
       'strChallenges':
       "- 挑战好友\n- 选择%价值，确定问题的数量#和奖励\n- 增加% = 增加要回答的问题的数量\n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少",
