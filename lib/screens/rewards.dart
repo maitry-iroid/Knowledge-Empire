@@ -266,6 +266,7 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   showRedeemView() {
+    print("--------------------- selected module isRedeem value: ${selectedModule.isRedeem}");
     return InkResponse(
         child: Container(
             alignment: Alignment.center,
@@ -294,7 +295,6 @@ class _RewardsPageState extends State<RewardsPage> {
             )),
         onTap: () {
           Utils.playClickSound();
-
           if(selectedModule.isRedeem == 1){
             this.callRedeemApi();
           }
@@ -315,6 +315,9 @@ class _RewardsPageState extends State<RewardsPage> {
 
       WebApi().callAPI(WebApi.rqRedeemReward, rq.toJson()).then((data) {
         this.fetchRewardsModules();
+        setState(() {
+         isLoading = false;
+        });
       }).catchError((e) {
         if (mounted)
           setState(() {
@@ -559,8 +562,7 @@ class _RewardsPageState extends State<RewardsPage> {
             arrRewards.addAll(arrData);
             arrFinalRewards.addAll(arrData);
 
-            if (arrRewards.length > 0 &&
-                (selectedModule.rewardId == null)) {
+            if (arrRewards.length > 0) {
               selectedModule = arrRewards[0];
             }
           });
