@@ -58,7 +58,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   QuestionData questionDataEngCustomer;
   bool isChallenge;
-
+  String _timeZone = "Unknown";
   List alphaIndex = ["A", "B", "C", "D"];
 
   String urlPDFPath = "";
@@ -93,6 +93,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
+
+  getTimeZone() async {
+    String timezone = await Utils.initPlatformState();
+    setState(() {
+      this._timeZone = timezone;
+    });
+  }
   Future getPdf() async {
     if (questionData != null &&
         questionData.mediaLink != null &&
@@ -564,6 +571,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     rq.userId = Injector.userData.userId.toString();
     rq.challengeId = 0;
     rq.isChallenge = 0;
+    rq.timezone = this._timeZone;
 
     SubmitAnswer submitAnswer = SubmitAnswer();
 

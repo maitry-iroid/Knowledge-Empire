@@ -63,6 +63,7 @@ dependencies:
   simple_animations: ^2.2.1
   characters:
   flutter_plugin_pdf_viewer:
+  flutter_native_timezone:
 
 
 
