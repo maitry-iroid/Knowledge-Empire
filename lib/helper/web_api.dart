@@ -41,6 +41,7 @@ class WebApi {
   static String rqGetDownloadQuestions = "getDownloadQuestions";
   static String rqSearchFriends = "searchFriends";
   static String rqRegisterForPush = "registerForPush";
+  static String rqRedeemReward = "redeemReward";
 
 //  static String rqUnreadBubbleCount = "unreadBubbleCount";
   static String rqGetTeamUsers = "getTeamUsers";

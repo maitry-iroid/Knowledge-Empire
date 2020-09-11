@@ -80,6 +80,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void initState() {
     super.initState();
 
+    Future.delayed(Duration.zero, () async {
+      await this.getTimeZone();
+    });
     questionDataEngCustomer = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge ?? false;
 
@@ -96,10 +99,15 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   getTimeZone() async {
     String timezone = await Utils.initPlatformState();
+    print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
+    if(!mounted) return;
+
     setState(() {
       this._timeZone = timezone;
     });
   }
+
+
   Future getPdf() async {
     if (questionData != null &&
         questionData.mediaLink != null &&
@@ -571,6 +579,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     rq.userId = Injector.userData.userId.toString();
     rq.challengeId = 0;
     rq.isChallenge = 0;
+    print("----------------------- In request parameter : $_timeZone");
     rq.timezone = this._timeZone;
 
     SubmitAnswer submitAnswer = SubmitAnswer();

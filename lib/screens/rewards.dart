@@ -13,6 +13,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_rewards.dart';
+import 'package:ke_employee/models/redeem_reward.dart';
 
 
 class RewardsPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _RewardsPageState extends State<RewardsPage> {
   List<RewardData> arrRewards = List();
   List<RewardData> arrFinalRewards = List();
   RewardData selectedModule = RewardData();
+  String _timeZone = "Unknown";
 
   TextEditingController searchController = TextEditingController();
   bool isLoading = false;
@@ -35,6 +37,19 @@ class _RewardsPageState extends State<RewardsPage> {
   void initState() {
     showDialogForCallApi();
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      await this.getTimeZone();
+    });
+  }
+
+  getTimeZone() async {
+    String timezone = await Utils.initPlatformState();
+    print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
+    if(!mounted) return;
+
+    setState(() {
+      this._timeZone = timezone;
+    });
   }
 
   Future showDialogForCallApi() async {
@@ -219,23 +234,23 @@ class _RewardsPageState extends State<RewardsPage> {
   showDetailView(){
     if((selectedModule?.points ?? "") != "" && (selectedModule?.leftUnits ?? "") != ""){
       return Padding(padding: EdgeInsets.symmetric(horizontal: 26),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              Utils.getText(context, StringRes.costReward) + " : " + selectedModule.points.toString() + "  " + Utils.getText(context, StringRes.costUnit),
-              style: TextStyle(
-                  color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
-                  fontSize: 17),
-            ),
-            SizedBox(height: 10),
-            Text(
-              Utils.getText(context, StringRes.unitsLeft) + " : " + selectedModule.leftUnits.toString(),
-              style: TextStyle(
-                  color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
-                  fontSize: 17),
-            ),
-            SizedBox(height: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                Utils.getText(context, StringRes.costReward) + " : " + selectedModule.points.toString() + "  " + Utils.getText(context, StringRes.costUnit),
+                style: TextStyle(
+                    color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+                    fontSize: 17),
+              ),
+              SizedBox(height: 10),
+              Text(
+                Utils.getText(context, StringRes.unitsLeft) + " : " + selectedModule.leftUnits.toString(),
+                style: TextStyle(
+                    color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
+                    fontSize: 17),
+              ),
+              SizedBox(height: 10),
 //            Text(
 //              Utils.getText(context, StringRes.categories) + " : " + selectedModule.leftUnits.toString(),
 //              style: TextStyle(
@@ -243,8 +258,8 @@ class _RewardsPageState extends State<RewardsPage> {
 //                  fontSize: 17),
 //            ),
 //            SizedBox(height: 10),
-          ],
-        ));
+            ],
+          ));
     }else{
       return Container();
     }
@@ -280,15 +295,34 @@ class _RewardsPageState extends State<RewardsPage> {
         onTap: () {
           Utils.playClickSound();
 
-//          if (selectedModule.isSubscribedFromBackend == 0) {
-//            if (selectedModule.isAssign == 1)
-//              showConfirmDialog();
-//            else
-//              performSubscribeUnsubscribe();
-//          } else {
-//            Utils.showToast(Utils.getText(context, StringRes.alertNotAllowed));
-//          }
+          if(selectedModule.isRedeem == 1){
+            this.callRedeemApi();
+          }
         });
+  }
+
+  callRedeemApi() {
+    Utils.isInternetConnectedWithAlert(context).then((_) {
+      RedeemRewardRequest rq = RedeemRewardRequest();
+      rq.userId = Injector.userData.userId.toString();
+      rq.rewardId = selectedModule.rewardId.toString();
+      rq.timezone = this._timeZone;
+
+      if (mounted)
+        setState(() {
+          isLoading = true;
+        });
+
+      WebApi().callAPI(WebApi.rqRedeemReward, rq.toJson()).then((data) {
+        this.fetchRewardsModules();
+      }).catchError((e) {
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
+        // Utils.showToast(e.toString());
+      });
+    });
   }
 
   Widget showItem(int index) {
@@ -531,7 +565,6 @@ class _RewardsPageState extends State<RewardsPage> {
             }
           });
 
-//        downloadQuestions(null);
       }
     }).catchError((e) {
       print("getRewards_" + e.toString());
