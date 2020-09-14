@@ -331,37 +331,6 @@ class CommonView {
             alignment: Alignment.center,
             children: <Widget>[
               Positioned(
-                top: 70,
-                left: 10,
-                child: Row(
-                  children: <Widget>[
-                    InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          //TODO Put Rewards Image instead of button
-                         RaisedButton(
-                           child:  Text("Rewards", style: TextStyle(color: ColorRes.white, fontSize: 16)),
-                         ),
-                          Utils.isShowUnreadCount(Const.typeReward)
-                              ? Utils.showUnreadCount(Const.typeReward, 17, 5)
-                              : Container(),
-                          Utils.isShowLock(Const.typeReward)
-                              ? Image(
-                            image: AssetImage(
-                                Utils.getAssetsImg("lock_org")),
-                            width: Utils.getDeviceWidth(context) / 4.5,
-                          )
-                              : Container(),
-                        ],
-                      ),
-                      onTap: () {
-                        Utils.performDashboardItemClick(context, Const.typeReward);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
                 top: 40,
 //            right: Utils.getDeviceWidth(context) / 10,
                 child: Row(
@@ -650,11 +619,34 @@ class CommonView {
               ),
               Positioned(
                 bottom: Utils.getDeviceHeight(context) / 6,
-                left: Utils.getDeviceWidth(context) / 3.3,
-                child: Image(
-                  image: AssetImage(Utils.getAssetsImg("mobile")),
-                  height: Utils.getDeviceHeight(context) / 12,
-                ),
+                left: Utils.getDeviceWidth(context) / 3,
+                child: Row(
+                  children: <Widget>[
+                    InkResponse(
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage(Utils.getAssetsImg("gift")),
+                            height: Utils.getDeviceHeight(context) / 8,
+                          ),
+                          Utils.isShowUnreadCount(Const.typeReward)
+                              ? Utils.showUnreadCount(Const.typeReward, 17, 5)
+                              : Container(),
+                          Utils.isShowLock(Const.typeReward)
+                              ? Image(
+                            image: AssetImage(
+                                Utils.getAssetsImg("lock_org")),
+                            width: Utils.getDeviceWidth(context) / 4.5,
+                          )
+                              : Container(),
+                        ],
+                      ),
+                      onTap: () {
+                        Utils.performDashboardItemClick(context, Const.typeReward);
+                      },
+                    ),
+                  ],
+                )
               ),
               Positioned(
                 bottom: Utils.getDeviceHeight(context) / 20,

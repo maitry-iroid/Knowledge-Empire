@@ -2016,7 +2016,7 @@ class StringRes {
       'month': 'Month',
       'year': 'Year',
       'lastPeriod': 'Last Period',
-      'thisPeriod': 'his Period',
+      'thisPeriod': 'This Period',
       'alertWantToBailOut': 'Are you sure you want to restart',
       'alertNoModuleFound': 'Oops..No learning module found for this user.',
       'ok': 'Ok',
