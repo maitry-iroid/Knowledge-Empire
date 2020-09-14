@@ -655,12 +655,11 @@ class HomePageState extends State<HomePage>
             Const.typeAchievement),
       );
 
-    //TODO change image for reward
     if (Utils.isFeatureOn(Const.typeReward))
       drawerItems.add(
         DrawerItem(
             Utils.getText(context, StringRes.rewards),
-            Injector.isBusinessMode ? "gift" : "ic_pro_home_rewards",
+            Injector.isBusinessMode ? "ic_gift_drawer" : "ic_pro_home_rewards",
             Const.typeReward),
       );
 
