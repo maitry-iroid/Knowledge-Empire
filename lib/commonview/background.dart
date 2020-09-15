@@ -619,7 +619,7 @@ class CommonView {
               ),
               Positioned(
                 bottom: Utils.getDeviceHeight(context) / 6,
-                left: Utils.getDeviceWidth(context) / 3,
+                left: Utils.getDeviceWidth(context) / 3.3,
                 child: Row(
                   children: <Widget>[
                     InkResponse(

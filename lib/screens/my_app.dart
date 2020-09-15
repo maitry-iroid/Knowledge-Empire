@@ -9,10 +9,14 @@ import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
+import 'package:ke_employee/routes/custom_router.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/screens/login.dart';
+import 'package:ke_employee/screens_portrait/bottom_navigation.dart';
+import 'package:ke_employee/screens_portrait/login.dart';
 import 'home.dart';
 
 class MyApp extends StatefulWidget {
@@ -45,10 +49,10 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-//      DeviceOrientation.portraitUp,
-//      DeviceOrientation.portraitDown
+//      DeviceOrientation.landscapeLeft,
+//      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
     ]);
 
     return StreamBuilder(

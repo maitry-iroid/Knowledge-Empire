@@ -316,7 +316,7 @@ class _RewardsPageState extends State<RewardsPage> {
       WebApi().callAPI(WebApi.rqRedeemReward, rq.toJson()).then((data) {
         this.fetchRewardsModules();
         setState(() {
-         isLoading = false;
+          isLoading = false;
         });
       }).catchError((e) {
         if (mounted)
@@ -348,56 +348,34 @@ class _RewardsPageState extends State<RewardsPage> {
             Expanded(
               flex: 9,
               child: Container(
-                  height: Injector.isBusinessMode ? 33 : 35,
-                  margin: EdgeInsets.only(top: Injector.isBusinessMode ? 2 : 0),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Injector.isBusinessMode ? null : ColorRes.white,
-                      borderRadius: Injector.isBusinessMode
-                          ? null
-                          : BorderRadius.circular(20),
-                      image: Injector.isBusinessMode
-                          ? DecorationImage(
-                          image: AssetImage(
-                              Utils.getAssetsImg("bg_bus_sector_item")),
-                          fit: BoxFit.fill)
-                          : null),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Text(
-                        arrFinalRewards[index].reward,
-                        style: TextStyle(
-                          color: Injector.isBusinessMode
-                              ? ColorRes.blue
-                              : ColorRes.textProf,
-                          fontSize: 15,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-//                      Opacity(
-//                        opacity: arrFinalRewards[index].isRedeem == 1
-//                            ? 1.0
-//                            : 0.0,
-//                        child: Align(
-//                            alignment: Alignment.topRight,
-//                            child: Text(
-//                              Utils.getText(context, StringRes.subscribed),
-//                              style: TextStyle(
-//                                color: Injector.isBusinessMode
-//                                    ? ColorRes.bgHeader
-//                                    : ColorRes.blue,
-//                                fontSize: 10,
-//                              ),
-//                              maxLines: 1,
-//                              overflow: TextOverflow.ellipsis,
-//                            )),
-//                      )
-                    ],
-                  )),
+                height: Injector.isBusinessMode ? 33 : 35,
+                margin: EdgeInsets.only(top: Injector.isBusinessMode ? 2 : 0),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                    color: Injector.isBusinessMode ? null : ColorRes.white,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image: AssetImage(
+                            Utils.getAssetsImg("bg_bus_sector_item")),
+                        fit: BoxFit.fill)
+                        : null),
+                child: Text(
+                  arrFinalRewards[index].reward,
+                  style: TextStyle(
+                    color: Injector.isBusinessMode
+                        ? ColorRes.blue
+                        : ColorRes.textProf,
+                    fontSize: 15,
+                  ),
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
             ),
             Expanded(
               flex: 4,
@@ -405,7 +383,7 @@ class _RewardsPageState extends State<RewardsPage> {
                 height: 30,
                 alignment: Alignment.center,
                 margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                 decoration: BoxDecoration(
                     color:
                     Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
@@ -424,6 +402,8 @@ class _RewardsPageState extends State<RewardsPage> {
                     fontSize: 16,
                   ),
                   maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
                 ),
               ),
             ),
@@ -443,6 +423,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
   showImageView(BuildContext context){
 
+//    print("Media :::::::::::::::: ${selectedModule?.media} ++++++++ ${selectedModule?.mediaThumb}");
     if((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != ""){
       return Container(
         margin: EdgeInsets.only(top: 10),

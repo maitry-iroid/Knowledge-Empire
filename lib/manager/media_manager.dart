@@ -139,7 +139,7 @@ class MediaManager{
         decoration:
         BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
 //        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
-      child: PDFViewer(document: pdfDocument, showPicker: false),
+        child: PDFViewer(document: pdfDocument, showPicker: false),
       );
     }
   }
@@ -278,16 +278,9 @@ class ExpandMediaState extends State<ExpandMedia>
                             margin: EdgeInsets.only(
                                 top: 0, bottom: 0, left: 0, right: 0),
                             height: Utils.getDeviceHeight(context) / 1.5,
-                            width: Utils.getDeviceWidth(context) ,
+                            width: Utils.getDeviceWidth(context),
                             decoration: BoxDecoration(
                               color: ColorRes.white,
-                              image: Utils.isImage(widget.link)
-                                  ? DecorationImage(
-                                  image: Utils.getCacheNetworkImage(
-                                      widget.link),
-                                  fit: BoxFit.cover)
-                                  : null,
-                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: Utils.isVideo(widget.link) &&
                                 (_controller?.value?.initialized ?? false)
@@ -296,7 +289,13 @@ class ExpandMediaState extends State<ExpandMedia>
                             )
                                 : (Utils.isPdf(widget.link)
                                 ? PDFViewer(document: document, showPicker: false,)
-                                : Container(color: Colors.white)),
+                                : Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: Utils.getCacheNetworkImage(
+                                          widget.link),
+                                      fit: BoxFit.cover)
+                              ),)),
                           ),
                         ),
                         Positioned(
