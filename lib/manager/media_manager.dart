@@ -25,7 +25,8 @@ class MediaManager{
 
   bool isLoading = false;
 
-  showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage, {PDFDocument pdfDocument, bool isPdfLoading = false, String pdfFilePath}) {
+  showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage,
+      {PDFDocument pdfDocument, bool isPdfLoading = false, String pdfFilePath, ChewieController chewieController, VideoPlayerController videoPlayerController}) {
 
     return InkResponse(
 
@@ -51,7 +52,7 @@ class MediaManager{
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor, width: 3)),
-                  child: showMediaView(context, answer, thumbImage, pdfDocument: pdfDocument, isPdfLoading: isPdfLoading)),
+                  child: showMediaView(context, answer, thumbImage, pdfDocument: pdfDocument, isPdfLoading: isPdfLoading, chewieController: chewieController, videoPlayerController: videoPlayerController)),
             ),
             showMediaExpandIcon(context, answer, pdfFilePath: pdfFilePath)
           ],
@@ -95,52 +96,68 @@ class MediaManager{
         builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath,));
   }
 
-  showMediaView(BuildContext context, String path, String thumbImage, {PDFDocument pdfDocument, bool isPdfLoading = false}) {
-    if (Utils.isImage(path) || Utils.isVideo(path)) {
-      return Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-                image: DecorationImage(
-                  image: CachedNetworkImageProvider(thumbImage ,
-                      scale: Const.imgScaleProfile,
-                      cacheManager: Injector.cacheManager),
-                  fit: BoxFit.cover,
-                )),
-          ),
-          Utils.isVideo(path) ? Container(
-            child: MaterialButton(
-              height: 60,
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (_) => ExpandMedia(link: path));
-              },
-              child: Container(
-                width: Utils.getDeviceHeight(context) / 10,
-                height: Utils.getDeviceHeight(context) / 10,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("play_button")),
-                        fit: BoxFit.scaleDown)),
-              ),
-            ),
-          ) : Container()
-        ],
-      ) ;
-    }else if (Utils.isPdf(path)) {
+  showMediaView(BuildContext context, String path, String thumbImage,
+      {PDFDocument pdfDocument, bool isPdfLoading = false, ChewieController chewieController, VideoPlayerController videoPlayerController}) {
+    if(chewieController != null && (videoPlayerController?.value?.initialized ?? false) && Utils.isVideo(path)){
+      print("-----------------------------------auto play----------------------------------");
       return Container(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        padding: EdgeInsets.all(3),
-        decoration:
-        BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          height: Utils.getDeviceHeight(context) / 1.5,
+          width: Utils.getDeviceWidth(context),
+          decoration: BoxDecoration(
+            color: ColorRes.white,
+          ),
+          child: Utils.isVideo(path) &&
+              (videoPlayerController?.value?.initialized ?? false)
+              ? Chewie(controller: chewieController) : Container(color: ColorRes.white,));
+    }else{
+      print("-----------------------------------not auto play----------------------------------");
+      if (Utils.isImage(path) || Utils.isVideo(path)) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(thumbImage,
+                        scale: Const.imgScaleProfile,
+                        cacheManager: Injector.cacheManager),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+            Utils.isVideo(path) ? Container(
+              child: MaterialButton(
+                height: 60,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) => ExpandMedia(link: path));
+                },
+                child: Container(
+                  width: Utils.getDeviceHeight(context) / 10,
+                  height: Utils.getDeviceHeight(context) / 10,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Utils.getAssetsImg("play_button")),
+                          fit: BoxFit.scaleDown)),
+                ),
+              ),
+            ) : Container()
+          ],
+        ) ;
+      }else if (Utils.isPdf(path)) {
+        return Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          padding: EdgeInsets.all(3),
+          decoration:
+          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
 //        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
-        child: PDFViewer(document: pdfDocument, showPicker: false),
-      );
+          child: PDFViewer(document: pdfDocument, showPicker: false),
+        );
+      }
     }
   }
 

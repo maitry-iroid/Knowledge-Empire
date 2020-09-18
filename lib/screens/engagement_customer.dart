@@ -94,6 +94,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
       getPdf();
     }
+
+    if(Utils.isVideo(questionDataEngCustomer.mediaLink)){
+      Injector.audioPlayerBg.stop();
+      Future.delayed(Duration.zero, () async {
+        await this.initVideoController(questionDataEngCustomer.mediaLink);
+      });
+    }
   }
 
 
@@ -634,17 +641,56 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
+  Future<void> initVideoController(String link) async {
+    await Injector.cacheManager
+        .getFileFromCache(link)
+        .then((fileInfo) {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(
+          Utils
+              .getCacheFile(link)
+              .file)
+          : VideoPlayerController.network(link)
+        ..initialize().then((_) {
+          if (mounted)
+            setState(() {
+              _chewieController.play();
+            });
+        });
+      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+      _chewieController = ChewieController(
+          videoPlayerController: _controller,
+//            autoPlay: true,
+          allowFullScreen: false,
+          materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          looping: true);
+      print("========================= video controller initialized =================");
+    });
+  }
+
   showFirstHalf(BuildContext context) {
     return Expanded(
         flex: 1,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText
+                  ? MediaManager().showQueMedia(context, ColorRes.white,
+                  questionData.mediaLink, questionData.mediaThumbImage,
+                  pdfDocument: _pdfDocument,
+                  isPdfLoading: isLoading,
+                  pdfFilePath: _pdfPath,
+                  chewieController: _chewieController,
+                  videoPlayerController: _controller):
               MediaManager().showQueMedia(context, ColorRes.white,
                   questionData.mediaLink, questionData.mediaThumbImage,
-              pdfDocument: _pdfDocument,
-              isPdfLoading: isLoading,
-              pdfFilePath: _pdfPath),
+                  pdfDocument: _pdfDocument,
+                  isPdfLoading: isLoading,
+                  pdfFilePath: _pdfPath),
               showQueDescription(context)
             ],
           ),
