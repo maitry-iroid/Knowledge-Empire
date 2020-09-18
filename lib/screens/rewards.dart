@@ -315,6 +315,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
       WebApi().callAPI(WebApi.rqRedeemReward, rq.toJson()).then((data) {
         this.fetchRewardsModules();
+        Utils.callCustomerValuesApi();
         setState(() {
           isLoading = false;
         });

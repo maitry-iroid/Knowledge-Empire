@@ -188,77 +188,35 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showMediaAnswer(BuildContext context, bool isMediaWithQuestion){
     return Expanded(
-        child: Stack(
-          children: <Widget>[
-            Card(
-              color: ColorRes.bgProf,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
-              child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 18),
-                  decoration: BoxDecoration(
-                    color:
-                    Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Injector.isBusinessMode
-                        ? Border.all(color: ColorRes.white, width: 1)
-                        : null,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+//              showMediaQuestion(context),
+              Expanded(child: GridView.builder(
+                  itemCount: questionDataCustomerSituation.answer.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: isMediaWithQuestion ? 1 : 2,
+                      childAspectRatio: 2,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0
                   ),
-                  child: GridView.builder(
-                      itemCount: questionDataCustomerSituation.answer.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: isMediaWithQuestion ? 1 : 2,
-                          childAspectRatio: 2,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 0
-                      ),
-                      itemBuilder: (context, index){
-                        return MediaManager().showQueMedia(
-                            context,
-                            isAnswerCorrect(index) ? ColorRes.greenDot : arrAnswerSituation[index].isSelected
-                                ? ColorRes.fontGrey : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
-                                ? ColorRes.greenDot : ColorRes.white,
-                            questionDataCustomerSituation.answer.elementAt(index).answer,
-                            questionDataCustomerSituation.answer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg");
-                      }
-                  )
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                alignment: Alignment.center,
-                height: 30,
-                width: 120,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: Injector.isBusinessMode
-                        ? null
-                        : BorderRadius.circular(20),
-                    border: Injector.isBusinessMode
-                        ? null
-                        : Border.all(width: 1, color: ColorRes.white),
-                    color:
-                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                        image:
-                        AssetImage(Utils.getAssetsImg("eddit_profile")),
-                        fit: BoxFit.fill)
-                        : null),
-                child: Text(
-                  Utils.getText(context, StringRes.answers),
-                  style: TextStyle(color: ColorRes.white, fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
-        ));
+                  itemBuilder: (context, index){
+                    return MediaManager().showQueMedia(
+                        context,
+                        isAnswerCorrect(index) ? ColorRes.greenDot : arrAnswerSituation[index].isSelected
+                            ? ColorRes.fontGrey : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                            ? ColorRes.greenDot : ColorRes.white,
+                        questionDataCustomerSituation.answer.elementAt(index).answer,
+                        questionDataCustomerSituation.answer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg");
+                  }
+              ))
+            ],
+          ),
+        )
+        );
   }
 
   showMediaAnswersView(BuildContext context, String path) {

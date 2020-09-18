@@ -618,16 +618,16 @@ class CommonView {
                 ),
               ),
               Positioned(
-                bottom: Utils.getDeviceHeight(context) / 6,
-                left: Utils.getDeviceWidth(context) / 3.3,
+                bottom: Utils.getDeviceHeight(context) / 6.5,
+                left: Utils.getDeviceWidth(context) / 3.5,
                 child: Row(
                   children: <Widget>[
                     InkResponse(
                       child: Stack(
                         children: <Widget>[
                           Image(
-                            image: AssetImage(Utils.getAssetsImg("gift")),
-                            height: Utils.getDeviceHeight(context) / 8,
+                            image: AssetImage(Utils.getAssetsImg("ic_gift_drawer")),
+                            height: Utils.getDeviceHeight(context) / 5,
                           ),
                           Utils.isShowUnreadCount(Const.typeReward)
                               ? Utils.showUnreadCount(Const.typeReward, 17, 5)
