@@ -625,10 +625,10 @@ class CommonView {
                     InkResponse(
                       child: Stack(
                         children: <Widget>[
-                          Image(
+                          Utils.isFeatureOn(Const.typeReward) ? Image(
                             image: AssetImage(Utils.getAssetsImg("ic_gift_drawer")),
                             height: Utils.getDeviceHeight(context) / 5,
-                          ),
+                          ) : Container(),
                           Utils.isShowUnreadCount(Const.typeReward)
                               ? Utils.showUnreadCount(Const.typeReward, 17, 5)
                               : Container(),
@@ -636,12 +636,13 @@ class CommonView {
                               ? Image(
                             image: AssetImage(
                                 Utils.getAssetsImg("lock_org")),
-                            width: Utils.getDeviceWidth(context) / 4.5,
+                                width: Utils.getDeviceWidth(context) / 4.5,
                           )
                               : Container(),
                         ],
                       ),
                       onTap: () {
+                        print("Reward tapped");
                         Utils.performDashboardItemClick(context, Const.typeReward);
                       },
                     ),
