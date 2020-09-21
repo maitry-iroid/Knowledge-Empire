@@ -99,7 +99,6 @@ class MediaManager{
   showMediaView(BuildContext context, String path, String thumbImage,
       {PDFDocument pdfDocument, bool isPdfLoading = false, ChewieController chewieController, VideoPlayerController videoPlayerController}) {
     if(chewieController != null && (videoPlayerController?.value?.initialized ?? false) && Utils.isVideo(path)){
-      print("-----------------------------------auto play----------------------------------");
       return Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: Utils.getDeviceHeight(context) / 1.5,
@@ -111,7 +110,6 @@ class MediaManager{
               (videoPlayerController?.value?.initialized ?? false)
               ? Chewie(controller: chewieController) : Container(color: ColorRes.white,));
     }else{
-      print("-----------------------------------not auto play----------------------------------");
       if (Utils.isImage(path) || Utils.isVideo(path)) {
         return Stack(
           alignment: Alignment.center,

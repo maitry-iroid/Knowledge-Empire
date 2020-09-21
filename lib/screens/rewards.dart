@@ -1,12 +1,10 @@
-import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -14,6 +12,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_rewards.dart';
 import 'package:ke_employee/models/redeem_reward.dart';
+import 'package:pdf_previewer/pdf_previewer.dart';
 
 
 class RewardsPage extends StatefulWidget {
@@ -33,12 +32,28 @@ class _RewardsPageState extends State<RewardsPage> {
   String searchText = "";
 
 
+  String _pdfPath = '';
+  String _previewPath;
+  PDFDocument _pdfDocument;
+  bool _isLoading = false;
+  int _pageNumber = 1;
+
   @override
   void initState() {
     showDialogForCallApi();
     super.initState();
     Future.delayed(Duration.zero, () async {
       await this.getTimeZone();
+    });
+  }
+
+  Future getPDF(String url) async {
+    if (selectedModule != null && url != null ){
+      _pdfPath = url;
+      _pdfDocument = await PDFDocument.fromURL(url);
+    }
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -51,6 +66,7 @@ class _RewardsPageState extends State<RewardsPage> {
       this._timeZone = timezone;
     });
   }
+
 
   Future showDialogForCallApi() async {
     await Future.delayed(Duration(milliseconds: 50));
@@ -413,9 +429,15 @@ class _RewardsPageState extends State<RewardsPage> {
       ),
       onTap: () {
         Utils.playClickSound();
+
         if (mounted)
           setState(() {
             selectedModule = arrFinalRewards[index];
+            if(Utils.isPdf(selectedModule.media)){
+              Future.delayed(Duration.zero, () async {
+                await this.getPDF(selectedModule.media);
+              });
+            }
 //            isSwitched = selectedModule.isDownloadEnable == 1;
           });
       },
@@ -423,14 +445,26 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   showImageView(BuildContext context){
-
 //    print("Media :::::::::::::::: ${selectedModule?.media} ++++++++ ${selectedModule?.mediaThumb}");
     if((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != ""){
-      return Container(
-        margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb),
-      );
+
+      print("Pdfpath :::::::::::::::::::::::: $_pdfPath");
+      if(Utils.isPdf(selectedModule?.media)){
+        return Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb,
+              pdfDocument: _pdfDocument,
+              isPdfLoading: _isLoading,
+              pdfFilePath: selectedModule.media),
+        );
+      }else{
+        return Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb),
+        );
+      }
     }else{
       return Container();
     }
@@ -546,6 +580,11 @@ class _RewardsPageState extends State<RewardsPage> {
 
             if (arrRewards.length > 0) {
               selectedModule = arrRewards[0];
+              if(Utils.isPdf(selectedModule.media)){
+                Future.delayed(Duration.zero, () async {
+                  await this.getPDF(selectedModule.media);
+                });
+              }
             }
           });
 
