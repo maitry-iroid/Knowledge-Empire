@@ -99,13 +99,11 @@ class _RewardsPageState extends State<RewardsPage> {
           materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
           cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
           looping: true);
-      print("========================= video controller initialized =================");
     });
   }
 
   getTimeZone() async {
     String timezone = await Utils.initPlatformState();
-    print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
     if(!mounted) return;
 
     setState(() {
@@ -313,13 +311,6 @@ class _RewardsPageState extends State<RewardsPage> {
                     fontSize: 17),
               ),
               SizedBox(height: 10),
-//            Text(
-//              Utils.getText(context, StringRes.categories) + " : " + selectedModule.leftUnits.toString(),
-//              style: TextStyle(
-//                  color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
-//                  fontSize: 17),
-//            ),
-//            SizedBox(height: 10),
             ],
           ));
     }else{
@@ -328,7 +319,6 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   showRedeemView() {
-    print("--------------------- selected module isRedeem value: ${selectedModule.isRedeem}");
     return InkResponse(
         child: Container(
             alignment: Alignment.center,
@@ -496,18 +486,14 @@ class _RewardsPageState extends State<RewardsPage> {
                 await this.initVideoController(selectedModule.media);
               });
             }
-
-//            isSwitched = selectedModule.isDownloadEnable == 1;
           });
       },
     );
   }
 
   showImageView(BuildContext context){
-//    print("Media :::::::::::::::: ${selectedModule?.media} ++++++++ ${selectedModule?.mediaThumb}");
-    if((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != ""){
 
-      print("Pdfpath :::::::::::::::::::::::: $_pdfPath");
+    if((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != ""){
       if(Utils.isPdf(selectedModule?.media)){
         return Container(
           margin: EdgeInsets.only(top: 10),

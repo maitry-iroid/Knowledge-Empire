@@ -56,8 +56,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
     getDashboardStatus();
 
     Utils.callCustomerValuesApi();
-    Injector.audioPlayerBg.resume();
-
   }
 
   getIntroData() {
