@@ -663,7 +663,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           : _controller.setLooping(false);
       _chewieController = ChewieController(
           videoPlayerController: _controller,
-//            autoPlay: true,
           allowFullScreen: false,
           materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
           cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),

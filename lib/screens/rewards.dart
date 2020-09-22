@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
@@ -13,7 +14,11 @@ import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_rewards.dart';
 import 'package:ke_employee/models/redeem_reward.dart';
 import 'package:pdf_previewer/pdf_previewer.dart';
+import 'package:video_player/video_player.dart';
 
+
+VideoPlayerController _controller;
+ChewieController _chewieController;
 
 class RewardsPage extends StatefulWidget {
   @override
@@ -25,6 +30,7 @@ class _RewardsPageState extends State<RewardsPage> {
   List<RewardData> arrRewards = List();
   List<RewardData> arrFinalRewards = List();
   RewardData selectedModule = RewardData();
+  int selectedIndex = 0;
   String _timeZone = "Unknown";
 
   TextEditingController searchController = TextEditingController();
@@ -47,13 +53,52 @@ class _RewardsPageState extends State<RewardsPage> {
     });
   }
 
+  @override
+  void dispose() {
+    _controller.pause();
+    super.dispose();
+  }
+
+
   Future getPDF(String url) async {
     if (selectedModule != null && url != null ){
       _pdfPath = url;
       _pdfDocument = await PDFDocument.fromURL(url);
     }
-    setState(() {
-      _isLoading = false;
+    if(mounted){
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> initVideoController(String link) async {
+    await Injector.cacheManager
+        .getFileFromCache(link)
+        .then((fileInfo) {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(
+          Utils
+              .getCacheFile(link)
+              .file)
+          : VideoPlayerController.network(link)
+        ..initialize().then((_) {
+          if (mounted)
+            setState(() {
+              _chewieController.play();
+            });
+        });
+      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+      _chewieController = ChewieController(
+          videoPlayerController: _controller,
+          allowFullScreen: false,
+          materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          looping: true);
+      print("========================= video controller initialized =================");
     });
   }
 
@@ -332,9 +377,11 @@ class _RewardsPageState extends State<RewardsPage> {
       WebApi().callAPI(WebApi.rqRedeemReward, rq.toJson()).then((data) {
         this.fetchRewardsModules();
         Utils.callCustomerValuesApi();
-        setState(() {
-          isLoading = false;
-        });
+        if (mounted){
+          setState(() {
+            isLoading = false;
+          });
+        }
       }).catchError((e) {
         if (mounted)
           setState(() {
@@ -433,11 +480,22 @@ class _RewardsPageState extends State<RewardsPage> {
         if (mounted)
           setState(() {
             selectedModule = arrFinalRewards[index];
+            selectedIndex = index;
+            _controller.pause();
+
             if(Utils.isPdf(selectedModule.media)){
               Future.delayed(Duration.zero, () async {
                 await this.getPDF(selectedModule.media);
               });
             }
+
+            if(Utils.isVideo(selectedModule.media)){
+              Injector.audioPlayerBg.stop();
+              Future.delayed(Duration.zero, () async {
+                await this.initVideoController(selectedModule.media);
+              });
+            }
+
 //            isSwitched = selectedModule.isDownloadEnable == 1;
           });
       },
@@ -458,7 +516,16 @@ class _RewardsPageState extends State<RewardsPage> {
               isPdfLoading: _isLoading,
               pdfFilePath: selectedModule.media),
         );
-      }else{
+      }else if(Utils.isVideo(selectedModule?.media)){
+        return Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb,
+          videoPlayerController: _controller,
+            chewieController: _chewieController
+          ),
+        );
+      } else{
         return Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -579,12 +646,20 @@ class _RewardsPageState extends State<RewardsPage> {
             arrFinalRewards.addAll(arrData);
 
             if (arrRewards.length > 0) {
-              selectedModule = arrRewards[0];
+              selectedModule = arrRewards[selectedIndex];
               if(Utils.isPdf(selectedModule.media)){
                 Future.delayed(Duration.zero, () async {
                   await this.getPDF(selectedModule.media);
                 });
               }
+
+              if(Utils.isVideo(selectedModule.media)){
+                Injector.audioPlayerBg.stop();
+                Future.delayed(Duration.zero, () async {
+                  await this.initVideoController(selectedModule.media);
+                });
+              }
+
             }
           });
 
