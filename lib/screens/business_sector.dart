@@ -788,7 +788,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showSubscribeView() {
-    return InkResponse(
+    return selectedModule.index == null
+        ? Container()
+        : InkResponse(
         child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 50),
@@ -797,17 +799,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 color: Injector.isBusinessMode
                     ? null
                     : selectedModule.isSubscribedFromBackend == 1
-                        ? ColorRes.greyText
-                        : ColorRes.headerBlue,
+                    ? ColorRes.greyText
+                    : ColorRes.headerBlue,
                 borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg(
-                            selectedModule.isSubscribedFromBackend == 1
-                                ? "bg_disable_subscribe"
-                                : "bg_subscribe")),
-                        fit: BoxFit.fill)
+                    image: AssetImage(Utils.getAssetsImg(
+                        selectedModule.isSubscribedFromBackend == 1
+                            ? "bg_disable_subscribe"
+                            : "bg_subscribe")),
+                    fit: BoxFit.fill)
                     : null),
             child: Text(
               Utils.getText(

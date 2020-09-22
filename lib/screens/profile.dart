@@ -707,7 +707,7 @@ class _ProfilePageState extends State<ProfilePage> {
           try {
             Navigator.pushAndRemoveUntil(
                 context, FadeRouteLogin(), ModalRoute.withName("/home"));
-
+            Injector.audioPlayerBg.stop();
             await Injector.logout();
           } catch (e) {
             print(e);
