@@ -56,6 +56,7 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   void dispose() {
     _controller.pause();
+    Injector.isSoundEnable ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
     super.dispose();
   }
 
