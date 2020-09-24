@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -16,9 +18,6 @@ import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/models/language.dart';
-import 'package:ke_employee/models/switch_company.dart';
-import 'package:ke_employee/models/update_mode.dart';
 import 'package:ke_employee/models/update_user_setting.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -116,7 +115,8 @@ class _ProfilePageState extends State<ProfilePage> {
     nameFocusNode = FocusNode();
 
     companyController.text = Injector.userData?.companyName;
-    nickNameController.text = Injector.userData?.nickName;
+    // Support emoji in nickname
+    nickNameController.text = EmojiParser().emojify(Injector.userData?.nickName ?? "");
     updateUserID = Injector.userId.toString();
     updateIsSoundEnable =
         Injector.isSoundEnable != null && Injector.isSoundEnable
@@ -1399,10 +1399,14 @@ class _ProfilePageState extends State<ProfilePage> {
     print("Request ::::::::::::::::::::::::: \n${req.toString()}");
 
     CommonView.showCircularProgress(true, context);
+
+
     WebApi().updateProfile(req, _image).then((data) async {
       CommonView.showCircularProgress(false, context);
 
       if (data != null) {
+        print("nickname ::: ${data.nickName}");
+
         Injector.userData.profileImage = data.profileImage;
         Injector.userData.companyName = data.companyName;
         Injector.userData.name = data.name;

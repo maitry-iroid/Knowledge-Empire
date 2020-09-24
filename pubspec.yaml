@@ -64,7 +64,7 @@ dependencies:
   characters:
   flutter_plugin_pdf_viewer:
   flutter_native_timezone:
-
+  flutter_emoji:
 
 
 #  flutter_plugin_pdf_viewer: ^1.0.7

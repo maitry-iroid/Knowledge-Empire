@@ -55,7 +55,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
   @override
   void dispose() {
-    _controller.pause();
+    _controller?.pause();
     Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
     super.dispose();
   }
@@ -472,7 +472,7 @@ class _RewardsPageState extends State<RewardsPage> {
           setState(() {
             selectedModule = arrFinalRewards[index];
             selectedIndex = index;
-            _controller.pause();
+            _controller?.pause();
 
             if(Utils.isPdf(selectedModule.media)){
               Future.delayed(Duration.zero, () async {
