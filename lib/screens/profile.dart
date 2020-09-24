@@ -1473,9 +1473,9 @@ class _ProfilePageState extends State<ProfilePage> {
     String customerSpecificVersion = "BES"; //Blue Elephants Solutions
     String os = Injector.deviceType == "ios" ? "I" : "A";
 
-    String x = "003";
-    String y = "000";
-    String z = "001";
+    String x = "004";
+    String y = "001";
+    String z = "000";
 
     return mode +
         "-" +
