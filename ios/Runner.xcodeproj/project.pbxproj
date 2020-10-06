@@ -427,12 +427,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/Development/SDKs/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -444,7 +444,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
 				PRODUCT_NAME = Runner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -516,10 +516,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/Development/SDKs/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -531,7 +531,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempire.app;
 				PRODUCT_NAME = Runner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -609,10 +609,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/Development/SDKs/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -624,7 +624,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempire.app;
 				PRODUCT_NAME = Runner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -698,10 +698,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/Development/SDKs/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -713,7 +713,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempire.app;
 				PRODUCT_NAME = Runner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -842,10 +842,10 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/Development/SDKs/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -857,7 +857,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
 				PRODUCT_NAME = Runner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -878,12 +878,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 1.2.0;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/Development/SDKs/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -895,7 +895,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.knowledgeempiredev.app;
 				PRODUCT_NAME = Runner;
 				PROVISIONING_PROFILE_SPECIFIER = "";

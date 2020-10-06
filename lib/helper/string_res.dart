@@ -4,6 +4,8 @@ class StringRes {
   static String username = Injector.userData?.name ?? "";
 
   //<editor-fold desc="old strings">
+  static var accept = "accept";
+
   //main options
   static var home = "home";
   static var businessSector = "businessSector";
@@ -419,6 +421,7 @@ class StringRes {
     'en': {
       //<editor-fold desc="english">
       //main options
+      'accept': "Accept",
       'home': "Home",
       'businessSector': "Business Sector",
       'newCustomers': "New Customers",
@@ -842,6 +845,7 @@ class StringRes {
     'de': {
       //<editor-fold desc="german">
       //main options
+      'accept': "akzeptieren",
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
       'newCustomers': "Neue Kunden",
@@ -1251,6 +1255,7 @@ class StringRes {
     'zh': {
       //<editor-fold desc="chinese">
       //main options
+      'accept': "接受",
       'home': "首页",
       'businessSector': "业务部门",
       'newCustomers': "新客户",
@@ -1644,6 +1649,7 @@ class StringRes {
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
       //<editor-fold desc="english">
+      'accept': "Accept",
       'home': "Home",
       'businessSector': "Learning Module",
       'newCustomers': "Open Learnings",
@@ -2074,6 +2080,7 @@ class StringRes {
     },
     'de': {
       //<editor-fold desc="German">
+      'accept': "akzeptieren",
       'home': 'Start',
       'businessSector': 'Lernmodule',
       'newCustomers': 'Fragen',
@@ -2508,6 +2515,7 @@ class StringRes {
     },
     'zh': {
       //<editor-fold desc="chines">
+      'accept': "接受",
       'home': '首页',
       'businessSector': '学习模块',
       'newCustomers': '开放学习',
