@@ -20,6 +20,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:ke_employee/dialogs/nickname_dialog.dart';
+import 'package:ke_employee/dialogs/privacy_policy_dialog.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ke_employee/dialogs/loader.dart';
@@ -245,18 +246,31 @@ class Utils {
   }
 
 
-  static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) {
-    showDialog(
+  static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) async {
+    await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => NickNameDialog(
             isFromProfile: isFromProfile));
   }
 
+  static showPrivacyPolicyDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, String title, String content) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => PrivacyPolicyDialog(
+            scaffoldKey: _scaffoldKey,
+            isFromProfile: isFromProfile,
+            privacyPolicyTitle: title,
+            privacyPolicyContent: content,
+        ));
+  }
+
+
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      bool isFromProfile, bool isOldPasswordRequired) {
-    showDialog(
+      bool isFromProfile, bool isOldPasswordRequired) async {
+    await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => ChangePasswordDialog(
+            scaffoldKey: _scaffoldKey,
             isFromProfile: isFromProfile,
             isOldPasswordRequired: isOldPasswordRequired));
   }

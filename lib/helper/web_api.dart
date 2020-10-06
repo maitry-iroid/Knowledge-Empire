@@ -18,6 +18,7 @@ class WebApi {
   static String rqLogout = "logout";
   static String rqUpdateProfile = "updateProfile";
   static String rqChangePassword = "change_password";
+  static String rqPrivacyPolicy = "privacyPolicy";
 
   static String rqGetLearningModule = "getLearningModule";
   static String rqGetRewards = "getRewards";

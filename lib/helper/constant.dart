@@ -65,6 +65,10 @@ class Const {
   static var typeAnswerMedia = 2;
   static var typeAnswerMediaWithQuestion = 3;
 
+  // privacy policy type
+  static var typeGetPrivacyPolicy = 1;
+  static var typeUpdateAccessTime = 2;
+
   static var typeCamera = 101;
   static var typeGallery = 102;
 

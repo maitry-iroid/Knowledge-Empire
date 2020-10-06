@@ -433,11 +433,12 @@ class _LoginPageState extends State<LoginPage> {
 
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
-        if (Injector.userData.isPasswordChanged == 0) {
+//        if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-        } else {
-          navigateToDashboard();
-        }
+//          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, "title", "content");
+//        } else {
+//          navigateToDashboard();
+//        }
       }
     }).catchError((e) {
       CommonView.showCircularProgress(false, context);

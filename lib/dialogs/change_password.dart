@@ -2,20 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/change_password.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
   ChangePasswordDialog({
     Key key,
+    this.scaffoldKey,
     this.isFromProfile,
     this.isOldPasswordRequired,
   }) : super(key: key);
 
+  final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isFromProfile;
   final bool isOldPasswordRequired;
 
@@ -68,7 +72,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                           right: Utils.getDeviceWidth(context) / 5.5,
                           bottom: 0),
                       padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -82,31 +86,31 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                         children: <Widget>[
                           widget.isFromProfile
                               ? Container(
-                                  height: 35,
-                                  margin: EdgeInsets.symmetric(vertical: 3),
-                                  decoration: BoxDecoration(
-                                      color: ColorRes.bgTextBox,
-                                      border: Border.all(
-                                          width: 1, color: ColorRes.white),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: TextField(
-                                    controller: pass1Controller,
+                              height: 35,
+                              margin: EdgeInsets.symmetric(vertical: 3),
+                              decoration: BoxDecoration(
+                                  color: ColorRes.bgTextBox,
+                                  border: Border.all(
+                                      width: 1, color: ColorRes.white),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: TextField(
+                                controller: pass1Controller,
 //                                  textAlignVertical: TextAlignVertical.center,
-                                    textAlign: TextAlign.left,
-                                    maxLines: 1,
-                                    obscureText: true,
-                                    style: TextStyle(
-                                        fontSize: 14, color: ColorRes.white),
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 12, horizontal: 10),
-                                        hintText: Utils.getText(
-                                            context, StringRes.currentPassword),
-                                        hintStyle: TextStyle(
-                                            color: ColorRes.hintColor),
-                                        border: InputBorder.none),
-                                  ))
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                obscureText: true,
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorRes.white),
+                                decoration: InputDecoration(
+                                    contentPadding:
+                                    const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(
+                                        context, StringRes.currentPassword),
+                                    hintStyle: TextStyle(
+                                        color: ColorRes.hintColor),
+                                    border: InputBorder.none),
+                              ))
                               : Container(),
                           Container(
                               height: 35,
@@ -129,7 +133,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                     hintText: Utils.getText(
                                         context, StringRes.newPassword),
                                     hintStyle:
-                                        TextStyle(color: ColorRes.hintColor),
+                                    TextStyle(color: ColorRes.hintColor),
                                     border: InputBorder.none),
                               )),
                           Container(
@@ -154,7 +158,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                     hintText: Utils.getText(
                                         context, StringRes.reEnterPassword),
                                     hintStyle:
-                                        TextStyle(color: ColorRes.hintColor),
+                                    TextStyle(color: ColorRes.hintColor),
                                     border: InputBorder.none),
                               )),
                         ],
@@ -205,6 +209,7 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                 Utils.playClickSound();
                                 Utils.hideKeyboard(context);
                                 Navigator.pop(context);
+                                apiCallToPrivacyPolicy();
                               })
                         ],
                       ),
@@ -263,29 +268,70 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
     rq.isOldPasswordRequired = widget.isOldPasswordRequired;
 
     WebApi().callAPI(WebApi.rqChangePassword, rq.toJson()).then((data) {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
 
       if (data != null) {
         Utils.showToast(Utils.getText(context, StringRes.passwordChange));
         Injector.isPasswordChange = true;
 
         if (widget.isFromProfile) {
+          if (mounted)
+            setState(() {
+              isLoading = false;
+            });
           Navigator.pop(context);
         } else {
-          Navigator.pop(context);
-          Utils.showNickNameDialog(_scaffoldKey, false);
+          Navigator.of(context).pop();
+          apiCallToPrivacyPolicy();
+//          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, "", "");
+//          Utils.showNickNameDialog(_scaffoldKey, false);
 //          Navigator.pushAndRemoveUntil(
 //              context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
+
+      } else {
+        if (mounted)
+          setState(() {
+            isLoading = false;
+          });
       }
     }).catchError((e) {
       if (mounted)
         setState(() {
           isLoading = false;
         });
+    });
+
+
+  }
+
+  apiCallToPrivacyPolicy() {
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
+
+    PrivacyPolicyRequest rq = PrivacyPolicyRequest();
+    rq.userId = Injector.userData.userId;
+    rq.type = Const.typeGetPrivacyPolicy.toString();
+    rq.companyId = Injector.userData.activeCompany;
+
+    WebApi().callAPI(WebApi.rqPrivacyPolicy, rq.toJson()).then((data) {
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+
+      if (data != null) {
+        PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
+        if(response.isSeenPrivacyPolicy == 0 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != ""){
+          print("data content:::::::::::::::::::::::: ${response.privacyPolicyContent}");
+          Utils.showPrivacyPolicyDialog(widget.scaffoldKey, false, response.privacyPolicyTitle, response.privacyPolicyContent);
+        }else{
+          Utils.showNickNameDialog(widget.scaffoldKey, false);
+          Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
+        }
+      }
+
     });
   }
 
