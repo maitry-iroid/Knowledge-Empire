@@ -28,6 +28,7 @@ class PrivacyPolicyResponse {
   int isSeenPrivacyPolicy;
   String privacyPolicyTitle;
   String privacyPolicyContent;
+  String privacyPolicyAcceptText;
 
   PrivacyPolicyResponse({this.language, this.isSeenPrivacyPolicy, this.privacyPolicyTitle, this.privacyPolicyContent});
 
@@ -36,6 +37,7 @@ class PrivacyPolicyResponse {
     isSeenPrivacyPolicy= json['isSeenPrivacyPolicy'];
     privacyPolicyTitle = json['privacyPolicyTitle'];
     privacyPolicyContent = json['privacyPolicyContent'];
+    privacyPolicyAcceptText = json["privacyPolicyAcceptText"];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +46,7 @@ class PrivacyPolicyResponse {
     data['isSeenPrivacyPolicy'] = this.isSeenPrivacyPolicy;
     data['privacyPolicyTitle'] = this.privacyPolicyTitle;
     data['privacyPolicyContent'] = this.privacyPolicyContent;
+    data["privacyPolicyAcceptText"] = this.privacyPolicyAcceptText;
     return data;
   }
 }
@@ -59,6 +62,7 @@ apiCallPrivacyPolicy(int userId, String type, int companyId, void Function(Priva
 
     if (data != null) {
       PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
+      print("Response :::::::::::::::::: $response");
       completion(response);
     }
   });

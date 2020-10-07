@@ -436,7 +436,7 @@ class _LoginPageState extends State<LoginPage> {
 
         apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
           if(privacyPolicyResponse.isSeenPrivacyPolicy == 0 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
-            Utils.showPrivacyPolicyDialog(_scaffoldKey, false, privacyPolicyResponse.privacyPolicyTitle, privacyPolicyResponse.privacyPolicyContent, completion: (status){
+            Utils.showPrivacyPolicyDialog(_scaffoldKey, false, privacyPolicyResponse.privacyPolicyTitle, privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status){
               if(status == true)
                 apiCallPrivacyPolicy(userData.userId, Const.typeUpdateAccessTime.toString(), userData.activeCompany, (response){});
             });

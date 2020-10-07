@@ -20,6 +20,7 @@ class PrivacyPolicyDialog extends StatefulWidget {
     this.isFromProfile,
     this.privacyPolicyTitle,
     this.privacyPolicyContent,
+    this.privacyPolicyAcceptText,
     this.completion
   }) : super(key: key);
 
@@ -27,6 +28,7 @@ class PrivacyPolicyDialog extends StatefulWidget {
   final bool isFromProfile;
   final String privacyPolicyTitle;
   final String privacyPolicyContent;
+  final String privacyPolicyAcceptText;
   final void Function(bool) completion;
 
   @override
@@ -88,7 +90,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                 Expanded(
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 8),
+                      padding: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 3),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
@@ -99,19 +101,28 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                         ),
                       ),
                     )),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Expanded(child: Row(
-                        children: [
-                          Checkbox(
-                              activeColor: ColorRes.headerBlue,
-                              value: rememberMe,
-                              onChanged: _onRememberMeChanged
-                          ),
-                          Text("I accept terms and conditions", style: TextStyle(color: ColorRes.black, fontSize: 16))
-                        ],
-                      )),
+                      Expanded(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Checkbox(
+                                  activeColor: ColorRes.headerBlue,
+                                  value: rememberMe,
+                                  onChanged: _onRememberMeChanged
+                              ),
+                              Expanded(
+                                  child: Text(widget.privacyPolicyAcceptText,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(color: ColorRes.black, fontSize: 16)))
+                            ],
+                          )),
+                      SizedBox(width: 40),
                       InkResponse(
                           child: Align(
                             alignment: Alignment.centerRight,
