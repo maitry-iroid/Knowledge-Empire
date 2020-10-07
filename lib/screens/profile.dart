@@ -730,6 +730,7 @@ class _ProfilePageState extends State<ProfilePage> {
               updateType = 4.toString();
               updateCompanyId = company.companyId;
               callApiForUpdateUserSetting(updateType, null);
+              apiCallPrivacyPolicy(rq.userId, Const.typeUpdateAccessTime.toString(), rq.companyId, (response){});
             }
           });
         }else{

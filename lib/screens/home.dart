@@ -106,6 +106,7 @@ class HomePageState extends State<HomePage>
     super.initState();
     mRefreshAnimation = this;
     initStateMethods();
+
   }
 
   @override

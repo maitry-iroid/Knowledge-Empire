@@ -13,6 +13,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_rewards.dart';
 import 'package:ke_employee/models/redeem_reward.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:pdf_previewer/pdf_previewer.dart';
 import 'package:video_player/video_player.dart';
 
@@ -48,6 +49,14 @@ class _RewardsPageState extends State<RewardsPage> {
   void initState() {
     showDialogForCallApi();
     super.initState();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
+
     Future.delayed(Duration.zero, () async {
       await this.getTimeZone();
     });

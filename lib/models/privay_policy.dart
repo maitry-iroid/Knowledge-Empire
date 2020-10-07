@@ -1,3 +1,5 @@
+import 'package:ke_employee/helper/web_api.dart';
+
 class PrivacyPolicyRequest {
   int userId;
   String type;
@@ -44,4 +46,20 @@ class PrivacyPolicyResponse {
     data['privacyPolicyContent'] = this.privacyPolicyContent;
     return data;
   }
+}
+
+apiCallPrivacyPolicy(int userId, String type, int companyId, void Function(PrivacyPolicyResponse) completion){
+
+  PrivacyPolicyRequest rq = PrivacyPolicyRequest();
+  rq.userId = userId;
+  rq.type = type;
+  rq.companyId = companyId;
+
+  WebApi().callAPI(WebApi.rqPrivacyPolicy, rq.toJson()).then((data) {
+
+    if (data != null) {
+      PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
+      completion(response);
+    }
+  });
 }

@@ -10,6 +10,7 @@ import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/profile.dart';
 
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
@@ -34,6 +35,13 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     super.initState();
 
     showIntroDialog();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
   Future<void> showIntroDialog() async {

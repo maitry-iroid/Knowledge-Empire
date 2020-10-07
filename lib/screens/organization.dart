@@ -11,6 +11,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/screens/home.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
@@ -54,6 +55,13 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   initState() {
     super.initState();
     showIntroDialog();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
   Future showIntroDialog() async {

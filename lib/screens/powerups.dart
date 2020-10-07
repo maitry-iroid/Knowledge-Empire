@@ -4,6 +4,7 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -44,6 +45,13 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();

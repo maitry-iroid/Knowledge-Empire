@@ -6,6 +6,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
+import 'package:ke_employee/screens/profile.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -58,6 +59,13 @@ class _AchievementPageState extends State<AchievementPage> {
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       getAchievements();
     });
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
   @override

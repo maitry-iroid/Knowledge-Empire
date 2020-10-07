@@ -9,6 +9,7 @@ import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../helper/Utils.dart';
 import '../helper/string_res.dart';
@@ -53,6 +54,13 @@ class _ChallengesPageState extends State<ChallengesPage> {
   @override
   initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
 
     arrFriends = widget.homeData.arrFriends;
     friendId = widget.homeData.friendId;

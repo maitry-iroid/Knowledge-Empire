@@ -12,6 +12,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/screens/profile.dart';
 
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
@@ -56,6 +57,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     super.initState();
 
     showIntroDialog();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
+
   }
 
   Future<void> showIntroDialog() async {

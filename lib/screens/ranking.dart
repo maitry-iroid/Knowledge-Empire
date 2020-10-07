@@ -14,6 +14,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friend_unfriend_user.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
+import 'package:ke_employee/screens/profile.dart';
 import '../commonview/background.dart';
 import '../helper/constant.dart';
 
@@ -73,6 +74,13 @@ class _RankingPageState extends State<RankingPage> {
     });
 
     getData();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
   @override

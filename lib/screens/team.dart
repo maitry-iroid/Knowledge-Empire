@@ -13,6 +13,7 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/team_user.dart';
 import 'package:ke_employee/models/team_user_by_id.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 import '../helper/Utils.dart';
@@ -66,6 +67,13 @@ class _TeamPageState extends State<TeamPage> {
   void initState() {
      getTeamUsers();
     super.initState();
+
+     WidgetsBinding.instance.addObserver(
+         LifecycleEventHandler(resumeCallBack: () async => setState(() {
+           print("---------------------- APP Resumed---------------------");
+           Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+         }))
+     );
   }
 
   @override

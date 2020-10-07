@@ -6,6 +6,7 @@ import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../commonview/header.dart';
@@ -63,6 +64,13 @@ class HelpPageState extends State<HelpPage> {
     arrType = initFeatureDataArray();
 
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
   @override

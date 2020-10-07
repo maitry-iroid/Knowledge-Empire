@@ -10,6 +10,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/language.dart';
+import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -433,12 +434,17 @@ class _LoginPageState extends State<LoginPage> {
 
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
-//        if (Injector.userData.isPasswordChanged == 0) {
+        if (Injector.userData.isPasswordChanged == 0) {
           Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-//          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, "title", "content");
-//        } else {
-//          navigateToDashboard();
-//        }
+        } else {
+          apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
+            if(privacyPolicyResponse.isSeenPrivacyPolicy == 0 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
+              Utils.showPrivacyPolicyDialog(_scaffoldKey, false, privacyPolicyResponse.privacyPolicyTitle, privacyPolicyResponse.privacyPolicyContent);
+            }else{
+              navigateToDashboard();
+            }
+          });
+        }
       }
     }).catchError((e) {
       CommonView.showCircularProgress(false, context);

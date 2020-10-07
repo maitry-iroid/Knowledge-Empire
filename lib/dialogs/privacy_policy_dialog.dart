@@ -56,32 +56,6 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
     super.initState();
   }
 
-  apiCallToPrivacyPolicy() {
-    if (mounted)
-      setState(() {
-        isLoading = true;
-      });
-
-    PrivacyPolicyRequest rq = PrivacyPolicyRequest();
-    rq.userId = Injector.userData.userId;
-    rq.type = Const.typeGetPrivacyPolicy.toString();
-    rq.companyId = Injector.userData.activeCompany;
-
-    WebApi().callAPI(WebApi.rqPrivacyPolicy, rq.toJson()).then((data) {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
-
-      if (data != null) {
-        PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
-
-        print("data content:::::::::::::::::::::::: ${response.privacyPolicyContent}");
-      }
-
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +97,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                             Row(
                               children: [
                                 Checkbox(
-                                  activeColor: ColorRes.headerBlue,
+                                    activeColor: ColorRes.headerBlue,
                                     value: rememberMe,
                                     onChanged: _onRememberMeChanged
                                 ),
@@ -143,10 +117,12 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                           width: 100,
                           margin: EdgeInsets.only(right: 20, bottom: 5),
                           decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("bg_save")),
-                                  fit: BoxFit.fill)),
+                              color: rememberMe == true ? ColorRes.headerBlue : ColorRes.greyText,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                  color: Colors.white
+                              )
+                          ),
                           child: Text(
                             Utils.getText(context, StringRes.accept),
                             style: TextStyle(
@@ -162,16 +138,11 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                         }
                         if(widget.isFromProfile == true){
                           Navigator.of(context).pop();
-//                          ProfilePageState().callApiForUpdateUserSetting("4", null);
-                        }else{
+                        }else {
+                          Navigator.of(context).pop();
                           Utils.showNickNameDialog(_scaffoldKey, false);
                         }
-                      }else{
-//                        Navigator.of(context).pop();
-//                        Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-                        Utils.showToast(Utils.getText(context, StringRes.emailEmpty));
                       }
-//                      validateData();
                     })
               ],
             ),
@@ -192,47 +163,5 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
     );
   }
 
-  void validateData() async {
-    if (nickNameController.text.trim().isEmpty) {
-      Utils.showToast(Utils.getText(context, StringRes.enterNickName));
-      return;
-    }
 
-    if (mounted)
-      setState(() {
-        isLoading = true;
-      });
-
-    UpdateProfileRequest rq = UpdateProfileRequest();
-    rq.userId = Injector.userData.userId.toString();
-    rq.nickName = nickNameController.text;
-
-    WebApi().callAPI(WebApi.rqUpdateProfile, rq.toJson()).then((data) {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
-
-      if (data != null) {
-        Utils.showToast(Utils.getText(context, StringRes.nicknameChange));
-        Injector.isNickNameChange = true;
-
-        if (widget.isFromProfile) {
-          Navigator.pop(context);
-        } else {
-          Navigator.pushAndRemoveUntil(
-              context, FadeRouteHome(), ModalRoute.withName("/login"));
-        }
-      }
-    }).catchError((e) {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
-    });
-  }
-
-  void navigateToDashboard() {
-    Navigator.push(context, FadeRouteHome());
-  }
 }

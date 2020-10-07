@@ -17,6 +17,7 @@ import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
+import 'package:ke_employee/screens/profile.dart';
 import 'package:pdf_previewer/pdf_previewer.dart';
 import '../commonview/background.dart';
 import 'package:video_player/video_player.dart';
@@ -101,6 +102,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         await this.initVideoController(questionDataEngCustomer.mediaLink);
       });
     }
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
 

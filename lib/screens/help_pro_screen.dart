@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/help_model.dart';
+import 'package:ke_employee/screens/profile.dart';
 
 /*
 *   created by Riddhi
@@ -39,6 +40,18 @@ class _HelpProScreenState extends State<HelpProScreen> {
 
   Future<void> getText() async {
     initFeatureDataArray();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async => setState(() {
+          print("---------------------- APP Resumed---------------------");
+          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        }))
+    );
   }
 
   @override
