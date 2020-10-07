@@ -209,7 +209,8 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
                                 Utils.playClickSound();
                                 Utils.hideKeyboard(context);
                                 Navigator.pop(context);
-                                apiCallToPrivacyPolicy();
+                                if(widget.isFromProfile == false)
+                                  Utils.showNickNameDialog(_scaffoldKey, false);
                               })
                         ],
                       ),
@@ -281,13 +282,8 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
           Navigator.pop(context);
         } else {
           Navigator.of(context).pop();
-          apiCallToPrivacyPolicy();
-//          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, "", "");
-//          Utils.showNickNameDialog(_scaffoldKey, false);
-//          Navigator.pushAndRemoveUntil(
-//              context, FadeRouteHome(), ModalRoute.withName("/login"));
+          Utils.showNickNameDialog(_scaffoldKey, false);
         }
-
       } else {
         if (mounted)
           setState(() {
@@ -300,42 +296,5 @@ class ChangePasswordDialogState extends State<ChangePasswordDialog> {
           isLoading = false;
         });
     });
-
-
-  }
-
-  apiCallToPrivacyPolicy() {
-    if (mounted)
-      setState(() {
-        isLoading = true;
-      });
-
-    PrivacyPolicyRequest rq = PrivacyPolicyRequest();
-    rq.userId = Injector.userData.userId;
-    rq.type = Const.typeGetPrivacyPolicy.toString();
-    rq.companyId = Injector.userData.activeCompany;
-
-    WebApi().callAPI(WebApi.rqPrivacyPolicy, rq.toJson()).then((data) {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
-
-      if (data != null) {
-        PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
-        if(response.isSeenPrivacyPolicy == 0 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != ""){
-          print("data content:::::::::::::::::::::::: ${response.privacyPolicyContent}");
-          Utils.showPrivacyPolicyDialog(widget.scaffoldKey, false, response.privacyPolicyTitle, response.privacyPolicyContent);
-        }else{
-          Utils.showNickNameDialog(widget.scaffoldKey, false);
-          Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
-        }
-      }
-
-    });
-  }
-
-  void navigateToDashboard() {
-    Navigator.push(context, FadeRouteHome());
   }
 }

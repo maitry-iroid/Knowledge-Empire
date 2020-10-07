@@ -88,62 +88,93 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                 Expanded(
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                      padding: EdgeInsets.all(25),
+                      padding: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 8),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
                             Text(widget.privacyPolicyTitle, style: TextStyle(color: ColorRes.black, fontSize: 17, fontWeight: FontWeight.w700)),
-                            Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black)),
-                            Row(
-                              children: [
-                                Checkbox(
-                                    activeColor: ColorRes.headerBlue,
-                                    value: rememberMe,
-                                    onChanged: _onRememberMeChanged
-                                ),
-                                Text("I accept terms and conditions", style: TextStyle(color: ColorRes.black))
-                              ],
-                            )
+                            SizedBox(height: 10),
+                            Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black, fontSize: 16)),
                           ],
                         ),
                       ),
                     )),
-                InkResponse(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                          alignment: Alignment.center,
-                          height: 40,
-                          width: 100,
-                          margin: EdgeInsets.only(right: 20, bottom: 5),
-                          decoration: BoxDecoration(
-                              color: rememberMe == true ? ColorRes.headerBlue : ColorRes.greyText,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: Colors.white
-                              )
+                Padding(padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  child: Row(
+                    children: [
+                      Expanded(child: Row(
+                        children: [
+                          Checkbox(
+                              activeColor: ColorRes.headerBlue,
+                              value: rememberMe,
+                              onChanged: _onRememberMeChanged
                           ),
-                          child: Text(
-                            Utils.getText(context, StringRes.accept),
-                            style: TextStyle(
-                                fontSize: 17, color: ColorRes.white),
-                          )),
-                    ),
-                    onTap: () {
-                      Utils.playClickSound();
-                      Utils.hideKeyboard(context);
-                      if(rememberMe == true) {
-                        if (widget.completion != null) {
-                          widget.completion(true);
-                        }
-                        if(widget.isFromProfile == true){
-                          Navigator.of(context).pop();
-                        }else {
-                          Navigator.of(context).pop();
-                          Utils.showNickNameDialog(_scaffoldKey, false);
-                        }
-                      }
-                    })
+                          Text("I accept terms and conditions", style: TextStyle(color: ColorRes.black, fontSize: 16))
+                        ],
+                      )),
+                      InkResponse(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: 100,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                    color: ColorRes.headerBlue,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                        color: Colors.white
+                                    )
+                                ),
+                                child: Text("Decline",
+                                  style: TextStyle(
+                                      fontSize: 17, color: ColorRes.white),
+                                )),
+                          ),
+                          onTap: () {
+                            Utils.playClickSound();
+                            Utils.hideKeyboard(context);
+                            Navigator.of(context).pop();
+                          }),
+                      InkResponse(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: rememberMe == true ? ColorRes.headerBlue : ColorRes.greyText,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                        color: Colors.white
+                                    )
+                                ),
+                                child: Text(
+                                  Utils.getText(context, StringRes.accept),
+                                  style: TextStyle(
+                                      fontSize: 17, color: ColorRes.white),
+                                )),
+                          ),
+                          onTap: () {
+                            if(rememberMe == true) Utils.playClickSound();
+                            Utils.hideKeyboard(context);
+                            if(rememberMe == true) {
+                              if (widget.completion != null) {
+                                widget.completion(true);
+                              }
+                              Navigator.of(context).pop();
+                              if (Injector.userData.isPasswordChanged == 0) {
+                                Utils.showChangePasswordDialog(_scaffoldKey, false, false);
+                              }else{
+                                Navigator.pushAndRemoveUntil(
+                                    context, FadeRouteHome(), ModalRoute.withName("/login"));
+                              }
+                            }
+                          })
+                    ],
+                  ),)
               ],
             ),
           ),

@@ -26,23 +26,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: LoginPage(),
-          ),
-        );
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: LoginPage(),
+        ),
+  );
 }
 
 class LoginPage extends StatefulWidget {
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
               context, status.headlineText, status.message, true);
         } else {
           DateTime clickedTime =
-              DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+          DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
           if (DateTime.now().difference(clickedTime).inDays >= 1) {
             DisplayDialogs.showUpdateDialog(
                 context, status.headlineText, status.message, true);
@@ -287,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         barrierDismissible: true,
         barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: ColorRes.blackTransparentColor,
         transitionDuration: const Duration(milliseconds: 200),
         pageBuilder: (BuildContext buildContext, Animation animation,
@@ -343,7 +343,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(10),
                           child: Image(
                             image:
-                                AssetImage(Utils.getAssetsImg('close_dialog')),
+                            AssetImage(Utils.getAssetsImg('close_dialog')),
                             width: 20,
                           ),
                         ),
@@ -416,7 +416,7 @@ class _LoginPageState extends State<LoginPage> {
     loginRequest.secret =
         Utils.getSecret(loginRequest.email, loginRequest.password);
     loginRequest.language =
-        tempLanguage == StringRes.strDefault ? null : tempLanguage;
+    tempLanguage == StringRes.strDefault ? null : tempLanguage;
 
     Utils.hideKeyboard(context);
 
@@ -434,17 +434,17 @@ class _LoginPageState extends State<LoginPage> {
 
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
 
-        if (Injector.userData.isPasswordChanged == 0) {
-          Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-        } else {
-          apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
-            if(privacyPolicyResponse.isSeenPrivacyPolicy == 0 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
-              Utils.showPrivacyPolicyDialog(_scaffoldKey, false, privacyPolicyResponse.privacyPolicyTitle, privacyPolicyResponse.privacyPolicyContent);
-            }else{
+        apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
+          if(privacyPolicyResponse.isSeenPrivacyPolicy == 0 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
+            Utils.showPrivacyPolicyDialog(_scaffoldKey, false, privacyPolicyResponse.privacyPolicyTitle, privacyPolicyResponse.privacyPolicyContent, completion: (status){
+              if(status == true)
+                apiCallPrivacyPolicy(userData.userId, Const.typeUpdateAccessTime.toString(), userData.activeCompany, (response){});
+            });
+          }else{
+            if(privacyPolicyResponse.isSeenPrivacyPolicy == 1 && Injector.userData.isPasswordChanged == 1)
               navigateToDashboard();
-            }
-          });
-        }
+          }
+        });
       }
     }).catchError((e) {
       CommonView.showCircularProgress(false, context);
@@ -481,7 +481,7 @@ class _LoginPageState extends State<LoginPage> {
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     style:
-                        TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     onSubmitted: (value) {
                       _scrollController.animateTo(
                         0.0,
@@ -526,7 +526,7 @@ class _LoginPageState extends State<LoginPage> {
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     style:
-                        TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     onSubmitted: (value) {
                       _scrollController.animateTo(
                         0.0,

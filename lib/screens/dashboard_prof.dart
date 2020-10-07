@@ -47,10 +47,14 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     }
 
     WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
+        LifecycleEventHandler(resumeCallBack: () async {
+          if(mounted){
+            setState(() {
+              print("---------------------- APP Resumed---------------------");
+              Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+            });
+          }
+        })
     );
   }
 
