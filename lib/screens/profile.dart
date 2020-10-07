@@ -18,6 +18,7 @@ import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/models/update_user_setting.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -80,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
   FocusNode companyNameFocusNode;
   FocusNode nameFocusNode;
   List<Company> companyList = new List();
-
+  bool isLoading = false;
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
   String updateUserID;
@@ -94,7 +95,6 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     showIntroDialog();
     super.initState();
-
 
     // Background sound resumed and stopped based on mode, while app resumed.
     WidgetsBinding.instance.addObserver(
@@ -652,15 +652,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          companyController.text =
-                              companyList[index].companyName;
-                          Injector.userData.companyName =
-                              companyList[index].companyName;
-
-                          updateType = 4.toString();
                           updateCompanyId = companyList[index].companyId;
-                          callApiForUpdateUserSetting(updateType, null);
-
+                          this.apiCallToPrivacyPolicy(companyList[index]);
                           Navigator.pop(context);
                         },
                         child: Padding(
@@ -707,6 +700,47 @@ class _ProfilePageState extends State<ProfilePage> {
                 )),*/
           );
         });
+  }
+
+  apiCallToPrivacyPolicy(Company company) {
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
+
+    PrivacyPolicyRequest rq = PrivacyPolicyRequest();
+    rq.userId = Injector.userData.userId;
+    rq.type = Const.typeGetPrivacyPolicy.toString();
+    rq.companyId = updateCompanyId;
+
+    WebApi().callAPI(WebApi.rqPrivacyPolicy, rq.toJson()).then((data) {
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+
+      if (data != null) {
+        PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
+        if(response.isSeenPrivacyPolicy == 0 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != ""){
+          print("data content:::::::::::::::::::::::: ${response.privacyPolicyContent}");
+          Utils.showPrivacyPolicyDialog(_scaffoldKey, true, response.privacyPolicyTitle, response.privacyPolicyContent, completion: (status){
+            if (status == true) {
+              companyController.text = company.companyName;
+              Injector.userData.companyName = company.companyName;
+              updateType = 4.toString();
+              updateCompanyId = company.companyId;
+              callApiForUpdateUserSetting(updateType, null);
+            }
+          });
+        }else{
+          companyController.text = company.companyName;
+          Injector.userData.companyName = company.companyName;
+          updateType = 4.toString();
+          updateCompanyId = company.companyId;
+          callApiForUpdateUserSetting(updateType, null);
+        }
+      }
+    });
   }
 
   Future<void> performBailOut() async {

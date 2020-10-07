@@ -11,6 +11,7 @@ import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/models/update_profile.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/change_password.dart';
+import 'package:ke_employee/screens/profile.dart';
 
 class PrivacyPolicyDialog extends StatefulWidget {
   PrivacyPolicyDialog({
@@ -18,13 +19,15 @@ class PrivacyPolicyDialog extends StatefulWidget {
     this.scaffoldKey,
     this.isFromProfile,
     this.privacyPolicyTitle,
-    this.privacyPolicyContent
+    this.privacyPolicyContent,
+    this.completion
   }) : super(key: key);
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isFromProfile;
   final String privacyPolicyTitle;
   final String privacyPolicyContent;
+  final void Function(bool) completion;
 
   @override
   PrivacyPolicyDialogState createState() => new PrivacyPolicyDialogState();
@@ -154,8 +157,15 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                       Utils.playClickSound();
                       Utils.hideKeyboard(context);
                       if(rememberMe == true) {
-                        Navigator.of(context).pop();
-                        Utils.showNickNameDialog(_scaffoldKey, false);
+                        if (widget.completion != null) {
+                          widget.completion(true);
+                        }
+                        if(widget.isFromProfile == true){
+                          Navigator.of(context).pop();
+//                          ProfilePageState().callApiForUpdateUserSetting("4", null);
+                        }else{
+                          Utils.showNickNameDialog(_scaffoldKey, false);
+                        }
                       }else{
 //                        Navigator.of(context).pop();
 //                        Utils.showChangePasswordDialog(_scaffoldKey, false, false);
