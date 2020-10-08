@@ -62,11 +62,13 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.transparent,
       body: showSetupPin(context),
-    );
+    ), onWillPop: (){
+      return Future.value(false);
+    });
   }
 
   showSetupPin(BuildContext context) {
@@ -125,7 +127,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                             ],
                           )),
                       SizedBox(width: 40),
-                      InkResponse(
+                      widget.isFromProfile ? InkResponse(
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Container(
@@ -150,7 +152,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                             Utils.playClickSound();
                             Utils.hideKeyboard(context);
                             Navigator.of(context).pop();
-                          }),
+                          }) : Container(),
                       InkResponse(
                           child: Align(
                             alignment: Alignment.centerRight,

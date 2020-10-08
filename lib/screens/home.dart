@@ -106,13 +106,16 @@ class HomePageState extends State<HomePage>
     super.initState();
     mRefreshAnimation = this;
     initStateMethods();
-
+    Injector.checkPrivacyPolicy(_scaffoldKey);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
+    print("---------------------------App state ::: $state-------------------------------");
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
+      Injector.checkPrivacyPolicy(_scaffoldKey);
+      print("Userdata ::: " + json.encode(Injector.userData.toJson()));
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
         Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       }
