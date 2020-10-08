@@ -188,7 +188,4 @@ class NickNameDialogState extends State<NickNameDialog> {
     });
   }
 
-  void navigateToDashboard() {
-    Navigator.push(context, FadeRouteHome());
-  }
 }

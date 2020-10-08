@@ -27,8 +27,6 @@ class MyAppState extends State<MyApp> {
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
-  int isSeenPrivacyPolicy;
-
   @override
   void initState() {
     print("weburl-------" + Const.webUrl);
@@ -39,17 +37,7 @@ class MyAppState extends State<MyApp> {
 
     Injector.getContext(context);
 
-//    if (Injector.userId != null) {
-//      PushNotificationHelper(context,"my app").initPush();
-//    }
-
     super.initState();
-
-    apiCallPrivacyPolicy(Injector.userData?.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData?.activeCompany, (privacyPolicyResponse){
-      setState(() {
-        this.isSeenPrivacyPolicy = privacyPolicyResponse.isSeenPrivacyPolicy;
-      });
-    });
   }
 
   @override
@@ -75,7 +63,7 @@ class MyAppState extends State<MyApp> {
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home:  Injector.userId != null && this.isSeenPrivacyPolicy == 1 ? HomePage() : LoginPage(),
+          home:  Injector.userId != null ? HomePage() : LoginPage(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),

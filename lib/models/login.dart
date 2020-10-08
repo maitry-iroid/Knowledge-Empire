@@ -65,6 +65,7 @@ class UserData {
   String companyName;
   String manager;
   int activeCompany;
+  int isSeenPrivacyPolicy;
   int isManager;
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
@@ -91,6 +92,7 @@ class UserData {
     isManager = json['isManager'];
     manager = json['manager'];
     activeCompany = json['activeCompany'];
+    isSeenPrivacyPolicy = json['isSeenPrivacyPolicy'];
     isFirstTimeLogin = json['isFirstTimeLogin'];
     language = json['language'];
     mode = json['mode'];
@@ -114,6 +116,7 @@ class UserData {
     data['companyName'] = this.companyName;
     data['manager'] = this.manager;
     data['activeCompany'] = this.activeCompany;
+    data['isSeenPrivacyPolicy'] = this.isSeenPrivacyPolicy;
     data['isFirstTimeLogin'] = this.isFirstTimeLogin;
     data['language'] = this.language;
     data['mode'] = this.mode;

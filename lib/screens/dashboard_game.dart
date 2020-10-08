@@ -11,6 +11,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:ke_employee/screens/profile.dart';
 
 import '../helper/constant.dart';
 
@@ -56,6 +57,17 @@ class DashboardGamePageState extends State<DashboardGamePage>
     getDashboardStatus();
 
     Utils.callCustomerValuesApi();
+
+    WidgetsBinding.instance.addObserver(
+        LifecycleEventHandler(resumeCallBack: () async {
+          if(mounted){
+            setState(() {
+              print("---------------------- APP Resumed---------------------");
+              Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+            });
+          }
+        })
+    );
   }
 
   getIntroData() {

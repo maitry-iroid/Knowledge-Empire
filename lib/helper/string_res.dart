@@ -5,6 +5,7 @@ class StringRes {
 
   //<editor-fold desc="old strings">
   static var accept = "accept";
+  static var decline = "decline";
 
   //main options
   static var home = "home";
@@ -422,6 +423,7 @@ class StringRes {
       //<editor-fold desc="english">
       //main options
       'accept': "Accept",
+      "decline": "Decline",
       'home': "Home",
       'businessSector': "Business Sector",
       'newCustomers': "New Customers",
@@ -846,6 +848,7 @@ class StringRes {
       //<editor-fold desc="german">
       //main options
       'accept': "akzeptieren",
+      "decline": "Ablehnen",
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
       'newCustomers': "Neue Kunden",
@@ -1256,6 +1259,7 @@ class StringRes {
       //<editor-fold desc="chinese">
       //main options
       'accept': "接受",
+      "decline": "Decline",
       'home': "首页",
       'businessSector': "业务部门",
       'newCustomers': "新客户",
@@ -1650,6 +1654,7 @@ class StringRes {
     'en': {
       //<editor-fold desc="english">
       'accept': "Accept",
+      "decline": "Decline",
       'home': "Home",
       'businessSector': "Learning Module",
       'newCustomers': "Open Learnings",
@@ -2081,6 +2086,7 @@ class StringRes {
     'de': {
       //<editor-fold desc="German">
       'accept': "akzeptieren",
+      "decline": "Ablehnen",
       'home': 'Start',
       'businessSector': 'Lernmodule',
       'newCustomers': 'Fragen',
@@ -2516,6 +2522,7 @@ class StringRes {
     'zh': {
       //<editor-fold desc="chines">
       'accept': "接受",
+      "decline": "Decline",
       'home': '首页',
       'businessSector': '学习模块',
       'newCustomers': '开放学习',

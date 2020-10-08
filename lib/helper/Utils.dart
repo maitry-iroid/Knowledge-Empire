@@ -253,16 +253,17 @@ class Utils {
             isFromProfile: isFromProfile));
   }
 
-  static showPrivacyPolicyDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, String title, String content, String acceptText, {void Function(bool) completion}) async {
+  static showPrivacyPolicyDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, int companyId, String title, String content, String acceptText, {void Function(bool) completion}) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => PrivacyPolicyDialog(
             scaffoldKey: _scaffoldKey,
             isFromProfile: isFromProfile,
+            companyId: companyId,
             privacyPolicyTitle: title,
             privacyPolicyContent: content,
             privacyPolicyAcceptText: acceptText,
-          completion: completion,
+            completion: completion,
         ));
   }
 

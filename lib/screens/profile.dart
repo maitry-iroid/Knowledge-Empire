@@ -721,16 +721,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
       if (data != null) {
         PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
-        if(response.isSeenPrivacyPolicy == 0 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != ""){
-          print("data content:::::::::::::::::::::::: ${response.privacyPolicyContent}");
-          Utils.showPrivacyPolicyDialog(_scaffoldKey, true, response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText, completion: (status){
+        if(response.isSeenPrivacyPolicy != 1 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != ""){
+          Utils.showPrivacyPolicyDialog(_scaffoldKey, true,company.companyId,response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText, completion: (status){
             if (status == true) {
               companyController.text = company.companyName;
               Injector.userData.companyName = company.companyName;
               updateType = 4.toString();
               updateCompanyId = company.companyId;
+              Injector.userData.activeCompany = company.companyId;
               callApiForUpdateUserSetting(updateType, null);
-              apiCallPrivacyPolicy(rq.userId, Const.typeUpdateAccessTime.toString(), rq.companyId, (response){});
             }
           });
         }else{
@@ -738,6 +737,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Injector.userData.companyName = company.companyName;
           updateType = 4.toString();
           updateCompanyId = company.companyId;
+          Injector.userData.activeCompany = company.companyId;
           callApiForUpdateUserSetting(updateType, null);
         }
       }

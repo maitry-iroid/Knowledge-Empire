@@ -23,6 +23,7 @@ import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/intro_model.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:ke_employee/models/privay_policy.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
@@ -146,6 +147,16 @@ class Injector {
     init();
   }
 
+  static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey){
+    if(Injector.userData.isSeenPrivacyPolicy != 1){
+      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
+        if(response.isSeenPrivacyPolicy == 0){
+          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, Injector.userData.activeCompany, response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText);
+        }
+      });
+    }
+  }
+
   static getContext(BuildContext context) {
     buildContext = context;
   }
@@ -224,6 +235,7 @@ class Injector {
   }
 
   static setUserData(UserData _user, bool isLanguage) async {
+    print("Userdata ::: " + json.encode(_user.toJson()));
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
     userData = _user;

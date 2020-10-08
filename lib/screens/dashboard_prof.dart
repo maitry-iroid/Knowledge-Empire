@@ -11,6 +11,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/intro.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/profile.dart';
 
 import '../helper/constant.dart';
@@ -46,6 +47,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       getIntroData();
     }
 
+    print("----------------------Injector.userData.isSeenPrivacyPolicy :: ${Injector.userData.isSeenPrivacyPolicy} -----------------------");
     WidgetsBinding.instance.addObserver(
         LifecycleEventHandler(resumeCallBack: () async {
           if(mounted){
@@ -56,6 +58,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
           }
         })
     );
+
   }
 
   @override

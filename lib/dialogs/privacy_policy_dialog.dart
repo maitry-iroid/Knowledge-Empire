@@ -18,6 +18,7 @@ class PrivacyPolicyDialog extends StatefulWidget {
     Key key,
     this.scaffoldKey,
     this.isFromProfile,
+    this.companyId,
     this.privacyPolicyTitle,
     this.privacyPolicyContent,
     this.privacyPolicyAcceptText,
@@ -30,6 +31,7 @@ class PrivacyPolicyDialog extends StatefulWidget {
   final String privacyPolicyContent;
   final String privacyPolicyAcceptText;
   final void Function(bool) completion;
+  final int companyId;
 
   @override
   PrivacyPolicyDialogState createState() => new PrivacyPolicyDialogState();
@@ -138,7 +140,8 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                                         color: Colors.white
                                     )
                                 ),
-                                child: Text("Decline",
+                                child: Text(
+                                  Utils.getText(context, StringRes.decline),
                                   style: TextStyle(
                                       fontSize: 17, color: ColorRes.white),
                                 )),
@@ -173,15 +176,14 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                             Utils.hideKeyboard(context);
                             if(rememberMe == true) {
                               if (widget.completion != null) {
-                                widget.completion(true);
+                                apiCallPrivacyPolicy(Injector.userData.userId, Const.typeUpdateAccessTime.toString(), widget.companyId, (response) {
+                                  Injector.userData.isSeenPrivacyPolicy = 1;
+                                  Injector.setUserData(Injector.userData, false);
+                                  widget.completion(true);
+                                });
                               }
                               Navigator.of(context).pop();
-                              if (Injector.userData.isPasswordChanged == 0) {
-                                Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-                              }else{
-                                Navigator.pushAndRemoveUntil(
-                                    context, FadeRouteHome(), ModalRoute.withName("/login"));
-                              }
+
                             }
                           })
                     ],
