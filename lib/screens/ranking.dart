@@ -75,12 +75,6 @@ class _RankingPageState extends State<RankingPage> {
 
     getData();
 
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
   }
 
   @override

@@ -57,17 +57,6 @@ class DashboardGamePageState extends State<DashboardGamePage>
     getDashboardStatus();
 
     Utils.callCustomerValuesApi();
-
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async {
-          if(mounted){
-            setState(() {
-              print("---------------------- APP Resumed---------------------");
-              Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-            });
-          }
-        })
-    );
   }
 
   getIntroData() {

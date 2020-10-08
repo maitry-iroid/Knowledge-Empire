@@ -83,13 +83,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     showIntroDialog();
 
     super.initState();
-
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
   }
 
   Future<void> showIntroDialog() async {

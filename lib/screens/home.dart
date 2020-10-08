@@ -114,7 +114,7 @@ class HomePageState extends State<HomePage>
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-        Injector.audioPlayerBg.resume();
+        Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       }
     } else if (state == AppLifecycleState.inactive) {
       Injector.audioPlayerBg.pause();

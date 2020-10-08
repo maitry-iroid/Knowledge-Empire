@@ -47,18 +47,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       getIntroData();
     }
 
-    print("----------------------Injector.userData.isSeenPrivacyPolicy :: ${Injector.userData.isSeenPrivacyPolicy} -----------------------");
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async {
-          if(mounted){
-            setState(() {
-              print("---------------------- APP Resumed---------------------");
-              Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-            });
-          }
-        })
-    );
-
   }
 
   @override

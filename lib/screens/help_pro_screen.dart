@@ -43,18 +43,6 @@ class _HelpProScreenState extends State<HelpProScreen> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     getText();
     return Scaffold(

@@ -65,12 +65,6 @@ class HelpPageState extends State<HelpPage> {
 
     Injector.prefs.setBool(PrefKeys.isLoginFirstTime, false);
 
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
   }
 
   @override

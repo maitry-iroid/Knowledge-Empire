@@ -55,13 +55,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
   initState() {
     super.initState();
 
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
-
     arrFriends = widget.homeData.arrFriends;
     friendId = widget.homeData.friendId;
 

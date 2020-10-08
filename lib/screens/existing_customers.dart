@@ -44,13 +44,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     super.initState();
 
     initContent();
-
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
   }
 
   Future initContent() async {

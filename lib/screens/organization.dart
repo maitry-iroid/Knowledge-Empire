@@ -56,12 +56,6 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
     super.initState();
     showIntroDialog();
 
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
   }
 
   Future showIntroDialog() async {

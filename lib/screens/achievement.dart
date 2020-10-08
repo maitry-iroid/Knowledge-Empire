@@ -59,13 +59,6 @@ class _AchievementPageState extends State<AchievementPage> {
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       getAchievements();
     });
-
-    WidgetsBinding.instance.addObserver(
-        LifecycleEventHandler(resumeCallBack: () async => setState(() {
-          print("---------------------- APP Resumed---------------------");
-          Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-        }))
-    );
   }
 
   @override
