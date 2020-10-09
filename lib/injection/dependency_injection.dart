@@ -150,7 +150,7 @@ class Injector {
   static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context){
     if(Injector.userData.isSeenPrivacyPolicy != 1){
       apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
-        if(response.isSeenPrivacyPolicy == 0){
+        if(response.isSeenPrivacyPolicy != 1 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != "" && response.privacyPolicyAcceptText != ""){
           Utils.showPrivacyPolicyDialog(_scaffoldKey, false,
               Injector.userData.activeCompany, response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText,
           completion: (status){

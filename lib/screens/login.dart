@@ -68,8 +68,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 //
-//    emailController.text = "m3@mailinator.com";
-//    passwordController.text = "11";
+    emailController.text = "xd@mailinator.com";
+    passwordController.text = "11";
 
     initStateMethods();
 //    localeBloc.setLocale(Utils.getIndexLocale());
@@ -437,7 +437,7 @@ class _LoginPageState extends State<LoginPage> {
         if(userData.isSeenPrivacyPolicy != 1){
           apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
             if(privacyPolicyResponse != null){
-              if(privacyPolicyResponse.isSeenPrivacyPolicy != 1 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
+              if(privacyPolicyResponse.isSeenPrivacyPolicy != 1 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != "" && privacyPolicyResponse.privacyPolicyAcceptText != ""){
                 Utils.showPrivacyPolicyDialog(_scaffoldKey, false,
                     userData.activeCompany,
                     privacyPolicyResponse.privacyPolicyTitle,
