@@ -184,6 +184,8 @@ class Injector {
 
       userId = userData.userId;
 
+      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+
       if (prefs.getString(PrefKeys.customerValueData) != null) {
         customerValueData = CustomerValueData.fromJson(
             jsonDecode(prefs.getString(PrefKeys.customerValueData)));
@@ -263,7 +265,7 @@ class Injector {
 
     if (mode != _customerValueData.mode) {
       updateMode(customerValueData.mode);
-      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+      // localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     }
   }
 

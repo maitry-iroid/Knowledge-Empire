@@ -382,7 +382,7 @@ class HomePageState extends State<HomePage>
 
     initPush();
 
-    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    // localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
     initPendingChallengeStream();
 

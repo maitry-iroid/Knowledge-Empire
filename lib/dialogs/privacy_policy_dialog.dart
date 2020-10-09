@@ -56,7 +56,6 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
 
   @override
   void initState() {
-//    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     super.initState();
   }
 

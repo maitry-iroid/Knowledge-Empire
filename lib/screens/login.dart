@@ -430,7 +430,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (data != null) {
         UserData userData = UserData.fromJson(data);
-
+        localeBloc.setLocale(Utils.getIndexLocale(userData.language));
         Injector.setUserData(userData, false);
         Injector.updateInstance();
 
@@ -445,7 +445,7 @@ class _LoginPageState extends State<LoginPage> {
                     privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
                       print("status :::::::::: $status--------------------------------------------------------");
                       if(status == true){
-//                        localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                       // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
                         moveToChangePasswordOrDashboard();
                       }else{
                         Navigator.of(context).pop();
@@ -470,7 +470,7 @@ class _LoginPageState extends State<LoginPage> {
   moveToChangePasswordOrDashboard(){
     if (Injector.userData.isPasswordChanged != 1) {
       Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-    }else{
+    } else {
       navigateToDashboard();
     }
   }
