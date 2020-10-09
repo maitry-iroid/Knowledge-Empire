@@ -28,7 +28,7 @@ class NickNameDialogState extends State<NickNameDialog> {
 
   @override
   void initState() {
-    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+//    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     super.initState();
   }
 
@@ -176,6 +176,7 @@ class NickNameDialogState extends State<NickNameDialog> {
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
+          print("Navigate to dashboard nickname--------------------------------------------------------");
           Navigator.pushAndRemoveUntil(
               context, FadeRouteHome(), ModalRoute.withName("/login"));
         }

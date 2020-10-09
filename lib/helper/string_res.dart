@@ -1259,7 +1259,7 @@ class StringRes {
       //<editor-fold desc="chinese">
       //main options
       'accept': "接受",
-      "decline": "Decline",
+      "decline": "下降",
       'home': "首页",
       'businessSector': "业务部门",
       'newCustomers': "新客户",
@@ -2522,7 +2522,7 @@ class StringRes {
     'zh': {
       //<editor-fold desc="chines">
       'accept': "接受",
-      "decline": "Decline",
+      "decline": "下降",
       'home': '首页',
       'businessSector': '学习模块',
       'newCustomers': '开放学习',

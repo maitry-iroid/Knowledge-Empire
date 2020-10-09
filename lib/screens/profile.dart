@@ -685,7 +685,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (data != null) {
         PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
         if(response.isSeenPrivacyPolicy != 1 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != ""){
-          Utils.showPrivacyPolicyDialog(_scaffoldKey, true,company.companyId,response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText, completion: (status){
+          Utils.showPrivacyPolicyDialog(_scaffoldKey, true, company.companyId,response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText, completion: (status){
             if (status == true) {
               companyController.text = company.companyName;
               Injector.userData.companyName = company.companyName;

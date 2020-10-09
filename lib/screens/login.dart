@@ -68,6 +68,9 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
+    emailController.text = "m3@mailinator.com";
+    passwordController.text = "11";
+
     initStateMethods();
 //    localeBloc.setLocale(Utils.getIndexLocale());
   }
@@ -428,39 +431,38 @@ class _LoginPageState extends State<LoginPage> {
       if (data != null) {
         UserData userData = UserData.fromJson(data);
 
-        await Injector.setUserData(userData, false);
+        Injector.setUserData(userData, false);
+        Injector.updateInstance();
 
-        await Injector.updateInstance();
-
-        localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-
-        if(Injector.userData.isSeenPrivacyPolicy == 0){
+        if(userData.isSeenPrivacyPolicy != 1){
           apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
-            if(privacyPolicyResponse.isSeenPrivacyPolicy == 0 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
-              Utils.showPrivacyPolicyDialog(
-                  _scaffoldKey,
-                  false,
-                  Injector.userData.activeCompany,
-                  privacyPolicyResponse.privacyPolicyTitle,
-                  privacyPolicyResponse.privacyPolicyContent,
-                  privacyPolicyResponse.privacyPolicyAcceptText, completion: (status){
-                    if(status == true){
-                      moveToChangePasswordOrDashboard();
-                    }else{
-                      Navigator.of(context).pop();
-                    }
-                  });
-            }else{
-              moveToChangePasswordOrDashboard();
+            if(privacyPolicyResponse != null){
+              if(privacyPolicyResponse.isSeenPrivacyPolicy != 1 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != ""){
+                Utils.showPrivacyPolicyDialog(_scaffoldKey, false,
+                    userData.activeCompany,
+                    privacyPolicyResponse.privacyPolicyTitle,
+                    privacyPolicyResponse.privacyPolicyContent,
+                    privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
+                      print("status :::::::::: $status--------------------------------------------------------");
+                      if(status == true){
+//                        localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                        moveToChangePasswordOrDashboard();
+                      }else{
+                        Navigator.of(context).pop();
+                      }
+                    });
+              }else{
+                moveToChangePasswordOrDashboard();
+              }
             }
           });
         }else{
           moveToChangePasswordOrDashboard();
         }
 
-
       }
     }).catchError((e) {
+      print("Error::::::::::::::::::::::::::: $e");
       CommonView.showCircularProgress(false, context);
     });
   }
@@ -474,6 +476,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void navigateToDashboard() {
+    print("Navigate to dashboard--------------------------------------------------------");
     Navigator.pushAndRemoveUntil(
         context, FadeRouteHome(), ModalRoute.withName("/login"));
   }

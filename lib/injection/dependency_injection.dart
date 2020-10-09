@@ -147,14 +147,13 @@ class Injector {
     init();
   }
 
-  static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey){
+  static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context){
     if(Injector.userData.isSeenPrivacyPolicy != 1){
       apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
         if(response.isSeenPrivacyPolicy == 0){
           Utils.showPrivacyPolicyDialog(_scaffoldKey, false,
               Injector.userData.activeCompany, response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText,
           completion: (status){
-//            if(status == true)
           });
         }
       });

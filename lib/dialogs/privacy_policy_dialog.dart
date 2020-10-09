@@ -42,12 +42,12 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
   final nickNameController = TextEditingController();
   bool isLoading = false;
 
-  bool rememberMe = false;
+  bool isAccepted = false;
 
   void _onRememberMeChanged(bool newValue) => setState(() {
-    rememberMe = newValue;
+    isAccepted = newValue;
 
-    if (rememberMe) {
+    if (isAccepted) {
       // TODO: Here goes your functionality that remembers the user.
     } else {
       // TODO: Forget the user
@@ -56,7 +56,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
 
   @override
   void initState() {
-    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+//    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     super.initState();
   }
 
@@ -116,7 +116,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                             children: [
                               Checkbox(
                                   activeColor: ColorRes.headerBlue,
-                                  value: rememberMe,
+                                  value: isAccepted,
                                   onChanged: _onRememberMeChanged
                               ),
                               Expanded(
@@ -161,7 +161,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                                 height: 40,
                                 width: 100,
                                 decoration: BoxDecoration(
-                                    color: rememberMe == true ? ColorRes.headerBlue : ColorRes.greyText,
+                                    color: isAccepted == true ? ColorRes.headerBlue : ColorRes.greyText,
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
                                         color: Colors.white
@@ -174,9 +174,9 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                                 )),
                           ),
                           onTap: () {
-                            if(rememberMe == true) Utils.playClickSound();
+                            if(isAccepted == true) Utils.playClickSound();
                             Utils.hideKeyboard(context);
-                            if(rememberMe == true) {
+                            if(isAccepted == true) {
                               if (widget.completion != null) {
                                 apiCallPrivacyPolicy(Injector.userData.userId, Const.typeUpdateAccessTime.toString(), widget.companyId, (response) {
                                   Injector.userData.isSeenPrivacyPolicy = 1;

@@ -62,8 +62,9 @@ apiCallPrivacyPolicy(int userId, String type, int companyId, void Function(Priva
 
     if (data != null) {
       PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
-      print("Response :::::::::::::::::: $response");
       completion(response);
+    }else{
+      completion(null);
     }
   });
 }

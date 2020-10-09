@@ -292,6 +292,7 @@ class IntroDailogState extends State<IntroDailog> {
         if (widget.isFromProfile) {
           Navigator.pop(context);
         } else {
+          print("Navigate to dashboard     intro page--------------------------------------------------------");
           Navigator.pushAndRemoveUntil(
               context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
@@ -302,9 +303,5 @@ class IntroDailogState extends State<IntroDailog> {
       });
       // Utils.showToast(e.toString());
     });
-  }
-
-  void navigateToDashboard() {
-    Navigator.push(context, FadeRouteHome());
   }
 }

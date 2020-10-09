@@ -257,7 +257,6 @@ class Utils {
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => PrivacyPolicyDialog(
-            scaffoldKey: _scaffoldKey,
             isFromProfile: isFromProfile,
             companyId: companyId,
             privacyPolicyTitle: title,
