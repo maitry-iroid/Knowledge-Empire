@@ -71,7 +71,7 @@ class DisplayDialogs {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image:
-                          AssetImage(Utils.getAssetsImg("challenges_bg_alert")),
+                      AssetImage(Utils.getAssetsImg("challenges_bg_alert")),
                       fit: BoxFit.cover)),
               child: Stack(
                 alignment: Alignment.center,
@@ -85,7 +85,7 @@ class DisplayDialogs {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
+                          BorderRadius.all(Radius.circular(10.0))),
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
@@ -140,10 +140,10 @@ class DisplayDialogs {
 //                                Utils.showChallengeQuestionDialog(
 //                                    context, questionData);
                                 navigationBloc.updateNavigation(HomeData(
-                                  initialPageType: Const.typeEngagement,
-                                  questionHomeData: questionData,
-                                  isChallenge: true,
-                                  isReadyForChallenge: true
+                                    initialPageType: Const.typeEngagement,
+                                    questionHomeData: questionData,
+                                    isChallenge: true,
+                                    isReadyForChallenge: true
                                 ));
                               },
                             )
@@ -165,7 +165,7 @@ class DisplayDialogs {
             ),
           );
         }
-        /*    child: Dialog(
+      /*    child: Dialog(
 
 //        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
@@ -190,7 +190,7 @@ class DisplayDialogs {
           ],
         ),
       ),*/
-        );
+    );
   }
 
   static showUpdateDialog(
@@ -257,7 +257,7 @@ class DisplayDialogs {
     );
   }
 
-    static professionalDialog(BuildContext context) {
+  static professionalDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -283,6 +283,7 @@ class DisplayDialogs {
                 Utils.playClickSound();
                 Injector.introData.profile1 = 1;
                 await Injector.setIntroData(Injector.introData);
+                Injector.updateIntroData();
                 Navigator.of(context).pop();
                 showIntroProfile2(context);
               } catch (e) {
@@ -310,7 +311,7 @@ class DisplayDialogs {
                 Utils.playClickSound();
                 Injector.introData.profile2 = 1;
                 await Injector.setIntroData(Injector.introData);
-
+                Injector.updateIntroData();
                 Navigator.of(context).pop();
               } catch (e) {
                 print(e);
@@ -340,6 +341,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroOrg2(context);
             },
           );
@@ -365,6 +367,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroOrg3(context);
             },
           );
@@ -390,6 +393,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org3 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroOrg4(context);
             },
           );
@@ -415,6 +419,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org4 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -443,6 +448,7 @@ class DisplayDialogs {
 
               Injector.introData.learningModule1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
 
               showIntroLearningModule2(context);
             },
@@ -471,6 +477,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.learningModule2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               //     showIntroAccesToYourFirstCustomers(context);
             },
           );
@@ -499,6 +506,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.newCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroNewCustomers2(context);
             },
           );
@@ -526,6 +534,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.newCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -554,6 +563,7 @@ class DisplayDialogs {
 //              await Injector.updateIntroDialogType(Const.introImpactOnBrandValueAndCash);
               Injector.introData.customerSituation = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
 //              showImpactOnBrandValueAndCash(context);
             },
           );
@@ -582,6 +592,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.existingCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
 //              await Injector.updateIntroDialogType(Const.introListOfExistingCustomers);
               showIntroExisting2(context);
             },
@@ -610,6 +621,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.existingCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               //showReadyForBusiness(context);
             },
           );
@@ -635,6 +647,7 @@ class DisplayDialogs {
 
               Injector.introData.rewards = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -658,6 +671,7 @@ class DisplayDialogs {
 
               Injector.introData.reward2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -685,6 +699,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.challenge1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroChallenge2(context);
             },
           );
@@ -712,6 +727,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.challenge2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -732,7 +748,7 @@ class DisplayDialogs {
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
             titleText:
-                Utils.getText(context, StringRes.strMarketingCommunications),
+            Utils.getText(context, StringRes.strMarketingCommunications),
             btnName: Utils.getText(context, StringRes.next),
             desTextLine: Injector.introModel.ranking1,
             onTapBtn: () async {
@@ -740,6 +756,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.ranking1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroRanking2(context);
             },
           );
@@ -767,6 +784,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.ranking2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -795,6 +813,7 @@ class DisplayDialogs {
 
               Injector.introData.team1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroTeam2(context);
             },
           );
@@ -822,6 +841,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.team2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showYourTeam3(context);
             },
           );
@@ -849,6 +869,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.team3 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
             },
           );
         });
@@ -876,6 +897,7 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.pl1 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               showIntroPL2(context);
             },
           );
@@ -902,6 +924,7 @@ class DisplayDialogs {
               Utils.playClickSound();
               Injector.introData.pl2 = 1;
               await Injector.setIntroData(Injector.introData);
+              Injector.updateIntroData();
               Navigator.pop(context);
             },
           );

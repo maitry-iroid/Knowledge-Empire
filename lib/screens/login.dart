@@ -68,8 +68,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 //
-    emailController.text = "xd@mailinator.com";
-    passwordController.text = "11";
+//    emailController.text = "xd@mailinator.com";
+//    passwordController.text = "11";
 
     initStateMethods();
 //    localeBloc.setLocale(Utils.getIndexLocale());
