@@ -90,18 +90,16 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
             alignment: Alignment.center,
             child: Column(
               children: [
+                Container(
+                  margin: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 3),
+                  child: Text(widget.privacyPolicyTitle, style: TextStyle(color: ColorRes.black, fontSize: 17, fontWeight: FontWeight.w700)),
+                ),
+                SizedBox(height: 10),
                 Expanded(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 3),
+                      padding: EdgeInsets.symmetric(horizontal: 25),
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Text(widget.privacyPolicyTitle, style: TextStyle(color: ColorRes.black, fontSize: 17, fontWeight: FontWeight.w700)),
-                            SizedBox(height: 10),
-                            Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black, fontSize: 16)),
-                          ],
-                        ),
+                        child: Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black, fontSize: 16)),
                       ),
                     )),
                 Padding(
