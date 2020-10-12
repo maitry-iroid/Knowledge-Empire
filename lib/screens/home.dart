@@ -21,6 +21,7 @@ import 'package:ke_employee/models/drawer_item.dart';
 import 'package:ke_employee/models/get_challenges.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
 import 'package:ke_employee/screens/customer_situation.dart';
 import 'package:ke_employee/screens/challenges.dart';
@@ -106,7 +107,15 @@ class HomePageState extends State<HomePage>
     super.initState();
     mRefreshAnimation = this;
     initStateMethods();
-    Injector.checkPrivacyPolicy(_scaffoldKey, context);
+    print("Home Initstate:----------------------------------------------------------");
+    //update userdata if privacy policy is updated.
+    apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
+      if(response.isSeenPrivacyPolicy == 0){
+        Injector.userData.isSeenPrivacyPolicy = 0;
+        Injector.setUserData(Injector.userData, false);
+      }
+      Injector.checkPrivacyPolicy(_scaffoldKey, context);
+    });
   }
 
   @override

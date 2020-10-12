@@ -147,6 +147,7 @@ class Injector {
     init();
   }
 
+  // check privacy policy is accepted by user or not.
   static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context){
     if(Injector.userData.isSeenPrivacyPolicy != 1){
       apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
