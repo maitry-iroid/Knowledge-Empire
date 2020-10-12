@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/privay_policy.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/change_password.dart';
 
 class ChangePasswordDialog extends StatefulWidget {

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
@@ -215,12 +214,6 @@ class HomePageState extends State<HomePage>
           ),
         );
       },
-    );
-
-    return Container(
-      width: 26.0,
-      height: 26.0,
-      child: Image.asset(Utils.getAssetsImg(icon), width: 26, height: 26),
     );
   }
 

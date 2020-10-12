@@ -4,10 +4,8 @@ import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/get_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/profile.dart';
 
 import '../commonview/background.dart';
 import '../helper/Utils.dart';
@@ -19,7 +17,6 @@ import '../helper/web_api.dart';
 import '../injection/dependency_injection.dart';
 import '../models/questions.dart';
 import '../models/releaseResource.dart';
-import 'home.dart';
 
 /*
 *   created by Riddhi

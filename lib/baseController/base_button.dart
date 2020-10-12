@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/res.dart';
 
 class BaseRaisedButton extends RaisedButton{
   final VoidCallback onPressed;

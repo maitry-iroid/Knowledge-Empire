@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/screens_portrait/drawer.dart';
 
 
 class ModulePagePortrait extends StatefulWidget {

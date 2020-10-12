@@ -17,7 +17,6 @@ import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
-import 'package:ke_employee/screens/profile.dart';
 import 'package:pdf_previewer/pdf_previewer.dart';
 import '../commonview/background.dart';
 import 'package:video_player/video_player.dart';
@@ -25,7 +24,6 @@ import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
-import 'package:http/http.dart' as http;
 
 /*
 *   created by Riddhi

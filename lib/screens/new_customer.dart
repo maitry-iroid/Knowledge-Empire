@@ -6,12 +6,9 @@ import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/profile.dart';
-
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../models/questions.dart';

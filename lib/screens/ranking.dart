@@ -9,12 +9,10 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/listItem/group_item.dart';
 import 'package:ke_employee/listItem/time_item.dart';
 import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friend_unfriend_user.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
-import 'package:ke_employee/screens/profile.dart';
 import '../commonview/background.dart';
 import '../helper/constant.dart';
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/res.dart';
-
 
 class OtherPagePortrait extends StatefulWidget {
   @override

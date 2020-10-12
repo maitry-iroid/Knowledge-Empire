@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
-import 'package:ke_employee/BLoC/get_question_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
 
 class ChallengeHeader extends StatefulWidget {
   final bool isBtnVisible;

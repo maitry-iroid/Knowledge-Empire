@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -12,7 +9,6 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/models/register_for_push.dart';
 

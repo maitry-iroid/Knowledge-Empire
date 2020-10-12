@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';

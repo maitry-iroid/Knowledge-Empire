@@ -1,7 +1,5 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/profile.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {

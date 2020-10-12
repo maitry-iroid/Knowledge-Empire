@@ -4,7 +4,6 @@ import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/profile.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

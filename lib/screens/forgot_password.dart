@@ -4,9 +4,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/forgot_password.dart';
-import 'package:ke_employee/screens/profile.dart';
 
 class FadeRouteForgotPassword extends PageRouteBuilder {
   final Widget page;

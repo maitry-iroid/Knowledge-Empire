@@ -37,11 +37,9 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization.dart';
 import 'package:path/path.dart';
-
 import 'constant.dart';
 import 'localization.dart';
 
-import 'package:ke_employee/screens_portrait/bottom_navigation.dart';
 
 class Utils {
   static double getDeviceWidth(BuildContext context) {
