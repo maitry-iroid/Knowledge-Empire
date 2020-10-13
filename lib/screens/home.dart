@@ -124,7 +124,13 @@ class HomePageState extends State<HomePage>
     print("---------------------------App state ::: $state-------------------------------");
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-      Injector.checkPrivacyPolicy(_scaffoldKey, context);
+      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
+        if(response.isSeenPrivacyPolicy == 0){
+          Injector.userData.isSeenPrivacyPolicy = 0;
+          Injector.setUserData(Injector.userData, false);
+        }
+        Injector.checkPrivacyPolicy(_scaffoldKey, context);
+      });
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
         Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       }
