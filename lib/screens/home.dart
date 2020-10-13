@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
+import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
@@ -107,6 +108,7 @@ class HomePageState extends State<HomePage>
     mRefreshAnimation = this;
     initStateMethods();
     print("Home Initstate:----------------------------------------------------------");
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     //update userdata if privacy policy is updated.
     apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
       if(response.isSeenPrivacyPolicy == 0){
