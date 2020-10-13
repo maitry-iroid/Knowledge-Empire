@@ -258,21 +258,6 @@ class Utils {
     print("Title text :-------------------------------------------------------- $title");
     if (Utils.isPrivacyPolicyDialogOpen == true){
       Navigator.of(_scaffoldKey.currentContext).pop();
-      await showDialog(
-          context: _scaffoldKey.currentContext,
-          builder: (BuildContext context) => PrivacyPolicyDialog(
-            isFromProfile: isFromProfile,
-            companyId: companyId,
-            privacyPolicyTitle: title,
-            privacyPolicyContent: content,
-            privacyPolicyAcceptText: acceptText,
-            completion: (status) {
-              Utils.isPrivacyPolicyDialogOpen = false;
-              completion(status);
-            },
-          ));
-      completion(false);
-      return;
     }
     Utils.isPrivacyPolicyDialogOpen = true;
     await showDialog(

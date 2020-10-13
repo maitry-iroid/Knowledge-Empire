@@ -128,10 +128,6 @@ class HomePageState extends State<HomePage>
         if(response.isSeenPrivacyPolicy == 0){
           Injector.userData.isSeenPrivacyPolicy = 0;
           Injector.setUserData(Injector.userData, false);
-//          if (Utils.isPrivacyPolicyDialogOpen == true){
-//            Navigator.of(_scaffoldKey.currentContext).pop();
-//            Utils.isPrivacyPolicyDialogOpen = false;
-//          }
         }
         Injector.checkPrivacyPolicy(_scaffoldKey, context);
       });
