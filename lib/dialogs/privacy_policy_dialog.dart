@@ -143,6 +143,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                           onTap: () {
                             Utils.playClickSound();
                             Utils.hideKeyboard(context);
+                            Utils.isPrivacyPolicyDialogOpen = false;
                             Navigator.of(context).pop();
                           }) : Container(),
                       InkResponse(
