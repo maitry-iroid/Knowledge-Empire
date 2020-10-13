@@ -108,6 +108,7 @@ class HomePageState extends State<HomePage>
     mRefreshAnimation = this;
     initStateMethods();
     print("Home Initstate:----------------------------------------------------------");
+    Injector.prefs.setBool(PrefKeys.isLoggedIn, true);
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     //update userdata if privacy policy is updated.
     apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){

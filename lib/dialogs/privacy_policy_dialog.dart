@@ -51,6 +51,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
   @override
   void initState() {
     super.initState();
+    Utils.isPrivacyPolicyDialogOpen = true;
   }
 
   @override

@@ -259,7 +259,6 @@ class Utils {
     if (Utils.isPrivacyPolicyDialogOpen == true){
       Navigator.of(_scaffoldKey.currentContext).pop();
     }
-    Utils.isPrivacyPolicyDialogOpen = true;
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => PrivacyPolicyDialog(

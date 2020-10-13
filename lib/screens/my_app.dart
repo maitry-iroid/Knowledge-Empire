@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/localization.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
@@ -61,7 +62,7 @@ class MyAppState extends State<MyApp> {
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home:  Injector.userId != null ? HomePage() : LoginPage(),
+          home:  (Injector.prefs.getBool(PrefKeys.isLoggedIn) ?? false) == true ? HomePage() : LoginPage(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),
