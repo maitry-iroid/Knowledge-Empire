@@ -95,7 +95,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
 
     if(Utils.isVideo(questionDataEngCustomer.mediaLink)){
-      Injector.audioPlayerBg.stop();
+      Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       Future.delayed(Duration.zero, () async {
         await this.initVideoController(questionDataEngCustomer.mediaLink);
       });
