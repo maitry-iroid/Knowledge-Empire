@@ -56,6 +56,7 @@ class _PLPageState extends State<PLPage> {
     ColorRes.chartSeven,
     ColorRes.chartEight,
     ColorRes.chartNine,
+    ColorRes.chartTen
   ];
 
   @override
@@ -900,7 +901,7 @@ class _PLPageState extends State<PLPage> {
     });
 
     performanceData.revenue.forEach((cost) {
-      totalCost += cost.lastRevenue ?? 0;
+      totalProfit += cost.lastRevenue ?? 0;
     });
 
     return (totalCost - totalProfit).abs().toString();
@@ -915,7 +916,7 @@ class _PLPageState extends State<PLPage> {
     });
 
     performanceData.revenue.forEach((cost) {
-      totalCost += cost.currentRevenue ?? 0;
+      totalProfit += cost.currentRevenue ?? 0;
     });
 
     return (totalCost - totalProfit).abs().toString();
