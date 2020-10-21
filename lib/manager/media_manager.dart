@@ -115,6 +115,11 @@ class MediaManager{
           alignment: Alignment.center,
           children: [
             Container(
+//              child: Center(
+//                  widthFactor: double.infinity,
+//                  heightFactor: double.infinity,
+//                  child: new Image.network(thumbImage,width:double.infinity,height:double.infinity, fit: BoxFit.fill,)
+//              ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -124,7 +129,8 @@ class MediaManager{
                         scale: Const.imgScaleProfile,
                         cacheManager: Injector.cacheManager),
                     fit: BoxFit.cover,
-                  )),
+                  )
+              ),
             ),
             Utils.isVideo(path) ? Container(
               child: MaterialButton(
