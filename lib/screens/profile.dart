@@ -1471,7 +1471,7 @@ class _ProfilePageState extends State<ProfilePage> {
     String os = Injector.deviceType == "ios" ? "I" : "A";
 
     String x = "004";
-    String y = "001";
+    String y = "000";
     String z = "000";
 
     return mode +

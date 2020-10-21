@@ -429,7 +429,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.0;
+				CURRENT_PROJECT_VERSION = 1.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
@@ -516,7 +516,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.0;
+				CURRENT_PROJECT_VERSION = 1.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
@@ -609,7 +609,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.0;
+				CURRENT_PROJECT_VERSION = 1.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
@@ -698,7 +698,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.0;
+				CURRENT_PROJECT_VERSION = 1.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
@@ -842,7 +842,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.0;
+				CURRENT_PROJECT_VERSION = 1.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
@@ -880,7 +880,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Runner/Ke Employee.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.0;
+				CURRENT_PROJECT_VERSION = 1.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;

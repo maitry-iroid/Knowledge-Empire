@@ -261,6 +261,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         Utils.playClickSound();
         if (mounted)
           setState(() {
+
             selectedModule = arrFinalLearningModules[index];
             isSwitched = selectedModule.isDownloadEnable == 1;
           });
