@@ -468,6 +468,8 @@ class _LoginPageState extends State<LoginPage> {
   moveToChangePasswordOrDashboard(){
     if (Injector.userData.isPasswordChanged != 1) {
       Utils.showChangePasswordDialog(_scaffoldKey, false, false);
+    } else if(Injector.userData.isFirstTimeLogin == true){
+      Utils.showNickNameDialog(_scaffoldKey, false);
     } else {
       navigateToDashboard();
     }
