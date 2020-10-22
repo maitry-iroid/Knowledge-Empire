@@ -19,7 +19,7 @@ class GetQuestionsBloc {
     bool isInternetConnected = await Utils.isInternetConnected();
     List<QuestionData> arrQuestions = List();
     if (isInternetConnected) {
-      dynamic data = await Injector.webApi.callAPI(WebApi.rqGetQuestions, rq.toJson());
+      dynamic data = await Injector.webApi.callAPI(WebApi.rqGetQuestions_v2, rq.toJson());
       if (data != null) {
         data.forEach((v) {
           arrQuestions.add(QuestionData.fromJson(v));

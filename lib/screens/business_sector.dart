@@ -370,7 +370,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     rq.userId = Injector.userId;
 
     WebApi()
-        .callAPI(WebApi.rqGetLearningModule, rq.toJson())
+        .callAPI(WebApi.rqGetLearningModule_v2, rq.toJson())
         .then((data) async {
       if (mounted)
         setState(() {

@@ -21,9 +21,11 @@ class WebApi {
   static String rqPrivacyPolicy = "privacyPolicy";
 
   static String rqGetLearningModule = "getLearningModule";
+  static String rqGetLearningModule_v2 = "getLearningModule_v2";
   static String rqGetRewards = "getRewards";
   static String rqAssignUserToModule = "assignUserToModule";
   static String rqGetQuestions = "getQuestions";
+  static String rqGetQuestions_v2 = "getQuestions_v2";
   static String rqGetOrganization = "getOrganization";
   static String rqReleaseResource = "releaseResource";
   static String rqManageOrganization = "manageOrganization";

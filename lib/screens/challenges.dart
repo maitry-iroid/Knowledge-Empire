@@ -747,7 +747,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         rq.userId = selectedFriendId;
         rq.isChallenge = 1;
 
-        WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGetLearningModule_v2, rq.toJson()).then((data) {
 //          CommonView.showCircularProgress(false, context);
 
           if (data != null) {
