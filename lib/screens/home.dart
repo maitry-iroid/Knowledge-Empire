@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
+import 'package:ke_employee/BLoC/coin_anim_bloc.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
@@ -107,12 +108,15 @@ class HomePageState extends State<HomePage>
     super.initState();
     mRefreshAnimation = this;
     initStateMethods();
-    print("Home Initstate:----------------------------------------------------------");
     Injector.prefs.setBool(PrefKeys.isLoggedIn, true);
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+    navigationBloc.setIsCoinVisible(true);
     //update userdata if privacy policy is updated.
-    apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
-      if(response.isSeenPrivacyPolicy == 0){
+    apiCallPrivacyPolicy(
+        Injector.userData.userId,
+        Const.typeGetPrivacyPolicy.toString(),
+        Injector.userData.activeCompany, (response) {
+      if (response?.isSeenPrivacyPolicy == 0) {
         Injector.userData.isSeenPrivacyPolicy = 0;
         Injector.setUserData(Injector.userData, false);
       }
@@ -122,18 +126,24 @@ class HomePageState extends State<HomePage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    print("---------------------------App state ::: $state-------------------------------");
+    print(
+        "---------------------------App state ::: $state-------------------------------");
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
-        if(response.isSeenPrivacyPolicy == 0){
+      apiCallPrivacyPolicy(
+          Injector.userData.userId,
+          Const.typeGetPrivacyPolicy.toString(),
+          Injector.userData.activeCompany, (response) {
+        if (response.isSeenPrivacyPolicy == 0) {
           Injector.userData.isSeenPrivacyPolicy = 0;
           Injector.setUserData(Injector.userData, false);
         }
         Injector.checkPrivacyPolicy(_scaffoldKey, context);
       });
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-        Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        Injector.isBusinessMode
+            ? Injector.audioPlayerBg.resume()
+            : Injector.audioPlayerBg.stop();
       }
     } else if (state == AppLifecycleState.inactive) {
       Injector.audioPlayerBg.pause();
@@ -187,7 +197,34 @@ class HomePageState extends State<HomePage>
             children: <Widget>[
               getDrawerItemWidget(),
               buildHeaderView(),
-              coinAnimation(),
+
+              StreamBuilder(
+                  stream: navigationBloc?.isCoinVisible,
+                  builder: (context, AsyncSnapshot<bool> snapshot) {
+                    print("Riddhi : ");
+                    print(snapshot.data);
+                    print(snapshot.connectionState);
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      print("waiting...");
+                      return Container(
+                        color: ColorRes.transparent,width: 0,height: 0,
+                      );
+
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.active &&
+                        snapshot.hasData) {
+
+                      isCoinVisible = snapshot.data;
+                      print("isCoinVisible..." + isCoinVisible.toString());
+                      return coinAnimation();
+                    } else if (snapshot.hasError) {
+                      print("hasError...");
+                      return Text(snapshot.error.toString());
+                    } else {
+                      print("else...");
+                      return Container();
+                    }
+                  })
 
               // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeEmployee),   3.16,employeeDrainNotifier),
               //animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeSalesPersons),   2.38,saleDrainNotifier),
@@ -336,11 +373,12 @@ class HomePageState extends State<HomePage>
       top: !isCoinVisible ? top : 5,
       left: !isCoinVisible ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
-        isCoinVisible = false;
+        // isCoinVisible = false;
         if (Injector.customerValueData != null)
           customerValueBloc.setCustomerValue(Injector.customerValueData);
         homeData.isCameFromNewCustomer = false;
-        setState(() {});
+        navigationBloc.setIsCoinVisible(false);
+        // setState(() {});
       },
       child: Container(
         child: isCoinVisible
@@ -379,11 +417,12 @@ class HomePageState extends State<HomePage>
                     ? !mQuestionCountWithData.isCorrect
                     : false);
         if (homeData.isCameFromNewCustomer || index == -1) {
-          isCoinVisible = true;
+          // isCoinVisible = true;
         }
       }
-    } else
-      isCoinVisible = false;
+    } else {
+      // isCoinVisible = false;
+    }
   }
 
   void initStateMethods() async {
@@ -408,6 +447,9 @@ class HomePageState extends State<HomePage>
     Utils.removeBadge();
 
     navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
+
+    mRefreshAnimation.onRefreshAchievement(Const.typeSales);
+    mRefreshAnimation.onRefreshAchievement(Const.typeServices);
   }
 
   void initPlatformState() async {
