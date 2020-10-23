@@ -563,52 +563,58 @@ class HomePageState extends State<HomePage>
 
   @override
   onRefreshAchievement(int type) {
-    try {
-      headerNotifier.value = true;
-      headerNotifier.notifyListeners();
-      if (type == Const.typeHR) {
-        empAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
-          employeeDrainNotifier.value = true;
-          employeeDrainNotifier.notifyListeners();
-        });
-        Timer(Duration(seconds: 3), () {
-          if (empAnimTimer != null) {
-            empAnimTimer.cancel();
-            headerNotifier.value = false;
-            headerNotifier.notifyListeners();
-          }
-        });
-      } else if (type == Const.typeSales) {
-        saleAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
-          saleDrainNotifier.value = true;
-          saleDrainNotifier.notifyListeners();
-        });
-        Timer(Duration(seconds: 3), () {
-          if (saleAnimTimer != null) {
-            saleAnimTimer.cancel();
-            headerNotifier.value = false;
-            headerNotifier.notifyListeners();
-          }
-        });
-      } else if (type == Const.typeServices) {
-        serviceAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
-          serviceDrainNotifier.value = true;
-          serviceDrainNotifier.notifyListeners();
-        });
-        Timer(Duration(seconds: 3), () {
-          if (serviceAnimTimer != null) {
-            serviceAnimTimer.cancel();
-            headerNotifier.value = false;
-            headerNotifier.notifyListeners();
-          }
-        });
-      } else {
-        headerNotifier.value = false;
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      try {
+        headerNotifier.value = true;
         headerNotifier.notifyListeners();
+        if (type == Const.typeHR) {
+          empAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+            employeeDrainNotifier.value = true;
+            employeeDrainNotifier.notifyListeners();
+          });
+          Timer(Duration(seconds: 3), () {
+            if (empAnimTimer != null) {
+              empAnimTimer.cancel();
+              headerNotifier.value = false;
+              headerNotifier.notifyListeners();
+            }
+          });
+        } else if (type == Const.typeSales) {
+          saleAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+            saleDrainNotifier.value = true;
+            saleDrainNotifier.notifyListeners();
+          });
+          Timer(Duration(seconds: 3), () {
+            if (saleAnimTimer != null) {
+              saleAnimTimer.cancel();
+              headerNotifier.value = false;
+              headerNotifier.notifyListeners();
+            }
+          });
+        } else if (type == Const.typeServices) {
+          serviceAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
+            serviceDrainNotifier.value = true;
+            serviceDrainNotifier.notifyListeners();
+          });
+          Timer(Duration(seconds: 3), () {
+            if (serviceAnimTimer != null) {
+              serviceAnimTimer.cancel();
+              headerNotifier.value = false;
+              headerNotifier.notifyListeners();
+            }
+          });
+        } else {
+          headerNotifier.value = false;
+          headerNotifier.notifyListeners();
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
-    }
+
+    });
+
+
   }
 
   void initPush() {
