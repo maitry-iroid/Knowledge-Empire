@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
-import 'package:ke_employee/BLoC/coin_anim_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
@@ -127,7 +126,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (isAnswere) {
         widget.mRefreshAnimation.onRefreshAchievement(Const.typeServices);
         widget.mRefreshAnimation.onRefreshAchievement(Const.typeSales);
-        navigationBloc.setIsCoinVisible(true);
         Future.delayed(Duration(seconds: 1));
 
         if (isCameFromNewCustomer || isChallenge) {
