@@ -216,7 +216,7 @@ class DisplayDialogs {
                 //Navigator.pop(context);
                 OpenAppstore.launch(
                     androidAppId: Injector.packageInfo.packageName,
-                    iOSAppId: Injector.packageInfo.packageName);
+                    iOSAppId: "id1491903275");
               },
               onTapSecondBtn: () {
                 Injector.prefs.setString(
