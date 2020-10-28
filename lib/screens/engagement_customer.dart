@@ -274,9 +274,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             : SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
-    //
-    // await Injector.prefs
-    //     .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
+
+    await Injector.prefs
+        .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
 
     if (questionData.isAnsweredCorrect == 1) {
       Injector.customerValueData.totalBalance =
@@ -292,14 +292,13 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           jsonEncode(Injector.customerValueData.toJson()));
     }
 
-    // Utils.isInternetConnected().then((isConnected) {
-    //   if (isConnected) {
-    //     callSubmitAnswerApi(context);
-    //   } else {
-    //     navigateToSituation(context, null);
-    //   }
-    // });
-    navigateToSituation(context, null);
+    Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) {
+        callSubmitAnswerApi(context);
+      } else {
+        navigateToSituation(context, null);
+      }
+    });
   }
 
   void performSubmitChallenge(BuildContext context) async {
