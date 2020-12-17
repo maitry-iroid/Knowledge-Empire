@@ -35,8 +35,6 @@ import 'dart:ui' as ui;
 * */
 
 class Injector {
-
-
   static SharedPreferences prefs;
 
   // Device's Unique Id
@@ -80,8 +78,7 @@ class Injector {
   static StreamController<String> headerStreamController;
 
   // to notify Home UI values when any changes made related to their value occurs.
-  static StreamController<String> homeStreamController =
-      new StreamController<String>();
+  static StreamController<String> homeStreamController = new StreamController<String>();
 
   static ui.Image image;
 
@@ -120,6 +117,8 @@ class Injector {
 
   static bool isInternetConnected = true;
 
+  static String language = StringRes.strDefault;
+
   Injector._internal();
 
   // Pending challenge question count to Attempt
@@ -148,14 +147,16 @@ class Injector {
   }
 
   // check privacy policy is accepted by user or not.
-  static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context){
-    if(Injector.userData.isSeenPrivacyPolicy != 1){
-      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response){
-        if(response.isSeenPrivacyPolicy != 1 && response.privacyPolicyTitle != "" && response.privacyPolicyContent != "" && response.privacyPolicyAcceptText != ""){
-          Utils.showPrivacyPolicyDialog(_scaffoldKey, false,
-              Injector.userData.activeCompany, response.privacyPolicyTitle, response.privacyPolicyContent, response.privacyPolicyAcceptText,
-          completion: (status){
-          });
+  static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context) {
+    if (Injector.userData.isSeenPrivacyPolicy != 1) {
+      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response) {
+        if (response.isSeenPrivacyPolicy != 1 &&
+            response.privacyPolicyTitle != "" &&
+            response.privacyPolicyContent != "" &&
+            response.privacyPolicyAcceptText != "") {
+          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, Injector.userData.activeCompany, response.privacyPolicyTitle,
+              response.privacyPolicyContent, response.privacyPolicyAcceptText,
+              completion: (status) {});
         }
       });
     }
@@ -166,8 +167,7 @@ class Injector {
   }
 
   static Future<Null> init() async {
-    final ByteData data =
-        await rootBundle.load(Utils.getAssetsImg("small_coin"));
+    final ByteData data = await rootBundle.load(Utils.getAssetsImg("small_coin"));
     image = await loadImage(new Uint8List.view(data.buffer));
   }
 
@@ -188,22 +188,19 @@ class Injector {
       localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
       if (prefs.getString(PrefKeys.customerValueData) != null) {
-        customerValueData = CustomerValueData.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.customerValueData)));
+        customerValueData = CustomerValueData.fromJson(jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
         isSoundEnable = customerValueData.isEnableSound == 1;
       }
 
       if (prefs.getString(PrefKeys.introData) != null) {
-        introData =
-            IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+        introData = IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
 
         updateIntroData();
       }
 
       if (prefs.getString(PrefKeys.dashboardStatusData) != null) {
-        dashboardStatusResponse = DashboardStatusResponse.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.dashboardStatusData)));
+        dashboardStatusResponse = DashboardStatusResponse.fromJson(jsonDecode(prefs.getString(PrefKeys.dashboardStatusData)));
       }
 
       headerStreamController = StreamController.broadcast();
@@ -218,8 +215,7 @@ class Injector {
       getIntroText();
 
       if (prefs.getString(PrefKeys.introModel) != null) {
-        introModel = IntroModel.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.introModel)));
+        introModel = IntroModel.fromJson(jsonDecode(prefs.getString(PrefKeys.introModel)));
       }
     }
   }
@@ -252,8 +248,7 @@ class Injector {
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
-    await Injector.prefs.setString(
-        PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
+    await Injector.prefs.setString(PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
 
@@ -272,16 +267,14 @@ class Injector {
 
   static setIntroData(IntroData _introData) async {
     if (_introData != null) {
-      await Injector.prefs
-          .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
+      await Injector.prefs.setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
       introData = _introData;
     }
   }
 
   static setIntroModel(IntroModel _introModel) async {
     if (_introModel != null) {
-      await Injector.prefs
-          .setString(PrefKeys.introModel, jsonEncode(_introModel.toJson()));
+      await Injector.prefs.setString(PrefKeys.introModel, jsonEncode(_introModel.toJson()));
       introModel = _introModel;
     }
   }
@@ -351,8 +344,7 @@ class Injector {
     });
   }
 
-  static Future<UpdateDialogModel> getCurrentVersion(
-      BuildContext context) async {
+  static Future<UpdateDialogModel> getCurrentVersion(BuildContext context) async {
     bool isConnected = await Utils.isInternetConnected();
     if (isConnected) {
       bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
@@ -360,8 +352,7 @@ class Injector {
         "userId": Injector.userId != null ? Injector.userId.toString() : null,
         "appVersion": packageInfo.version,
         "deviceType": isIOS ? "ios" : "android",
-        "language":
-            Injector.userData != null ? Injector.userData.language : "English"
+        "language": Injector.userData != null ? Injector.userData.language : "English"
       };
       Map data = await WebApi().callAPI(WebApi.forceUpdate, map);
       if (data != null) {
@@ -379,8 +370,7 @@ class Injector {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)), //this right here
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
             child: Container(
               height: 200,
               child: Padding(
@@ -390,9 +380,7 @@ class Injector {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'What do you want to remember?'),
+                      decoration: InputDecoration(border: InputBorder.none, hintText: 'What do you want to remember?'),
                     ),
                     SizedBox(
                       width: 320.0,

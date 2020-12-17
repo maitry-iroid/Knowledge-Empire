@@ -84,36 +84,39 @@ class WebApi {
 
     if (!Injector.isInternetConnected) return;
 
-    final response = await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).catchError((e) {
-      return null;
-    });
+    var finalResponse;
 
-    print(apiReq + "==> " + response.toString());
+    await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).then((response) {
+      if (response != null && response.statusCode == 200) {
+        print(apiReq + "==> " + response.toString());
 
-    if (response != null && response.statusCode == 200) {
-      BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
+        BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
 
-      if (_response != null) {
-        if (_response.flag == "true") {
-          if (!isUserRemovedFromCompany(_response.flag, _response.msg)) {
-            if (apiReq == rqGetDashboardStatus)
-              return jsonDecode(response.data);
-            else
-              return _response.data;
+        if (_response != null) {
+          if (_response.flag == "true") {
+            if (!isUserRemovedFromCompany(_response.flag, _response.msg)) {
+              if (apiReq == rqGetDashboardStatus) {
+                finalResponse = jsonDecode(response.data);
+              } else {
+                finalResponse = _response.data;
+              }
+            } else {
+              Utils.showToast(_response.msg);
+            }
           } else {
-            Utils.showToast(_response.msg);
-            return null;
+            Utils.showToast(_response.msg ?? StringRes.somethingWrong);
           }
         } else {
-          Utils.showToast(_response.msg ?? StringRes.somethingWrong);
-          return null;
+          Utils.showToast(StringRes.somethingWrong);
         }
-      } else {
-        Utils.showToast(StringRes.somethingWrong);
-        return null;
       }
-    }
-    return null;
+    }).catchError((e) {
+      print("err_ " + apiReq + ": " + e.toString());
+      Utils.showErrToast(apiReq + ": " + e.toString());
+    });
+
+
+    return finalResponse;
   }
 
   Future<UserData> updateProfile(Map<String, dynamic> jsonMap, File file) async {
@@ -176,7 +179,7 @@ class WebApi {
         receiveTimeout: 3000,
         headers: headers);
 
-    print("finalbaseUrl :  "+options.baseUrl);
+    print("finalbaseUrl :  " + options.baseUrl);
     dio.options = options;
     return dio;
   }

@@ -24,19 +24,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-    pageBuilder: (BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,) =>
-    page,
-    transitionsBuilder: (BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,) =>
-        FadeTransition(
-          opacity: animation,
-          child: LoginPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: LoginPage(),
+          ),
+        );
 }
 
 class LoginPage extends StatefulWidget {
@@ -53,8 +57,6 @@ class _LoginPageState extends State<LoginPage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
-  String tempLanguage = StringRes.strDefault;
-
   ScrollController _scrollController = new ScrollController();
   UpdateDialogModel status;
 
@@ -64,14 +66,12 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
-    emailController.text = "ms4@mailinator.com";
+    emailController.text = "iroid1@mailinator.com";
     passwordController.text = "11";
-
 
     Future.delayed(const Duration(milliseconds: 500), () {
       verifyCompany();
     });
-
 
 //    localeBloc.setLocale(Utils.getIndexLocale());
   }
@@ -84,10 +84,7 @@ class _LoginPageState extends State<LoginPage> {
           DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
         } else {
           DateTime clickedTime = DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
-          if (DateTime
-              .now()
-              .difference(clickedTime)
-              .inDays >= 1) {
+          if (DateTime.now().difference(clickedTime).inDays >= 1) {
             DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
           }
         }
@@ -95,8 +92,7 @@ class _LoginPageState extends State<LoginPage> {
         DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, false);
       }
     }
-    localeBloc.setLocale(0);
-    //    localeBloc.setLocale(Utils.getIndexLocale());
+    localeBloc.setLocale(Utils.getIndexLocale(Injector.language));
   }
 
   //Sound Is mute
@@ -224,24 +220,24 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkResponse(
-                      child: Text(
-                        Utils.getText(context, StringRes.selectLanguage) + " - " + tempLanguage,
-                        style: TextStyle(color: ColorRes.white, fontSize: 17),
-                      ),
-                      onTap: () {
-                        Utils.playClickSound();
-//                        Navigator.push(context, FadeRouteForgotPassword());
-//                        selectLanguagesDialog();
-                        selectLanguagesAlert(context);
-                      },
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+//                   Align(
+//                     alignment: Alignment.topRight,
+//                     child: InkResponse(
+//                       child: Text(
+//                         Utils.getText(context, StringRes.selectLanguage) + " - " + tempLanguage,
+//                         style: TextStyle(color: ColorRes.white, fontSize: 17),
+//                       ),
+//                       onTap: () {
+//                         Utils.playClickSound();
+// //                        Navigator.push(context, FadeRouteForgotPassword());
+// //                        selectLanguagesDialog();
+//                         selectLanguagesAlert(context);
+//                       },
+//                     ),
+//                   ),
                   SizedBox(
                     height: 5,
                   ),
@@ -272,108 +268,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  selectLanguagesAlert(BuildContext context) {
-    showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel: MaterialLocalizations
-            .of(context)
-            .modalBarrierDismissLabel,
-        barrierColor: ColorRes.blackTransparentColor,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(40),
-                      width: Utils.getDeviceWidth(context) / 3.0,
-                      height: Utils.getDeviceHeight(context) / 1.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: ColorRes.white,
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: 35,
-                              width: Utils.getDeviceWidth(context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                color: ColorRes.blue,
-                              ),
-                              alignment: Alignment.topCenter,
-                              child: Center(
-                                child: Text(
-                                  Utils.getText(context, StringRes.selectLanguage),
-                                  style: TextStyle(color: ColorRes.white, fontSize: 17),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            Padding(padding: EdgeInsets.only(top: 13)),
-                            languageSelectCell(StringRes.english, 0),
-                            languageSelectCell(StringRes.german, 1),
-                            languageSelectCell(StringRes.chinese, 2),
-                          ],
-                        ),
-                      )),
-                  Positioned(
-                      right: 10,
-                      child: InkResponse(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Image(
-                            image: AssetImage(Utils.getAssetsImg('close_dialog')),
-                            width: 20,
-                          ),
-                        ),
-                        onTap: () {
-                          Utils.playClickSound();
-                          Navigator.pop(context, null);
-                        },
-                      ))
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  languageSelectCell(String language, int index) {
-    return InkResponse(
-      child: Container(
-        margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
-        padding: EdgeInsets.only(top: 5, bottom: 5, left: 0, right: 0),
-        decoration: BoxDecoration(color: ColorRes.rankingProValueBg, borderRadius: BorderRadius.all(Radius.circular(8))),
-        width: Utils.getDeviceWidth(context),
-        child: Text(
-          Utils.getText(context, language),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      onTap: () async {
-        if (index == 0) {
-          tempLanguage = Const.english;
-        } else if (index == 1) {
-          tempLanguage = Const.german;
-        } else if (index == 2) {
-          tempLanguage = Const.chinese;
-        } else {
-          tempLanguage = null;
-        }
-
-        localeBloc.setLocale(Utils.getIndexLocale(tempLanguage));
-
-        Navigator.pop(context);
-      },
-    );
-  }
-
   validateForm() async {
     Utils.playClickSound();
 
@@ -397,7 +291,7 @@ class _LoginPageState extends State<LoginPage> {
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
-    loginRequest.language = tempLanguage == StringRes.strDefault ? null : tempLanguage;
+    loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
 
     Utils.hideKeyboard(context);
 
@@ -421,14 +315,14 @@ class _LoginPageState extends State<LoginPage> {
                   privacyPolicyResponse.privacyPolicyAcceptText != "") {
                 Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
                     privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                      print("status :::::::::: $status--------------------------------------------------------");
-                      if (status == true) {
-                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-                        moveToChangePasswordOrDashboard();
-                      } else {
-                        Navigator.of(context).pop();
-                      }
-                    });
+                  print("status :::::::::: $status--------------------------------------------------------");
+                  if (status == true) {
+                    // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                    moveToChangePasswordOrDashboard();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                });
               } else {
                 moveToChangePasswordOrDashboard();
               }
@@ -541,9 +435,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void verifyCompany() async {
-    isCompanyVerified = Injector.prefs.getString(PrefKeys.mainBaseUrl) != null && Injector.prefs
-        .getString(PrefKeys.mainBaseUrl)
-        .isNotEmpty;
+    isCompanyVerified = Injector.prefs.getString(PrefKeys.mainBaseUrl) != null && Injector.prefs.getString(PrefKeys.mainBaseUrl).isNotEmpty;
 
     if (!isCompanyVerified) {
       await Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());

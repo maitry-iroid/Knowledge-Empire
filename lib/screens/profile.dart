@@ -316,35 +316,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : null),
                         ),
                       ),
-                      InkResponse(
-                        onTap: () async {
-                          await callAPIForComponyName();
-                        },
-                        child: Container(
-                          height: 30,
-                          margin: EdgeInsets.symmetric(vertical: 1),
-                          alignment: Alignment.center,
-                          child: Text(
-                            Utils.getText(context, StringRes.selectCompany),
-                            style: TextStyle(
-                              color: ColorRes.white,
-                              fontSize: 15,
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              color: Injector.isBusinessMode
-                                  ? null
-                                  : ColorRes.bgSettings,
-                              borderRadius: Injector.isBusinessMode
-                                  ? null
-                                  : BorderRadius.circular(20),
-                              image: Injector.isBusinessMode
-                                  ? DecorationImage(
-                                      image: AssetImage(
-                                          Utils.getAssetsImg('bg_privacy')))
-                                  : null),
-                        ),
-                      ),
+                      // InkResponse(
+                      //   onTap: () async {
+                      //     await callAPIForComponyName();
+                      //   },
+                      //   child: Container(
+                      //     height: 30,
+                      //     margin: EdgeInsets.symmetric(vertical: 1),
+                      //     alignment: Alignment.center,
+                      //     child: Text(
+                      //       Utils.getText(context, StringRes.selectCompany),
+                      //       style: TextStyle(
+                      //         color: ColorRes.white,
+                      //         fontSize: 15,
+                      //       ),
+                      //     ),
+                      //     decoration: BoxDecoration(
+                      //         color: Injector.isBusinessMode
+                      //             ? null
+                      //             : ColorRes.bgSettings,
+                      //         borderRadius: Injector.isBusinessMode
+                      //             ? null
+                      //             : BorderRadius.circular(20),
+                      //         image: Injector.isBusinessMode
+                      //             ? DecorationImage(
+                      //                 image: AssetImage(
+                      //                     Utils.getAssetsImg('bg_privacy')))
+                      //             : null),
+                      //   ),
+                      // ),
                       InkResponse(
                         onTap: () async {
                           selectLanguagesDialog();
@@ -1413,7 +1413,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.userData.nickName = data.nickName;
         await Injector.setUserData(Injector.userData, false);
 
-        Utils.showToast(Utils.getText(context, StringRes.successProfileUpdate));
+        Utils.showSuccessToast(Utils.getText(context, StringRes.successProfileUpdate));
 
         Injector.headerStreamController.add(Const.updateProfileBrod);
 

@@ -76,13 +76,20 @@ class Utils {
   }
 
   static showToast(String message) {
-//    _scaffoldKey.currentState.showSnackBar(SnackBar(
-//      content: Text(message),
-//      duration: const Duration(milliseconds: 2000),
-//    ));
 
     Fluttertoast.showToast(
         msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.black87, textColor: Colors.white);
+  }
+  static showErrToast(String message) {
+
+    Fluttertoast.showToast(
+        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.redAccent, textColor: Colors.white);
+  }
+
+  static showSuccessToast(String message) {
+
+    Fluttertoast.showToast(
+        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.green, textColor: Colors.white);
   }
 
   static Future<String> initPlatformState() async {
