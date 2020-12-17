@@ -66,9 +66,6 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
-    emailController.text = "iroid1@mailinator.com";
-    passwordController.text = "11";
-
     Future.delayed(const Duration(milliseconds: 500), () {
       verifyCompany();
     });

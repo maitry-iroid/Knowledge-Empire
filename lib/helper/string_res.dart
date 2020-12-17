@@ -484,6 +484,7 @@ class StringRes {
       'forgotPassword': 'Forgot Password?',
       'selectLanguages': 'Select Language',
       'nickname': 'New Nickname',
+      'companyCode': 'Company code',
 
 
       //organization
@@ -911,6 +912,7 @@ class StringRes {
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
       'nickname': 'Neuer Spitzname',
+      'companyCode': 'Company code',
 
       //organization
       'fireEmp': "10 Mitarbeiter entlassen",
@@ -1321,6 +1323,7 @@ class StringRes {
       'send': '发送',
       'forgotPassword': '忘记密码?',
       'nickname': '新昵称',
+      'companyCode': 'Company code',
 
 
       //organization
@@ -1979,6 +1982,7 @@ class StringRes {
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
       'nickname': 'New Nickname',
+      'companyCode': 'Company code',
       'fireEmp': 'Reduce Level',
       'hireEmp': 'Increase Level',
       'name': 'Name',
@@ -2141,6 +2145,7 @@ class StringRes {
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
       'nickname': 'Neuer Spitzname',
+      'companyCode': 'Company code',
       'fireEmp': 'Level reduzieren',
       'hireEmp': 'Level erhöhen',
       'sector': 'Lernmodule',
@@ -2575,6 +2580,7 @@ class StringRes {
       'send': '发送',
       'forgotPassword': '忘记密码？',
       'nickname': '新昵称',
+      'companyCode': 'Company code',
       'fireEmp': '降低等级',
       'hireEmp': '提高等级',
       'sector': '模块',

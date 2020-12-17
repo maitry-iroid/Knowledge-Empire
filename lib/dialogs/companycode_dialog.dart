@@ -47,7 +47,7 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
-                height: Utils.getDeviceHeight(context) / 3.6,
+                height: 150,
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
