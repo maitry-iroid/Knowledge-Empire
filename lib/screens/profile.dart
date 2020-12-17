@@ -741,8 +741,11 @@ class _ProfilePageState extends State<ProfilePage> {
         WebApi().callAPI(WebApi.rqLogout, rq.toJson()).then((data) async {
           CommonView.showCircularProgress(false, context);
 
-          if (data != null) {}
+          if (data != null) {
+
+          }
           try {
+            Injector.prefs.remove(PrefKeys.mainBaseUrl);
             Navigator.pushAndRemoveUntil(
                 context, FadeRouteLogin(), ModalRoute.withName("/home"));
             Injector.audioPlayerBg.stop();

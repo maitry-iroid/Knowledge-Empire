@@ -24,18 +24,14 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
+    pageBuilder: (BuildContext context,
         Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
+        Animation<double> secondaryAnimation,) =>
     page,
-    transitionsBuilder: (
-        BuildContext context,
+    transitionsBuilder: (BuildContext context,
         Animation<double> animation,
         Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
+        Widget child,) =>
         FadeTransition(
           opacity: animation,
           child: LoginPage(),
@@ -62,36 +58,41 @@ class _LoginPageState extends State<LoginPage> {
   ScrollController _scrollController = new ScrollController();
   UpdateDialogModel status;
 
+  bool isCompanyVerified = false;
+
   @override
   void initState() {
     super.initState();
-//
-//    emailController.text = "font5@mailinator.com";
-//    passwordController.text = "k8&x%3!n";
 
-    initStateMethods();
+    emailController.text = "ms4@mailinator.com";
+    passwordController.text = "11";
+
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      verifyCompany();
+    });
+
+
 //    localeBloc.setLocale(Utils.getIndexLocale());
   }
 
   Future initStateMethods() async {
     status = await Injector.getCurrentVersion(context);
-    if (status != null && status.status != null && status.status != "0" ||
-        status != null && status.status != null && status.status == "2") {
+    if (status != null && status.status != null && status.status != "0" || status != null && status.status != null && status.status == "2") {
       if (status.status == "2") {
         if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-          DisplayDialogs.showUpdateDialog(
-              context, status.headlineText, status.message, true);
+          DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
         } else {
-          DateTime clickedTime =
-          DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
-          if (DateTime.now().difference(clickedTime).inDays >= 1) {
-            DisplayDialogs.showUpdateDialog(
-                context, status.headlineText, status.message, true);
+          DateTime clickedTime = DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+          if (DateTime
+              .now()
+              .difference(clickedTime)
+              .inDays >= 1) {
+            DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
           }
         }
       } else {
-        DisplayDialogs.showUpdateDialog(
-            context, status.headlineText, status.message, false);
+        DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, false);
       }
     }
     localeBloc.setLocale(0);
@@ -109,15 +110,13 @@ class _LoginPageState extends State<LoginPage> {
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Image.asset(Utils.getAssetsImg('bg_login_profesonal'),
-                fit: BoxFit.cover),
+            Image.asset(Utils.getAssetsImg('bg_login_profesonal'), fit: BoxFit.cover),
             Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        right: Utils.getDeviceWidth(context) / 15),
+                    padding: EdgeInsets.only(right: Utils.getDeviceWidth(context) / 15),
                     child: Center(
                       child: Image.asset(
                         Utils.getAssetsImg('logo_login'),
@@ -165,8 +164,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 15,
           decoration: BoxDecoration(
             color: ColorRes.blueMenuSelected,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(9), topRight: Radius.circular(9)),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(9), topRight: Radius.circular(9)),
           ),
         ),
         Container(height: 1, color: ColorRes.white),
@@ -184,8 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 10),
                   showPassword(),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Utils.getDeviceWidth(context) / 9),
+                    padding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 9),
                     child: InkResponse(
                         child: Container(
                           height: 30,
@@ -194,14 +191,10 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: ExactAssetImage(
-                                    Utils.getAssetsImg('btn_login')),
-                                alignment: Alignment.topCenter,
-                                fit: BoxFit.fill),
+                                image: ExactAssetImage(Utils.getAssetsImg('btn_login')), alignment: Alignment.topCenter, fit: BoxFit.fill),
                           ),
                           child: Text(
-                            Utils.getText(context, StringRes.login)
-                                .toUpperCase(),
+                            Utils.getText(context, StringRes.login).toUpperCase(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: ColorRes.white,
@@ -210,8 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onTap: () {
-                          Utils.isInternetConnectedWithAlert(context)
-                              .then((isConnected) async {
+                          Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
                             if (isConnected) validateForm();
                           });
                         }),
@@ -223,8 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringRes.forgotPassword)
-                            .toUpperCase(),
+                        Utils.getText(context, StringRes.forgotPassword).toUpperCase(),
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                       ),
                       onTap: () {
@@ -240,9 +231,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringRes.selectLanguage) +
-                            " - " +
-                            tempLanguage,
+                        Utils.getText(context, StringRes.selectLanguage) + " - " + tempLanguage,
                         style: TextStyle(color: ColorRes.white, fontSize: 17),
                       ),
                       onTap: () {
@@ -287,12 +276,12 @@ class _LoginPageState extends State<LoginPage> {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
-        barrierLabel:
-        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel: MaterialLocalizations
+            .of(context)
+            .modalBarrierDismissLabel,
         barrierColor: ColorRes.blackTransparentColor,
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
+        pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
           return Scaffold(
             backgroundColor: Colors.transparent,
             body: Center(
@@ -314,18 +303,14 @@ class _LoginPageState extends State<LoginPage> {
                               height: 35,
                               width: Utils.getDeviceWidth(context),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                 color: ColorRes.blue,
                               ),
                               alignment: Alignment.topCenter,
                               child: Center(
                                 child: Text(
-                                  Utils.getText(
-                                      context, StringRes.selectLanguage),
-                                  style: TextStyle(
-                                      color: ColorRes.white, fontSize: 17),
+                                  Utils.getText(context, StringRes.selectLanguage),
+                                  style: TextStyle(color: ColorRes.white, fontSize: 17),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -343,8 +328,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Image(
-                            image:
-                            AssetImage(Utils.getAssetsImg('close_dialog')),
+                            image: AssetImage(Utils.getAssetsImg('close_dialog')),
                             width: 20,
                           ),
                         ),
@@ -365,9 +349,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
         padding: EdgeInsets.only(top: 5, bottom: 5, left: 0, right: 0),
-        decoration: BoxDecoration(
-            color: ColorRes.rankingProValueBg,
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+        decoration: BoxDecoration(color: ColorRes.rankingProValueBg, borderRadius: BorderRadius.all(Radius.circular(8))),
         width: Utils.getDeviceWidth(context),
         child: Text(
           Utils.getText(context, language),
@@ -414,10 +396,8 @@ class _LoginPageState extends State<LoginPage> {
     LoginRequest loginRequest = LoginRequest();
     loginRequest.email = emailController.text.trim();
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
-    loginRequest.secret =
-        Utils.getSecret(loginRequest.email, loginRequest.password);
-    loginRequest.language =
-    tempLanguage == StringRes.strDefault ? null : tempLanguage;
+    loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
+    loginRequest.language = tempLanguage == StringRes.strDefault ? null : tempLanguage;
 
     Utils.hideKeyboard(context);
 
@@ -432,32 +412,31 @@ class _LoginPageState extends State<LoginPage> {
         Injector.setUserData(userData, false);
         Injector.updateInstance();
 
-        if(userData.isSeenPrivacyPolicy != 1){
-          apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse){
-            if(privacyPolicyResponse != null){
-              if(privacyPolicyResponse.isSeenPrivacyPolicy != 1 && privacyPolicyResponse.privacyPolicyTitle != "" && privacyPolicyResponse.privacyPolicyContent != "" && privacyPolicyResponse.privacyPolicyAcceptText != ""){
-                Utils.showPrivacyPolicyDialog(_scaffoldKey, false,
-                    userData.activeCompany,
-                    privacyPolicyResponse.privacyPolicyTitle,
-                    privacyPolicyResponse.privacyPolicyContent,
-                    privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
+        if (userData.isSeenPrivacyPolicy != 1) {
+          apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse) {
+            if (privacyPolicyResponse != null) {
+              if (privacyPolicyResponse.isSeenPrivacyPolicy != 1 &&
+                  privacyPolicyResponse.privacyPolicyTitle != "" &&
+                  privacyPolicyResponse.privacyPolicyContent != "" &&
+                  privacyPolicyResponse.privacyPolicyAcceptText != "") {
+                Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
+                    privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
                       print("status :::::::::: $status--------------------------------------------------------");
-                      if(status == true){
-                       // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                      if (status == true) {
+                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
                         moveToChangePasswordOrDashboard();
-                      }else{
+                      } else {
                         Navigator.of(context).pop();
                       }
                     });
-              }else{
+              } else {
                 moveToChangePasswordOrDashboard();
               }
             }
           });
-        }else{
+        } else {
           moveToChangePasswordOrDashboard();
         }
-
       }
     }).catchError((e) {
       print("Error::::::::::::::::::::::::::: $e");
@@ -465,10 +444,10 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  moveToChangePasswordOrDashboard(){
+  moveToChangePasswordOrDashboard() {
     if (Injector.userData.isPasswordChanged != 1) {
       Utils.showChangePasswordDialog(_scaffoldKey, false, false);
-    } else if(Injector.userData.isFirstTimeLogin == true){
+    } else if (Injector.userData.isFirstTimeLogin == true) {
       Utils.showNickNameDialog(_scaffoldKey, false);
     } else {
       navigateToDashboard();
@@ -477,8 +456,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void navigateToDashboard() {
     print("Navigate to dashboard--------------------------------------------------------");
-    Navigator.pushAndRemoveUntil(
-        context, FadeRouteHome(), ModalRoute.withName("/login"));
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
   }
 
   showEmailView() {
@@ -493,9 +471,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
                 height: 45,
                 decoration: BoxDecoration(
-                    color: ColorRes.white,
-                    border: Border.all(width: 1, color: ColorRes.white),
-                    borderRadius: BorderRadius.circular(10)),
+                    color: ColorRes.white, border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(left: 8),
                 child: Center(
                   child: TextField(
@@ -505,8 +481,7 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style:
-                    TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     onSubmitted: (value) {
                       _scrollController.animateTo(
                         0.0,
@@ -515,10 +490,8 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 10),
-                        hintText: Utils.getText(context, StringRes.emailId)
-                            .toUpperCase(),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
+                        hintText: Utils.getText(context, StringRes.emailId).toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.greyText),
                         border: InputBorder.none),
                   ),
@@ -539,9 +512,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
                 height: 45,
                 decoration: BoxDecoration(
-                    color: ColorRes.white,
-                    border: Border.all(width: 1, color: ColorRes.white),
-                    borderRadius: BorderRadius.circular(10)),
+                    color: ColorRes.white, border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.circular(10)),
                 margin: EdgeInsets.only(left: 8),
                 child: Center(
                   child: TextField(
@@ -550,8 +521,7 @@ class _LoginPageState extends State<LoginPage> {
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: TextAlign.left,
                     maxLines: 1,
-                    style:
-                    TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     onSubmitted: (value) {
                       _scrollController.animateTo(
                         0.0,
@@ -560,15 +530,24 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     },
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 10),
-                        hintText: Utils.getText(context, StringRes.password)
-                            .toUpperCase(),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
+                        hintText: Utils.getText(context, StringRes.password).toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.greyText),
                         border: InputBorder.none),
                   ),
                 )))
       ],
     );
+  }
+
+  void verifyCompany() async {
+    isCompanyVerified = Injector.prefs.getString(PrefKeys.mainBaseUrl) != null && Injector.prefs
+        .getString(PrefKeys.mainBaseUrl)
+        .isNotEmpty;
+
+    if (!isCompanyVerified) {
+      await Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
+    } else
+      initStateMethods();
   }
 }

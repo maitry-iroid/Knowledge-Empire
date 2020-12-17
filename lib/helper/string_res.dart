@@ -61,7 +61,11 @@ class StringRes {
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
+
+  //TODO add for other language
   static var newNickName = "nickname";
+  //TODO add for other language
+  static var companyCode = "companyCode";
 
 //  static var selectLanguages = "selectLanguages"; //onlu define english
 
@@ -342,7 +346,10 @@ class StringRes {
   static var enterNewPassword = "enterNewPassword ";
   static var enterRePassword = "enterRePassword";
   static var enterSameNewPassword = "enterSameNewPassword";
+  //TODO add for other language
   static var enterNickName = "enterNickName";
+  //TODO add for other language
+  static var enterCompanyCode = "enterCompanyCode";
   static var passwordChange = "passwordChange";
   static var nicknameChange = "nicknameChange";
 
@@ -783,6 +790,7 @@ class StringRes {
       'enterRePassword': 'Please re-eneter new Password.',
       'enterSameNewPassword': 'Please enter same new password.',
       'enterNickName': 'Please enter nickname',
+      'enterCompanyCode': 'Please enter company code that you received in your email',
       'passwordChange': 'Password changed Successfully.',
       'nicknameChange': 'Nickname changed Successfully',
 

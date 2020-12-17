@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/login.dart';
@@ -58,14 +59,10 @@ class WebApi {
   static String updateUserSetting = "updateUserSetting";
   static String rqGetDashboardStatus = "getDashboardStatus";
   static String getIntroText = "getIntroText";
+  static String rqVerifyCompanyCode = "verifyCompanyCode";
 
   static getRequest(String req, String data) {
-    return {
-      'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef',
-      'apiSecret': '1a42cc080ef2464a60134473276fe42e',
-      'apiRequest': req,
-      'data': data
-    };
+    return {'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef', 'apiSecret': '1a42cc080ef2464a60134473276fe42e', 'apiRequest': req, 'data': data};
   }
 
   static getUploadProfileRequest(String req, String data, File file) async {
@@ -74,9 +71,7 @@ class WebApi {
       'apiSecret': '1a42cc080ef2464a60134473276fe42e',
       'apiRequest': req,
       'data': data,
-      'profileImage': file != null
-          ? await MultipartFile.fromFile(file.path, filename: "image.jpg")
-          : null,
+      'profileImage': file != null ? await MultipartFile.fromFile(file.path, filename: "image.jpg") : null,
     });
   }
 
@@ -89,9 +84,7 @@ class WebApi {
 
     if (!Injector.isInternetConnected) return;
 
-    final response = await dio
-        .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
-        .catchError((e) {
+    final response = await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).catchError((e) {
       return null;
     });
 
@@ -123,22 +116,18 @@ class WebApi {
     return null;
   }
 
-  Future<UserData> updateProfile(
-      Map<String, dynamic> jsonMap, File file) async {
+  Future<UserData> updateProfile(Map<String, dynamic> jsonMap, File file) async {
     initDio();
 
     try {
-      FormData formData = await getUploadProfileRequest(
-          rqUpdateProfile, json.encode(jsonMap), file);
+      FormData formData = await getUploadProfileRequest(rqUpdateProfile, json.encode(jsonMap), file);
 
-      final response = await dio.post("",
-          data: formData, onSendProgress: (int sent, int total) {});
+      final response = await dio.post("", data: formData, onSendProgress: (int sent, int total) {});
 
       print(response.data);
 
       if (response.statusCode == 200) {
-        BaseResponse baseResponse =
-            BaseResponse.fromJson(jsonDecode(response.data));
+        BaseResponse baseResponse = BaseResponse.fromJson(jsonDecode(response.data));
 
         if (baseResponse != null) {
           if (baseResponse.flag == "true")
@@ -163,10 +152,7 @@ class WebApi {
 
   initDio() {
     String contentTypeHeader = 'application/json';
-    String authorizationHeader =
-        Injector.userData != null && Injector.userData.accessToken != null
-            ? "pig " + Injector.userData.accessToken
-            : "";
+    String authorizationHeader = Injector.userData != null && Injector.userData.accessToken != null ? "pig " + Injector.userData.accessToken : "";
     String deviceType = Injector.deviceType;
     String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
 
@@ -183,11 +169,14 @@ class WebApi {
     };
 
     BaseOptions options = new BaseOptions(
-        baseUrl: baseUrl,
-        connectTimeout: 20000,
+        baseUrl: Injector.prefs.getString(PrefKeys.mainBaseUrl) == null || Injector.prefs.getString(PrefKeys.mainBaseUrl).isEmpty
+            ? baseUrl
+            : Injector.prefs.getString(PrefKeys.mainBaseUrl),
+        connectTimeout: 120000,
         receiveTimeout: 3000,
         headers: headers);
 
+    print("finalbaseUrl :  "+options.baseUrl);
     dio.options = options;
     return dio;
   }

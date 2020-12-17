@@ -16,6 +16,7 @@ class PrefKeys {
   static var dashboardStatusData = "dashboardStatusData";
   static var isAudioPlaying = "isAudioPlaying";
   static var isLoggedIn = "isLoggedIn";
+  static var mainBaseUrl = "mainBaseUrl";
 
 //  static var learningModule1= "learningModule1";
 //  static var learningModule2= "learningModule2";

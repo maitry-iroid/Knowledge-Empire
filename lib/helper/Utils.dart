@@ -19,6 +19,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:ke_employee/dialogs/companycode_dialog.dart';
 import 'package:ke_employee/dialogs/nickname_dialog.dart';
 import 'package:ke_employee/dialogs/privacy_policy_dialog.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
@@ -40,9 +41,7 @@ import 'package:path/path.dart';
 import 'constant.dart';
 import 'localization.dart';
 
-
 class Utils {
-
   static bool isPrivacyPolicyDialogOpen = false;
 
   static double getDeviceWidth(BuildContext context) {
@@ -83,11 +82,7 @@ class Utils {
 //    ));
 
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.black87,
-        textColor: Colors.white);
+        msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.black87, textColor: Colors.white);
   }
 
   static Future<String> initPlatformState() async {
@@ -109,8 +104,7 @@ class Utils {
     bool isConnected = false;
 
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
     } else {
       showToast(Utils.getText(context, StringRes.noInternet));
@@ -124,8 +118,7 @@ class Utils {
     bool isConnected = false;
 
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
     } else {
       isConnected = false;
@@ -134,8 +127,7 @@ class Utils {
   }
 
   static showLoader(BuildContext context) async {
-    await showDialog(
-        context: context, builder: (BuildContext context) => Loader());
+    await showDialog(context: context, builder: (BuildContext context) => Loader());
   }
 
   static closeLoader(BuildContext context) {
@@ -246,43 +238,44 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
-
   static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => NickNameDialog(
-            isFromProfile: isFromProfile));
+    await showDialog(context: _scaffoldKey.currentContext, builder: (BuildContext context) => NickNameDialog(isFromProfile: isFromProfile));
   }
 
-  static showPrivacyPolicyDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, int companyId, String title, String content, String acceptText, {void Function(bool) completion}) async {
+  static showPrivacyPolicyDialog(
+      GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, int companyId, String title, String content, String acceptText,
+      {void Function(bool) completion}) async {
     print("Title text :-------------------------------------------------------- $title");
-    if (Utils.isPrivacyPolicyDialogOpen == true){
+    if (Utils.isPrivacyPolicyDialogOpen == true) {
       Navigator.of(_scaffoldKey.currentContext).pop();
     }
     await showDialog(
         context: _scaffoldKey.currentContext,
         builder: (BuildContext context) => PrivacyPolicyDialog(
-            isFromProfile: isFromProfile,
-            companyId: companyId,
-            privacyPolicyTitle: title,
-            privacyPolicyContent: content,
-            privacyPolicyAcceptText: acceptText,
-            completion: (status) {
-              Utils.isPrivacyPolicyDialogOpen = false;
-              completion(status);
-            },
-        ));
+              isFromProfile: isFromProfile,
+              companyId: companyId,
+              privacyPolicyTitle: title,
+              privacyPolicyContent: content,
+              privacyPolicyAcceptText: acceptText,
+              completion: (status) {
+                Utils.isPrivacyPolicyDialogOpen = false;
+                completion(status);
+              },
+            ));
   }
 
-
-  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      bool isFromProfile, bool isOldPasswordRequired) async {
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => ChangePasswordDialog(
-            scaffoldKey: _scaffoldKey,
-            isFromProfile: isFromProfile,
-            isOldPasswordRequired: isOldPasswordRequired));
+        builder: (BuildContext context) =>
+            ChangePasswordDialog(scaffoldKey: _scaffoldKey, isFromProfile: isFromProfile, isOldPasswordRequired: isOldPasswordRequired));
+  }
+
+  static Future showVerifyCompanyDialog(GlobalKey<ScaffoldState> _scaffoldKey) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) => VerifyCompanyDialog(
+            ));
   }
 
   static String generateMd5(String input) {
@@ -290,8 +283,7 @@ class Utils {
   }
 
   static getSecret(String email, String password) {
-    String text =
-        email.split('').reversed.join() + password.split('').reversed.join();
+    String text = email.split('').reversed.join() + password.split('').reversed.join();
     return generateMd5(text);
   }
 
@@ -309,9 +301,7 @@ class Utils {
   static playBackgroundMusic() async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
-    if (Injector.isBusinessMode &&
-        Injector.isSoundEnable != null &&
-        Injector.isSoundEnable) {
+    if (Injector.isBusinessMode && Injector.isSoundEnable != null && Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
@@ -340,8 +330,7 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("achievement_music.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static playClickSound() {
@@ -354,28 +343,23 @@ class Utils {
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("coin_sound.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("wrong_answer.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static achievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("achievement_music.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static proCorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("pro_right_answer.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proIncorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("pro_wrong_answer.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
 //  static audioPlay(String path) async {
@@ -406,9 +390,7 @@ class Utils {
   }
 
   static getCurrentFormattedDate() {
-    var now = new DateTime.fromMillisecondsSinceEpoch(
-        DateTime.now().millisecondsSinceEpoch,
-        isUtc: true);
+    var now = new DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch, isUtc: true);
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     String formatted = formatter.format(now);
     print(formatted);
@@ -418,8 +400,7 @@ class Utils {
   static void callSubmitAnswerApi(BuildContext context) {
     if (Injector.prefs.getString(PrefKeys.answerData) == null) return;
 
-    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
-        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
+    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
     WebApi().callAPI(WebApi.rqSubmitAnswers, rq.toJson()).then((data) async {
       if (data != null) {
@@ -452,8 +433,7 @@ class Utils {
     int finalValue = 0;
     try {
       var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
-      var b = (1 +
-          (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+      var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
       var c = (1 + (Injector.customerValueData.valueBonus / 100));
 
       finalValue = (a * b * c).round();
@@ -486,10 +466,8 @@ class Utils {
     var random = ((Random().nextInt(10))) / 10;
     int finalValue = 0;
     try {
-      var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
-          min(questionData.counter, 10) * random;
-      var b = (1 +
-          (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+      var a = max(pow(min(questionData.counter, 10), 1.2), 1) + min(questionData.counter, 10) * random;
+      var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
       var c = (2 - (Injector.customerValueData.resourceBonus / 100));
 
       finalValue = (a * b * c).round();
@@ -528,43 +506,34 @@ class Utils {
     }
   }
 
-  static updateAttemptTimeInQuestionDataLocally(
-      int questionId, String attemptTime) async {
+  static updateAttemptTimeInQuestionDataLocally(int questionId, String attemptTime) async {
     List<QuestionData> arrQuestions = List();
 
-    QuestionsResponse questionsResponse = QuestionsResponse.fromJson(
-        jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
+    QuestionsResponse questionsResponse = QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
     arrQuestions = questionsResponse.data;
 
-    QuestionData questionData =
-        arrQuestions.where((que) => que.questionId == questionId).first;
+    QuestionData questionData = arrQuestions.where((que) => que.questionId == questionId).first;
     questionData.attemptTime = attemptTime;
 
     questionsResponse.data = arrQuestions;
 
-    await Injector.prefs.setString(
-        PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+    await Injector.prefs.setString(PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
   }
 
   static List<QuestionData> getQuestionsLocally(int type) {
     List<QuestionData> arrFinalQuestion = List();
 
     if (Injector.prefs.getString(PrefKeys.questionData) != null) {
-      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(
-              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
-          .data;
+      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData))).data;
 
       arrQuestionsLocal.forEach((questionData) {
-        if (questionData.attemptTime == null ||
-            questionData.attemptTime.isEmpty) {
+        if (questionData.attemptTime == null || questionData.attemptTime.isEmpty) {
           arrFinalQuestion.add(questionData);
         } else {
-          DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss")
-              .parse(questionData.attemptTime);
+          DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(questionData.attemptTime);
           if (type == Const.getNewQueType
               ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
-              : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
-            arrFinalQuestion.add(questionData);
+              : newDateTimeObj2.difference(DateTime.now()).inDays <= 1) arrFinalQuestion.add(questionData);
         }
       });
     }
@@ -608,7 +577,7 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
       Injector.audioCache.play("all_button_clicks.wav");
     }
 
@@ -621,11 +590,8 @@ class Utils {
         type == Const.typePl) {
       bool isConnected = await isInternetConnected();
 
-
       if (Injector.dashboardStatusResponse != null) {
-        OnOffFeatureData data = Injector.dashboardStatusResponse.data
-            .where((obj) => obj.type == int.parse(type))
-            ?.first;
+        OnOffFeatureData data = Injector.dashboardStatusResponse.data.where((obj) => obj.type == int.parse(type))?.first;
 
         if (data != null && data.isFeatureOn == 0) return;
 
@@ -650,8 +616,7 @@ class Utils {
         Utils.performDashboardItemClick(context, type);
       },
       child: Container(
-        foregroundDecoration:
-            BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
+        foregroundDecoration: BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -713,8 +678,7 @@ class Utils {
 
   static getCacheNetworkImage(String url) {
     if (url.isNotEmpty) {
-      return CachedNetworkImageProvider(url,
-          scale: 1, cacheManager: Injector.cacheManager);
+      return CachedNetworkImageProvider(url, scale: 1, cacheManager: Injector.cacheManager);
     } else
       return AssetImage(Utils.getAssetsImg("user_org"));
   }
@@ -749,9 +713,7 @@ class Utils {
           ),
           child: getCount(type) > 0
               ? new DecoratedBox(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: ColorRes.greenDot),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorRes.greenDot),
                   child: Center(
                     child: Text(
                       getCount(type).toString(),
@@ -765,11 +727,7 @@ class Utils {
   static int getCount(String _type) {
     if (Injector.dashboardStatusResponse != null) {
       return Injector.dashboardStatusResponse.data.length > 0
-          ? (Injector.dashboardStatusResponse.data
-                  ?.where((obj) => obj.type == int.parse(_type))
-                  ?.first
-                  ?.unreadCount ??
-              00)
+          ? (Injector.dashboardStatusResponse.data?.where((obj) => obj.type == int.parse(_type))?.first?.unreadCount ?? 00)
           : 00;
     } else
       return 0;
@@ -928,13 +886,11 @@ class Utils {
 //        .document(userId)
 //        .updateData({Const.keyBadgeCount: FieldValue.increment(1)});
 //  }
-  static void showLockReasonDialog(
-      String typeOrg, BuildContext context, isForInternet) {
+  static void showLockReasonDialog(String typeOrg, BuildContext context, isForInternet) {
     showDialog(
         context: context,
         builder: (BuildContext context) => OrgInfoDialog(
-              text: Utils.getText(context,
-                  isForInternet ? typeOrg : getLockReasonText(typeOrg)),
+              text: Utils.getText(context, isForInternet ? typeOrg : getLockReasonText(typeOrg)),
               isForIntroDialog: true,
             ));
   }
@@ -961,10 +917,7 @@ class Utils {
       List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
 
       if (data.length > 0) {
-        int status = data
-            .where((obj) => obj.type == int.parse(type))
-            ?.first
-            ?.isFeatureOn;
+        int status = data.where((obj) => obj.type == int.parse(type))?.first?.isFeatureOn;
 
         return status == 1;
       }
@@ -978,8 +931,7 @@ class Utils {
       List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
 
       if (data.length > 0) {
-        int status =
-            data.where((obj) => obj.type == int.parse(type))?.first?.isUnlock;
+        int status = data.where((obj) => obj.type == int.parse(type))?.first?.isUnlock;
 
         return status == 0;
       }
