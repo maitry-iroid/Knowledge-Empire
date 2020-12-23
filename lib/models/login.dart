@@ -5,6 +5,7 @@ class LoginRequest {
   String password;
   String secret;
   String language;
+  String companyCode;
 
   LoginRequest({this.email, this.password, this.secret, this.language});
 
@@ -13,6 +14,7 @@ class LoginRequest {
     password = json['password'];
     secret = json['secret'];
     language = json['language'];
+    companyCode = json['companyCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class LoginRequest {
     data['password'] = this.password;
     data['secret'] = this.secret;
     data['language'] = this.language;
+    data['companyCode'] = this.companyCode;
     return data;
   }
 }

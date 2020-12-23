@@ -22,16 +22,22 @@ class VerifyCompanyDialog extends StatefulWidget {
 
 class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
   final codeController = TextEditingController();
+  final langController = TextEditingController();
   bool isLoading = false;
 
   @override
   void initState() {
 //    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    langController.text = Utils.getText(context, StringRes.selectLanguage) + " - " + Injector.language;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: showSetupPin(context),
@@ -47,7 +53,7 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
             width: Utils.getDeviceWidth(context) / 1.5,
             alignment: Alignment.center,
             child: Container(
-                height: 150,
+                height: 170,
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 alignment: Alignment.center,
                 child: Stack(
@@ -55,7 +61,7 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 0, left: 10, right: Utils.getDeviceWidth(context) / 5.5, bottom: 0),
+                      margin: EdgeInsets.only( left: 10, right: Utils.getDeviceWidth(context) / 5.5),
                       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -69,8 +75,6 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                         shrinkWrap: true,
                         children: <Widget>[
                           Container(
-                              height: 38,
-                              margin: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
                                   border: Border.all(width: 1, color: ColorRes.white),
@@ -81,7 +85,7 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                                 maxLines: 1,
                                 style: TextStyle(fontSize: 16, color: ColorRes.white),
                                 decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                                     hintText: Utils.getText(
                                       context,
                                       StringRes.companyCode,
@@ -90,25 +94,35 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                                     border: InputBorder.none),
                               )),
                           InkResponse(
-                              child: Container(
-                                  height: 38,
-                                  alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.symmetric(vertical: 10),
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  decoration: BoxDecoration(
-                                      color: ColorRes.bgTextBox,
-                                      border: Border.all(width: 1, color: ColorRes.white),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Text(
-                                    Utils.getText(context, StringRes.selectLanguage) + " - " + Injector.language,
-                                    style: TextStyle(color: ColorRes.white, fontSize: 16),
-                                  )),
-                              onTap: () {
-                                Utils.playClickSound();
+                            child: Container(
+                                margin: EdgeInsets.only(top: 15),
+                                decoration: BoxDecoration(
+                                    color: ColorRes.bgTextBox,
+                                    border: Border.all(width: 1, color: ColorRes.white),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: TextField(
+                                  controller: langController,
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  enabled: false,
+                                  style: TextStyle(fontSize: 16, color: ColorRes.white),
+                                  decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                                      // hintText: Utils.getText(
+                                      //   context,
+                                      //   StringRes.selectLanguage,
+                                      // ),
+                                      hintStyle: TextStyle(color: ColorRes.hintColor),
+                                      border: InputBorder.none),
+                                )),
+                            onTap: () {
+                              Utils.playClickSound();
 //                        Navigator.push(context, FadeRouteForgotPassword());
 //                        selectLanguagesDialog();
-                                selectLanguagesAlert(context);
-                              }),
+                              selectLanguagesAlert(context);
+                            },
+                          ),
+
                         ],
                       ),
                     ),
@@ -120,8 +134,8 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                           InkResponse(
                               child: Container(
                                   alignment: Alignment.center,
-                                  height: 40,
-                                  width: 100,
+                                  height: 45,
+                                  width: 110,
                                   decoration:
                                       BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_save")), fit: BoxFit.fill)),
                                   child: Text(
@@ -173,10 +187,9 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
         });
 
       if (data != null && data['baseUrl'] != null) {
+        Injector.companyCode = codeController.text.trim();
         Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
         Navigator.pop(context);
-      } else {
-        Utils.showToast(Utils.getText(context, StringRes.somethingWrong));
       }
     }).catchError((e) {
       if (mounted)

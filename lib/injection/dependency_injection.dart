@@ -118,6 +118,7 @@ class Injector {
   static bool isInternetConnected = true;
 
   static String language = StringRes.strDefault;
+  static String companyCode ;
 
   Injector._internal();
 

@@ -289,6 +289,7 @@ class _LoginPageState extends State<LoginPage> {
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
     loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
+    loginRequest.companyCode = Injector.companyCode;
 
     Utils.hideKeyboard(context);
 
