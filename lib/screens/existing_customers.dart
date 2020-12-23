@@ -37,7 +37,6 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     initContent();

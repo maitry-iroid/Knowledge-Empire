@@ -42,9 +42,7 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
     isAccepted = newValue;
 
     if (isAccepted) {
-      // TODO: Here goes your functionality that remembers the user.
     } else {
-      // TODO: Forget the user
     }
   });
 

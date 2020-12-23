@@ -21,7 +21,6 @@ class _LoginPagePortraitState extends State<LoginPagePortrait> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
   }

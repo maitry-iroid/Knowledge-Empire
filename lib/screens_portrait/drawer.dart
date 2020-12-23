@@ -25,7 +25,6 @@ class _DrawerPortraitState extends State<DrawerPortrait> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
