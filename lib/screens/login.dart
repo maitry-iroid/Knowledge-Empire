@@ -24,23 +24,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: LoginPage(),
-          ),
-        );
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: LoginPage(),
+        ),
+  );
 }
 
 class LoginPage extends StatefulWidget {
@@ -250,6 +250,21 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkResponse(
+                      child: Text(
+                        Utils.getText(context, 'CHANGE COMPANY OR LANGUAGE'),
+                        style: TextStyle(color: ColorRes.black, fontSize: 17),
+                      ),
+                      onTap: () {
+                        Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
+                      },
+                    ),
+                  ),
                 ],
               )),
         ),
@@ -312,14 +327,14 @@ class _LoginPageState extends State<LoginPage> {
                   privacyPolicyResponse.privacyPolicyAcceptText != "") {
                 Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
                     privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                  print("status :::::::::: $status--------------------------------------------------------");
-                  if (status == true) {
-                    // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-                    moveToChangePasswordOrDashboard();
-                  } else {
-                    Navigator.of(context).pop();
-                  }
-                });
+                      print("status :::::::::: $status--------------------------------------------------------");
+                      if (status == true) {
+                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                        moveToChangePasswordOrDashboard();
+                      } else {
+                        Navigator.of(context).pop();
+                      }
+                    });
               } else {
                 moveToChangePasswordOrDashboard();
               }

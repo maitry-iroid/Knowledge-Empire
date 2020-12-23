@@ -432,7 +432,7 @@
 				CURRENT_PROJECT_VERSION = 1.2.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/Development/flutter;
+				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -519,7 +519,7 @@
 				CURRENT_PROJECT_VERSION = 1.2.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/Development/flutter;
+				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -612,7 +612,7 @@
 				CURRENT_PROJECT_VERSION = 1.2.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/Development/flutter;
+				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -701,7 +701,7 @@
 				CURRENT_PROJECT_VERSION = 1.2.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/Development/flutter;
+				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -845,7 +845,7 @@
 				CURRENT_PROJECT_VERSION = 1.2.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/Development/flutter;
+				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -883,7 +883,7 @@
 				CURRENT_PROJECT_VERSION = 1.2.2.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/Development/flutter;
+				FLUTTER_ROOT = /Users/khushipatel/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
