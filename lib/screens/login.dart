@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       verifyCompany();
     });
 

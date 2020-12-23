@@ -9,6 +9,9 @@ import TSBackgroundFetch
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
 ) -> Bool {
+    var flutter_native_splash = 1
+    UIApplication.shared.isStatusBarHidden = false
+
     GeneratedPluginRegistrant.register(with: self)
 //    FirebaseApp.configure()
     if FirebaseApp.app() == nil {
@@ -24,4 +27,3 @@ import TSBackgroundFetch
   
 
 }
-
