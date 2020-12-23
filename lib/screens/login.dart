@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       verifyCompany();
     });
 
@@ -304,6 +304,7 @@ class _LoginPageState extends State<LoginPage> {
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
     loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
     loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
+    loginRequest.companyCode = Injector.companyCode;
 
     Utils.hideKeyboard(context);
 
