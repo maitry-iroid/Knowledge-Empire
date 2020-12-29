@@ -295,13 +295,15 @@ class _RankingPageState extends State<RankingPage> {
           ? isScrollDown ? arrFriends.last.userId : arrFriends.first.userId
           : 0;
 
-      await WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) {
+      await WebApi().callAPI(WebApi.rqGetFriends, rq.toJson()).then((data) async {
         CommonView.showCircularProgress(false, _scaffoldKey.currentContext);
         if (data != null) {
           List<GetFriendsData> arrFriendsData = List();
 
-          data.forEach((v) {
-            arrFriendsData.add(GetFriendsData.fromJson(v));
+          await Future.forEach(data, (v) async {
+            GetFriendsData model = GetFriendsData.fromJson(v);
+            await model.decryptName();
+            arrFriendsData.add(model);
           });
 
           if (arrFriendsData.isNotEmpty) {
@@ -542,7 +544,7 @@ class _RankingPageState extends State<RankingPage> {
                       : Border.all(width: 2, color: ColorRes.rankingProValueBg),
                   image: DecorationImage(
                       image: AssetImage(Utils.getAssetsImg(
-                          Injector.isBusinessMode ? 'value' : '')),
+                          Injector.isBusinessMode ? 'value' : 'value')),
                       fit: BoxFit.fill),
                 ),
                 child: Text(

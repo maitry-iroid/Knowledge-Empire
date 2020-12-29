@@ -1,3 +1,5 @@
+import 'package:ke_employee/manager/encryption_manager.dart';
+
 class GetFriendsRequest {
   int userId;
   int category;
@@ -55,6 +57,21 @@ class GetFriendsData {
     rate = json['rate'];
     profileImage = json['profileImage'];
 //    isFriends = json['isFriends'];
+  }
+
+  decryptName() async {
+    List<String> fullName = this.name.toString().split(" ");
+    this.name = "";
+    if (fullName.length > 0) {
+      if (fullName.length > 1) {
+        String decryptedFName = await EncryptionManager().stringDecryption(fullName.first);
+        String decryptedLName = await EncryptionManager().stringDecryption(fullName.last);
+        this.name = decryptedFName + " " + decryptedLName;
+      } else {
+        String decryptedFName = await EncryptionManager().stringDecryption(fullName.first);
+        this.name = decryptedFName;
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {

@@ -813,12 +813,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
         rq.userId = Injector.userId.toString();
         rq.searchText = searchText;
 
-        WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) async {
           if (data != null) {
             List<GetFriendsData> getFriendsData = List();
 
-            data.forEach((v) {
-              getFriendsData.add(GetFriendsData.fromJson(v));
+            await Future.forEach(data, (v) async {
+              GetFriendsData model = GetFriendsData.fromJson(v);
+              await model.decryptName();
+              getFriendsData.add(model);
             });
 
             getFriendsData.removeWhere(
