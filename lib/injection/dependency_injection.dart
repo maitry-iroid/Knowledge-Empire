@@ -256,6 +256,9 @@ class Injector {
     userData.name = customerValueData.name;
     userData.nickName = customerValueData.nickName;
 
+    await userData.decryptName();
+    await userData.decryptNickName();
+
     Injector.setUserData(userData, false);
 
     isSoundEnable = customerValueData.isEnableSound == 1;

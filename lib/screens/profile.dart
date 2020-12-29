@@ -13,6 +13,7 @@ import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -1388,12 +1389,15 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  updateProfile() {
+  updateProfile() async {
     Utils.playClickSound();
+
+    String nickName = await EncryptionManager().stringEncryption(nickNameController.text);
+
     var req = {
       'userId': Injector.userId,
       'companyName': companyController.text.trim(),
-      'nickName': nickNameController.text
+      'nickName': nickName
     };
 
     print("Request ::::::::::::::::::::::::: \n${req.toString()}");
@@ -1410,7 +1414,8 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.userData.profileImage = data.profileImage;
         Injector.userData.companyName = data.companyName;
         Injector.userData.name = data.name;
-        Injector.userData.nickName = data.nickName;
+        Injector.userData.nickName = await EncryptionManager().stringDecryption(data.nickName);
+
         await Injector.setUserData(Injector.userData, false);
 
         Utils.showSuccessToast(Utils.getText(context, StringRes.successProfileUpdate));

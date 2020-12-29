@@ -133,9 +133,11 @@ class WebApi {
         BaseResponse baseResponse = BaseResponse.fromJson(jsonDecode(response.data));
 
         if (baseResponse != null) {
-          if (baseResponse.flag == "true")
-            return UserData.fromJson(baseResponse.data);
-          else {
+          if (baseResponse.flag == "true") {
+            UserData userData = UserData.fromJson(baseResponse.data);
+            await userData.decryptRequiredData();
+            return userData;
+          } else {
             Utils.showToast(baseResponse.msg);
             return null;
           }

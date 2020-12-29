@@ -8,6 +8,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
@@ -300,9 +301,13 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     LoginRequest loginRequest = LoginRequest();
-    loginRequest.email = emailController.text.trim();
+
+    String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
+    loginRequest.email = encEmail;
+
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
-    loginRequest.secret = Utils.getSecret(loginRequest.email, loginRequest.password);
+
+    loginRequest.secret = Utils.getSecret(encEmail, loginRequest.password);
     loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
     loginRequest.companyCode = Injector.companyCode;
 
@@ -315,6 +320,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (data != null) {
         UserData userData = UserData.fromJson(data);
+        await userData.decryptRequiredData();
         localeBloc.setLocale(Utils.getIndexLocale(userData.language));
         Injector.setUserData(userData, false);
         Injector.updateInstance();
