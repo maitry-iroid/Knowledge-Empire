@@ -17,6 +17,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/intro.dart';
@@ -319,6 +320,8 @@ class Injector {
         WebApi().callAPI(WebApi.getIntroText, rq.toJson()).then((data) async {
           if (data != null) {
             introModel = IntroModel.fromJson(data);
+            String decryptedName = await EncryptionManager().stringDecryption(introModel.firstName);
+            introModel.profile1 = introModel.profile1.replaceAll(introModel.firstName, decryptedName);
             await Injector.setIntroModel(introModel);
           }
         }).catchError((e) {

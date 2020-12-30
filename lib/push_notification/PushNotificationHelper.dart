@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/models/register_for_push.dart';
 
@@ -136,8 +137,22 @@ class PushNotificationHelper {
     Utils.addBadge();
 
     try {
+
       title = message['notification']['title'];
       body = message['notification']['body'];
+
+      String fname = message['firstName'];
+      String lname = message['lastName'];
+
+      if (fname != null) {
+        String decrptyedFName = await EncryptionManager().stringDecryption(fname);
+        body = body.replaceAll(fname, decrptyedFName);
+      }
+
+      if (lname != null) {
+        String decrptyedLName = await EncryptionManager().stringDecryption(lname);
+        body = body.replaceAll(lname, decrptyedLName);
+      }
 
 //      title = message['title'];
 //      body = message['body'];

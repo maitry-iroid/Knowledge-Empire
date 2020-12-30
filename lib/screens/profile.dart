@@ -64,9 +64,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    showIntroDialog();
     super.initState();
-
+    showIntroDialog();
   }
 
 
