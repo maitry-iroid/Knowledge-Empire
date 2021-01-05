@@ -1413,7 +1413,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.userData.profileImage = data.profileImage;
         Injector.userData.companyName = data.companyName;
         Injector.userData.name = data.name;
-        Injector.userData.nickName = await EncryptionManager().stringDecryption(data.nickName);
+//        Injector.userData.nickName = await EncryptionManager().stringDecryption(data.nickName);
 
         await Injector.setUserData(Injector.userData, false);
 
