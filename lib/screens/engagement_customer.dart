@@ -93,7 +93,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
 
     if (Utils.isVideo(questionDataEngCustomer.mediaLink)) {
-      Injector.isBusinessMode
+//      Injector.audioPlayerBg.stop();
+      (Injector.isBusinessMode && (Injector.isSoundEnable ?? false))
           ? Injector.audioPlayerBg.resume()
           : Injector.audioPlayerBg.stop();
       Future.delayed(Duration.zero, () async {
@@ -674,6 +675,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       _chewieController = ChewieController(
           videoPlayerController: _controller,
           allowFullScreen: false,
+          allowMuting: false,
           materialProgressColors: ChewieProgressColors(
               playedColor: ColorRes.header, handleColor: ColorRes.blue),
           cupertinoProgressColors: ChewieProgressColors(

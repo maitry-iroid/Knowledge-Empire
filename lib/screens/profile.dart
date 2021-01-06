@@ -1044,7 +1044,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: 13,
                           ),
                           Text(
-                            "Nick name",
+                            Utils.getText(context, StringRes.nickname),
                             style:
                             TextStyle(color: ColorRes.white, fontSize: 15),
                           ),
@@ -1414,6 +1414,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Injector.userData.companyName = data.companyName;
         Injector.userData.name = data.name;
 //        Injector.userData.nickName = await EncryptionManager().stringDecryption(data.nickName);
+        Injector.userData.nickName = data.nickName;
 
         await Injector.setUserData(Injector.userData, false);
 

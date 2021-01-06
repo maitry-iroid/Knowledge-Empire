@@ -308,15 +308,18 @@ class Utils {
   static playBackgroundMusic() async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
+    print('--------before isPlaySound-----------------$isPlaySound');
     if (Injector.isBusinessMode && Injector.isSoundEnable != null && Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
     }
+    print('--------after isPlaySound-----------------$isPlaySound');
     await playSound(isPlaySound);
   }
 
   static Future playSound(bool isPlaySound) async {
+    print('--------in method isPlaySound-----------------$isPlaySound');
     try {
       if (isPlaySound) {
         final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');

@@ -258,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, 'CHANGE COMPANY OR LANGUAGE'),
+                        Utils.getText(context, StringRes.changeCompanyOrLanguage),
                         style: TextStyle(color: ColorRes.black, fontSize: 17),
                       ),
                       onTap: () {
@@ -314,7 +314,7 @@ class _LoginPageState extends State<LoginPage> {
     Utils.hideKeyboard(context);
 
     CommonView.showCircularProgress(true, context);
-
+    print(loginRequest.toJson());
     WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
       CommonView.showCircularProgress(false, context);
 
@@ -334,7 +334,6 @@ class _LoginPageState extends State<LoginPage> {
                   privacyPolicyResponse.privacyPolicyAcceptText != "") {
                 Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
                     privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                      print("status :::::::::: $status--------------------------------------------------------");
                       if (status == true) {
                         // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
                         moveToChangePasswordOrDashboard();

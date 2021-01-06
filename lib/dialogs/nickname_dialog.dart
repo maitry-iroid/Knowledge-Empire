@@ -5,6 +5,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/update_profile.dart';
 import 'package:ke_employee/screens/home.dart';
 
@@ -159,7 +160,7 @@ class NickNameDialogState extends State<NickNameDialog> {
 
     UpdateProfileRequest rq = UpdateProfileRequest();
     rq.userId = Injector.userData.userId.toString();
-    rq.nickName = nickNameController.text;
+    rq.nickName = await EncryptionManager().stringEncryption(nickNameController.text);
 
     WebApi().callAPI(WebApi.rqUpdateProfile, rq.toJson()).then((data) {
       if (mounted)

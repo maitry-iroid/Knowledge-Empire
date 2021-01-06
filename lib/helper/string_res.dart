@@ -63,7 +63,9 @@ class StringRes {
   static var forgotPassword = "forgotPassword";
 
   //TODO add for other language
-  static var newNickName = "nickname";
+  static var newNickName = "newNickName";
+  static var nickname = "nickName";
+
   //TODO add for other language
   static var companyCode = "companyCode";
 
@@ -350,6 +352,7 @@ class StringRes {
   static var enterNickName = "enterNickName";
   //TODO add for other language
   static var enterCompanyCode = "enterCompanyCode";
+  static var changeCompanyOrLanguage = 'changeCompanyOrLanguage';
   static var passwordChange = "passwordChange";
   static var nicknameChange = "nicknameChange";
 
@@ -427,6 +430,18 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
+
+      //Nickname
+      'enterNickName': 'Please enter nickname',
+      'nicknameChange': 'Nickname changed Successfully',
+      'newNickName': 'New Nickname',
+      'nickName': 'Nickname',
+
+      //Company code
+      'enterCompanyCode': 'Please enter company code that you received in your email',
+      'changeCompanyOrLanguage' : 'Change company or language',
+      'companyCode': 'Company code',
+
       //<editor-fold desc="english">
       //main options
       'accept': "Accept",
@@ -483,8 +498,6 @@ class StringRes {
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
       'selectLanguages': 'Select Language',
-      'nickname': 'New Nickname',
-      'companyCode': 'Company code',
 
 
       //organization
@@ -790,10 +803,7 @@ class StringRes {
       'enterNewPassword ': 'Please enter new Password.',
       'enterRePassword': 'Please re-eneter new Password.',
       'enterSameNewPassword': 'Please enter same new password.',
-      'enterNickName': 'Please enter nickname',
-      'enterCompanyCode': 'Please enter company code that you received in your email',
       'passwordChange': 'Password changed Successfully.',
-      'nicknameChange': 'Nickname changed Successfully',
 
       //intro page
       'skipTutorial': 'Skip Tutorial',
@@ -854,6 +864,18 @@ class StringRes {
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
     },
     'de': {
+      //Nickname
+      'enterNickName': 'Bitte Spitznamen eingeben',
+      'nicknameChange': 'Spitzname erfolgreich geändert',
+      'newNickName': 'Neuer Spitzname',
+      'nickName': 'Spitzname',
+
+      //Company code
+      'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
+      'changeCompanyOrLanguage' : 'Unternehmen oder Sprache ändern',
+      'companyCode': 'Unternehmenscode',
+
+
       //<editor-fold desc="german">
       //main options
       'accept': "akzeptieren",
@@ -911,8 +933,6 @@ class StringRes {
       'cancel': 'Abbrechen',
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
-      'nickname': 'Neuer Spitzname',
-      'companyCode': 'Company code',
 
       //organization
       'fireEmp': "10 Mitarbeiter entlassen",
@@ -1266,6 +1286,17 @@ class StringRes {
       'alert': "Achtung",
     },
     'zh': {
+      //Nickname
+      'enterNickName': '请输入昵称',
+      'nicknameChange': '昵称已成功更改',
+      'newNickName': '新昵称',
+      'nickName': '昵称',
+
+      //Company code
+      'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
+      'changeCompanyOrLanguage' : '更改公司或语言',
+      'companyCode': '公司代码',
+
       //<editor-fold desc="chinese">
       //main options
       'accept': "接受",
@@ -1322,9 +1353,6 @@ class StringRes {
       'cancel': '取消',
       'send': '发送',
       'forgotPassword': '忘记密码?',
-      'nickname': '新昵称',
-      'companyCode': 'Company code',
-
 
       //organization
       'fireEmp': "解雇10名员工",
@@ -1663,6 +1691,17 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
+      //Nickname
+      'enterNickName': 'Please enter nickname',
+      'nicknameChange': 'Nickname changed Successfully',
+      'newNickName': 'New Nickname',
+      'nickName': 'Nickname',
+
+      //Company code
+      'enterCompanyCode': 'Please enter company code that you received in your email',
+      'changeCompanyOrLanguage' : 'Change company or language',
+      'companyCode': 'Company code',
+
       //<editor-fold desc="english">
       'accept': "Accept",
       "decline": "Decline",
@@ -1981,8 +2020,6 @@ class StringRes {
       'cancel': 'Cancel',
       'send': 'Send',
       'forgotPassword': 'Forgot Password?',
-      'nickname': 'New Nickname',
-      'companyCode': 'Company code',
       'fireEmp': 'Reduce Level',
       'hireEmp': 'Increase Level',
       'name': 'Name',
@@ -2096,6 +2133,17 @@ class StringRes {
       'alert': "Alert"
     },
     'de': {
+      //Nickname
+      'enterNickName': 'Bitte Spitznamen eingeben',
+      'nicknameChange': 'Spitzname erfolgreich geändert',
+      'newNickName': 'Neuer Spitzname',
+      'nickName': 'Spitzname',
+
+      //Company code
+      'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
+      'changeCompanyOrLanguage' : 'Unternehmen oder Sprache ändern',
+      'companyCode': 'Unternehmenscode',
+
       //<editor-fold desc="German">
       'accept': "akzeptieren",
       "decline": "Ablehnen",
@@ -2144,8 +2192,6 @@ class StringRes {
       'cancel': 'Abbrechen',
       'send': 'Senden',
       'forgotPassword': 'Passwort Vergessen?',
-      'nickname': 'Neuer Spitzname',
-      'companyCode': 'Company code',
       'fireEmp': 'Level reduzieren',
       'hireEmp': 'Level erhöhen',
       'sector': 'Lernmodule',
@@ -2533,6 +2579,17 @@ class StringRes {
       "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
     },
     'zh': {
+      //Nickname
+      'enterNickName': '请输入昵称',
+      'nicknameChange': '昵称已成功更改',
+      'newNickName': '新昵称',
+      'nickName': '昵称',
+
+      //Company code
+      'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
+      'changeCompanyOrLanguage' : '更改公司或语言',
+      'companyCode': '公司代码',
+
       //<editor-fold desc="chines">
       'accept': "接受",
       "decline": "下降",
@@ -2579,8 +2636,6 @@ class StringRes {
       'cancel': '取消',
       'send': '发送',
       'forgotPassword': '忘记密码？',
-      'nickname': '新昵称',
-      'companyCode': 'Company code',
       'fireEmp': '降低等级',
       'hireEmp': '提高等级',
       'sector': '模块',

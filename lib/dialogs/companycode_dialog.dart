@@ -180,6 +180,8 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
         isLoading = true;
       });
 
+//    Injector.prefs.getString(PrefKeys.mainBaseUrl)
+    Injector.prefs.remove(PrefKeys.mainBaseUrl);
     WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) {
       if (mounted)
         setState(() {
