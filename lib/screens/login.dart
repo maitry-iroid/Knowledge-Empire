@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkResponse(
                       child: Text(
                         Utils.getText(context, StringRes.forgotPassword).toUpperCase(),
-                        style: TextStyle(color: ColorRes.textBlue, fontSize: 17),
+                        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -241,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkResponse(
                       child: Text(
                         Utils.getText(context, StringRes.requestDemoAccount),
-                        style: TextStyle(color: ColorRes.textBlue, fontSize: 17),
+                        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
                       ),
                       onTap: () {
                         _launchEmail("support@knowledge-empire.com");
@@ -256,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkResponse(
                       child: Text(
                         Utils.getText(context, StringRes.changeCompanyOrLanguage),
-                        style: TextStyle(color: ColorRes.textBlue, fontSize: 17),
+                        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
                       ),
                       onTap: () {
                         Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
