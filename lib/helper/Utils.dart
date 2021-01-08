@@ -290,7 +290,9 @@ class Utils {
   }
 
   static getSecret(String email, String password) {
-    String text = email.split('').reversed.join() + password.split('').reversed.join();
+    String newEmail = email.replaceAll("\n", "");
+    print("------------------- new email ::::: ${newEmail}");
+    String text = newEmail.split('').reversed.join() + password.split('').reversed.join();
     return generateMd5(text);
   }
 

@@ -22,7 +22,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _chewieController = ChewieController(
           videoPlayerController: _videoPlayerController1,
           aspectRatio: 3 / 2,
-          allowMuting: false,
           autoPlay: true,
           looping: true);
     });

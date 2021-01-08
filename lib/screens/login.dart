@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/manager/encryption_manager.dart';
+import 'package:ke_employee/manager/version_manager.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
@@ -139,7 +140,21 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: showLoginForm(),
                         ),
-                        Container(height: Utils.getDeviceHeight(context) / 4),
+                        Container(
+                          height: Utils.getDeviceHeight(context) / 4,
+                          child: Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 10, right: 25),
+                                child: Text(
+                                  VersionManager.getVersion(context),
+                                  style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.35), fontSize: 17),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -210,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkResponse(
                       child: Text(
                         Utils.getText(context, StringRes.forgotPassword).toUpperCase(),
-                        style: TextStyle(color: ColorRes.white, fontSize: 17),
+                        style: TextStyle(color: ColorRes.textBlue, fontSize: 17),
                       ),
                       onTap: () {
                         Utils.playClickSound();
@@ -218,24 +233,6 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
-//                   Align(
-//                     alignment: Alignment.topRight,
-//                     child: InkResponse(
-//                       child: Text(
-//                         Utils.getText(context, StringRes.selectLanguage) + " - " + tempLanguage,
-//                         style: TextStyle(color: ColorRes.white, fontSize: 17),
-//                       ),
-//                       onTap: () {
-//                         Utils.playClickSound();
-// //                        Navigator.push(context, FadeRouteForgotPassword());
-// //                        selectLanguagesDialog();
-//                         selectLanguagesAlert(context);
-//                       },
-//                     ),
-//                   ),
                   SizedBox(
                     height: 5,
                   ),
@@ -244,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkResponse(
                       child: Text(
                         Utils.getText(context, StringRes.requestDemoAccount),
-                        style: TextStyle(color: ColorRes.blue, fontSize: 17),
+                        style: TextStyle(color: ColorRes.textBlue, fontSize: 17),
                       ),
                       onTap: () {
                         _launchEmail("support@knowledge-empire.com");
@@ -259,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: InkResponse(
                       child: Text(
                         Utils.getText(context, StringRes.changeCompanyOrLanguage),
-                        style: TextStyle(color: ColorRes.black, fontSize: 17),
+                        style: TextStyle(color: ColorRes.textBlue, fontSize: 17),
                       ),
                       onTap: () {
                         Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
@@ -304,10 +301,13 @@ class _LoginPageState extends State<LoginPage> {
 
     String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
     loginRequest.email = encEmail;
-
+    print('--------Before Email : ${loginRequest.email}');
     loginRequest.password = Utils.generateMd5(passwordController.text.trim());
 
     loginRequest.secret = Utils.getSecret(encEmail, loginRequest.password);
+    print('--------After Email : ${loginRequest.email}');
+    print('--------Password : ${loginRequest.password}');
+    print('--------Secret : ${loginRequest.secret}');
     loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
     loginRequest.companyCode = Injector.companyCode;
 

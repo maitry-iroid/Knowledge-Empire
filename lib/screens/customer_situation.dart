@@ -11,6 +11,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
@@ -85,6 +86,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   Future<void> showIntroDialog() async {
     questionDataCustSituation = questionDataCustomerSituation;
+    questionDataCustSituation.firstName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.firstName);
+    questionDataCustSituation.lastName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.lastName);
     arrAnswerSituation = questionDataCustomerSituation?.answer;
 
     abcdList = alphaIndex;

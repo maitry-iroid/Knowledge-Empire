@@ -88,11 +88,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = questionDataEngCustomer.answer;
       abcdList = alphaIndex;
-
       getPdf();
     }
 
-    if (Utils.isVideo(questionDataEngCustomer.mediaLink)) {
+    if (Utils.isVideo(questionDataEngCustomer.mediaLink) && questionDataEngCustomer.answerType != Const.typeAnswerMedia) {
 //      Injector.audioPlayerBg.stop();
       (Injector.isBusinessMode && (Injector.isSoundEnable ?? false))
           ? Injector.audioPlayerBg.resume()
@@ -675,7 +674,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       _chewieController = ChewieController(
           videoPlayerController: _controller,
           allowFullScreen: false,
-          allowMuting: false,
           materialProgressColors: ChewieProgressColors(
               playedColor: ColorRes.header, handleColor: ColorRes.blue),
           cupertinoProgressColors: ChewieProgressColors(

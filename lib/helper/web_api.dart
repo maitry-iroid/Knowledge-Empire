@@ -112,7 +112,7 @@ class WebApi {
       }
     }).catchError((e) {
       print("err_ " + apiReq + ": " + e.toString());
-      Utils.showErrToast(apiReq + ": " + e.toString());
+//      Utils.showErrToast(apiReq + ": " + e.toString());
     });
 
 

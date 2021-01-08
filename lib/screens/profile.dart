@@ -14,6 +14,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/encryption_manager.dart';
+import 'package:ke_employee/manager/version_manager.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/company.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
@@ -220,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Container(
                           child: Center(
                             child: Text(
-                              getVersion(),
+                              VersionManager.getVersion(context),
                               style: TextStyle(
                                   color: Injector.isBusinessMode
                                       ? ColorRes.white
@@ -876,84 +877,84 @@ class _ProfilePageState extends State<ProfilePage> {
         margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        height: 36,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: ColorRes.lightBg.withOpacity(0.5),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          SizedBox(
-                            width: 13,
-                          ),
-                          Text(
-                            Utils.getText(context, StringRes.companyName),
-                            style:
-                                TextStyle(color: ColorRes.white, fontSize: 15),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 38,
-                              padding: EdgeInsets.only(left: 20, right: 20),
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("bg_name_email")),
-                                    fit: BoxFit.fill),
-                              ),
-                              child: TextField(
-                                controller: companyController,
-                                obscureText: false,
-                                focusNode: companyNameFocusNode,
-                                style: TextStyle(
-                                  color: ColorRes.white,
-                                  fontSize: 15,
-                                ),
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(bottom: 5),
-                                    border: InputBorder.none,
-//                                    hintText: Injector.userData?.companyName,
-                                    hintStyle:
-                                        TextStyle(color: ColorRes.hintColor)),
-                                maxLines: 1,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                InkResponse(
-                  child: Image(
-                    image: AssetImage(Utils.getAssetsImg("edit")),
-                    width: 40,
-                  ),
-                  onTap: () {
-                    Utils.playClickSound();
-                    FocusScope.of(context).requestFocus(companyNameFocusNode);
-                  },
-                )
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
+//            Row(
+//              children: <Widget>[
+//                Expanded(
+//                  child: Stack(
+//                    alignment: Alignment.center,
+//                    children: <Widget>[
+//                      Container(
+//                        padding: EdgeInsets.symmetric(horizontal: 20),
+//                        height: 36,
+//                        width: double.infinity,
+//                        decoration: BoxDecoration(
+//                          borderRadius: BorderRadius.circular(20),
+//                          color: ColorRes.lightBg.withOpacity(0.5),
+//                        ),
+//                      ),
+//                      Row(
+//                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                        children: <Widget>[
+//                          SizedBox(
+//                            width: 13,
+//                          ),
+//                          Text(
+//                            Utils.getText(context, StringRes.companyName),
+//                            style:
+//                                TextStyle(color: ColorRes.white, fontSize: 15),
+//                          ),
+//                          SizedBox(
+//                            width: 10,
+//                          ),
+//                          Expanded(
+//                            child: Container(
+//                              alignment: Alignment.center,
+//                              height: 38,
+//                              padding: EdgeInsets.only(left: 20, right: 20),
+//                              decoration: BoxDecoration(
+//                                image: DecorationImage(
+//                                    image: AssetImage(
+//                                        Utils.getAssetsImg("bg_name_email")),
+//                                    fit: BoxFit.fill),
+//                              ),
+//                              child: TextField(
+//                                controller: companyController,
+//                                obscureText: false,
+//                                focusNode: companyNameFocusNode,
+//                                style: TextStyle(
+//                                  color: ColorRes.white,
+//                                  fontSize: 15,
+//                                ),
+//                                decoration: InputDecoration(
+//                                    contentPadding: EdgeInsets.only(bottom: 5),
+//                                    border: InputBorder.none,
+////                                    hintText: Injector.userData?.companyName,
+//                                    hintStyle:
+//                                        TextStyle(color: ColorRes.hintColor)),
+//                                maxLines: 1,
+//                              ),
+//                            ),
+//                          )
+//                        ],
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//                InkResponse(
+//                  child: Image(
+//                    image: AssetImage(Utils.getAssetsImg("edit")),
+//                    width: 40,
+//                  ),
+//                  onTap: () {
+//                    Utils.playClickSound();
+//                    FocusScope.of(context).requestFocus(companyNameFocusNode);
+//                  },
+//                )
+//              ],
+//            ),
+//            SizedBox(
+//              height: 10,
+//            ),
             Row(
               children: <Widget>[
                 Expanded(
@@ -1457,42 +1458,6 @@ class _ProfilePageState extends State<ProfilePage> {
       CommonView.showCircularProgress(false, context);
       // Utils.showToast(e.toString());
     });
-  }
-
-  /*
-  *           IMPORTANT
-  * We introduced the "App version", so that we have a reference we can use to have a common understanding which version we are talking about.
-  * The versioning could work like this:
-  * "A-BBB-C Version: XXX.YYY-ZZZ"
-  * A is replaced with P for Productive, T for Testing (which we do not have at the moment) and D for Development.
-  * BBB is replaced if we have customer specific versions. Standard is BES (for Blue Elephants Solutions)
-  * C is replaced with the target operating system (I for iOS and A for Android). is this enough or should we have more coding for the operating system
-  * (e.g. in case of mayor changes of operating system and we need to have different versions ready for different operating systems?
-  * X= is version numbering for mayor releases. Currently 000. Once we have a version to really go live with it will be 001.
-  * Y= For bigger updated (e.g. new features implemented). Falls back to 000 when X goes up by one
-  * Z= for smaller updates and bug fixes. Falls back to 000 when Y goes up by one.
-  * */
-
-  String getVersion() {
-    String mode = Injector.isDev ? "D" : "P";
-    String customerSpecificVersion = "BES"; //Blue Elephants Solutions
-    String os = Injector.deviceType == "ios" ? "I" : "A";
-
-    String x = "004";
-    String y = "000";
-    String z = "000";
-
-    return mode +
-        "-" +
-        customerSpecificVersion +
-        "-" +
-        os +
-        " ${Utils.getText(context, StringRes.strVersion)}: " +
-        x +
-        "." +
-        y +
-        "-" +
-        z;
   }
 
   callApiForUpdateUserSetting(String updateType, int index) {

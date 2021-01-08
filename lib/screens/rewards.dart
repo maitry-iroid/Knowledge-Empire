@@ -94,7 +94,6 @@ class _RewardsPageState extends State<RewardsPage> {
       _chewieController = ChewieController(
           videoPlayerController: _controller,
           allowFullScreen: false,
-          allowMuting: false,
           materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
           cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
           looping: true);

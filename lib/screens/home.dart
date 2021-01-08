@@ -16,6 +16,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/listItem/menu_item.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/drawer_item.dart';
 import 'package:ke_employee/models/get_challenges.dart';
@@ -479,9 +480,11 @@ class HomePageState extends State<HomePage>
         });
         if (questionData != null && questionData.challengeId != null) {
           if (questionData.isFirstQuestion == 1) {
+            String firstName = await EncryptionManager().stringDecryption(questionData.firstName);
+            String lastName = await EncryptionManager().stringDecryption(questionData.lastName);
             DisplayDialogs.showChallengeDialog(
                 context,
-                questionData.firstName + " " + questionData.lastName,
+                firstName + " " + lastName,
                 questionData);
           } else {
             navigationBloc.updateNavigation(HomeData(
