@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -61,18 +63,17 @@ class PushNotificationHelper {
     Injector.firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('on message $message');
-
         showNotification(message);
       },
-//      onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,
       onResume: (Map<String, dynamic> message) async {
+        // Trigger on notification tap when app is in background.
         print('on resume $message');
-        showNotification(message);
+        Utils.showSuccessToast("Trigger on notification tap when app is in background.");
       },
       onLaunch: (Map<String, dynamic> message) async {
+        // Trigger on notification tap when app is terminated.
         print('on launch $message');
-
-        showNotification(message);
+        Utils.showSuccessToast("Trigger on notification tap when app is terminated.");
       },
     );
   }
@@ -132,27 +133,49 @@ class PushNotificationHelper {
     String body = "";
 
     print(message);
-    showLocalNotification(Injector.notificationID, body);
+
+    // String fname = "";
+    // String lname = "";
 
     Utils.addBadge();
 
     try {
 
-      title = message['notification']['title'];
-      body = message['notification']['body'];
+      if (Platform.isIOS) {
 
-      String fname = message['firstName'];
-      String lname = message['lastName'];
+        title = message['aps']['alert']['title'];
+        body = message['aps']['alert']['body'];
 
-      if (fname != null) {
-        String decrptyedFName = await EncryptionManager().stringDecryption(fname);
-        body = body.replaceAll(fname, decrptyedFName);
+        // fname = message['gcm.notification.firstName'];
+        // lname = message['gcm.notification.lastName'];
+
+      } else if (Platform.isAndroid) {
+
+        title = message['notification']['title'];
+        body = message['notification']['body'];
+
+        // fname = message['data']['firstName'];
+        // lname = message['data']['lastName'];
+
       }
 
-      if (lname != null) {
-        String decrptyedLName = await EncryptionManager().stringDecryption(lname);
-        body = body.replaceAll(lname, decrptyedLName);
-      }
+
+
+      // print("::::::::: Original body :::::::: ${body}\n::::::::::::");
+
+      // if (fname != null) {
+      //   String decrptyedFName = await EncryptionManager().stringDecryption(fname);
+      //   body = body.replaceAll(fname, decrptyedFName);
+      // }
+      //
+      // if (lname != null) {
+      //   String decrptyedLName = await EncryptionManager().stringDecryption(lname);
+      //   body = body.replaceAll(lname, decrptyedLName);
+      // }
+
+      // print("::::::::: Decrypted body :::::::: ${body}\n::::::::::::");
+
+      showLocalNotification(Injector.notificationID, body);
 
 //      title = message['title'];
 //      body = message['body'];
