@@ -4,6 +4,7 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/forgot_password.dart';
 
 class FadeRouteForgotPassword extends PageRouteBuilder {
@@ -225,7 +226,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  validateForm() {
+  validateForm() async {
 //    if(currentVol != 0) {
     Utils.playClickSound();
 //    }
@@ -240,7 +241,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     });
 
     ForgotPasswordRequest rq = ForgotPasswordRequest();
-    rq.email = emailController.text.trim();
+    String encEmail =  await EncryptionManager().stringEncryption(emailController.text.trim());
+    rq.email = encEmail;
 
     WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
       if (mounted)setState(() {
