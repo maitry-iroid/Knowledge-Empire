@@ -54,6 +54,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  final codeController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -128,10 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _scrollController,
                       shrinkWrap: true,
                       children: <Widget>[
-                        Container(height: Utils.getDeviceHeight(context) / 8),
+                        Container(height: Utils.getDeviceHeight(context) / 13),
                         Container(
                           width: double.infinity,
-                          height: Utils.getDeviceHeight(context) / 1.3,
+                          height: Utils.getDeviceHeight(context) / 1.22,
                           margin: EdgeInsets.only(left: 20, right: 20),
                           decoration: BoxDecoration(
                             color: ColorRes.loginBg,
@@ -187,6 +188,8 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.all(0),
                 children: <Widget>[
 //                  Text(Const.APP_NAME),
+                  showCompanyCodeView(),
+                  SizedBox(height: 10),
                   showEmailView(),
                   SizedBox(height: 10),
                   showPassword(),
@@ -255,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringRes.changeLanguage),
+                        Utils.getText(context, StringRes.changeLanguage) + ' - '+ Injector.language,
                         style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
                       ),
                       onTap: () {
@@ -471,6 +474,47 @@ class _LoginPageState extends State<LoginPage> {
   void navigateToDashboard() {
     print("Navigate to dashboard--------------------------------------------------------");
     Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
+  }
+
+  showCompanyCodeView() {
+    return Row(
+      children: <Widget>[
+        Image(
+          image: AssetImage(Utils.getAssetsImg("email2")),
+          width: 50,
+          height: 50,
+        ),
+        Expanded(
+            child: Container(
+                height: 45,
+                decoration: BoxDecoration(
+                    color: ColorRes.white, border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.circular(10)),
+                margin: EdgeInsets.only(left: 8),
+                child: Center(
+                  child: TextField(
+                    controller: codeController,
+                    autocorrect: Platform.isAndroid ? true : false,
+                    keyboardType: TextInputType.emailAddress,
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    onSubmitted: (value) {
+                      _scrollController.animateTo(
+                        0.0,
+                        curve: Curves.easeOut,
+                        duration: const Duration(milliseconds: 300),
+                      );
+                    },
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
+                        hintText: Utils.getText(context, StringRes.companyCode).toUpperCase(),
+                        hintStyle: TextStyle(color: ColorRes.greyText),
+                        border: InputBorder.none),
+                  ),
+                )))
+      ],
+    );
   }
 
   showEmailView() {
