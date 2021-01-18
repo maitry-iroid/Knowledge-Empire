@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
@@ -71,10 +71,25 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
 
     // Future.delayed(const Duration(milliseconds: 1000), () {
-      verifyCompany();
+
+    verifyCompany();
+    preFillData();
+    // if(Foundation.kDebugMode){
+    //   print('--------Debug mode------------');
+    //   codeController.text = 'jaymin1108';
+    //   emailController.text = "jaymin220@mailinator.com";
+    //   passwordController.text = "11";
+    // } else {
+    //   preFillData();
+    // }
     // });
 
 //    localeBloc.setLocale(Utils.getIndexLocale());
+  }
+
+  preFillData() async {
+    emailController.text = await EncryptionManager().stringDecryption(Injector.prefs.get(PrefKeys.emailId));
+    codeController.text = Injector.prefs.get(PrefKeys.companyCode);
   }
 
   Future initStateMethods() async {
@@ -408,17 +423,11 @@ class _LoginPageState extends State<LoginPage> {
       duration: const Duration(milliseconds: 300),
     );
 
-    if (mounted)
-      setState(() {
-        isLoading = true;
-      });
+    CommonView.showCircularProgress(true, context);
 
     Injector.prefs.remove(PrefKeys.mainBaseUrl);
     await WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) async {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
+      CommonView.showCircularProgress(false, context);
 
       if (data != null && data['baseUrl'] != null) {
         Injector.companyCode = codeController.text.trim();
@@ -452,6 +461,10 @@ class _LoginPageState extends State<LoginPage> {
             localeBloc.setLocale(Utils.getIndexLocale(userData.language));
             Injector.setUserData(userData, false);
             Injector.updateInstance();
+
+            //Store email and companycode in shared preference
+            Injector.prefs.setString(PrefKeys.emailId, encEmail);
+            Injector.prefs.setString(PrefKeys.companyCode, Injector.companyCode);
 
             if (userData.isSeenPrivacyPolicy != 1) {
               apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse) {

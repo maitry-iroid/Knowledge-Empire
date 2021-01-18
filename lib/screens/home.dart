@@ -558,7 +558,7 @@ class HomePageState extends State<HomePage>
 
   @override
   void dispose() {
-    Injector.homeStreamController.close();
+    // Injector.homeStreamController.close();
     _connectivitySubscription?.cancel();
     headerNotifier.dispose();
     super.dispose();

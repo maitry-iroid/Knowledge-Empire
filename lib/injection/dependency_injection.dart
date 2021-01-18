@@ -223,7 +223,17 @@ class Injector {
   }
 
   static logout() async {
+    //Get email and company code before clearing shared preference data
+    String email = Injector.prefs.getString(PrefKeys.emailId);
+    String companyCode = Injector.prefs.getString(PrefKeys.companyCode);
+
+    //Clear shared preference data
     await Injector.prefs.clear();
+
+    //Again store email and company code for pre-filling data in login page
+    await Injector.prefs.setString(PrefKeys.emailId, email);
+    await Injector.prefs.setString(PrefKeys.companyCode, companyCode);
+
     userData = null;
     userId = null;
     customerValueData = null;

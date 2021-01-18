@@ -747,10 +747,10 @@ class _ProfilePageState extends State<ProfilePage> {
           }
           try {
             Injector.prefs.remove(PrefKeys.mainBaseUrl);
+            await Injector.logout();
             Navigator.pushAndRemoveUntil(
                 context, FadeRouteLogin(), ModalRoute.withName("/home"));
             Injector.audioPlayerBg.stop();
-            await Injector.logout();
           } catch (e) {
             print(e);
           }

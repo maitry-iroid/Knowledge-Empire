@@ -17,6 +17,8 @@ class PrefKeys {
   static var isAudioPlaying = "isAudioPlaying";
   static var isLoggedIn = "isLoggedIn";
   static var mainBaseUrl = "mainBaseUrl";
+  static var emailId = 'emailId';
+  static var companyCode = 'companyCode';
 
 //  static var learningModule1= "learningModule1";
 //  static var learningModule2= "learningModule2";
