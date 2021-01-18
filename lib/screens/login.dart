@@ -64,14 +64,15 @@ class _LoginPageState extends State<LoginPage> {
   UpdateDialogModel status;
 
   bool isCompanyVerified = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 1000), () {
+    // Future.delayed(const Duration(milliseconds: 1000), () {
       verifyCompany();
-    });
+    // });
 
 //    localeBloc.setLocale(Utils.getIndexLocale());
   }
@@ -386,6 +387,11 @@ class _LoginPageState extends State<LoginPage> {
   validateForm() async {
     Utils.playClickSound();
 
+    if (codeController.text.trim().isEmpty) {
+      Utils.showToast(Utils.getText(context, StringRes.enterCompanyCode));
+      return;
+    }
+
     if (emailController.text.isEmpty) {
       Utils.showToast(Utils.getText(context, StringRes.emailEmpty));
       return;
@@ -402,62 +408,86 @@ class _LoginPageState extends State<LoginPage> {
       duration: const Duration(milliseconds: 300),
     );
 
-    LoginRequest loginRequest = LoginRequest();
+    if (mounted)
+      setState(() {
+        isLoading = true;
+      });
 
-    String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
-    loginRequest.email = encEmail;
-    print('--------Before Email : ${loginRequest.email}');
-    loginRequest.password = Utils.generateMd5(passwordController.text.trim());
+    Injector.prefs.remove(PrefKeys.mainBaseUrl);
+    await WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) async {
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
 
-    loginRequest.secret = Utils.getSecret(encEmail, loginRequest.password);
-    print('--------After Email : ${loginRequest.email}');
-    print('--------Password : ${loginRequest.password}');
-    print('--------Secret : ${loginRequest.secret}');
-    loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
-    loginRequest.companyCode = Injector.companyCode;
+      if (data != null && data['baseUrl'] != null) {
+        Injector.companyCode = codeController.text.trim();
+        await Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
+        // Navigator.pop(context);
 
-    Utils.hideKeyboard(context);
+        LoginRequest loginRequest = LoginRequest();
 
-    CommonView.showCircularProgress(true, context);
-    print(loginRequest.toJson());
-    WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
-      CommonView.showCircularProgress(false, context);
+        String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
+        loginRequest.email = encEmail;
+        print('--------Before Email : ${loginRequest.email}');
+        loginRequest.password = Utils.generateMd5(passwordController.text.trim());
 
-      if (data != null) {
-        UserData userData = UserData.fromJson(data);
-        await userData.decryptRequiredData();
-        localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-        Injector.setUserData(userData, false);
-        Injector.updateInstance();
+        loginRequest.secret = Utils.getSecret(encEmail, loginRequest.password);
+        print('--------After Email : ${loginRequest.email}');
+        print('--------Password : ${loginRequest.password}');
+        print('--------Secret : ${loginRequest.secret}');
+        loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
+        loginRequest.companyCode = Injector.companyCode;
 
-        if (userData.isSeenPrivacyPolicy != 1) {
-          apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse) {
-            if (privacyPolicyResponse != null) {
-              if (privacyPolicyResponse.isSeenPrivacyPolicy != 1 &&
-                  privacyPolicyResponse.privacyPolicyTitle != "" &&
-                  privacyPolicyResponse.privacyPolicyContent != "" &&
-                  privacyPolicyResponse.privacyPolicyAcceptText != "") {
-                Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
-                    privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                      if (status == true) {
-                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-                        moveToChangePasswordOrDashboard();
-                      } else {
-                        Navigator.of(context).pop();
-                      }
-                    });
-              } else {
-                moveToChangePasswordOrDashboard();
-              }
+        Utils.hideKeyboard(context);
+
+        CommonView.showCircularProgress(true, context);
+        print(loginRequest.toJson());
+        WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
+          CommonView.showCircularProgress(false, context);
+
+          if (data != null) {
+            UserData userData = UserData.fromJson(data);
+            await userData.decryptRequiredData();
+            localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+            Injector.setUserData(userData, false);
+            Injector.updateInstance();
+
+            if (userData.isSeenPrivacyPolicy != 1) {
+              apiCallPrivacyPolicy(userData.userId, Const.typeGetPrivacyPolicy.toString(), userData.activeCompany, (privacyPolicyResponse) {
+                if (privacyPolicyResponse != null) {
+                  if (privacyPolicyResponse.isSeenPrivacyPolicy != 1 &&
+                      privacyPolicyResponse.privacyPolicyTitle != "" &&
+                      privacyPolicyResponse.privacyPolicyContent != "" &&
+                      privacyPolicyResponse.privacyPolicyAcceptText != "") {
+                    Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
+                        privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
+                          if (status == true) {
+                            // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                            moveToChangePasswordOrDashboard();
+                          } else {
+                            Navigator.of(context).pop();
+                          }
+                        });
+                  } else {
+                    moveToChangePasswordOrDashboard();
+                  }
+                }
+              });
+            } else {
+              moveToChangePasswordOrDashboard();
             }
-          });
-        } else {
-          moveToChangePasswordOrDashboard();
-        }
+          }
+        }).catchError((e) {
+          print("Error::::::::::::::::::::::::::: $e");
+          CommonView.showCircularProgress(false, context);
+        });
       }
     }).catchError((e) {
-      print("Error::::::::::::::::::::::::::: $e");
-      CommonView.showCircularProgress(false, context);
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
     });
   }
 
@@ -601,9 +631,9 @@ class _LoginPageState extends State<LoginPage> {
   void verifyCompany() async {
     isCompanyVerified = Injector.prefs.getString(PrefKeys.mainBaseUrl) != null && Injector.prefs.getString(PrefKeys.mainBaseUrl).isNotEmpty;
 
-    if (!isCompanyVerified) {
-      await Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
-    } else
-      initStateMethods();
+    // if (!isCompanyVerified) {
+    //   await Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
+    // } else
+    //   initStateMethods();
   }
 }
