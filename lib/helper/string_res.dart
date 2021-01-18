@@ -352,7 +352,7 @@ class StringRes {
   static var enterNickName = "enterNickName";
   //TODO add for other language
   static var enterCompanyCode = "enterCompanyCode";
-  static var changeCompanyOrLanguage = 'changeCompanyOrLanguage';
+  static var changeLanguage = 'changeLanguage';
   static var passwordChange = "passwordChange";
   static var nicknameChange = "nicknameChange";
 
@@ -439,7 +439,7 @@ class StringRes {
 
       //Company code
       'enterCompanyCode': 'Please enter company code that you received in your email',
-      'changeCompanyOrLanguage' : 'Change company or language',
+      'changeLanguage' : 'Change Language',
       'companyCode': 'Company code',
 
       //<editor-fold desc="english">
@@ -872,7 +872,7 @@ class StringRes {
 
       //Company code
       'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
-      'changeCompanyOrLanguage' : 'Unternehmen oder Sprache ändern',
+      'changeLanguage' : 'Sprache ändern',
       'companyCode': 'Unternehmenscode',
 
 
@@ -1294,7 +1294,7 @@ class StringRes {
 
       //Company code
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
-      'changeCompanyOrLanguage' : '更改公司或语言',
+      'changeLanguage' : '改变语言',
       'companyCode': '公司代码',
 
       //<editor-fold desc="chinese">
@@ -1699,7 +1699,7 @@ class StringRes {
 
       //Company code
       'enterCompanyCode': 'Please enter company code that you received in your email',
-      'changeCompanyOrLanguage' : 'Change company or language',
+      'changeLanguage' : 'Change Language',
       'companyCode': 'Company code',
 
       //<editor-fold desc="english">
@@ -2141,7 +2141,7 @@ class StringRes {
 
       //Company code
       'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
-      'changeCompanyOrLanguage' : 'Unternehmen oder Sprache ändern',
+      'changeLanguage' : 'Sprache ändern',
       'companyCode': 'Unternehmenscode',
 
       //<editor-fold desc="German">
@@ -2587,7 +2587,7 @@ class StringRes {
 
       //Company code
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
-      'changeCompanyOrLanguage' : '更改公司或语言',
+      'changeLanguage' : '改变语言',
       'companyCode': '公司代码',
 
       //<editor-fold desc="chines">

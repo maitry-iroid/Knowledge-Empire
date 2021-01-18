@@ -255,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.topRight,
                     child: InkResponse(
                       child: Text(
-                        Utils.getText(context, StringRes.changeCompanyOrLanguage),
+                        Utils.getText(context, StringRes.changeLanguage),
                         style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
                       ),
                       onTap: () {
