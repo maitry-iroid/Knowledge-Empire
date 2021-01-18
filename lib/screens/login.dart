@@ -259,7 +259,9 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
                       ),
                       onTap: () {
-                        Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
+                        Utils.playClickSound();
+                        selectLanguagesAlert(context);
+                        // Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
                       },
                     ),
                   ),
@@ -276,6 +278,106 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       throw 'Could not launch';
     }
+  }
+
+  selectLanguagesAlert(BuildContext context) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: ColorRes.blackTransparentColor,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.all(40),
+                      width: Utils.getDeviceWidth(context) / 3.0,
+                      height: Utils.getDeviceHeight(context) / 1.9,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: ColorRes.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 35,
+                              width: Utils.getDeviceWidth(context),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                                color: ColorRes.blue,
+                              ),
+                              alignment: Alignment.topCenter,
+                              child: Center(
+                                child: Text(
+                                  Utils.getText(context, StringRes.selectLanguage),
+                                  style: TextStyle(color: ColorRes.white, fontSize: 17),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            Padding(padding: EdgeInsets.only(top: 13)),
+                            languageSelectCell(StringRes.english, 0),
+                            languageSelectCell(StringRes.german, 1),
+                            languageSelectCell(StringRes.chinese, 2),
+                          ],
+                        ),
+                      )),
+                  Positioned(
+                      right: 10,
+                      child: InkResponse(
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Image(
+                            image: AssetImage(Utils.getAssetsImg('close_dialog')),
+                            width: 20,
+                          ),
+                        ),
+                        onTap: () {
+                          Utils.playClickSound();
+                          Navigator.pop(context, null);
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  languageSelectCell(String language, int index) {
+    return InkResponse(
+      child: Container(
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+        padding: EdgeInsets.only(top: 5, bottom: 5, left: 0, right: 0),
+        decoration: BoxDecoration(color: ColorRes.rankingProValueBg, borderRadius: BorderRadius.all(Radius.circular(8))),
+        width: Utils.getDeviceWidth(context),
+        child: Text(
+          Utils.getText(context, language),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      onTap: () async {
+        if (index == 0) {
+          Injector.language = Const.english;
+        } else if (index == 1) {
+          Injector.language = Const.german;
+        } else if (index == 2) {
+          Injector.language = Const.chinese;
+        } else {
+          Injector.language = null;
+        }
+
+        localeBloc.setLocale(Utils.getIndexLocale(Injector.language));
+
+        Navigator.pop(context);
+      },
+    );
   }
 
   validateForm() async {
