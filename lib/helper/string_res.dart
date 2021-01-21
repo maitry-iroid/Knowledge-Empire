@@ -442,6 +442,13 @@ class StringRes {
       'changeLanguage' : 'Change Language',
       'companyCode': 'Company code',
 
+
+      //password
+      'enterSameNewPassword': 'Please enter same new password.',
+      'enterRePassword': 'Please re-eneter new Password.',
+      'enterNewPassword ': 'Please enter new Password.',
+      'enterOldPassword': 'Please enter old Password.',
+
       //<editor-fold desc="english">
       //main options
       'accept': "Accept",
@@ -799,10 +806,6 @@ class StringRes {
       'emailEmpty': 'Email can\'t be empty.',
       'passWordEmpty': 'Password can\'t be empty.',
       'mailSent': 'Mail sent Successfully.',
-      'enterOldPassword': 'Please enter old Password.',
-      'enterNewPassword ': 'Please enter new Password.',
-      'enterRePassword': 'Please re-eneter new Password.',
-      'enterSameNewPassword': 'Please enter same new password.',
       'passwordChange': 'Password changed Successfully.',
 
       //intro page
@@ -875,6 +878,11 @@ class StringRes {
       'changeLanguage' : 'Sprache ändern',
       'companyCode': 'Unternehmenscode',
 
+      //password
+      'enterOldPassword': 'Bitte geben Sie das alte Passwort ein.',
+      'enterSameNewPassword': 'Bitte geben Sie das gleiche neue Passwort ein.',
+      'enterRePassword': 'Bitte geben Sie das neue Passwort erneut ein.',
+      'enterNewPassword ': 'Bitte geben Sie ein neues Passwort ein.',
 
       //<editor-fold desc="german">
       //main options
@@ -1296,6 +1304,12 @@ class StringRes {
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
       'changeLanguage' : '改变语言',
       'companyCode': '公司代码',
+
+      //password
+      'enterOldPassword': '请输入旧密码。',
+      'enterNewPassword ': '请输入新密码。',
+      'enterRePassword': '请重新输入新密码。',
+      'enterSameNewPassword': '请输入相同的新密码。',
 
       //<editor-fold desc="chinese">
       //main options
@@ -2144,6 +2158,12 @@ class StringRes {
       'changeLanguage' : 'Sprache ändern',
       'companyCode': 'Unternehmenscode',
 
+      //password
+      'enterOldPassword': 'Bitte geben Sie das alte Passwort ein.',
+      'enterSameNewPassword': 'Bitte geben Sie das gleiche neue Passwort ein.',
+      'enterRePassword': 'Bitte geben Sie das neue Passwort erneut ein.',
+      'enterNewPassword ': 'Bitte geben Sie ein neues Passwort ein.',
+
       //<editor-fold desc="German">
       'accept': "akzeptieren",
       "decline": "Ablehnen",
@@ -2589,6 +2609,12 @@ class StringRes {
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
       'changeLanguage' : '改变语言',
       'companyCode': '公司代码',
+
+      //password
+      'enterOldPassword': '请输入旧密码。',
+      'enterNewPassword ': '请输入新密码。',
+      'enterRePassword': '请重新输入新密码。',
+      'enterSameNewPassword': '请输入相同的新密码。',
 
       //<editor-fold desc="chines">
       'accept': "接受",
