@@ -86,8 +86,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   Future<void> showIntroDialog() async {
     questionDataCustSituation = questionDataCustomerSituation;
-    questionDataCustSituation.firstName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.firstName);
-    questionDataCustSituation.lastName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.lastName);
+    String firstName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.firstName);
+    String lastName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.lastName);
+    if((firstName?.length ?? 0) > 0) {
+      questionDataCustSituation.firstName = firstName;
+    }
+    if((lastName?.length ?? 0) > 0) {
+      questionDataCustSituation.lastName = lastName;
+    }
+    // questionDataCustSituation.firstName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.firstName);
+    // questionDataCustSituation.lastName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.lastName);
     arrAnswerSituation = questionDataCustomerSituation?.answer;
 
     abcdList = alphaIndex;
