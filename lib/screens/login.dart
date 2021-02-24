@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
 
   List languagesList = [StringRes.english, StringRes.german, StringRes.chinese];
 
-  ScrollController _scrollController = new ScrollController();
+  // ScrollController _scrollController = new ScrollController();
   UpdateDialogModel status;
 
   bool isCompanyVerified = false;
@@ -116,75 +116,99 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: ColorRes.fontDarkGrey,
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Image.asset(Utils.getAssetsImg('bg_login_profesonal'), fit: BoxFit.cover),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: Utils.getDeviceWidth(context) / 15),
-                    child: Center(
-                      child: Image.asset(
-                        Utils.getAssetsImg('logo_login'),
-                        height: Utils.getDeviceHeight(context) / 1.8,
-                        width: Utils.getDeviceWidth(context) / 3.8,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+      resizeToAvoidBottomInset: false,
+      key: _scaffoldKey,
+      body: Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.bottomCenter,
+        children: [
+          (MediaQuery.of(context).viewInsets.bottom == 0) ? Image.asset(Utils.getAssetsImg('BG@3x'), fit: BoxFit.cover) : Container(height: 0),
+          Expanded(
+              child: Container(
+                  width: double.infinity,
+                  height: 100,
+                  margin: EdgeInsets.only(left: 20, right: 20, top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10, bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
+                  decoration: BoxDecoration(
+                    color: ColorRes.loginBg,
+                    border: Border.all(color: ColorRes.white, width: 1),
+                    borderRadius: new BorderRadius.circular(10.0),
                   ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: ListView(
-                      controller: _scrollController,
-                      shrinkWrap: true,
-                      children: <Widget>[
-                        Container(height: Utils.getDeviceHeight(context) / 13),
-                        Container(
-                          width: double.infinity,
-                          height: Utils.getDeviceHeight(context) / 1.22,
-                          margin: EdgeInsets.only(left: 20, right: 20),
-                          decoration: BoxDecoration(
-                            color: ColorRes.loginBg,
-                            border: Border.all(color: ColorRes.white, width: 1),
-                            borderRadius: new BorderRadius.circular(10.0),
-                          ),
-                          child: showLoginForm(),
-                        ),
-                        Container(
-                          height: Utils.getDeviceHeight(context) / 4,
-                          child: Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10, right: 25),
-                                child: Text(
-                                  VersionManager.getVersion(context),
-                                  style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.35), fontSize: 17),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ));
+                  child: showLoginForm()
+              )
+          ),
+        ],
+      ),
+    );
+    // return Scaffold(
+    //     key: _scaffoldKey,
+    //     resizeToAvoidBottomPadding: false,
+    //     backgroundColor: ColorRes.fontDarkGrey,
+    //     body: Stack(
+    //       fit: StackFit.expand,
+    //       children: <Widget>[
+    //         Image.asset(Utils.getAssetsImg('bg_login_profesonal'), fit: BoxFit.cover),
+    //         Row(
+    //           crossAxisAlignment: CrossAxisAlignment.stretch,
+    //           children: <Widget>[
+    //             Expanded(
+    //               child: Padding(
+    //                 padding: EdgeInsets.only(right: Utils.getDeviceWidth(context) / 15),
+    //                 child: Center(
+    //                   child: Image.asset(
+    //                     Utils.getAssetsImg('logo_login'),
+    //                     height: Utils.getDeviceHeight(context) / 1.8,
+    //                     width: Utils.getDeviceWidth(context) / 3.8,
+    //                     fit: BoxFit.fill,
+    //                   ),
+    //                 ),
+    //               ),
+    //             ),
+    //             Expanded(
+    //               child: Center(
+    //                 child: ListView(
+    //                   controller: _scrollController,
+    //                   shrinkWrap: true,
+    //                   children: <Widget>[
+    //                     Container(height: Utils.getDeviceHeight(context) / 13),
+    //                     Container(
+    //                       width: double.infinity,
+    //                       height: Utils.getDeviceHeight(context) / 1.22,
+    //                       margin: EdgeInsets.only(left: 20, right: 20),
+    //                       decoration: BoxDecoration(
+    //                         color: ColorRes.loginBg,
+    //                         border: Border.all(color: ColorRes.white, width: 1),
+    //                         borderRadius: new BorderRadius.circular(10.0),
+    //                       ),
+    //                       child: showLoginForm(),
+    //                     ),
+    //                     Container(
+    //                       height: Utils.getDeviceHeight(context) / 4,
+    //                       child: Stack(
+    //                         alignment: Alignment.topRight,
+    //                         children: [
+    //                           Container(
+    //                             margin: EdgeInsets.only(top: 10, right: 25),
+    //                             child: Text(
+    //                               VersionManager.getVersion(context),
+    //                               style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.35), fontSize: 17),
+    //                             ),
+    //                           )
+    //                         ],
+    //                       ),
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ));
   }
 
   Widget showLoginForm() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
           height: 15,
@@ -196,96 +220,148 @@ class _LoginPageState extends State<LoginPage> {
         Container(height: 1, color: ColorRes.white),
         Expanded(
           child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: ListView(
-                shrinkWrap: true,
-                primary: false,
-                padding: EdgeInsets.all(0),
-                children: <Widget>[
-//                  Text(Const.APP_NAME),
-                  showCompanyCodeView(),
-                  SizedBox(height: 10),
-                  showEmailView(),
-                  SizedBox(height: 10),
-                  showPassword(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 9),
-                    child: InkResponse(
-                        child: Container(
-                          height: 30,
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: ExactAssetImage(Utils.getAssetsImg('btn_login')), alignment: Alignment.topCenter, fit: BoxFit.fill),
-                          ),
-                          child: Text(
-                            Utils.getText(context, StringRes.login).toUpperCase(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: ColorRes.white,
-                              fontSize: 16,
-                            ),
-                          ),
+            margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(child: showEmailView()),
+                        SizedBox(width: 10),
+                        Expanded(child: showCompanyCodeView()),
+                      ],
+                    )),
+                Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(child: showPassword()),
+                        SizedBox(width: 10),
+                        Expanded(child: showLoginButton()),
+                      ],
+                    )),
+                Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(width: 50),
+                                      Expanded(child: showForgotPasswordView()),
+                                      Expanded(child: showChangeLanguageView())
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(width: 50),
+                                      Expanded(child: showRequestDemoAccountView()),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )
                         ),
-                        onTap: () {
-                          Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
-                            if (isConnected) validateForm();
-                          });
-                        }),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkResponse(
-                      child: Text(
-                        Utils.getText(context, StringRes.forgotPassword).toUpperCase(),
-                        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
-                      ),
-                      onTap: () {
-                        Utils.playClickSound();
-                        Navigator.push(context, FadeRouteForgotPassword());
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkResponse(
-                      child: Text(
-                        Utils.getText(context, StringRes.requestDemoAccount),
-                        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
-                      ),
-                      onTap: () {
-                        _launchEmail("support@knowledge-empire.com");
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkResponse(
-                      child: Text(
-                        Utils.getText(context, StringRes.changeLanguage) + ' - '+ Injector.language,
-                        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
-                      ),
-                      onTap: () {
-                        Utils.playClickSound();
-                        selectLanguagesAlert(context);
-                        // Utils.showVerifyCompanyDialog(_scaffoldKey).then((value) => verifyCompany());
-                      },
-                    ),
-                  ),
-                ],
-              )),
+                        showVersion(),
+                      ],
+                    )),
+//                 Expanded(
+//                     child: Container(
+//                         alignment: Alignment.center,
+//                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//                         child: ListView(
+//                           shrinkWrap: true,
+//                           primary: false,
+//                           padding: EdgeInsets.all(0),
+//                           children: <Widget>[
+// //                  Text(Const.APP_NAME),
+//                             showCompanyCodeView(),
+//                             SizedBox(height: 10),
+//                             showEmailView(),
+//                             SizedBox(height: 10),
+//                             showPassword(),
+//                             Padding(
+//                               padding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 9),
+//                               child: InkResponse(
+//                                   child: Container(
+//                                     height: 30,
+//                                     alignment: Alignment.center,
+//                                     margin: EdgeInsets.only(top: 10),
+//                                     padding: EdgeInsets.symmetric(horizontal: 20),
+//                                     decoration: BoxDecoration(
+//                                       image: DecorationImage(
+//                                           image: ExactAssetImage(Utils.getAssetsImg('btn_login')), alignment: Alignment.topCenter, fit: BoxFit.fill),
+//                                     ),
+//                                     child: Text(
+//                                       Utils.getText(context, StringRes.login).toUpperCase(),
+//                                       textAlign: TextAlign.center,
+//                                       style: TextStyle(
+//                                         color: ColorRes.white,
+//                                         fontSize: 16,
+//                                       ),
+//                                     ),
+//                                   ),
+//                                   onTap: () {
+//                                     Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
+//                                       if (isConnected) validateForm();
+//                                     });
+//                                   }),
+//                             ),
+//                             SizedBox(
+//                               height: 10,
+//                             ),
+//                             Align(
+//                               alignment: Alignment.topRight,
+//                               child: InkResponse(
+//                                 child: Text(
+//                                   Utils.getText(context, StringRes.forgotPassword).toUpperCase(),
+//                                   style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
+//                                 ),
+//                                 onTap: () {
+//                                   Utils.playClickSound();
+//                                   Navigator.push(context, FadeRouteForgotPassword());
+//                                 },
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 5,
+//                             ),
+//                             Align(
+//                               alignment: Alignment.topRight,
+//                               child: InkResponse(
+//                                 child: Text(
+//                                   Utils.getText(context, StringRes.requestDemoAccount),
+//                                   style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17),
+//                                 ),
+//                                 onTap: () {
+//                                   _launchEmail("support@knowledge-empire.com");
+//                                 },
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 5,
+//                             ),
+//
+//                           ],
+//                         ))),
+              ],
+            ),
+          ),
         ),
       ],
     );
@@ -417,11 +493,11 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    _scrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    // _scrollController.animateTo(
+    //   0.0,
+    //   curve: Curves.easeOut,
+    //   duration: const Duration(milliseconds: 300),
+    // );
 
     CommonView.showCircularProgress(true, context);
 
@@ -523,9 +599,9 @@ class _LoginPageState extends State<LoginPage> {
     return Row(
       children: <Widget>[
         Image(
-          image: AssetImage(Utils.getAssetsImg("email2")),
-          width: 50,
-          height: 50,
+          image: AssetImage(Utils.getAssetsImg("ic_company_code")),
+          width: 45,
+          height: 45,
         ),
         Expanded(
             child: Container(
@@ -542,13 +618,13 @@ class _LoginPageState extends State<LoginPage> {
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
-                    onSubmitted: (value) {
-                      _scrollController.animateTo(
-                        0.0,
-                        curve: Curves.easeOut,
-                        duration: const Duration(milliseconds: 300),
-                      );
-                    },
+                    // onSubmitted: (value) {
+                    //   _scrollController.animateTo(
+                    //     0.0,
+                    //     curve: Curves.easeOut,
+                    //     duration: const Duration(milliseconds: 300),
+                    //   );
+                    // },
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.companyCode).toUpperCase(),
@@ -583,13 +659,13 @@ class _LoginPageState extends State<LoginPage> {
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
-                    onSubmitted: (value) {
-                      _scrollController.animateTo(
-                        0.0,
-                        curve: Curves.easeOut,
-                        duration: const Duration(milliseconds: 300),
-                      );
-                    },
+                    // onSubmitted: (value) {
+                    //   _scrollController.animateTo(
+                    //     0.0,
+                    //     curve: Curves.easeOut,
+                    //     duration: const Duration(milliseconds: 300),
+                    //   );
+                    // },
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.emailId).toUpperCase(),
@@ -623,13 +699,13 @@ class _LoginPageState extends State<LoginPage> {
                     textAlign: TextAlign.left,
                     maxLines: 1,
                     style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
-                    onSubmitted: (value) {
-                      _scrollController.animateTo(
-                        0.0,
-                        curve: Curves.easeOut,
-                        duration: const Duration(milliseconds: 300),
-                      );
-                    },
+                    // onSubmitted: (value) {
+                    //   _scrollController.animateTo(
+                    //     0.0,
+                    //     curve: Curves.easeOut,
+                    //     duration: const Duration(milliseconds: 300),
+                    //   );
+                    // },
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
                         hintText: Utils.getText(context, StringRes.password).toUpperCase(),
@@ -641,6 +717,77 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  showLoginButton() {
+    return Center(
+      child: InkResponse(
+          child: Container(
+            height: 40,
+            width: 180,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: ExactAssetImage(Utils.getAssetsImg('btn_login')), alignment: Alignment.topCenter, fit: BoxFit.fill),
+            ),
+            child: Text(
+              Utils.getText(context, StringRes.login).toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: ColorRes.white,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          onTap: () {
+            Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
+              if (isConnected) validateForm();
+            });
+          }),
+    );
+  }
+
+  showForgotPasswordView() {
+    return InkResponse(
+      child: Text(
+        Utils.getText(context, StringRes.forgotPassword),
+        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+      ),
+      onTap: () {
+        Utils.playClickSound();
+        Navigator.push(context, FadeRouteForgotPassword());
+      },
+    );
+  }
+
+  showChangeLanguageView() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        Utils.getText(context, StringRes.changeLanguage),
+            // + ' - '+ Injector.language,
+        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+      ),
+    );
+  }
+
+  showRequestDemoAccountView() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        Utils.getText(context, StringRes.requestDemoAccount),
+        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+      ),
+    );
+  }
+
+  showVersion() {
+    return Expanded(
+        flex: 1,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 8, right: 5),
+          child: Text(VersionManager.getVersion(context), style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.5), fontSize: 16), textAlign: TextAlign.right,),
+        ));
+  }
   void verifyCompany() async {
     isCompanyVerified = Injector.prefs.getString(PrefKeys.mainBaseUrl) != null && Injector.prefs.getString(PrefKeys.mainBaseUrl).isNotEmpty;
 
