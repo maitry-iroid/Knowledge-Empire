@@ -26,23 +26,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: LoginPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: LoginPage(),
+          ),
+        );
 }
 
 class LoginPage extends StatefulWidget {
@@ -122,20 +122,22 @@ class _LoginPageState extends State<LoginPage> {
         fit: StackFit.expand,
         alignment: Alignment.bottomCenter,
         children: [
-          (MediaQuery.of(context).viewInsets.bottom == 0) ? Image.asset(Utils.getAssetsImg('BG@3x'), fit: BoxFit.cover) : Container(height: 0),
+          (MediaQuery.of(context).viewInsets.bottom == 0) ? Image.asset(Utils.getAssetsImg('login_bg'), fit: BoxFit.cover) : Container(height: 0),
           Expanded(
               child: Container(
                   width: double.infinity,
                   height: 100,
-                  margin: EdgeInsets.only(left: 20, right: 20, top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10, bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
+                  margin: EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10,
+                      bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
                   decoration: BoxDecoration(
                     color: ColorRes.loginBg,
                     border: Border.all(color: ColorRes.white, width: 1),
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
-                  child: showLoginForm()
-              )
-          ),
+                  child: showLoginForm())),
         ],
       ),
     );
@@ -226,60 +228,55 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Expanded(
                     child: Row(
-                      children: [
-                        Expanded(child: showEmailView()),
-                        SizedBox(width: 10),
-                        Expanded(child: showCompanyCodeView()),
-                      ],
-                    )),
+                  children: [
+                    Expanded(child: showEmailView()),
+                    SizedBox(width: 10),
+                    Expanded(child: showCompanyCodeView()),
+                  ],
+                )),
                 Expanded(
                     child: Row(
-                      children: [
-                        Expanded(child: showPassword()),
-                        SizedBox(width: 10),
-                        Expanded(child: showLoginButton()),
-                      ],
-                    )),
+                  children: [
+                    Expanded(child: showPassword()),
+                    SizedBox(width: 10),
+                    Expanded(child: showLoginButton()),
+                  ],
+                )),
                 Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      SizedBox(width: 50),
-                                      Expanded(child: showForgotPasswordView()),
-                                      Expanded(child: showChangeLanguageView())
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(width: 50),
-                                      Expanded(child: showRequestDemoAccountView()),
-                                    ],
-                                  ),
-                                )
-                              ],
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [SizedBox(width: 50), Expanded(child: showForgotPasswordView()), Expanded(child: showChangeLanguageView())],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: 50),
+                                  Expanded(child: showRequestDemoAccountView()),
+                                ],
+                              ),
                             )
-                        ),
-                        showVersion(),
-                      ],
-                    )),
+                          ],
+                        )),
+                    showVersion(),
+                  ],
+                )),
 //                 Expanded(
 //                     child: Container(
 //                         alignment: Alignment.center,
@@ -551,13 +548,13 @@ class _LoginPageState extends State<LoginPage> {
                       privacyPolicyResponse.privacyPolicyAcceptText != "") {
                     Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
                         privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                          if (status == true) {
-                            // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-                            moveToChangePasswordOrDashboard();
-                          } else {
-                            Navigator.of(context).pop();
-                          }
-                        });
+                      if (status == true) {
+                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                        moveToChangePasswordOrDashboard();
+                      } else {
+                        Navigator.of(context).pop();
+                      }
+                    });
                   } else {
                     moveToChangePasswordOrDashboard();
                   }
@@ -726,8 +723,7 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: ExactAssetImage(Utils.getAssetsImg('btn_login')), alignment: Alignment.topCenter, fit: BoxFit.fill),
+              image: DecorationImage(image: ExactAssetImage(Utils.getAssetsImg('btn_login')), alignment: Alignment.topCenter, fit: BoxFit.fill),
             ),
             child: Text(
               Utils.getText(context, StringRes.login).toUpperCase(),
@@ -762,10 +758,16 @@ class _LoginPageState extends State<LoginPage> {
   showChangeLanguageView() {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Text(
-        Utils.getText(context, StringRes.changeLanguage),
-            // + ' - '+ Injector.language,
-        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+      child: InkResponse(
+        onTap: () {
+          Utils.playClickSound();
+          selectLanguagesAlert(context);
+        },
+        child: Text(
+          Utils.getText(context, StringRes.changeLanguage),
+          // + ' - '+ Injector.language,
+          style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+        ),
       ),
     );
   }
@@ -785,9 +787,14 @@ class _LoginPageState extends State<LoginPage> {
         flex: 1,
         child: Container(
           margin: EdgeInsets.only(bottom: 8, right: 5),
-          child: Text(VersionManager.getVersion(context), style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.5), fontSize: 16), textAlign: TextAlign.right,),
+          child: Text(
+            VersionManager.getVersion(context),
+            style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.5), fontSize: 16),
+            textAlign: TextAlign.right,
+          ),
         ));
   }
+
   void verifyCompany() async {
     isCompanyVerified = Injector.prefs.getString(PrefKeys.mainBaseUrl) != null && Injector.prefs.getString(PrefKeys.mainBaseUrl).isNotEmpty;
 

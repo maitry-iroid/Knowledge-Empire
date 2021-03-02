@@ -4,7 +4,6 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
 class VersionManager {
-
   /*
   *           IMPORTANT
   * We introduced the "App version", so that we have a reference we can use to have a common understanding which version we are talking about.
@@ -26,19 +25,8 @@ class VersionManager {
 
     String x = "004";
     String y = "000";
-    String z = "000";
+    String z = "001";
 
-    return mode +
-        "-" +
-        customerSpecificVersion +
-        "-" +
-        os +
-        " ${Utils.getText(context, StringRes.strVersion)}: " +
-        x +
-        "." +
-        y +
-        "-" +
-        z;
+    return mode + "-" + customerSpecificVersion + "-" + os + " ${Utils.getText(context, StringRes.strVersion)}: " + x + "." + y + "-" + z;
   }
-  
 }
