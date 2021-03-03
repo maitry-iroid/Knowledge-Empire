@@ -123,21 +123,20 @@ class _LoginPageState extends State<LoginPage> {
         alignment: Alignment.bottomCenter,
         children: [
           (MediaQuery.of(context).viewInsets.bottom == 0) ? Image.asset(Utils.getAssetsImg('login_bg'), fit: BoxFit.cover) : Container(height: 0),
-          Expanded(
-              child: Container(
-                  width: double.infinity,
-                  height: 100,
-                  margin: EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10,
-                      bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
-                  decoration: BoxDecoration(
-                    color: ColorRes.loginBg,
-                    border: Border.all(color: ColorRes.white, width: 1),
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: showLoginForm())),
+          Container(
+              width: double.infinity,
+              height: 100,
+              margin: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10,
+                  bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
+              decoration: BoxDecoration(
+                color: ColorRes.loginBg,
+                border: Border.all(color: ColorRes.white, width: 1),
+                borderRadius: new BorderRadius.circular(10.0),
+              ),
+              child: showLoginForm()),
         ],
       ),
     );
