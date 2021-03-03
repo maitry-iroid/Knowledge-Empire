@@ -347,13 +347,16 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   rq.type = Const.getNewQueType;
                   List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
 
+                  print("======================= perform next ======================");
+                  print(arrQuestions.length);
+
                   if (arrQuestions != null && arrQuestions.length > 0) {
                     HomeData homeData =
                         HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
 
                     navigationBloc.updateNavigation(homeData);
                   } else
-                    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
+                    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
                 } else {
                   navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
                 }
