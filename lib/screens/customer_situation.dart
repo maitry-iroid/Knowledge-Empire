@@ -656,10 +656,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             children: <Widget>[
               showQueMedia(context),
               CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description),
-              CommonView.contactExpertAndInformation(
-                  context, Utils.getText(context, StringRes.contactExpert), true, questionDataCustSituation.description),
-              CommonView.contactExpertAndInformation(
-                  context, Utils.getText(context, StringRes.moreInformation), true, questionDataCustSituation.description)
+              questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != "" ? CommonView.contactExpertAndInformation(
+                  context, Utils.getText(context, StringRes.contactExpert), true, questionDataCustSituation?.expertEmail ?? "") : Container(),
+              questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != "" ? CommonView.contactExpertAndInformation(
+                  context, Utils.getText(context, StringRes.moreInformation), true, questionDataCustSituation?.additionalInfoLink ?? "") : Container()
             ],
           ),
         ));
