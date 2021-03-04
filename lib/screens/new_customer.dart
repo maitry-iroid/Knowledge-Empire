@@ -51,8 +51,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             children: <Widget>[
               CommonView.showBackground(context),
               Container(
-                margin: EdgeInsets.only(
-                    left: 20, right: 20, top: Utils.getHeaderHeight(context)),
+                margin: EdgeInsets.only(left: 20, right: 20, top: Utils.getHeaderHeight(context)),
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -104,11 +103,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-                  fit: BoxFit.fill)
-              : null),
+          image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_rounded")), fit: BoxFit.fill) : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -144,17 +139,17 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               minFontSize: 4,
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: AutoSizeText(
-              Utils.getText(context, StringRes.loyalty),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.fade,
-              maxLines: 1,
-              minFontSize: 4,
-            ),
-          ),
+          // Expanded(
+          //   flex: 3,
+          //   child: AutoSizeText(
+          //     Utils.getText(context, StringRes.loyalty),
+          //     style: TextStyle(color: Colors.white, fontSize: 18),
+          //     textAlign: TextAlign.center,
+          //     overflow: TextOverflow.fade,
+          //     maxLines: 1,
+          //     minFontSize: 4,
+          //   ),
+          // ),
           Utils.isFeatureOn(Const.typeOrg)
               ? Expanded(
                   flex: 3,
@@ -186,8 +181,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
         Utils.playClickSound();
 
         if (Utils.isFeatureOn(Const.typeOrg)) {
-          if ((Injector.customerValueData.remainingSalesPerson >=
-                  arrQuestions[index].resources &&
+          if ((Injector.customerValueData.remainingSalesPerson >= arrQuestions[index].resources &&
               Injector.customerValueData.remainingCustomerCapacity > 0)) {
             attemptQuestion(index);
           } else {
@@ -213,14 +207,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     margin: EdgeInsets.symmetric(vertical: 3),
                     decoration: BoxDecoration(
                         color: Injector.isBusinessMode ? null : ColorRes.white,
-                        borderRadius: Injector.isBusinessMode
-                            ? null
-                            : BorderRadius.circular(20),
+                        borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                         image: Injector.isBusinessMode
-                            ? DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("bg_record_white")),
-                                fit: BoxFit.fill)
+                            ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_record_white")), fit: BoxFit.fill)
                             : null),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -242,8 +231,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           flex: 5,
                           child: Text(
                             arrQuestions[index].moduleName,
-                            style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 18),
+                            style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
                             textAlign: TextAlign.center,
                             maxLines: 1,
                           ),
@@ -252,24 +240,21 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           flex: 3,
                           child: kePoint(index),
                         ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(
-                            ("${arrQuestions[index].loyalty.toString()} d"),
-                            style: TextStyle(
-                                color: ColorRes.textRecordBlue, fontSize: 18),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                          ),
-                        ),
+                        // Expanded(
+                        //   flex: 3,
+                        //   child: Text(
+                        //     ("${arrQuestions[index].loyalty.toString()} d"),
+                        //     style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+                        //     textAlign: TextAlign.center,
+                        //     maxLines: 1,
+                        //   ),
+                        // ),
                         Utils.isFeatureOn(Const.typeOrg)
                             ? Expanded(
                                 flex: 3,
                                 child: Text(
                                   arrQuestions[index].resources.toString(),
-                                  style: TextStyle(
-                                      color: ColorRes.textRecordBlue,
-                                      fontSize: 18),
+                                  style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
                                   textAlign: TextAlign.center,
                                   maxLines: 1,
                                 ),
@@ -284,20 +269,12 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   margin: EdgeInsets.only(left: 10, right: 2),
                   padding: EdgeInsets.only(left: 15, right: 15),
                   decoration: BoxDecoration(
-                      color:
-                          Injector.isBusinessMode ? null : ColorRes.headerBlue,
-                      borderRadius: Injector.isBusinessMode
-                          ? null
-                          : BorderRadius.circular(20),
-                      image: Injector.isBusinessMode
-                          ? DecorationImage(
-                              image: AssetImage(
-                                  Utils.getAssetsImg("bg_engage_now")),
-                              fit: BoxFit.fill)
-                          : null),
+                      color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
+                      borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                      image:
+                          Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill) : null),
                   child: Text(
-                    Utils.getText(
-                        _scaffoldKey.currentContext, StringRes.engageNow),
+                    Utils.getText(_scaffoldKey.currentContext, StringRes.engageNow),
                     style: TextStyle(color: ColorRes.white, fontSize: 16),
                   )),
             ],
@@ -370,10 +347,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   }
 
   void attemptQuestion(int index) {
-    HomeData homeData = HomeData(
-        initialPageType: Const.typeEngagement,
-        questionHomeData: arrQuestions[index],
-        value: arrQuestions[index].value);
+    HomeData homeData = HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[index], value: arrQuestions[index].value);
 
     navigationBloc.updateNavigation(homeData);
   }
