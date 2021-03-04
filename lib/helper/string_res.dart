@@ -970,8 +970,8 @@ class StringRes {
       //learning module
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
-      'contactExpert': 'Contact Expert',
-      'moreInformation': 'More Information',
+      'contactExpert': 'Experte Kontaktieren',
+      'moreInformation': 'Mehr Informationen',
       'subscribed': 'abonniert',
       'downLoad': 'Herunterladen',
       'size': 'Größe',
@@ -992,7 +992,7 @@ class StringRes {
       'competitor': 'Wettbewerber',
       'sendChallenge': 'Herausfordern',
       'next': 'Weiter',
-      'BackToList': 'Back to List',
+      'BackToList': 'Zur Übersicht',
 
       //  engage customer
       'answers': 'Antworten',
@@ -1382,8 +1382,8 @@ class StringRes {
       //learning module
       'subscribe': '订阅',
       'unSubscribe': '取消订阅',
-      'contactExpert': 'Contact Expert',
-      'moreInformation': 'More Information',
+      'contactExpert': '咨询专家',
+      'moreInformation': '了解更多资讯',
       'subscribed': '已订阅',
       'downLoad': '下载',
       'size': '大小',
@@ -1405,7 +1405,7 @@ class StringRes {
       'competitor': '竞争对手',
       'sendChallenge': '送出挑战寄发战帖',
       'next': '下一页',
-      'BackToList': 'Back to List',
+      'BackToList': '回到问题主选单',
 
       //  engage customer
       'answers': '答案',
@@ -2166,8 +2166,8 @@ class StringRes {
 
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
-      'contactExpert': 'Contact Expert',
-      'moreInformation': 'More Information',
+      'contactExpert': 'Experte Kontaktieren',
+      'moreInformation': 'Mehr Informationen',
       'subscribed': 'abonniert',
       'downLoad': 'Herunterladen',
       'size': 'Größe',
@@ -2186,7 +2186,7 @@ class StringRes {
       'competitor': 'Kollegen',
       'sendChallenge': 'Herausfordern',
       'next': 'Weiter',
-      'BackToList': 'Back to List',
+      'BackToList': 'Zur Übersicht',
       'answers': 'Antworten',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
@@ -2584,8 +2584,8 @@ class StringRes {
 
       'subscribe': '加入',
       'unSubscribe': '取消加入',
-      'contactExpert': 'Contact Expert',
-      'moreInformation': 'More Information',
+      'contactExpert': '咨询专家',
+      'moreInformation': '了解更多资讯',
       'subscribed': '已加入',
       'downLoad': '下载',
       'size': 'Q&A',
@@ -2605,7 +2605,7 @@ class StringRes {
       'competitor': '同事',
       'sendChallenge': '发送挑战',
       'next': '下一页',
-      'BackToList': 'Back to List',
+      'BackToList': '回到问题主选单',
       'answers': '答案',
       'question': '问题',
       'explanation': '说明',
