@@ -740,13 +740,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showContactExpertView() {
-    return CommonView.contactExpertAndInformation(
-        context, Utils.getText(context, StringRes.contactExpert), true, selectedModule?.expertEmail ?? "Contact Expert");
+    return selectedModule.expertEmail != null && selectedModule.expertEmail != ""
+        ? CommonView.contactExpertAndInformation(
+            context, Utils.getText(context, StringRes.contactExpert), true, selectedModule?.expertEmail ?? "Contact Expert")
+        : Container();
   }
 
   showMoreInformationView() {
-    return CommonView.contactExpertAndInformation(
-        context, Utils.getText(context, StringRes.moreInformation), true, selectedModule?.additionalInfoLink ?? "More Information");
+    return selectedModule.additionalInfoLink != null && selectedModule.additionalInfoLink != ""
+        ? CommonView.contactExpertAndInformation(
+            context, Utils.getText(context, StringRes.moreInformation), true, selectedModule?.additionalInfoLink ?? "More Information")
+        : Container();
   }
 
   showDownloadSubscribeOptions() {
