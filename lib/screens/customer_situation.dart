@@ -653,7 +653,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           child: Column(
             children: <Widget>[
               showQueMedia(context),
-              CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description)
+              CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description),
+              CommonView.contactExpertAndInformation(
+                  context, Utils.getText(context, StringRes.contactExpert), true, questionDataCustSituation.description),
+              CommonView.contactExpertAndInformation(
+                  context, Utils.getText(context, StringRes.moreInformation), true, questionDataCustSituation.description)
             ],
           ),
         ));
