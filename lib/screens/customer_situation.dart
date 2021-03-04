@@ -272,11 +272,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   showSubHeader(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            isChallenge != null && isChallenge
-                ? Row(
+        child: isChallenge != null && isChallenge
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
                       Container(
                         width: 30,
@@ -297,43 +297,58 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         textAlign: TextAlign.center,
                       ),
                     ],
-                  )
-                : Container(
-                    width: 100,
                   ),
-            Container(
-              alignment: Alignment.center,
-              height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-                  color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                  image:
-                      Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
-              child: Text(
-                Utils.getText(context, StringRes.situation),
-                style: TextStyle(color: ColorRes.white, fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            InkResponse(
-              child: Container(
-                alignment: Alignment.center,
-                width: 100,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
-                child: Text(
-                  Utils.getText(context, StringRes.next),
-                  style: TextStyle(color: ColorRes.white, fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              onTap: () async {
-                Utils.playClickSound();
-                if (isChallenge != null && isChallenge) {
-                  Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+                  InkResponse(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 145,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                      child: Text(
+                        Utils.getText(context, StringRes.backToList),
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () async {
+                      Utils.playClickSound();
+                      navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
+                    },
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 30,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                        borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                        color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+                        image: Injector.isBusinessMode
+                            ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
+                            : null),
+                    child: Text(
+                      Utils.getText(context, StringRes.situation),
+                      style: TextStyle(color: ColorRes.white, fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  InkResponse(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 100,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                      child: Text(
+                        Utils.getText(context, StringRes.next),
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () async {
+                      Utils.playClickSound();
+                      if (isChallenge != null && isChallenge) {
+                        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
 
-                  /* if (nextChallengeQuestionData != null &&
+                        /* if (nextChallengeQuestionData != null &&
                       nextChallengeQuestionData.challengeId != null) {
 
                     navigationBloc.updateNavigation(HomeData(
@@ -341,29 +356,113 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         isChallenge: isChallenge,mani
                         questionHomeData: nextChallengeQuestionData));
                   }*/
-                } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
-                  QuestionRequest rq = QuestionRequest();
-                  rq.userId = Injector.userData.userId;
-                  rq.type = Const.getNewQueType;
-                  List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+                      } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
+                        QuestionRequest rq = QuestionRequest();
+                        rq.userId = Injector.userData.userId;
+                        rq.type = Const.getNewQueType;
+                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
 
-                  print("======================= perform next ======================");
-                  print(arrQuestions.length);
+                        print("======================= perform next ======================");
+                        print(arrQuestions.length);
 
-                  if (arrQuestions != null && arrQuestions.length > 0) {
-                    HomeData homeData =
-                        HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
+                        if (arrQuestions != null && arrQuestions.length > 0) {
+                          HomeData homeData =
+                              HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
 
-                    navigationBloc.updateNavigation(homeData);
-                  } else
-                    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
-                } else {
-                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                }
-              },
-            )
-          ],
-        ));
+                          navigationBloc.updateNavigation(homeData);
+                        } else
+                          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+                      } else {
+                        navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                      }
+                    },
+                  )
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  InkResponse(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 145,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                      child: Text(
+                        Utils.getText(context, StringRes.backToList),
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () async {
+                      Utils.playClickSound();
+                      navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
+                    },
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 30,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                        borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                        color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+                        image: Injector.isBusinessMode
+                            ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
+                            : null),
+                    child: Text(
+                      Utils.getText(context, StringRes.situation),
+                      style: TextStyle(color: ColorRes.white, fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  InkResponse(
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 100,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                      child: Text(
+                        Utils.getText(context, StringRes.next),
+                        style: TextStyle(color: ColorRes.white, fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () async {
+                      Utils.playClickSound();
+                      if (isChallenge != null && isChallenge) {
+                        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+
+                        /* if (nextChallengeQuestionData != null &&
+                      nextChallengeQuestionData.challengeId != null) {
+
+                    navigationBloc.updateNavigation(HomeData(
+                        initialPageType: Const.typeEngagement,
+                        isChallenge: isChallenge,mani
+                        questionHomeData: nextChallengeQuestionData));
+                  }*/
+                      } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
+                        QuestionRequest rq = QuestionRequest();
+                        rq.userId = Injector.userData.userId;
+                        rq.type = Const.getNewQueType;
+                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+
+                        print("======================= perform next ======================");
+                        print(arrQuestions.length);
+
+                        if (arrQuestions != null && arrQuestions.length > 0) {
+                          HomeData homeData =
+                              HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
+
+                          navigationBloc.updateNavigation(homeData);
+                        } else
+                          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+                      } else {
+                        navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                      }
+                    },
+                  )
+                ],
+              ));
   }
 
   bool isAnswerCorrect(int index) {
