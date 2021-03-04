@@ -312,7 +312,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     ),
                     onTap: () async {
                       Utils.playClickSound();
-                      navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
+                      navigationBloc
+                          .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
                     },
                   ),
                   Container(
@@ -396,7 +397,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     ),
                     onTap: () async {
                       Utils.playClickSound();
-                      navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeNewCustomer));
+                      navigationBloc
+                          .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
                     },
                   ),
                   Container(
