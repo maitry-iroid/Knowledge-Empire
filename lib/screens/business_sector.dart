@@ -2,17 +2,20 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:background_fetch/background_fetch.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
-
+import 'package:video_player/video_player.dart';
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
@@ -27,6 +30,9 @@ import '../models/get_learning_module.dart';
 *   - Mange download setting to attempt questions in offline mode as well
 *
 * */
+
+VideoPlayerController _controller;
+ChewieController _chewieController;
 
 class BusinessSectorPage extends StatefulWidget {
   const BusinessSectorPage({Key key}) : super(key: key);
@@ -49,12 +55,64 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   int maxVol, currentVol;
 
   bool isSwitched = false;
+  PDFDocument _pdfDocument;
+  bool _isLoading = false;
+  String _pdfPath = '';
 
   @override
   void initState() {
     super.initState();
 
     showIntroDialog();
+  }
+
+  Future getPDF(String url) async {
+    if (selectedModule != null && url != null ){
+      _pdfPath = url;
+      _pdfDocument = await PDFDocument.fromURL(url);
+    }
+    if(mounted){
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> initVideoController(String link) async {
+    await Injector.cacheManager
+        .getFileFromCache(link)
+        .then((fileInfo) {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(
+          Utils
+              .getCacheFile(link)
+              .file)
+          : VideoPlayerController.network(link)
+        ..initialize().then((_) {
+          if (mounted)
+            setState(() {
+              _chewieController.play();
+            });
+        });
+      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+      questionData.videoLoop == 1
+          ? _controller.setLooping(true)
+          : _controller.setLooping(false);
+      _chewieController = ChewieController(
+          videoPlayerController: _controller,
+          allowFullScreen: false,
+          materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+          looping: true);
+    });
+  }
+
+
+  @override
+  void dispose() {
+    _controller?.pause();
+    Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+    super.dispose();
   }
 
   Future<void> showIntroDialog() async {
@@ -230,6 +288,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           setState(() {
             selectedModule = arrFinalLearningModules[index];
             isSwitched = selectedModule.isDownloadEnable == 1;
+
+            if(Utils.isPdf(selectedModule.mediaLink)){
+              Future.delayed(Duration.zero, () async {
+                await this.getPDF(selectedModule.mediaLink);
+              });
+            }
+
+            if(Utils.isVideo(selectedModule.mediaLink)){
+              Injector.audioPlayerBg.stop();
+              Future.delayed(Duration.zero, () async {
+                await this.initVideoController(selectedModule.mediaLink);
+              });
+            }
+
           });
       },
     );
@@ -310,7 +382,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     return Container(
       color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
       child: ListView(
-        children: <Widget>[showDescriptionView(), showDownloadSubscribeOptions()],
+        children: <Widget>[showImageView(context), showDescriptionView(), showDownloadSubscribeOptions()],
       ),
     );
   }
@@ -354,6 +426,18 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             if (arrLearningModules.length > 0 && (selectedModule.moduleId == null)) {
               selectedModule = arrLearningModules[0];
               isSwitched = selectedModule.isDownloadEnable == 1;
+              if(Utils.isPdf(selectedModule.mediaLink)){
+                Future.delayed(Duration.zero, () async {
+                  await this.getPDF(selectedModule.mediaLink);
+                });
+              }
+
+              if(Utils.isVideo(selectedModule.mediaLink)){
+                Injector.audioPlayerBg.stop();
+                Future.delayed(Duration.zero, () async {
+                  await this.initVideoController(selectedModule.mediaLink);
+                });
+              }
             }
           });
 
@@ -751,6 +835,38 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         ? CommonView.contactExpertAndInformation(
             context, Utils.getText(context, StringRes.moreInformation), true, selectedModule?.additionalInfoLink ?? "More Information")
         : Container();
+  }
+
+  showImageView(BuildContext context){
+    if((selectedModule?.mediaLink ?? "") != "" && (selectedModule?.mediaThumbImage ?? "") != "") {
+      if(Utils.isPdf(selectedModule?.mediaLink)){
+        return Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
+              pdfDocument: _pdfDocument,
+              isPdfLoading: _isLoading,
+              pdfFilePath: selectedModule.mediaLink),
+        );
+      }else if(Utils.isVideo(selectedModule?.mediaLink)){
+        return Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
+              videoPlayerController: _controller,
+              chewieController: _chewieController
+          ),
+        );
+      } else {
+        return Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage),
+        );
+      }
+    }else{
+      return Container();
+    }
   }
 
   showDownloadSubscribeOptions() {
