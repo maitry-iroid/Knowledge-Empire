@@ -20,10 +20,7 @@ class CommonView {
     return Injector.isBusinessMode
         ?
 //    CommonView.showDashboardView(context)
-        BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')),
-                fit: BoxFit.fill))
+        BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_dashboard_trans')), fit: BoxFit.fill))
         : BoxDecoration(color: ColorRes.bgProf);
   }
 
@@ -36,8 +33,7 @@ class CommonView {
         children: <Widget>[
           InkResponse(
             child: Image(
-              image: AssetImage(Utils.getAssetsImg(
-                  Injector.isBusinessMode ? "back" : 'back_prof')),
+              image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "back" : 'back_prof')),
               width: 30,
             ),
             onTap: () {
@@ -48,15 +44,10 @@ class CommonView {
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            margin: title == StringRes.challenges
-                ? EdgeInsets.only(right: 60)
-                : EdgeInsets.symmetric(horizontal: 10),
+            margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                borderRadius:
-                    Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                border: Injector.isBusinessMode
-                    ? null
-                    : Border.all(width: 1, color: ColorRes.white),
+                borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
                 color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                 image: Injector.isBusinessMode
                     ? DecorationImage(
@@ -125,8 +116,7 @@ class CommonView {
     //pdf show codeing.
   }
 
-  static questionAndExplanation(
-      BuildContext context, String title, bool checking, String content) {
+  static questionAndExplanation(BuildContext context, String title, bool checking, String content) {
     return InkResponse(
       onTap: () {
         Utils.playClickSound();
@@ -144,12 +134,11 @@ class CommonView {
         children: <Widget>[
           Card(
             elevation: 10,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 10),
             child: Container(
               margin: EdgeInsets.only(top: 0),
-              padding: EdgeInsets.only(left: 10, right: 10, top: 23,bottom: 20),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 23, bottom: 20),
               decoration: BoxDecoration(
                 color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
                 borderRadius: BorderRadius.circular(12),
@@ -159,11 +148,7 @@ class CommonView {
                 width: double.infinity,
                 child: Text(
                   content,
-                  style: TextStyle(
-                      color: Injector.isBusinessMode
-                          ? ColorRes.white
-                          : ColorRes.textProf,
-                      fontSize: 17),
+                  style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
                 ),
               ),
             ),
@@ -174,26 +159,14 @@ class CommonView {
               alignment: Alignment.center,
               height: 30,
               margin: (checking == true
-                  ? EdgeInsets.symmetric(
-                      horizontal: Utils.getDeviceWidth(context) / 7)
-                  : EdgeInsets.symmetric(
-                      horizontal: Utils.getDeviceWidth(context) / 3)),
+                  ? EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 7)
+                  : EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 3)),
               padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode
-                      ? null
-                      : BorderRadius.circular(20),
-                  border: Injector.isBusinessMode
-                      ? null
-                      : Border.all(width: 1, color: ColorRes.white),
-                  color:
-                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image:
-                              AssetImage(Utils.getAssetsImg("eddit_profile")),
-                          fit: BoxFit.fill)
-                      : null),
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+                  color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill) : null),
               child: Text(
                 title,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -202,8 +175,7 @@ class CommonView {
             ),
           ),
           Align(
-            alignment:
-                (checking == true ? Alignment.bottomRight : Alignment.topRight),
+            alignment: (checking == true ? Alignment.bottomRight : Alignment.topRight),
 //          Alignment.bottomRight,
             child: (checking == true
                 ? Container(
@@ -214,10 +186,8 @@ class CommonView {
                         image:
 //                          Injector.isBusinessMode ?
                             DecorationImage(
-                                image: AssetImage(Injector.isBusinessMode
-                                    ? Utils.getAssetsImg(
-                                        "full_expand_question_answers")
-                                    : Utils.getAssetsImg("expand_pro")),
+                                image: AssetImage(
+                                    Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
                                 fit: BoxFit.fill)
 //                              : null
                         ))
@@ -228,15 +198,42 @@ class CommonView {
                     decoration: BoxDecoration(
                         image:
 //                          Injector.isBusinessMode ?
-                            DecorationImage(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("close_dialog")),
-                                fit: BoxFit.fill)
+                            DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.fill)
 //                              : null
                         ))),
           )
         ],
       ),
+    );
+  }
+
+  static contactExpertAndInformation(BuildContext context, String title, bool checking, String content) {
+    return InkResponse(
+      onTap: () {
+        Utils.playClickSound();
+
+        if (checking)
+          showDialog(
+            context: context,
+            builder: (_) => FunkyOverlay(
+              title: title,
+              content: content,
+            ),
+          );
+      },
+      child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 50, right: 50, top: 15),
+          padding: EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+              color: Injector.isBusinessMode ? Colors.transparent : ColorRes.headerBlue,
+              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_subscribe")), fit: BoxFit.fill) : null),
+          child: Text(
+            Utils.getText(context, title),
+            style: TextStyle(color: ColorRes.white, fontSize: 20),
+            textAlign: TextAlign.center,
+          )),
     );
   }
 
@@ -309,12 +306,8 @@ class CommonView {
   static Widget showBGDashboardView(BuildContext context) {
 //    CommonView.showDashboardView(context);
     return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("intro_bub_background")),
-                fit: BoxFit.fill)));
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("intro_bub_background")), fit: BoxFit.fill)));
   }
-
 
   static Widget showDashboardView(BuildContext context) {
     return ResponsiveUi(
@@ -322,10 +315,7 @@ class CommonView {
         return Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
-                  fit: BoxFit.fill)),
+          decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")), fit: BoxFit.fill)),
           child: Stack(
             fit: StackFit.expand,
             alignment: Alignment.center,
@@ -339,17 +329,13 @@ class CommonView {
                       child: Stack(
                         children: <Widget>[
                           Image(
-                            image:
-                                AssetImage(Utils.getAssetsImg("organization")),
+                            image: AssetImage(Utils.getAssetsImg("organization")),
                             width: Utils.getDeviceWidth(context) / 4.5,
                           ),
-                          Utils.isShowUnreadCount(Const.typeOrg)
-                              ? Utils.showUnreadCount(Const.typeOrg, 17, 5)
-                              : Container(),
+                          Utils.isShowUnreadCount(Const.typeOrg) ? Utils.showUnreadCount(Const.typeOrg, 17, 5) : Container(),
                           Utils.isShowLock(Const.typeOrg)
                               ? Image(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("lock_org")),
+                                  image: AssetImage(Utils.getAssetsImg("lock_org")),
                                   width: Utils.getDeviceWidth(context) / 4.5,
                                 )
                               : Container(),
@@ -363,17 +349,13 @@ class CommonView {
                       child: Stack(
                         children: <Widget>[
                           Image(
-                            image:
-                                AssetImage(Utils.getAssetsImg("profit-loss")),
+                            image: AssetImage(Utils.getAssetsImg("profit-loss")),
                             width: Utils.getDeviceWidth(context) / 4.5,
                           ),
-                          Utils.isShowUnreadCount(Const.typePl)
-                              ? Utils.showUnreadCount(Const.typePl, 17, 5)
-                              : Container(),
+                          Utils.isShowUnreadCount(Const.typePl) ? Utils.showUnreadCount(Const.typePl, 17, 5) : Container(),
                           Utils.isShowLock(Const.typePl)
                               ? Image(
-                                  image:
-                                      AssetImage(Utils.getAssetsImg("lock_pl")),
+                                  image: AssetImage(Utils.getAssetsImg("lock_pl")),
                                   width: Utils.getDeviceWidth(context) / 4.5,
                                 )
                               : Container(),
@@ -390,22 +372,17 @@ class CommonView {
                               image: AssetImage(Utils.getAssetsImg("ranking")),
                               width: Utils.getDeviceWidth(context) / 4.5,
                             ),
-                            Utils.isShowUnreadCount(Const.typeRanking)
-                                ? Utils.showUnreadCount(
-                                    Const.typeRanking, 17, 5)
-                                : Container(),
+                            Utils.isShowUnreadCount(Const.typeRanking) ? Utils.showUnreadCount(Const.typeRanking, 17, 5) : Container(),
                             Utils.isShowLock(Const.typeRanking)
                                 ? Image(
-                                    image: AssetImage(
-                                        Utils.getAssetsImg("lock_ranking")),
+                                    image: AssetImage(Utils.getAssetsImg("lock_ranking")),
                                     width: Utils.getDeviceWidth(context) / 4.5,
                                   )
                                 : Container(),
                           ],
                         ),
                         onTap: () {
-                          Utils.performDashboardItemClick(
-                              context, Const.typeRanking);
+                          Utils.performDashboardItemClick(context, Const.typeRanking);
                         }),
                   ],
                 ),
@@ -421,30 +398,23 @@ class CommonView {
               Container(
                 alignment: Alignment.center,
                 width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(
-                    top: Utils.getDeviceHeight(context) / 4.2,
-                    left: Utils.getDeviceWidth(context) / 12),
+                margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 4.2, left: Utils.getDeviceWidth(context) / 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       child: Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 40,
-                              left: 20,
-                              right: Utils.getDeviceWidth(context) / 13),
+                          padding: EdgeInsets.only(bottom: 40, left: 20, right: Utils.getDeviceWidth(context) / 13),
                           child: InkResponse(
                             child: Stack(
                               children: <Widget>[
                                 Image(
-                                  image:
-                                      AssetImage(Utils.getAssetsImg("rewards")),
+                                  image: AssetImage(Utils.getAssetsImg("rewards")),
                                   width: Utils.getDeviceHeight(context) / 3.0,
                                 ),
                                 Utils.isShowUnreadCount(Const.typeAchievement)
-                                    ? Utils.showUnreadCount(
-                                        Const.typeAchievement, 17, size.width / 20)
+                                    ? Utils.showUnreadCount(Const.typeAchievement, 17, size.width / 20)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
@@ -452,10 +422,8 @@ class CommonView {
                                       )),
                                 Utils.isShowLock(Const.typeAchievement)
                                     ? Image(
-                                        image: AssetImage(
-                                            Utils.getAssetsImg("lock_rewards")),
-                                        width: Utils.getDeviceHeight(context) /
-                                            3.0,
+                                        image: AssetImage(Utils.getAssetsImg("lock_rewards")),
+                                        width: Utils.getDeviceHeight(context) / 3.0,
                                       )
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
@@ -465,32 +433,26 @@ class CommonView {
                               ],
                             ),
                             onTap: () {
-                              Utils.performDashboardItemClick(
-                                  context, Const.typeAchievement);
+                              Utils.performDashboardItemClick(context, Const.typeAchievement);
                             },
                           )),
                     ),
                     Expanded(
                       child: Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 15,
-                              left: Utils.getDeviceWidth(context) / 14,
-                              right: Utils.getDeviceWidth(context) / 14),
+                          padding: EdgeInsets.only(bottom: 15, left: Utils.getDeviceWidth(context) / 14, right: Utils.getDeviceWidth(context) / 14),
                           child: Opacity(
                             child: InkResponse(
                               child: Stack(
                                 children: <Widget>[
                                   Image(
-                                    image:
-                                        AssetImage(Utils.getAssetsImg("team")),
+                                    image: AssetImage(Utils.getAssetsImg("team")),
                                     width: Utils.getDeviceHeight(context) / 3.0,
                                   ),
                                   Utils.showUnreadCount(Const.typeTeam, 18, 20)
                                 ],
                               ),
                               onTap: () {
-                                Utils.performDashboardItemClick(
-                                    context, Const.typeTeam);
+                                Utils.performDashboardItemClick(context, Const.typeTeam);
                               },
                             ),
                             opacity: Injector.isManager() ? 1 : 0,
@@ -498,22 +460,16 @@ class CommonView {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: 0,
-                            left: 0,
-                            right: Utils.getDeviceWidth(context) / 10,
-                            top: 00),
+                        padding: EdgeInsets.only(bottom: 0, left: 0, right: Utils.getDeviceWidth(context) / 10, top: 00),
                         child: InkResponse(
                             child: Stack(
                               children: <Widget>[
                                 Image(
-                                  image: AssetImage(
-                                      Utils.getAssetsImg("challenges")),
+                                  image: AssetImage(Utils.getAssetsImg("challenges")),
                                   width: Utils.getDeviceHeight(context) / 2.6,
                                 ),
                                 Utils.isShowUnreadCount(Const.typeChallenges)
-                                    ? Utils.showUnreadCount(
-                                        Const.typeChallenges, 17, 17)
+                                    ? Utils.showUnreadCount(Const.typeChallenges, 17, 17)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
@@ -521,10 +477,8 @@ class CommonView {
                                       )),
                                 Utils.isShowLock(Const.typeChallenges)
                                     ? Image(
-                                        image: AssetImage(Utils.getAssetsImg(
-                                            "lock_challenges")),
-                                        width: Utils.getDeviceHeight(context) /
-                                            2.6,
+                                        image: AssetImage(Utils.getAssetsImg("lock_challenges")),
+                                        width: Utils.getDeviceHeight(context) / 2.6,
                                       )
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
@@ -534,8 +488,7 @@ class CommonView {
                               ],
                             ),
                             onTap: () {
-                              Utils.performDashboardItemClick(
-                                  context, Const.typeChallenges);
+                              Utils.performDashboardItemClick(context, Const.typeChallenges);
                             }),
                       ),
                     ),
@@ -558,33 +511,27 @@ class CommonView {
                           child: Stack(
                             children: <Widget>[
                               Image(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("business_sectors")),
+                                image: AssetImage(Utils.getAssetsImg("business_sectors")),
                                 width: Utils.getDeviceWidth(context) / 3.8,
                               ),
-                              Utils.showUnreadCount(
-                                  Const.typeBusinessSector, 10, 35)
+                              Utils.showUnreadCount(Const.typeBusinessSector, 10, 35)
                             ],
                           ),
                           onTap: () {
-                            Utils.performDashboardItemClick(
-                                context, Const.typeBusinessSector);
+                            Utils.performDashboardItemClick(context, Const.typeBusinessSector);
                           }),
                       InkResponse(
                           child: Stack(
                             children: <Widget>[
                               Image(
-                                image: AssetImage(
-                                    Utils.getAssetsImg("new-customer")),
+                                image: AssetImage(Utils.getAssetsImg("new-customer")),
                                 width: Utils.getDeviceWidth(context) / 4.2,
                               ),
-                              Utils.showUnreadCount(
-                                  Const.typeNewCustomer, 10, 15)
+                              Utils.showUnreadCount(Const.typeNewCustomer, 10, 15)
                             ],
                           ),
                           onTap: () {
-                            Utils.performDashboardItemClick(
-                                context, Const.typeNewCustomer);
+                            Utils.performDashboardItemClick(context, Const.typeNewCustomer);
                           }),
 //                SizedBox(
 //                  width: Utils.getDeviceWidth(context) / 20,
@@ -593,17 +540,14 @@ class CommonView {
                           child: Stack(
                             children: <Widget>[
                               Image(
-                                image:
-                                    AssetImage(Utils.getAssetsImg("existing")),
+                                image: AssetImage(Utils.getAssetsImg("existing")),
                                 width: Utils.getDeviceWidth(context) / 4.6,
                               ),
-                              Utils.showUnreadCount(
-                                  Const.typeExistingCustomer, 10, 35)
+                              Utils.showUnreadCount(Const.typeExistingCustomer, 10, 35)
                             ],
                           ),
                           onTap: () {
-                            Utils.performDashboardItemClick(
-                                context, Const.typeExistingCustomer);
+                            Utils.performDashboardItemClick(context, Const.typeExistingCustomer);
                           }),
                     ],
                   ),
@@ -618,37 +562,35 @@ class CommonView {
                 ),
               ),
               Positioned(
-                bottom: Utils.getDeviceHeight(context) / 6.5,
-                left: Utils.getDeviceWidth(context) / 3.5,
-                child: Row(
-                  children: <Widget>[
-                    InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          Utils.isFeatureOn(Const.typeReward) ? Image(
-                            image: AssetImage(Utils.getAssetsImg("ic_gift_drawer")),
-                            height: Utils.getDeviceHeight(context) / 5,
-                          ) : Container(),
-                          Utils.isShowUnreadCount(Const.typeReward)
-                              ? Utils.showUnreadCount(Const.typeReward, 17, 5)
-                              : Container(),
-                          Utils.isShowLock(Const.typeReward)
-                              ? Image(
-                            image: AssetImage(
-                                Utils.getAssetsImg("lock_org")),
-                                width: Utils.getDeviceWidth(context) / 4.5,
-                          )
-                              : Container(),
-                        ],
+                  bottom: Utils.getDeviceHeight(context) / 6.5,
+                  left: Utils.getDeviceWidth(context) / 3.5,
+                  child: Row(
+                    children: <Widget>[
+                      InkResponse(
+                        child: Stack(
+                          children: <Widget>[
+                            Utils.isFeatureOn(Const.typeReward)
+                                ? Image(
+                                    image: AssetImage(Utils.getAssetsImg("ic_gift_drawer")),
+                                    height: Utils.getDeviceHeight(context) / 5,
+                                  )
+                                : Container(),
+                            Utils.isShowUnreadCount(Const.typeReward) ? Utils.showUnreadCount(Const.typeReward, 17, 5) : Container(),
+                            Utils.isShowLock(Const.typeReward)
+                                ? Image(
+                                    image: AssetImage(Utils.getAssetsImg("lock_org")),
+                                    width: Utils.getDeviceWidth(context) / 4.5,
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                        onTap: () {
+                          print("Reward tapped");
+                          Utils.performDashboardItemClick(context, Const.typeReward);
+                        },
                       ),
-                      onTap: () {
-                        print("Reward tapped");
-                        Utils.performDashboardItemClick(context, Const.typeReward);
-                      },
-                    ),
-                  ],
-                )
-              ),
+                    ],
+                  )),
               Positioned(
                 bottom: Utils.getDeviceHeight(context) / 20,
                 left: Utils.getDeviceWidth(context) / 3.4,
@@ -674,17 +616,14 @@ class CommonView {
 
   //push notification alert
 
-  pushNotificationAlert(BuildContext context, String bonus, String level,
-      String type, String achievementType) {
+  pushNotificationAlert(BuildContext context, String bonus, String level, String type, String achievementType) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: ColorRes.blackTransparentColor,
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
+        pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
           return Scaffold(
             backgroundColor: Colors.transparent,
             body: Center(
@@ -706,25 +645,22 @@ class CommonView {
                               height: 35,
                               width: Utils.getDeviceWidth(context),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                                 color: ColorRes.blue,
                               ),
                               alignment: Alignment.topCenter,
                               child: Center(
                                 child: Text(
                                   Utils.getText(context, StringRes.achievement),
-                                  style: TextStyle(
-                                      color: ColorRes.white, fontSize: 17),
+                                  style: TextStyle(color: ColorRes.white, fontSize: 17),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                             ),
                             Padding(padding: EdgeInsets.only(top: 13)),
                             Text(
-                              Utils.getText(context,
-                                  "${StringRes.congratulations}" /*+bonus.toString()!="null"?bonus.toString():""+*/ "${StringRes.rewards}!"),
+                              Utils.getText(
+                                  context, "${StringRes.congratulations}" /*+bonus.toString()!="null"?bonus.toString():""+*/ "${StringRes.rewards}!"),
                               style: TextStyle(
                                 color: ColorRes.greenDot,
                                 fontSize: 20,
@@ -733,11 +669,7 @@ class CommonView {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                  "assets/images/coin_reward.gif",
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.fill),
+                              child: Image.asset("assets/images/coin_reward.gif", width: 50, height: 50, fit: BoxFit.fill),
                             ),
                           ],
                         ),
@@ -748,8 +680,7 @@ class CommonView {
                         child: Padding(
                           padding: EdgeInsets.all(10),
                           child: Image(
-                            image:
-                                AssetImage(Utils.getAssetsImg('close_dialog')),
+                            image: AssetImage(Utils.getAssetsImg('close_dialog')),
                             width: 20,
                           ),
                         ),
@@ -765,8 +696,7 @@ class CommonView {
         });
   }
 
-  pushNotificationAlert2(BuildContext context, String bonus, String level,
-      String type, String achievementType) {
+  pushNotificationAlert2(BuildContext context, String bonus, String level, String type, String achievementType) {
     showDialog(
         context: context,
         builder: (BuildContext buildContext) {
@@ -780,9 +710,7 @@ class CommonView {
               width: Utils.getDeviceWidth(context) / 2,
               child: Container(
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: ColorRes.white),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                decoration: BoxDecoration(border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -792,10 +720,8 @@ class CommonView {
                         width: Utils.getDeviceWidth(context) / 8,
                         height: Utils.getDeviceHeight(context) / 15,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(
-                                color: ColorRes.borderRewardsName, width: 1)),
+                        decoration:
+                            BoxDecoration(borderRadius: BorderRadius.circular(25), border: Border.all(color: ColorRes.borderRewardsName, width: 1)),
                         child: Center(
                             child: Text(
                           Utils.getText(context, StringRes.collector),
@@ -809,8 +735,7 @@ class CommonView {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.asset(Utils.getAssetsImg("won"),
-                            height: Utils.getDeviceHeight(context) / 5,
-                            width: Utils.getDeviceWidth(context) / 6),
+                            height: Utils.getDeviceHeight(context) / 5, width: Utils.getDeviceWidth(context) / 6),
                       ),
                       SizedBox(height: 8),
                       Text(
@@ -822,8 +747,7 @@ class CommonView {
                       ),
                       SizedBox(height: 12),
                       Image.asset(Utils.getAssetsImg("next_prof"),
-                          width: Utils.getDeviceWidth(context) / 5,
-                          height: Utils.getDeviceHeight(context) / 12)
+                          width: Utils.getDeviceWidth(context) / 5, height: Utils.getDeviceHeight(context) / 12)
                     ],
                   ),
                 ),
@@ -880,18 +804,19 @@ class CommonView {
         })*/
   }
 
-    collectorDialog(BuildContext context, PushModel mPushModel, String btnText)   {
+  collectorDialog(BuildContext context, PushModel mPushModel, String btnText) {
     showGeneralDialog(
         barrierColor: Colors.black.withOpacity(0.75),
         barrierDismissible: false,
         transitionBuilder: (context, a1, a2, widget) {
-          return AchievementDialog(a1: a1,btnText: btnText,mPushModel: mPushModel);
+          return AchievementDialog(a1: a1, btnText: btnText, mPushModel: mPushModel);
         },
         transitionDuration: Duration(milliseconds: 300),
         barrierLabel: '',
         context: context,
         pageBuilder: (context, animation1, animation2) {});
   }
+
   Widget createItem(BuildContext context) {
     return ExplosionWidget(
         tag: "RAnim",
@@ -902,14 +827,9 @@ class CommonView {
             width: 80,
             child: Text(
               "RAnim",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, color: Colors.green, fontWeight: FontWeight.bold),
             )));
   }
-
-
 
   static showShimmer() {
     return Container(

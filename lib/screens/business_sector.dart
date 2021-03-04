@@ -740,59 +740,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showContactExpertView() {
-    return InkResponse(
-        child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 50, right: 50, top: 15),
-            padding: EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-                color: Injector.isBusinessMode
-                    ? null
-                    : selectedModule.isSubscribedFromBackend == 1
-                        ? ColorRes.greyText
-                        : ColorRes.headerBlue,
-                borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg(selectedModule.isSubscribedFromBackend == 1 ? "bg_disable_subscribe" : "bg_subscribe")),
-                        fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              Utils.getText(context, StringRes.contactExpert),
-              style: TextStyle(color: ColorRes.white, fontSize: 20),
-              textAlign: TextAlign.center,
-            )),
-        onTap: () {
-          Utils.playClickSound();
-        });
+    return CommonView.contactExpertAndInformation(
+        context, Utils.getText(context, StringRes.contactExpert), true, selectedModule?.expertEmail ?? "Contact Expert");
   }
 
   showMoreInformationView() {
-    return InkResponse(
-        child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 50, right: 50, top: 15),
-            padding: EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-                color: Injector.isBusinessMode
-                    ? null
-                    : selectedModule.isSubscribedFromBackend == 1
-                        ? ColorRes.greyText
-                        : ColorRes.headerBlue,
-                borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                image: Injector.isBusinessMode
-                    ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg(selectedModule.isSubscribedFromBackend == 1 ? "bg_disable_subscribe" : "bg_subscribe")),
-                        fit: BoxFit.fill)
-                    : null),
-            child: Text(
-              Utils.getText(context, StringRes.moreInformation),
-              style: TextStyle(color: ColorRes.white, fontSize: 20),
-              textAlign: TextAlign.center,
-            )),
-        onTap: () {
-          Utils.playClickSound();
-        });
+    return CommonView.contactExpertAndInformation(
+        context, Utils.getText(context, StringRes.moreInformation), true, selectedModule?.additionalInfoLink ?? "More Information");
   }
 
   showDownloadSubscribeOptions() {
