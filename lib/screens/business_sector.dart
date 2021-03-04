@@ -632,7 +632,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               child: SingleChildScrollView(
                 child: Text(
                   selectedModule.moduleDescription,
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.left,
                   style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
                 ),
               ),
