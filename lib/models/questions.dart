@@ -89,40 +89,44 @@ class QuestionData {
   int isFirstQuestion;
   int questionCurrentIndex;
   int answerType;
+  String expertEmail;
+  String additionalInfoLink;
 
   var winningAmount;
 
   QuestionData(
       {this.questionId,
-        this.challengeId,
-        this.title,
-        this.firstName,
-        this.lastName,
-        this.profileImage,
-        this.question,
-        this.moduleName,
-        this.moduleId,
-        this.companyId,
-        this.daysInList,
-        this.counter,
-        this.description,
-        this.correctAnswerId,
-        this.loyalty,
-        this.value,
-        this.mediaLink,
-        this.mediaThumbImage,
-        this.answer,
-        this.correctAnswerImage,
-        this.inCorrectAnswerImage,
-        this.videoPlay,
-        this.videoLoop,
-        this.winningAmount,
-        this.isAnsweredCorrect,
-        this.questionCurrentIndex,
-        this.totalQuestion,
-        this.isFirstQuestion,
-        this.attemptTime,
-        this.answerType});
+      this.challengeId,
+      this.title,
+      this.firstName,
+      this.lastName,
+      this.profileImage,
+      this.question,
+      this.moduleName,
+      this.moduleId,
+      this.companyId,
+      this.daysInList,
+      this.counter,
+      this.description,
+      this.correctAnswerId,
+      this.loyalty,
+      this.value,
+      this.mediaLink,
+      this.mediaThumbImage,
+      this.answer,
+      this.correctAnswerImage,
+      this.inCorrectAnswerImage,
+      this.videoPlay,
+      this.videoLoop,
+      this.winningAmount,
+      this.isAnsweredCorrect,
+      this.questionCurrentIndex,
+      this.totalQuestion,
+      this.isFirstQuestion,
+      this.attemptTime,
+      this.answerType,
+      this.expertEmail,
+      this.additionalInfoLink});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -148,12 +152,10 @@ class QuestionData {
     isAnsweredCorrect = json['isAnsweredCorrect'];
     answerType = json['answerType'];
     winningAmount = json['winningAmount'];
-    if (json.containsKey("questionAnswerStatus") &&
-        json['questionAnswerStatus'] != null) {
+    if (json.containsKey("questionAnswerStatus") && json['questionAnswerStatus'] != null) {
       List ansList = json['questionAnswerStatus'];
       if (ansList != null && ansList.length > 0) {
         Injector.countList = ansList.map((e) => QuestionCountWithData.fromJson(e)).toList();
-
       }
     }
 
@@ -170,6 +172,8 @@ class QuestionData {
     attemptTime = json['attemptTime'];
     totalQuestion = json['totalQuestion'];
     isFirstQuestion = json['isFirstQuestion'];
+    expertEmail = json['expertEmail'];
+    additionalInfoLink = json['additionalInfoLink'];
   }
 
   Map<String, dynamic> toJson() {
@@ -205,6 +209,8 @@ class QuestionData {
     data['attemptTime'] = this.attemptTime;
     data['totalQuestion'] = this.totalQuestion;
     data['isFirstQuestion'] = this.isFirstQuestion;
+    data['expertEmail'] = this.expertEmail;
+    data['additionalInfoLink'] = this.additionalInfoLink;
     return data;
   }
 }
