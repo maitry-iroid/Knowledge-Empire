@@ -110,6 +110,8 @@ class StringRes {
   //learning module
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
+  static var contactExpert = "contactExpert";
+  static var moreInformation = "moreInformation";
   static var subscribed = "subscribed";
   static var downLoad = "downLoad";
   static var size = "size";
@@ -539,6 +541,8 @@ class StringRes {
       //learning module
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
+      'contactExpert': 'Contact Expert',
+      'moreInformation': 'More Information',
       'subscribed': 'Subscribed',
       'downLoad': 'DownLoad',
       'size': 'Size',
@@ -966,6 +970,8 @@ class StringRes {
       //learning module
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
+      'contactExpert': 'Contact Expert',
+      'moreInformation': 'More Information',
       'subscribed': 'abonniert',
       'downLoad': 'Herunterladen',
       'size': 'Größe',
@@ -1376,6 +1382,8 @@ class StringRes {
       //learning module
       'subscribe': '订阅',
       'unSubscribe': '取消订阅',
+      'contactExpert': 'Contact Expert',
+      'moreInformation': 'More Information',
       'subscribed': '已订阅',
       'downLoad': '下载',
       'size': '大小',
@@ -1982,6 +1990,8 @@ class StringRes {
 
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
+      'contactExpert': 'Contact Expert',
+      'moreInformation': 'More Information',
       'subscribed': 'Subscribed',
       'downLoad': 'DownLoad',
       'description': 'Description',
@@ -2156,6 +2166,8 @@ class StringRes {
 
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
+      'contactExpert': 'Contact Expert',
+      'moreInformation': 'More Information',
       'subscribed': 'abonniert',
       'downLoad': 'Herunterladen',
       'size': 'Größe',
@@ -2572,6 +2584,8 @@ class StringRes {
 
       'subscribe': '加入',
       'unSubscribe': '取消加入',
+      'contactExpert': 'Contact Expert',
+      'moreInformation': 'More Information',
       'subscribed': '已加入',
       'downLoad': '下载',
       'size': 'Q&A',
