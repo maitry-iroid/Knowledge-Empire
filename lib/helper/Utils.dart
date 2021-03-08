@@ -23,6 +23,7 @@ import 'package:ke_employee/dialogs/companycode_dialog.dart';
 import 'package:ke_employee/dialogs/nickname_dialog.dart';
 import 'package:ke_employee/dialogs/privacy_policy_dialog.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:ke_employee/screens/more_info.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -38,6 +39,7 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization.dart';
 import 'package:path/path.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'constant.dart';
 import 'localization.dart';
 

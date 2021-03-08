@@ -11,6 +11,7 @@ import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
+import 'package:ke_employee/screens/more_info.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CommonView {
@@ -207,7 +208,7 @@ class CommonView {
     );
   }
 
-  static contactExpertAndInformation(BuildContext context, String title, bool checking, String content) {
+  static showContactExpert(BuildContext context, String title, bool checking, String content) {
     return InkResponse(
       onTap: () {
         Utils.playClickSound();
@@ -220,6 +221,29 @@ class CommonView {
               content: content,
             ),
           );
+      },
+      child: Container(
+          alignment: Alignment.center,
+          margin: EdgeInsets.only(left: 50, right: 50, top: 15),
+          padding: EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+              color: Injector.isBusinessMode ? Colors.transparent : ColorRes.headerBlue,
+              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+              image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_subscribe")), fit: BoxFit.fill) : null),
+          child: Text(
+            Utils.getText(context, title),
+            style: TextStyle(color: ColorRes.white, fontSize: 20),
+            textAlign: TextAlign.center,
+          )),
+    );
+  }
+
+  static showMoreInformation(BuildContext context, String title, bool checking, String url) {
+    return InkResponse(
+      onTap: () {
+        Utils.playClickSound();
+        print("--------------URL ::: $url");
+        Navigator.push(context, MaterialPageRoute(builder: (_) => MoreInformation(url: url)));
       },
       child: Container(
           alignment: Alignment.center,

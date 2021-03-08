@@ -825,14 +825,14 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   showContactExpertView() {
     return selectedModule.expertEmail != null && selectedModule.expertEmail != ""
-        ? CommonView.contactExpertAndInformation(
+        ? CommonView.showContactExpert(
             context, Utils.getText(context, StringRes.contactExpert), true, selectedModule?.expertEmail ?? "Contact Expert")
         : Container();
   }
 
   showMoreInformationView() {
     return selectedModule.additionalInfoLink != null && selectedModule.additionalInfoLink != ""
-        ? CommonView.contactExpertAndInformation(
+        ? CommonView.showMoreInformation(
             context, Utils.getText(context, StringRes.moreInformation), true, selectedModule?.additionalInfoLink ?? "More Information")
         : Container();
   }
