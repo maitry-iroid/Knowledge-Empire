@@ -9,10 +9,13 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/more_info.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_encoder/url_encoder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CommonView {
   static bool isShowLayout = false;
@@ -208,19 +211,26 @@ class CommonView {
     );
   }
 
-  static showContactExpert(BuildContext context, String title, bool checking, String content) {
-    return InkResponse(
-      onTap: () {
-        Utils.playClickSound();
+  static launchURL(String url) async {
+    await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  }
 
-        if (checking)
-          showDialog(
-            context: context,
-            builder: (_) => FunkyOverlay(
-              title: title,
-              content: content,
-            ),
-          );
+
+  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String moduleName) {
+    return InkResponse(
+      onTap: () async {
+        Utils.playClickSound();
+        String mail = await EncryptionManager().stringDecryption(content);
+
+        //Generate encoded String for mail to
+        String subjectData = isModule ? "Module" : "Question";
+        String subject = 'Support request for Knowledge Empire $subjectData: $moduleName';
+        String body = urlEncode(text: "Dear Expert,<br><br>This is a Knowledge Empire Support request:<br>From:${Injector.userData.email}<br>For $subjectData: $moduleName<br><br>Best Regards,<br>Your Knowledge Empire Team");
+
+        // Print logs and execute
+        print("title::::: $mail");
+        print("Body :::::: $body");
+        launchURL("mailto:$mail?subject=$subject&body=$body");
       },
       child: Container(
           alignment: Alignment.center,

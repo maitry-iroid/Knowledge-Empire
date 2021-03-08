@@ -657,7 +657,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               showQueMedia(context),
               CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description),
               questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != "" ? CommonView.showContactExpert(
-                  context, Utils.getText(context, StringRes.contactExpert), true, questionDataCustSituation?.expertEmail ?? "") : Container(),
+                  context, Utils.getText(context, StringRes.contactExpert), true, questionDataCustSituation?.expertEmail ?? "", false, this.questionDataCustomerSituation.question) : Container(),
               questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != "" ? CommonView.showMoreInformation(
                   context, Utils.getText(context, StringRes.moreInformation), true, questionDataCustSituation?.additionalInfoLink ?? "") : Container()
             ],

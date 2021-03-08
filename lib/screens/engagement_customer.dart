@@ -250,9 +250,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer) ? 1 : 0;
 
-    SubmitAnswerRequest rq = Injector.prefs.getString(PrefKeys.answerData) != null
-        ? SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
-        : SubmitAnswerRequest();
+    // SubmitAnswerRequest rq = Injector.prefs.getString(PrefKeys.answerData) != null
+    //     ? SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
+    //     : SubmitAnswerRequest();
+
+    //TODO manage request here for download module
+    SubmitAnswerRequest  rq = SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
 
@@ -305,6 +308,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void callSubmitAnswerApi(BuildContext context) {
     SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
+    print("Submit Answer rq : ${rq.toJson()}");
     if (mounted)
       setState(() {
         isLoading = true;
@@ -556,7 +560,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
     rq.answer.add(submitAnswer);
 
-    rq.totalQuestionAnswered = rq.answer.length;
+    rq.totalQuestionAnswered = 1;
 
     Utils.isInternetConnected().then((isConnected) {
       if (!isConnected) {

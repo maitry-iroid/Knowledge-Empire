@@ -68,6 +68,7 @@ dependencies:
   flutter_native_splash: 0.1.9
   cipher2:
   webview_flutter:
+  url_encoder:
 
 #  flutter_plugin_pdf_viewer: ^1.0.7
 
