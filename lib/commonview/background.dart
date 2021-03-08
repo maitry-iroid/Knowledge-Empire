@@ -243,12 +243,13 @@ class CommonView {
 
         //Generate encoded String for mail to
         String subjectData = isModule ? "Module" : "Question";
-        String subject = 'Support request for Knowledge Empire $subjectData: $dataName';
-        String body = urlEncode(text: "Dear Expert,<br><br>This is a Knowledge Empire Support request:<br>From:${Injector.userData.email}<br>For $subjectData: $dataName<br><br>Best Regards,<br>Your Knowledge Empire Team");
+        String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataName.replaceAll(" ", "%20")}';
+        String body = "Dear%20Expert123,%0A%0AThis%20is%20a%20Knowledge%20Empire%20Support%20request:%0AFrom:${Injector.userData.email}%0AFor%20$subjectData:%20${dataName.replaceAll(" ", "%20")}%0A%0ABest%20Regards,%0AYour%20Knowledge%20Empire%20Team";
 
         // Print logs and execute
         print("title::::: $mail");
         print("Body :::::: $body");
+        print("URL ::::: mailto:$mail?subject=$subject&body=$body");
         launchURL("mailto:$mail?subject=$subject&body=$body");
       },
       child: Container(
