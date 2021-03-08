@@ -229,7 +229,7 @@ class CommonView {
         rq.informationType = "1";
 
         print("Request ::: ${rq.toJson()}");
-        await WebApi().callAPI(WebApi.rqInformationActivityLog, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqInformationActivityLog, rq.toJson()).then((data) {
           print("data::: $data");
           if (data != null) {
             print("----------- Information Activity Log API called -------------");
