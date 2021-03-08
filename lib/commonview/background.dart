@@ -244,7 +244,7 @@ class CommonView {
         //Generate encoded String for mail to
         String subjectData = isModule ? "Module" : "Question";
         String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataName.replaceAll(" ", "%20")}';
-        String body = "Dear%20Expert123,%0A%0AThis%20is%20a%20Knowledge%20Empire%20Support%20request:%0AFrom:${Injector.userData.email}%0AFor%20$subjectData:%20${dataName.replaceAll(" ", "%20")}%0A%0ABest%20Regards,%0AYour%20Knowledge%20Empire%20Team";
+        String body = "Dear%20Expert,%0A%0AThis%20is%20a%20Knowledge%20Empire%20Support%20request:%0AFrom:${Injector.userData.email}%0AFor%20$subjectData:%20${dataName.replaceAll(" ", "%20")}%0A%0ABest%20Regards,%0AYour%20Knowledge%20Empire%20Team";
 
         // Print logs and execute
         print("title::::: $mail");
