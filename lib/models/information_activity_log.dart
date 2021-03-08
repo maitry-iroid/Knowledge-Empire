@@ -4,7 +4,7 @@ class InformationActivityLogModel{
   String type;
   String informationType;
 
-  InformationActivityLogModel({this.userId, this.type, this.data});
+  InformationActivityLogModel({this.userId, this.dataId, this.type, this.informationType});
 
   InformationActivityLogModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];

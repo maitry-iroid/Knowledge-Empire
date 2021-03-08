@@ -8,8 +8,10 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/encryption_manager.dart';
+import 'package:ke_employee/models/information_activity_log.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/more_info.dart';
@@ -216,16 +218,33 @@ class CommonView {
   }
 
 
-  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String moduleName) {
+  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataName, String dataId) {
     return InkResponse(
       onTap: () async {
         Utils.playClickSound();
+        InformationActivityLogModel rq = InformationActivityLogModel();
+        rq.userId = Injector.userData.userId.toString();
+        rq.dataId = dataId;
+        rq.type = isModule ? "2" : "1";
+        rq.informationType = "1";
+
+        print("Request ::: ${rq.toJson()}");
+        await WebApi().callAPI(WebApi.rqInformationActivityLog, rq.toJson()).then((data) {
+          print("data::: $data");
+          if (data != null) {
+            print("----------- Information Activity Log API called -------------");
+          } else {
+            print("----------- Data null -------------");
+          }
+        }).catchError((e) {
+          print("Information Activity Log" + e.toString());
+        });
         String mail = await EncryptionManager().stringDecryption(content);
 
         //Generate encoded String for mail to
         String subjectData = isModule ? "Module" : "Question";
-        String subject = 'Support request for Knowledge Empire $subjectData: $moduleName';
-        String body = urlEncode(text: "Dear Expert,<br><br>This is a Knowledge Empire Support request:<br>From:${Injector.userData.email}<br>For $subjectData: $moduleName<br><br>Best Regards,<br>Your Knowledge Empire Team");
+        String subject = 'Support request for Knowledge Empire $subjectData: $dataName';
+        String body = urlEncode(text: "Dear Expert,<br><br>This is a Knowledge Empire Support request:<br>From:${Injector.userData.email}<br>For $subjectData: $dataName<br><br>Best Regards,<br>Your Knowledge Empire Team");
 
         // Print logs and execute
         print("title::::: $mail");
@@ -248,11 +267,24 @@ class CommonView {
     );
   }
 
-  static showMoreInformation(BuildContext context, String title, bool checking, String url) {
+  static showMoreInformation(BuildContext context, String title, bool checking, String url, bool isModule, String dataId) {
     return InkResponse(
       onTap: () {
         Utils.playClickSound();
         print("--------------URL ::: $url");
+        InformationActivityLogModel rq = InformationActivityLogModel();
+        rq.userId = Injector.userData.userId.toString();
+        rq.dataId = dataId;
+        rq.type = isModule ? "2" : "1";
+        rq.informationType = "2";
+
+        WebApi().callAPI(WebApi.rqInformationActivityLog, rq.toJson()).then((data) {
+          if (data != null) {
+            print("----------- Information Activity Log API called -------------");
+          }
+        }).catchError((e) {
+          print("Information Activity Log" + e.toString());
+        });
         Navigator.push(context, MaterialPageRoute(builder: (_) => MoreInformation(url: url, title: title)));
       },
       child: Container(
