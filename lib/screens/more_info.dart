@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ke_employee/helper/res.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MoreInformation extends StatefulWidget {
   final String url;
-  MoreInformation({this.url});
+  final String title;
+  MoreInformation({this.url, this.title});
 
   @override
   _MoreInformationState createState() => _MoreInformationState();
@@ -26,6 +28,10 @@ class _MoreInformationState extends State<MoreInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorRes.headerBlue,
+        title: Text(widget.title),
+      ),
       body: WebView(
         initialUrl: widget.url,
       )

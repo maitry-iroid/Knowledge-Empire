@@ -243,7 +243,7 @@ class CommonView {
       onTap: () {
         Utils.playClickSound();
         print("--------------URL ::: $url");
-        Navigator.push(context, MaterialPageRoute(builder: (_) => MoreInformation(url: url)));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => MoreInformation(url: url, title: title)));
       },
       child: Container(
           alignment: Alignment.center,
