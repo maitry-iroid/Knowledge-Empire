@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -22,7 +22,6 @@ import '../helper/string_res.dart';
 *
 * */
 
-
 int position1;
 
 bool isCheckLoad = false;
@@ -41,19 +40,14 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   List<Organization> arrOrganization = List();
   bool isLoading = false;
 
-
-
-
   @override
   initState() {
     super.initState();
     showIntroDialog();
-
   }
 
   Future showIntroDialog() async {
-    if (Injector.introData != null && Injector.introData.org1 == 0)
-      await DisplayDialogs.showIntroOrg1(context);
+    if (Injector.introData != null && Injector.introData.org1 == 0) await DisplayDialogs.showIntroOrg1(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) getOrganization();
@@ -76,10 +70,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 //              CommonView.showTitle(context, StringRes.organizations),
               Expanded(
                 child: Stack(
-                  children: <Widget>[
-                    CommonView.showBackgroundOrg(context),
-                    arrOrganization.length > 0 ? showItems() : Container()
-                  ],
+                  children: <Widget>[CommonView.showBackgroundOrg(context), arrOrganization.length > 0 ? showItems() : Container()],
                 ),
               )
             ],
@@ -104,16 +95,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           margin: EdgeInsets.only(
               left: 4,
               right: 4,
-              top: type == Const.typeSales ||
-                      type == Const.typeOperations ||
-                      type == Const.typeFinance
-                  ? 60
-                  : 4,
-              bottom: type == Const.typeSales ||
-                      type == Const.typeOperations ||
-                      type == Const.typeFinance
-                  ? 4
-                  : 60),
+              top: type == Const.typeSales || type == Const.typeOperations || type == Const.typeFinance ? 60 : 4,
+              bottom: type == Const.typeSales || type == Const.typeOperations || type == Const.typeFinance ? 4 : 60),
           elevation: 5,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           child: Column(
@@ -133,14 +116,8 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                         ),
                         color: ColorRes.headerBlue),
                     child: Text(
-                      org != null && org.level != null
-                          ? org.level.toString()
-                          : "",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Injector.isBusinessMode
-                              ? ColorRes.white
-                              : ColorRes.hintColor),
+                      org != null && org.level != null ? org.level.toString() : "",
+                      style: TextStyle(fontSize: 14, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.hintColor),
                     ),
                   ),
                   Expanded(
@@ -149,11 +126,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       minFontSize: 4,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Injector.isBusinessMode
-                              ? ColorRes.textBlue
-                              : ColorRes.hintColor),
+                      style: TextStyle(fontSize: 12, color: Injector.isBusinessMode ? ColorRes.textBlue : ColorRes.hintColor),
                     ),
                   ),
                   SizedBox(
@@ -168,11 +141,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                     height: 15,
                     margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('bg_progress_2')),
-                            fit: BoxFit.fill)),
+                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_progress_2')), fit: BoxFit.fill)),
                   ),
                   LinearPercentIndicator(
                     alignment: MainAxisAlignment.center,
@@ -189,8 +158,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
         ),
       ),
       onTap: () async {
-        if (type == Const.typeLegal && !Utils.isFeatureOn(Const.typeChallenges))
-          return;
+        if (type == Const.typeLegal && !Utils.isFeatureOn(Const.typeChallenges)) return;
 
         var data = await showDialog(
             context: _scaffoldKey.currentContext,
@@ -205,9 +173,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
 
   showItems() {
     return Padding(
-      padding: EdgeInsets.only(
-          left: Utils.getDeviceWidth(context) / 12,
-          right: Utils.getDeviceWidth(context) / 10),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context) / 12, right: Utils.getDeviceWidth(context) / 10),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -218,9 +184,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           Positioned(
             right: 5,
             top: 50,
-            child: Utils.isFeatureOn(Const.typeChallenges)
-                ? showItem(Const.typeLegal)
-                : Container(),
+            child: Utils.isFeatureOn(Const.typeChallenges) ? showItem(Const.typeLegal) : Container(),
           ),
           Positioned(
             left: Utils.getDeviceWidth(context) / 6,
@@ -296,8 +260,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
   }
 
   getProgress(int position) {
-    int totalEmployeeCount = Injector.customerValueData.totalEmployeeCapacity -
-        Injector.customerValueData.remainingEmployeeCapacity;
+    int totalEmployeeCount = Injector.customerValueData.totalEmployeeCapacity - Injector.customerValueData.remainingEmployeeCapacity;
 
     if (totalEmployeeCount == null) return 0.0;
 
@@ -327,9 +290,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
           isLoading = true;
         });
 
-      WebApi()
-          .callAPI(WebApi.rqManageOrganization, rq.toJson())
-          .then((data) async {
+      WebApi().callAPI(WebApi.rqManageOrganization, rq.toJson()).then((data) async {
         if (mounted)
           setState(() {
             isLoading = false;
@@ -437,10 +398,9 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
               width: widget.isForIntroDialog != null && !widget.isForIntroDialog
                   ? Utils.getDeviceWidth(context) / 1.8
                   : Utils.getDeviceWidth(context) / 2.5,
-              height:
-                  widget.isForIntroDialog != null && !widget.isForIntroDialog
-                      ? Utils.getDeviceHeight(context) / 1.8
-                      : Utils.getDeviceHeight(context) / 2.1,
+              height: widget.isForIntroDialog != null && !widget.isForIntroDialog
+                  ? Utils.getDeviceHeight(context) / 1.8
+                  : Utils.getDeviceHeight(context) / 2.1,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: ColorRes.white,
@@ -459,19 +419,11 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                     widget.isForIntroDialog != null && !widget.isForIntroDialog
                         ? InkResponse(
                             child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 3, bottom: 3),
-                              margin: EdgeInsets.only(
-                                  left: 10, right: 10, top: 3, bottom: 3),
+                              padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2, color: ColorRes.blue),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Text(
-                                  Utils.getText(context, StringRes.hireEmp),
-                                  style: TextStyle(
-                                      color: ColorRes.blue, fontSize: 17)),
+                                  border: Border.all(width: 2, color: ColorRes.blue), borderRadius: BorderRadius.all(Radius.circular(20))),
+                              child: Text(Utils.getText(context, StringRes.hireEmp), style: TextStyle(color: ColorRes.blue, fontSize: 17)),
                             ),
                             onTap: () {
                               Navigator.pop(context, Const.add);
@@ -482,17 +434,10 @@ class OrgInfoDialogState extends State<OrgInfoDialog> {
                     widget.isForIntroDialog != null && !widget.isForIntroDialog
                         ? InkResponse(
                             child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 3, bottom: 3),
+                              padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2, color: ColorRes.blue),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Text(
-                                  Utils.getText(context, StringRes.fireEmp),
-                                  style: TextStyle(
-                                      color: ColorRes.red, fontSize: 17)),
+                                  border: Border.all(width: 2, color: ColorRes.blue), borderRadius: BorderRadius.all(Radius.circular(20))),
+                              child: Text(Utils.getText(context, StringRes.fireEmp), style: TextStyle(color: ColorRes.red, fontSize: 17)),
                             ),
                             onTap: () {
                               Navigator.pop(context, Const.subtract);

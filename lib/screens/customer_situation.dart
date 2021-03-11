@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/get_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
-import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -19,7 +19,7 @@ import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:video_player/video_player.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
-import '../commonview/background.dart';
+import '../commonview/common_view.dart';
 import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
@@ -187,35 +187,60 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showMediaAnswer(BuildContext context, bool isMediaWithQuestion) {
     return Expanded(
-        child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: SingleChildScrollView(
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
 //              showMediaQuestion(context),
-          Expanded(
-              child: GridView.builder(
-                  itemCount: questionDataCustomerSituation.answer.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: isMediaWithQuestion ? 1 : 2, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
-                  itemBuilder: (context, index) {
-                    return MediaManager().showQueMedia(
-                        context,
-                        isAnswerCorrect(index)
-                            ? ColorRes.greenDot
-                            : arrAnswerSituation[index].isSelected
-                                ? ColorRes.fontGrey
-                                : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
-                                    ? ColorRes.greenDot
-                                    : ColorRes.white,
-                        questionDataCustomerSituation.answer.elementAt(index).answer,
-                        questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
-                            "https://www.speedsecuregcc.com/uploads/products/default.jpg");
-                  }))
-        ],
+                GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: questionDataCustomerSituation.answer.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: isMediaWithQuestion ? 1 : 2, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
+                    itemBuilder: (context, index) {
+                      return MediaManager().showQueMedia(
+                          context,
+                          isAnswerCorrect(index)
+                              ? ColorRes.greenDot
+                              : arrAnswerSituation[index].isSelected
+                                  ? ColorRes.fontGrey
+                                  : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                                      ? ColorRes.greenDot
+                                      : ColorRes.white,
+                          questionDataCustomerSituation.answer.elementAt(index).answer,
+                          questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
+                              "https://www.speedsecuregcc.com/uploads/products/default.jpg");
+                    }),
+                Row(children: <Widget>[
+                  Expanded(
+                      child: questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
+                          ? CommonView.showContactExpert(
+                              context,
+                              Utils.getText(context, StringRes.contactExpert),
+                              true,
+                              questionDataCustSituation?.expertEmail ?? "",
+                              false,
+                              this.questionDataCustomerSituation.question,
+                              this.questionDataCustomerSituation.questionId.toString())
+                          : Container()),
+                  Expanded(
+                      child: questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
+                          ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
+                              questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString())
+                          : Container()),
+                ]),
+                SizedBox(height: 10)
+              ],
+            ),
+          ),
+        ),
       ),
-    ));
+    );
   }
 
   showMediaAnswersView(BuildContext context, String path) {
@@ -656,10 +681,20 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             children: <Widget>[
               showQueMedia(context),
               CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description),
-              questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != "" ? CommonView.showContactExpert(
-                  context, Utils.getText(context, StringRes.contactExpert), true, questionDataCustSituation?.expertEmail ?? "", false, this.questionDataCustomerSituation.question, this.questionDataCustomerSituation.questionId.toString()) : Container(),
-              questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != "" ? CommonView.showMoreInformation(
-                  context, Utils.getText(context, StringRes.moreInformation), true, questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString()) : Container()
+              questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
+                  ? CommonView.showContactExpert(
+                      context,
+                      Utils.getText(context, StringRes.contactExpert),
+                      true,
+                      questionDataCustSituation?.expertEmail ?? "",
+                      false,
+                      this.questionDataCustomerSituation.question,
+                      this.questionDataCustomerSituation.questionId.toString())
+                  : Container(),
+              questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
+                  ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
+                      questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString())
+                  : Container()
             ],
           ),
         ));

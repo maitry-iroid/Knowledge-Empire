@@ -1,7 +1,7 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -13,7 +13,6 @@ import 'package:ke_employee/models/get_rewards.dart';
 import 'package:ke_employee/models/redeem_reward.dart';
 import 'package:video_player/video_player.dart';
 
-
 VideoPlayerController _controller;
 ChewieController _chewieController;
 
@@ -23,7 +22,6 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
-
   List<RewardData> arrRewards = List();
   List<RewardData> arrFinalRewards = List();
   RewardData selectedModule = RewardData();
@@ -33,7 +31,6 @@ class _RewardsPageState extends State<RewardsPage> {
   TextEditingController searchController = TextEditingController();
   bool isLoading = false;
   String searchText = "";
-
 
   String _pdfPath = '';
   String _previewPath;
@@ -58,13 +55,12 @@ class _RewardsPageState extends State<RewardsPage> {
     super.dispose();
   }
 
-
   Future getPDF(String url) async {
-    if (selectedModule != null && url != null ){
+    if (selectedModule != null && url != null) {
       _pdfPath = url;
       _pdfDocument = await PDFDocument.fromURL(url);
     }
-    if(mounted){
+    if (mounted) {
       setState(() {
         _isLoading = false;
       });
@@ -72,15 +68,8 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   Future<void> initVideoController(String link) async {
-    await Injector.cacheManager
-        .getFileFromCache(link)
-        .then((fileInfo) {
-      _controller = Utils.getCacheFile(link) != null
-          ? VideoPlayerController.file(
-          Utils
-              .getCacheFile(link)
-              .file)
-          : VideoPlayerController.network(link)
+    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) {
+      _controller = Utils.getCacheFile(link) != null ? VideoPlayerController.file(Utils.getCacheFile(link).file) : VideoPlayerController.network(link)
         ..initialize().then((_) {
           if (mounted)
             setState(() {
@@ -88,9 +77,7 @@ class _RewardsPageState extends State<RewardsPage> {
             });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
+      questionData.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
       _chewieController = ChewieController(
           videoPlayerController: _controller,
           allowFullScreen: false,
@@ -102,25 +89,22 @@ class _RewardsPageState extends State<RewardsPage> {
 
   getTimeZone() async {
     String timezone = await Utils.initPlatformState();
-    if(!mounted) return;
+    if (!mounted) return;
 
     setState(() {
       this._timeZone = timezone;
     });
   }
 
-
   Future showDialogForCallApi() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData != null && Injector.introData.reward2 == 0)
-      await DisplayDialogs.showIntroRewards(context);
+    if (Injector.introData != null && Injector.introData.reward2 == 0) await DisplayDialogs.showIntroRewards(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       fetchRewardsModules();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +120,10 @@ class _RewardsPageState extends State<RewardsPage> {
                 flex: 1,
                 child: Injector.isBusinessMode
                     ? Card(
-                  color: Colors.transparent,
-                  elevation: 20,
-                  child: showSecondHalf(context),
-                )
+                        color: Colors.transparent,
+                        elevation: 20,
+                        child: showSecondHalf(context),
+                      )
                     : showSecondHalf(context),
               )
             ],
@@ -167,11 +151,8 @@ class _RewardsPageState extends State<RewardsPage> {
                     child: Container(
                         height: 33,
                         padding: EdgeInsets.only(top: 13, left: 10),
-                        margin:
-                        EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: ColorRes.white),
+                        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: ColorRes.white),
                         child: Theme(
                             data: ThemeData(accentColor: ColorRes.colorPrimary),
                             child: TextField(
@@ -191,13 +172,10 @@ class _RewardsPageState extends State<RewardsPage> {
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 controller: searchController,
-                                style: TextStyle(
-                                    fontSize: 16, color: ColorRes.hintColor),
+                                style: TextStyle(fontSize: 16, color: ColorRes.hintColor),
                                 decoration: InputDecoration(
-                                    hintText: Utils.getText(
-                                        context, StringRes.searchForKeywords),
-                                    hintStyle:
-                                    TextStyle(color: ColorRes.hintColor),
+                                    hintText: Utils.getText(context, StringRes.searchForKeywords),
+                                    hintStyle: TextStyle(color: ColorRes.hintColor),
                                     border: InputBorder.none))))),
                 SizedBox(
                   width: 5,
@@ -205,8 +183,7 @@ class _RewardsPageState extends State<RewardsPage> {
                 Image(
                     height: 35,
                     image: AssetImage(
-                      Utils.getAssetsImg(
-                          Injector.isBusinessMode ? "search" : 'search_prof'),
+                      Utils.getAssetsImg(Injector.isBusinessMode ? "search" : 'search_prof'),
                     ),
                     fit: BoxFit.fill)
               ],
@@ -230,11 +207,7 @@ class _RewardsPageState extends State<RewardsPage> {
     return Container(
       color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
       child: ListView(
-        children: <Widget>[
-          showImageView(context),
-          showDescriptionView(),
-          showDownloadSubscribeOptions()
-        ],
+        children: <Widget>[showImageView(context), showDescriptionView(), showDownloadSubscribeOptions()],
       ),
     );
   }
@@ -245,13 +218,8 @@ class _RewardsPageState extends State<RewardsPage> {
       margin: EdgeInsets.only(left: 20, right: 10, bottom: 10),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-          borderRadius:
-          Injector.isBusinessMode ? null : BorderRadius.circular(20),
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("business_sec_header")),
-              fit: BoxFit.fill)
-              : null),
+          borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("business_sec_header")), fit: BoxFit.fill) : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -281,37 +249,35 @@ class _RewardsPageState extends State<RewardsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          showDetailView(),
-          showRedeemView()
-        ],
+        children: <Widget>[showDetailView(), showRedeemView()],
       ),
     );
   }
 
-  showDetailView(){
-    if((selectedModule?.points ?? "") != "" && (selectedModule?.leftUnits ?? "") != ""){
-      return Padding(padding: EdgeInsets.symmetric(horizontal: 26),
+  showDetailView() {
+    if ((selectedModule?.points ?? "") != "" && (selectedModule?.leftUnits ?? "") != "") {
+      return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 26),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                Utils.getText(context, StringRes.costReward) + " : " + selectedModule.points.toString() + "  " + Utils.getText(context, StringRes.costUnit),
-                style: TextStyle(
-                    color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
-                    fontSize: 17),
+                Utils.getText(context, StringRes.costReward) +
+                    " : " +
+                    selectedModule.points.toString() +
+                    "  " +
+                    Utils.getText(context, StringRes.costUnit),
+                style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue, fontSize: 17),
               ),
               SizedBox(height: 10),
               Text(
                 Utils.getText(context, StringRes.unitsLeft) + " : " + selectedModule.leftUnits.toString(),
-                style: TextStyle(
-                    color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue,
-                    fontSize: 17),
+                style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue, fontSize: 17),
               ),
               SizedBox(height: 10),
             ],
           ));
-    }else{
+    } else {
       return Container();
     }
   }
@@ -326,17 +292,13 @@ class _RewardsPageState extends State<RewardsPage> {
                 color: Injector.isBusinessMode
                     ? null
                     : selectedModule.isRedeem == 0
-                    ? ColorRes.greyText
-                    : ColorRes.headerBlue,
-                borderRadius:
-                Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                        ? ColorRes.greyText
+                        : ColorRes.headerBlue,
+                borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        selectedModule.isRedeem == 0
-                            ? "bg_disable_subscribe"
-                            : "bg_subscribe")),
-                    fit: BoxFit.fill)
+                        image: AssetImage(Utils.getAssetsImg(selectedModule.isRedeem == 0 ? "bg_disable_subscribe" : "bg_subscribe")),
+                        fit: BoxFit.fill)
                     : null),
             child: Text(
               Utils.getText(context, StringRes.redeem),
@@ -345,7 +307,7 @@ class _RewardsPageState extends State<RewardsPage> {
             )),
         onTap: () {
           Utils.playClickSound();
-          if(selectedModule.isRedeem == 1){
+          if (selectedModule.isRedeem == 1) {
             this.callRedeemApi();
           }
         });
@@ -366,7 +328,7 @@ class _RewardsPageState extends State<RewardsPage> {
       WebApi().callAPI(WebApi.rqRedeemReward, rq.toJson()).then((data) {
         this.fetchRewardsModules();
         Utils.callCustomerValuesApi();
-        if (mounted){
+        if (mounted) {
           setState(() {
             isLoading = false;
           });
@@ -388,12 +350,8 @@ class _RewardsPageState extends State<RewardsPage> {
         margin: EdgeInsets.only(left: 20, right: 10),
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
-            image: (selectedModule.rewardId ==
-                arrFinalRewards[index].rewardId)
-                ? DecorationImage(
-                image: AssetImage(Utils.getAssetsImg(
-                    Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
-                fit: BoxFit.fill)
+            image: (selectedModule.rewardId == arrFinalRewards[index].rewardId)
+                ? DecorationImage(image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")), fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -407,21 +365,14 @@ class _RewardsPageState extends State<RewardsPage> {
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
-                    borderRadius: Injector.isBusinessMode
-                        ? null
-                        : BorderRadius.circular(20),
+                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
-                        ? DecorationImage(
-                        image: AssetImage(
-                            Utils.getAssetsImg("bg_bus_sector_item")),
-                        fit: BoxFit.fill)
+                        ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_bus_sector_item")), fit: BoxFit.fill)
                         : null),
                 child: Text(
                   arrFinalRewards[index].reward,
                   style: TextStyle(
-                    color: Injector.isBusinessMode
-                        ? ColorRes.blue
-                        : ColorRes.textProf,
+                    color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.textProf,
                     fontSize: 15,
                   ),
                   maxLines: 1,
@@ -438,16 +389,9 @@ class _RewardsPageState extends State<RewardsPage> {
                 margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                 decoration: BoxDecoration(
-                    color:
-                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    borderRadius: Injector.isBusinessMode
-                        ? null
-                        : BorderRadius.circular(20),
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg("value")),
-                        fit: BoxFit.fill)
-                        : null),
+                    color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("value")), fit: BoxFit.fill) : null),
                 child: Text(
                   arrFinalRewards[index].points.toString(),
                   style: TextStyle(
@@ -472,13 +416,13 @@ class _RewardsPageState extends State<RewardsPage> {
             selectedIndex = index;
             _controller?.pause();
 
-            if(Utils.isPdf(selectedModule.media)){
+            if (Utils.isPdf(selectedModule.media)) {
               Future.delayed(Duration.zero, () async {
                 await this.getPDF(selectedModule.media);
               });
             }
 
-            if(Utils.isVideo(selectedModule.media)){
+            if (Utils.isVideo(selectedModule.media)) {
               Injector.audioPlayerBg.stop();
               Future.delayed(Duration.zero, () async {
                 await this.initVideoController(selectedModule.media);
@@ -489,35 +433,30 @@ class _RewardsPageState extends State<RewardsPage> {
     );
   }
 
-  showImageView(BuildContext context){
-
-    if((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != ""){
-      if(Utils.isPdf(selectedModule?.media)){
+  showImageView(BuildContext context) {
+    if ((selectedModule?.media ?? "") != "" && (selectedModule?.mediaThumb ?? "") != "") {
+      if (Utils.isPdf(selectedModule?.media)) {
         return Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb,
-              pdfDocument: _pdfDocument,
-              isPdfLoading: _isLoading,
-              pdfFilePath: selectedModule.media),
+              pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.media),
         );
-      }else if(Utils.isVideo(selectedModule?.media)){
+      } else if (Utils.isVideo(selectedModule?.media)) {
         return Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb,
-          videoPlayerController: _controller,
-            chewieController: _chewieController
-          ),
+              videoPlayerController: _controller, chewieController: _chewieController),
         );
-      } else{
+      } else {
         return Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb),
         );
       }
-    }else{
+    } else {
       return Container();
     }
   }
@@ -534,30 +473,20 @@ class _RewardsPageState extends State<RewardsPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            color:
-            Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            color: Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
             margin: EdgeInsets.only(top: 20),
             child: Container(
-              padding:
-              EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
               decoration: BoxDecoration(
-                color: Injector.isBusinessMode
-                    ? ColorRes.bgDescription
-                    : ColorRes.white,
+                color: Injector.isBusinessMode ? ColorRes.bgDescription : ColorRes.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Injector.isBusinessMode
-                    ? Border.all(color: ColorRes.white, width: 1)
-                    : null,
+                border: Injector.isBusinessMode ? Border.all(color: ColorRes.white, width: 1) : null,
               ),
               child: SingleChildScrollView(
                 child: Text(
                   selectedModule.description,
                   textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      color: Injector.isBusinessMode
-                          ? ColorRes.white
-                          : ColorRes.textProf,
-                      fontSize: 17),
+                  style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
                 ),
               ),
             ),
@@ -567,19 +496,12 @@ class _RewardsPageState extends State<RewardsPage> {
             child: Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(
-                  top: Injector.isBusinessMode ? 3 : 5,
-                  left: Utils.getDeviceWidth(context) / 9,
-                  right: Utils.getDeviceWidth(context) / 9),
+                  top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 9, right: Utils.getDeviceWidth(context) / 9),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                  color:
-                  Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_blue")),
-                      fit: BoxFit.fill)
-                      : null),
+                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -601,9 +523,7 @@ class _RewardsPageState extends State<RewardsPage> {
     GetRewardRequest rq = GetRewardRequest();
     rq.userId = Injector.userId;
 
-    WebApi()
-        .callAPI(WebApi.rqGetRewards, rq.toJson())
-        .then((data) async {
+    WebApi().callAPI(WebApi.rqGetRewards, rq.toJson()).then((data) async {
       if (mounted)
         setState(() {
           isLoading = false;
@@ -632,22 +552,20 @@ class _RewardsPageState extends State<RewardsPage> {
 
             if (arrRewards.length > 0) {
               selectedModule = arrRewards[selectedIndex];
-              if(Utils.isPdf(selectedModule.media)){
+              if (Utils.isPdf(selectedModule.media)) {
                 Future.delayed(Duration.zero, () async {
                   await this.getPDF(selectedModule.media);
                 });
               }
 
-              if(Utils.isVideo(selectedModule.media)){
+              if (Utils.isVideo(selectedModule.media)) {
                 Injector.audioPlayerBg.stop();
                 Future.delayed(Duration.zero, () async {
                   await this.initVideoController(selectedModule.media);
                 });
               }
-
             }
           });
-
       }
     }).catchError((e) {
       print("getRewards_" + e.toString());
@@ -660,12 +578,8 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   void searchData() {
-    var data = arrRewards
-        .where((module) =>
-        module.reward.toLowerCase().contains(searchText.toLowerCase()))
-        .toList();
+    var data = arrRewards.where((module) => module.reward.toLowerCase().contains(searchText.toLowerCase())).toList();
 
     arrFinalRewards.addAll(data);
   }
-
 }

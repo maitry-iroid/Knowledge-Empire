@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/dashboard_intro_dialog.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -27,8 +27,7 @@ class DashboardGamePage extends StatefulWidget {
   DashboardGamePageState createState() => DashboardGamePageState();
 }
 
-class DashboardGamePageState extends State<DashboardGamePage>
-    with TickerProviderStateMixin {
+class DashboardGamePageState extends State<DashboardGamePage> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   AnimationController rotationController;
@@ -74,8 +73,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
             IntroData introData = IntroData.fromJson(data);
             await Injector.setIntroData(introData);
 
-            if (Injector.introData == null || Injector.introData.dashboard == 0)
-              showIntroDialog();
+            if (Injector.introData == null || Injector.introData.dashboard == 0) showIntroDialog();
           }
         }).catchError((e) {
           CommonView.showCircularProgress(false, context);
@@ -107,7 +105,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
           child: Stack(
             children: <Widget>[
               CommonView.showDashboardView(context),
-            //  HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
+              //  HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
               // HeaderView(scaffoldKey: _scaffoldKey, isShowMenu: true),
             ],
           ),
@@ -124,8 +122,7 @@ class DashboardGamePageState extends State<DashboardGamePage>
 
         WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            DashboardStatusResponse response =
-                DashboardStatusResponse.fromJson(data);
+            DashboardStatusResponse response = DashboardStatusResponse.fromJson(data);
 
             if (response.data.isNotEmpty) {
               Injector.prefs.setString(PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
