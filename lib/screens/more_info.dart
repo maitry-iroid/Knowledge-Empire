@@ -13,7 +13,6 @@ class MoreInformation extends StatefulWidget {
 }
 
 class _MoreInformationState extends State<MoreInformation> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -24,17 +23,16 @@ class _MoreInformationState extends State<MoreInformation> {
     ]);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorRes.headerBlue,
-        title: Text(widget.title),
-      ),
-      body: WebView(
-        initialUrl: widget.url,
-      )
-    );
+        appBar: AppBar(
+          backgroundColor: ColorRes.headerBlue,
+          title: Text(widget.title),
+        ),
+        body: WebView(
+          initialUrl: widget.url,
+          javascriptMode: JavascriptMode.unrestricted,
+        ));
   }
 }
