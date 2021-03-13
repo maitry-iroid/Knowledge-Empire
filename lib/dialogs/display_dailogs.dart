@@ -55,8 +55,7 @@ class DisplayDialogs {
   static double akikoImageMoveRight = 9.3;
   static double akikoImageMoveTop = 80.0;
 
-  static showChallengeDialog(
-      BuildContext context, String userName, QuestionData questionData) {
+  static showChallengeDialog(BuildContext context, String userName, QuestionData questionData) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -67,11 +66,7 @@ class DisplayDialogs {
             ),
             child: Container(
               height: Utils.getDeviceHeight(context) / 1.4,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image:
-                      AssetImage(Utils.getAssetsImg("challenges_bg_alert")),
-                      fit: BoxFit.cover)),
+              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("challenges_bg_alert")), fit: BoxFit.cover)),
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -79,59 +74,33 @@ class DisplayDialogs {
                     child: Container(
                       width: Utils.getDeviceWidth(context) / 2.5,
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(
-                          top: 30, left: 10, right: 10, bottom: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0))),
+                      margin: EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
                             new Container(
                               height: 30,
                               padding: EdgeInsets.all(8),
-                              margin: EdgeInsets.only(
-                                  top: Utils.getDeviceHeight(context) / 22),
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(Utils.getAssetsImg(
-                                          "challenges_alert_bg")))),
+                              margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 22),
+                              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("challenges_alert_bg")))),
                               child: Center(
-                                child: Text(
-                                    Utils.getText(context, StringRes.challenge),
-                                    style: TextStyle(
-                                        color: ColorRes.textRecordBlue)),
+                                child: Text(Utils.getText(context, StringRes.challenge), style: TextStyle(color: ColorRes.textRecordBlue)),
                               ),
                             ),
                             SizedBox(height: 9),
-                            challengesRow(
-                                Utils.getText(context, StringRes.by) + ": ",
-                                userName),
-                            challengesRow(
-                                Utils.getText(context, StringRes.inText) + ": ",
-                                "${questionData.moduleName ?? ""}"),
-                            challengesRow(
-                                Utils.getText(context, StringRes.toWin) + ": ",
-                                questionData.winningAmount
-                                    .toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
-                            challengesRow(
-                                Utils.getText(context, StringRes.questions) +
-                                    ": ",
-                                "${questionData.totalQuestion ?? ""}"),
+                            challengesRow(Utils.getText(context, StringRes.by) + ": ", userName),
+                            challengesRow(Utils.getText(context, StringRes.inText) + ": ", "${questionData.moduleName ?? ""}"),
+                            challengesRow(Utils.getText(context, StringRes.toWin) + ": ",
+                                questionData.winningAmount.toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
+                            challengesRow(Utils.getText(context, StringRes.questions) + ": ", "${questionData.totalQuestion ?? ""}"),
                             InkResponse(
                               child: Container(
-                                padding: EdgeInsets.only(
-                                    left: 35, right: 35, top: 10, bottom: 10),
+                                padding: EdgeInsets.only(left: 35, right: 35, top: 10, bottom: 10),
                                 margin: EdgeInsets.only(top: 5),
                                 decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(Utils.getAssetsImg(
-                                            'chhellages_alert_next_bg')),
-                                        fit: BoxFit.fill)),
-                                child: Text(
-                                    Utils.getText(context, StringRes.next),
-                                    style: TextStyle(color: ColorRes.white)),
+                                    image: DecorationImage(image: AssetImage(Utils.getAssetsImg('chhellages_alert_next_bg')), fit: BoxFit.fill)),
+                                child: Text(Utils.getText(context, StringRes.next), style: TextStyle(color: ColorRes.white)),
                               ),
                               onTap: () {
                                 Utils.playClickSound();
@@ -139,10 +108,9 @@ class DisplayDialogs {
 //                                Utils.showChallengeQuestionDialog(
 //                                    context, questionData);
                                 navigationBloc.updateNavigation(HomeData(
-                                    initialPageType: Const.typeEngagement,
-                                    questionHomeData: questionData,
-                                    isChallenge: true,
-                                    isReadyForChallenge: true
+                                  initialPageType: Const.typeEngagement,
+                                  questionHomeData: questionData,
+                                  isChallenge: true,
                                 ));
                               },
                             )
@@ -154,17 +122,14 @@ class DisplayDialogs {
                   Positioned(
                       child: Align(
                           alignment: Alignment.topCenter,
-                          child: Image.asset(
-                              Utils.getAssetsImg("challenges_icon"),
-                              fit: BoxFit.contain,
-                              height: Utils.getDeviceHeight(context) / 6,
-                              width: Utils.getDeviceHeight(context) / 6)))
+                          child: Image.asset(Utils.getAssetsImg("challenges_icon"),
+                              fit: BoxFit.contain, height: Utils.getDeviceHeight(context) / 6, width: Utils.getDeviceHeight(context) / 6)))
                 ],
               ),
             ),
           );
         }
-      /*    child: Dialog(
+        /*    child: Dialog(
 
 //        backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
@@ -189,11 +154,10 @@ class DisplayDialogs {
           ],
         ),
       ),*/
-    );
+        );
   }
 
-  static showUpdateDialog(
-      BuildContext context, String headline, String message, isCancelAble) {
+  static showUpdateDialog(BuildContext context, String headline, String message, isCancelAble) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -214,13 +178,10 @@ class DisplayDialogs {
               desTextLine: message,
               onTapBtn: () async {
                 //Navigator.pop(context);
-                OpenAppstore.launch(
-                    androidAppId: Injector.packageInfo.packageName,
-                    iOSAppId: "id1491903275");
+                OpenAppstore.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: "id1491903275");
               },
               onTapSecondBtn: () {
-                Injector.prefs.setString(
-                    PrefKeys.isCancelDialog, DateTime.now().toString());
+                Injector.prefs.setString(PrefKeys.isCancelDialog, DateTime.now().toString());
                 Navigator.pop(context);
               },
             ),
@@ -245,12 +206,7 @@ class DisplayDialogs {
                   style: TextStyle(color: ColorRes.headerBlue),
                 ),
               )),
-          Expanded(
-              flex: 5,
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(details,
-                      style: TextStyle(color: ColorRes.greyText)))),
+          Expanded(flex: 5, child: Align(alignment: Alignment.centerLeft, child: Text(details, style: TextStyle(color: ColorRes.greyText)))),
         ],
       ),
     );
@@ -746,8 +702,7 @@ class DisplayDialogs {
             imageHeight: lydiaImageHeight,
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
-            titleText:
-            Utils.getText(context, StringRes.strMarketingCommunications),
+            titleText: Utils.getText(context, StringRes.strMarketingCommunications),
             btnName: Utils.getText(context, StringRes.next),
             desTextLine: Injector.introModel.ranking1,
             onTapBtn: () async {

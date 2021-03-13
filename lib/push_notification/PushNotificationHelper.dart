@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -24,11 +24,9 @@ class PushNotificationHelper {
   }
 
   void initPush() async {
-
     firebaseCloudMessagingListeners();
 
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_launcher');
+    var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
 //    var initializationSettingsIOS = IOSInitializationSettings(
 //        onDidReceiveLocalNotification: onDidReceiveLocalNotification, );
 
@@ -38,11 +36,8 @@ class PushNotificationHelper {
       requestAlertPermission: true,
       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
     );
-    var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-    await Injector.flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
-        onSelectNotification: onSelectNotification);
+    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    await Injector.flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
 
     await Injector.firebaseMessaging.requestNotificationPermissions();
 
@@ -78,8 +73,7 @@ class PushNotificationHelper {
     );
   }
 
-  Future<void> onDidReceiveLocalNotification(
-      int id, String title, String body, String payload) async {
+  Future<void> onDidReceiveLocalNotification(int id, String title, String body, String payload) async {
     print("onDidReceiveLocalNotification");
     // display a dialog with the notification details, tap ok to go to another page
     await showDialog(
@@ -140,9 +134,7 @@ class PushNotificationHelper {
     Utils.addBadge();
 
     try {
-
       if (Platform.isIOS) {
-
         title = message['aps']['alert']['title'];
         body = message['aps']['alert']['body'];
 
@@ -150,7 +142,6 @@ class PushNotificationHelper {
         // lname = message['gcm.notification.lastName'];
 
       } else if (Platform.isAndroid) {
-
         title = message['notification']['title'];
         body = message['notification']['body'];
 
@@ -158,8 +149,6 @@ class PushNotificationHelper {
         // lname = message['data']['lastName'];
 
       }
-
-
 
       // print("::::::::: Original body :::::::: ${body}\n::::::::::::");
 
@@ -195,48 +184,28 @@ class PushNotificationHelper {
     }
 
     String btnText = "";
-    if (mPushModel.notificationType == Const.pushTypeChallenge.toString() &&
-        Utils.isFeatureOn(Const.typeChallenges)) {
+    if (mPushModel.notificationType == Const.pushTypeChallenge.toString() && Utils.isFeatureOn(Const.typeChallenges)) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
-    } else if (mPushModel.notificationType ==
-            Const.pushTypeAchievement.toString() &&
-        Utils.isFeatureOn(Const.typeAchievement)) {
-      if (mPushModel.type != null &&
-          mPushModel.type == "1" &&
-          mPushModel.bonus != null) {
-        Injector.customerValueData.totalEmployeeCapacity +=
-            int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingEmployeeCapacity +=
-            int.parse(mPushModel.bonus);
-        btnText = "${mPushModel.bonus} " +
-            Utils.getText(context, StringRes.employees);
+    } else if (mPushModel.notificationType == Const.pushTypeAchievement.toString() && Utils.isFeatureOn(Const.typeAchievement)) {
+      if (mPushModel.type != null && mPushModel.type == "1" && mPushModel.bonus != null) {
+        Injector.customerValueData.totalEmployeeCapacity += int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingEmployeeCapacity += int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " + Utils.getText(context, StringRes.employees);
       }
-      if (mPushModel.type != null &&
-          mPushModel.type == "3" &&
-          mPushModel.bonus != null) {
-        Injector.customerValueData.totalSalesPerson +=
-            int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingSalesPerson +=
-            int.parse(mPushModel.bonus);
-        btnText = "${mPushModel.bonus} " +
-            Utils.getText(context, StringRes.salesReps);
+      if (mPushModel.type != null && mPushModel.type == "3" && mPushModel.bonus != null) {
+        Injector.customerValueData.totalSalesPerson += int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingSalesPerson += int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " + Utils.getText(context, StringRes.salesReps);
       }
 
-      if (mPushModel.type != null &&
-          mPushModel.type == "8" &&
-          mPushModel.bonus != null) {
-        Injector.customerValueData.totalCustomerCapacity +=
-            int.parse(mPushModel.bonus);
-        Injector.customerValueData.remainingCustomerCapacity +=
-            int.parse(mPushModel.bonus);
-        btnText = "${mPushModel.bonus} " +
-            Utils.getText(context, StringRes.serviceReps);
+      if (mPushModel.type != null && mPushModel.type == "8" && mPushModel.bonus != null) {
+        Injector.customerValueData.totalCustomerCapacity += int.parse(mPushModel.bonus);
+        Injector.customerValueData.remainingCustomerCapacity += int.parse(mPushModel.bonus);
+        btnText = "${mPushModel.bonus} " + Utils.getText(context, StringRes.serviceReps);
       }
-      if (mPushModel.type != null &&
-          mPushModel.type == "0" &&
-          mPushModel.bonus != null) {
+      if (mPushModel.type != null && mPushModel.type == "0" && mPushModel.bonus != null) {
         Injector.customerValueData.totalBalance += int.parse(mPushModel.bonus);
-        btnText = "${mPushModel.bonus} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}";
+        btnText = "${mPushModel.bonus} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}";
       }
 
       Injector.setCustomerValueData(Injector.customerValueData);
@@ -246,21 +215,17 @@ class PushNotificationHelper {
 //      rq.userId = Injector.userId;
 //      customerValueBloc.getCustomerValue(rq);
 
-      CommonView().collectorDialog(context, mPushModel,btnText);
-
+      CommonView().collectorDialog(context, mPushModel, btnText);
     } else {
       showLocalNotification(Injector.notificationID, body);
     }
   }
 
   showLocalNotification(int id, String body) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails('your channel id', 'your channel name', 'your channel description',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await Injector.flutterLocalNotificationsPlugin
-        .show(id, body, body, platformChannelSpecifics, payload: 'item x');
+    var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await Injector.flutterLocalNotificationsPlugin.show(id, body, body, platformChannelSpecifics, payload: 'item x');
   }
 }

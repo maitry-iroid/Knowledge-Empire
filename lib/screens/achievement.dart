@@ -1,11 +1,11 @@
- import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/get_achievement.dart';
 
-import '../commonview/background.dart';
+import '../commonview/common_view.dart';
 import '../helper/Utils.dart';
 import '../helper/res.dart';
 import '../helper/string_res.dart';
@@ -50,8 +50,7 @@ class _AchievementPageState extends State<AchievementPage> {
   Future showDialogForCallApi() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData != null && Injector.introData.rewards == 0)
-      await DisplayDialogs.showIntroAchievement(context);
+    if (Injector.introData != null && Injector.introData.rewards == 0) await DisplayDialogs.showIntroAchievement(context);
 
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       getAchievements();
@@ -86,8 +85,7 @@ class _AchievementPageState extends State<AchievementPage> {
 
         if (selectedAchievement.subCategory.isNotEmpty) {
           _subSelectedItem = 0;
-          selectedSubCategory =
-              selectedAchievement.subCategory[_subSelectedItem];
+          selectedSubCategory = selectedAchievement.subCategory[_subSelectedItem];
         }
       });
   }
@@ -119,14 +117,9 @@ class _AchievementPageState extends State<AchievementPage> {
                 height: 30,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image:
-                                AssetImage(Utils.getAssetsImg('bg_reward_sub')),
-                            fit: BoxFit.fill)
-                        : null),
+                    color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image:
+                        Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg('bg_reward_sub')), fit: BoxFit.fill) : null),
                 child: Text(
                   Utils.getText(context, StringRes.category),
                   style: TextStyle(color: ColorRes.white, fontSize: 17),
@@ -173,15 +166,11 @@ class _AchievementPageState extends State<AchievementPage> {
               ),
               child: Container(
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: ColorRes.white),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                decoration: BoxDecoration(border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: ListView.builder(
 //                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: selectedAchievement != null
-                      ? selectedAchievement.subCategory.length
-                      : 0,
+                  itemCount: selectedAchievement != null ? selectedAchievement.subCategory.length : 0,
                   itemBuilder: (BuildContext context, int index) {
                     return showRewardItem(index);
                   },
@@ -195,10 +184,7 @@ class _AchievementPageState extends State<AchievementPage> {
               height: double.infinity,
               margin: EdgeInsets.only(left: 5, right: 5, top: 5),
               child: Row(
-                children: <Widget>[
-                  showAchievementBox(1),
-                  showAchievementBox(2)
-                ],
+                children: <Widget>[showAchievementBox(1), showAchievementBox(2)],
               ),
             ),
           ),
@@ -237,10 +223,7 @@ class _AchievementPageState extends State<AchievementPage> {
               height: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 5),
               child: Row(
-                children: <Widget>[
-                  showAchievementBox(1),
-                  showAchievementBox(2)
-                ],
+                children: <Widget>[showAchievementBox(1), showAchievementBox(2)],
               ),
             ),
           ),
@@ -259,17 +242,11 @@ class _AchievementPageState extends State<AchievementPage> {
           Card(
             elevation: 10,
             color: ColorRes.bgDescription,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.only(
-                top: 14,
-                bottom: Utils.getDeviceHeight(context) / 15,
-                right: 2.5,
-                left: 2.5),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            margin: EdgeInsets.only(top: 14, bottom: Utils.getDeviceHeight(context) / 15, right: 2.5, left: 2.5),
             child: Container(
               width: Utils.getDeviceWidth(context) / 3,
-              padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 18, bottom: 18),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 18, bottom: 18),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: ColorRes.white, width: 1),
@@ -293,13 +270,9 @@ class _AchievementPageState extends State<AchievementPage> {
               alignment: Alignment.center,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_achivement")),
-                      fit: BoxFit.fill)),
+              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_achivement")), fit: BoxFit.fill)),
               child: Text(
-                Utils.getText(context,
-                    type == 1 ? StringRes.achievement : StringRes.nextLevel),
+                Utils.getText(context, type == 1 ? StringRes.achievement : StringRes.nextLevel),
                 style: TextStyle(color: ColorRes.white, fontSize: 17),
                 textAlign: TextAlign.center,
               ),
@@ -313,10 +286,7 @@ class _AchievementPageState extends State<AchievementPage> {
               width: 120,
               margin: EdgeInsets.only(bottom: 10),
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg("bg_innovation")),
-                      fit: BoxFit.fill)),
+              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_innovation")), fit: BoxFit.fill)),
               child: Text(
                 Utils.getText(
                     context,
@@ -378,11 +348,7 @@ class _AchievementPageState extends State<AchievementPage> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                        color: _subSelectedItem == index
-                            ? ColorRes.borderRewardsName
-                            : ColorRes.white,
-                        width: 1)),
+                    border: Border.all(color: _subSelectedItem == index ? ColorRes.borderRewardsName : ColorRes.white, width: 1)),
 //                 child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 10),
 
@@ -405,9 +371,7 @@ class _AchievementPageState extends State<AchievementPage> {
 //                height: Utils.getDeviceHeight(context) / 4,
                   child: Image(
                     image: AssetImage(
-                      Utils.getAssetsImg(rewardsList[selectedAchievement
-                              .subCategory[index].currentLevel]
-                          .image),
+                      Utils.getAssetsImg(rewardsList[selectedAchievement.subCategory[index].currentLevel].image),
                     ),
 //                  fit: BoxFit.fill,
                   )),
@@ -479,27 +443,19 @@ class _CategoryItemState extends State<CategoryItem> {
       },
       child: Container(
           height: Injector.isBusinessMode ? 50 : 40,
-          margin: EdgeInsets.only(
-              left: 5,
-              right: 5,
-              top: Injector.isBusinessMode ? 0 : 5,
-              bottom: 10),
+          margin: EdgeInsets.only(left: 5, right: 5, top: Injector.isBusinessMode ? 0 : 5, bottom: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: Injector.isBusinessMode
                   ? null
-                  : widget.isSelected ? ColorRes.titleBlueProf : null,
-              border: Injector.isBusinessMode
-                  ? null
-                  : Border.all(width: 1, color: ColorRes.titleBlueProf),
-              borderRadius:
-                  Injector.isBusinessMode ? null : BorderRadius.circular(10),
+                  : widget.isSelected
+                      ? ColorRes.titleBlueProf
+                      : null,
+              border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.titleBlueProf),
+              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(10),
               image: Injector.isBusinessMode
                   ? DecorationImage(
-                      image: AssetImage(Utils.getAssetsImg(widget.isSelected
-                          ? "bg_reward_sub_selected"
-                          : "bg_reward_sub2")),
-                      fit: BoxFit.fill)
+                      image: AssetImage(Utils.getAssetsImg(widget.isSelected ? "bg_reward_sub_selected" : "bg_reward_sub2")), fit: BoxFit.fill)
                   : null),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Center(
@@ -508,7 +464,9 @@ class _CategoryItemState extends State<CategoryItem> {
               style: TextStyle(
                   color: Injector.isBusinessMode
                       ? ColorRes.white
-                      : widget.isSelected ? ColorRes.white : ColorRes.textBlue,
+                      : widget.isSelected
+                          ? ColorRes.white
+                          : ColorRes.textBlue,
                   fontSize: 17),
               textAlign: TextAlign.center,
             ),

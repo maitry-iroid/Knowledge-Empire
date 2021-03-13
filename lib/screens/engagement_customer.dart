@@ -20,7 +20,7 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
 import 'package:pdf_previewer/pdf_previewer.dart';
-import '../commonview/background.dart';
+import '../commonview/common_view.dart';
 import 'package:video_player/video_player.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
@@ -106,40 +106,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
   }
 
-  getTimeZone() async {
-    String timezone = await Utils.initPlatformState();
-    print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
-    if (!mounted) return;
-
-    setState(() {
-      this._timeZone = timezone;
-    });
-  }
-
-  Future getPdf() async {
-    if (questionData != null && questionData.mediaLink != null && Utils.isPdf(questionData.mediaLink)) {
-      if (Utils.getCacheFile(questionData.mediaLink) != null) {
-        File fetchedFile = Utils.getCacheFile(questionData.mediaLink).file;
-        _pdfPath = fetchedFile.path;
-      } else {
-        File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
-        _pdfPath = fetchedFile.path;
-      }
-      _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
-
-      // Load from URL
-      _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
-        print(e);
-      });
-
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
   @override
   void dispose() {
     try {
@@ -180,6 +146,40 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ],
       ),
     );
+  }
+
+  getTimeZone() async {
+    String timezone = await Utils.initPlatformState();
+    print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
+    if (!mounted) return;
+
+    setState(() {
+      this._timeZone = timezone;
+    });
+  }
+
+  Future getPdf() async {
+    if (questionData != null && questionData.mediaLink != null && Utils.isPdf(questionData.mediaLink)) {
+      if (Utils.getCacheFile(questionData.mediaLink) != null) {
+        File fetchedFile = Utils.getCacheFile(questionData.mediaLink).file;
+        _pdfPath = fetchedFile.path;
+      } else {
+        File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
+        _pdfPath = fetchedFile.path;
+      }
+      _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+
+      // Load from URL
+      _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
+        print(e);
+      });
+
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   selectItem(index) {
@@ -255,7 +255,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     //     : SubmitAnswerRequest();
 
     //TODO manage request here for download module
-    SubmitAnswerRequest  rq = SubmitAnswerRequest();
+    SubmitAnswerRequest rq = SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
 
@@ -572,23 +572,24 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   navigateToSituation(BuildContext context, QuestionData nextChallengeQuestionData) async {
-    if (!isChallenge) {
+    if (isChallenge) {
+      navigationBloc.updateNavigation(HomeData(
+        initialPageType: Const.typeCustomerSituation,
+        questionHomeData: questionData,
+        isChallenge: true,
+        isCameFromNewCustomer: false,
+      ));
+      //
+      // QuestionRequest rq = QuestionRequest();
+      // rq.userId = Injector.userData.userId;
+      // rq.type = Const.getNewQueType;
+      // await getQuestionsBloc.getQuestion(rq);
+
+    } else {
       HomeData homeData = HomeData(
           initialPageType: Const.typeCustomerSituation, questionHomeData: questionData, isChallenge: isChallenge, isCameFromNewCustomer: true);
 
       navigationBloc.updateNavigation(homeData);
-    } else {
-      // navigationBloc.updateNavigation(HomeData(
-      //   initialPageType: Const.typeCustomerSituation,
-      //   questionHomeData: questionData,
-      //   isChallenge: true,
-      //   isCameFromNewCustomer: false,
-      // ));
-
-      QuestionRequest rq = QuestionRequest();
-      rq.userId = Injector.userData.userId;
-      rq.type = Const.getNewQueType;
-      await getQuestionsBloc.getQuestion(rq);
     }
   }
 

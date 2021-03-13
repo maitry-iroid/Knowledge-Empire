@@ -6,7 +6,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:ke_employee/commonview/background.dart';
+import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
@@ -67,11 +67,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future getPDF(String url) async {
-    if (selectedModule != null && url != null ){
+    if (selectedModule != null && url != null) {
       _pdfPath = url;
       _pdfDocument = await PDFDocument.fromURL(url);
     }
-    if(mounted){
+    if (mounted) {
       setState(() {
         _isLoading = false;
       });
@@ -79,15 +79,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> initVideoController(String link) async {
-    await Injector.cacheManager
-        .getFileFromCache(link)
-        .then((fileInfo) {
-      _controller = Utils.getCacheFile(link) != null
-          ? VideoPlayerController.file(
-          Utils
-              .getCacheFile(link)
-              .file)
-          : VideoPlayerController.network(link)
+    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) {
+      _controller = Utils.getCacheFile(link) != null ? VideoPlayerController.file(Utils.getCacheFile(link).file) : VideoPlayerController.network(link)
         ..initialize().then((_) {
           if (mounted)
             setState(() {
@@ -95,9 +88,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
+      questionData.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
       _chewieController = ChewieController(
           videoPlayerController: _controller,
           allowFullScreen: false,
@@ -106,7 +97,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           looping: true);
     });
   }
-
 
   @override
   void dispose() {
@@ -289,19 +279,18 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             selectedModule = arrFinalLearningModules[index];
             isSwitched = selectedModule.isDownloadEnable == 1;
 
-            if(Utils.isPdf(selectedModule.mediaLink)){
+            if (Utils.isPdf(selectedModule.mediaLink)) {
               Future.delayed(Duration.zero, () async {
                 await this.getPDF(selectedModule.mediaLink);
               });
             }
 
-            if(Utils.isVideo(selectedModule.mediaLink)){
+            if (Utils.isVideo(selectedModule.mediaLink)) {
               Injector.audioPlayerBg.stop();
               Future.delayed(Duration.zero, () async {
                 await this.initVideoController(selectedModule.mediaLink);
               });
             }
-
           });
       },
     );
@@ -426,13 +415,13 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             if (arrLearningModules.length > 0 && (selectedModule.moduleId == null)) {
               selectedModule = arrLearningModules[0];
               isSwitched = selectedModule.isDownloadEnable == 1;
-              if(Utils.isPdf(selectedModule.mediaLink)){
+              if (Utils.isPdf(selectedModule.mediaLink)) {
                 Future.delayed(Duration.zero, () async {
                   await this.getPDF(selectedModule.mediaLink);
                 });
               }
 
-              if(Utils.isVideo(selectedModule.mediaLink)){
+              if (Utils.isVideo(selectedModule.mediaLink)) {
                 Injector.audioPlayerBg.stop();
                 Future.delayed(Duration.zero, () async {
                   await this.initVideoController(selectedModule.mediaLink);
@@ -825,37 +814,33 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   showContactExpertView() {
     return selectedModule.expertEmail != null && selectedModule.expertEmail != ""
-        ? CommonView.showContactExpert(
-            context, Utils.getText(context, StringRes.contactExpert), true, selectedModule?.expertEmail ?? "Contact Expert", true, this.selectedModule.moduleName, this.selectedModule.moduleId.toString())
+        ? CommonView.showContactExpert(context, Utils.getText(context, StringRes.contactExpert), true,
+            selectedModule?.expertEmail ?? "Contact Expert", true, this.selectedModule.moduleName, this.selectedModule.moduleId.toString())
         : Container();
   }
 
   showMoreInformationView() {
     return selectedModule.additionalInfoLink != null && selectedModule.additionalInfoLink != ""
-        ? CommonView.showMoreInformation(
-            context, Utils.getText(context, StringRes.moreInformation), true, selectedModule?.additionalInfoLink ?? "More Information", true, this.selectedModule.moduleId.toString())
+        ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
+            selectedModule?.additionalInfoLink ?? "More Information", true, this.selectedModule.moduleId.toString())
         : Container();
   }
 
-  showImageView(BuildContext context){
-    if((selectedModule?.mediaLink ?? "") != "" && (selectedModule?.mediaThumbImage ?? "") != "") {
-      if(Utils.isPdf(selectedModule?.mediaLink)){
+  showImageView(BuildContext context) {
+    if ((selectedModule?.mediaLink ?? "") != "" && (selectedModule?.mediaThumbImage ?? "") != "") {
+      if (Utils.isPdf(selectedModule?.mediaLink)) {
         return Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
-              pdfDocument: _pdfDocument,
-              isPdfLoading: _isLoading,
-              pdfFilePath: selectedModule.mediaLink),
+              pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.mediaLink),
         );
-      }else if(Utils.isVideo(selectedModule?.mediaLink)){
+      } else if (Utils.isVideo(selectedModule?.mediaLink)) {
         return Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
-              videoPlayerController: _controller,
-              chewieController: _chewieController
-          ),
+              videoPlayerController: _controller, chewieController: _chewieController),
         );
       } else {
         return Container(
@@ -864,7 +849,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage),
         );
       }
-    }else{
+    } else {
       return Container();
     }
   }
