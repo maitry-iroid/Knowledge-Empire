@@ -772,11 +772,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   showRequestDemoAccountView() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        Utils.getText(context, StringRes.requestDemoAccount),
-        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+    return InkResponse(
+      onTap: (){
+        _launchEmail("support@knowledge-empire.com");
+      },
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          Utils.getText(context, StringRes.requestDemoAccount),
+          style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+        ),
       ),
     );
   }
