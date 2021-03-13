@@ -33,6 +33,8 @@ class ExistingCustomerPage extends StatefulWidget {
 
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
+  List<QuestionData> tempArrQuestions = List();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -40,6 +42,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
     super.initState();
 
     initContent();
+    this.tempArrQuestions = arrQuestions;
   }
 
   Future initContent() async {
@@ -281,7 +284,10 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   initialPageType: Const.typeCustomerSituation,
                   questionHomeData: arrQuestions[index],
                   isCameFromNewCustomer: false,
-                  isChallenge: false);
+                  isChallenge: false,
+                  existingQueIndex: index,
+                existingQueList: arrQuestions
+              );
 
 //              Navigator.push(context, FadeRouteHome(homeData: homeData));
 //              Navigator.push(_scaffoldKey.currentContext,

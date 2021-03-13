@@ -23,6 +23,8 @@ import '../commonview/common_view.dart';
 import '../models/questions.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
+import 'home.dart';
+
 /*
 *   created by Riddhi
 *
@@ -65,8 +67,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   QuestionData questionDataCustomerSituation;
   bool isChallenge;
   bool isCameFromNewCustomer = false;
-
-  int index = 1;
+  int existingQuesIndex;
+      int index = 1;
 
   List alphaIndex = ['A', 'B', 'C', 'D'];
 
@@ -483,6 +485,34 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                           navigationBloc.updateNavigation(homeData);
                         } else
                           navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+
+                      } else if (!isCameFromNewCustomer != null && !isCameFromNewCustomer) {
+
+                        QuestionRequest rq = QuestionRequest();
+                        rq.userId = Injector.userData.userId;
+                        rq.type = Const.getExistingQueType;
+                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+
+
+                        print("======================= perform next existing======================");
+                        print(arrQuestions.length);
+                        if(arrQuestions != null && arrQuestions.length > 0) {
+                          existingQuesIndex = widget.homeData.existingQueIndex+1;
+
+                          if(existingQuesIndex < arrQuestions.length){
+                            print("------------- ::::::::: ${arrQuestions[existingQuesIndex].toJson()}");
+                            HomeData homeData = HomeData(initialPageType: Const.typeCustomerSituation, questionHomeData: arrQuestions[existingQuesIndex], value: arrQuestions[existingQuesIndex].value, existingQueIndex: existingQuesIndex);
+                            navigationBloc.updateNavigation(homeData);
+                            setState(() {
+                              questionDataCustomerSituation = arrQuestions[existingQuesIndex];
+                              print("------------ type :::::::: ${questionDataCustomerSituation.answerType}");
+                            });
+                          } else{
+                            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                          }
+                        } else {
+                          print("======================= Questions not found ======================");
+                        }
                       } else {
                         navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
                       }
