@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/forgot_password.dart';
 
@@ -39,6 +41,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
+  final codeController = TextEditingController();
   bool isLoading = false;
   ScrollController _scrollController = new ScrollController();
   @override
@@ -94,7 +97,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         Container(height: Utils.getDeviceHeight(context) / 5),
                         Container(
                           width: Utils.getDeviceWidth(context) / 2.3,
-                          height: Utils.getDeviceHeight(context) / 2,
+                          height: Utils.getDeviceHeight(context) / 1.7,
                           margin: EdgeInsets.only(left: 20, right: 20),
                           decoration: BoxDecoration(
                             color: ColorRes.loginBg,
@@ -186,8 +189,39 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       hintStyle: TextStyle(color: ColorRes.greyText)),
                 ),
               ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+                height: 40,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                    color: ColorRes.white,
+                    border: Border.all(
+                      color: ColorRes.white,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextField(
+                  controller: codeController,
+                  keyboardType: TextInputType.text,
+                  obscureText: false,
+                  style: TextStyle(color: ColorRes.titleBlueProf, fontSize: 15),
+                  onSubmitted: (value) {
+                    _scrollController.animateTo(
+                      0.0,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 300),
+                    );
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText:
+                      Utils.getText(context, StringRes.companyCode)
+                          .toUpperCase(),
+                      hintStyle: TextStyle(color: ColorRes.greyText)),
+                ),
+              ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               InkResponse(
                 child: Container(
@@ -244,22 +278,41 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     String encEmail =  await EncryptionManager().stringEncryption(emailController.text.trim());
     rq.email = encEmail;
 
-    WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
-      if (mounted)setState(() {
-        isLoading = false;
-      });
+    Injector.prefs.remove(PrefKeys.mainBaseUrl);
+    WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) {
 
-      if (data != null) {
-        Utils.showToast(Utils.getText(context, StringRes.mailSent));
-        //alert pop
-        Navigator.pop(context);
+      if (data != null && data['baseUrl'] != null) {
+        Injector.companyCode = codeController.text.trim();
+        Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
+        // Navigator.pop(context);
+        rq.companyCode = codeController.text.trim();
+        WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
+          if (mounted)
+            setState(() {
+            isLoading = false;
+          });
+
+          if (data != null) {
+            Utils.showToast(Utils.getText(context, StringRes.mailSent));
+            //alert pop
+            Navigator.pop(context);
+          } else {
+            print("Data ::::::::::::::::: $data");
+          }
+        }).catchError((e) {
+          print("forgotPassword_" + e.toString());
+          if (mounted)
+            setState(() {
+            isLoading = false;
+          });
+          // Utils.showToast(e.toString());
+        });
       }
     }).catchError((e) {
-      print("forgotPassword_" + e.toString());
-      if (mounted)setState(() {
-        isLoading = false;
-      });
-      // Utils.showToast(e.toString());
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
     });
   }
 }
