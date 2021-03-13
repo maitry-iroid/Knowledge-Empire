@@ -131,7 +131,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       if (isAnswere) {
         widget.mRefreshAnimation.onRefreshAchievement(Const.typeServices);
         widget.mRefreshAnimation.onRefreshAchievement(Const.typeSales);
-        // Future.delayed(Duration(seconds: 1));
+        Future.delayed(Duration(seconds: 1));
 
         if (isCameFromNewCustomer || isChallenge) {
           Utils.checkAudio(questionDataCustSituation.isAnsweredCorrect == 1);
