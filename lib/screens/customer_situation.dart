@@ -68,7 +68,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   bool isChallenge;
   bool isCameFromNewCustomer = false;
   int existingQuesIndex;
-      int index = 1;
+  int index = 1;
 
   List alphaIndex = ['A', 'B', 'C', 'D'];
 
@@ -122,7 +122,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   void updateChallenge(bool isAnswere) {
     int index = Injector.countList.indexWhere(
-        (QuestionCountWithData questionCountWithData) => questionCountWithData.questionIndex == questionDataCustSituation.questionCurrentIndex);
+            (QuestionCountWithData questionCountWithData) => questionCountWithData.questionIndex == questionDataCustSituation.questionCurrentIndex);
 
     if (index != -1) {
       Injector.countList[index].color = isAnswere ? ColorRes.greenDot : ColorRes.red;
@@ -165,7 +165,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   height: 8,
                 ),
                 homeData.questionHomeData.answerType == Const.typeAnswerText ||
-                        homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
+                    homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                     ? showTextAnswer(context)
                     : showMediaAnswer(context, false),
               ],
@@ -180,11 +180,11 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   showTextAnswer(BuildContext context) {
     return Expanded(
         child: Row(
-      children: <Widget>[
-        showFirstHalf(context),
-        showSecondHalf(context),
-      ],
-    ));
+          children: <Widget>[
+            showFirstHalf(context),
+            showSecondHalf(context),
+          ],
+        ));
   }
 
   showMediaAnswer(BuildContext context, bool isMediaWithQuestion) {
@@ -192,53 +192,73 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
-          child: Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-//              showMediaQuestion(context),
-                GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: questionDataCustomerSituation.answer.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: isMediaWithQuestion ? 1 : 2, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
-                    itemBuilder: (context, index) {
-                      return MediaManager().showQueMedia(
-                          context,
-                          isAnswerCorrect(index)
-                              ? ColorRes.greenDot
-                              : arrAnswerSituation[index].isSelected
-                                  ? ColorRes.fontGrey
-                                  : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
-                                      ? ColorRes.greenDot
-                                      : ColorRes.white,
-                          questionDataCustomerSituation.answer.elementAt(index).answer,
-                          questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
-                              "https://www.speedsecuregcc.com/uploads/products/default.jpg");
-                    }),
-                Row(children: <Widget>[
-                  Expanded(
-                      child: questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
-                          ? CommonView.showContactExpert(
-                              context,
-                              Utils.getText(context, StringRes.contactExpert),
-                              true,
-                              questionDataCustSituation?.expertEmail ?? "",
-                              false,
-                              this.questionDataCustomerSituation.question,
-                              this.questionDataCustomerSituation.questionId.toString())
-                          : Container()),
-                  Expanded(
-                      child: questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
-                          ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
-                              questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString())
-                          : Container()),
-                ]),
-                SizedBox(height: 10)
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              GridView.count(
+                crossAxisCount: isMediaWithQuestion ? 1 : 2,
+                childAspectRatio: 2,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                // Generate 100 widgets that display their index in the List.
+                children: List.generate(questionDataCustomerSituation.answer.length, (index) {
+                  return MediaManager().showQueMedia(
+                      context,
+                      isAnswerCorrect(index)
+                          ? ColorRes.greenDot
+                          : arrAnswerSituation[index].isSelected
+                          ? ColorRes.fontGrey
+                          : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                          ? ColorRes.greenDot
+                          : ColorRes.white,
+                      questionDataCustomerSituation.answer.elementAt(index).answer,
+                      questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
+                          "https://www.speedsecuregcc.com/uploads/products/default.jpg");
+                }),
+              ),
+              // GridView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemCount: questionDataCustomerSituation.answer.length,
+              //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //         crossAxisCount: isMediaWithQuestion ? 1 : 2, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
+              //     itemBuilder: (context, index) {
+              //       return MediaManager().showQueMedia(
+              //           context,
+              //           isAnswerCorrect(index)
+              //               ? ColorRes.greenDot
+              //               : arrAnswerSituation[index].isSelected
+              //                   ? ColorRes.fontGrey
+              //                   : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+              //                       ? ColorRes.greenDot
+              //                       : ColorRes.white,
+              //           questionDataCustomerSituation.answer.elementAt(index).answer,
+              //           questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
+              //               "https://www.speedsecuregcc.com/uploads/products/default.jpg");
+              //     }),
+              Row(children: <Widget>[
+                Expanded(
+                    child: questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
+                        ? CommonView.showContactExpert(
+                        context,
+                        Utils.getText(context, StringRes.contactExpert),
+                        true,
+                        questionDataCustSituation?.expertEmail ?? "",
+                        false,
+                        this.questionDataCustomerSituation.question,
+                        this.questionDataCustomerSituation.questionId.toString())
+                        : Container()),
+                Expanded(
+                    child: questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
+                        ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
+                        questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString())
+                        : Container()),
+              ]),
+              SizedBox(height: 10)
+            ],
           ),
         ),
       ),
@@ -301,82 +321,82 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         margin: EdgeInsets.only(top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: isChallenge != null && isChallenge
             ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        width: 30,
-                        height: 30,
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: questionDataCustSituation.profileImage != null && questionDataCustSituation.profileImage.isNotEmpty
-                                    ? Utils.getCacheNetworkImage(questionDataCustSituation.profileImage)
-                                    : AssetImage(Utils.getAssetsImg('user_org')),
-                                fit: BoxFit.fill),
-                            border: Border.all(color: ColorRes.textLightBlue)),
-                      ),
-                      Text(
-                        questionDataCustSituation.firstName + " " + questionDataCustSituation.lastName,
-                        style: TextStyle(color: ColorRes.white, fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  InkResponse(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 145,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
-                      child: Text(
-                        Utils.getText(context, StringRes.backToList),
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    onTap: () async {
-                      Utils.playClickSound();
-                      navigationBloc
-                          .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
-                    },
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 30,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-                        color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                        image: Injector.isBusinessMode
-                            ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
-                            : null),
-                    child: Text(
-                      Utils.getText(context, StringRes.situation),
-                      style: TextStyle(color: ColorRes.white, fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  InkResponse(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 100,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
-                      child: Text(
-                        Utils.getText(context, StringRes.next),
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    onTap: () async {
-                      Utils.playClickSound();
-                      if (isChallenge != null && isChallenge) {
-                        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Container(
+                  width: 30,
+                  height: 30,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: questionDataCustSituation.profileImage != null && questionDataCustSituation.profileImage.isNotEmpty
+                              ? Utils.getCacheNetworkImage(questionDataCustSituation.profileImage)
+                              : AssetImage(Utils.getAssetsImg('user_org')),
+                          fit: BoxFit.fill),
+                      border: Border.all(color: ColorRes.textLightBlue)),
+                ),
+                Text(
+                  questionDataCustSituation.firstName + " " + questionDataCustSituation.lastName,
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                width: 145,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.backToList),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () async {
+                Utils.playClickSound();
+                navigationBloc
+                    .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
+              },
+            ),
+            Container(
+              alignment: Alignment.center,
+              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+                  image: Injector.isBusinessMode
+                      ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
+                      : null),
+              child: Text(
+                Utils.getText(context, StringRes.situation),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                width: 100,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.next),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () async {
+                Utils.playClickSound();
+                if (isChallenge != null && isChallenge) {
+                  Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
 
-                        /* if (nextChallengeQuestionData != null &&
+                  /* if (nextChallengeQuestionData != null &&
                       nextChallengeQuestionData.challengeId != null) {
 
                     navigationBloc.updateNavigation(HomeData(
@@ -384,84 +404,84 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         isChallenge: isChallenge,mani
                         questionHomeData: nextChallengeQuestionData));
                   }*/
-                      } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
-                        QuestionRequest rq = QuestionRequest();
-                        rq.userId = Injector.userData.userId;
-                        rq.type = Const.getNewQueType;
-                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+                } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
+                  QuestionRequest rq = QuestionRequest();
+                  rq.userId = Injector.userData.userId;
+                  rq.type = Const.getNewQueType;
+                  List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
 
-                        print("======================= perform next ======================");
-                        print(arrQuestions.length);
+                  print("======================= perform next ======================");
+                  print(arrQuestions.length);
 
-                        if (arrQuestions != null && arrQuestions.length > 0) {
-                          HomeData homeData =
-                              HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
+                  if (arrQuestions != null && arrQuestions.length > 0) {
+                    HomeData homeData =
+                    HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
 
-                          navigationBloc.updateNavigation(homeData);
-                        } else
-                          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
-                      } else {
-                        navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                      }
-                    },
-                  )
-                ],
-              )
+                    navigationBloc.updateNavigation(homeData);
+                  } else
+                    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+                } else {
+                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                }
+              },
+            )
+          ],
+        )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  InkResponse(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 145,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
-                      child: Text(
-                        Utils.getText(context, StringRes.backToList),
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    onTap: () async {
-                      Utils.playClickSound();
-                      navigationBloc
-                          .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
-                    },
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 30,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-                        color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                        image: Injector.isBusinessMode
-                            ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
-                            : null),
-                    child: Text(
-                      Utils.getText(context, StringRes.situation),
-                      style: TextStyle(color: ColorRes.white, fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  InkResponse(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 100,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
-                      child: Text(
-                        Utils.getText(context, StringRes.next),
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    onTap: () async {
-                      Utils.playClickSound();
-                      if (isChallenge != null && isChallenge) {
-                        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                width: 145,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.backToList),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () async {
+                Utils.playClickSound();
+                navigationBloc
+                    .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
+              },
+            ),
+            Container(
+              alignment: Alignment.center,
+              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                  color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+                  image: Injector.isBusinessMode
+                      ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
+                      : null),
+              child: Text(
+                Utils.getText(context, StringRes.situation),
+                style: TextStyle(color: ColorRes.white, fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            InkResponse(
+              child: Container(
+                alignment: Alignment.center,
+                width: 100,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                child: Text(
+                  Utils.getText(context, StringRes.next),
+                  style: TextStyle(color: ColorRes.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () async {
+                Utils.playClickSound();
+                if (isChallenge != null && isChallenge) {
+                  Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
 
-                        /* if (nextChallengeQuestionData != null &&
+                  /* if (nextChallengeQuestionData != null &&
                       nextChallengeQuestionData.challengeId != null) {
 
                     navigationBloc.updateNavigation(HomeData(
@@ -469,57 +489,57 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         isChallenge: isChallenge,mani
                         questionHomeData: nextChallengeQuestionData));
                   }*/
-                      } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
-                        QuestionRequest rq = QuestionRequest();
-                        rq.userId = Injector.userData.userId;
-                        rq.type = Const.getNewQueType;
-                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+                } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
+                  QuestionRequest rq = QuestionRequest();
+                  rq.userId = Injector.userData.userId;
+                  rq.type = Const.getNewQueType;
+                  List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
 
-                        print("======================= perform next ======================");
-                        print(arrQuestions.length);
+                  print("======================= perform next ======================");
+                  print(arrQuestions.length);
 
-                        if (arrQuestions != null && arrQuestions.length > 0) {
-                          HomeData homeData =
-                              HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
+                  if (arrQuestions != null && arrQuestions.length > 0) {
+                    HomeData homeData =
+                    HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
 
-                          navigationBloc.updateNavigation(homeData);
-                        } else
-                          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
+                    navigationBloc.updateNavigation(homeData);
+                  } else
+                    navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
 
-                      } else if (!isCameFromNewCustomer != null && !isCameFromNewCustomer) {
+                } else if (!isCameFromNewCustomer != null && !isCameFromNewCustomer) {
 
-                        QuestionRequest rq = QuestionRequest();
-                        rq.userId = Injector.userData.userId;
-                        rq.type = Const.getExistingQueType;
-                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+                  QuestionRequest rq = QuestionRequest();
+                  rq.userId = Injector.userData.userId;
+                  rq.type = Const.getExistingQueType;
+                  List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
 
 
-                        print("======================= perform next existing======================");
-                        print(arrQuestions.length);
-                        if(arrQuestions != null && arrQuestions.length > 0) {
-                          existingQuesIndex = widget.homeData.existingQueIndex+1;
+                  print("======================= perform next existing======================");
+                  print(arrQuestions.length);
+                  if(arrQuestions != null && arrQuestions.length > 0) {
+                    existingQuesIndex = widget.homeData.existingQueIndex+1;
 
-                          if(existingQuesIndex < arrQuestions.length){
-                            print("------------- ::::::::: ${arrQuestions[existingQuesIndex].toJson()}");
-                            HomeData homeData = HomeData(initialPageType: Const.typeCustomerSituation, questionHomeData: arrQuestions[existingQuesIndex], value: arrQuestions[existingQuesIndex].value, existingQueIndex: existingQuesIndex);
-                            navigationBloc.updateNavigation(homeData);
-                            setState(() {
-                              questionDataCustomerSituation = arrQuestions[existingQuesIndex];
-                              print("------------ type :::::::: ${questionDataCustomerSituation.answerType}");
-                            });
-                          } else{
-                            navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                          }
-                        } else {
-                          print("======================= Questions not found ======================");
-                        }
-                      } else {
-                        navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                      }
-                    },
-                  )
-                ],
-              ));
+                    if(existingQuesIndex < arrQuestions.length){
+                      print("------------- ::::::::: ${arrQuestions[existingQuesIndex].toJson()}");
+                      HomeData homeData = HomeData(initialPageType: Const.typeCustomerSituation, questionHomeData: arrQuestions[existingQuesIndex], value: arrQuestions[existingQuesIndex].value, existingQueIndex: existingQuesIndex);
+                      navigationBloc.updateNavigation(homeData);
+                      setState(() {
+                        questionDataCustomerSituation = arrQuestions[existingQuesIndex];
+                        print("------------ type :::::::: ${questionDataCustomerSituation.answerType}");
+                      });
+                    } else{
+                      navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                    }
+                  } else {
+                    print("======================= Questions not found ======================");
+                  }
+                } else {
+                  navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                }
+              },
+            )
+          ],
+        ));
   }
 
   bool isAnswerCorrect(int index) {
@@ -555,10 +575,10 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
           color: Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
-                  ),
-                  fit: BoxFit.cover))
+              image: AssetImage(
+                checkAnswer(index),
+              ),
+              fit: BoxFit.cover))
               : null),
       child: Row(
         children: <Widget>[
@@ -609,34 +629,34 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                 ),
                 child: widget.homeData.questionHomeData.answerType == Const.typeAnswerText
                     ? ListView.builder(
-                        shrinkWrap: true,
-                        primary: false,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: arrAnswerSituation.length,
-                        itemBuilder: (BuildContext context, index) {
-                          return showItemC(index);
-                        },
-                      )
+                  shrinkWrap: true,
+                  primary: false,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: arrAnswerSituation.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return showItemC(index);
+                  },
+                )
                     : GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: questionDataCustomerSituation.answer.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
-                        itemBuilder: (context, index) {
-                          return MediaManager().showQueMedia(
-                              context,
-                              isAnswerCorrect(index)
-                                  ? ColorRes.greenDot
-                                  : arrAnswerSituation[index].isSelected
-                                      ? ColorRes.fontGrey
-                                      : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
-                                          ? ColorRes.greenDot
-                                          : ColorRes.white,
-                              questionDataCustomerSituation.answer.elementAt(index).answer,
-                              questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
-                                  "https://www.speedsecuregcc.com/uploads/products/default.jpg");
-                        }),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: questionDataCustomerSituation.answer.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
+                    itemBuilder: (context, index) {
+                      return MediaManager().showQueMedia(
+                          context,
+                          isAnswerCorrect(index)
+                              ? ColorRes.greenDot
+                              : arrAnswerSituation[index].isSelected
+                              ? ColorRes.fontGrey
+                              : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                              ? ColorRes.greenDot
+                              : ColorRes.white,
+                          questionDataCustomerSituation.answer.elementAt(index).answer,
+                          questionDataCustomerSituation.answer.elementAt(index).thumbImage ??
+                              "https://www.speedsecuregcc.com/uploads/products/default.jpg");
+                    }),
               ),
             ),
             Align(
@@ -651,7 +671,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
                     color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     image:
-                        Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill) : null),
+                    Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill) : null),
                 child: Text(
                   Utils.getText(context, StringRes.answers),
                   style: TextStyle(color: ColorRes.white, fontSize: 18),
@@ -713,17 +733,17 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description),
               questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
                   ? CommonView.showContactExpert(
-                      context,
-                      Utils.getText(context, StringRes.contactExpert),
-                      true,
-                      questionDataCustSituation?.expertEmail ?? "",
-                      false,
-                      this.questionDataCustomerSituation.question,
-                      this.questionDataCustomerSituation.questionId.toString())
+                  context,
+                  Utils.getText(context, StringRes.contactExpert),
+                  true,
+                  questionDataCustSituation?.expertEmail ?? "",
+                  false,
+                  this.questionDataCustomerSituation.question,
+                  this.questionDataCustomerSituation.questionId.toString())
                   : Container(),
               questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
                   ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
-                      questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString())
+                  questionDataCustSituation?.additionalInfoLink ?? "", false, this.questionDataCustomerSituation.questionId.toString())
                   : Container()
             ],
           ),
@@ -774,7 +794,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image:
-                        AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
+                    AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
                     fit: BoxFit.fill))),
         onTap: () {
           Utils.playClickSound();
@@ -895,9 +915,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                    DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.fill)
+                                DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.fill)
 //                                    : null
-                                )),
+                            )),
                       ),
                     )
                   ],
@@ -944,10 +964,10 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
           color: Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
-                  image: AssetImage(
-                    checkAnswer(index),
-                  ),
-                  fit: BoxFit.fill))
+              image: AssetImage(
+                checkAnswer(index),
+              ),
+              fit: BoxFit.fill))
               : null),
       child: Row(
         children: <Widget>[
@@ -1111,38 +1131,38 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert> with Sin
                           },
                           child: (checkimg == true
                               ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
+                                  DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
 //                                          : null
-                                      ))
+                              ))
                               : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
+                                  DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
 //                                          : null
-                                      )))),
+                              )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-                ),
+            ),
           ),
         ),
       ),
     );
   }
 
-   showMediaView(BuildContext context) {
+  showMediaView(BuildContext context) {
     if (Utils.isImage(correctWrongImage())) {
       return Container(
         decoration: BoxDecoration(
@@ -1171,8 +1191,8 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert> with Sin
                   setState(() {
                     questionDataCustSituation.videoPlay == 1
                         ? _controller.value.isPlaying
-                            ? _controller.pause()
-                            : _controller.play()
+                        ? _controller.pause()
+                        : _controller.play()
                         : _controller.play();
                   });
                 },
