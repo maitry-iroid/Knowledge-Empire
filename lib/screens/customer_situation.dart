@@ -83,6 +83,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     showIntroDialog();
 
     super.initState();
+
+    print("______________INIT__________________");
   }
 
   Future<void> showIntroDialog() async {
@@ -404,7 +406,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         isChallenge: isChallenge,mani
                         questionHomeData: nextChallengeQuestionData));
                   }*/
-                } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
+                }
+                else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
                   QuestionRequest rq = QuestionRequest();
                   rq.userId = Injector.userData.userId;
                   rq.type = Const.getNewQueType;
@@ -420,7 +423,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     navigationBloc.updateNavigation(homeData);
                   } else
                     navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
-                } else {
+                }
+                else {
                   navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
                 }
               },
@@ -506,34 +510,37 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   } else
                     navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
 
-                } else if (!isCameFromNewCustomer != null && !isCameFromNewCustomer) {
-
-                  QuestionRequest rq = QuestionRequest();
-                  rq.userId = Injector.userData.userId;
-                  rq.type = Const.getExistingQueType;
-                  List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
-
-
-                  print("======================= perform next existing======================");
-                  print(arrQuestions.length);
-                  if(arrQuestions != null && arrQuestions.length > 0) {
-                    existingQuesIndex = widget.homeData.existingQueIndex+1;
-
-                    if(existingQuesIndex < arrQuestions.length){
-                      print("------------- ::::::::: ${arrQuestions[existingQuesIndex].toJson()}");
-                      HomeData homeData = HomeData(initialPageType: Const.typeCustomerSituation, questionHomeData: arrQuestions[existingQuesIndex], value: arrQuestions[existingQuesIndex].value, existingQueIndex: existingQuesIndex);
-                      navigationBloc.updateNavigation(homeData);
-                      setState(() {
-                        questionDataCustomerSituation = arrQuestions[existingQuesIndex];
-                        print("------------ type :::::::: ${questionDataCustomerSituation.answerType}");
-                      });
-                    } else{
-                      navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                    }
-                  } else {
-                    print("======================= Questions not found ======================");
-                  }
-                } else {
+                }
+                // else if (!isCameFromNewCustomer != null && !isCameFromNewCustomer) {
+                //
+                //   QuestionRequest rq = QuestionRequest();
+                //   rq.userId = Injector.userData.userId;
+                //   rq.type = Const.getExistingQueType;
+                //   List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
+                //
+                //
+                //   print("======================= perform next existing======================");
+                //   print(arrQuestions.length);
+                //   if(arrQuestions != null && arrQuestions.length > 0) {
+                //     existingQuesIndex = widget.homeData.existingQueIndex+1;
+                //
+                //     if(existingQuesIndex < arrQuestions.length){
+                //       print("------------- ::::::::: ${arrQuestions[existingQuesIndex].toJson()}");
+                //       HomeData homeData = HomeData(initialPageType: Const.typeCustomerSituation, questionHomeData: arrQuestions[existingQuesIndex], value: arrQuestions[existingQuesIndex].value, existingQueIndex: existingQuesIndex);
+                //       navigationBloc.updateNavigation(homeData);
+                //       // Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerSituationPage(homeData: homeData, mRefreshAnimation: widget.mRefreshAnimation)));
+                //       setState(() {
+                //         questionDataCustomerSituation = arrQuestions[existingQuesIndex];
+                //         print("------------ type :::::::: ${questionDataCustomerSituation.answerType}");
+                //       });
+                //     } else{
+                //       navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
+                //     }
+                //   } else {
+                //     print("======================= Questions not found ======================");
+                //   }
+                // }
+                else {
                   navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
                 }
               },

@@ -25,7 +25,7 @@ class VersionManager {
 
     String x = "004";
     String y = "000";
-    String z = "001";
+    String z = "002";
 
     return mode + "-" + customerSpecificVersion + "-" + os + " ${Utils.getText(context, StringRes.strVersion)}: " + x + "." + y + "-" + z;
   }
