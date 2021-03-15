@@ -362,18 +362,6 @@ class HelpPageState extends State<HelpPage> {
                       width: Utils.getDeviceWidth(context) / 3.3,
                     )
                   : Container(width: Utils.getDeviceWidth(context) / 3.8),
-              getSelectedType() == Const.typeReward
-                  ? Expanded(
-                    child: Container(
-               margin: EdgeInsets.only( bottom: Utils.getDeviceHeight(context) / 6.5, right: Utils.getDeviceWidth(context) / 8),
-                      child: Image(
-                image: AssetImage(Utils.getAssetsImg("ic_gift_drawer")),
-                width: Utils.getDeviceWidth(context) / 3.6,
-                height: Utils.getDeviceHeight(context) / 5,
-              ),
-                    ),
-                  )
-                  : Container(width: Utils.getDeviceWidth(context) / 3.8),
               getSelectedType() == Const.typeNewCustomer
                   ? Image(
                       image: AssetImage(Utils.getAssetsImg("new-customer")),
@@ -395,6 +383,15 @@ class HelpPageState extends State<HelpPage> {
             ],
           ),
         ),
+        getSelectedType() == Const.typeReward ? Container(
+           child: Positioned(
+              bottom: Utils.getDeviceHeight(context) / 6.5,
+              left: Utils.getDeviceWidth(context) / 3.5,
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg('ic_gift_drawer')),
+              )
+            )
+        ) : Container()
       ],
     );
   }

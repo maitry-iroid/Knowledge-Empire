@@ -1142,7 +1142,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert> with Sin
     );
   }
 
-  showMediaView(BuildContext context) {
+   showMediaView(BuildContext context) {
     if (Utils.isImage(correctWrongImage())) {
       return Container(
         decoration: BoxDecoration(
@@ -1158,6 +1158,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert> with Sin
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
         child: Stack(
+          // fit: StackFit.expand,
           alignment: Alignment.center,
           children: <Widget>[
             Container(
