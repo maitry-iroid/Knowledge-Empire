@@ -884,7 +884,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   showFileSize() {
-    print("TEST:::::::::::::: ${Utils.getText(context, StringRes.downloadText)}");
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
             Utils.getText(context, StringRes.downloadText) +

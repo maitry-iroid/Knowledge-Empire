@@ -436,7 +436,7 @@ class StringRes {
       'nicknameChange': 'Nickname changed Successfully',
       'newNickName': 'New Nickname',
       'nickName': 'Nickname',
-      'downloadText': "This module will occupie ",
+      'downloadText': 'This module will occupie ',
 
       //Company code
       'enterCompanyCode': 'Please enter company code that you received in your email',
@@ -863,7 +863,7 @@ class StringRes {
       'nicknameChange': 'Spitzname erfolgreich geändert',
       'newNickName': 'Neuer Spitzname',
       'nickName': 'Spitzname',
-      'downloadText ': "Dieses Modul benötigt ",
+      'downloadText': 'Dieses Modul benötigt',
 
       //Company code
       'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
@@ -1275,7 +1275,7 @@ class StringRes {
       'nicknameChange': '昵称已成功更改',
       'newNickName': '新昵称',
       'nickName': '昵称',
-      'downloadText': "这个模块将占用",
+      'downloadText': '这个模块将占用',
 
       //Company code
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
@@ -1657,7 +1657,7 @@ class StringRes {
       'nicknameChange': 'Nickname changed Successfully',
       'newNickName': 'New Nickname',
       'nickName': 'Nickname',
-      'downloadText': "This module will occupie ",
+      'downloadText': 'This module will occupie',
 
       //Company code
       'enterCompanyCode': 'Please enter company code that you received in your email',
@@ -2073,7 +2073,7 @@ class StringRes {
       'nicknameChange': 'Spitzname erfolgreich geändert',
       'newNickName': 'Neuer Spitzname',
       'nickName': 'Spitzname',
-      'downloadText ': "Dieses Modul benötigt ",
+      'downloadText ': 'Dieses Modul benötigt',
 
       //Company code
       'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
@@ -2493,7 +2493,7 @@ class StringRes {
       'nicknameChange': '昵称已成功更改',
       'newNickName': '新昵称',
       'nickName': '昵称',
-      'downloadText': "这个模块将占用",
+      'downloadText': '这个模块将占用',
 
       //Company code
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
