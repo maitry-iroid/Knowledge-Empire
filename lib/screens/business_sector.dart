@@ -815,7 +815,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showContactExpertView() {
     return selectedModule.expertEmail != null && selectedModule.expertEmail != ""
         ? CommonView.showContactExpert(context, Utils.getText(context, StringRes.contactExpert), true,
-            selectedModule?.expertEmail ?? "Contact Expert", true, this.selectedModule.moduleName, this.selectedModule.moduleId.toString())
+            selectedModule?.expertEmail ?? "Contact Expert", true, this.selectedModule.moduleName, "", false, this.selectedModule.moduleId.toString())
         : Container();
   }
 

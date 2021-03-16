@@ -218,7 +218,7 @@ class CommonView {
   }
 
 
-  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataName, String dataId) {
+  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataTitle, String dataText, bool isMediaQue, String dataId) {
     return InkResponse(
       onTap: () async {
         Utils.playClickSound();
@@ -243,8 +243,11 @@ class CommonView {
 
         //Generate encoded String for mail to
         String subjectData = isModule ? "Module" : "Question";
-        String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataName.replaceAll(" ", "%20")}';
-        String body = "Dear%20Expert,%0A%0AThis%20is%20a%20Knowledge%20Empire%20Support%20request:%0AFrom:${Injector.userData.email}%0AFor%20$subjectData:%20${dataName.replaceAll(" ", "%20")}%0A%0ABest%20Regards,%0AYour%20Knowledge%20Empire%20Team";
+        String queText = isModule || isMediaQue ? "" : "Question Text:";
+        String supportReq = "Support request: [Type your message here]";
+        
+        String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}';
+        String body = "Dear%20Expert,%0A%0AThis%20is%20a%20Knowledge%20Empire%20Support%20request:%0AFrom:${Injector.userData.email}%0AFor%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}%0A${queText.replaceAll(" ", "%20")}%20${dataText.replaceAll(" ", "%20")}%0A${supportReq.replaceAll(" ", "%20")}%0A%0ABest%20Regards,%0AYour%20Knowledge%20Empire%20Team";
 
         // Print logs and execute
         print("title::::: $mail");

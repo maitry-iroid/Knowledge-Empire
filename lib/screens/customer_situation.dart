@@ -250,7 +250,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         true,
                         questionDataCustSituation?.expertEmail ?? "",
                         false,
+                        this.questionDataCustomerSituation.title,
                         this.questionDataCustomerSituation.question,
+                        true,
                         this.questionDataCustomerSituation.questionId.toString())
                         : Container()),
                 Expanded(
@@ -745,7 +747,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                   true,
                   questionDataCustSituation?.expertEmail ?? "",
                   false,
+                  this.questionDataCustomerSituation.title,
                   this.questionDataCustomerSituation.question,
+                  false,
                   this.questionDataCustomerSituation.questionId.toString())
                   : Container(),
               questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
