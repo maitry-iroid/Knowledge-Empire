@@ -537,7 +537,11 @@ class _TeamPageState extends State<TeamPage> {
             await Future.forEach(teamUserData.users, (Users user) async {
               print("element");
               print(user.name);
-              user.name = await EncryptionManager().stringDecryption(user.name);
+              if(user.name.contains(" ")){
+                user.name = await EncryptionManager().stringDecryption(user.name.split(" ").first) + " " + await EncryptionManager().stringDecryption(user.name.split(" ").last);
+              }else{
+                user.name = await EncryptionManager().stringDecryption(user.name);
+              }
             }).then((value) {
               print(teamUserData.users.toList());
               initGraphData();
@@ -595,7 +599,11 @@ class _TeamPageState extends State<TeamPage> {
 
           if (data != null) {
             teamUserByIdData = TeamUserByIdData.fromJson(data);
-            teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name);
+            if(teamUserByIdData.name.contains(" ")){
+              teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name.split(" ").first) + " " + await EncryptionManager().stringDecryption(teamUserByIdData.name.split(" ").last);
+            }else{
+              teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name);
+            }
             initGraphData();
 
             if (mounted) setState(() {});
