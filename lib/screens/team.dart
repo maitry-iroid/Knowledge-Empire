@@ -7,6 +7,7 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/bailout.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
@@ -526,14 +527,21 @@ class _TeamPageState extends State<TeamPage> {
 
         rq.userId = Injector.userId;
 
-        WebApi().callAPI(WebApi.rqGetTeamUsers, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGetTeamUsers, rq.toJson()).then((data) async {
           CommonView.showCircularProgress(false, context);
 
           if (data != null) {
             teamUserData = TeamUserData.fromJson(data);
+            TeamUserData teamUserData1 = TeamUserData();
 
-            initGraphData();
-
+            await Future.forEach(teamUserData.users, (Users user) async {
+              print("element");
+              print(user.name);
+              user.name = await EncryptionManager().stringDecryption(user.name);
+            }).then((value) {
+              print(teamUserData.users.toList());
+              initGraphData();
+            });
             if (mounted) setState(() {});
           }
         }).catchError((e) {
@@ -582,12 +590,12 @@ class _TeamPageState extends State<TeamPage> {
         rq.userId = Injector.userId;
         rq.teamUserId = teamUserId;
 
-        WebApi().callAPI(WebApi.rqGetTeamUserById, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGetTeamUserById, rq.toJson()).then((data) async {
           CommonView.showCircularProgress(false, context);
 
           if (data != null) {
             teamUserByIdData = TeamUserByIdData.fromJson(data);
-
+            teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name);
             initGraphData();
 
             if (mounted) setState(() {});

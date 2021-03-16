@@ -119,8 +119,7 @@ class StringRes {
   static var alertWantToSubscribe1 = "alertWantToSubscribe1";
   static var alertWantToSubscribe2 = "alertWantToSubscribe2";
   static var downloading = "downloading";
-  static var strDownloadText = "strDownloadText";
-  static var strDownloadNewText = "strDownloadNewText";
+  static var downloadText = "downloadText";
   static var alertNotAllowed = "alertNotAllowed";
 
   //engage customer
@@ -437,6 +436,7 @@ class StringRes {
       'nicknameChange': 'Nickname changed Successfully',
       'newNickName': 'New Nickname',
       'nickName': 'Nickname',
+      'downloadText': "This module will occupie ",
 
       //Company code
       'enterCompanyCode': 'Please enter company code that you received in your email',
@@ -550,8 +550,6 @@ class StringRes {
       'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
-      'strDownloadText': "This module will occupie ",
-      'strDownloadNewText': "This module will occupie ",
       'alertNotAllowed': "You can not unsubscribe assigned Business Segments.",
 
       //engage customer
@@ -865,6 +863,7 @@ class StringRes {
       'nicknameChange': 'Spitzname erfolgreich geändert',
       'newNickName': 'Neuer Spitzname',
       'nickName': 'Spitzname',
+      'downloadText ': "Dieses Modul benötigt ",
 
       //Company code
       'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
@@ -979,8 +978,6 @@ class StringRes {
       'alertWantToSubscribe1': "Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ",
       'alertWantToSubscribe2': "? Alle Fragen gehen verloren",
       'downloading': "Daten werden geladen ...",
-      'strDownloadText ': "Dieses Modul benötigt ",
-      'strDownloadNewText ': "Dieses Modul benötigt ",
       'alertNotAllowed': "Zugeordnete Geschäftsbereiche können nicht abgemeldet werden",
 
       //engage customer
@@ -1278,6 +1275,7 @@ class StringRes {
       'nicknameChange': '昵称已成功更改',
       'newNickName': '新昵称',
       'nickName': '昵称',
+      'downloadText': "这个模块将占用",
 
       //Company code
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
@@ -1391,8 +1389,6 @@ class StringRes {
       'alertWantToSubscribe1': "您确定要取消订阅吗",
       'alertWantToSubscribe2': "您将失去所有的问题",
       'downloading': "正在下载......",
-      'strDownloadText': "这个模块将占用",
-      'strDownloadNewText': "这个模块将占用",
       'alertNotAllowed': "您不能取消加入已分配的业务板块",
 
       //engage customer
@@ -1661,6 +1657,7 @@ class StringRes {
       'nicknameChange': 'Nickname changed Successfully',
       'newNickName': 'New Nickname',
       'nickName': 'Nickname',
+      'downloadText': "This module will occupie ",
 
       //Company code
       'enterCompanyCode': 'Please enter company code that you received in your email',
@@ -1876,9 +1873,6 @@ class StringRes {
       'yourName': 'Your Name',
       'yourEmail': 'Your Email',
 
-      'strDownloadText': 'This module will occupy ',
-      'strDownloadNewText': 'This module will occupy ',
-
       'cost': 'KP Cost',
       'employees': 'Power-Ups',
       'salaries': 'KP Cost',
@@ -2079,6 +2073,7 @@ class StringRes {
       'nicknameChange': 'Spitzname erfolgreich geändert',
       'newNickName': 'Neuer Spitzname',
       'nickName': 'Spitzname',
+      'downloadText ': "Dieses Modul benötigt ",
 
       //Company code
       'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
@@ -2175,8 +2170,6 @@ class StringRes {
       'alertWantToSubscribe1': 'Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ',
       'alertWantToSubscribe2': '? Alle Fragen gehen verloren',
       'downloading': 'Daten werden geladen ...',
-      'strDownloadText': 'Dieses Modul benötigt',
-      'strDownloadNewText': 'Dieses Modul benötigt',
       'alertNotAllowed': 'Zugeordnete Lernbereiche können nicht abgemeldet werden',
       'engagement': 'Situation',
       'debrief': 'Nachbesprechung',
@@ -2500,6 +2493,7 @@ class StringRes {
       'nicknameChange': '昵称已成功更改',
       'newNickName': '新昵称',
       'nickName': '昵称',
+      'downloadText': "这个模块将占用",
 
       //Company code
       'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
@@ -2593,8 +2587,6 @@ class StringRes {
       'alertWantToSubscribe1': '您确定要取消加入吗？',
       'alertWantToSubscribe2': '您将失去所有的问题',
       'downloading': '正在下载......',
-      'strDownloadText': '这个模块将占用',
-      'strDownloadNewText': '这个模块将占用',
       'alertNotAllowed': '您不能取消加入已分配的学习模块',
       'engagement': '情况',
       'debrief': '任务报告',
