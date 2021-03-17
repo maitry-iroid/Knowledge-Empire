@@ -23,9 +23,9 @@ class VersionManager {
     String customerSpecificVersion = "BES"; //Blue Elephants Solutions
     String os = Injector.deviceType == "ios" ? "I" : "A";
 
-    String x = "004";
-    String y = "000";
-    String z = "003";
+    String x = "001";
+    String y = "003";
+    String z = "000";
 
     return mode + "-" + customerSpecificVersion + "-" + os + " ${Utils.getText(context, StringRes.strVersion)}: " + x + "." + y + "-" + z;
   }
