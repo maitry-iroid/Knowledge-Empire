@@ -15,6 +15,7 @@ import 'package:ke_employee/models/information_activity_log.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/more_info.dart';
+import 'package:mailto/mailto.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_encoder/url_encoder.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -239,21 +240,31 @@ class CommonView {
         }).catchError((e) {
           print("Information Activity Log" + e.toString());
         });
+
+        print("MAIL before::::::::::::::::::::::::::::: $content");
         String mail = await EncryptionManager().stringDecryption(content);
+        print("MAIL after::::::::::::::::::::::::::::: $mail");
 
         //Generate encoded String for mail to
         String subjectData = isModule ? "Module" : "Question";
         String queText = isModule || isMediaQue ? "" : "Question Text:";
         String supportReq = "Support request: [Type your message here]";
         
-        String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}';
-        String body = "Dear%20Expert,%0A%0AThis%20is%20a%20Knowledge%20Empire%20Support%20request:%0AFrom:${Injector.userData.email}%0AFor%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}%0A${queText.replaceAll(" ", "%20")}%20${dataText.replaceAll(" ", "%20")}%0A${supportReq.replaceAll(" ", "%20")}%0A%0ABest%20Regards,%0AYour%20Knowledge%20Empire%20Team";
+        // String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}';
+        String subject = 'Support request for Knowledge Empire $subjectData: $dataTitle';
+        String body = "Dear Expert, \n\nThis is a Knowledge Empire Support request: \nFrom:${Injector.userData.email} \nFor $subjectData: $dataTitle \n$queText $dataText \n$supportReq \n\nBest Regards, \nYour Knowledge Empire Team";
 
         // Print logs and execute
         print("title::::: $mail");
         print("Body :::::: $body");
         print("URL ::::: mailto:$mail?subject=$subject&body=$body");
-        launchURL("mailto:$mail?subject=$subject&body=$body");
+        // launchURL("mailto:$mail?subject=$subject&body=$body");
+        final mailtoLink = Mailto(
+          to: [mail],
+          subject: subject,
+          body: body,
+        );
+        await launch('$mailtoLink');
       },
       child: Container(
           alignment: Alignment.center,
