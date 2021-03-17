@@ -184,10 +184,10 @@ class _TeamPageState extends State<TeamPage> {
           child: secondScreen != true
               ? Row(
                   children: <Widget>[
-                    listTextData(index == 1 ? "25" : user?.name, TextAlign.left),
-                    listTextData(index == 1 ? "25" : user?.lastLog.toString(), TextAlign.center),
-                    listTextData(index == 1 ? "25" : user?.points.toString(), TextAlign.center),
-                    listTextData(index == 1 ? "1" : user?.correct.toString(), TextAlign.center)
+                    listTextData(user?.name ?? "", TextAlign.left),
+                    listTextData(user?.lastLog.toString() ?? "", TextAlign.center),
+                    listTextData(user?.points.toString() ?? "", TextAlign.center),
+                    listTextData(user?.correct.toString() ?? "", TextAlign.center)
                     /*                   listTextData(user?.name, TextAlign.left),
                     listTextData(user?.lastLog.toString(), TextAlign.right),
                     listTextData(user?.points.toString(), TextAlign.right),
@@ -543,7 +543,7 @@ class _TeamPageState extends State<TeamPage> {
                 user.name = await EncryptionManager().stringDecryption(user.name);
               }
             }).then((value) {
-              print(teamUserData.users.toList());
+              print(teamUserData.users.map((e) => e.name).toList());
               initGraphData();
             });
             if (mounted) setState(() {});
