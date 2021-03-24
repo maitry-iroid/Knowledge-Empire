@@ -26,23 +26,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: LoginPage(),
-          ),
-        );
+    pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) =>
+    page,
+    transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+        ) =>
+        FadeTransition(
+          opacity: animation,
+          child: LoginPage(),
+        ),
+  );
 }
 
 class LoginPage extends StatefulWidget {
@@ -69,22 +69,29 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-
-    // Future.delayed(const Duration(milliseconds: 1000), () {
-
     verifyCompany();
     preFillData();
-    // if(Foundation.kDebugMode){
-    //   print('--------Debug mode------------');
-    //   codeController.text = 'jaymin1108';
-    //   emailController.text = "jaymin220@mailinator.com";
-    //   passwordController.text = "11";
-    // } else {
-    //   preFillData();
-    // }
-    // });
+    callVersionApi();
+  }
 
-//    localeBloc.setLocale(Utils.getIndexLocale());
+  void callVersionApi() async {
+    UpdateDialogModel status = await Injector.getCurrentVersion(context);
+    if (status != null) {
+      if (status.status != "0" || status.status == "2") {
+        if (status.status == "2") {
+          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
+            DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
+          } else {
+            DateTime clickedTime = DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
+            if (DateTime.now().difference(clickedTime).inDays >= 1) {
+              DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
+            }
+          }
+        } else {
+          DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, false);
+        }
+      }
+    }
   }
 
   preFillData() async {
@@ -227,55 +234,55 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Expanded(
                     child: Row(
-                  children: [
-                    Expanded(child: showEmailView()),
-                    SizedBox(width: 10),
-                    Expanded(child: showCompanyCodeView()),
-                  ],
-                )),
+                      children: [
+                        Expanded(child: showEmailView()),
+                        SizedBox(width: 10),
+                        Expanded(child: showCompanyCodeView()),
+                      ],
+                    )),
                 Expanded(
                     child: Row(
-                  children: [
-                    Expanded(child: showPassword()),
-                    SizedBox(width: 10),
-                    Expanded(child: showLoginButton()),
-                  ],
-                )),
+                      children: [
+                        Expanded(child: showPassword()),
+                        SizedBox(width: 10),
+                        Expanded(child: showLoginButton()),
+                      ],
+                    )),
                 Expanded(
                     child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [SizedBox(width: 50), Expanded(child: showForgotPasswordView()), Expanded(child: showChangeLanguageView())],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 8),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(width: 50),
-                                  Expanded(child: showRequestDemoAccountView()),
-                                ],
-                              ),
-                            )
-                          ],
-                        )),
-                    showVersion(),
-                  ],
-                )),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                            flex: 2,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [SizedBox(width: 50), Expanded(child: showForgotPasswordView()), Expanded(child: showChangeLanguageView())],
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(width: 50),
+                                      Expanded(child: showRequestDemoAccountView()),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )),
+                        showVersion(),
+                      ],
+                    )),
 //                 Expanded(
 //                     child: Container(
 //                         alignment: Alignment.center,
@@ -547,13 +554,13 @@ class _LoginPageState extends State<LoginPage> {
                       privacyPolicyResponse.privacyPolicyAcceptText != "") {
                     Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
                         privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                      if (status == true) {
-                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-                        moveToChangePasswordOrDashboard();
-                      } else {
-                        Navigator.of(context).pop();
-                      }
-                    });
+                          if (status == true) {
+                            // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                            moveToChangePasswordOrDashboard();
+                          } else {
+                            Navigator.of(context).pop();
+                          }
+                        });
                   } else {
                     moveToChangePasswordOrDashboard();
                   }
