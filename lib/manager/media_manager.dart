@@ -26,12 +26,12 @@ class MediaManager{
   bool isLoading = false;
 
   showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage,
-      {PDFDocument pdfDocument, bool isPdfLoading = false, String pdfFilePath, ChewieController chewieController, VideoPlayerController videoPlayerController}) {
+      {PDFDocument pdfDocument, bool isPdfLoading = false, String pdfFilePath, ChewieController chewieController, VideoPlayerController videoPlayerController, int videoPlay, int videoLoop}) {
 
     return InkResponse(
 
         onTap: () {
-          performImageClick(context, answer, pdfFilePath: pdfFilePath);
+          performImageClick(context, answer, pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop);
         },
         child: Stack(
           children: <Widget>[
@@ -52,14 +52,14 @@ class MediaManager{
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: borderColor, width: 3)),
-                  child: showMediaView(context, answer, thumbImage, pdfDocument: pdfDocument, isPdfLoading: isPdfLoading, chewieController: chewieController, videoPlayerController: videoPlayerController)),
+                  child: showMediaView(context, answer, thumbImage, pdfDocument: pdfDocument, isPdfLoading: isPdfLoading, chewieController: chewieController, videoPlayerController: videoPlayerController, videoPlay: videoPlay, videoLoop: videoLoop)),
             ),
-            showMediaExpandIcon(context, answer, pdfFilePath: pdfFilePath)
+            showMediaExpandIcon(context, answer, pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop)
           ],
         ));
   }
 
-  showMediaExpandIcon(BuildContext context, String link, {String pdfFilePath}) {
+  showMediaExpandIcon(BuildContext context, String link, {String pdfFilePath, int videoPlay, int videoLoop}) {
     return Positioned(
       bottom: 0,
       right: 0,
@@ -76,13 +76,13 @@ class MediaManager{
                     fit: BoxFit.fill))),
         onTap: () {
           Utils.playClickSound();
-          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link));
+          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link, videoPlay: videoPlay, videoLoop: videoLoop));
         },
       ),
     );
   }
 
-  void performImageClick(BuildContext context, String link, {String pdfFilePath}) {
+  void performImageClick(BuildContext context, String link, {String pdfFilePath, int videoPlay, int videoLoop}) {
     Utils.playClickSound();
 //    Utils.isImage(link)
 //        ? showDialog(
@@ -93,11 +93,11 @@ class MediaManager{
 
     showDialog(
         context: context,
-        builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath,));
+        builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop));
   }
 
   showMediaView(BuildContext context, String path, String thumbImage,
-      {PDFDocument pdfDocument, bool isPdfLoading = false, ChewieController chewieController, VideoPlayerController videoPlayerController}) {
+      {PDFDocument pdfDocument, bool isPdfLoading = false, ChewieController chewieController, VideoPlayerController videoPlayerController, int videoPlay, int videoLoop}) {
     if(chewieController != null && (videoPlayerController?.value?.initialized ?? false) && Utils.isVideo(path)){
       return Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -138,7 +138,7 @@ class MediaManager{
                 onPressed: () {
                   showDialog(
                       context: context,
-                      builder: (_) => ExpandMedia(link: path));
+                      builder: (_) => ExpandMedia(link: path, videoLoop: videoLoop, videoPlay: videoPlay));
                 },
                 child: Container(
                   width: Utils.getDeviceHeight(context) / 10,
@@ -170,7 +170,10 @@ class MediaManager{
 class ExpandMedia extends StatefulWidget {
   final String pdfPath;
   final String link;
-  ExpandMedia({Key key, this.pdfPath, this.link}) : super(key: key);
+  final int videoPlay;
+  final int videoLoop;
+
+  ExpandMedia({Key key, this.pdfPath, this.link, this.videoLoop, this.videoPlay}) : super(key: key);
 
 
   @override
@@ -223,13 +226,11 @@ class ExpandMediaState extends State<ExpandMedia>
         ..initialize().then((_) {
           if (mounted)
             setState(() {
-              _chewieController.play();
+              widget.videoPlay == 1 ? _chewieController.play() : _chewieController.pause();
+              widget.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
             });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1
-          ? _controller.setLooping(true)
-          : _controller.setLooping(false);
       _chewieController = ChewieController(
           videoPlayerController: _controller,
 //            autoPlay: true,

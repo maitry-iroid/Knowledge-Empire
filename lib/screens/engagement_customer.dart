@@ -626,7 +626,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       isPdfLoading: isLoading,
                       pdfFilePath: _pdfPath,
                       chewieController: _chewieController,
-                      videoPlayerController: _controller)
+                      videoPlayerController: _controller,
+                videoLoop: questionDataEngCustomer.videoLoop,
+                videoPlay: questionDataEngCustomer.videoPlay
+              )
                   : MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
                       pdfDocument: _pdfDocument, isPdfLoading: isLoading, pdfFilePath: _pdfPath),
               showQueDescription(context)
