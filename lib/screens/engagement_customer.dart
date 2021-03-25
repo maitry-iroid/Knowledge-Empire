@@ -599,11 +599,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ..initialize().then((_) {
           if (mounted)
             setState(() {
-              _chewieController.play();
+              questionDataEngCustomer.videoPlay == 1 ? _chewieController.play() : _chewieController.pause();
+              questionDataEngCustomer.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
             });
         });
       _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      questionData.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
       _chewieController = ChewieController(
           videoPlayerController: _controller,
           allowFullScreen: false,
@@ -620,7 +620,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              widget.homeData.questionHomeData.answerType == Const.typeAnswerText
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText || widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                   ? MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
                       pdfDocument: _pdfDocument,
                       isPdfLoading: isLoading,
