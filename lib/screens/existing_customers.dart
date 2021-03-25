@@ -21,8 +21,8 @@ import '../models/releaseResource.dart';
 /*
 *   created by Riddhi
 *
-*   All Correct attempted questions will b displayed here until its locality finishes
-*   User can stop getting locality by and can release the resource to attempt other questions
+*   All Correct attempted questions will b displayed here until its loyalty finishes
+*   User can stop getting loyalty by and can release the resource to attempt other questions
 *
 * */
 

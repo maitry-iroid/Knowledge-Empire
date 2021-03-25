@@ -11,21 +11,21 @@ class EncryptionManager{
     try {
       // encrytion
       encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
-      print("testEncrytion case2: success");
+      // print("testEncrytion case2: success");
     } on PlatformException catch(e) {
       if(e.code == "ERROR_INVALID_KEY_OR_IV_LENGTH"){
-        print("testEncrytion ==${plainText}== case2: pass : ${e.toString()}");
+        // print("testEncrytion ==${plainText}== case2: pass : ${e.toString()}");
       }else{
-        print("testEncrytion ==${plainText}== case2: failed : ${e.toString()}");
+        // print("testEncrytion ==${plainText}== case2: failed : ${e.toString()}");
       }
     }
 
 //      String encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
 
-      print('-----------------------------------------');
-      print('Plain Text: $plainText');
-      print('Encryption: $encryptedString'); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
-      print('-----------------------------------------\n\n');
+      // print('-----------------------------------------');
+      // print('Plain Text: $plainText');
+      // print('Encryption: $encryptedString'); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
+      // print('-----------------------------------------\n\n');
 
       return encryptedString;
     }
@@ -36,18 +36,18 @@ class EncryptionManager{
       try {
         // decryption
         decryptedString = await Cipher2.decryptAesCbc128Padding7(cypherText, key, iv);
-        print("testDecrytion case2: success");
+        // print("testDecrytion case2: success");
       } on PlatformException catch(e) {
         if(e.code == "ERROR_INVALID_KEY_OR_IV_LENGTH"){
-          print("testDecrytion ==${cypherText}== case2: pass : ${e.toString()}");
+          // print("testDecrytion ==${cypherText}== case2: pass : ${e.toString()}");
         }else{
-          print("testDecrytion ==${cypherText}== case2: failed : ${e.toString()}");
+          // print("testDecrytion ==${cypherText}== case2: failed : ${e.toString()}");
         }
       }
-      print('-----------------------------------------');
-      print('Cypher Text: $cypherText');
-      print('Decryption: $decryptedString'); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
-      print('-----------------------------------------\n\n');
+      // print('-----------------------------------------');
+      // print('Cypher Text: $cypherText');
+      // print('Decryption: $decryptedString'); // Lorem ipsum dolor sit amet, consectetur adipiscing elit
+      // print('-----------------------------------------\n\n');
 
       return decryptedString;
     }
