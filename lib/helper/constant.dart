@@ -2,7 +2,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'flavor_config.dart';
 
-enum Environment { DEV, PROD }
+enum Environment { DEV, PROD, DEV_V2, PROD_V2 }
 
 class Const {
   static var deviceType = "android";
@@ -109,6 +109,12 @@ class Const {
         break;
       case Environment.PROD:
         _config = AppConfig.prodConfig();
+        break;
+      case Environment.DEV_V2:
+        _config = AppConfig.devV2Config();
+        break;
+      case Environment.PROD_V2:
+        _config = AppConfig.prodV2Config();
         break;
     }
   }

@@ -90,6 +90,16 @@ android {
             applicationId "com.keemployee.app"
             resValue "string", "app_name", "Knowledge Empire"
         }
+        dev_v2 {
+            dimension "default"
+            applicationId "com.keemployee.new.app.dev"
+            resValue "string", "app_name", "KE dev"
+        }
+        prod_v2 {
+            dimension "default"
+            applicationId "com.keemployee.new.app"
+            resValue "string", "app_name", "Knowledge Empire"
+        }
        // Privacy - Location When In Use Usage Description
     }
 
