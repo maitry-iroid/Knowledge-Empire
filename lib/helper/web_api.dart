@@ -62,6 +62,7 @@ class WebApi {
   static String getIntroText = "getIntroText";
   static String rqVerifyCompanyCode = "verifyCompanyCode";
   static String rqInformationActivityLog = 'informationActivityLog';
+  static String rqGetAppThemeColors = "getAppThemeColors";
 
   static getRequest(String req, String data) {
     return {'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef', 'apiSecret': '1a42cc080ef2464a60134473276fe42e', 'apiRequest': req, 'data': data};

@@ -19,6 +19,7 @@ class PrefKeys {
   static var mainBaseUrl = "mainBaseUrl";
   static var emailId = 'emailId';
   static var companyCode = 'companyCode';
+  static var appThemeColor = "appThemeColor";
 
 //  static var learningModule1= "learningModule1";
 //  static var learningModule2= "learningModule2";

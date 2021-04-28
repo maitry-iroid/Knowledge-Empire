@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/baseController/base_textfield.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/manager/encryption_manager.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
 import 'package:ke_employee/models/forgot_password.dart';
 
 class FadeRouteForgotPassword extends PageRouteBuilder {
@@ -52,7 +55,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if(Const.isLandscape) {
+      return Scaffold(
 //        key: _scaffoldKey,
         resizeToAvoidBottomPadding: false,
       backgroundColor: ColorRes.fontDarkGrey,
@@ -133,6 +137,50 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         ),
       )
     );
+    } else {
+      return Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(44.0),
+            child: AppBar(
+              title: Text("Forgot password", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 18)),
+              leading: IconButton(icon: Icon(Icons.close, size: 24, color: ThemeManager().getTextColor()), onPressed: (){
+                Navigator.of(context).pop();
+              }),
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.check, size: 24, color: ThemeManager().getTextColor()),
+                    onPressed: (){
+                      Utils.playClickSound();
+                      Utils.hideKeyboard(context);
+                      // validateData();
+                    }),
+              ],
+            )),
+        body: Scaffold(
+          backgroundColor: ThemeManager().getBgGradientLight(),
+          body: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextFieldWithBorder(
+                    hintText: "Email",
+                    controller: emailController,
+                    isSecure: true,
+                    fillColor: ThemeManager().getStaticGradientColor(),
+                    textInputType: TextInputType.text,
+                    validator: (value){
+                      return null;
+                    }),
+                SizedBox(height: 10),
+                Text(Utils.getText(context, StringRes.forgotPassword), style: TextStyle(color: ThemeManager().getDarkColor(), fontWeight: FontWeight.normal))
+              ],
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   showLoginForm() {
