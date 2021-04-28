@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart' as Foundation;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/baseController/base_button.dart';
+import 'package:ke_employee/baseController/base_textfield.dart';
 import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -19,6 +21,7 @@ import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/screens_portrait/bottom_navigation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
@@ -122,96 +125,136 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      key: _scaffoldKey,
-      body: Stack(
-        fit: StackFit.expand,
-        alignment: Alignment.bottomCenter,
+    if(Const.envType == Environment.DEV || Const.envType == Environment.PROD) {
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        body: Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.bottomCenter,
+          children: [
+            (MediaQuery.of(context).viewInsets.bottom == 0) ? Image.asset(Utils.getAssetsImg('login_bg'), fit: BoxFit.cover) : Container(height: 0),
+            Container(
+                width: double.infinity,
+                height: 100,
+                margin: EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10,
+                    bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
+                decoration: BoxDecoration(
+                  color: ColorRes.loginBg,
+                  border: Border.all(color: ColorRes.white, width: 1),
+                  borderRadius: new BorderRadius.circular(10.0),
+                ),
+                child: showLoginForm()),
+          ],
+        ),
+      );
+    } else {
+      return Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: ColorRes.white,
+        body: SafeArea(
+            child: this.showMainView()
+        ),
+      );
+    }
+  }
+
+  Widget showMainView(){
+    return Container(
+      padding: EdgeInsets.all(10),
+      color: ColorRes.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          (MediaQuery.of(context).viewInsets.bottom == 0) ? Image.asset(Utils.getAssetsImg('login_bg'), fit: BoxFit.cover) : Container(height: 0),
-          Container(
-              width: double.infinity,
-              height: 100,
-              margin: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: (MediaQuery.of(context).viewInsets.bottom == 0) ? 170 : 10,
-                  bottom: (MediaQuery.of(context).viewInsets.bottom == 0) ? 10 : 170),
-              decoration: BoxDecoration(
-                color: ColorRes.loginBg,
-                border: Border.all(color: ColorRes.white, width: 1),
-                borderRadius: new BorderRadius.circular(10.0),
-              ),
-              child: showLoginForm()),
+          Expanded(
+              flex: 2,
+              child: Image.asset(Utils.getAssetsImg('logo_login'), width: Utils.getDeviceWidth(context))),
+          Expanded(child: Container()),
+          Expanded(
+              flex: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BaseTextField(
+                      hintText: Utils.getText(context, StringRes.usernameText),
+                      controller: emailController,
+                      validator: (value){
+                        return null;
+                      }),
+                  SizedBox(height: Utils.getDeviceHeight(context) / 60),
+                  BaseTextField(
+                      hintText: Utils.getText(context, StringRes.password),
+                      controller: passwordController,
+                      isSecure: true,
+                      validator: (value){
+                        return null;
+                      }),
+                  SizedBox(height: Utils.getDeviceHeight(context) / 60),
+                  BaseTextField(
+                      hintText: Utils.getText(context, StringRes.companyCode),
+                      controller: codeController,
+                      isSecure: false,
+                      validator: (value){
+                        return null;
+                      }),
+//                  SizedBox(height: 15),
+                  SizedBox(height: Utils.getDeviceHeight(context) / 60),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkResponse(
+                        onTap: (){
+                          Utils.playClickSound();
+                          Navigator.push(context, FadeRouteForgotPassword());
+                        },
+                        child: Text(Utils.getText(context, StringRes.forgotPassword), style: TextStyle(color: ColorRes.blue, fontSize: 16, fontWeight: FontWeight.bold)),
+                      ),
+                      InkResponse(
+                        onTap: (){
+                          Utils.playClickSound();
+                          selectLanguagesAlert(context);
+                        },
+                        child: Text(Utils.getText(context, StringRes.changeLanguage), style: TextStyle(color: ColorRes.blue, fontSize: 16, fontWeight: FontWeight.bold)),
+                      )
+                    ],
+                  )
+                ],
+              )),
+          Expanded(child: Container()),
+          Expanded(
+              flex: 5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BaseRaisedButton(
+                      buttonColor: ColorRes.blue,
+                      buttonText: Utils.getText(context, StringRes.login),
+                      onPressed: (){
+                        Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
+                          if (isConnected) validateForm();
+                        });
+                        // Navigator.of(context).pushNamed(bottomNavigationRoute);
+                      }),
+                  SizedBox(height: 10),
+                  Center(child: Text(Utils.getText(context, StringRes.requestDemoAccount), style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),),
+                  Expanded(child: Container()),
+                  Center(
+                    child: Text(
+                      VersionManager.getVersion(context),
+                      style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.5), fontSize: 18),
+                      textAlign: TextAlign.right,
+                    ),
+                  )
+                ],
+              )),
         ],
       ),
     );
-    // return Scaffold(
-    //     key: _scaffoldKey,
-    //     resizeToAvoidBottomPadding: false,
-    //     backgroundColor: ColorRes.fontDarkGrey,
-    //     body: Stack(
-    //       fit: StackFit.expand,
-    //       children: <Widget>[
-    //         Image.asset(Utils.getAssetsImg('bg_login_profesonal'), fit: BoxFit.cover),
-    //         Row(
-    //           crossAxisAlignment: CrossAxisAlignment.stretch,
-    //           children: <Widget>[
-    //             Expanded(
-    //               child: Padding(
-    //                 padding: EdgeInsets.only(right: Utils.getDeviceWidth(context) / 15),
-    //                 child: Center(
-    //                   child: Image.asset(
-    //                     Utils.getAssetsImg('logo_login'),
-    //                     height: Utils.getDeviceHeight(context) / 1.8,
-    //                     width: Utils.getDeviceWidth(context) / 3.8,
-    //                     fit: BoxFit.fill,
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //             Expanded(
-    //               child: Center(
-    //                 child: ListView(
-    //                   controller: _scrollController,
-    //                   shrinkWrap: true,
-    //                   children: <Widget>[
-    //                     Container(height: Utils.getDeviceHeight(context) / 13),
-    //                     Container(
-    //                       width: double.infinity,
-    //                       height: Utils.getDeviceHeight(context) / 1.22,
-    //                       margin: EdgeInsets.only(left: 20, right: 20),
-    //                       decoration: BoxDecoration(
-    //                         color: ColorRes.loginBg,
-    //                         border: Border.all(color: ColorRes.white, width: 1),
-    //                         borderRadius: new BorderRadius.circular(10.0),
-    //                       ),
-    //                       child: showLoginForm(),
-    //                     ),
-    //                     Container(
-    //                       height: Utils.getDeviceHeight(context) / 4,
-    //                       child: Stack(
-    //                         alignment: Alignment.topRight,
-    //                         children: [
-    //                           Container(
-    //                             margin: EdgeInsets.only(top: 10, right: 25),
-    //                             child: Text(
-    //                               VersionManager.getVersion(context),
-    //                               style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.35), fontSize: 17),
-    //                             ),
-    //                           )
-    //                         ],
-    //                       ),
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ));
   }
 
   Widget showLoginForm() {
@@ -595,7 +638,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void navigateToDashboard() {
     print("Navigate to dashboard--------------------------------------------------------");
-    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
+      Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
   }
 
   showCompanyCodeView() {

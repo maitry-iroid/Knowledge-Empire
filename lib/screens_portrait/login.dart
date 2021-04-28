@@ -17,6 +17,7 @@ class _LoginPagePortraitState extends State<LoginPagePortrait> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final companyCodeController = TextEditingController();
 
 
   @override
@@ -61,6 +62,13 @@ class _LoginPagePortraitState extends State<LoginPagePortrait> {
                         return null;
                       }),
                   SizedBox(height: Utils.getDeviceHeight(context) / 60),
+                  BaseTextField(
+                      hintText: Utils.getText(context, StringRes.password),
+                      controller: passwordController,
+                      isSecure: true,
+                      validator: (value){
+                        return null;
+                      }),
                   BaseTextField(
                       hintText: Utils.getText(context, StringRes.password),
                       controller: passwordController,

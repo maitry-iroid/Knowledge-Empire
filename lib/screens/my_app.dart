@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
 import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/helper/environment_utils.dart';
 import 'package:ke_employee/helper/localization.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -37,17 +38,12 @@ class MyAppState extends State<MyApp> {
     Injector.getContext(context);
 
     super.initState();
+    EnvUtils.getOrientation();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-//      DeviceOrientation.portraitUp,
-//      DeviceOrientation.portraitDown
-    ]);
-
+    EnvUtils.getOrientation();
     return StreamBuilder(
       stream: localeBloc.locale,
       initialData: Locale('en', ''),
@@ -62,7 +58,7 @@ class MyAppState extends State<MyApp> {
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home:  (Injector.prefs.getBool(PrefKeys.isLoggedIn) ?? false) == true ? HomePage() : LoginPage(),
+          home:  EnvUtils.getHomeScreen(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),

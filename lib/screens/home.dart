@@ -43,6 +43,7 @@ import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:ke_employee/screens/achievement.dart';
 import 'package:ke_employee/screens/rewards.dart';
 import 'package:ke_employee/screens/team.dart';
+import 'package:ke_employee/screens_portrait/bottom_navigation.dart';
 import 'P+L.dart';
 import 'business_sector.dart';
 import '../commonview/header.dart';
@@ -66,9 +67,9 @@ class FadeRouteHome extends PageRouteBuilder {
 
   FadeRouteHome()
       : super(
-          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => HomePage(),
+          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => Const.isLandscape ? HomePage() : BottomNavigationPortrait(),
           transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) =>
-              FadeTransition(opacity: animation, child: HomePage()),
+              FadeTransition(opacity: animation, child: Const.isLandscape ? HomePage() : BottomNavigationPortrait()),
         );
 }
 

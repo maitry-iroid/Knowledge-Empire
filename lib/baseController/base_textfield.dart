@@ -15,7 +15,7 @@ class BaseTextField extends TextFormField{
           keyboardType: textInputType ?? TextInputType.text,
           obscureText: isSecure ?? false,
           style: TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               color: Colors.black
           ),
           decoration: InputDecoration(

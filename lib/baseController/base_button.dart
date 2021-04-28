@@ -7,7 +7,7 @@ class BaseRaisedButton extends RaisedButton{
 
   BaseRaisedButton({@required this.buttonText, @required this.onPressed, @required this.buttonColor}) :
         super(
-          child: Text(buttonText, style: TextStyle(color: Colors.white)),
+          child: Text(buttonText, style: TextStyle(color: Colors.white, fontSize: 18)),
           onPressed: onPressed,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0)

@@ -7,6 +7,7 @@ enum Environment { DEV, PROD, DEV_V2, PROD_V2 }
 class Const {
   static var deviceType = "android";
   static Environment envType;
+  static bool isLandscape = true;
 
   static var typeHome = "0";
   static var typeBusinessSector = "1";
