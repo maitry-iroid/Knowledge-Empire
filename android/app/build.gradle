@@ -93,12 +93,12 @@ android {
         dev_v2 {
             dimension "default"
             applicationId "com.keemployee.new.app.dev"
-            resValue "string", "app_name", "KE dev"
+            resValue "string", "app_name", "KE dev v2"
         }
         prod_v2 {
             dimension "default"
             applicationId "com.keemployee.new.app"
-            resValue "string", "app_name", "Knowledge Empire"
+            resValue "string", "app_name", "KE prod v2"
         }
        // Privacy - Location When In Use Usage Description
     }

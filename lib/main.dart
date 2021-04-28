@@ -28,7 +28,7 @@ Future setupLocator() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Injector.getInstance();
-  Const.setEnvironment(Environment.DEV);
+  Const.setEnvironment(Environment.DEV_V2);
   runApp(MyApp());
 }
 
