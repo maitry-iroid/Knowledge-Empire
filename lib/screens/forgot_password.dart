@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ke_employee/baseController/base_button.dart';
 import 'package:ke_employee/baseController/base_textfield.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
@@ -161,20 +162,35 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           body: Container(
             padding: EdgeInsets.all(10),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextFieldWithBorder(
-                    hintText: "Email",
+                    hintText: Utils.getText(context, StringRes.enterRegisteredEmail).toUpperCase(),
                     controller: emailController,
-                    isSecure: true,
+                    isSecure: false,
                     fillColor: ThemeManager().getStaticGradientColor(),
                     textInputType: TextInputType.text,
                     validator: (value){
                       return null;
                     }),
                 SizedBox(height: 10),
-                Text(Utils.getText(context, StringRes.forgotPassword), style: TextStyle(color: ThemeManager().getDarkColor(), fontWeight: FontWeight.normal))
+                TextFieldWithBorder(
+                    hintText: Utils.getText(context, StringRes.companyCode).toUpperCase(),
+                    controller: codeController,
+                    isSecure: false,
+                    fillColor: ThemeManager().getStaticGradientColor(),
+                    textInputType: TextInputType.text,
+                    validator: (value){
+                      return null;
+                    }),
+                SizedBox(height: 50),
+                BaseRaisedButton(
+                    buttonColor: ColorRes.blue,
+                    buttonText: Utils.getText(context, StringRes.send).toUpperCase(),
+                    onPressed: (){
+
+                    }),
               ],
             ),
           ),
