@@ -189,7 +189,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     buttonColor: ColorRes.blue,
                     buttonText: Utils.getText(context, StringRes.send).toUpperCase(),
                     onPressed: (){
-
+                      validateForm();
                     }),
               ],
             ),

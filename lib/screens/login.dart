@@ -240,7 +240,11 @@ class _LoginPageState extends State<LoginPage> {
                         // Navigator.of(context).pushNamed(bottomNavigationRoute);
                       }),
                   SizedBox(height: 10),
-                  Center(child: Text(Utils.getText(context, StringRes.requestDemoAccount), style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),),
+                  InkResponse(
+                    onTap: (){
+                      _launchEmail("support@knowledge-empire.com");
+                    },
+                      child: Center(child: Text(Utils.getText(context, StringRes.requestDemoAccount), style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),)),
                   Expanded(child: Container()),
                   Center(
                     child: Text(
@@ -435,8 +439,8 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Container(
                       margin: EdgeInsets.all(40),
-                      width: Utils.getDeviceWidth(context) / 3.0,
-                      height: Utils.getDeviceHeight(context) / 1.9,
+                      width:  (Const.envType == Environment.DEV || Const.envType == Environment.PROD) ? Utils.getDeviceWidth(context) / 3.0 : Utils.getDeviceWidth(context) / 1.5,
+                      height: (Const.envType == Environment.DEV || Const.envType == Environment.PROD) ? Utils.getDeviceHeight(context) / 1.9 : Utils.getDeviceHeight(context) / 4.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: ColorRes.white,
