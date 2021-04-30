@@ -115,6 +115,14 @@ class ScreensManager {
 
   ScreensManager._internal();
 
+  final GlobalKey<NavigatorState> firstTabNavKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> secondTabNavKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> thirdTabNavKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> forthTabNavKey = GlobalKey<NavigatorState>();
+
+  bool isTabBarVisible = false;
+  bool isTeamVisible = false;
+
   BottomNavigationPortraitState _bottomNavigationPortraitState;
 
   BottomNavigationPortraitState get bottomNavigationPortraitState =>

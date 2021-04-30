@@ -12,6 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/baseController/base_text.dart';
 import 'package:ke_employee/commonview/pdf_viewer.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
 import 'dart:convert';
@@ -22,8 +23,11 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:ke_employee/dialogs/companycode_dialog.dart';
 import 'package:ke_employee/dialogs/nickname_dialog.dart';
 import 'package:ke_employee/dialogs/privacy_policy_dialog.dart';
+import 'package:ke_employee/manager/screens_manager.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/screens/more_info.dart';
+import 'package:ke_employee/screens_portrait/drawer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -60,6 +64,132 @@ class Utils {
 
   static getAssetsImgJpg(String name) {
     return "assets/images/" + name + ".jpg";
+  }
+
+  showAppBarWithDrawer(BuildContext context, BottomItems item) {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(44.0), // here the desired height
+      child: AppBar(
+        backgroundColor: ThemeManager().getHeaderColor(),
+        title: Text(item == BottomItems.profileAndSettings ? item.title : "", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 17)),
+        leading: IconButton(
+            icon: Icon(Icons.menu, size: 24, color: ThemeManager().getTextColor()),
+            onPressed: (){
+              Navigator.of(context).push(
+                  PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return DrawerPortrait();
+                      }
+                  ));
+            }),
+        actions: [
+          item != BottomItems.profileAndSettings ? Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child : Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  height: AppBar().preferredSize.height / 2.7,
+                  decoration: BoxDecoration(
+                      color: ThemeManager().getLightColor(),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.lightbulb_outline, size: 14, color: ThemeManager().getHeaderColor()),
+                      SizedBox(width: 5),
+                      Text("3000", style: TextStyle(color: ThemeManager().getHeaderColor(), fontSize: 12))
+                    ],
+                  ),
+                ),
+              )
+          ) : Container()
+        ],
+      ),
+    );
+  }
+
+  static showAlertDialog(BuildContext context){
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: ThemeManager().getStaticGradientColor(),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0)),
+          buttonPadding: EdgeInsets.all(0),
+          actionsPadding: EdgeInsets.all(0),
+          content: BaseText(
+              text: "Are you sure you want to unsubscribe to the module? All progress wil be lost.",
+              textColor: ThemeManager().getDarkColor(),
+              fontSize: 13,
+              fontWeight: FontWeight.normal,
+              textAlign: TextAlign.center
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide( //                    <--- top side
+                        color: ThemeManager().getDarkColor(),
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  width: Utils.getDeviceWidth(context),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide( //                    <--- top side
+                                  color: ThemeManager().getDarkColor(),
+                                  width: 0.5,
+                                ),
+                              ),
+                            ),
+                            child: FlatButton(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              child: new BaseText(
+                                  text: "Yes",
+                                  textColor: ThemeManager().getDarkColor(),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.center),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          )),
+                      Expanded(
+                          child: FlatButton(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            child: new BaseText(
+                                text: "No",
+                                textColor: ThemeManager().getBadgeColor(),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                textAlign: TextAlign.center),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )),
+                    ],
+                  ),
+                )),
+          ],
+        );
+      },
+    );
   }
 
   static showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {

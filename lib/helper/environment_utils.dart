@@ -19,7 +19,12 @@ class EnvUtils{
         return BottomNavigationPortrait();
       }
     } else {
-      return LoginPage();
+      if(Const.envType == Environment.DEV || Const.envType == Environment.PROD)
+        return LoginPage();
+      else {
+        return LoginPage();
+      }
+
     }
     // return (Injector.prefs.getBool(PrefKeys.isLoggedIn) ?? false) == true ? BottomNavigationPortrait() : LoginPagePortrait();
   }

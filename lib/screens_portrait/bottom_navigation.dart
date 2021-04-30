@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/manager/screens_manager.dart';
-import 'package:ke_employee/screens_portrait/drawer.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
 
 class BottomNavigationPortrait extends StatefulWidget {
   @override
@@ -10,10 +10,14 @@ class BottomNavigationPortrait extends StatefulWidget {
 }
 
 class BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
+
   final CupertinoTabController _controller = CupertinoTabController();
+  GlobalKey _kTabBarHeight = GlobalKey();
+  double tabBarHeight = 0;
 
   int currentIndex;
   List<BottomItems> _children;
+  List<GlobalKey<NavigatorState>> navKeyList;
 
   @override
   void initState() {
@@ -24,73 +28,110 @@ class BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
       BottomItems.others,
       BottomItems.profileAndSettings
     ];
+    navKeyList = [
+      ScreensManager().firstTabNavKey,
+      ScreensManager().secondTabNavKey,
+      ScreensManager().thirdTabNavKey,
+      ScreensManager().forthTabNavKey
+    ];
     super.initState();
+
     ScreensManager().bottomNavigationPortraitState = this;
+//    ThemeManager().getAppThemeColorsFromPrefs();
+    ThemeManager().getAppThemeColors(() {
+      setState(() {});
+    });
   }
+
+  _getSizes() {
+    final RenderBox renderBoxRed = _kTabBarHeight.currentContext.findRenderObject();
+    setState(() {
+      this.tabBarHeight = renderBoxRed.size.height;
+      ScreensManager().isTabBarVisible = false;
+    });
+    print("SIZE of _kTabBarHeight: $tabBarHeight");
+  }
+
+
+  @override
+  void didUpdateWidget(BottomNavigationPortrait oldWidget) {
+    // TODO: implement didUpdateWidget
+    this._getSizes();
+    super.didUpdateWidget(oldWidget);
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: ColorRes.portraitThemeColor,
-        middle: Text(_children[currentIndex].title, style: TextStyle(color: ColorRes.white)),
-        leading: GestureDetector(
-          onTap: (){
-            Navigator.of(context).push(
-                PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context, _, __) {
-                      return DrawerPortrait();
-                    }
-                ));
-          },
-          child: Icon(Icons.menu, size: 24, color: ColorRes.white),
-        ),
-      ),
-      child : CupertinoTabScaffold(
-          controller: _controller,
-          tabBar: CupertinoTabBar(
-            backgroundColor: ColorRes.portraitThemeColor,
-            activeColor: ColorRes.white,
-            inactiveColor: ColorRes.whiteTransparent,
-            currentIndex: currentIndex,
-            onTap: onTabTapped,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.school, size: 24),
-                title: Text("Questions"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.create_new_folder, size: 24,),
-                title: Text("Modules"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.format_list_bulleted, size: 24,),
-                title: Text("Other"),
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.account_box, size: 24,),
-                  title: Text("Profile & Settings")),
-            ],
+    return Stack(
+      children: [
+        CupertinoTabScaffold(
+            controller: _controller,
+            tabBar: CupertinoTabBar(
+              key: _kTabBarHeight,
+              backgroundColor: ThemeManager().getFooterColor(),
+              activeColor: ThemeManager().getTextColor(),
+              inactiveColor: ThemeManager().getTextColor().withOpacity(ThemeManager().getOpacity3()),
+              currentIndex: currentIndex,
+              onTap: onTabTapped,
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.school, size: 24),
+                  title: Text("Questions"),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.create_new_folder, size: 24,),
+                  title: Text("Modules"),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.format_list_bulleted, size: 24,),
+                  title: Text("Other"),
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.account_box, size: 24,),
+                    title: Text("Profile & Settings")),
+              ],
 
-          ),
-          tabBuilder: (BuildContext context, int index) {
-            return CupertinoTabView(
-              builder: (BuildContext context) {
-                return SafeArea(
-                  top: false,
-                  bottom: false,
-                  child: _children[currentIndex].page,
-                );
-              },
-            );
-          }
-      ),
+            ),
+            tabBuilder: (BuildContext context, int index) {
+              return CupertinoTabView(
+                navigatorKey: navKeyList[index],
+                builder: (BuildContext context) {
+                  return SafeArea(
+                    top: false,
+                    bottom: false,
+                    child: _children[currentIndex].page,
+                  );
+                },
+              );
+            }
+        ),
+        Visibility(
+            visible: ScreensManager().isTabBarVisible,
+            child: Positioned(
+              bottom: 0,
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      ScreensManager().isTabBarVisible = false;
+                      ScreensManager().isTeamVisible = false;
+                    });
+                  },
+                  child: Container(
+                    height: tabBarHeight,
+                    width: Utils.getDeviceWidth(context),
+                    color: Colors.black.withOpacity(0.4),
+                  ),
+                )))
+      ],
     );
   }
 
   void onTabTapped(int index) {
     setState(() {
+      if(index == currentIndex){
+        navKeyList[index].currentState.popUntil((r) => r.isFirst);
+      }
       currentIndex = index;
       _controller.index = index;
     });

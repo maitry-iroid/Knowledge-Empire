@@ -181,6 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                   BaseTextField(
                       hintText: Utils.getText(context, StringRes.usernameText),
                       controller: emailController,
+                      fillColor: ColorRes.white,
                       validator: (value){
                         return null;
                       }),
@@ -189,6 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: Utils.getText(context, StringRes.password),
                       controller: passwordController,
                       isSecure: true,
+                      fillColor: ColorRes.white,
                       validator: (value){
                         return null;
                       }),
@@ -197,6 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: Utils.getText(context, StringRes.companyCode),
                       controller: codeController,
                       isSecure: false,
+                      fillColor: ColorRes.white,
                       validator: (value){
                         return null;
                       }),
@@ -232,6 +235,8 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   BaseRaisedButton(
                       buttonColor: ColorRes.blue,
+                      textColor: Colors.white,
+                      borderColor: Colors.white,
                       buttonText: Utils.getText(context, StringRes.login),
                       onPressed: (){
                         Utils.isInternetConnectedWithAlert(context).then((isConnected) async {

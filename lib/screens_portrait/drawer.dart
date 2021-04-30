@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/manager/screens_manager.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
+import 'package:ke_employee/routes/custom_router.dart';
+import 'package:ke_employee/routes/route_names.dart';
 
 class DrawerPortrait extends StatefulWidget {
   @override
   _DrawerPortraitState createState() => _DrawerPortraitState();
 }
 
- const List<DrawerItems> _drawerItems = [
+const List<DrawerItems> _drawerItems = [
   DrawerItems.profile,
   DrawerItems.learnings,
   DrawerItems.modules,
@@ -25,6 +28,7 @@ class _DrawerPortraitState extends State<DrawerPortrait> {
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
   }
 
@@ -45,7 +49,7 @@ class _DrawerPortraitState extends State<DrawerPortrait> {
                 ),
               ),
               Container(
-                color: ColorRes.portraitThemeColor,
+                color: ThemeManager().getHeaderColor(),
                 width: Utils.getDeviceWidth(context) / 1.5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +74,7 @@ class _DrawerPortraitState extends State<DrawerPortrait> {
       padding: EdgeInsets.only(left: 15),
 //      margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       alignment: Alignment.centerLeft,
-      child: Text("Yu Hsin", style: TextStyle(color: ColorRes.white, fontSize: 18, fontWeight: FontWeight.bold)),
+      child: Text("Yu Hsin", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 18, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -86,13 +90,20 @@ class _DrawerPortraitState extends State<DrawerPortrait> {
                     print(_drawerItems[index].title);
                     if(_drawerItems[index].bottomItem != null){
                       ScreensManager().bottomNavigationPortraitState?.selectBottomItem(_drawerItems[index].bottomItem);
+                      Navigator.of(context).pop();
+
+                      // if(_drawerItems[index].bottomItem == BottomItems.others){
+                      //   ScreensManager().thirdTabNavKey.currentState.popUntil((r) => r.isFirst);
+                      //   ScreensManager().thirdTabNavKey.currentState.push(CustomRouter.getRoute(name: _drawerItems[index].pageRoute));
+                      // }
+
+
                     }
-                    Navigator.of(context).pop();
                   },
                   child: ListTile(
                     contentPadding: EdgeInsets.all(0),
                     dense: true,
-                    title: Text(_drawerItems[index].title, style: TextStyle(color: ColorRes.white, fontSize: 14)),
+                    title: Text(_drawerItems[index].title, style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 14)),
                   ),
                 );
               }
