@@ -14,6 +14,7 @@ import 'package:ke_employee/commonview/dummy_header.dart';
 import 'package:ke_employee/commonview/my_home.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/ResponsiveUi.dart';
+import 'package:ke_employee/helper/home_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/listItem/menu_item.dart';
 import 'package:ke_employee/manager/encryption_manager.dart';
@@ -81,11 +82,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerProviderStateMixin implements RefreshAnimation {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey = new GlobalKey<ExplosionWidgetState>();
-  String _currentPage = Const.typeHome;
-  StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  ValueNotifier<bool> headerNotifier = ValueNotifier<bool>(false);
 
   bool startAnim = false;
   int duration = 1;
@@ -100,17 +96,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     super.initState();
     mRefreshAnimation = this;
     initStateMethods();
-    print("Home Initstate:----------------------------------------------------------");
-    Injector.prefs.setBool(PrefKeys.isLoggedIn, true);
-    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
-    //update userdata if privacy policy is updated.
-    apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response) {
-      if (response.isSeenPrivacyPolicy == 0) {
-        Injector.userData.isSeenPrivacyPolicy = 0;
-        Injector.setUserData(Injector.userData, false);
-      }
-      Injector.checkPrivacyPolicy(_scaffoldKey, context);
-    });
+    HomeUtils.initHome(context);
   }
 
   @override
@@ -123,7 +109,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
           Injector.userData.isSeenPrivacyPolicy = 0;
           Injector.setUserData(Injector.userData, false);
         }
-        Injector.checkPrivacyPolicy(_scaffoldKey, context);
+        Injector.checkPrivacyPolicy(HomeUtils.scaffoldKey, context);
       });
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
         Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
@@ -146,7 +132,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
             );
           } else if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
             homeData = snapshot.data;
-            _currentPage = snapshot.data.initialPageType;
+            HomeUtils.currentPage = snapshot.data.initialPageType;
             getAnimationStatus();
 
             return mainLayout(context);
@@ -162,7 +148,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     return ResponsiveUi(
       builder: (context, size) {
         return Scaffold(
-          key: _scaffoldKey,
+          key: HomeUtils.scaffoldKey,
           drawer: new SizedBox(
             width: Utils.getDeviceWidth(context) / 2.5,
             child: Drawer(
@@ -215,35 +201,35 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   }
 
   Widget getDrawerItemWidget() {
-    if (_currentPage == Const.typeHome) {
+    if (HomeUtils.currentPage == Const.typeHome) {
       return Injector.isBusinessMode ? DashboardGamePage() : DashboardProfPage();
-    } else if (_currentPage == Const.typeBusinessSector) {
+    } else if (HomeUtils.currentPage == Const.typeBusinessSector) {
       return BusinessSectorPage();
-    } else if (_currentPage == Const.typeNewCustomer) {
+    } else if (HomeUtils.currentPage == Const.typeNewCustomer) {
       return NewCustomerPage();
-    } else if (_currentPage == Const.typeExistingCustomer) {
+    } else if (HomeUtils.currentPage == Const.typeExistingCustomer) {
       return ExistingCustomerPage();
-    } else if (_currentPage == Const.typeTeam) {
+    } else if (HomeUtils.currentPage == Const.typeTeam) {
       return TeamPage();
-    } else if (_currentPage == Const.typeChallenges) {
+    } else if (HomeUtils.currentPage == Const.typeChallenges) {
       return ChallengesPage(homeData: homeData);
-    } else if (_currentPage == Const.typeAchievement) {
+    } else if (HomeUtils.currentPage == Const.typeAchievement) {
       return AchievementPage();
-    } else if (_currentPage == Const.typeReward) {
+    } else if (HomeUtils.currentPage == Const.typeReward) {
       return RewardsPage();
-    } else if (_currentPage == Const.typeOrg) {
+    } else if (HomeUtils.currentPage == Const.typeOrg) {
       return Injector.isBusinessMode ? OrganizationsPage2(mRefreshAnimation: mRefreshAnimation) : PowerUpsPage(mRefreshAnimation: mRefreshAnimation);
-    } else if (_currentPage == Const.typeRanking) {
+    } else if (HomeUtils.currentPage == Const.typeRanking) {
       return RankingPage();
-    } else if (_currentPage == Const.typePl) {
+    } else if (HomeUtils.currentPage == Const.typePl) {
       return PLPage();
-    } else if (_currentPage == Const.typeProfile) {
+    } else if (HomeUtils.currentPage == Const.typeProfile) {
       return ProfilePage();
-    } else if (_currentPage == Const.typeEngagement) {
+    } else if (HomeUtils.currentPage == Const.typeEngagement) {
       return EngagementCustomer(homeData: homeData);
-    } else if (_currentPage == Const.typeCustomerSituation) {
+    } else if (HomeUtils.currentPage == Const.typeCustomerSituation) {
       return CustomerSituationPage(homeData: homeData, mRefreshAnimation: mRefreshAnimation);
-    } else if (_currentPage == Const.typeCustomerSituation) {
+    } else if (HomeUtils.currentPage == Const.typeCustomerSituation) {
       return ProfilePage();
     } else {
       return Injector.isBusinessMode ? DashboardGamePage() : DashboardProfPage();
@@ -252,13 +238,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
 
   Widget buildHeaderView() {
     return ValueListenableBuilder(
-      valueListenable: headerNotifier,
+      valueListenable: HomeUtils.headerNotifier,
       builder: (BuildContext context, value, Widget child) {
         print(value);
         return Stack(
           children: <Widget>[
             HeaderView(
-                scaffoldKey: _scaffoldKey,
+                scaffoldKey: HomeUtils.scaffoldKey,
                 isShowMenu: true,
                 isChallenge: homeData.isChallenge,
                 currentIndex: homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.questionCurrentIndex != null
@@ -269,7 +255,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
                     : 0),
             value
                 ? DummyView(
-                    scaffoldKey: _scaffoldKey,
+                    scaffoldKey: HomeUtils.scaffoldKey,
                     isShowMenu: true,
                     isChallenge: homeData.isChallenge,
                     currentIndex: homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.questionCurrentIndex != null
@@ -326,7 +312,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     bool second = false;
     if (homeData != null) {
       print(homeData);
-      first = _currentPage == Const.typeCustomerSituation &&
+      first = HomeUtils.currentPage == Const.typeCustomerSituation &&
           ((homeData.isCameFromNewCustomer != null && homeData.isCameFromNewCustomer && homeData.questionHomeData.isAnsweredCorrect == 1));
       second = homeData.isChallenge != null && homeData.isChallenge && homeData.questionHomeData != null
           ? homeData.questionHomeData.isAnsweredCorrect != null
@@ -347,49 +333,36 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   }
 
   void initStateMethods() async {
-    callDashboardStatusApi();
+    HomeUtils.callDashboardStatusApi();
 
-    callVersionApi();
+    HomeUtils.callVersionApi(context);
 
-    initPush();
+    HomeUtils.initPush(context);
 
     // localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
-    initPendingChallengeStream();
+    HomeUtils.initPendingChallengeStream(context);
 
     Utils.callCustomerValuesApi();
 
     await Utils.playBackgroundMusic();
 
-    initCheckNetworkConnectivity();
+    WidgetsBinding.instance.addObserver(this);
+    HomeUtils.initCheckNetworkConnectivity(context);
 
-    initPlatformState();
+    HomeUtils.initPlatformState();
 
     Utils.removeBadge();
 
-    navigationBloc.updateNavigation(HomeData(initialPageType: _currentPage));
-  }
-
-  void initPlatformState() async {
-    String appBadgeSupported;
-    try {
-      bool res = await FlutterAppBadger.isAppBadgeSupported();
-      if (res) {
-        appBadgeSupported = 'Supported';
-      } else {
-        appBadgeSupported = 'Not supported';
-      }
-    } on PlatformException {
-      appBadgeSupported = 'Failed to get badge support.';
-    }
+    navigationBloc.updateNavigation(HomeData(initialPageType: HomeUtils.currentPage));
   }
 
   void onSelectItem(DrawerItem item) {
     Utils.playClickSound();
-    if (_scaffoldKey.currentState.isDrawerOpen) {
-      _scaffoldKey.currentState.openEndDrawer();
+    if (HomeUtils.scaffoldKey.currentState.isDrawerOpen) {
+      HomeUtils.scaffoldKey.currentState.openEndDrawer();
     }
-    if (_currentPage != item.key) {
+    if (HomeUtils.currentPage != item.key) {
       if (item.key == Const.typeHelp) {
         if (Injector.isBusinessMode) {
           Navigator.push(context, FadeRouteIntro());
@@ -402,110 +375,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     }
   }
 
-  void initPendingChallengeStream() async {
-    Injector.homeStreamController.stream.listen((data) async {
-      if (data == "${Const.openPendingChallengeDialog}") {
-        callPendingChallengesApi();
-      }
-    }, onDone: () {}, onError: (error) {});
-  }
-
-  void initCheckNetworkConnectivity() {
-    WidgetsBinding.instance.addObserver(this);
-
-    _connectivitySubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result != ConnectivityResult.none) {
-        Injector.isInternetConnected = true;
-        Utils.callSubmitAnswerApi(context);
-      } else
-        Injector.isInternetConnected = false;
-    });
-  }
-
-  void callPendingChallengesApi() {
-    if (!Utils.isFeatureOn(Const.typeChallenges)) return;
-
-    GetChallengesRequest rq = GetChallengesRequest();
-    rq.userId = Injector.userData.userId;
-
-    WebApi().callAPI(WebApi.rqGetChallenge, rq.toJson()).then((data) async {
-      if (data != null && data.toString() != "{}") {
-        QuestionData questionData = QuestionData.fromJson(data);
-        new Future.delayed(const Duration(seconds: 5), () async {
-          await getChallengeQueBloc.getChallengeQuestion();
-        });
-        if (questionData != null && questionData.challengeId != null) {
-          if (questionData.isFirstQuestion == 1) {
-            String firstName = await EncryptionManager().stringDecryption(questionData.firstName);
-            String lastName = await EncryptionManager().stringDecryption(questionData.lastName);
-            DisplayDialogs.showChallengeDialog(context, firstName + " " + lastName, questionData);
-          } else {
-            navigationBloc.updateNavigation(HomeData(
-              initialPageType: Const.typeEngagement,
-              questionHomeData: questionData,
-              isChallenge: true,
-            ));
-          }
-        } else {
-          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
-        }
-      } else {
-        navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
-      }
-    }).catchError((e) {
-      print("getChallenges_" + e.toString());
-    });
-  }
-
-  void callVersionApi() async {
-    UpdateDialogModel status = await Injector.getCurrentVersion(context);
-    if (status != null) {
-      if (status.status != "0" || status.status == "2") {
-        if (status.status == "2") {
-          if (Injector.prefs.get(PrefKeys.isCancelDialog) == null) {
-            DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
-          } else {
-            DateTime clickedTime = DateTime.parse(Injector.prefs.get(PrefKeys.isCancelDialog));
-            if (DateTime.now().difference(clickedTime).inDays >= 1) {
-              DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, true);
-            }
-          }
-        } else {
-          DisplayDialogs.showUpdateDialog(context, status.headlineText, status.message, false);
-        }
-      }
-    }
-  }
-
-  void callDashboardStatusApi() {
-    Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) {
-        DashboardStatusRequest rq = DashboardStatusRequest();
-        rq.userId = Injector.userData.userId;
-
-        WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
-          if (data != null) {
-            DashboardStatusResponse response = DashboardStatusResponse.fromJson(data);
-
-            if (response.data.isNotEmpty) {
-              Injector.prefs.setString(PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
-              Injector.dashboardStatusResponse = response;
-
-              if (mounted) setState(() {});
-            }
-          }
-        }).catchError((e) {
-          print("getDashboardValue_" + e.toString());
-        });
-      }
-    });
-  }
-
   @override
   void dispose() {
     // Injector.homeStreamController.close();
-    _connectivitySubscription?.cancel();
-    headerNotifier.dispose();
+    HomeUtils.connectivitySubscription?.cancel();
+    HomeUtils.headerNotifier.dispose();
     super.dispose();
   }
 
@@ -513,8 +387,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   onRefreshAchievement(int type) {
     Future.delayed(const Duration(milliseconds: 500), () {
       try {
-        headerNotifier.value = true;
-        headerNotifier.notifyListeners();
+        HomeUtils.headerNotifier.value = true;
+        HomeUtils.headerNotifier.notifyListeners();
         if (type == Const.typeHR) {
           empAnimTimer = Timer.periodic(Duration(milliseconds: 400), (_) {
             employeeDrainNotifier.value = true;
@@ -523,8 +397,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
           Timer(Duration(seconds: 3), () {
             if (empAnimTimer != null) {
               empAnimTimer.cancel();
-              headerNotifier.value = false;
-              headerNotifier.notifyListeners();
+              HomeUtils.headerNotifier.value = false;
+              HomeUtils.headerNotifier.notifyListeners();
             }
           });
         } else if (type == Const.typeSales) {
@@ -535,8 +409,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
           Timer(Duration(seconds: 3), () {
             if (saleAnimTimer != null) {
               saleAnimTimer.cancel();
-              headerNotifier.value = false;
-              headerNotifier.notifyListeners();
+              HomeUtils.headerNotifier.value = false;
+              HomeUtils.headerNotifier.notifyListeners();
             }
           });
         } else if (type == Const.typeServices) {
@@ -547,26 +421,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
           Timer(Duration(seconds: 3), () {
             if (serviceAnimTimer != null) {
               serviceAnimTimer.cancel();
-              headerNotifier.value = false;
-              headerNotifier.notifyListeners();
+              HomeUtils.headerNotifier.value = false;
+              HomeUtils.headerNotifier.notifyListeners();
             }
           });
         } else {
-          headerNotifier.value = false;
-          headerNotifier.notifyListeners();
+          HomeUtils.headerNotifier.value = false;
+          HomeUtils.headerNotifier.notifyListeners();
         }
       } catch (e) {
         print(e);
-      }
-    });
-  }
-
-  void initPush() {
-    Future.delayed(const Duration(milliseconds: 500), () {
-      PushNotificationHelper pushNotificationHelper = PushNotificationHelper(context);
-
-      if (pushNotificationHelper != null) {
-        pushNotificationHelper.initPush();
       }
     });
   }
@@ -578,8 +442,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     for (var i = 0; i < drawerItems.length; i++) {
       drawerOptions.add(new ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-          title: MenuItem(drawerItems[i], _currentPage),
-          selected: drawerItems[i].key == _currentPage,
+          title: MenuItem(drawerItems[i], HomeUtils.currentPage),
+          selected: drawerItems[i].key == HomeUtils.currentPage,
           onTap: () => onSelectItem(drawerItems[i])));
     }
     return drawerOptions;

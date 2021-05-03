@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/home_utils.dart';
 import 'package:ke_employee/manager/screens_manager.dart';
 import 'package:ke_employee/manager/theme_manager.dart';
 
@@ -36,6 +37,7 @@ class BottomNavigationPortraitState extends State<BottomNavigationPortrait> {
     ];
     super.initState();
 
+    HomeUtils.initHome(context);
     ScreensManager().bottomNavigationPortraitState = this;
 //    ThemeManager().getAppThemeColorsFromPrefs();
     ThemeManager().getAppThemeColors(() {

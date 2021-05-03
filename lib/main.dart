@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/environment_utils.dart';
 import 'helper/constant.dart';
 import 'injection/dependency_injection.dart';
 import 'screens/my_app.dart';
