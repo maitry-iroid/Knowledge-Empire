@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:ke_employee/helper/Utils.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
 
 import 'ParticleModel.dart';
 
@@ -42,9 +42,10 @@ class _ParticlesState extends State<Particles> {
   Future<ui.Image> loadImage(List<int> img) async {
     final Completer<ui.Image> completer = new Completer();
     ui.decodeImageFromList(img, (ui.Image img) {
-      if (mounted)setState(() {
-        isImageLoaded = true;
-      });
+      if (mounted)
+        setState(() {
+          isImageLoaded = true;
+        });
       return completer.complete(img);
     });
     return completer.future;
@@ -86,8 +87,7 @@ class ParticlePainter extends CustomPainter {
       particles.forEach((particle) {
         var progress = particle.animationProgress.progress(time);
         final animation = particle.tween.transform(progress);
-        final position =
-            Offset(animation["y"] * size.width, animation["x"] * size.height);
+        final position = Offset(animation["y"] * size.width, animation["x"] * size.height);
         //      canvas.drawCircle(position, size.width * 0.2 * particle.size, paint);
         canvas.drawImage(image, position, paint);
       });
@@ -107,14 +107,12 @@ class AnimationProgress {
   /// Creates an [AnimationProgress].
   AnimationProgress({this.duration, this.startTime})
       : assert(duration != null, "Please specify an animation duration."),
-        assert(
-            startTime != null, "Please specify a start time of the animation.");
+        assert(startTime != null, "Please specify a start time of the animation.");
 
   /// Queries the current progress value based on the specified [startTime] and
   /// [duration] as a value between `0.0` and `1.0`. It will automatically
   /// clamp values this interval to fit in.
-  double progress(Duration time) => max(0.0,
-      min((time - startTime).inMilliseconds / duration.inMilliseconds, 1.0));
+  double progress(Duration time) => max(0.0, min((time - startTime).inMilliseconds / duration.inMilliseconds, 1.0));
 }
 
 class MultiTrackTween extends Animatable<Map<String, dynamic>> {
@@ -122,45 +120,33 @@ class MultiTrackTween extends Animatable<Map<String, dynamic>> {
   var _maxDuration = 0;
 
   MultiTrackTween(List<Track> tracks)
-      : assert(tracks != null && tracks.length > 0,
-            "Add a List<Track> to configure the tween."),
-        assert(tracks.where((track) => track.items.length == 0).length == 0,
-            "Each Track needs at least one added Tween by using the add()-method.") {
+      : assert(tracks != null && tracks.length > 0, "Add a List<Track> to configure the tween."),
+        assert(tracks.where((track) => track.items.length == 0).length == 0, "Each Track needs at least one added Tween by using the add()-method.") {
     _computeMaxDuration(tracks);
     _computeTrackTweens(tracks);
   }
 
   void _computeMaxDuration(List<Track> tracks) {
     tracks.forEach((track) {
-      final trackDuration = track.items
-          .map((item) => item.duration.inMilliseconds)
-          .reduce((sum, item) => sum + item);
+      final trackDuration = track.items.map((item) => item.duration.inMilliseconds).reduce((sum, item) => sum + item);
       _maxDuration = max(_maxDuration, trackDuration);
     });
   }
 
   void _computeTrackTweens(List<Track> tracks) {
     tracks.forEach((track) {
-      final trackDuration = track.items
-          .map((item) => item.duration.inMilliseconds)
-          .reduce((sum, item) => sum + item);
+      final trackDuration = track.items.map((item) => item.duration.inMilliseconds).reduce((sum, item) => sum + item);
 
-      final sequenceItems = track.items
-          .map((item) => TweenSequenceItem(
-              tween: item.tween,
-              weight: item.duration.inMilliseconds / _maxDuration))
-          .toList();
+      final sequenceItems =
+          track.items.map((item) => TweenSequenceItem(tween: item.tween, weight: item.duration.inMilliseconds / _maxDuration)).toList();
 
       if (trackDuration < _maxDuration) {
-        sequenceItems.add(TweenSequenceItem(
-            tween: ConstantTween(null),
-            weight: (_maxDuration - trackDuration) / _maxDuration));
+        sequenceItems.add(TweenSequenceItem(tween: ConstantTween(null), weight: (_maxDuration - trackDuration) / _maxDuration));
       }
 
       final sequence = TweenSequence(sequenceItems);
 
-      _tracksToTween[track.name] =
-          _TweenData(tween: sequence, maxTime: trackDuration / _maxDuration);
+      _tracksToTween[track.name] = _TweenData(tween: sequence, maxTime: trackDuration / _maxDuration);
     });
   }
 
@@ -245,20 +231,14 @@ class Rendering extends StatefulWidget {
   final int startTimeSimulationTicks;
   final Canvas canvas;
 
-  Rendering(
-      {this.builder,
-      this.onTick,
-      this.startTime = Duration.zero,
-      this.startTimeSimulationTicks = 20,
-      this.canvas})
+  Rendering({this.builder, this.onTick, this.startTime = Duration.zero, this.startTimeSimulationTicks = 20, this.canvas})
       : assert(builder != null, "Builder needs to defined.");
 
   @override
   _RenderingState createState() => _RenderingState();
 }
 
-class _RenderingState extends State<Rendering>
-    with SingleTickerProviderStateMixin {
+class _RenderingState extends State<Rendering> with SingleTickerProviderStateMixin {
   Ticker _ticker;
   Duration _timeElapsed = Duration(milliseconds: 5);
 
@@ -280,19 +260,16 @@ class _RenderingState extends State<Rendering>
     if (widget.onTick != null) {
       widget.onTick(effectiveElapsed);
     }
-    if (mounted)setState(() {
-      _timeElapsed = effectiveElapsed;
-    });
+    if (mounted)
+      setState(() {
+        _timeElapsed = effectiveElapsed;
+      });
   }
 
   void _simulateStartTimeTicks() {
     if (widget.onTick != null) {
       Iterable<int>.generate(widget.startTimeSimulationTicks + 1).forEach((i) {
-        final simulatedTime = Duration(
-            milliseconds: (widget.startTime.inMilliseconds *
-                    i /
-                    widget.startTimeSimulationTicks)
-                .round());
+        final simulatedTime = Duration(milliseconds: (widget.startTime.inMilliseconds * i / widget.startTimeSimulationTicks).round());
         widget.onTick(simulatedTime);
       });
     }

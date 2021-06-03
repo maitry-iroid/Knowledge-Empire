@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/privay_policy.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/privay_policy.dart';
 
 class PrivacyPolicyDialog extends StatefulWidget {
-  PrivacyPolicyDialog({
-    Key key,
-    this.scaffoldKey,
-    this.isFromProfile,
-    this.companyId,
-    this.privacyPolicyTitle,
-    this.privacyPolicyContent,
-    this.privacyPolicyAcceptText,
-    this.completion
-  }) : super(key: key);
+  PrivacyPolicyDialog(
+      {Key key,
+      this.scaffoldKey,
+      this.isFromProfile,
+      this.companyId,
+      this.privacyPolicyTitle,
+      this.privacyPolicyContent,
+      this.privacyPolicyAcceptText,
+      this.completion})
+      : super(key: key);
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool isFromProfile;
@@ -39,12 +39,11 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
   bool isAccepted = false;
 
   void _onRememberMeChanged(bool newValue) => setState(() {
-    isAccepted = newValue;
+        isAccepted = newValue;
 
-    if (isAccepted) {
-    } else {
-    }
-  });
+        if (isAccepted) {
+        } else {}
+      });
 
   @override
   void initState() {
@@ -54,13 +53,15 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(child: Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: Colors.transparent,
-      body: showSetupPin(context),
-    ), onWillPop: (){
-      return Future.value(false);
-    });
+    return WillPopScope(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.transparent,
+          body: showSetupPin(context),
+        ),
+        onWillPop: () {
+          return Future.value(false);
+        });
   }
 
   showSetupPin(BuildContext context) {
@@ -90,11 +91,11 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                 SizedBox(height: 10),
                 Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 25),
-                      child: SingleChildScrollView(
-                        child: Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black, fontSize: 16)),
-                      ),
-                    )),
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: SingleChildScrollView(
+                    child: Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black, fontSize: 16)),
+                  ),
+                )),
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
                   child: Row(
@@ -102,48 +103,38 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                     children: [
                       Expanded(
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Checkbox(
-                                  activeColor: ColorRes.headerBlue,
-                                  value: isAccepted,
-                                  onChanged: _onRememberMeChanged
-                              ),
-                              Expanded(
-                                  child: Text(widget.privacyPolicyAcceptText,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(color: ColorRes.black, fontSize: 16)))
-                            ],
-                          )),
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Checkbox(activeColor: ColorRes.headerBlue, value: isAccepted, onChanged: _onRememberMeChanged),
+                          Expanded(
+                              child: Text(widget.privacyPolicyAcceptText,
+                                  maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: ColorRes.black, fontSize: 16)))
+                        ],
+                      )),
                       SizedBox(width: 40),
-                      widget.isFromProfile ? InkResponse(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                                alignment: Alignment.center,
-                                height: 40,
-                                width: 100,
-                                margin: EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                    color: ColorRes.headerBlue,
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: Colors.white
-                                    )
-                                ),
-                                child: Text(
-                                  Utils.getText(context, StringRes.decline),
-                                  style: TextStyle(
-                                      fontSize: 17, color: ColorRes.white),
-                                )),
-                          ),
-                          onTap: () {
-                            Utils.playClickSound();
-                            Utils.hideKeyboard(context);
-                            Utils.isPrivacyPolicyDialogOpen = false;
-                            Navigator.of(context).pop();
-                          }) : Container(),
+                      widget.isFromProfile
+                          ? InkResponse(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    height: 40,
+                                    width: 100,
+                                    margin: EdgeInsets.only(right: 10),
+                                    decoration: BoxDecoration(
+                                        color: ColorRes.headerBlue, borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white)),
+                                    child: Text(
+                                      Utils.getText(context, StringRes.decline),
+                                      style: TextStyle(fontSize: 17, color: ColorRes.white),
+                                    )),
+                              ),
+                              onTap: () {
+                                Utils.playClickSound();
+                                Utils.hideKeyboard(context);
+                                Utils.isPrivacyPolicyDialogOpen = false;
+                                Navigator.of(context).pop();
+                              })
+                          : Container(),
                       InkResponse(
                           child: Align(
                             alignment: Alignment.centerRight,
@@ -154,20 +145,16 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                                 decoration: BoxDecoration(
                                     color: isAccepted == true ? ColorRes.headerBlue : ColorRes.greyText,
                                     borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: Colors.white
-                                    )
-                                ),
+                                    border: Border.all(color: Colors.white)),
                                 child: Text(
                                   Utils.getText(context, StringRes.accept),
-                                  style: TextStyle(
-                                      fontSize: 17, color: ColorRes.white),
+                                  style: TextStyle(fontSize: 17, color: ColorRes.white),
                                 )),
                           ),
                           onTap: () {
-                            if(isAccepted == true) Utils.playClickSound();
+                            if (isAccepted == true) Utils.playClickSound();
                             Utils.hideKeyboard(context);
-                            if(isAccepted == true) {
+                            if (isAccepted == true) {
                               if (widget.completion != null) {
                                 apiCallPrivacyPolicy(Injector.userData.userId, Const.typeUpdateAccessTime.toString(), widget.companyId, (response) {
                                   Injector.userData.isSeenPrivacyPolicy = 1;
@@ -176,11 +163,11 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
                                 });
                               }
                               Navigator.of(context).pop();
-
                             }
                           })
                     ],
-                  ),)
+                  ),
+                )
               ],
             ),
           ),
@@ -199,6 +186,4 @@ class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
       width: 0.0,
     );
   }
-
-
 }

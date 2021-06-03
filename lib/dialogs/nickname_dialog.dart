@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/models/update_profile.dart';
-import 'package:ke_employee/screens/home.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:knowledge_empire/models/update_profile.dart';
+import 'package:knowledge_empire/screens/home.dart';
 
 class NickNameDialog extends StatefulWidget {
   NickNameDialog({
@@ -56,13 +56,8 @@ class NickNameDialogState extends State<NickNameDialog> {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(
-                          top: 0,
-                          left: 10,
-                          right: Utils.getDeviceWidth(context) / 5.5,
-                          bottom: 0),
-                      padding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      margin: EdgeInsets.only(top: 0, left: 10, right: Utils.getDeviceWidth(context) / 5.5, bottom: 0),
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -79,22 +74,17 @@ class NickNameDialogState extends State<NickNameDialog> {
                               margin: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
-                                  border: Border.all(
-                                      width: 1, color: ColorRes.white),
+                                  border: Border.all(width: 1, color: ColorRes.white),
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextField(
                                 controller: nickNameController,
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 14, color: ColorRes.white),
+                                style: TextStyle(fontSize: 14, color: ColorRes.white),
                                 decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 10),
-                                    hintText: Utils.getText(
-                                        context, StringRes.newNickName),
-                                    hintStyle:
-                                    TextStyle(color: ColorRes.hintColor),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(context, StringRes.newNickName),
+                                    hintStyle: TextStyle(color: ColorRes.hintColor),
                                     border: InputBorder.none),
                               )),
                         ],
@@ -110,15 +100,11 @@ class NickNameDialogState extends State<NickNameDialog> {
                                   alignment: Alignment.center,
                                   height: 40,
                                   width: 100,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              Utils.getAssetsImg("bg_save")),
-                                          fit: BoxFit.fill)),
+                                  decoration:
+                                      BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_save")), fit: BoxFit.fill)),
                                   child: Text(
                                     Utils.getText(context, StringRes.save),
-                                    style: TextStyle(
-                                        fontSize: 17, color: ColorRes.white),
+                                    style: TextStyle(fontSize: 17, color: ColorRes.white),
                                   )),
                               onTap: () {
                                 Utils.playClickSound();
@@ -176,8 +162,7 @@ class NickNameDialogState extends State<NickNameDialog> {
           Navigator.pop(context);
         } else {
           print("Navigate to dashboard nickname--------------------------------------------------------");
-          Navigator.pushAndRemoveUntil(
-              context, FadeRouteHome(), ModalRoute.withName("/login"));
+          Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {
@@ -187,5 +172,4 @@ class NickNameDialogState extends State<NickNameDialog> {
         });
     });
   }
-
 }

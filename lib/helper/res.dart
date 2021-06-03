@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 
 class ColorRes {
   static Color white = const Color(0xFFffffff);
   static Color colorPrimary = Injector.isBusinessMode ? colorBgDark : white;
-  static Color headerPrimary =
-      Injector.isBusinessMode ? headerDashboard : Color(0xFF000040);
+  static Color headerPrimary = Injector.isBusinessMode ? headerDashboard : Color(0xFF000040);
   static Color headerBlue = const Color(0xFF000040);
   static Color colorAccent = const Color(0xFFffffff);
   static Color colorBgDark = const Color(0xFF3a3a3a);
@@ -41,20 +39,19 @@ class ColorRes {
   static Color textBlue = const Color(0xFF2f3d7b);
   static Color textLightBlue = const Color(0xFF7bbdff);
   static Color textRecordBlue = const Color(0xFF0080ff);
-  static Color textPrimary =
-      Injector.isBusinessMode ? white : Color(0xFF8c8c8c);
+  static Color textPrimary = Injector.isBusinessMode ? white : Color(0xFF8c8c8c);
   static Color titleBlueProf = Color(0xFF3f6798);
   static Color bgProf = Color(0xFFe8e8e8);
   static Color textProf = Color(0xFF8c8c8c);
-  static Color bgSettings= Color(0xFF959595);
+  static Color bgSettings = Color(0xFF959595);
   static Color borderRewardsName = Color(0xFFf8bb43);
   static Color rankingBackGround = Color(0xFFa5b7cf);
   static Color loginBg = Color(0xFFcdcdcd);
   static Color rankingProBg = Color(0xFF676767);
-  static Color rankingProValueBg  = Color(0xFFcfe5ff);
-  static Color rankingProDeSelectDay  = Color(0xFFc6ced8);
-  static Color blackTransparentColor  = Color(0x73000000);
-  static Color helpProBox  = const Color(0xFF75c0fb);
+  static Color rankingProValueBg = Color(0xFFcfe5ff);
+  static Color rankingProDeSelectDay = Color(0xFFc6ced8);
+  static Color blackTransparentColor = Color(0x73000000);
+  static Color helpProBox = const Color(0xFF75c0fb);
 
   static Color chartTen = Color(0xFF5CA793);
   static Color chartNine = Color(0xFF1395BA);
@@ -70,8 +67,6 @@ class ColorRes {
   static Color chartOpen = Color(0xFF6fac46);
   static Color chartClose = Color(0xFFc4d8bc);
 
-
-
   static Color crmColor = Color(0xFF003F5C);
   static Color financeColor = Color(0xFF2F4B7C);
   static Color legalColor = Color(0xFF665191);
@@ -85,8 +80,6 @@ class ColorRes {
   static Color thirdColor = Color(0xFF665191);
 
   static Color portraitThemeColor = Color(0xFF5157C0);
-
-
 }
 
 class DimenRes {

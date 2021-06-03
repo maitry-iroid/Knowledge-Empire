@@ -1,4 +1,4 @@
-import 'package:ke_employee/helper/web_api.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
 
 class PrivacyPolicyRequest {
   int userId;
@@ -22,7 +22,6 @@ class PrivacyPolicyRequest {
   }
 }
 
-
 class PrivacyPolicyResponse {
   String language;
   int isSeenPrivacyPolicy;
@@ -34,7 +33,7 @@ class PrivacyPolicyResponse {
 
   PrivacyPolicyResponse.fromJson(Map<String, dynamic> json) {
     language = json['language'];
-    isSeenPrivacyPolicy= json['isSeenPrivacyPolicy'];
+    isSeenPrivacyPolicy = json['isSeenPrivacyPolicy'];
     privacyPolicyTitle = json['privacyPolicyTitle'];
     privacyPolicyContent = json['privacyPolicyContent'];
     privacyPolicyAcceptText = json["privacyPolicyAcceptText"];
@@ -51,19 +50,17 @@ class PrivacyPolicyResponse {
   }
 }
 
-apiCallPrivacyPolicy(int userId, String type, int companyId, void Function(PrivacyPolicyResponse) completion){
-
+apiCallPrivacyPolicy(int userId, String type, int companyId, void Function(PrivacyPolicyResponse) completion) {
   PrivacyPolicyRequest rq = PrivacyPolicyRequest();
   rq.userId = userId;
   rq.type = type;
   rq.companyId = companyId;
 
   WebApi().callAPI(WebApi.rqPrivacyPolicy, rq.toJson()).then((data) {
-
     if (data != null) {
       PrivacyPolicyResponse response = PrivacyPolicyResponse.fromJson(data);
       completion(response);
-    }else{
+    } else {
       completion(null);
     }
   });

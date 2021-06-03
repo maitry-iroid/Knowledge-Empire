@@ -1,9 +1,9 @@
-import 'package:ke_employee/BLoC/repository.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/questions.dart';
+import 'package:knowledge_empire/BLoC/repository.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/questions.dart';
 import 'package:rxdart/rxdart.dart';
 
 final getQuestionsBloc = GetQuestionsBloc();

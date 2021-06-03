@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ke_employee/models/questions.dart';
+import 'package:knowledge_empire/models/questions.dart';
 
 import 'get_friends.dart';
 

@@ -1,5 +1,5 @@
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
 
 class LoginRequest {
   String email;
@@ -74,8 +74,8 @@ class UserData {
   int salesPersonCount = 0;
   bool isFirstTimeLogin = false;
   bool isSoundEnable = false;
-  String language  = Const.english;
-  int mode ;
+  String language = Const.english;
+  int mode;
   int isAnonymousName = 0;
 
   UserData();
@@ -158,5 +158,4 @@ class UserData {
   decryptNickName() async {
     this.nickName = await EncryptionManager().stringDecryption(this.nickName);
   }
-
 }

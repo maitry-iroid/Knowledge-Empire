@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/theme_color.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/manager/theme_color.dart';
 
-class ThemeManager{
-
+class ThemeManager {
   static final ThemeManager _singleton = ThemeManager._internal();
 
   factory ThemeManager() {
@@ -28,8 +27,7 @@ class ThemeManager{
 
   getAppThemeColorsFromPrefs() {
     if (Injector.prefs.getString(PrefKeys.appThemeColor) != null) {
-      this.appThemeData = AppThemeData.fromJson(
-          jsonDecode(Injector.prefs.getString(PrefKeys.appThemeColor)));
+      this.appThemeData = AppThemeData.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.appThemeColor)));
     }
   }
 
@@ -60,7 +58,6 @@ class ThemeManager{
     });
   }
 
-
   //Get theme data
   Color getThemeColor() => this.appThemeData?.themeColor?.getColor() ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
 
@@ -68,13 +65,16 @@ class ThemeManager{
 
   Color getLightColor() => this.appThemeData?.lightColor?.getColor() ?? HSVColor.fromAHSV(1, 235, 0.02, 1).toColor();
 
-  Color getBadgeColor() =>  this.appThemeData?.badgeColor?.getColor() ?? HSVColor.fromAHSV(1, 350, 0.7, 1).toColor();
+  Color getBadgeColor() => this.appThemeData?.badgeColor?.getColor() ?? HSVColor.fromAHSV(1, 350, 0.7, 1).toColor();
 
-  Color getHeaderColor() => EnumThemeColorExtension.getEnum(this.appThemeData?.headerTheme)?.themeColor ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
+  Color getHeaderColor() =>
+      EnumThemeColorExtension.getEnum(this.appThemeData?.headerTheme)?.themeColor ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
 
-  Color getContentColor() => EnumThemeColorExtension.getEnum(this.appThemeData?.contentTheme)?.themeColor ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
+  Color getContentColor() =>
+      EnumThemeColorExtension.getEnum(this.appThemeData?.contentTheme)?.themeColor ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
 
-  Color getFooterColor() => EnumThemeColorExtension.getEnum(this.appThemeData?.footerTheme)?.themeColor ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
+  Color getFooterColor() =>
+      EnumThemeColorExtension.getEnum(this.appThemeData?.footerTheme)?.themeColor ?? HSVColor.fromAHSV(1, 235, 0.5, 0.8).toColor();
 
   Color getTextColor() => EnumTextColorExtension.getEnum(this.appThemeData?.textColor)?.textColor ?? HSVColor.fromAHSV(1, 235, 0.02, 1).toColor();
 

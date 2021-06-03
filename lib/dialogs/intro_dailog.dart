@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/home.dart';
-import 'package:ke_employee/models/change_password.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/screens/home.dart';
+import 'package:knowledge_empire/models/change_password.dart';
 
 class IntroDailog extends StatefulWidget {
   IntroDailog({
@@ -58,13 +58,8 @@ class IntroDailogState extends State<IntroDailog> {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(
-                          top: 0,
-                          left: 10,
-                          right: Utils.getDeviceWidth(context) / 5.5,
-                          bottom: 0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                      margin: EdgeInsets.only(top: 0, left: 10, right: Utils.getDeviceWidth(context) / 5.5, bottom: 0),
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -82,8 +77,7 @@ class IntroDailogState extends State<IntroDailog> {
                                   margin: EdgeInsets.symmetric(vertical: 3),
                                   decoration: BoxDecoration(
                                       color: ColorRes.bgTextBox,
-                                      border: Border.all(
-                                          width: 1, color: ColorRes.white),
+                                      border: Border.all(width: 1, color: ColorRes.white),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: TextField(
                                     controller: pass1Controller,
@@ -91,17 +85,11 @@ class IntroDailogState extends State<IntroDailog> {
                                     textAlign: TextAlign.left,
                                     maxLines: 1,
                                     obscureText: true,
-                                    style: TextStyle(
-                                        fontSize: fontSizeValue,
-                                        color: ColorRes.white),
+                                    style: TextStyle(fontSize: fontSizeValue, color: ColorRes.white),
                                     decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 12, horizontal: 10),
-                                        hintText: Utils.getText(
-                                            context, StringRes.currentPassword),
-                                        hintStyle: TextStyle(
-                                            color: ColorRes.hintColor),
+                                        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                                        hintText: Utils.getText(context, StringRes.currentPassword),
+                                        hintStyle: TextStyle(color: ColorRes.hintColor),
                                         border: InputBorder.none),
                                   ))
                               : Container(),
@@ -110,8 +98,7 @@ class IntroDailogState extends State<IntroDailog> {
                               margin: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
-                                  border: Border.all(
-                                      width: 1, color: ColorRes.white),
+                                  border: Border.all(width: 1, color: ColorRes.white),
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextField(
                                 controller: pass2Controller,
@@ -119,16 +106,11 @@ class IntroDailogState extends State<IntroDailog> {
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
                                 obscureText: true,
-                                style: TextStyle(
-                                    fontSize: fontSizeValue,
-                                    color: ColorRes.white),
+                                style: TextStyle(fontSize: fontSizeValue, color: ColorRes.white),
                                 decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 10),
-                                    hintText: Utils.getText(
-                                        context, StringRes.newPassword),
-                                    hintStyle:
-                                        TextStyle(color: ColorRes.hintColor),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(context, StringRes.newPassword),
+                                    hintStyle: TextStyle(color: ColorRes.hintColor),
                                     border: InputBorder.none),
                               )),
                           Container(
@@ -136,8 +118,7 @@ class IntroDailogState extends State<IntroDailog> {
                               margin: EdgeInsets.symmetric(vertical: 3),
                               decoration: BoxDecoration(
                                   color: ColorRes.bgTextBox,
-                                  border: Border.all(
-                                      width: 1, color: ColorRes.white),
+                                  border: Border.all(width: 1, color: ColorRes.white),
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextField(
                                 obscureText: true,
@@ -145,16 +126,11 @@ class IntroDailogState extends State<IntroDailog> {
                                 textAlignVertical: TextAlignVertical.center,
                                 textAlign: TextAlign.left,
                                 maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: fontSizeValue,
-                                    color: ColorRes.white),
+                                style: TextStyle(fontSize: fontSizeValue, color: ColorRes.white),
                                 decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 10),
-                                    hintText: Utils.getText(
-                                        context, StringRes.reEnterPassword),
-                                    hintStyle:
-                                        TextStyle(color: ColorRes.hintColor),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+                                    hintText: Utils.getText(context, StringRes.reEnterPassword),
+                                    hintStyle: TextStyle(color: ColorRes.hintColor),
                                     border: InputBorder.none),
                               )),
                         ],
@@ -184,16 +160,11 @@ class IntroDailogState extends State<IntroDailog> {
                                   alignment: Alignment.center,
                                   height: 40,
                                   width: 100,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              Utils.getAssetsImg("bg_save")),
-                                          fit: BoxFit.fill)),
+                                  decoration:
+                                      BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_save")), fit: BoxFit.fill)),
                                   child: Text(
                                     Utils.getText(context, StringRes.save),
-                                    style: TextStyle(
-                                        fontSize: btnFontSize,
-                                        color: ColorRes.white),
+                                    style: TextStyle(fontSize: btnFontSize, color: ColorRes.white),
                                   )),
                               onTap: () {
                                 Utils.playClickSound();
@@ -209,16 +180,11 @@ class IntroDailogState extends State<IntroDailog> {
                                   alignment: Alignment.center,
                                   height: 40,
                                   width: 100,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              Utils.getAssetsImg("bg_save")),
-                                          fit: BoxFit.fill)),
+                                  decoration:
+                                      BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_save")), fit: BoxFit.fill)),
                                   child: Text(
                                     Utils.getText(context, StringRes.cancel),
-                                    style: TextStyle(
-                                        fontSize: btnFontSize,
-                                        color: ColorRes.white),
+                                    style: TextStyle(fontSize: btnFontSize, color: ColorRes.white),
                                   )),
                               onTap: () {
                                 Utils.playClickSound();
@@ -275,9 +241,7 @@ class IntroDailogState extends State<IntroDailog> {
 
     ChangePasswordRequest rq = ChangePasswordRequest();
     rq.userId = Injector.userData.userId;
-    rq.oldPassword = widget.isFromProfile
-        ? Utils.generateMd5(pass1Controller.text.trim())
-        : null;
+    rq.oldPassword = widget.isFromProfile ? Utils.generateMd5(pass1Controller.text.trim()) : null;
     rq.password = Utils.generateMd5(pass2Controller.text.trim());
     rq.isOldPasswordRequired = widget.isOldPasswordRequired;
 
@@ -293,8 +257,7 @@ class IntroDailogState extends State<IntroDailog> {
           Navigator.pop(context);
         } else {
           print("Navigate to dashboard     intro page--------------------------------------------------------");
-          Navigator.pushAndRemoveUntil(
-              context, FadeRouteHome(), ModalRoute.withName("/login"));
+          Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
         }
       }
     }).catchError((e) {

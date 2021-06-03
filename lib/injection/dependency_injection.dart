@@ -10,21 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/intro.dart';
-import 'package:ke_employee/models/intro_model.dart';
-import 'package:ke_employee/models/login.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
-import 'package:ke_employee/models/privay_policy.dart';
+import 'package:knowledge_empire/BLoC/locale_bloc.dart';
+import 'package:knowledge_empire/commonview/challenge_header.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:knowledge_empire/models/UpdateDialogModel.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/intro.dart';
+import 'package:knowledge_empire/models/intro_model.dart';
+import 'package:knowledge_empire/models/login.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
+import 'package:knowledge_empire/models/privay_policy.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
@@ -119,7 +119,7 @@ class Injector {
   static bool isInternetConnected = true;
 
   static String language = StringRes.strDefault;
-  static String companyCode ;
+  static String companyCode;
 
   Injector._internal();
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/performance.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/performance.dart';
 
 class OrdinalComboBarLineChart extends StatelessWidget {
   final List<charts.Series> seriesList;
@@ -11,8 +11,7 @@ class OrdinalComboBarLineChart extends StatelessWidget {
 
   OrdinalComboBarLineChart(this.seriesList, {this.animate});
 
-  factory OrdinalComboBarLineChart.withSampleData(
-      PerformanceData performanceData) {
+  factory OrdinalComboBarLineChart.withSampleData(PerformanceData performanceData) {
     return new OrdinalComboBarLineChart(
       _createSampleData(performanceData),
       // Disable animations for image tests.
@@ -34,22 +33,20 @@ class OrdinalComboBarLineChart extends StatelessWidget {
                 // Tick and Label styling here.
                 labelStyle: new charts.TextStyleSpec(
                     fontSize: 15, // size in Pts.
-                    color: Injector.isBusinessMode?charts.MaterialPalette.white:charts.MaterialPalette.black),
+                    color: Injector.isBusinessMode ? charts.MaterialPalette.white : charts.MaterialPalette.black),
 
                 // Change the line colors to match text color.
-                lineStyle: new charts.LineStyleSpec(
-                    color: charts.Color.fromHex(code: "#484848")))),
+                lineStyle: new charts.LineStyleSpec(color: charts.Color.fromHex(code: "#484848")))),
         primaryMeasureAxis: new charts.NumericAxisSpec(
             renderSpec: new charts.GridlineRendererSpec(
 
                 // Tick and Label styling here.
                 labelStyle: new charts.TextStyleSpec(
                     fontSize: 15, // size in Pts.
-                    color: Injector.isBusinessMode?charts.MaterialPalette.white:charts.MaterialPalette.black),
+                    color: Injector.isBusinessMode ? charts.MaterialPalette.white : charts.MaterialPalette.black),
 
                 // Change the line colors to match text color.
-                lineStyle: new charts.LineStyleSpec(
-                    color: charts.Color.fromHex(code: "#484848")))),
+                lineStyle: new charts.LineStyleSpec(color: charts.Color.fromHex(code: "#484848")))),
         defaultRenderer: new charts.BarRendererConfig(
           groupingType: charts.BarGroupingType.grouped,
         ),
@@ -64,8 +61,7 @@ class OrdinalComboBarLineChart extends StatelessWidget {
   }
 
   /// Create series list with multiple series
-  static List<charts.Series<OrdinalSales, String>> _createSampleData(
-      PerformanceData performanceData) {
+  static List<charts.Series<OrdinalSales, String>> _createSampleData(PerformanceData performanceData) {
     List<OrdinalSales> costData = List();
     List<OrdinalSales> revenueData = List();
     List<OrdinalSales> cashData = List();

@@ -7,19 +7,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:ke_employee/BLoC/get_question_bloc.dart';
-import 'package:ke_employee/BLoC/navigation_bloc.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/manager/media_manager.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/models/submit_challenge_question.dart';
-import 'package:pdf_previewer/pdf_previewer.dart';
+import 'package:knowledge_empire/BLoC/get_question_bloc.dart';
+import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:knowledge_empire/manager/media_manager.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/homedata.dart';
+import 'package:knowledge_empire/models/submit_challenge_question.dart';
+// import 'package:pdf_previewer/pdf_previewer.dart';
 import '../commonview/common_view.dart';
 import 'package:video_player/video_player.dart';
 import '../helper/constant.dart';
@@ -167,7 +167,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
         _pdfPath = fetchedFile.path;
       }
-      _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+      //TODO - 28-4-21
+      // _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
 
       // Load from URL
       _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
@@ -620,16 +621,16 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              widget.homeData.questionHomeData.answerType == Const.typeAnswerText || widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText ||
+                      widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                   ? MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
                       pdfDocument: _pdfDocument,
                       isPdfLoading: isLoading,
                       pdfFilePath: _pdfPath,
                       chewieController: _chewieController,
                       videoPlayerController: _controller,
-                videoLoop: questionDataEngCustomer.videoLoop,
-                videoPlay: questionDataEngCustomer.videoPlay
-              )
+                      videoLoop: questionDataEngCustomer.videoLoop,
+                      videoPlay: questionDataEngCustomer.videoPlay)
                   : MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
                       pdfDocument: _pdfDocument, isPdfLoading: isLoading, pdfFilePath: _pdfPath),
               showQueDescription(context)

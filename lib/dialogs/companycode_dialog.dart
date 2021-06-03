@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/update_profile.dart';
-import 'package:ke_employee/screens/home.dart';
+import 'package:knowledge_empire/BLoC/locale_bloc.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/update_profile.dart';
+import 'package:knowledge_empire/screens/home.dart';
 
 class VerifyCompanyDialog extends StatefulWidget {
   VerifyCompanyDialog({
@@ -29,13 +29,11 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
   void initState() {
 //    localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
 
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     langController.text = Utils.getText(context, StringRes.selectLanguage) + " - " + Injector.language;
 
     return Scaffold(
@@ -61,7 +59,7 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                   alignment: Alignment.center,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only( left: 10, right: Utils.getDeviceWidth(context) / 5.5),
+                      margin: EdgeInsets.only(left: 10, right: Utils.getDeviceWidth(context) / 5.5),
                       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -122,7 +120,6 @@ class VerifyCompanyDialogState extends State<VerifyCompanyDialog> {
                               selectLanguagesAlert(context);
                             },
                           ),
-
                         ],
                       ),
                     ),

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ke_employee/BLoC/repository.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_friends.dart';
-import 'package:ke_employee/models/get_user_group.dart';
+import 'package:knowledge_empire/BLoC/repository.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/get_friends.dart';
+import 'package:knowledge_empire/models/get_user_group.dart';
 import 'package:rxdart/rxdart.dart';
 
 final getRankingDataBloc = GetRankingDataBloc();
@@ -57,8 +57,7 @@ class GetRankingDataBloc {
     arrGroups.add(grp3);
 
     if (isInternetConnected) {
-      dynamic data =
-          await Injector.webApi.callAPI(WebApi.rqGetUserGroups, rq.toJson());
+      dynamic data = await Injector.webApi.callAPI(WebApi.rqGetUserGroups, rq.toJson());
 
       if (data != null) {
         data.forEach((v) {
@@ -66,8 +65,7 @@ class GetRankingDataBloc {
         });
       }
     }
-    if (arrGroups != null && arrGroups.isNotEmpty)
-      _getGroupSubject.sink.add(arrGroups);
+    if (arrGroups != null && arrGroups.isNotEmpty) _getGroupSubject.sink.add(arrGroups);
   }
 
 //  updateQuestions(List<QuestionData> arrQuestions) async {

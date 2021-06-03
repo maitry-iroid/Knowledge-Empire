@@ -1,4 +1,4 @@
-import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 
 import 'constant.dart';
 
@@ -20,7 +20,7 @@ class HeaderUtils {
 
   static String getHeaderIcon(String type) {
     if (type == Const.typeSalesPersons)
-        return Injector.isBusinessMode ? "ic_sales_header" : "employee_prof_ic";
+      return Injector.isBusinessMode ? "ic_sales_header" : "employee_prof_ic";
     else if (type == Const.typeEmployee)
       return Injector.isBusinessMode ? "ic_people" : "book";
     else if (type == Const.typeBrandValue)
@@ -71,22 +71,18 @@ class HeaderUtils {
   }
 
   static String getProgressText(String organizationType) {
-    return (getRemainingValue(organizationType)?.toString() ?? "0") +
-        "/" +
-        (getTotalValue(organizationType)?.toString() ?? "0");
+    return (getRemainingValue(organizationType)?.toString() ?? "0") + "/" + (getTotalValue(organizationType)?.toString() ?? "0");
   }
 
   static getTotalEmployee() {
-    return (Injector.customerValueData?.remainingEmployeeCapacity?.toString() ??
-            "0") +
+    return (Injector.customerValueData?.remainingEmployeeCapacity?.toString() ?? "0") +
         "/" +
         (Injector.customerValueData?.totalEmployeeCapacity?.toString() ?? "0");
   }
 
   static getAnswerRatio() {
     return ((Injector.customerValueData?.correctAnswerCount ?? 0) /
-            (Injector.customerValueData?.totalAttemptedQuestion == null ||
-                    Injector.customerValueData?.totalAttemptedQuestion == 0
+            (Injector.customerValueData?.totalAttemptedQuestion == null || Injector.customerValueData?.totalAttemptedQuestion == 0
                 ? 1
                 : Injector.customerValueData?.totalAttemptedQuestion) *
             100)
@@ -96,8 +92,7 @@ class HeaderUtils {
   static double getBonusValue() {
     try {
       double value = (Injector.customerValueData?.correctAnswerCount ?? 0) /
-          ((Injector.customerValueData?.totalAttemptedQuestion == null ||
-                  Injector.customerValueData?.totalAttemptedQuestion == 0)
+          ((Injector.customerValueData?.totalAttemptedQuestion == null || Injector.customerValueData?.totalAttemptedQuestion == 0)
               ? 1
               : Injector.customerValueData?.totalAttemptedQuestion);
 

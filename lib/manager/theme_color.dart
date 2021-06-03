@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/manager/theme_manager.dart';
+import 'package:knowledge_empire/manager/theme_manager.dart';
 
 class AppThemeColorRequest {
   int userId;
@@ -47,7 +47,6 @@ class AppThemeColorsResponse {
   }
 }
 
-
 class AppThemeData {
   ColorData themeColor;
   ColorData lightColor;
@@ -64,22 +63,21 @@ class AppThemeData {
   ColorData backgroundGradientLight;
   ColorData backgroundGradientWhite;
 
-  AppThemeData({
-    this.themeColor,
-    this.lightColor,
-    this.darkColor,
-    this.textColor,
-    this.badgeColor,
-    this.headerTheme,
-    this.contentTheme,
-    this.footerTheme,
-    this.bodyText1Opacity,
-    this.bodyText2Opacity,
-    this.bodyText3Opacity,
-    this.backgroundGradientDark,
-    this.backgroundGradientLight,
-    this.backgroundGradientWhite
-  });
+  AppThemeData(
+      {this.themeColor,
+      this.lightColor,
+      this.darkColor,
+      this.textColor,
+      this.badgeColor,
+      this.headerTheme,
+      this.contentTheme,
+      this.footerTheme,
+      this.bodyText1Opacity,
+      this.bodyText2Opacity,
+      this.bodyText3Opacity,
+      this.backgroundGradientDark,
+      this.backgroundGradientLight,
+      this.backgroundGradientWhite});
 
   AppThemeData.fromJson(Map<String, dynamic> json) {
     themeColor = ColorData.fromJson(json['themeColor']);
@@ -118,17 +116,12 @@ class AppThemeData {
   }
 }
 
-class ColorData{
-
+class ColorData {
   double hue;
   double saturation;
   double value;
 
-  ColorData({
-    this.hue,
-    this.saturation,
-    this.value
-  });
+  ColorData({this.hue, this.saturation, this.value});
 
   ColorData.fromJson(Map<String, dynamic> json) {
     hue = double.parse(json['h'].toString());
@@ -144,18 +137,14 @@ class ColorData{
     return data;
   }
 
-  Color getColor(){
+  Color getColor() {
     return HSVColor.fromAHSV(1, hue, saturation, value).toColor();
   }
 }
 
-enum EnumThemeColor{
-  light,
-  dark
-}
+enum EnumThemeColor { light, dark }
 
 extension EnumThemeColorExtension on EnumThemeColor {
-
   // ignore: missing_return
   int get value {
     switch (this) {
@@ -168,9 +157,11 @@ extension EnumThemeColorExtension on EnumThemeColor {
 
   // ignore: missing_return
   Color get themeColor {
-    switch(this){
-      case EnumThemeColor.light:  return ThemeManager().getLightColor();
-      case EnumThemeColor.dark:   return ThemeManager().getThemeColor();
+    switch (this) {
+      case EnumThemeColor.light:
+        return ThemeManager().getLightColor();
+      case EnumThemeColor.dark:
+        return ThemeManager().getThemeColor();
     }
   }
 
@@ -184,48 +175,47 @@ extension EnumThemeColorExtension on EnumThemeColor {
   }
 }
 
+enum EnumTextColor { light, dark, white, black }
 
-enum EnumTextColor{
-  light,
-  dark,
-  white,
-  black
-}
-
-extension EnumTextColorExtension on EnumTextColor{
-  
+extension EnumTextColorExtension on EnumTextColor {
   // ignore: missing_return
   int get value {
-    switch(this){
-      case EnumTextColor.light:   return 1;
-      case EnumTextColor.dark:    return 2;
-      case EnumTextColor.white:   return 3;
-      case EnumTextColor.black:   return 4;
+    switch (this) {
+      case EnumTextColor.light:
+        return 1;
+      case EnumTextColor.dark:
+        return 2;
+      case EnumTextColor.white:
+        return 3;
+      case EnumTextColor.black:
+        return 4;
     }
   }
-  
-  
+
   // ignore: missing_return
   Color get textColor {
-    switch(this){
-      case EnumTextColor.light:   return ThemeManager().getLightColor();
-      case EnumTextColor.dark:    return ThemeManager().getDarkColor();
-      case EnumTextColor.white:   return Colors.white;
-      case EnumTextColor.black:   return Colors.black;
+    switch (this) {
+      case EnumTextColor.light:
+        return ThemeManager().getLightColor();
+      case EnumTextColor.dark:
+        return ThemeManager().getDarkColor();
+      case EnumTextColor.white:
+        return Colors.white;
+      case EnumTextColor.black:
+        return Colors.black;
     }
   }
-  
+
   static EnumTextColor getEnum(int value) {
-    if(value == EnumTextColor.light.value){
+    if (value == EnumTextColor.light.value) {
       return EnumTextColor.light;
-    }else if(value == EnumTextColor.dark.value){
+    } else if (value == EnumTextColor.dark.value) {
       return EnumTextColor.dark;
-    }else if(value == EnumTextColor.white.value){
+    } else if (value == EnumTextColor.white.value) {
       return EnumTextColor.white;
-    }else if(value == EnumTextColor.black.value){
+    } else if (value == EnumTextColor.black.value) {
       return EnumTextColor.black;
     }
     return null;
   }
-
 }

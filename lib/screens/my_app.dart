@@ -5,16 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/environment_utils.dart';
-import 'package:ke_employee/helper/localization.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/dashboard_game.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/screens/login.dart';
+import 'package:knowledge_empire/BLoC/locale_bloc.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/environment_utils.dart';
+import 'package:knowledge_empire/helper/localization.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/screens/dashboard_game.dart';
+import 'package:knowledge_empire/screens/engagement_customer.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/screens/login.dart';
 import 'home.dart';
 
 class MyApp extends StatefulWidget {
@@ -54,11 +54,9 @@ class MyAppState extends State<MyApp> {
           theme: ThemeData(
             accentColor: ColorRes.transparent,
             fontFamily: 'TrulyMadly',
-            backgroundColor: Injector.mode == Const.businessMode
-                ? ColorRes.colorBgDark
-                : ColorRes.white,
+            backgroundColor: Injector.mode == Const.businessMode ? ColorRes.colorBgDark : ColorRes.white,
           ),
-          home:  EnvUtils.getHomeScreen(),
+          home: EnvUtils.getHomeScreen(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),
@@ -84,7 +82,6 @@ class MyAppState extends State<MyApp> {
       },
     );
   }
-
 
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.

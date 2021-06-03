@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/header_utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:knowledge_empire/BLoC/customer_value_bloc.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/header_utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'challenge_header.dart';
 
@@ -25,12 +25,7 @@ class DummyView extends StatefulWidget {
   final int challengeCount;
   final int currentIndex;
 
-  DummyView(
-      {this.scaffoldKey,
-      this.isShowMenu,
-      this.isChallenge,
-      this.challengeCount,
-      this.currentIndex});
+  DummyView({this.scaffoldKey, this.isShowMenu, this.isChallenge, this.challengeCount, this.currentIndex});
 
   @override
   DummyViewState createState() => DummyViewState();
@@ -39,8 +34,7 @@ class DummyView extends StatefulWidget {
 class DummyViewState extends State<DummyView> {
   @override
   void didUpdateWidget(DummyView oldWidget) {
-    if (Injector.headerStreamController == null)
-      Injector.headerStreamController = StreamController.broadcast();
+    if (Injector.headerStreamController == null) Injector.headerStreamController = StreamController.broadcast();
 
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
@@ -80,8 +74,7 @@ class DummyViewState extends State<DummyView> {
   Widget showHeaderItem(String type, BuildContext context, valueListenable) {
     return Container(
       margin: EdgeInsets.only(top: 13.5),
-      padding:
-          EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+      padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -92,15 +85,11 @@ class DummyViewState extends State<DummyView> {
               Opacity(
                 opacity: 0.0,
                 child: Image(
-                  image: AssetImage(
-                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                  image: AssetImage(Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
                   height: 26,
                 ),
               ),
-              valueListenable != null
-                  ? animatedPositioned(
-                      HeaderUtils.getHeaderIcon(type), valueListenable, context)
-                  : Container(),
+              valueListenable != null ? animatedPositioned(HeaderUtils.getHeaderIcon(type), valueListenable, context) : Container(),
             ],
           ),
           SizedBox(
@@ -118,29 +107,20 @@ class DummyViewState extends State<DummyView> {
                         decoration: BoxDecoration(
                             color: ColorRes.greyText,
                             borderRadius: BorderRadius.circular(12),
-                            border: Injector.isBusinessMode
-                                ? null
-                                : Border.all(color: ColorRes.white, width: 1)),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 0,
-                            horizontal: Injector.isBusinessMode ? 0 : 1),
+                            border: Injector.isBusinessMode ? null : Border.all(color: ColorRes.white, width: 1)),
+                        padding: EdgeInsets.symmetric(vertical: 0, horizontal: Injector.isBusinessMode ? 0 : 1),
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 22.0,
-                          percent:
-                              HeaderUtils.getProgressInt(type)?.toDouble() ??
-                                  0.toDouble(),
+                          percent: HeaderUtils.getProgressInt(type)?.toDouble() ?? 0.toDouble(),
                           backgroundColor: Colors.transparent,
-                          progressColor: Injector.isBusinessMode
-                              ? Colors.blue
-                              : ColorRes.titleBlueProf,
+                          progressColor: Injector.isBusinessMode ? Colors.blue : ColorRes.titleBlueProf,
                         ),
                       ),
                       Positioned(
                         left: 4,
                         child: Text(
-                          HeaderUtils.getProgress(type).toString() +
-                              (type == Const.typeBrandValue ? "%" : ""),
+                          HeaderUtils.getProgress(type).toString() + (type == Const.typeBrandValue ? "%" : ""),
                           style: TextStyle(color: ColorRes.white, fontSize: 17),
                         ),
                       )
@@ -152,9 +132,7 @@ class DummyViewState extends State<DummyView> {
                   child: Container(
                     width: Utils.getDeviceWidth(context) / 12,
                     child: Text(
-                      Injector.customerValueData != null
-                          ? Injector.customerValueData.totalBalance.toString()
-                          : "00.00",
+                      Injector.customerValueData != null ? Injector.customerValueData.totalBalance.toString() : "00.00",
                       style: TextStyle(color: ColorRes.white, fontSize: 18),
                     ),
                   ),
@@ -181,12 +159,9 @@ class DummyViewState extends State<DummyView> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: Injector.userData == null ||
-                                Injector.userData.profileImage == null ||
-                                Injector.userData.profileImage.isEmpty
+                        image: Injector.userData == null || Injector.userData.profileImage == null || Injector.userData.profileImage.isEmpty
                             ? AssetImage(Utils.getAssetsImg('user_org'))
-                            : Utils.getCacheNetworkImage(
-                                Injector.userData.profileImage),
+                            : Utils.getCacheNetworkImage(Injector.userData.profileImage),
                         fit: BoxFit.cover),
                     border: Border.all(color: ColorRes.textLightBlue)),
               ),
@@ -205,9 +180,7 @@ class DummyViewState extends State<DummyView> {
         height: 20,
         width: 20,
         padding: EdgeInsets.symmetric(horizontal: 3),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(Utils.getAssetsImg("question_mark_help")))),
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("question_mark_help")))),
       ),
     );
   }
@@ -220,11 +193,7 @@ class DummyViewState extends State<DummyView> {
       children: <Widget>[
         Text(
           Injector.userData != null ? Injector.userData.companyName : "",
-          style: TextStyle(
-              color: Injector.isBusinessMode
-                  ? ColorRes.textLightBlue
-                  : ColorRes.white,
-              fontSize: 17),
+          style: TextStyle(color: Injector.isBusinessMode ? ColorRes.textLightBlue : ColorRes.white, fontSize: 17),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -233,11 +202,7 @@ class DummyViewState extends State<DummyView> {
         ),
         Text(
           Injector.userData != null ? Injector.userData.name : "",
-          style: TextStyle(
-              color: Injector.isBusinessMode
-                  ? ColorRes.white
-                  : ColorRes.textLightBlue,
-              fontSize: 17),
+          style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textLightBlue, fontSize: 17),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         )
@@ -262,14 +227,12 @@ class DummyViewState extends State<DummyView> {
   _buildSearchResults(CustomerValueData data) {
     if (widget.isChallenge != null && widget.isChallenge) {
       if (widget.challengeCount != null) {
-        int indexData = Injector.countList.indexWhere(
-            (QuestionCountWithData questionCountWithData) =>
-                questionCountWithData.questionIndex == widget.currentIndex);
+        int indexData = Injector.countList
+            .indexWhere((QuestionCountWithData questionCountWithData) => questionCountWithData.questionIndex == widget.currentIndex);
         if (indexData == -1) {
           indexData = 0;
         }
-        return ChallengeHeader(
-            challengeCount: widget.challengeCount, currentIndex: indexData);
+        return ChallengeHeader(challengeCount: widget.challengeCount, currentIndex: indexData);
       }
     }
 
@@ -278,29 +241,17 @@ class DummyViewState extends State<DummyView> {
       children: <Widget>[
         showMenuView(),
         showProfile(context),
-        Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeEmployee, context, employeeDrainNotifier)
-            : Container(),
-        Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(Const.typeSalesPersons, context, saleDrainNotifier)
-            : Container(),
-        Utils.isFeatureOn(Const.typeOrg)
-            ? showHeaderItem(
-                Const.typeServicesPerson, context, serviceDrainNotifier)
-            : Container(),
-        Opacity(
-            opacity: 0.0,
-            child: showHeaderItem(Const.typeBrandValue, context, null)),
-        Opacity(
-            opacity: 0.0,
-            child: showHeaderItem(Const.typeMoney, context, null)),
+        Utils.isFeatureOn(Const.typeOrg) ? showHeaderItem(Const.typeEmployee, context, employeeDrainNotifier) : Container(),
+        Utils.isFeatureOn(Const.typeOrg) ? showHeaderItem(Const.typeSalesPersons, context, saleDrainNotifier) : Container(),
+        Utils.isFeatureOn(Const.typeOrg) ? showHeaderItem(Const.typeServicesPerson, context, serviceDrainNotifier) : Container(),
+        Opacity(opacity: 0.0, child: showHeaderItem(Const.typeBrandValue, context, null)),
+        Opacity(opacity: 0.0, child: showHeaderItem(Const.typeMoney, context, null)),
         showHelpView(context)
       ],
     );
   }
 
-  Widget animatedPositioned(
-      String icon, valueListenable, BuildContext context) {
+  Widget animatedPositioned(String icon, valueListenable, BuildContext context) {
     print("valueAnimation listner " + valueListenable.toString());
     return ValueListenableBuilder(
       valueListenable: valueListenable,
@@ -319,8 +270,7 @@ class DummyViewState extends State<DummyView> {
             child: AnimatedOpacity(
                 duration: Duration(milliseconds: value ? 200 : 0),
                 opacity: value ? 0.0 : 1.0,
-                child: Image.asset(Utils.getAssetsImg(icon),
-                    width: 26, height: 26)),
+                child: Image.asset(Utils.getAssetsImg(icon), width: 26, height: 26)),
           ),
         );
       },
