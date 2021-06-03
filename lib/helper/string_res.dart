@@ -4,9 +4,6 @@ class StringRes {
   static String username = Injector.userData?.name ?? "";
 
   //<editor-fold desc="old strings">
-  static var accept = "accept";
-  static var decline = "decline";
-
   //main options
   static var home = "home";
   static var businessSector = "businessSector";
@@ -54,20 +51,12 @@ class StringRes {
   static var login = "login";
   static var enterRegisteredEmail = "enterRegisteredEmail";
   static var password = "password";
-  static var usernameText = "username";
   static var newPassword = "newPassword";
   static var currentPassword = "currentPassword";
   static var reEnterPassword = "reEnterPassword";
   static var cancel = "cancel";
   static var send = "send";
   static var forgotPassword = "forgotPassword";
-
-  //TODO add for other language
-  static var newNickName = "newNickName";
-  static var nickname = "nickName";
-
-  //TODO add for other language
-  static var companyCode = "companyCode";
 
 //  static var selectLanguages = "selectLanguages"; //onlu define english
 
@@ -100,18 +89,9 @@ class StringRes {
   static var toWin = "toWin";
   static var questions = "questions";
 
-  //Rewards module
-  static var redeem = "redeem";
-  static var costReward = "costReward";
-  static var costUnit = "costUnit";
-  static var unitsLeft = "unitsLeft";
-  static var categories = "categories";
-
   //learning module
   static var subscribe = "subscribe";
   static var unSubscribe = "unSubscribe";
-  static var contactExpert = "contactExpert";
-  static var moreInformation = "moreInformation";
   static var subscribed = "subscribed";
   static var downLoad = "downLoad";
   static var size = "size";
@@ -119,7 +99,8 @@ class StringRes {
   static var alertWantToSubscribe1 = "alertWantToSubscribe1";
   static var alertWantToSubscribe2 = "alertWantToSubscribe2";
   static var downloading = "downloading";
-  static var downloadText = "downloadText";
+  static var strDownloadText = "strDownloadText";
+  static var strDownloadNewText = "strDownloadNewText";
   static var alertNotAllowed = "alertNotAllowed";
 
   //engage customer
@@ -133,7 +114,6 @@ class StringRes {
   static var competitor = "competitor";
   static var sendChallenge = "sendChallenge";
   static var next = "next";
-  static var backToList = "BackToList";
 
 //  engage customer
 
@@ -207,7 +187,8 @@ class StringRes {
   static var strChallanges = "strChallanges";
   static var strChallangesDialogContent = "strChallangesDialogContent";
   static var strMarketingCommunications = "strMarketingCommunications";
-  static var strMarketingCommunicationsDialog = "strMarketingCommunicationsDialog";
+  static var strMarketingCommunicationsDialog =
+      "strMarketingCommunicationsDialog";
   static var strRankingDialogContent = "strRankingDialogContent";
   static var strYourTeamPerformance = "strYourTeamPerformance";
   static var strYourTeamPerformanceDialog = "strYourTeamPerformanceDialog";
@@ -349,13 +330,7 @@ class StringRes {
   static var enterNewPassword = "enterNewPassword ";
   static var enterRePassword = "enterRePassword";
   static var enterSameNewPassword = "enterSameNewPassword";
-  //TODO add for other language
-  static var enterNickName = "enterNickName";
-  //TODO add for other language
-  static var enterCompanyCode = "enterCompanyCode";
-  static var changeLanguage = 'changeLanguage';
   static var passwordChange = "passwordChange";
-  static var nicknameChange = "nicknameChange";
 
   //intro page
   static var skipTutorial = "skipTutorial";
@@ -419,8 +394,7 @@ class StringRes {
   static String strBusinessSector = "strBusinessSector";
   static String strNewCustomer = "strNewCustomer";
   static String strExistingCustomer = "strExistingCustomer";
-  static String strAchievement = "strAchievement";
-  static String strReward = "strReward";
+  static String strRewards = "strRewards";
   static String strTeam = "strTeam";
   static String strChallenges = "strChallenges";
   static String strOrganization = "strOrganization";
@@ -431,28 +405,8 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
-      //Nickname
-      'enterNickName': 'Please enter nickname',
-      'nicknameChange': 'Nickname changed Successfully',
-      'newNickName': 'New Nickname',
-      'nickName': 'Nickname',
-      'downloadText': 'This module will occupie ',
-
-      //Company code
-      'enterCompanyCode': 'Please enter company code that you received in your email',
-      'changeLanguage': 'Change Language',
-      'companyCode': 'Company code',
-
-      //password
-      'enterSameNewPassword': 'Please enter same new password.',
-      'enterRePassword': 'Please re-eneter new Password.',
-      'enterNewPassword ': 'Please enter new Password.',
-      'enterOldPassword': 'Please enter old Password.',
-
       //<editor-fold desc="english">
       //main options
-      'accept': "Accept",
-      "decline": "Decline",
       'home': "Home",
       'businessSector': "Business Sector",
       'newCustomers': "New Customers",
@@ -521,7 +475,8 @@ class StringRes {
 
       //existing customer
       'endRel': 'End Rel.',
-      'alertReleaseResources': "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
+      'alertReleaseResources':
+          "This customer will be removed, not generate any more revenue and only be accessible again after Loyalty period",
 
       //challenges
       'searchForKeywords': 'Search for keywords',
@@ -531,25 +486,19 @@ class StringRes {
       'alertUnFriendSuccess': "Unfriend successfully",
       'alertUChallengeSent': "Challenge sent successfully!",
 
-      // Rewards module
-      'redeem': 'Redeem',
-      'costReward': 'Cost',
-      'costUnit': 'virtual cash',
-      'unitsLeft': "Units left",
-      'categories': 'Categories',
-
       //learning module
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
-      'contactExpert': 'Contact Expert',
-      'moreInformation': 'More Information',
       'subscribed': 'Subscribed',
       'downLoad': 'DownLoad',
       'size': 'Size',
       'description': 'Description',
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
+      'alertWantToSubscribe1':
+          "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': "? You will lose all the questions from the ",
       'downloading': "Downloading...",
+      'strDownloadText': "This module will occupie ",
+      'strDownloadNewText': "This module will occupie ",
       'alertNotAllowed': "You can not unsubscribe assigned Business Segments.",
 
       //engage customer
@@ -562,7 +511,6 @@ class StringRes {
       'competitor': 'Competitor',
       'sendChallenge': 'Send Challenge',
       'next': 'Next',
-      'BackToList': 'Back to List',
 
       //  engage customer
       'answers': 'Answers',
@@ -640,9 +588,12 @@ class StringRes {
 
       'plPerson': 'The person you can count on',
       'niceMeetYou': 'Nice to meet you ',
-      'plMyName': '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have more revenue then cost.',
-      'hereYourMonitor': 'Here you can monitor the cost and the revenue of your company.',
-      'selectPeriod': 'You can also select the period you want to look at and compare the current period with the previous period.',
+      'plMyName':
+          '\n\nMy name is Akiko Nakamura. I am in charge of Finance.\nLet\'s make sure to always have more revenue then cost.',
+      'hereYourMonitor':
+          'Here you can monitor the cost and the revenue of your company.',
+      'selectPeriod':
+          'You can also select the period you want to look at and compare the current period with the previous period.',
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”, “Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).\n“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
@@ -651,7 +602,8 @@ class StringRes {
       //existing customer
 
       'servingYourExisting': 'Serving your existing customers',
-      'servingYourExistingDialog': ', \n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
+      'servingYourExistingDialog':
+          ', \n\nI am Bob and taking care of Customer Service.\nLet me introduce you to the list of existing customer.',
 
       'listOfExisting': 'List of existing Customers',
       'listOfExistingDetails':
@@ -753,7 +705,6 @@ class StringRes {
       'unLockPl': 'Unlocks 1 week after 1st login.',
       'unLockRanking': 'Unlocks after three days in row login',
       'unLockReward': 'Unlocks if first Achievement is reached',
-      //TODO add unLockReward dialog text
       'unLockChallenge': 'Unlocks when first lawyer hired',
 
       //Dashboard Game screen
@@ -798,6 +749,10 @@ class StringRes {
       'emailEmpty': 'Email can\'t be empty.',
       'passWordEmpty': 'Password can\'t be empty.',
       'mailSent': 'Mail sent Successfully.',
+      'enterOldPassword': 'Please enter old Password.',
+      'enterNewPassword ': 'Please enter new Password.',
+      'enterRePassword': 'Please re-eneter new Password.',
+      'enterSameNewPassword': 'Please enter same new password.',
       'passwordChange': 'Password changed Successfully.',
 
       //intro page
@@ -810,7 +765,8 @@ class StringRes {
       //pushNotification alert
       'congratulations': 'Congratulations!, You earned',
       'collector': 'Collector',
-      'businessSegments': '5 Business Segments subscribed to” then we say “Bonus:',
+      'businessSegments':
+          '5 Business Segments subscribed to” then we say “Bonus:',
       'businessSegmentsNew': '5 Business Segments subscribed to \n Bonus:',
 
       'bonusPoint': "Bonus Point",
@@ -858,28 +814,8 @@ class StringRes {
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
     },
     'de': {
-      //Nickname
-      'enterNickName': 'Bitte Spitznamen eingeben',
-      'nicknameChange': 'Spitzname erfolgreich geändert',
-      'newNickName': 'Neuer Spitzname',
-      'nickName': 'Spitzname',
-      'downloadText': 'Dieses Modul benötigt',
-
-      //Company code
-      'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
-      'changeLanguage': 'Sprache ändern',
-      'companyCode': 'Unternehmenscode',
-
-      //password
-      'enterOldPassword': 'Bitte geben Sie das alte Passwort ein.',
-      'enterSameNewPassword': 'Bitte geben Sie das gleiche neue Passwort ein.',
-      'enterRePassword': 'Bitte geben Sie das neue Passwort erneut ein.',
-      'enterNewPassword ': 'Bitte geben Sie ein neues Passwort ein.',
-
       //<editor-fold desc="german">
       //main options
-      'accept': "akzeptieren",
-      "decline": "Ablehnen",
       'home': "Büro",
       'businessSector': "Geschäftsbereich",
       'newCustomers': "Neue Kunden",
@@ -888,8 +824,7 @@ class StringRes {
       'challenges': "Herausforderungen",
       'challenge': "Herausforderungen",
       'pl': "Bilanz",
-      'achievement': "Auszeichnungen",
-      'rewards': 'Belohnungen',
+      'rewards': "Auszeichnungen",
       'ranking': "Rangliste",
       'team': "Team",
       'profile': "Profil",
@@ -925,7 +860,6 @@ class StringRes {
       //login
       'login': 'Einloggen',
       'enterRegisteredEmail': 'Email eingeben',
-      'username': 'Nutzername',
       'password': 'Passwort',
       'newPassword': 'Neues Passwort',
       'currentPassword': 'Aktuelles Passwort',
@@ -949,47 +883,43 @@ class StringRes {
 
       //existing customer
       'endRel': 'Beziehung beenden',
-      'alertReleaseResources': 'Dieser Kunde wird entfernt, generiert keinen Umsatz mehr und ist erst nach der Treuefrist wieder erreichbar',
+      'alertReleaseResources':
+          'Dieser Kunde wird entfernt, generiert keinen Umsatz mehr und ist erst nach der Treuefrist wieder erreichbar',
 
       //challenges
       'searchForKeywords': 'Suche',
       'somethingWrong': 'Da ist was schief gegangen',
       'friends': 'Freunde',
-      'alertFriendSuccess': 'Freund hinzugefügt',
-      'alertUnFriendSuccess': 'Freund entfernt',
+      'alertFriendSuccess': 'Friend added successfully',
+      'alertUnFriendSuccess': 'Unfriend successfully',
       'alertUChallengeSent': 'Herausforderung erfolgreich gesendet!',
-
-      //Rewards module
-      'redeem': 'Einlösen',
-      'costReward': 'kosten',
-      'costUnit': 'virtuelles Vermögen',
-      'unitsLeft': "Noch vorhanden",
-      'categories': 'Kategorien',
 
       //learning module
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
-      'contactExpert': 'Experte Kontaktieren',
-      'moreInformation': 'Mehr Informationen',
       'subscribed': 'abonniert',
       'downLoad': 'Herunterladen',
       'size': 'Größe',
       'description': 'Beschreibung',
-      'alertWantToSubscribe1': "Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ",
+      'alertWantToSubscribe1':
+          "Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ",
       'alertWantToSubscribe2': "? Alle Fragen gehen verloren",
       'downloading': "Daten werden geladen ...",
-      'alertNotAllowed': "Zugeordnete Geschäftsbereiche können nicht abgemeldet werden",
+      'strDownloadText ': "Dieses Modul benötigt ",
+      'strDownloadNewText ': "Dieses Modul benötigt ",
+      'alertNotAllowed':
+          "Zugeordnete Geschäftsbereiche können nicht abgemeldet werden",
 
       //engage customer
       'engagement': 'Nachbesprechung',
       'situation': 'Nachbesprechung',
       'category': 'Kategorie',
+      'achievement': 'Bereits erreicht',
       'nextLevel': 'Nächste Stufe',
       'friend': 'Freund',
       'competitor': 'Wettbewerber',
       'sendChallenge': 'Herausfordern',
       'next': 'Weiter',
-      'BackToList': 'Zur Übersicht',
 
       //  engage customer
       'answers': 'Antworten',
@@ -1074,8 +1004,10 @@ class StringRes {
       'niceMeetYou': 'Nett dich kennenzulernen ',
       'plMyName':
           'Mein Name ist Akiko Nakamura und verantwortlich für die Finanzen.Lass uns gemeinsam sicherstellen, dass wir immermehr Einnahmen als Ausgaben haben.',
-      'hereYourMonitor': 'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
-      'selectPeriod': 'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+      'hereYourMonitor':
+          'Hier kannst du die Einnahmen und die Ausgeben deines Unternehmens überwachen.',
+      'selectPeriod':
+          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
 
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell beantwortet und wieviel unbeantwortet sind.',
@@ -1083,7 +1015,8 @@ class StringRes {
       //existing customer
 
       'servingYourExisting': 'Kundenservice',
-      'servingYourExistingDialog': ', \n\nIch bin Bob und kümmere mich um den Kundenservice.',
+      'servingYourExistingDialog':
+          ', \n\nIch bin Bob und kümmere mich um den Kundenservice.',
 
       'listOfExisting': 'Bestandskundenliste',
       'listOfExistingDetails':
@@ -1153,14 +1086,19 @@ class StringRes {
       'dashboardBalance': 'Fragen beantworten\nErhöht Vermögen',
       'dashboardBusiness': '1. Geschäftsbereiche\nLernmodule auswählen',
       'dashboardNewCustomer': '2. Neukundenliste\nFragen beantworten',
-      'dashboardExistingCustomer': '3. Bestandskundenliste\nRichtig beantwortete Fragen',
+      'dashboardExistingCustomer':
+          '3. Bestandskundenliste\nRichtig beantwortete Fragen',
 
       'alertChangePassword': 'Passwort erfolgreich geändert.',
-      'unLockOrg': 'Wird freigeschaltet, wenn zum ersten mal Vertriebs- oder Service-Kapazitäten erschoepft sind',
+      'unLockOrg':
+          'Wird freigeschaltet, wenn zum ersten mal Vertriebs- oder Service-Kapazitäten erschoepft sind',
       'unLockPl': 'Wird eine Woche nach erstem Login freigeschaltet',
-      'unLockRanking': 'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
-      'unLockReward': 'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
-      'unLockChallenge': 'Wird freigeschaltet, wenn erster Anwalt eingestellt wird.',
+      'unLockRanking':
+          'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
+      'unLockReward':
+          'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
+      'unLockChallenge':
+          'Wird freigeschaltet, wenn erster Anwalt eingestellt wird.',
       //'detailChallengeMessage': 'Du Wurdest von $username im Modul ${questionData.moduleName} herausgefordert.\nDu musst alle Fragen richtig beantworten um ${questionData.winningAmount} zu gewinnen.',
 
       //Organization screen Dialog
@@ -1179,7 +1117,8 @@ class StringRes {
           'Hier kannst du dein Vermögen sehen.\n\nMitarbeiter einzustellen kostet Geld (Kosten steigen mit der Zeit). Diese Kosten werden von deinem Vermögen abgezogen.\nJeder Mitarbeiter bekommt außerdem ein gehalt. Dieses Gehalt betraegt 200 pro Mitarbeiter und Tag (Gehaelter steigen mit der Zeit).',
 
       //setting screen Dialog
-      'settingDetails': 'Du kannst zur professionellen Ansicht wechseln (kein virtuelles Unternehmen) und den Ton ein und aus schalten.',
+      'settingDetails':
+          'Du kannst zur professionellen Ansicht wechseln (kein virtuelles Unternehmen) und den Ton ein und aus schalten.',
 
       //Dashboard Game screen
       'welcomeToKnow': 'Willkommen bei Knowledge Empire',
@@ -1218,11 +1157,15 @@ class StringRes {
       'goToBusiness': 'Zu "Geschäftsbereiche" wechseln',
 
       'alertChangePassword': 'Passwort erfolgreich geändert.',
-      'unLockOrg': 'Wird freigeschaltet, wenn zum ersten mal Lern- oder Bestandsfragen-Kapazitäten erschoepft sind',
+      'unLockOrg':
+          'Wird freigeschaltet, wenn zum ersten mal Lern- oder Bestandsfragen-Kapazitäten erschoepft sind',
       'unLockPl': 'Wird eine Woche nach erstem Login freigeschaltet',
-      'unLockRanking': 'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
-      'unLockReward': 'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
-      'unLockChallenge': 'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
+      'unLockRanking':
+          'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
+      'unLockReward':
+          'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
+      'unLockChallenge':
+          'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
 
       'dear': "Hallo",
       'hi': "Hallo",
@@ -1260,38 +1203,18 @@ class StringRes {
       //</editor-fold>
 
       'passwordChange': 'Passwort erfolgreich geändert.',
-      'nicknameChange': 'Spitzname erfolgreich geändert',
       'serviceReps': "Servicemitarbeiter",
       'strKp': "\$",
       'strBalance': "Vermögen",
       'addFriend': 'Freund hinzugefügt',
       'unFriend': 'Freund entfernt',
-      'alertUnFriend': "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
+      'alertUnFriend':
+          "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
       'alert': "Achtung",
     },
     'zh': {
-      //Nickname
-      'enterNickName': '请输入昵称',
-      'nicknameChange': '昵称已成功更改',
-      'newNickName': '新昵称',
-      'nickName': '昵称',
-      'downloadText': '这个模块将占用',
-
-      //Company code
-      'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
-      'changeLanguage': '改变语言',
-      'companyCode': '公司代码',
-
-      //password
-      'enterOldPassword': '请输入旧密码。',
-      'enterNewPassword ': '请输入新密码。',
-      'enterRePassword': '请重新输入新密码。',
-      'enterSameNewPassword': '请输入相同的新密码。',
-
       //<editor-fold desc="chinese">
       //main options
-      'accept': "接受",
-      "decline": "下降",
       'home': "首页",
       'businessSector': "业务部门",
       'newCustomers': "新客户",
@@ -1336,7 +1259,6 @@ class StringRes {
       //login
       'login': '登录',
       'enterRegisteredEmail': '登录账户',
-      'username': '用户名',
       'password': '密码',
       'newPassword': '新密码',
       'currentPassword': 'Current 密码',
@@ -1370,18 +1292,9 @@ class StringRes {
       'alertUnFriendSuccess': "成功取消朋友",
       'alertUChallengeSent': "挑战已成功发送",
 
-      //Rewards module
-      'redeem': '赎回',
-      'costReward': '费用',
-      'costUnit': '虚拟现金',
-      'unitsLeft': "剩余单位",
-      'categories': '类别',
-
       //learning module
       'subscribe': '订阅',
       'unSubscribe': '取消订阅',
-      'contactExpert': '咨询专家',
-      'moreInformation': '了解更多资讯',
       'subscribed': '已订阅',
       'downLoad': '下载',
       'size': '大小',
@@ -1389,19 +1302,20 @@ class StringRes {
       'alertWantToSubscribe1': "您确定要取消订阅吗",
       'alertWantToSubscribe2': "您将失去所有的问题",
       'downloading': "正在下载......",
+      'strDownloadText': "这个模块将占用",
+      'strDownloadNewText': "这个模块将占用",
       'alertNotAllowed': "您不能取消加入已分配的业务板块",
 
       //engage customer
       'engagement': '情况',
       'situation': '任务报告',
       'category': '类别',
-      'achievement': '奖励',
+      'achievement': '成就',
       'nextLevel': '下一级',
       'friends': '夥伴朋友',
       'competitor': '竞争对手',
       'sendChallenge': '送出挑战寄发战帖',
       'next': '下一页',
-      'BackToList': '回到问题主选单',
 
       //  engage customer
       'answers': '答案',
@@ -1464,17 +1378,22 @@ class StringRes {
           "下一级"
           "下面的数字是您将收到的奖金。",
       'challengesDialogTitle1': "您是自己的主宰",
-      'challengesDialogContent1': ", \n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
+      'challengesDialogContent1':
+          ", \n\n我叫威尔，我是您公司的律师。\n我会帮助您挑战其他竞争对手，\n同时也帮您防守对方的攻击。",
       'strChallanges': "挑战",
-      'strChallangesDialogContent': "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。\n您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
+      'strChallangesDialogContent':
+          "搜索或选择您想挑战的竞争对手。\n选择您想挑战他的一个业务部门然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。\n您的竞争对手需要正确回答选定部门的3个问题才能赢得挑战。",
       'strMarketingCommunications': "营销与传播",
-      'strMarketingCommunicationsDialog': ", \n\n很高兴见到您。我久仰您的大名。\n所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
+      'strMarketingCommunicationsDialog':
+          ", \n\n很高兴见到您。我久仰您的大名。\n所以我非常高兴能为您工作。\n我是莉蒂亚，负责市场营销和传播。\n让我们来看看您的整体市场地位。",
       'strRankingDialogContent': "在左侧选择排名标准（比如现金，\n并在顶部选择您想对比的分组以及时间范围。\n您也可以点击"
           "您"
           "滚动到您的位置和挑战以及添加朋友。",
       'strYourTeamPerformance': "您的团队的表现",
-      'strYourTeamPerformanceDialog': "您好，我是尼基，我又来了。\n这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
-      'strTeamDialog': "作为经理，您可以查看和监控您的团队的表现。\n如果您点击一个团队成员，您可以看到他的个人表现。\n如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
+      'strYourTeamPerformanceDialog':
+          "您好，我是尼基，我又来了。\n这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
+      'strTeamDialog':
+          "作为经理，您可以查看和监控您的团队的表现。\n如果您点击一个团队成员，您可以看到他的个人表现。\n如果他的公司没有了资金，您还可以帮助他缓解资金困难 (将他的现金重置为30.000)。",
 
       'plPerson': '您可以依靠的人',
       'niceMeetYou': '很高兴见到您',
@@ -1482,106 +1401,132 @@ class StringRes {
       'hereYourMonitor': '在这里，您可以监控公司的成本和收入。',
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期',
 
-      'strYourTeamPerformanceDialog2': '图表显示"保留级别"和"问题状态”\n"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。\n"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+      'strYourTeamPerformanceDialog2':
+          '图表显示"保留级别"和"问题状态”\n"保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。\n"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
 
       //existing customer
       'servingYourExisting': '服务现有客户',
       'servingYourExistingDialog': ', \n\n我是负责客户服务的鲍勃。\n让我向您介绍现有客户名单。',
 
       'listOfExisting': '现有客户名单',
-      'listOfExistingDetails': '在这里，您可以看到您目前正在联络的所有客户和合同.\n他们每天产生多少现金以及他们在多少天内会对您忠诚。\n如果您想结束合同，您可以点击"X"。\n这个客户将不再产生现金，但您会收回1位服务代表。',
+      'listOfExistingDetails':
+          '在这里，您可以看到您目前正在联络的所有客户和合同.\n他们每天产生多少现金以及他们在多少天内会对您忠诚。\n如果您想结束合同，您可以点击"X"。\n这个客户将不再产生现金，但您会收回1位服务代表。',
 
       'readyForBusiness': '准备开展业务',
-      'readyForBusinessDeatils': '您现在可以查看更多的业务部门，然后联络更多的客户。\n\n或者探索您公司的其他领域，可以赚取奖励，挑战其他玩家，查看您的财务绩效和比较您的排名。',
+      'readyForBusinessDeatils':
+          '您现在可以查看更多的业务部门，然后联络更多的客户。\n\n或者探索您公司的其他领域，可以赚取奖励，挑战其他玩家，查看您的财务绩效和比较您的排名。',
       'finishTutorial': '完成教程',
 
       //customer situation
       'impactOnSales': '对销售和服务的影响',
-      'impactOnSalesDetails': '恭喜！您刚刚赢得了您的第一个客户。\n您的销售代表指示图现在显示8/10，因为这个客户需要2个销售代表，而您的服务代表指示图显示9/10，因为您需要1名服务代表为这个客户服务。',
+      'impactOnSalesDetails':
+          '恭喜！您刚刚赢得了您的第一个客户。\n您的销售代表指示图现在显示8/10，因为这个客户需要2个销售代表，而您的服务代表指示图显示9/10，因为您需要1名服务代表为这个客户服务。',
       'impactOnBrand': '对品牌价值和现金的影响',
-      'impactOnBrandDetails': '您的品牌价值现在是100％，因为您关于所有客户情况的回答100％正确。\n\n独立于您的品牌价值，您的现金增长取决于客户价值。',
+      'impactOnBrandDetails':
+          '您的品牌价值现在是100％，因为您关于所有客户情况的回答100％正确。\n\n独立于您的品牌价值，您的现金增长取决于客户价值。',
       'checkYourCustomer': '查看您的现有客户',
-      'checkYourCustomerDetails': '您可以在主界面的记事本中查看您现有的客户。\n\n您可以通过点击您的服务代表指示图，选择菜单中的“现有客户”或者前往主页面选择“已完成的学习”来访问您的记事本。',
+      'checkYourCustomerDetails':
+          '您可以在主界面的记事本中查看您现有的客户。\n\n您可以通过点击您的服务代表指示图，选择菜单中的“现有客户”或者前往主页面选择“已完成的学习”来访问您的记事本。',
       'clickServiceBtn': '点击服务代表指示图',
 
       //engagement
       'yourFirstEngagement': '您的第一次联络',
-      'yourFirstEngagementDetails': '为了赢得这个客户，您需要准确地回到这个问题。您可以点击展开按钮放大图片、问题和答案选项。\n\n选择正确的答案，然后单击"下一页”',
+      'yourFirstEngagementDetails':
+          '为了赢得这个客户，您需要准确地回到这个问题。您可以点击展开按钮放大图片、问题和答案选项。\n\n选择正确的答案，然后单击"下一页”',
       'yourFirstEngagementBtn': '选择答案并单击"下一页”',
 
       //New Customer screen
       'heartBusiness': '业务的核心',
-      'heartBusinessDetails': '老板您好，\n\n现在到了关键时刻，只有最后的公司才能生存下来, 但也是我们为公司赚钱的时机。我是蒂娜, 您的全球销售高级副总裁。\n我们开始工作吧，不要再拖延了。',
+      'heartBusinessDetails':
+          '老板您好，\n\n现在到了关键时刻，只有最后的公司才能生存下来, 但也是我们为公司赚钱的时机。我是蒂娜, 您的全球销售高级副总裁。\n我们开始工作吧，不要再拖延了。',
       'listOfPotential': '潜在客户名单',
-      'listOfPotentialDetails': '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚.\n当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。\n点击"立即联络"。',
+      'listOfPotentialDetails':
+          '每个客户都有一个名称，都属于一个部门。\n“价值”是您每天收到的现金，并且同时顾客对您忠诚.\n当您掌握了顾客情况时，客户的忠诚度将增加。\n“资源”表示您需要多少销售代表来联络这个客户。\n点击"立即联络"。',
       'listOfPotentialBtn': '点击"立即联络"',
 
       //Business sector screen dialog
       'customerRelation': '客户关系管理',
-      'customerRelationDetails': ', \n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM).\n我们看看不同的业务部门来寻找潜在的客户吧！',
+      'customerRelationDetails':
+          ', \n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM).\n我们看看不同的业务部门来寻找潜在的客户吧！',
       'areaOfComp': '能力领域',
-      'areaOfCompDetails': '每个业务部门将测试特定的知识来赢得客户.\n"大小"是每个部门的客户数量.\n您可以点击业务板块阅读说明,\n加入并下载问题以便离线使用.\n某些业务部门可能已经分配给您。',
+      'areaOfCompDetails':
+          '每个业务部门将测试特定的知识来赢得客户.\n"大小"是每个部门的客户数量.\n您可以点击业务板块阅读说明,\n加入并下载问题以便离线使用.\n某些业务部门可能已经分配给您。',
       'accessToFirst': '访问您的第一个客户',
       'accessToFirstDetails': '您可以加入第一个商业部门从而访问您的第一个客户。\n点击业务板块的"开始"，然后点击"加入"。',
       'accessToFirstBtn': '点击"开始”',
       'readyForCustomer': '准备好接触您的第一个客户了吗？',
-      'readyForCustomerDetails': '让我们前往笔记本电脑中您可以联络的新客户列表页面。\n\n您可以使用导航菜单“>”，点击您的销售代表指示图，\n或者点击后退然后选择笔记本电脑。',
+      'readyForCustomerDetails':
+          '让我们前往笔记本电脑中您可以联络的新客户列表页面。\n\n您可以使用导航菜单“>”，点击您的销售代表指示图，\n或者点击后退然后选择笔记本电脑。',
       'readyForCustomerBtn': '点击您的销售代表指示图',
 
       'customersRelationShip': "客户关系管理",
 
-      'customersRelationShipContent': "您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
+      'customersRelationShipContent':
+          "您好\n\n我叫李伟。就像英文单词leeway一样。\n我负责您的公司的客户关系管理（CRM）。我们看看不同的业务部门来\n寻找潜在的客户吧！",
       'areaOfCompetency': "能力领域",
       'areaOfCompetenceContent': "每个业务部门将测试特定的知识来赢得客户。"
           "大小"
           "是每个部门的客户数量。\n您可以点击业务板块阅读说明，加入并下载问题以便离线使用。\n某些业务部门可能已经分配给您。",
       'customizeYourCompany': "自定义您的公司",
-      'customizeYourCompanyContent': ", \n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
-          "个人资料"
-          "。\n",
+      'customizeYourCompanyContent':
+          ", \n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+              "个人资料"
+              "。\n",
 
       //Organization screen Dialog
       'hireHrEmp': '招聘人力资源员工',
-      'hireHrEmpDetails': ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
+      'hireHrEmpDetails':
+          ', \n\n欢迎加入我们，欢迎来到董事会会议室。\n我叫尼基塔，但叫我尼基就可以了。\n作为人力资源部的负责人，\n我将向您介绍我们的团队以及指导您如何招聘员工,\n让我们的团队发展壮大。',
 
-      'hireHrEmpDetailsSeconds': '听听您的团队的建议，为什么您应该招聘更多的员工，\n点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后选择“雇用10名员工”。',
+      'hireHrEmpDetailsSeconds':
+          '听听您的团队的建议，为什么您应该招聘更多的员工，\n点击他们试试？\n\n让我们先招聘10名HR员工，您只需点击HR然后选择“雇用10名员工”。',
 
       'empOMaster': '雇员指示图',
-      'empOMasterDetails': '您的雇员指示图显示40/50。\n50是最大可雇用员工的数量，40是当前员工数量。\n您可以通过雇用更多的HR员工来增加最大可雇用员工的数量。\n点击您的雇员指示图也将进入该组织页面。',
+      'empOMasterDetails':
+          '您的雇员指示图显示40/50。\n50是最大可雇用员工的数量，40是当前员工数量。\n您可以通过雇用更多的HR员工来增加最大可雇用员工的数量。\n点击您的雇员指示图也将进入该组织页面。',
       'costOfEmp': '员工成本',
-      'costOfEmpDetails': '在这里，您可以看到您的总现金。\n\n招聘员工会增加雇用成本（随着时间的推移增加）。\n费用将从您的现金中扣除。\n每个员工每天会收到工资，每日起薪是200。\n工资水平将随着时间的推移而增加。',
+      'costOfEmpDetails':
+          '在这里，您可以看到您的总现金。\n\n招聘员工会增加雇用成本（随着时间的推移增加）。\n费用将从您的现金中扣除。\n每个员工每天会收到工资，每日起薪是200。\n工资水平将随着时间的推移而增加。',
 
       //setting screen Dialog
-      'settingDetails': '您可以切换到专业模式（没有虚拟公司),\n您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金,\n您的经理会进行审批。',
+      'settingDetails':
+          '您可以切换到专业模式（没有虚拟公司),\n您可以打开或关闭声音。\n\n如果您的公司现金为负，您可以请求一笔纾困资金,\n您的经理会进行审批。',
 
       //Dashboard Game screen
       'welcomeToKnow': '欢迎来到知识帝国',
-      'welcomeToKnowDetails': ", \n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
-          "个人资料"
-          "。",
+      'welcomeToKnowDetails':
+          ", \n\n我叫迈克，我是您们的运营主管。\n您准备好成为您自己的虚拟公司的CEO了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+              "个人资料"
+              "。",
       'clickYourProfile': '点击您的个人资料',
 
       'meetYourTeam': '认识您的团队',
-      'meetYourTeamDetails': "单击组织结构图以了解您的组织概况。\n只要您想，您可以雇用和解雇员工！\n开始之前，您将需要聘请一些HR、销售和服务的员工。",
+      'meetYourTeamDetails':
+          "单击组织结构图以了解您的组织概况。\n只要您想，您可以雇用和解雇员工！\n开始之前，您将需要聘请一些HR、销售和服务的员工。",
       'clickOrgChart': '点击组织结构图',
       'getReadyApproach': '准备接触客户',
-      'getReadyApproachDetails': '"为了赢得新的客户，您需要有销售代表。\n\n我们点击“销售”，然后点击""雇用10名员工""来雇用10名销售代表。"',
+      'getReadyApproachDetails':
+          '"为了赢得新的客户，您需要有销售代表。\n\n我们点击“销售”，然后点击""雇用10名员工""来雇用10名销售代表。"',
       'clickSale': '点击“销售”',
 
       'salesOMeter': '销售代表指示图',
-      'salesOMeterDetails': "您的销售代表指示图显示10/10。\n最后一个数字显示您当前的销售代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n吸引客户将会让销售代表工作8个小时。",
+      'salesOMeterDetails':
+          "您的销售代表指示图显示10/10。\n最后一个数字显示您当前的销售代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n吸引客户将会让销售代表工作8个小时。",
 
       'getReadyServer': '准备好为客户服务',
-      'getReadyServerDetails': '"为了服务现有客户或提供服务，您需要为每个客户配备一个服务代表。\n\n我们点击“服务”，然后点击""雇用10名员工""来雇用10名服务代表。"',
+      'getReadyServerDetails':
+          '"为了服务现有客户或提供服务，您需要为每个客户配备一个服务代表。\n\n我们点击“服务”，然后点击""雇用10名员工""来雇用10名服务代表。"',
       'clickOnService': '点击“服务”',
       'serviceOMeter': '服务代表指示图',
-      'serviceOMeterDetails': "您的服务代表指示图显示10/10。\n最后一个数字显示您当前的服务代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n每个现有客户将占用1个服务代表。",
+      'serviceOMeterDetails':
+          "您的服务代表指示图显示10/10。\n最后一个数字显示您当前的服务代表数量。\n第一个数字显示当前可用的服务代表数量。\n\n每个现有客户将占用1个服务代表。",
 
       'readyForSerious': '准备开展真正的业务',
-      'readyForSeriousDetails': "很好，您们都准备好开展业务了。\n让我们来看看报纸，选择您想要从事的第一个商业部门。\n\n您可以点击菜单"
-          ">"
-          "，然后点击"
-          "业务部门”",
+      'readyForSeriousDetails':
+          "很好，您们都准备好开展业务了。\n让我们来看看报纸，选择您想要从事的第一个商业部门。\n\n您可以点击菜单"
+              ">"
+              "，然后点击"
+              "业务部门”",
       'goToBusiness': '转到"业务部门”',
 
       //lock feature
@@ -1639,7 +1584,6 @@ class StringRes {
       //</editor-fold>
 
       'passwordChange': '密码已更改。',
-      'nicknameChange': '昵称已成功更改',
       'serviceReps': "服务代表",
       'strKp': "\$",
       'strBalance': "现金",
@@ -1652,21 +1596,7 @@ class StringRes {
 
   static Map<String, Map<String, String>> localizedValuesProf = {
     'en': {
-      //Nickname
-      'enterNickName': 'Please enter nickname',
-      'nicknameChange': 'Nickname changed Successfully',
-      'newNickName': 'New Nickname',
-      'nickName': 'Nickname',
-      'downloadText': 'This module will occupie',
-
-      //Company code
-      'enterCompanyCode': 'Please enter company code that you received in your email',
-      'changeLanguage': 'Change Language',
-      'companyCode': 'Company code',
-
       //<editor-fold desc="english">
-      'accept': "Accept",
-      "decline": "Decline",
       'home': "Home",
       'businessSector': "Learning Module",
       'newCustomers': "Open Learnings",
@@ -1694,24 +1624,30 @@ class StringRes {
       'rewardsDialogContent':
           "Check out the reward categories and click on a trophy to find out what you have achieved already and what you will need to achieve for the next level.\n\nThe number below the “Next Level” is the bonus you will receive.",
       'challengesDialogTitle1': "Challenges",
-      'challengesDialogContent1': "Here you will learn how to challenge other colleagues",
+      'challengesDialogContent1':
+          "Here you will learn how to challenge other colleagues",
       'strChallanges': "Challenges",
       'strChallangesDialogContent':
           "Search or select a Colleague you would like to challenge.\nSelect one of his Learning Modules you would like to challenge him and select the reward (% of current Knowledge Points (KP)) the winner can get. Your competitor will need to answer 3 out of 3 questions from the selected module correctly in order to win the challenge.",
       'strMarketingCommunications': "Ranking",
-      'strMarketingCommunicationsDialog': "In this section you will learn everything you need to know about the ranking",
+      'strMarketingCommunicationsDialog':
+          "In this section you will learn everything you need to know about the ranking",
       'strRankingDialogContent':
           "Select on the left side the ranking criteria (e.g. Knowledge Points (KP)) and at the top which group you would like to compare it with and in which time frame.\nYou can also click in “You” to scroll to your position and challenge and add friends.",
       'strYourTeamPerformance': "Your Team's Performance",
-      'strYourTeamPerformanceDialog': "This section is exclusively for team leaders.\nHere you can see the performance of your reports.",
+      'strYourTeamPerformanceDialog':
+          "This section is exclusively for team leaders.\nHere you can see the performance of your reports.",
       'strTeamDialog':
           "As a manager you can see and monitor the performance of your team. If you click on a team member you can see his individual performance and reset his Knowledge Points (KP) to 30.000.",
 
       'plPerson': 'Performance',
 //      'niceMeetYou':'${Injector.userData?.name??""}很高兴见到您',
-      'plMyName': 'In this section you will learn everything you need to know about your performance analysis',
-      'hereYourMonitor': 'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
-      'selectPeriod': 'You can also select the period you want to look at and compare the current period with the previous period.',
+      'plMyName':
+          'In this section you will learn everything you need to know about your performance analysis',
+      'hereYourMonitor':
+          'Here you can monitor the deductions and the additions of Knowledge Points (KP).',
+      'selectPeriod':
+          'You can also select the period you want to look at and compare the current period with the previous period.',
 
       'strYourTeamPerformanceDialog2':
           'The graphs show you the “Retention Level” & “Question Status”“Retention Level” indicates how many questions are retained(1 = low retention and 10 = very well retained knowledge).“Question Status” indicates if questions are open and answered (open = open for answering, completed = correctly answered)',
@@ -1729,7 +1665,8 @@ class StringRes {
 
       //existing customer
       'servingYourExisting': 'List of Completed Learnings',
-      'servingYourExistingDialog': 'In this part of the tutorial you will learn all relevant information about your completed learnings',
+      'servingYourExistingDialog':
+          'In this part of the tutorial you will learn all relevant information about your completed learnings',
       'listOfExisting': 'List of Completed Learnings',
       'listOfExistingDetails':
           'Here you see all questions that you currently have memorized. How much Knowledge Points (KP) you receive from them each day and how many days they will stay in this list.\nYou can click the “X” if you want to remove a question.\nThis question will then not generate any more Knowledge Points for you but you will regain 1 free Memory Point (MP).',
@@ -1759,7 +1696,8 @@ class StringRes {
 
       //New Customer screen
       'heartBusiness': 'List of Open Learnings',
-      'heartBusinessDetails': 'In this part of the tutorial you will learn all relevant information needed to select and answer questions',
+      'heartBusinessDetails':
+          'In this part of the tutorial you will learn all relevant information needed to select and answer questions',
       'listOfPotential': 'List of Questions',
       'listOfPotentialDetails':
           'Each question has a name and belongs to a Learning Module.\nKnowledge are the Knowledge Points (KP) you can earn everyday you have this question in your completed Learning list.\n"Repeat in ..." tells you in how many days you need to repeat the question if you now answer it correctly.\nThe more often you answer a question correctly the less often you will need to repeat it.\nStudy Points (SP) indicate how many Study Points (SP) you will need to answer this question. Click on “Answer Now”.',
@@ -1833,9 +1771,10 @@ class StringRes {
           "Note that your Memory Point (MP) Bar shows 10/10.\nThe last number shows your maximum Memory capacity.\nThe first number shows your free Memory for new questions.\n\nEach correctly answered question will require 1 memory point.",
 
       'readyForSerious': 'Ready for your first question?',
-      'readyForSeriousDetails': "Great, you are now ready for your first questions.\nLet's head over to the "
-          "Learning Modules"
-          " section to select the first Learning Module that you want to engage in.\n\nYou can click on the menu “>” and then “Learning Modules”",
+      'readyForSeriousDetails':
+          "Great, you are now ready for your first questions.\nLet's head over to the "
+              "Learning Modules"
+              " section to select the first Learning Module that you want to engage in.\n\nYou can click on the menu “>” and then “Learning Modules”",
       'goToBusiness': 'Go to "Learning Modules"',
 
       'dashboardProfile': 'Change Profile',
@@ -1848,7 +1787,8 @@ class StringRes {
       'dashboardExistingCustomer': '3. Existing Questions\nReview Questions',
       'alertChangePassword': 'Password changed Successfully.',
 
-      'unLockOrg': 'Unlocks when Study or Memory Points are empty for the first time.',
+      'unLockOrg':
+          'Unlocks when Study or Memory Points are empty for the first time.',
       'unLockPl': 'Unlocks 1 week after 1st login',
       'unLockRanking': 'Unlocks after three days in row login',
       'unLockReward': 'Unlocks if first Achievement is reached',
@@ -1873,6 +1813,9 @@ class StringRes {
       'yourName': 'Your Name',
       'yourEmail': 'Your Email',
 
+      'strDownloadText': 'This module will occupy ',
+      'strDownloadNewText': 'This module will occupy ',
+
       'cost': 'KP Cost',
       'employees': 'Power-Ups',
       'salaries': 'KP Cost',
@@ -1881,7 +1824,8 @@ class StringRes {
       'brand': '%Correct',
       'customers': 'Questions',
       'Profit': 'Knowledge Points (KP)',
-      'alertWantToSubscribe1': "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
+      'alertWantToSubscribe1':
+          "Are you sure, you want to unsubscribe from this module? All progress will be lost. ",
       'alertWantToSubscribe2': '? You will lose all the questions from the ',
       'answers': 'Answers',
       'bonusPoint': "Bonus Point",
@@ -1889,7 +1833,6 @@ class StringRes {
       'cashAtStartOfPeriod': 'Knowledge Points at start of Period',
       'subscribedSuccess': 'Subscribed successfully!',
       'alertFriendSuccess': 'Friend added successfully',
-      'alertUnFriendSuccess': "Unfriend successfully",
       'unSubscribedSuccess': 'Unsubscribed successfully!',
 
       'selectCompany': 'Select Company',
@@ -1909,7 +1852,8 @@ class StringRes {
       'strOpen': "Open",
       'hireHrEmp': "Improve Max. Power-Ups (PU)",
 
-      'helpProProfile': '"Profile: \n- Change your company name \n- switch to game mode \n- switch company \n- request a restart"',
+      'helpProProfile':
+          '"Profile: \n- Change your company name \n- switch to game mode \n- switch company \n- request a restart"',
       'helpProEmployMeter':
           '"Power-Up Bar (xx/yy):  \n- xx = currently free Power-Up Points  \n- yy = total Power-Up capacity  \n- Every Power-Up Point cost you 200 (increasing) per day  \n- Click on Power-Up Bar brings you to Power Up Screen"',
       'helpProSalesMeter':
@@ -1921,7 +1865,8 @@ class StringRes {
       'helpProCash':
           '"Knowledge Points:  \n- Increases by answering Questions correct and earning achievements  \n- Decreases through Power-Up costs"',
 
-      'helpProBusinessSector': '"Learning Modules: \n- Find new Learning Module \n- Subscribe / Unsubscribe \n- Download for offline availability"',
+      'helpProBusinessSector':
+          '"Learning Modules: \n- Find new Learning Module \n- Subscribe / Unsubscribe \n- Download for offline availability"',
       'helpProNewCustomers':
           '"Open Learnings: \n- Find new Questions to answer \n- Each Question requires free Study and Memory Points \n- Repetition of Questions increases if you answer them correctly"',
       'helpProExistingCustomer':
@@ -1934,8 +1879,10 @@ class StringRes {
           '"Challenges: \n- Challenge friends \n- Selected % value determined # of questions and payout \n- increasing % = Increasing ammount of questions to be answered \n- higher % = higher payout for competitor if he wins and lower payout for you if he looses"',
       'helpProOrganization':
           '"Power-Ups:  \n- select additional Power-Ups  \n- you need Power-Up capacities (HR) to Spend Power-Up points  \n- Every Power-Up Point spend costs you 100 Knowledge Points per day"',
-      'helpProP&L': '"Performance:  \n- Monitor your performance and progress  \n- Ensure you earn enough Knowledge Points"',
-      'helpProRanking': '"Ranking:  \n- See and compare your rank  \n- you can check multiple timelines and comparison groups"',
+      'helpProP&L':
+          '"Performance:  \n- Monitor your performance and progress  \n- Ensure you earn enough Knowledge Points"',
+      'helpProRanking':
+          '"Ranking:  \n- See and compare your rank  \n- you can check multiple timelines and comparison groups"',
       'emailId': 'Email Id',
       'editProfile': 'Edit Profile',
       'changePassword': 'Change Password',
@@ -1975,17 +1922,8 @@ class StringRes {
       'somethingWrong': 'Something went wrong',
       'friend': 'Friend',
       'alertUChallengeSent': 'Challenge sent successfully!',
-      //Rewards module
-      'redeem': 'Redeem',
-      'costReward': 'Cost',
-      'costUnit': 'Knowledge Points',
-      'unitsLeft': "Units left",
-      'categories': 'Categories',
-
       'subscribe': 'Subscribe',
       'unSubscribe': 'Unsubscribe',
-      'contactExpert': 'Contact Expert',
-      'moreInformation': 'More Information',
       'subscribed': 'Subscribed',
       'downLoad': 'DownLoad',
       'description': 'Description',
@@ -2016,12 +1954,12 @@ class StringRes {
       'world': 'World',
       'country': 'Country',
       'score': 'Score',
-      'companyName': 'Company Name',
+      'companyName': 'Nickname',
       'day': 'Day',
       'month': 'Month',
       'year': 'Year',
       'lastPeriod': 'Last Period',
-      'thisPeriod': 'This Period',
+      'thisPeriod': 'his Period',
       'alertWantToBailOut': 'Are you sure you want to restart',
       'alertNoModuleFound': 'Oops..No learning module found for this user.',
       'ok': 'Ok',
@@ -2031,64 +1969,51 @@ class StringRes {
       'close': 'Close',
       //</editor-fold>
       'passwordChange': 'Password changed Successfully.',
-      'nicknameChange': 'Nickname changed Successfully',
       'serviceReps': "Memory Points",
 
-      'strProProfile': "- Change your company name\n- switch to game mode\n- switch company\n- request a restart",
+      'strProProfile':
+          "- Change your company name\n- switch to game mode\n- switch company\n- request a restart",
       'strEmpOMeter':
           "- xx = currently free Power-Up Points\n- yy = total Power-Up capacity\n- Every Power-Up Point cost you 200 (increasing) per day\n- Click on Power-Up Bar brings you to Power Up Screen",
       'strSalesOMeter':
           "- xx = currently free Study Points\n- yy = total Study Points\n- Used Study Points will refill after 8 hours\n- Click onStudy Point Bar brings you to List of open questions",
       'strServiceOMeter':
           "- xx = currently free Memory Points\n- yy = totalMemory Points\n- 1 free Memory Point needed per Question\n- Click on Memory Point Bar brings you to list of answered questions",
-      'strBrandValue': "- Percentage of correctly answered questions\n- Click on %Correct Answers brings you to Ranking Screen",
+      'strBrandValue':
+          "- Percentage of correctly answered questions\n- Click on %Correct Answers brings you to Ranking Screen",
       'strBrandValueTitle': "%Correct Answers",
-      'strCash': "- Increases by answering Questions correct and earning achievements\n- Decreases through Power-Up costs",
-      'strBusinessSector': "- Find new Learning Module\n- Subscribe / Unsubscribe\n- Download for offline availability",
+      'strCash':
+          "- Increases by answering Questions correct and earning achievements\n- Decreases through Power-Up costs",
+      'strBusinessSector':
+          "- Find new Learning Module\n- Subscribe / Unsubscribe\n- Download for offline availability",
       'strNewCustomer':
           "- Find new Questions to answer\n- Each Question requires free Study and Memory Points\n- Repetition of Questions increases if you answer them correctly",
-      'strExistingCustomer': "- review all your correctly answered questions\n- Repetition of Questions increases if you answer them correctly",
-      'strAchievement': "- Achievements are earned by completing certain task\n- Achievements pay extra Knowledge Points if you reach a new level",
-      'strReward': "- Redeem Knowledge Points to receive real world rewards",
-      'strTeam': "- list of your direct reports\n- high level reporting and KPI\n- Allow bailout / reset",
+      'strExistingCustomer':
+          "- review all your correctly answered questions\n- Repetition of Questions increases if you answer them correctly",
+      'strRewards':
+          "- Rewards are earned by completing certain task\n- Rewards pay extra Knowledge Points if you reach a new level",
+      'strTeam':
+          "- list of your direct reports\n- high level reporting and KPI\n- Allow bailout / reset",
       'strChallenges':
           "- Challenge friends\n- Selected % value determined # of questions and payout\n- increasing % = Increasing ammount of questions to be answered\n- higher % = higher payout for competitor if he wins and lower payout for you if he looses",
       'strOrganization':
           "- select additional Power-Ups\n- you need Power-Up capacities (HR) to Spend Power-Up points\n- Every Power-Up Point spend costs you 100 Knowledge Points per day",
-      'strPL': "- Monitor your performance and progress\n- Ensure you earn enough Knowledge Points",
-      'strRanking': "- See and compare your rank\n- you can check multiple timelines and comparison groups",
-      'strRanking': "- See and compare your rank\n- you can check multiple timelines and comparison groups",
+      'strPL':
+          "- Monitor your performance and progress\n- Ensure you earn enough Knowledge Points",
+      'strRanking':
+          "- See and compare your rank\n- you can check multiple timelines and comparison groups",
+      'strRanking':
+          "- See and compare your rank\n- you can check multiple timelines and comparison groups",
       'strKp': "Kp",
       'strBalance': "Knowledge Points",
       'next': 'Next',
-      'BackToList': 'Back to List',
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
       'addFriend': 'Friend added successfully',
       'unFriend': 'Unfriend successfully',
       'alert': "Alert"
     },
     'de': {
-      //Nickname
-      'enterNickName': 'Bitte Spitznamen eingeben',
-      'nicknameChange': 'Spitzname erfolgreich geändert',
-      'newNickName': 'Neuer Spitzname',
-      'nickName': 'Spitzname',
-      'downloadText ': 'Dieses Modul benötigt',
-
-      //Company code
-      'enterCompanyCode': 'Bitte geben Sie die Unternehmenscode ein, den Sie in Ihrer E-Mail erhalten haben',
-      'changeLanguage': 'Sprache ändern',
-      'companyCode': 'Unternehmenscode',
-
-      //password
-      'enterOldPassword': 'Bitte geben Sie das alte Passwort ein.',
-      'enterSameNewPassword': 'Bitte geben Sie das gleiche neue Passwort ein.',
-      'enterRePassword': 'Bitte geben Sie das neue Passwort erneut ein.',
-      'enterNewPassword ': 'Bitte geben Sie ein neues Passwort ein.',
-
       //<editor-fold desc="German">
-      'accept': "akzeptieren",
-      "decline": "Ablehnen",
       'home': 'Start',
       'businessSector': 'Lernmodule',
       'newCustomers': 'Fragen',
@@ -2096,9 +2021,7 @@ class StringRes {
       'organizations': 'Lernbonus',
       'challenges': 'Herausforderungen',
       'pl': 'Entwicklung',
-      'rewards': "Belohnungen",
-      'achievement': 'Auszeichnungen',
-      'rewards': 'Belohnungen',
+      'rewards': 'Auszeichnungen',
       'ranking': 'Rangliste',
       'team': 'Team',
       'profile': 'Profil',
@@ -2152,34 +2075,29 @@ class StringRes {
       'alertFriendSuccess': 'Freund hinzugefügt',
       'alertUnFriendSuccess': 'Freund entfernt',
       'alertUChallengeSent': 'Herausforderung erfolgreich gesendet!',
-      //Rewards module
-      'redeem': 'Einlösen',
-      'costReward': 'kosten',
-      'costUnit': 'Wissenspunkte',
-      'unitsLeft': "Noch vorhanden",
-      'categories': 'Kategorien',
-
       'subscribe': 'Abonnieren',
       'unSubscribe': 'Abmelden',
-      'contactExpert': 'Experte Kontaktieren',
-      'moreInformation': 'Mehr Informationen',
       'subscribed': 'abonniert',
       'downLoad': 'Herunterladen',
       'size': 'Größe',
       'description': 'Beschreibung',
-      'alertWantToSubscribe1': 'Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ',
+      'alertWantToSubscribe1':
+          'Wirklich von diesem Modul abmelden? Aller Fortschritt geht verlohren. ',
       'alertWantToSubscribe2': '? Alle Fragen gehen verloren',
       'downloading': 'Daten werden geladen ...',
-      'alertNotAllowed': 'Zugeordnete Lernbereiche können nicht abgemeldet werden',
+      'strDownloadText': 'Dieses Modul benötigt',
+      'strDownloadNewText': 'Dieses Modul benötigt',
+      'alertNotAllowed':
+          'Zugeordnete Lernbereiche können nicht abgemeldet werden',
       'engagement': 'Situation',
       'debrief': 'Nachbesprechung',
       'category': 'Kategorie',
+      'achievement': 'Bereits erreicht',
       'nextLevel': 'Nächste Stufe',
       'friends': 'Freunde',
       'competitor': 'Kollegen',
       'sendChallenge': 'Herausfordern',
       'next': 'Weiter',
-      'BackToList': 'Zur Übersicht',
       'answers': 'Antworten',
       'question': 'Fragen',
       'explanation': 'Erläuterung',
@@ -2202,7 +2120,7 @@ class StringRes {
       'world': 'Welt',
       'country': 'Land',
       'score': 'Punkte',
-      'companyName': 'Firmenname',
+      'companyName': 'Spitzname',
       'revenue': 'Additionen',
       'hashCustomers': 'Anzahl Fragen',
       'brand': '%Richtig',
@@ -2228,12 +2146,14 @@ class StringRes {
       'rewardsDialogContent':
           "Schau dir die unterschiedlichen Kategorien von Auszeichnungen an um herauszufinden was du schon erreicht hast und was du noch machen musst um das nächste Level zu erreichen.\nDie Zahlen sind die Wissenspunkte (WP) die du erhältst, wenn du diese Auszeichnung erreichst.",
       'challengesDialogTitle1': "Herausforderungen",
-      'challengesDialogContent1': "\nHier lernst du wie du einen Kollegen zu einem Wissensduell heraus forderst.",
+      'challengesDialogContent1':
+          "\nHier lernst du wie du einen Kollegen zu einem Wissensduell heraus forderst.",
       'strChallanges': "Herausforderungen",
       'strChallangesDialogContent':
           "Suche und wähle Kollegen aus, die du herausfordern möchtest.\nwähle den Lernbereich aus, in dem er herausgefordert werden soll und den Prozentsatz von den aktuellen Wissenspunkte (WP), den der Gewinner bekommen soll.\n\nDer Herausgeforderte muss dann 3 von 3 Fragen aus diesem Lernmodul richtig beantworten um zu gewinnen.\nAnsonsten gewinnst du.",
       'strMarketingCommunications': "Rangliste",
-      'strMarketingCommunicationsDialog': "In diesem Bereich lernst du alles über die Rangliste",
+      'strMarketingCommunicationsDialog':
+          "In diesem Bereich lernst du alles über die Rangliste",
       'strRankingDialogContent':
           "Auf der linken Seite kannst du die Kategorie für die Rangliste auswählen und am oberen Rand, mit welcher Gruppe du dich vergleichen möchtest und in welchem Zeitraum.\n\nWenn du auf "
               "Du"
@@ -2246,14 +2166,18 @@ class StringRes {
 
       'plPerson': 'Entwicklung',
 //      'niceMeetYou':'${Injector.userData?.name??""}很高兴见到您',
-      'plMyName': 'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
-      'hereYourMonitor': 'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
-      'selectPeriod': 'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
+      'plMyName':
+          'In diesem Bereich kannst du deine Entwicklung einsehen und überprüfen.',
+      'hereYourMonitor':
+          'Hier kannst du deinen Wissenspunkte-Zuwachs und -Abgang überwachen.',
+      'selectPeriod':
+          'Dazu kannst du unterschiedliche Zeithorizonte auswählen und immer die aktuelle Periode mit der Perioden davor vergleichen.',
       'strYourTeamPerformanceDialog2':
           'Die Kuchendiagramme zeigen dir das Fragenlevel und den Fragenstatus.Das Fragenlevel ist ein Indikator für wie gut dieses Wissen verinnerlicht ist(1= niedrig, 10=hoch). Der Fragenstatus gibt Auskunft darüber wieviel Fragen aktuell bentowertet und wieviel unbeantwortet sind.',
       //existing customer
       'servingYourExisting': 'Liste der Bestandsfragen',
-      'servingYourExistingDialog': 'In diesem Teil der Einführung lernst du alles Wissenswerte über die Bestandsfragen',
+      'servingYourExistingDialog':
+          'In diesem Teil der Einführung lernst du alles Wissenswerte über die Bestandsfragen',
 
       'listOfExisting': 'Liste der Bestandsfragen',
       'listOfExistingDetails':
@@ -2284,7 +2208,8 @@ class StringRes {
 
       //New Customer screen
       'heartBusiness': 'Liste der offenen Fragen',
-      'heartBusinessDetails': 'In diesem Teil der Einführung lernst du alles Wissenswerte über die Fragenliste und die Fragen',
+      'heartBusinessDetails':
+          'In diesem Teil der Einführung lernst du alles Wissenswerte über die Fragenliste und die Fragen',
       'listOfPotential': 'Liste der offenen Fragen',
       'listOfPotentialDetails':
           'Jeder Frage hat einen Namen und gehört zu einem Lernmodul. Wissenspunkte (WP) sind die täglichen Punkte die dir diese Frage einbringen wird, so lange sie in der Bestandsfragenliste bleibt.\n"Wiederholen in..." zeigt die Anzahl Tage wann die Frage wiederholt werden muss. Je häufiger du sie richtig beantwortest, je grösser wird der Abstand.\nIn der Spalte Lernpunkte (LP) siehst du wieviel Lernpunkte (LP) du benötigst um die Frage zu beantworten.\nUm eine Frage zu beantworten bitte auf "Beantworten" klicken',
@@ -2322,7 +2247,8 @@ class StringRes {
 
       //Organization screen Dialog
       'hireHrEmp': 'Maximale Bonuspunkte',
-      'hireHrEmpDetails': 'Im Folgenden wirst du lernen wie du mit Bonuspunkten Verbesserungen freischalten kannst ',
+      'hireHrEmpDetails':
+          'Im Folgenden wirst du lernen wie du mit Bonuspunkten Verbesserungen freischalten kannst ',
 
       'hireHrEmpDetailsSeconds':
           'Um zu erfahren was die einzelnen Verbesserungen bringen, kannst du auf sie klicke.\n\nLass uns damit anfangen die Anzahl maximaler Bonuspunkte (BP) zu erhöhen. Dafür bitte auf "Max. Bonuspunkte (BP)" klicken und dann auf "Level erhöhen"',
@@ -2335,7 +2261,8 @@ class StringRes {
           'Hier kannst du deine Wissenspunkte (WP) sehen.\n\nBonuspunkte zu investieren kostet Wissenspunkte (Kosten steigen mit der Zeit). Diese Kosten werden von deinen Wissenspunkten (WP) abgezogen.\nJeder Bonuspunkt kostet außerdem 200 Wissenspunkte pro investiertem Bonuspunkt und Tag (Kosten steigen mit der Zeit).',
 
       //setting screen Dialog
-      'settingDetails': 'Du kannst zum wissensspiel wechseln (virtuelles Unternehmen) und den Ton ein und aus schalten.',
+      'settingDetails':
+          'Du kannst zum wissensspiel wechseln (virtuelles Unternehmen) und den Ton ein und aus schalten.',
 
       //Dashboard Game screen
       'welcomeToKnow': 'Willkommen bei Knowledge Empire',
@@ -2368,26 +2295,33 @@ class StringRes {
           "Deine Bestandsfragenkapazitaeten zeigen jetzt 10/10.\n\nDie hintere Zahl zeigt dir deine gesamten Bestandsfragenkapazitaeten an. Die erste Zahl zeigt dir, wieviele diese Bestandsfragenkapazitaeten aktuell frei zur Verfuegung stehen.\n\nJeder Fragen benötigt eine freie Bestandsfragenkapazitat.",
 
       'readyForSerious': 'Bereit für die erste Frage?',
-      'readyForSeriousDetails': "Super, jetzt sind wir startklar. Lass uns in einen Blick in die Lernmodule werfen.\n\nBitte im Menü "
-          ">"
-          " "
-          "Lernmodule"
-          " auswählen.",
+      'readyForSeriousDetails':
+          "Super, jetzt sind wir startklar. Lass uns in einen Blick in die Lernmodule werfen.\n\nBitte im Menü "
+              ">"
+              " "
+              "Lernmodule"
+              " auswählen.",
       'goToBusiness': 'Zu "Lernmodule" wechseln',
 
       'dashboardProfile': 'Benutzer Profil und\nSprache anpassen',
       'dashboardSales': 'Lernkapazitäten"\num Fragen zu beantworten',
-      'dashboardServices': '""Bestandsfragenkapazitaeten"\num Fragen zu behalten',
+      'dashboardServices':
+          '""Bestandsfragenkapazitaeten"\num Fragen zu behalten',
       'dashboardBalance': '""Wissenspunkte"\nerhöhen durch Fragen beantworten',
       'dashboardBusiness': '1. Lernmodule\nsuchen & auswählen',
       'dashboardNewCustomer': '2. Fragenkatalog\nFragen beantworten',
-      'dashboardExistingCustomer': '3. Bestandsfragenliste\nRichtig beantwortete Fragen',
+      'dashboardExistingCustomer':
+          '3. Bestandsfragenliste\nRichtig beantwortete Fragen',
       'alertChangePassword': 'Passwort erfolgreich geändert.',
-      'unLockOrg': 'Wird freigeschaltet, wenn zum ersten mal Lern- oder Bestandsfragen-Kapazitäten erschoepft sind',
+      'unLockOrg':
+          'Wird freigeschaltet, wenn zum ersten mal Lern- oder Bestandsfragen-Kapazitäten erschoepft sind',
       'unLockPl': 'Wird eine Woche nach erstem Login freigeschaltet',
-      'unLockRanking': 'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
-      'unLockReward': 'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
-      'unLockChallenge': 'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
+      'unLockRanking':
+          'Wird freigeschaltet, wenn sich Nutzer drei Tage in Folge anmeldet',
+      'unLockReward':
+          'Wird freigeschaltet, wenn erstes Achievement erreicht wird',
+      'unLockChallenge':
+          'Wird freigeschaltet, wenn Max. Herausforderungen erstmals erhöht werden',
 
       'dear': "Hallo",
       'hi': "Hallo",
@@ -2423,7 +2357,8 @@ class StringRes {
       'strOpen': "Offen",
 
       //help screen
-      'helpProProfile': '"Profil:  \n- Firmenname ändern  \n- Zu gamifizierter Version wechseln  \n- Neustart beantragen"',
+      'helpProProfile':
+          '"Profil:  \n- Firmenname ändern  \n- Zu gamifizierter Version wechseln  \n- Neustart beantragen"',
       'helpProEmployMeter':
           '"Bonuskapazitäten (xx/yy):  \n- xx = noch verfuegbare Bonuspunkte  \n- yy = totale Bonuskapazitaet  \n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag  \n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln"',
       'helpProSalesMeter':
@@ -2441,74 +2376,65 @@ class StringRes {
           '"Fragenkatalog:  \n- Neue unbeantwortete Fragen finden und beantworten  \n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
       'helpProExistingCustomer':
           '"Bestandsfragen:  \n- Bestandsfragen liste enthält richtig beantwortete Fragen  \n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu"',
-      'helpProRewards': '"Auszeichnungen:  \n- Gibt es für gewisse Aktionen  \n- Steigen im Wert in höheren Leveln"',
+      'helpProRewards':
+          '"Auszeichnungen:  \n- Gibt es für gewisse Aktionen  \n- Steigen im Wert in höheren Leveln"',
       'helpProTeam':
           '"Teamperformance (nur Sichtbar wenn Mitarbeiterführung besteht):  \n- Liste der Mitarbeiter im Team  \n- Basis Reporting und KPIs  \n- Neustarts gewähren"',
       'helpProChallenges':
           '"Herausforderungen:  \n- Kollegen herausfordern  \n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten  \n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte"',
       'helpProOrganization':
           '"Lernbonus:  \n- Bonuspunkte auf Bonusbereiche verteilen  \n- ""Max. Bonuspunkte"" erhöhen um mehr Bonuspunkte verteilen zu koennen  \n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend"',
-      'helpProP': '"Entwicklung: \n- Überwache die Entwicklung deines Fortschritts  \n- Sorge dafür, dass deine Wissenpunkte zunehmen"',
-      'helpProRanking': '"Rangliste:  \n- Rang einsehen und vergleichen  \n- Unterschiedliche Zeitlinien können angezeigt werden"',
+      'helpProP':
+          '"Entwicklung: \n- Überwache die Entwicklung deines Fortschritts  \n- Sorge dafür, dass deine Wissenpunkte zunehmen"',
+      'helpProRanking':
+          '"Rangliste:  \n- Rang einsehen und vergleichen  \n- Unterschiedliche Zeitlinien können angezeigt werden"',
       //</editor-fold>
       'passwordChange': 'Passwort erfolgreich geändert.',
-      'nicknameChange': 'Spitzname erfolgreich geändert',
       'serviceReps': "Bestandsfragen",
 
-      'strProProfile': "- Firmenname ändern\n- Zu gamifizierter Version wechseln\n- Neustart beantragen",
+      'strProProfile':
+          "- Firmenname ändern\n- Zu gamifizierter Version wechseln\n- Neustart beantragen",
       'strEmpOMeter':
           "- xx = noch verfuegbare Bonuspunkte\n- yy = totale Bonuskapazitaet\n- Jeder Bonuspunkt kostet 200 (zunehmend) pro Tag\n- Auf Bonuspunktekapazitaeten klicken um zum Lernbonusbildschirm zu wechseln",
       'strSalesOMeter':
           "- xx = noch verfuegbare Lernkapazität\n- yy = totale Lernkapazität\n- Lernpunkte fuellen sich 8 Stunden nach benutzung automatisch wieder auf\n- Auf Lernkapazitäten klicken um zum Fragenkatalog zu wechseln",
       'strServiceOMeter':
           "- xx = noch verfügbare Bestandsfragenkapazität\n- yy = totale Bestandsfragenkapazität\n- Jeder Frage bindet eine Bestandsfragenkapazität\n- Auf Bestandsfragenkapazitaeten klicken um zur Bestandskundenliste zu wechseln",
-      'strBrandValue': "- Anteil richtig beantworteter Fragen\n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln",
+      'strBrandValue':
+          "- Anteil richtig beantworteter Fragen\n- Auf % richtige Antworten klicken um zur Rangliste zu wechseln",
       'strBrandValueTitle': "% richtige Antworten",
-      'strCash': "- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen\n- Verringert sich duch Kosten fuer Bonuspunkte",
-      'strBusinessSector': "- Neue Lernmodule finden\n- Abonnieren / abmelde\n- Herunterladen zur Nutzung ohne Internet Zugang",
+      'strCash':
+          "- Erhöht sich durch korrekt beantwortete Fragen und Auszeichnungen\n- Verringert sich duch Kosten fuer Bonuspunkte",
+      'strBusinessSector':
+          "- Neue Lernmodule finden\n- Abonnieren / abmelde\n- Herunterladen zur Nutzung ohne Internet Zugang",
       'strNewCustomer':
           "- Neue unbeantwortete Fragen finden und beantworten\n- Fragen benötigen freie Lern- und Bestandsfragen-Kapazitäten\n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu",
       'strExistingCustomer':
           "- Bestandsfragen liste enthält richtig beantwortete Fragen\n- Tage bis zur nächsten Wiederholung nimmt bei richtigen Antworten zu",
-      'strAchievement': "- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
-      'strReward': "- Tausche Wissenspunkte ein, um echte Belohnungen zu erhalten",
-      'strTeam': "- Liste der Mitarbeiter im Team\n- Basis Reporting und KPIs\n- Neustarts gewähren",
+      'strRewards':
+          "- Gibt es für gewisse Aktionen\n- Steigen im Wert in höheren Leveln",
+      'strTeam':
+          "- Liste der Mitarbeiter im Team\n- Basis Reporting und KPIs\n- Neustarts gewähren",
       'strChallenges':
           "- Kollegen herausfordern\n- hoher % Wert bedeutet der Herausgeforderte hat viele Fragen richtig zu beantworten\n- niedriger % Wert bedeutet der Herausgeforderte hat wenig Fragen zu beantworten, bekommt aber auch nur wenig Wissenspunkte",
       'strOrganization':
           "- Bonuspunkte auf Bonusbereiche verteilen\n- \"Max. Bonuspunkte\" erhöhen um mehr Bonuspunkte verteilen zu koennen\n- Jeder Bonuspunkt kostet 100 Wissenspunkte pro Tag und nimmt mit der Zeit zunehmend",
-      'strPL': "- Überwache die Entwicklung deines Fortschritts\n- Sorge dafür, dass deine Wissenpunkte zunehmen",
-      'strRanking': "- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
-      'strRanking': "- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
+      'strPL':
+          "- Überwache die Entwicklung deines Fortschritts\n- Sorge dafür, dass deine Wissenpunkte zunehmen",
+      'strRanking':
+          "- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
+      'strRanking':
+          "- Rang einsehen und vergleichen\n- Unterschiedliche Zeitlinien können angezeigt werden",
       'strKp': "WP",
       'strBalance': "Wissenspunkte",
       'addFriend': 'Freund hinzugefügt',
       'unFriend': 'Freund entfernt',
       'alert': "Achtung",
-      'alertUnFriend': "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
+      'alertUnFriend':
+          "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
     },
     'zh': {
-      //Nickname
-      'enterNickName': '请输入昵称',
-      'nicknameChange': '昵称已成功更改',
-      'newNickName': '新昵称',
-      'nickName': '昵称',
-      'downloadText': '这个模块将占用',
-
-      //Company code
-      'enterCompanyCode': '请输入您在电子邮件中收到的公司代码',
-      'changeLanguage': '改变语言',
-      'companyCode': '公司代码',
-
-      //password
-      'enterOldPassword': '请输入旧密码。',
-      'enterNewPassword ': '请输入新密码。',
-      'enterRePassword': '请重新输入新密码。',
-      'enterSameNewPassword': '请输入相同的新密码。',
-
       //<editor-fold desc="chines">
-      'accept': "接受",
-      "decline": "下降",
       'home': '首页',
       'businessSector': '学习模块',
       'newCustomers': '开放学习',
@@ -2516,7 +2442,7 @@ class StringRes {
       'organizations': '威力升级',
       'challenges': '挑战',
       'pl': '表现',
-      'rewards': '奖赏',
+      'rewards': '奖励',
       'ranking': '排名',
       'team': '团队',
       'profile': '个人资料',
@@ -2569,17 +2495,8 @@ class StringRes {
       'alertFriendSuccess': '成功添加朋友',
       'alertUnFriendSuccess': '成功取消朋友',
       'alertUChallengeSent': '挑战已成功发送',
-      //Rewards module
-      'redeem': '赎回',
-      'costReward': '费用',
-      'costUnit': '知识点数',
-      'unitsLeft': "剩余单位",
-      'categories': '类别',
-
       'subscribe': '加入',
       'unSubscribe': '取消加入',
-      'contactExpert': '咨询专家',
-      'moreInformation': '了解更多资讯',
       'subscribed': '已加入',
       'downLoad': '下载',
       'size': 'Q&A',
@@ -2587,17 +2504,18 @@ class StringRes {
       'alertWantToSubscribe1': '您确定要取消加入吗？',
       'alertWantToSubscribe2': '您将失去所有的问题',
       'downloading': '正在下载......',
+      'strDownloadText': '这个模块将占用',
+      'strDownloadNewText': '这个模块将占用',
       'alertNotAllowed': '您不能取消加入已分配的学习模块',
       'engagement': '情况',
       'debrief': '任务报告',
       'category': '类别',
-      'achievement': '奖励',
+      'achievement': '成就',
       'nextLevel': '下一级',
       'friends': '朋友',
       'competitor': '同事',
       'sendChallenge': '发送挑战',
       'next': '下一页',
-      'BackToList': '回到问题主选单',
       'answers': '答案',
       'question': '问题',
       'explanation': '说明',
@@ -2620,7 +2538,7 @@ class StringRes {
       'world': '国家',
       'country': '分数',
       'score': '昵称',
-      'companyName': '公司名称',
+      'companyName': '增加',
       'revenue': '#问题',
       'hashCustomers': '%正确',
       'brand': '%正确',
@@ -2643,26 +2561,31 @@ class StringRes {
 
       //introDialog
       'gotIt': "了解",
-      'rewardsDialogContent': "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您将收到的奖金。",
+      'rewardsDialogContent':
+          "查看奖励类别，点击奖杯查看您目前的成就以及您需要取得多少成就才能升到下一级别.\n\n下一级下面的数字是您将收到的奖金。",
       'challengesDialogTitle1': "挑战",
       'challengesDialogContent1': "在这里，您将学习如何挑战其他同事",
       'strChallanges': "挑战",
-      'strChallangesDialogContent': "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，\n然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。\n您的竞争对手需要正确回答选定模块的3个问题才能赢得挑战。",
+      'strChallangesDialogContent':
+          "搜索或选择您想挑战的同事。\n选择您想挑战他的学习模块之一，\n然后选择赢家可以获得的奖励 (%当前知识点数 (KP))。\n您的竞争对手需要正确回答选定模块的3个问题才能赢得挑战。",
       'strMarketingCommunications': "排名",
       'strMarketingCommunicationsDialog': "在这一部分，您将了解有关排名的所有信息",
-      'strRankingDialogContent': "在左侧选择排名标准 (比如知识点数 (KP))，并在顶部 选择您想对比的分组以及时间范围。\n您也可以点击"
-          "您"
-          "滚动到您的位置和挑战以及添加朋友。",
+      'strRankingDialogContent':
+          "在左侧选择排名标准 (比如知识点数 (KP))，并在顶部 选择您想对比的分组以及时间范围。\n您也可以点击"
+              "您"
+              "滚动到您的位置和挑战以及添加朋友。",
       'strYourTeamPerformance': "您的团队的表现",
       'strYourTeamPerformanceDialog': "这部分是团队领导专属。\n在这里您可以看到您的报告的表现。",
-      'strTeamDialog': "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现，并将他的知识点 (KP) 重置为30.000。",
+      'strTeamDialog':
+          "作为经理，您可以查看和监控您的团队的表现。如果您点击一个团队成员，您可以看到他的个人表现，并将他的知识点 (KP) 重置为30.000。",
 
       'plPerson': '表现',
 //      'niceMeetYou':'${Injector.userData?.name??""}很高兴见到您',
       'plMyName': '在这一部分，\n您将了解有关表现分析的所有信息',
       'hereYourMonitor': '在这里，您可以监控扣除和增加知识点数 (KP)。',
       'selectPeriod': '您还可以选择您想要查看的时间段和比较当前周期与上一个周期。',
-      'strYourTeamPerformanceDialog2': '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
+      'strYourTeamPerformanceDialog2':
+          '图表显示"保留级别"和"问题状态” "保留级别"表示保留了多少问题（1 = 低保留级别，10 = 知识保留得很好）。"问题状态"表示问题是否已开启并已回答（开启 = 开启回答，完成 = 已正确回答)',
       //existing customer
       'servingYourExisting': '已完成的学习列表',
       'servingYourExistingDialog': '\n在本教程的这一部分，\n您将学习有关您已完成的学习的所有相关信息',
@@ -2670,21 +2593,26 @@ class StringRes {
       'listOfExistingDetails':
           '在这里，您可以看到您目前已经记住的所有问题。\n您每天从这些问题那里获得多少知识点 (KP) 以及这些问题会在列表中存在多少天。\n如果您想删除一个问题，您可以点击"X"。\n然后，这个问题将不会为您生成更多的知识点数，\n但您将重新获得1个可用记忆点数 (MP)。',
       'readyForBusiness': '准备开始',
-      'readyForBusinessDeatils': '您可以进一步查看学习模块，回答更多的问题。\n\n或者探索这个应用程序的其他区域，您可以赚取奖励，挑战其他玩家，查看您的表现和比较您的排名。',
+      'readyForBusinessDeatils':
+          '您可以进一步查看学习模块，回答更多的问题。\n\n或者探索这个应用程序的其他区域，您可以赚取奖励，挑战其他玩家，查看您的表现和比较您的排名。',
       'finishTutorial': '完成教程',
 
       //customer situation
       'impactOnSales': '对学习点数 (SP) 和记忆点数 (MP) 的影响',
-      'impactOnSalesDetails': '恭喜！您正确地回答了您的第一个问题。\n您的学习点数 (SP) 条现在显示8/10，因为这个问题需要2个学习点数。您的记忆力点数 (MP) 条显示 9/10，因为这个问题会在您的已完成学习列表中占用1个记忆点数。',
+      'impactOnSalesDetails':
+          '恭喜！您正确地回答了您的第一个问题。\n您的学习点数 (SP) 条现在显示8/10，因为这个问题需要2个学习点数。您的记忆力点数 (MP) 条显示 9/10，因为这个问题会在您的已完成学习列表中占用1个记忆点数。',
       'impactOnBrand': '对知识分数 (KS) 的影响',
-      'impactOnBrandDetails': '您的知识分数 (KS) 现在是100％，因您100%正确回答了所有问题。\n\n独立于您的知识分数 (KS)，您的知识点数 (KP) 也因为获得这个问题提供的知识点数而增加。',
+      'impactOnBrandDetails':
+          '您的知识分数 (KS) 现在是100％，因您100%正确回答了所有问题。\n\n独立于您的知识分数 (KS)，您的知识点数 (KP) 也因为获得这个问题提供的知识点数而增加。',
       'checkYourCustomer': '查看完整的学习列表',
-      'checkYourCustomerDetails': '您可以在"已完成的学习"部分找到包含所有已完成的问题的列表。\n\n您可以通过点击您的记忆力点数 (MP) 条，\n从菜单选择“已完成的学习”，或者前往主页面选择“已完成的学习”进入您的“已完成的学习”页面。',
+      'checkYourCustomerDetails':
+          '您可以在"已完成的学习"部分找到包含所有已完成的问题的列表。\n\n您可以通过点击您的记忆力点数 (MP) 条，\n从菜单选择“已完成的学习”，或者前往主页面选择“已完成的学习”进入您的“已完成的学习”页面。',
       'clickServiceBtn': '点击您的记忆点数 (MP) 条',
 
       //engagement
       'yourFirstEngagement': '您的第一个问题',
-      'yourFirstEngagementDetails': '为了赢得这个问题，您需要正确回答这个问题。您可以点击展开按钮放大图片、问题和答案选项。\n\n选择正确的答案，然后单击"下一页”',
+      'yourFirstEngagementDetails':
+          '为了赢得这个问题，您需要正确回答这个问题。您可以点击展开按钮放大图片、问题和答案选项。\n\n选择正确的答案，然后单击"下一页”',
       'yourFirstEngagementBtn': '选择答案并单击"下一页”',
 
       //New Customer screen
@@ -2697,25 +2625,32 @@ class StringRes {
 
       //Business sector screen dialog
       'customerRelation': '学习模块介绍',
-      'customerRelationDetails': '\n在这里，您可以搜索学习模块，加入和取消加入，\n并决定是否要下载内容以供将来离线使用。',
+      'customerRelationDetails':
+          '\n在这里，您可以搜索学习模块，加入和取消加入，\n并决定是否要下载内容以供将来离线使用。',
       'areaOfComp': '学习模块介绍',
-      'areaOfCompDetails': '每个学习模块将测试特定的知识领域。\n"大小"表示每个模块中的问题数量。\n您可以点击学习模块阅读描述，并决定是否要加入它们。\n某些学习模块已由贵公司分配给您，无法取消加入。',
+      'areaOfCompDetails':
+          '每个学习模块将测试特定的知识领域。\n"大小"表示每个模块中的问题数量。\n您可以点击学习模块阅读描述，并决定是否要加入它们。\n某些学习模块已由贵公司分配给您，无法取消加入。',
       'accessToFirst': '加入第一个模块',
-      'accessToFirstDetails': '您可以加入第一个商业部门从而访问您的第一个问题。\n\n点击学习模块"开始"，然后点击"加入"。',
+      'accessToFirstDetails':
+          '您可以加入第一个商业部门从而访问您的第一个问题。\n\n点击学习模块"开始"，然后点击"加入"。',
       'accessToFirstBtn': '点击"开始”',
       'readyForCustomer': '准备好您的第一个问题',
-      'readyForCustomerDetails': '让我们前往开放学习板块，其中包含一个您可以回答的新问题列表。\n\n您可以点击您的学习点数 (SP) 条，使用导航菜单“>”，或者单击后退按钮，然后选择“开放学习”。',
+      'readyForCustomerDetails':
+          '让我们前往开放学习板块，其中包含一个您可以回答的新问题列表。\n\n您可以点击您的学习点数 (SP) 条，使用导航菜单“>”，或者单击后退按钮，然后选择“开放学习”。',
       'readyForCustomerBtn': '点击学习点数 (SP) 条',
 
       'customersRelationShip': "学习模块介绍",
 
-      'customersRelationShipContent': "在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。",
+      'customersRelationShipContent':
+          "在这里，您可以搜索学习模块，加入和取消加入，并决定是否要下载内容以供将来离线使用。",
       'areaOfCompetency': "学习模块介绍",
-      'areaOfCompetenceContent': "每个学习模块将测试特定的知识领域。\"大小\"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。",
+      'areaOfCompetenceContent':
+          "每个学习模块将测试特定的知识领域。\"大小\"表示每个模块中的问题数量。您可以点击学习模块阅读描述，并决定是否要加入它们。某些学习模块已由贵公司分配给您，无法取消加入。",
       'customizeYourCompany': "自定义您的个人资料",
-      'customizeYourCompanyContent': "，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
-          "个人资料"
-          "。 ",
+      'customizeYourCompanyContent':
+          "，\n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+              "个人资料"
+              "。 ",
 
       //Organization screen Dialog
       'hireHrEmp': '提高“最大威力升级 (PU)”',
@@ -2725,35 +2660,43 @@ class StringRes {
           '如需获取建议和了解提高威力升级点数 (PU) 的原因，请点击它们。\n让我们先花费10个威力升级点数 (PU) 和1000个知识点数 (KP) 来将“最大威力升级 (PU)”升至1级。\n点击“最大威力升级 (PU)”然后点击“提高等级”',
 
       'empOMaster': '威力升级点数 (PU) 条',
-      'empOMasterDetails': '您的威力升级点数 (PU) 条显示40/50。\n50是您最大的威力升级点数 (PU)，40是您当前可用的点数。\n您可以通过提高威力升级点数 (PU) 级别来增加您的最大值。\n点击您的威力升级点数 (PU) 条，您将前往此界面。',
+      'empOMasterDetails':
+          '您的威力升级点数 (PU) 条显示40/50。\n50是您最大的威力升级点数 (PU)，40是您当前可用的点数。\n您可以通过提高威力升级点数 (PU) 级别来增加您的最大值。\n点击您的威力升级点数 (PU) 条，您将前往此界面。',
       'costOfEmp': '进步的成本',
       'costOfEmpDetails':
           '在这里，您可以看到您的知识点数 (KP)。\n\n提高威力升级点数 (PU) 会花费知识点数 (KP)。随着等级的提升，这种一次性的花费成本会增加。\n每花费一个威力升级点数 (PU) 会不断产生费用，一开始是每天每个威力升级点数 (PU) 消耗200个知识点数 (KP)。这种成本将随着时间的推移而增加。',
 
       //setting screen Dialog
-      'settingDetails': '您可以切换到游戏模式（有虚拟公司),您可以打开或关闭声音。\n\n如果您的点数变为负数，您可以请求重新开始，您的经理会进行审批。',
+      'settingDetails':
+          '您可以切换到游戏模式（有虚拟公司),您可以打开或关闭声音。\n\n如果您的点数变为负数，您可以请求重新开始，您的经理会进行审批。',
 
       //Dashboard Game screen
       'welcomeToKnow': '',
-      'welcomeToKnowDetails': ", \n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
-          "个人资料"
-          "。 ",
+      'welcomeToKnowDetails':
+          ", \n\n欢迎来到游戏化的学习体验。\n您准备好赚取点数以及和同事竞争了吗？\n点击您的姓名或导航菜单 (“>”) 中的\n"
+              "个人资料"
+              "。 ",
       'clickYourProfile': '点击您的个人资料',
       'meetYourTeam': '您的威力升级点数 (PU)',
-      'meetYourTeamDetails': "点击威力升级点数查看您的进步概览。\n您可以根据需要增加和减少威力升级点数的级别！\n开始前您需要提高”最大威力升级点数 (PU)”，“最大学习点数 (SP)”和“最大记忆力 (MP)”。",
+      'meetYourTeamDetails':
+          "点击威力升级点数查看您的进步概览。\n您可以根据需要增加和减少威力升级点数的级别！\n开始前您需要提高”最大威力升级点数 (PU)”，“最大学习点数 (SP)”和“最大记忆力 (MP)”。",
       'clickOrgChart': '点击威力升级 (PU)',
       'getReadyApproach': '回答问题的学习点数 (SP)',
-      'getReadyApproachDetails': '"要回答问题，您需要学习点数。\n\n让我们点击“最大学习点数 (SP)”，然后“提升等级”来将“最大学习点数 (SP)”升至1级。"',
+      'getReadyApproachDetails':
+          '"要回答问题，您需要学习点数。\n\n让我们点击“最大学习点数 (SP)”，然后“提升等级”来将“最大学习点数 (SP)”升至1级。"',
       'clickSale': '点击“最大学习点数 (SP)”',
       'salesOMeter': '学习点数 (SP) 条',
-      'salesOMeterDetails': '"您的学习点数 (SP) 条显示10/10。\n最后一个数字显示您的最大学习点数 (SP)。\n第一个数字显示当前可用的学习点数 (SP)。\n\n回答问题将需要学习点数 (SP)，8小时后会自动补充。"',
+      'salesOMeterDetails':
+          '"您的学习点数 (SP) 条显示10/10。\n最后一个数字显示您的最大学习点数 (SP)。\n第一个数字显示当前可用的学习点数 (SP)。\n\n回答问题将需要学习点数 (SP)，8小时后会自动补充。"',
 
       'getReadyServer': '最大记忆点数 (MP)',
-      'getReadyServerDetails': "为了在您的记忆中保持一个正确的回答，您需要有一个可用的记忆点数。\n\n让我们点击“最大记忆点数 (MP)"
-          "，然后点击“提升等级”来获取10个记忆点数。",
+      'getReadyServerDetails':
+          "为了在您的记忆中保持一个正确的回答，您需要有一个可用的记忆点数。\n\n让我们点击“最大记忆点数 (MP)"
+              "，然后点击“提升等级”来获取10个记忆点数。",
       'clickOnService': '点击“最大记忆点数 (MP)"',
       'serviceOMeter': '记忆点数 (MP) 条',
-      'serviceOMeterDetails': "您的记忆点数 (MP) 条显示10/10。\n最后一个数字显示您的最大记忆容量。\n第一个数字显示新问题的可用记忆点数。\n\n每个正确回答的问题将需要1个记忆点数。",
+      'serviceOMeterDetails':
+          "您的记忆点数 (MP) 条显示10/10。\n最后一个数字显示您的最大记忆容量。\n第一个数字显示新问题的可用记忆点数。\n\n每个正确回答的问题将需要1个记忆点数。",
 
       'readyForSerious': '准备好回答您的第一个问题了吗',
       'readyForSeriousDetails': "很好，您现在已经准备好您的第一个问题。\n让我们前往"
@@ -2812,41 +2755,53 @@ class StringRes {
 
       //help pro screen :
       'helpProProfile': '"个人资料: \n- 更改您的公司名称 \n- 切换到游戏模式 \n- 切换公司 \n- 申请重新开始"',
-      'helpProEmployMeter': '"威力升级点数条 (xx/yy): \n- xx = 当前可用威力升级点数 \n- yy = 威力升级总量 \n- 每一个威力升级点数每天花费您200 (逐渐增加) \n- 点击威力升级点数条将前往威力升级界面"',
-      'helpProSalesMeter': '"学习点数条 (xx/yy): \n- xx = 当前可用学习点数 \n- yy = 总学习点数 \n- 8小时候已使用的学习点数会重新填充 \n- 点击学习点数条将前往开放问题列表"',
-      'helpProServiceMeter': '"记忆点数条 (xx/yy): \n- xx = 当前可用记忆点数 \n- yy =  总记忆点数 \n- 每个问题需要一个可用的记忆点数 \n-  点击记忆点数条将前往已回答问题列表"',
+      'helpProEmployMeter':
+          '"威力升级点数条 (xx/yy): \n- xx = 当前可用威力升级点数 \n- yy = 威力升级总量 \n- 每一个威力升级点数每天花费您200 (逐渐增加) \n- 点击威力升级点数条将前往威力升级界面"',
+      'helpProSalesMeter':
+          '"学习点数条 (xx/yy): \n- xx = 当前可用学习点数 \n- yy = 总学习点数 \n- 8小时候已使用的学习点数会重新填充 \n- 点击学习点数条将前往开放问题列表"',
+      'helpProServiceMeter':
+          '"记忆点数条 (xx/yy): \n- xx = 当前可用记忆点数 \n- yy =  总记忆点数 \n- 每个问题需要一个可用的记忆点数 \n-  点击记忆点数条将前往已回答问题列表"',
       'helpProBrandValue': '"%正确答案: \n- 正确回答问题的百分比 \n- 点击%正确答案将前往排名界面 "',
       'helpProCash': '"知识点数: \n- 正确回答问题和达成成就都可以增加知识点数 \n- 进行威力升级会减少知识点数"',
 
-      'helpProBusinessSector': '"学习模块: \n- 寻找新的学习模块 \n- 加入 / 取消加入 \n- 下载以供离线使用"',
-      'helpProNewCustomers': '"开放学习: \n- 寻找新的问题来回答 \n- 每个问题都需要可用的学习和记忆点数 \n- 如果您答对了问题，问题重复的次数就会增加"',
-      'helpProExistingCustomer': '"完成的学习: \n- 复习您所有正确回答的问题 \n- 如果您答对了问题，问题重复的次数就会增加"',
+      'helpProBusinessSector':
+          '"学习模块: \n- 寻找新的学习模块 \n- 加入 / 取消加入 \n- 下载以供离线使用"',
+      'helpProNewCustomers':
+          '"开放学习: \n- 寻找新的问题来回答 \n- 每个问题都需要可用的学习和记忆点数 \n- 如果您答对了问题，问题重复的次数就会增加"',
+      'helpProExistingCustomer':
+          '"完成的学习: \n- 复习您所有正确回答的问题 \n- 如果您答对了问题，问题重复的次数就会增加"',
       'helpProRewards': '"奖励: \n- 通过完成某些任务获得奖励 \n- 如果您达到新的级别，您将获得额外的知识点数奖励"',
       'helpProTeam': '"团队 (仅对经理可见): \n- 您的直接下属名单 \n- 高级别报告和KPI \n- 允许纾困/重置"',
-      'helpProChallenges': '"挑战: \n- 挑战好友 \n- 选择%价值，确定问题的数量#和奖励 \n- 增加% = 增加要回答的问题的数量 \n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少"',
-      'helpProOrganization': '"威力升级: \n- 选择额外的威力升级 \n- 您需要威力升级容量 (PU) 才能使用威力升级点数 \n- 每天每使用一个威力升级点数花费您100个知识点数"',
+      'helpProChallenges':
+          '"挑战: \n- 挑战好友 \n- 选择%价值，确定问题的数量#和奖励 \n- 增加% = 增加要回答的问题的数量 \n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少"',
+      'helpProOrganization':
+          '"威力升级: \n- 选择额外的威力升级 \n- 您需要威力升级容量 (PU) 才能使用威力升级点数 \n- 每天每使用一个威力升级点数花费您100个知识点数"',
       'helpProP': '"表现: \n- 监控您的表现和进步 \n- 确保您赚取足够的知识点数"',
       'helpProRanking': '"排名: \n- 查看和比较您的排名 \n- 您可以检查多个时间段和比较多个群组"',
       //</editor-fold>
       'passwordChange': '密码已更改。',
-      'nicknameChange': '昵称已成功更改',
       'serviceReps': "记忆点数",
 
       'strProProfile': " - 更改您的公司名称\n- 切换到游戏模式\n- 切换公司\n- 申请重新开始",
-      'strEmpOMeter': "- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
-      'strSalesOMeter': "- xx = 当前可用学习点数\n- yy = 总学习点数\n- 8小时候已使用的学习点数会重新填充\n- 点击学习点数条将前往开放问题列表",
-      'strServiceOMeter': "- xx = 当前可用记忆点数\n- yy =  总记忆点数\n- 每个问题需要一个可用的记忆点数\n-  点击记忆点数条将前往已回答问题列表",
+      'strEmpOMeter':
+          "- xx = 当前可用威力升级点数\n- yy = 威力升级总量\n- 每一个威力升级点数每天花费您200 (逐渐增加)\n- 点击威力升级点数条将前往威力升级界面",
+      'strSalesOMeter':
+          "- xx = 当前可用学习点数\n- yy = 总学习点数\n- 8小时候已使用的学习点数会重新填充\n- 点击学习点数条将前往开放问题列表",
+      'strServiceOMeter':
+          "- xx = 当前可用记忆点数\n- yy =  总记忆点数\n- 每个问题需要一个可用的记忆点数\n-  点击记忆点数条将前往已回答问题列表",
       'strBrandValue': "- 正确回答问题的百分比\n- 点击%正确答案将前往排名界面",
       'strBrandValueTitle': "%正确答案",
       'strCash': "- 正确回答问题和达成成就都可以增加知识点数\n- 进行威力升级会减少知识点数",
       'strBusinessSector': "- 寻找新的学习模块\n- 加入 / 取消加入\n- 下载以供离线使用",
-      'strNewCustomer': "- 寻找新的问题来回答\n- 每个问题都需要可用的学习和记忆点数\n- 如果您答对了问题，问题重复的次数就会增加",
+      'strNewCustomer':
+          "- 寻找新的问题来回答\n- 每个问题都需要可用的学习和记忆点数\n- 如果您答对了问题，问题重复的次数就会增加",
       'strExistingCustomer': "- 复习您所有正确回答的问题\n- 如果您答对了问题，问题重复的次数就会增加",
-      'strAchievement': "- 通过完成某些任务获得奖励\n- 如果您达到新的级别，您将获得额外的知识点数奖励",
-      'strReward': "- 兑换知识点数以获得真实世界的奖赏",
+      'strRewards': "- 通过完成某些任务获得奖励\n- 如果您达到新的级别，您将获得额外的知识点数奖励",
       'strTeam': "- 您的直接下属名单\n- 高级别报告和KPI\n- 允许纾困/重置",
-      'strChallenges': "- 挑战好友\n- 选择%价值，确定问题的数量#和奖励\n- 增加% = 增加要回答的问题的数量\n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少",
-      'strOrganization': "- 选择额外的威力升级\n- 您需要威力升级容量 (PU) 才能使用威力升级点数\n- 每天每使用一个威力升级点数花费您100个知识点数",
+      'strChallenges':
+          "- 挑战好友\n- 选择%价值，确定问题的数量#和奖励\n- 增加% = 增加要回答的问题的数量\n- 更高％ = 如果对手赢了，他可以赢得更多，如果他输了，您赢得更少",
+      'strOrganization':
+          "- 选择额外的威力升级\n- 您需要威力升级容量 (PU) 才能使用威力升级点数\n- 每天每使用一个威力升级点数花费您100个知识点数",
       'strPL': "- 监控您的表现和进步\n- 确保您赚取足够的知识点数",
       'strRanking': "- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",
       'strRanking': "- 查看和比较您的排名\n- 您可以检查多个时间段和比较多个群组",

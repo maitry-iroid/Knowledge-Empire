@@ -1,3 +1,4 @@
+
 class GetLearningModuleRequest {
   int userId;
   int isChallenge;
@@ -17,10 +18,11 @@ class GetLearningModuleRequest {
   }
 }
 
+
 class LearningModuleResponse {
-  String flag = "";
-  String result = "";
-  String msg = "";
+  String flag="";
+  String result="";
+  String msg="";
   List<LearningModuleData> data;
 
   LearningModuleResponse({this.flag, this.result, this.msg, this.data});
@@ -51,9 +53,9 @@ class LearningModuleResponse {
 
 class LearningModuleData {
   int moduleId;
-  String moduleName = "";
-  String moduleDescription = "";
-  String question = "";
+  String moduleName="";
+  String moduleDescription="";
+  String question="";
   int isAssign;
   int companyId;
   int isDownloadEnable;
@@ -62,13 +64,6 @@ class LearningModuleData {
   var fileSize;
   bool isDownloading = false;
   int index;
-  String expertEmail;
-  String additionalInfoLink;
-  String mediaLink;
-  String mediaThumbImage;
-  int supportFileType;
-  int videoPlay;
-  int videoLoop;
 
 
   LearningModuleData();
@@ -84,13 +79,6 @@ class LearningModuleData {
     isDownloadEnable = json['isDownloadEnable'];
     moduleProgress = json['moduleProgress'];
     isSubscribedFromBackend = json['isSubscribedFromBackend'];
-    expertEmail = json['expertEmail'];
-    additionalInfoLink = json['additionalInfoLink'];
-    mediaLink = json['mediaLink'];
-    mediaThumbImage = json['mediaThumbImage'];
-    supportFileType = json['supportFileType'];
-    videoPlay = json['videoPlay'];
-    videoLoop = json['videoLoop'];
   }
 
   Map<String, dynamic> toJson() {
@@ -104,13 +92,6 @@ class LearningModuleData {
     data['isDownloadEnable'] = this.isDownloadEnable;
     data['moduleProgress'] = this.moduleProgress;
     data['isSubscribedFromBackend'] = this.isSubscribedFromBackend;
-    data['expertEmail'] = this.expertEmail;
-    data['additionalInfoLink'] = this.additionalInfoLink;
-    data['mediaLink'] = this.mediaLink;
-    data['mediaThumbImage'] = this.mediaThumbImage;
-    data['supportFileType'] = this.supportFileType;
-    data['videoPlay'] = this.videoPlay;
-    data['videoLoop'] = this.videoLoop;
     return data;
   }
 }
@@ -139,3 +120,4 @@ class AssignModuleRequest {
     return data;
   }
 }
+

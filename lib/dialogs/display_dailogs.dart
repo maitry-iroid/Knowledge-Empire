@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';
@@ -55,7 +56,8 @@ class DisplayDialogs {
   static double akikoImageMoveRight = 9.3;
   static double akikoImageMoveTop = 80.0;
 
-  static showChallengeDialog(BuildContext context, String userName, QuestionData questionData) {
+  static showChallengeDialog(
+      BuildContext context, String userName, QuestionData questionData) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -66,7 +68,11 @@ class DisplayDialogs {
             ),
             child: Container(
               height: Utils.getDeviceHeight(context) / 1.4,
-              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("challenges_bg_alert")), fit: BoxFit.cover)),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image:
+                          AssetImage(Utils.getAssetsImg("challenges_bg_alert")),
+                      fit: BoxFit.cover)),
               child: Stack(
                 alignment: Alignment.center,
                 children: <Widget>[
@@ -74,33 +80,59 @@ class DisplayDialogs {
                     child: Container(
                       width: Utils.getDeviceWidth(context) / 2.5,
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 30, left: 10, right: 10, bottom: 10),
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                      margin: EdgeInsets.only(
+                          top: 30, left: 10, right: 10, bottom: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
                             new Container(
                               height: 30,
                               padding: EdgeInsets.all(8),
-                              margin: EdgeInsets.only(top: Utils.getDeviceHeight(context) / 22),
-                              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("challenges_alert_bg")))),
+                              margin: EdgeInsets.only(
+                                  top: Utils.getDeviceHeight(context) / 22),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(Utils.getAssetsImg(
+                                          "challenges_alert_bg")))),
                               child: Center(
-                                child: Text(Utils.getText(context, StringRes.challenge), style: TextStyle(color: ColorRes.textRecordBlue)),
+                                child: Text(
+                                    Utils.getText(context, StringRes.challenge),
+                                    style: TextStyle(
+                                        color: ColorRes.textRecordBlue)),
                               ),
                             ),
                             SizedBox(height: 9),
-                            challengesRow(Utils.getText(context, StringRes.by) + ": ", userName),
-                            challengesRow(Utils.getText(context, StringRes.inText) + ": ", "${questionData.moduleName ?? ""}"),
-                            challengesRow(Utils.getText(context, StringRes.toWin) + ": ",
-                                questionData.winningAmount.toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
-                            challengesRow(Utils.getText(context, StringRes.questions) + ": ", "${questionData.totalQuestion ?? ""}"),
+                            challengesRow(
+                                Utils.getText(context, StringRes.by) + ": ",
+                                userName),
+                            challengesRow(
+                                Utils.getText(context, StringRes.inText) + ": ",
+                                "${questionData.moduleName ?? ""}"),
+                            challengesRow(
+                                Utils.getText(context, StringRes.toWin) + ": ",
+                                questionData.winningAmount
+                                    .toString() /*+" "+ Utils.getText(context, StringRes.yourValue).toString()*/),
+                            challengesRow(
+                                Utils.getText(context, StringRes.questions) +
+                                    ": ",
+                                "${questionData.totalQuestion ?? ""}"),
                             InkResponse(
                               child: Container(
-                                padding: EdgeInsets.only(left: 35, right: 35, top: 10, bottom: 10),
+                                padding: EdgeInsets.only(
+                                    left: 35, right: 35, top: 10, bottom: 10),
                                 margin: EdgeInsets.only(top: 5),
                                 decoration: BoxDecoration(
-                                    image: DecorationImage(image: AssetImage(Utils.getAssetsImg('chhellages_alert_next_bg')), fit: BoxFit.fill)),
-                                child: Text(Utils.getText(context, StringRes.next), style: TextStyle(color: ColorRes.white)),
+                                    image: DecorationImage(
+                                        image: AssetImage(Utils.getAssetsImg(
+                                            'chhellages_alert_next_bg')),
+                                        fit: BoxFit.fill)),
+                                child: Text(
+                                    Utils.getText(context, StringRes.next),
+                                    style: TextStyle(color: ColorRes.white)),
                               ),
                               onTap: () {
                                 Utils.playClickSound();
@@ -111,6 +143,7 @@ class DisplayDialogs {
                                   initialPageType: Const.typeEngagement,
                                   questionHomeData: questionData,
                                   isChallenge: true,
+                                  isReadyForChallenge: true
                                 ));
                               },
                             )
@@ -122,8 +155,11 @@ class DisplayDialogs {
                   Positioned(
                       child: Align(
                           alignment: Alignment.topCenter,
-                          child: Image.asset(Utils.getAssetsImg("challenges_icon"),
-                              fit: BoxFit.contain, height: Utils.getDeviceHeight(context) / 6, width: Utils.getDeviceHeight(context) / 6)))
+                          child: Image.asset(
+                              Utils.getAssetsImg("challenges_icon"),
+                              fit: BoxFit.contain,
+                              height: Utils.getDeviceHeight(context) / 6,
+                              width: Utils.getDeviceHeight(context) / 6)))
                 ],
               ),
             ),
@@ -157,7 +193,8 @@ class DisplayDialogs {
         );
   }
 
-  static showUpdateDialog(BuildContext context, String headline, String message, isCancelAble) {
+  static showUpdateDialog(
+      BuildContext context, String headline, String message, isCancelAble) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -178,10 +215,13 @@ class DisplayDialogs {
               desTextLine: message,
               onTapBtn: () async {
                 //Navigator.pop(context);
-                OpenAppstore.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: "id1491903275");
+                OpenAppstore.launch(
+                    androidAppId: Injector.packageInfo.packageName,
+                    iOSAppId: Injector.packageInfo.packageName);
               },
               onTapSecondBtn: () {
-                Injector.prefs.setString(PrefKeys.isCancelDialog, DateTime.now().toString());
+                Injector.prefs.setString(
+                    PrefKeys.isCancelDialog, DateTime.now().toString());
                 Navigator.pop(context);
               },
             ),
@@ -206,13 +246,18 @@ class DisplayDialogs {
                   style: TextStyle(color: ColorRes.headerBlue),
                 ),
               )),
-          Expanded(flex: 5, child: Align(alignment: Alignment.centerLeft, child: Text(details, style: TextStyle(color: ColorRes.greyText)))),
+          Expanded(
+              flex: 5,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(details,
+                      style: TextStyle(color: ColorRes.greyText)))),
         ],
       ),
     );
   }
 
-  static professionalDialog(BuildContext context) {
+    static professionalDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -238,7 +283,6 @@ class DisplayDialogs {
                 Utils.playClickSound();
                 Injector.introData.profile1 = 1;
                 await Injector.setIntroData(Injector.introData);
-                Injector.updateIntroData();
                 Navigator.of(context).pop();
                 showIntroProfile2(context);
               } catch (e) {
@@ -266,7 +310,7 @@ class DisplayDialogs {
                 Utils.playClickSound();
                 Injector.introData.profile2 = 1;
                 await Injector.setIntroData(Injector.introData);
-                Injector.updateIntroData();
+
                 Navigator.of(context).pop();
               } catch (e) {
                 print(e);
@@ -296,7 +340,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroOrg2(context);
             },
           );
@@ -322,7 +365,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroOrg3(context);
             },
           );
@@ -348,7 +390,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org3 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroOrg4(context);
             },
           );
@@ -374,7 +415,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.org4 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
             },
           );
         });
@@ -403,7 +443,6 @@ class DisplayDialogs {
 
               Injector.introData.learningModule1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
 
               showIntroLearningModule2(context);
             },
@@ -432,7 +471,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.learningModule2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               //     showIntroAccesToYourFirstCustomers(context);
             },
           );
@@ -461,7 +499,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.newCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroNewCustomers2(context);
             },
           );
@@ -489,7 +526,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.newCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
             },
           );
         });
@@ -518,7 +554,6 @@ class DisplayDialogs {
 //              await Injector.updateIntroDialogType(Const.introImpactOnBrandValueAndCash);
               Injector.introData.customerSituation = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
 //              showImpactOnBrandValueAndCash(context);
             },
           );
@@ -547,7 +582,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.existingCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
 //              await Injector.updateIntroDialogType(Const.introListOfExistingCustomers);
               showIntroExisting2(context);
             },
@@ -576,38 +610,13 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.existingCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               //showReadyForBusiness(context);
             },
           );
         });
   }
 
-  //todo This dialogs only for Achievement screen
-  static showIntroAchievement(BuildContext context) async {
-    await Future.delayed(Duration(milliseconds: 50));
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return IntroScreenDialog(
-            menuView: false,
-            imageName: "john",
-            titleText: Utils.getText(context, StringRes.achievement),
-            btnName: Utils.getText(context, StringRes.gotIt),
-            desTextLine: Injector.introModel.rewards,
-            btnColor: ColorRes.blue,
-            onTapBtn: () async {
-              Utils.playClickSound();
-              Navigator.pop(context);
-
-              Injector.introData.rewards = 1;
-              await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
-            },
-          );
-        });
-  }
-
+  //todo This dialogs only for Reward screen
   static showIntroRewards(BuildContext context) async {
     await Future.delayed(Duration(milliseconds: 50));
     showDialog(
@@ -618,15 +627,14 @@ class DisplayDialogs {
             imageName: "john",
             titleText: Utils.getText(context, StringRes.rewards),
             btnName: Utils.getText(context, StringRes.gotIt),
-            desTextLine: Injector.introModel.reward2,
+            desTextLine: Injector.introModel.rewards,
             btnColor: ColorRes.blue,
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
 
-              Injector.introData.reward2 = 1;
+              Injector.introData.rewards = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
             },
           );
         });
@@ -654,7 +662,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.challenge1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroChallenge2(context);
             },
           );
@@ -682,7 +689,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.challenge2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
             },
           );
         });
@@ -702,7 +708,8 @@ class DisplayDialogs {
             imageHeight: lydiaImageHeight,
             imageMoveTop: lydiaImageMoveTop,
             imageMoveRight: lydiaImageMoveRight,
-            titleText: Utils.getText(context, StringRes.strMarketingCommunications),
+            titleText:
+                Utils.getText(context, StringRes.strMarketingCommunications),
             btnName: Utils.getText(context, StringRes.next),
             desTextLine: Injector.introModel.ranking1,
             onTapBtn: () async {
@@ -710,7 +717,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.ranking1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroRanking2(context);
             },
           );
@@ -738,7 +744,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.ranking2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
             },
           );
         });
@@ -767,7 +772,6 @@ class DisplayDialogs {
 
               Injector.introData.team1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroTeam2(context);
             },
           );
@@ -795,7 +799,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.team2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showYourTeam3(context);
             },
           );
@@ -823,7 +826,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.team3 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
             },
           );
         });
@@ -851,7 +853,6 @@ class DisplayDialogs {
               Navigator.pop(context);
               Injector.introData.pl1 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               showIntroPL2(context);
             },
           );
@@ -878,7 +879,6 @@ class DisplayDialogs {
               Utils.playClickSound();
               Injector.introData.pl2 = 1;
               await Injector.setIntroData(Injector.introData);
-              Injector.updateIntroData();
               Navigator.pop(context);
             },
           );

@@ -56,7 +56,7 @@ class _TimeItemState extends State<TimeItem> {
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? widget.isSelected
                     ? "ranking_bg_time_selected"
-                    : "ranking_bg_time_deselected" : "ranking_bg_time_selected"
+                    : "ranking_bg_time_deselected" : ""
                 )),
                 fit: BoxFit.contain)),
         child: Text(

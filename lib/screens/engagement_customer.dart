@@ -1,31 +1,31 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:ke_employee/BLoC/get_question_bloc.dart';
+import 'package:ke_employee/BLoC/customer_value_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
 import 'package:pdf_previewer/pdf_previewer.dart';
-import '../commonview/common_view.dart';
+import '../commonview/background.dart';
 import 'package:video_player/video_player.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/questions.dart';
 import '../models/submit_answer.dart';
+import 'package:http/http.dart' as http;
 
 /*
 *   created by Riddhi
@@ -39,9 +39,11 @@ import '../models/submit_answer.dart';
 
 List<Answer> arrAnswer = List();
 
+
 List abcdList = List();
 VideoPlayerController _controller;
 ChewieController _chewieController;
+
 
 class EngagementCustomer extends StatefulWidget {
   final HomeData homeData;
@@ -57,7 +59,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   QuestionData questionDataEngCustomer;
   bool isChallenge;
-  String _timeZone = "Unknown";
+
   List alphaIndex = ["A", "B", "C", "D"];
 
   String urlPDFPath = "";
@@ -71,7 +73,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   //todo pdf viewer
   String _pdfPath = '';
   String _previewPath;
-  PDFDocument _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -79,29 +80,46 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () async {
-      await this.getTimeZone();
-    });
     questionDataEngCustomer = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge ?? false;
 
     if (questionDataEngCustomer != null) {
-      Future.delayed(Duration.zero, () async {
-        questionDataEngCustomer.firstName = await EncryptionManager().stringDecryption(questionDataEngCustomer.firstName);
-        questionDataEngCustomer.lastName = await EncryptionManager().stringDecryption(questionDataEngCustomer.lastName);
-      });
       questionData = questionDataEngCustomer;
       questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = questionDataEngCustomer.answer;
       abcdList = alphaIndex;
-      getPdf();
-    }
 
-    if (Utils.isVideo(questionDataEngCustomer.mediaLink) && questionDataEngCustomer.answerType != Const.typeAnswerMedia) {
-//      Injector.audioPlayerBg.stop();
-      (Injector.isBusinessMode && (Injector.isSoundEnable ?? false)) ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
-      Future.delayed(Duration.zero, () async {
-        await this.initVideoController(questionDataEngCustomer.mediaLink);
+      getPdf();
+//    downloadFile();
+      if(Utils.isVideo(questionData.mediaLink)){
+        Future.delayed(Duration.zero, () async{
+          await ExpandMediaState().initVideoController(questionData.mediaLink);
+        });
+      }
+    }
+  }
+
+  Future getPdf() async {
+    if (questionData != null &&
+        questionData.mediaLink != null &&
+        Utils.isPdf(questionData.mediaLink)) {
+      if (Utils.getCacheFile(questionData.mediaLink) != null) {
+        File fetchedFile = Utils
+            .getCacheFile(questionData.mediaLink)
+            .file;
+        _pdfPath = fetchedFile.path;
+        _previewPath = await PdfPreviewer.getPagePreview(
+            filePath: _pdfPath, pageNumber: _pageNumber);
+      } else {
+        File fetchedFile = await await DefaultCacheManager()
+            .getSingleFile(questionData.mediaLink);
+        _pdfPath = fetchedFile.path;
+      }
+      _previewPath = await PdfPreviewer.getPagePreview(
+          filePath: _pdfPath, pageNumber: _pageNumber);
+
+      setState(() {
+        _isLoading = false;
       });
     }
   }
@@ -115,6 +133,38 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
     super.dispose();
   }
+//
+//  Future<void> initVideoController(String link) async {
+//    if (Utils.isVideo(link)) {
+//      await Injector.cacheManager
+//          .getFileFromCache(link)
+//          .then((fileInfo) {
+//        _controller = Utils.getCacheFile(link) != null
+//            ? VideoPlayerController.file(
+//            Utils
+//                .getCacheFile(link)
+//                .file)
+//            : VideoPlayerController.network(link)
+//          ..initialize().then((_) {
+//            if (mounted)
+//              setState(() {
+//                _chewieController.play();
+//              });
+//          });
+//        _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
+//        questionData.videoLoop == 1
+//            ? _controller.setLooping(true)
+//            : _controller.setLooping(false);
+//        _chewieController = ChewieController(
+//            videoPlayerController: _controller,
+//            autoPlay: true,
+//            allowFullScreen: false,
+//            materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+//            cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
+//            looping: true);
+//      });
+//    }
+//  }
 
   bool isLoading = false;
 
@@ -127,8 +177,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         children: <Widget>[
           isChallenge
               ? Container(
-                  color: ColorRes.colorBgDark,
-                )
+            color: ColorRes.colorBgDark,
+          )
               : CommonView.showBackground(context),
           Column(
             children: <Widget>[
@@ -136,8 +186,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               SizedBox(
                 height: 8,
               ),
-              widget.homeData.questionHomeData.answerType == Const.typeAnswerText ||
-                      widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText
                   ? showMainBody(context)
                   : showMediaBody(context),
             ],
@@ -146,40 +195,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         ],
       ),
     );
-  }
-
-  getTimeZone() async {
-    String timezone = await Utils.initPlatformState();
-    print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
-    if (!mounted) return;
-
-    setState(() {
-      this._timeZone = timezone;
-    });
-  }
-
-  Future getPdf() async {
-    if (questionData != null && questionData.mediaLink != null && Utils.isPdf(questionData.mediaLink)) {
-      if (Utils.getCacheFile(questionData.mediaLink) != null) {
-        File fetchedFile = Utils.getCacheFile(questionData.mediaLink).file;
-        _pdfPath = fetchedFile.path;
-      } else {
-        File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
-        _pdfPath = fetchedFile.path;
-      }
-      _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
-
-      // Load from URL
-      _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
-        print(e);
-      });
-
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
   }
 
   selectItem(index) {
@@ -207,10 +222,24 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(width: 1, color: arrAnswer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
-              color: arrAnswer[index].isSelected ? ColorRes.blueMenuSelected : ColorRes.white,
-              image: Injector.isBusinessMode ? (DecorationImage(image: AssetImage(checkAnswer(index)), fit: BoxFit.cover)) : null),
+              borderRadius:
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(
+                  width: 1,
+                  color: arrAnswer[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
+              color: Injector.isBusinessMode
+                  ? null
+                  : (arrAnswer[index].isSelected
+                  ? ColorRes.blueMenuSelected
+                  : ColorRes.white),
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
+                  image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
+                  : null),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -222,7 +251,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       Utils.getText(context, abcdList[index]),
                       style: TextStyle(
                         fontSize: 17,
-                        color: (arrAnswer[index].isSelected ? ColorRes.white : ColorRes.textProf),
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf),
                       ),
                     )),
               ),
@@ -231,7 +262,11 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   padding: EdgeInsets.only(left: 5.0, right: 5.0),
                   child: new Text(
                     arrAnswer[index].answer,
-                    style: TextStyle(fontSize: 17, color: (arrAnswer[index].isSelected ? ColorRes.white : ColorRes.textProf)),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf)),
                   ),
                 ),
               )
@@ -241,7 +276,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitAnswer(BuildContext context) async {
-    List<Answer> selectedAnswer = arrAnswer.where((answer) => answer.isSelected).toList();
+    List<Answer> selectedAnswer =
+    arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
       Utils.showToast(Utils.getText(context, StringRes.alertSelectOneOption));
@@ -250,24 +286,29 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     questionData.isAnsweredCorrect = isAnswerCorrect(selectedAnswer) ? 1 : 0;
 
-    // SubmitAnswerRequest rq = Injector.prefs.getString(PrefKeys.answerData) != null
-    //     ? SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
-    //     : SubmitAnswerRequest();
-
-    //TODO manage request here for download module
-    SubmitAnswerRequest rq = SubmitAnswerRequest();
+    SubmitAnswerRequest rq =
+    Injector.prefs.getString(PrefKeys.answerData) != null
+        ? SubmitAnswerRequest.fromJson(
+        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)))
+        : SubmitAnswerRequest();
 
     SubmitAnswerRequest rqFinal = getSubmitAnswerRequest(rq);
 
-    await Injector.prefs.setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
+    await Injector.prefs
+        .setString(PrefKeys.answerData, jsonEncode(rqFinal.toJson()));
 
     if (questionData.isAnsweredCorrect == 1) {
-      Injector.customerValueData.totalBalance = Injector.customerValueData.totalBalance + questionData.value;
+      Injector.customerValueData.totalBalance =
+          Injector.customerValueData.totalBalance + questionData.value;
 
-      Injector.customerValueData.remainingSalesPerson = Injector.customerValueData.remainingSalesPerson - questionData.resources;
-      Injector.customerValueData.remainingCustomerCapacity = Injector.customerValueData.remainingCustomerCapacity - 1;
+      Injector.customerValueData.remainingSalesPerson =
+          Injector.customerValueData.remainingSalesPerson -
+              questionData.resources;
+      Injector.customerValueData.remainingCustomerCapacity =
+          Injector.customerValueData.remainingCustomerCapacity - 1;
 
-      Injector.prefs.setString(PrefKeys.customerValueData, jsonEncode(Injector.customerValueData.toJson()));
+      Injector.prefs.setString(PrefKeys.customerValueData,
+          jsonEncode(Injector.customerValueData.toJson()));
     }
 
     Utils.isInternetConnected().then((isConnected) {
@@ -280,7 +321,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void performSubmitChallenge(BuildContext context) async {
-    List<Answer> selectedAnswer = arrAnswer.where((answer) => answer.isSelected).toList();
+    List<Answer> selectedAnswer =
+    arrAnswer.where((answer) => answer.isSelected).toList();
 
     if (selectedAnswer.length == 0) {
       Utils.showToast(Utils.getText(context, StringRes.alertSelectOneOption));
@@ -306,9 +348,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   void callSubmitAnswerApi(BuildContext context) {
-    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
+    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
+        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
-    print("Submit Answer rq : ${rq.toJson()}");
     if (mounted)
       setState(() {
         isLoading = true;
@@ -347,7 +389,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         isLoading = true;
       });
 
-    WebApi().callAPI(WebApi.rqSubmitChallengeAnswer, rq.toJson()).then((data) async {
+    WebApi()
+        .callAPI(WebApi.rqSubmitChallengeAnswer, rq.toJson())
+        .then((data) async {
       if (mounted)
         setState(() {
           isLoading = false;
@@ -356,7 +400,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (data != null) {
 //        QuestionData questionData = QuestionData.fromJson(data);
         navigateToSituation(context, questionData);
-        Utils.callCustomerValuesApi();
+        Utils.getCustomerValues();
       }
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
@@ -371,45 +415,59 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   showSubHeader(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
+        margin: EdgeInsets.only(
+            top: Utils.getHeaderHeight(context) + 10, left: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             isChallenge
                 ? Row(
-                    children: <Widget>[
-                      Container(
-                        width: 30,
-                        height: 30,
-                        margin: EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: questionData.profileImage != null && questionData.profileImage.isNotEmpty
-                                    ? Utils.getCacheNetworkImage(questionData.profileImage)
-                                    : AssetImage(Utils.getAssetsImg('user_org')),
-                                fit: BoxFit.fill),
-                            border: Border.all(color: ColorRes.textLightBlue)),
-                      ),
-                      Text(
-                        questionData.firstName.toString() + " " + questionData.lastName.toString(),
-                        style: TextStyle(color: ColorRes.white, fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  )
+              children: <Widget>[
+                Container(
+                  width: 30,
+                  height: 30,
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: questionData.profileImage != null &&
+                              questionData.profileImage.isNotEmpty
+                              ? Utils.getCacheNetworkImage(
+                              questionData.profileImage)
+                              : AssetImage(
+                              Utils.getAssetsImg('user_org')),
+                          fit: BoxFit.fill),
+                      border: Border.all(color: ColorRes.textLightBlue)),
+                ),
+                Text(
+                  questionData.firstName.toString() +
+                      " " +
+                      questionData.lastName.toString(),
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )
                 : Container(
-                    width: 100,
-                  ),
+              width: 100,
+            ),
             Container(
               alignment: Alignment.center,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-                  color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                  image:
-                      Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(15),
+                  color: Injector.isBusinessMode
+                      ? null
+                      : ColorRes.blueMenuSelected,
+                  image: Injector.isBusinessMode
+                      ? (DecorationImage(
+                      image:
+                      AssetImage(Utils.getAssetsImg("eddit_profile")),
+                      fit: BoxFit.fill))
+                      : null),
               child: Text(
                 Utils.getText(context, StringRes.engagement),
                 style: TextStyle(color: ColorRes.white, fontSize: 18),
@@ -421,7 +479,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 alignment: Alignment.center,
                 width: 100,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(Utils.getAssetsImg("bg_engage_now")),
+                        fit: BoxFit.fill)),
                 child: Text(
                   Utils.getText(context, StringRes.next),
                   style: TextStyle(color: ColorRes.white, fontSize: 16),
@@ -444,78 +505,86 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   showMainBody(BuildContext context) {
     return Expanded(
         child: Row(
-      children: <Widget>[showFirstHalf(context), showSecondHalf(context)],
-    ));
+          children: <Widget>[
+            showFirstHalf(context),
+            showSecondHalf(context),
+          ],
+        ));
   }
 
   showMediaBody(BuildContext context) {
     return Expanded(
         child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+          padding: EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
 //              showMediaQuestion(context),
-          Expanded(child: showMediaAnswerOptions(context, false))
-        ],
-      ),
-    ));
+              showMediaAnswerOptions(context)
+            ],
+          ),
+        ));
   }
 
-  showMediaQuestion(BuildContext context) {
+  showMediaQuestion(BuildContext context){
+    print("Question :::::::::: ${widget.homeData.questionHomeData.question}");
     return Padding(
         padding: EdgeInsets.only(bottom: 5, left: 5),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Text(Utils.getText(context, StringRes.question) + " :  ",
+            Text(
+                Utils.getText(context, StringRes.question) + " :  ",
                 style: TextStyle(
                     color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.headerBlue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5)),
-            Expanded(
-                child: Text(widget.homeData.questionHomeData.question,
-                    maxLines: 5, style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey, fontSize: 16)))
+                    fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 0.5)),
+            Expanded(child: Text(widget.homeData.questionHomeData.question,
+                maxLines: 5,
+                style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey, fontSize: 16)))
           ],
         ));
   }
 
-  showMediaAnswerOptions(BuildContext context, bool isMediaWithQuestion) {
-    return GridView.builder(
-        physics: isMediaWithQuestion ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: widget.homeData.questionHomeData.answer.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: isMediaWithQuestion ? 1 : 2, childAspectRatio: 2, crossAxisSpacing: 0, mainAxisSpacing: 0),
-        itemBuilder: (context, index) {
-          return Stack(
-            alignment: Alignment.topRight,
-            children: <Widget>[
-              MediaManager().showQueMedia(context, ColorRes.white, arrAnswer.elementAt(index).answer,
-                  arrAnswer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
-              Padding(
-                  padding: EdgeInsets.only(top: 15, right: 15),
-                  child: Transform.scale(
-                    scale: 1.7,
-                    child: Checkbox(
-                        checkColor: ColorRes.white,
-                        activeColor: ColorRes.greenDot,
-                        value: arrAnswer[index].isSelected ? true : false,
-                        onChanged: (value) {
-                          Utils.playClickSound();
-                          if (mounted) {
-                            setState(() {
-                              arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-                            });
-                          }
-                        }),
-                  ))
-            ],
-          );
-        });
+  showMediaAnswerOptions(BuildContext context){
+    return Expanded(
+        child: GridView.builder(
+            itemCount: widget.homeData.questionHomeData.answer.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 2,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0
+            ),
+            itemBuilder: (context, index){
+              return Stack(
+                alignment: Alignment.topRight,
+                children: <Widget>[
+                  MediaManager().showQueMedia(context, ColorRes.white, arrAnswer.elementAt(index).answer, arrAnswer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
+                  Padding(padding: EdgeInsets.only(top: 15, right: 15),
+                      child: Transform.scale(
+                        scale: 1.7,
+                        child: Checkbox(
+                            checkColor: ColorRes.white,
+                            activeColor: ColorRes.greenDot,
+                            value: arrAnswer[index].isSelected  ? true : false,
+                            onChanged: (value){
+                              Utils.playClickSound();
+                              setState(() {
+                                arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+                              });
+//                              print( " Array Answer :::  ${widget.homeData.questionHomeData.correctAnswerId}");
+//                              print( " Array Answer :::  ${arrAnswer.map((e) => e.option).toList()}");
+//                              print( " Array Answer :::  ${arrAnswer.map((e) => e.isSelected).toList()}");
+                            }
+                        ),
+                      ))
+                ],
+              );
+            }
+        )
+    );
   }
 
   bool isAnswerCorrect(List<Answer> selectedAnswer) {
@@ -541,15 +610,17 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     rq.userId = Injector.userData.userId.toString();
     rq.challengeId = 0;
     rq.isChallenge = 0;
-    print("----------------------- In request parameter : $_timeZone");
-    rq.timezone = this._timeZone;
 
     SubmitAnswer submitAnswer = SubmitAnswer();
 
     submitAnswer.questionId = questionData.questionId;
     submitAnswer.moduleId = questionData.moduleId;
     if (!isChallenge) {
-      submitAnswer.counter = max(questionData.isAnsweredCorrect == 1 ? (questionData.counter + 1) : (questionData.counter ~/ 2).round(), 0);
+      submitAnswer.counter = max(
+          questionData.isAnsweredCorrect == 1
+              ? (questionData.counter + 1)
+              : (questionData.counter ~/ 2).round(),
+          0);
       submitAnswer.loyalty = questionData.loyalty;
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
@@ -560,58 +631,36 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     if (rq.answer == null) rq.answer = List<SubmitAnswer>();
     rq.answer.add(submitAnswer);
 
-    rq.totalQuestionAnswered = 1;
+    rq.totalQuestionAnswered = rq.answer.length;
 
     Utils.isInternetConnected().then((isConnected) {
       if (!isConnected) {
-        Utils.updateAttemptTimeInQuestionDataLocally(questionData.questionId, submitAnswer.attemptTime);
+        Utils.updateAttemptTimeInQuestionDataLocally(
+            questionData.questionId, submitAnswer.attemptTime);
       }
     });
 
     return rq;
   }
 
-  navigateToSituation(BuildContext context, QuestionData nextChallengeQuestionData) async {
-    if (isChallenge) {
+  void navigateToSituation(BuildContext context,
+      QuestionData nextChallengeQuestionData) {
+    if (!isChallenge) {
+      HomeData homeData = HomeData(
+          initialPageType: Const.typeCustomerSituation,
+          questionHomeData: questionData,
+          isChallenge: isChallenge,
+          isCameFromNewCustomer: true);
+
+      navigationBloc.updateNavigation(homeData);
+    } else {
       navigationBloc.updateNavigation(HomeData(
         initialPageType: Const.typeCustomerSituation,
         questionHomeData: questionData,
         isChallenge: true,
         isCameFromNewCustomer: false,
       ));
-      //
-      // QuestionRequest rq = QuestionRequest();
-      // rq.userId = Injector.userData.userId;
-      // rq.type = Const.getNewQueType;
-      // await getQuestionsBloc.getQuestion(rq);
-
-    } else {
-      HomeData homeData = HomeData(
-          initialPageType: Const.typeCustomerSituation, questionHomeData: questionData, isChallenge: isChallenge, isCameFromNewCustomer: true);
-
-      navigationBloc.updateNavigation(homeData);
     }
-  }
-
-  Future<void> initVideoController(String link) async {
-    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) {
-      _controller = Utils.getCacheFile(link) != null ? VideoPlayerController.file(Utils.getCacheFile(link).file) : VideoPlayerController.network(link)
-        ..initialize().then((_) {
-          if (mounted)
-            setState(() {
-              questionDataEngCustomer.videoPlay == 1 ? _chewieController.play() : _chewieController.pause();
-              questionDataEngCustomer.videoLoop == 1 ? _controller.setLooping(true) : _controller.setLooping(false);
-            });
-        });
-      _controller.setVolume(Injector.isSoundEnable ? 1.0 : 0.0);
-      _chewieController = ChewieController(
-          videoPlayerController: _controller,
-          allowFullScreen: false,
-          materialProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-          cupertinoProgressColors: ChewieProgressColors(playedColor: ColorRes.header, handleColor: ColorRes.blue),
-          looping: true);
-      print("========================= video controller initialized =================");
-    });
   }
 
   showFirstHalf(BuildContext context) {
@@ -620,18 +669,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              widget.homeData.questionHomeData.answerType == Const.typeAnswerText || widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
-                  ? MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
-                      pdfDocument: _pdfDocument,
-                      isPdfLoading: isLoading,
-                      pdfFilePath: _pdfPath,
-                      chewieController: _chewieController,
-                      videoPlayerController: _controller,
-                videoLoop: questionDataEngCustomer.videoLoop,
-                videoPlay: questionDataEngCustomer.videoPlay
-              )
-                  : MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
-                      pdfDocument: _pdfDocument, isPdfLoading: isLoading, pdfFilePath: _pdfPath),
+              MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaLink),
+//              showQueMedia(context, true, questionData.mediaLink, questionData.mediaLink),
               showQueDescription(context)
             ],
           ),
@@ -647,28 +686,27 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
           children: <Widget>[
             Card(
               elevation: 10,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
               margin: EdgeInsets.only(top: 15, bottom: 15, right: 15, left: 8),
               child: Container(
-//                height: widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion ? Utils.getDeviceHeight(context) / 1.6 : null,
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 18),
                   decoration: BoxDecoration(
-                    color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                    color:
+                    Injector.isBusinessMode ? ColorRes.bgDescription : null,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: ColorRes.white, width: 1),
                   ),
-                  child: widget.homeData.questionHomeData.answerType == Const.typeAnswerText
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: arrAnswer.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return showItem(index);
-                          },
-                        )
-                      : showMediaAnswerOptions(context, true)),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: arrAnswer.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return showItem(index);
+                    },
+                  )),
             ),
 
             Align(
@@ -676,14 +714,24 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               child: Container(
                 alignment: Alignment.center,
                 height: 30,
-                margin: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 6, vertical: 0),
+                margin: EdgeInsets.symmetric(
+                    horizontal: Utils.getDeviceWidth(context) / 6, vertical: 0),
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                    border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
-                    color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    image:
-                        Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill) : null),
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    border: Injector.isBusinessMode
+                        ? null
+                        : Border.all(width: 1, color: ColorRes.white),
+                    color:
+                    Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(
+                        image:
+                        AssetImage(Utils.getAssetsImg("eddit_profile")),
+                        fit: BoxFit.fill)
+                        : null),
                 child: Text(
                   Utils.getText(context, StringRes.answers),
                   style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -701,7 +749,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 //                }
                   showDialog(
                     context: context,
-                    builder: (_) => FunkyOverlayAnswers(engagementCustomerState: this),
+                    builder: (_) =>
+                        FunkyOverlayAnswers(engagementCustomerState: this),
                   );
                 },
                 child: Container(
@@ -711,10 +760,12 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     decoration: BoxDecoration(
                         image:
 //                                  Injector.isBusinessMode ?
-                            DecorationImage(
-                                image: AssetImage(
-                                    Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
-                                fit: BoxFit.fill))),
+                        DecorationImage(
+                            image: AssetImage(Injector.isBusinessMode
+                                ? Utils.getAssetsImg(
+                                "full_expand_question_answers")
+                                : Utils.getAssetsImg("expand_pro")),
+                            fit: BoxFit.fill))),
               ),
             )
           ],
@@ -724,22 +775,165 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   showQueDescription(BuildContext context) {
-    return CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.question), true, questionData.question);
+    return CommonView.questionAndExplanation(
+        context,
+        Utils.getText(context, StringRes.question),
+        true,
+        questionData.question);
   }
+
+//  showQueMedia(BuildContext context, bool isExpandIcon, String answer, String thumbImage) {
+//    return InkResponse(
+//        onTap: () {
+//          Utils.playClickSound();
+//          performImageClick(context, answer);
+//        },
+//        child: Stack(
+//          children: <Widget>[
+//            Card(
+//              elevation: 5,
+//              color: ColorRes.transparent.withOpacity(0.4),
+//              shape: RoundedRectangleBorder(
+//                  borderRadius: BorderRadius.circular(10.0)),
+//              margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
+//              child: Container(
+//                  height: MediaQuery
+//                      .of(context)
+//                      .size
+//                      .height / 2.5,
+//                  alignment: Alignment.center,
+//                  padding:
+//                  EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+//                  decoration: BoxDecoration(
+//                      borderRadius: BorderRadius.circular(12),
+//                      border: Border.all(color: ColorRes.white, width: 1)),
+//                  child: showMediaView(context, thumbImage)),
+//            ),
+//            showMediaExpandIcon(context, answer)
+//          ],
+//        ));
+//  }
+//
+//  String pathPDF = "";
+
+//  PDFDocument doc = await PDFDocument.fromURL('http://www.africau.edu/images/default/sample.pdf');
+
+//  showMediaView(BuildContext context, String path) {
+//    print("Path : $path");
+//    if (Utils.isImage(path)) {
+//      print("isImage = true");
+//      return Container(
+//        decoration: BoxDecoration(
+//            borderRadius: BorderRadius.all(
+//              Radius.circular(10),
+//            ),
+//            image: DecorationImage(
+//              image: CachedNetworkImageProvider(path,
+//                  scale: Const.imgScaleProfile,
+//                  cacheManager: Injector.cacheManager),
+//              fit: BoxFit.cover,
+//            )),
+//      );
+//    } else if (Utils.isVideo(path) &&
+//        _controller != null &&
+//        _controller.value.initialized) {
+//      print("isVideo = true");
+//      return Stack(
+//        alignment: Alignment.center,
+//        children: <Widget>[
+//          Container(
+//            child: Chewie(
+//              controller: _chewieController,
+//            ),
+//          ),
+//          Container(
+//            child: MaterialButton(
+//              height: 100,
+//              onPressed: () {
+//                _controller.value.isPlaying
+//                    ? _controller.pause()
+//                    : _controller.play();
+//
+//                if (mounted) setState(() {});
+//              },
+//              child: Container(
+//                width: Utils.getDeviceHeight(context) / 7,
+//                height: Utils.getDeviceHeight(context) / 7,
+//                decoration: BoxDecoration(
+//                    image: DecorationImage(
+//                        image: AssetImage(
+//                          _controller.value.isPlaying
+//                              ? Utils.getAssetsImg("") //add_emp_check
+//                              : Utils.getAssetsImg("play_button"),
+//                        ),
+//                        fit: BoxFit.scaleDown)),
+//              ),
+//            ),
+//          )
+//        ],
+//      );
+//    } else if (Utils.isPdf(path)) {
+//      print("isPdf = true");
+//      return Container(
+//        padding: EdgeInsets.all(3),
+//        decoration:
+//        BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
+//        child: Utils.pdfShow(_previewPath, isLoading),
+//      );
+//    }
+////    else {
+////    return Container();
+////    }
+//  }
+//
+//  showMediaExpandIcon(BuildContext context, String link) {
+//    return Positioned(
+//      bottom: 0,
+//      right: 0,
+//      child: InkResponse(
+//        child: Container(
+//            alignment: Alignment.center,
+//            height: Utils.getDeviceWidth(context) / 20,
+//            width: Utils.getDeviceWidth(context) / 20,
+//            decoration: BoxDecoration(
+//                image: DecorationImage(
+//                    image: AssetImage(Injector.isBusinessMode
+//                        ? Utils.getAssetsImg("full_expand_question_answers")
+//                        : Utils.getAssetsImg("expand_pro")),
+//                    fit: BoxFit.fill))),
+//        onTap: () {
+//          Utils.playClickSound();
+//          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: _pdfPath, link: link));
+//        },
+//      ),
+//    );
+//  }
+//
+//  void performImageClick(BuildContext context, String link) {
+//    Utils.playClickSound();
+//    Utils.isImage(link)
+//        ? showDialog(
+//      context: context,
+//      builder: (_) => ExpandMedia(link: link),
+//    )
+//        : Container();
+//  }
 }
 
 //------------------------------------------------------------
 //Answers Select Full screen in show
 
 class FunkyOverlayAnswers extends StatefulWidget {
-  FunkyOverlayAnswers({Key key, this.engagementCustomerState}) : super(key: key);
+  FunkyOverlayAnswers({Key key, this.engagementCustomerState})
+      : super(key: key);
   final _EngagementCustomerState engagementCustomerState;
 
   @override
   State<StatefulWidget> createState() => FunkyOverlayAnswersState();
 }
 
-class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTickerProviderStateMixin {
+class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
 
@@ -747,8 +941,10 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
   void initState() {
     super.initState();
 
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 450));
-    scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
       setState(() {});
@@ -765,7 +961,10 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
-            decoration: ShapeDecoration(color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Stack(
@@ -774,15 +973,20 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
                   children: <Widget>[
                     Card(
                       elevation: 10,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.only(top: 25, bottom: 0, right: 25, left: 25),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 25, bottom: 0, right: 25, left: 25),
                       child: Container(
                           height: Utils.getDeviceHeight(context) / 1.2,
                           width: Utils.getDeviceWidth(context) / 1.2,
                           margin: EdgeInsets.only(top: 0),
-                          padding: EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 13),
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10, top: 25, bottom: 13),
                           decoration: BoxDecoration(
-                            color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                            color: Injector.isBusinessMode
+                                ? ColorRes.bgDescription
+                                : null,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: ColorRes.white, width: 1),
                           ),
@@ -795,7 +999,7 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
                             },
                           )
 //                          })
-                          ),
+                      ),
                     ),
                     Positioned(
                       top: 0,
@@ -803,14 +1007,25 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
                       child: Container(
                         alignment: Alignment.center,
                         height: 35,
-                        margin: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 3, vertical: 5),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: Utils.getDeviceWidth(context) / 3,
+                            vertical: 5),
                         padding: EdgeInsets.symmetric(horizontal: 27),
                         decoration: BoxDecoration(
-                            borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                            border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
-                            color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                            borderRadius: Injector.isBusinessMode
+                                ? null
+                                : BorderRadius.circular(20),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(width: 1, color: ColorRes.white),
+                            color: Injector.isBusinessMode
+                                ? null
+                                : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
-                                ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)
+                                ? DecorationImage(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("eddit_profile")),
+                                fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, StringRes.answers),
@@ -834,9 +1049,12 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
                             decoration: BoxDecoration(
                                 image:
 //                                Injector.isBusinessMode ?
-                                    DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.fill)
+                                DecorationImage(
+                                    image: AssetImage(
+                                        Utils.getAssetsImg("close_dialog")),
+                                    fit: BoxFit.fill)
 //                                    : null
-                                )),
+                            )),
                       ),
                     )
                   ],
@@ -851,11 +1069,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
     return GestureDetector(
         onTap: () {
           Utils.playClickSound();
-          if (mounted) {
-            setState(() {
-              arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-            });
-          }
+          setState(() {
+            arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+          });
 
           widget.engagementCustomerState.refresh();
         },
@@ -863,10 +1079,24 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
           margin: EdgeInsets.only(left: 6, right: 6, top: 6),
           padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           decoration: BoxDecoration(
-              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-              border: Injector.isBusinessMode ? null : Border.all(width: 1, color: arrAnswer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
-              color: Injector.isBusinessMode ? null : (arrAnswer[index].isSelected ? ColorRes.blueMenuSelected : ColorRes.white),
-              image: Injector.isBusinessMode ? (DecorationImage(image: AssetImage(checkAnswer(index)), fit: BoxFit.fill)) : null),
+              borderRadius:
+              Injector.isBusinessMode ? null : BorderRadius.circular(15),
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(
+                  width: 1,
+                  color: arrAnswer[index].isSelected
+                      ? ColorRes.white
+                      : ColorRes.fontGrey),
+              color: Injector.isBusinessMode
+                  ? null
+                  : (arrAnswer[index].isSelected
+                  ? ColorRes.blueMenuSelected
+                  : ColorRes.white),
+              image: Injector.isBusinessMode
+                  ? (DecorationImage(
+                  image: AssetImage(checkAnswer(index)), fit: BoxFit.fill))
+                  : null),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -878,7 +1108,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
                       Utils.getText(context, abcdList[index]),
                       style: TextStyle(
                         fontSize: 17,
-                        color: (arrAnswer[index].isSelected ? ColorRes.white : ColorRes.textProf),
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf),
                       ),
                     )),
               ),
@@ -887,7 +1119,11 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
                   padding: EdgeInsets.only(left: 5.0, right: 5.0),
                   child: new Text(
                     arrAnswer[index].answer,
-                    style: TextStyle(fontSize: 17, color: (arrAnswer[index].isSelected ? ColorRes.white : ColorRes.textProf)),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: (arrAnswer[index].isSelected
+                            ? ColorRes.white
+                            : ColorRes.textProf)),
                   ),
                 ),
               )
@@ -931,7 +1167,8 @@ class FunkyOverlay extends StatefulWidget {
   State<StatefulWidget> createState() => FunkyOverlayState();
 }
 
-class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderStateMixin {
+class FunkyOverlayState extends State<FunkyOverlay>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> scaleAnimation;
 
@@ -939,13 +1176,13 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
   void initState() {
     super.initState();
 
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 450));
-    scaleAnimation = CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
 
     controller.addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
+      setState(() {});
     });
 
     controller.forward();
@@ -961,7 +1198,10 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
-            decoration: ShapeDecoration(color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+            decoration: ShapeDecoration(
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Stack(
@@ -970,22 +1210,30 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
                   children: <Widget>[
                     Card(
                       elevation: 10,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.only(top: 20, bottom: 15, right: 25, left: 25),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      margin: EdgeInsets.only(
+                          top: 20, bottom: 15, right: 25, left: 25),
                       child: Container(
                         height: Utils.getDeviceHeight(context) / 1.6,
                         width: Utils.getDeviceWidth(context) / 1.5,
                         margin: EdgeInsets.only(top: 0),
                         padding: EdgeInsets.only(left: 25, right: 10, top: 25),
                         decoration: BoxDecoration(
-                          color: Injector.isBusinessMode ? ColorRes.bgDescription : null,
+                          color: Injector.isBusinessMode
+                              ? ColorRes.bgDescription
+                              : null,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: ColorRes.white, width: 1),
                         ),
                         child: SingleChildScrollView(
                           child: Text(
                             widget.content ?? "",
-                            style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 19),
+                            style: TextStyle(
+                                color: Injector.isBusinessMode
+                                    ? ColorRes.white
+                                    : ColorRes.textProf,
+                                fontSize: 19),
                           ),
                         ),
                       ),
@@ -996,15 +1244,26 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
                         alignment: Alignment.center,
                         height: 35,
                         margin: (checkimg == true
-                            ? EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 6)
-                            : EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context) / 3)),
+                            ? EdgeInsets.symmetric(
+                            horizontal: Utils.getDeviceWidth(context) / 6)
+                            : EdgeInsets.symmetric(
+                            horizontal: Utils.getDeviceWidth(context) / 3)),
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
-                            borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                            border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
-                            color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                            borderRadius: Injector.isBusinessMode
+                                ? null
+                                : BorderRadius.circular(20),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(width: 1, color: ColorRes.white),
+                            color: Injector.isBusinessMode
+                                ? null
+                                : ColorRes.titleBlueProf,
                             image: Injector.isBusinessMode
-                                ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)
+                                ? DecorationImage(
+                                image: AssetImage(
+                                    Utils.getAssetsImg("eddit_profile")),
+                                fit: BoxFit.fill)
                                 : null),
                         child: Text(
                           Utils.getText(context, widget.title),
@@ -1035,31 +1294,39 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
                           },
                           child: (checkimg == true
                               ? Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
 //                                          : null
-                                      ))
+                              ))
                               : Container(
-                                  alignment: Alignment.center,
-                                  height: Utils.getDeviceWidth(context) / 30,
-                                  width: Utils.getDeviceWidth(context) / 30,
-                                  decoration: BoxDecoration(
-                                      image:
+                              alignment: Alignment.center,
+                              height: Utils.getDeviceWidth(context) / 30,
+                              width: Utils.getDeviceWidth(context) / 30,
+                              decoration: BoxDecoration(
+                                  image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
+                                  DecorationImage(
+                                      image: AssetImage(
+                                          Utils.getAssetsImg(
+                                              "close_dialog")),
+                                      fit: BoxFit.contain)
 //                                          : null
-                                      )))),
+                              )))),
                     )
                   ],
                 )
 //              child: CommonView.questionAndExplanationFullAlert(
 //                context, "Question"),
-                ),
+            ),
           ),
         ),
       ),

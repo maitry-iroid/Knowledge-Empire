@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/string_res.dart';
+
 class TemplatePageWidget extends StatefulWidget {
   final double width;
   final double height;

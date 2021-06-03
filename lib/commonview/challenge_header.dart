@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
-import 'package:ke_employee/commonview/common_view.dart';
+import 'package:ke_employee/BLoC/get_question_bloc.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/screens/engagement_customer.dart';
 
 class ChallengeHeader extends StatefulWidget {
   final bool isBtnVisible;
@@ -24,7 +27,8 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: getChallengeQueBloc.getChallenge,
-        builder: (context, AsyncSnapshot<List<QuestionCountWithData>> snapshot) {
+        builder:
+            (context, AsyncSnapshot<List<QuestionCountWithData>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CommonView.showShimmer();
           } else if (snapshot.connectionState == ConnectionState.active) {
@@ -63,7 +67,8 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
                       index == Injector.countList.length - 1
                           ? Container()
                           : Padding(
-                              padding: const EdgeInsets.only(right: 5, left: 5, top: 8, bottom: 8),
+                              padding: const EdgeInsets.only(
+                                  right: 5, left: 5, top: 8, bottom: 8),
                               child: Container(
                                 height: 1,
                                 width: 30,
@@ -88,7 +93,9 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
                               setColor = Injector.countList.length;
                             }
                             setColor--;
-                            Injector.countList.forEach((QuestionCountWithData yourCountWithData) => yourCountWithData.color = Colors.blue);
+                            Injector.countList.forEach(
+                                (QuestionCountWithData yourCountWithData) =>
+                                    yourCountWithData.color = Colors.blue);
                             Injector.countList[setColor].color = Colors.red;
                             setState(() {});
                           },
@@ -105,7 +112,9 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
                               setColor = -1;
                             }
                             setColor++;
-                            Injector.countList.forEach((QuestionCountWithData yourCountWithData) => yourCountWithData.color = Colors.blue);
+                            Injector.countList.forEach(
+                                (QuestionCountWithData yourCountWithData) =>
+                                    yourCountWithData.color = Colors.blue);
                             Injector.countList[setColor].color = Colors.green;
                             setState(() {});
                           },
@@ -127,11 +136,21 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         width: 30,
         height: 30,
         decoration: BoxDecoration(
-            color: widget.currentIndex == index ? ColorRes.blue : ColorRes.greyText,
-            border: Border.all(color: widget.currentIndex == index ? ColorRes.blue : ColorRes.white),
+            color: widget.currentIndex == index
+                ? ColorRes.blue
+                : ColorRes.greyText,
+            border: Border.all(
+                color: widget.currentIndex == index
+                    ? ColorRes.blue
+                    : ColorRes.white),
             shape: BoxShape.circle),
+
         child: Center(
-          child: Text((index + 1).toString(), style: Theme.of(context).textTheme.body1.copyWith(color: ColorRes.white)),
+          child: Text((index + 1).toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .body1
+                  .copyWith(color: ColorRes.white)),
         ),
       );
     } else if (!Injector.countList[index].isCorrect) {
@@ -140,7 +159,10 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         height: 30,
         decoration: BoxDecoration(
             color: colorData(index, false),
-            border: Border.all(color: widget.currentIndex == index ? ColorRes.blue : Colors.white),
+            border: Border.all(
+                color: widget.currentIndex == index
+                    ? ColorRes.blue
+                    : Colors.white),
             shape: BoxShape.circle),
         child: Icon(Icons.close, color: ColorRes.white),
       );
@@ -150,7 +172,10 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         height: 30,
         decoration: BoxDecoration(
             color: colorData(index, true),
-            border: Border.all(color: widget.currentIndex == index ? ColorRes.blue : Colors.white),
+            border: Border.all(
+                color: widget.currentIndex == index
+                    ? ColorRes.blue
+                    : Colors.white),
             shape: BoxShape.circle),
         child: Icon(Icons.done, color: ColorRes.white),
       );
@@ -158,9 +183,16 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
       return Container(
         width: 30,
         height: 30,
-        decoration: BoxDecoration(color: ColorRes.blue, border: Border.all(color: Colors.white), shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            color: ColorRes.blue,
+            border: Border.all(color: Colors.white),
+            shape: BoxShape.circle),
         child: Center(
-          child: Text((index + 1).toString(), style: Theme.of(context).textTheme.body1.copyWith(color: ColorRes.white)),
+          child: Text((index + 1).toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .body1
+                  .copyWith(color: ColorRes.white)),
         ),
       );
     }
@@ -168,7 +200,8 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
 
   Color colorData(int index, bool isForCorrect) {
     if (widget.currentIndex == index) {
-      if (Injector.countList[index].isCorrect != null && Injector.countList[index].isCorrect) {
+      if (Injector.countList[index].isCorrect != null &&
+          Injector.countList[index].isCorrect) {
         return isForCorrect ? ColorRes.greenDot : ColorRes.red;
       } else {
         return isForCorrect ? ColorRes.greenDot : ColorRes.red;

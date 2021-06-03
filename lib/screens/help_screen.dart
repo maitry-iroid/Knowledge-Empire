@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/common_view.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
 import '../commonview/header.dart';
 import '../helper/constant.dart';
 
@@ -81,7 +82,11 @@ class HelpPageState extends State<HelpPage> {
                 isShowMenu: true,
               ),
               Container(
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("intro_bub_background")), fit: BoxFit.fill)),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            Utils.getAssetsImg("intro_bub_background")),
+                        fit: BoxFit.fill)),
               ),
               showIntroBubbleView(),
               showSelectedMainView(),
@@ -131,9 +136,14 @@ class HelpPageState extends State<HelpPage> {
       opacity: getSelectedType() == type ? 1 : 0,
       child: Container(
         foregroundDecoration: null,
-        padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
+        padding:
+            EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 4 : 2),
         decoration: BoxDecoration(
-            image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_header_card")), fit: BoxFit.fill) : null),
+            image: Injector.isBusinessMode
+                ? DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg("bg_header_card")),
+                    fit: BoxFit.fill)
+                : null),
         child: Row(
           children: <Widget>[
             Stack(
@@ -151,7 +161,8 @@ class HelpPageState extends State<HelpPage> {
                             borderRadius: BorderRadius.circular(12.5)),
                       ),
                 Image(
-                  image: AssetImage(Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
+                  image: AssetImage(
+                      Utils.getAssetsImg(HeaderUtils.getHeaderIcon(type))),
                   height: 26,
                 ),
               ],
@@ -169,27 +180,38 @@ class HelpPageState extends State<HelpPage> {
                         decoration: BoxDecoration(
                             color: ColorRes.greyText,
                             borderRadius: BorderRadius.circular(12),
-                            border: Injector.isBusinessMode ? null : Border.all(color: ColorRes.white, width: 1)),
-                        padding: EdgeInsets.symmetric(vertical: 0, horizontal: Injector.isBusinessMode ? 0 : 1),
+                            border: Injector.isBusinessMode
+                                ? null
+                                : Border.all(color: ColorRes.white, width: 1)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: Injector.isBusinessMode ? 0 : 1),
                         child: LinearPercentIndicator(
                           width: Utils.getDeviceWidth(context) / 12,
                           lineHeight: 22.0,
-                          percent: HeaderUtils.getProgressInt(type)?.toDouble() ?? 0.toDouble(),
+                          percent:
+                              HeaderUtils.getProgressInt(type)?.toDouble() ??
+                                  0.toDouble(),
                           backgroundColor: Colors.transparent,
-                          progressColor: Injector.isBusinessMode ? Colors.blue : ColorRes.titleBlueProf,
+                          progressColor: Injector.isBusinessMode
+                              ? Colors.blue
+                              : ColorRes.titleBlueProf,
                         ),
                       ),
                       Positioned(
                         left: 4,
                         child: Text(
-                          HeaderUtils.getProgress(type).toString() + (type == Const.typeBrandValue ? "%" : ""),
+                          HeaderUtils.getProgress(type).toString() +
+                              (type == Const.typeBrandValue ? "%" : ""),
                           style: TextStyle(color: ColorRes.white, fontSize: 17),
                         ),
                       )
                     ],
                   )
                 : Text(
-                    Injector.customerValueData != null ? Injector.customerValueData.totalBalance.toString() : "00.00",
+                    Injector.customerValueData != null
+                        ? Injector.customerValueData.totalBalance.toString()
+                        : "00.00",
                     style: TextStyle(color: ColorRes.white, fontSize: 18),
                   ),
           ],
@@ -213,9 +235,12 @@ class HelpPageState extends State<HelpPage> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: Injector.userData == null || Injector.userData.profileImage == null || Injector.userData.profileImage.isEmpty
+                        image: Injector.userData == null ||
+                                Injector.userData.profileImage == null ||
+                                Injector.userData.profileImage.isEmpty
                             ? AssetImage(Utils.getAssetsImg('user_org'))
-                            : Utils.getCacheNetworkImage(Injector.userData.profileImage),
+                            : Utils.getCacheNetworkImage(
+                                Injector.userData.profileImage),
                         fit: BoxFit.fill),
                     border: Border.all(color: ColorRes.textLightBlue)),
               ),
@@ -237,7 +262,11 @@ class HelpPageState extends State<HelpPage> {
         children: <Widget>[
           Text(
             Injector.userData != null ? Injector.userData.companyName : "",
-            style: TextStyle(color: Injector.isBusinessMode ? ColorRes.textLightBlue : ColorRes.white, fontSize: 17),
+            style: TextStyle(
+                color: Injector.isBusinessMode
+                    ? ColorRes.textLightBlue
+                    : ColorRes.white,
+                fontSize: 17),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -246,7 +275,11 @@ class HelpPageState extends State<HelpPage> {
           ),
           Text(
             Injector.userData != null ? Injector.userData.name : "",
-            style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textLightBlue, fontSize: 17),
+            style: TextStyle(
+                color: Injector.isBusinessMode
+                    ? ColorRes.white
+                    : ColorRes.textLightBlue,
+                fontSize: 17),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           )
@@ -311,7 +344,7 @@ class HelpPageState extends State<HelpPage> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 40, left: 38),
-                child: getSelectedType() == Const.typeAchievement
+                child: getSelectedType() == Const.typeReward
                     ? InkResponse(
                         child: Image(
                           image: AssetImage(Utils.getAssetsImg("rewards")),
@@ -336,7 +369,8 @@ class HelpPageState extends State<HelpPage> {
                       ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 0, left: 0, right: 28, top: 00),
+                padding:
+                    EdgeInsets.only(bottom: 0, left: 0, right: 28, top: 00),
                 child: getSelectedType() == Const.typeChallenges
                     ? InkResponse(
                         child: Image(
@@ -383,15 +417,6 @@ class HelpPageState extends State<HelpPage> {
             ],
           ),
         ),
-        getSelectedType() == Const.typeReward ? Container(
-           child: Positioned(
-              bottom: Utils.getDeviceHeight(context) / 6.5,
-              left: Utils.getDeviceWidth(context) / 3.5,
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('ic_gift_drawer')),
-              )
-            )
-        ) : Container()
       ],
     );
   }
@@ -400,7 +425,10 @@ class HelpPageState extends State<HelpPage> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")), fit: BoxFit.fill)),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(Utils.getAssetsImg("bg_dashboard_new")),
+              fit: BoxFit.fill)),
       child: Stack(
         fit: StackFit.expand,
         alignment: Alignment.center,
@@ -465,7 +493,8 @@ class HelpPageState extends State<HelpPage> {
                       ),
                     )),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
+                  padding:
+                      EdgeInsets.only(bottom: 0, left: 0, right: 30, top: 00),
                   child: InkResponse(
                     child: Image(
                       image: AssetImage(Utils.getAssetsImg("challenges")),
@@ -563,7 +592,8 @@ class HelpPageState extends State<HelpPage> {
                   left: 40,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleProfile())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleProfile())),
                       fit: BoxFit.fitWidth,
                       height: headerBubHeight,
 //                      width: Utils.getDeviceHeight(context) / 1.3,
@@ -579,7 +609,8 @@ class HelpPageState extends State<HelpPage> {
                   left: 60,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleCompanyName())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleCompanyName())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -593,7 +624,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 3.0,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleEmp())),
+                      image:
+                          AssetImage(Utils.getAssetsImg(introShowBubbleEmp())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -607,7 +639,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 2,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleSales())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleSales())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -621,7 +654,8 @@ class HelpPageState extends State<HelpPage> {
                   right: 0,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleCustomer())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleCustomer())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -635,7 +669,8 @@ class HelpPageState extends State<HelpPage> {
                   right: 50,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleBrandValue())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleBrandValue())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -650,7 +685,8 @@ class HelpPageState extends State<HelpPage> {
 //            right: Utils.getDeviceWidth(context) / 2.9,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleCash())),
+                      image:
+                          AssetImage(Utils.getAssetsImg(introShowBubbleCash())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -666,7 +702,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 3.2,
                   child: InkResponse(
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg(introShowBubbleBusinessSectors())),
+                        image: AssetImage(Utils.getAssetsImg(
+                            introShowBubbleBusinessSectors())),
                         height: headerBubHeight,
                       ),
                       onTap: () {}),
@@ -679,7 +716,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 3.4,
                   child: InkResponse(
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg(introShowBubbleNewCustomer())),
+                        image: AssetImage(
+                            Utils.getAssetsImg(introShowBubbleNewCustomer())),
                         height: headerBubHeight,
                       ),
                       onTap: () {}),
@@ -692,24 +730,11 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 3.6,
                   child: InkResponse(
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg(introShowBubbleExistingCustomer())),
+                        image: AssetImage(Utils.getAssetsImg(
+                            introShowBubbleExistingCustomer())),
                         height: headerBubHeight,
                       ),
                       onTap: () {}),
-                )
-              : Container(),
-
-          getSelectedType() == Const.typeAchievement
-              ? Positioned(
-                  bottom: Utils.getDeviceHeight(context) / 4.2,
-                  left: Utils.getDeviceWidth(context) / 3.5,
-                  child: InkResponse(
-                    child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleAchievements())),
-                      height: headerBubHeight,
-                    ),
-                    onTap: () {},
-                  ),
                 )
               : Container(),
 
@@ -719,7 +744,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 3.5,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleRewards())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleRewards())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -733,7 +759,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 1.8,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleTeam())),
+                      image:
+                          AssetImage(Utils.getAssetsImg(introShowBubbleTeam())),
                       height: headerBubHeight,
                     ),
                     onTap: () {},
@@ -747,7 +774,8 @@ class HelpPageState extends State<HelpPage> {
                   right: Utils.getDeviceWidth(context) / 4,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleChallenges())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleChallenges())),
                       height: headerBubHeight + 70,
                     ),
                     onTap: () {},
@@ -761,7 +789,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 2.7,
                   child: InkResponse(
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg(introShowBubbleOrganization())),
+                        image: AssetImage(
+                            Utils.getAssetsImg(introShowBubbleOrganization())),
                         height: headerBubHeight + 50,
                       ),
                       onTap: () {}),
@@ -774,7 +803,8 @@ class HelpPageState extends State<HelpPage> {
                   left: Utils.getDeviceWidth(context) / 3.8,
                   child: InkResponse(
                       child: Image(
-                        image: AssetImage(Utils.getAssetsImg(introShowBubblePl())),
+                        image:
+                            AssetImage(Utils.getAssetsImg(introShowBubblePl())),
                         height: headerBubHeight + 40,
                       ),
                       onTap: () {}),
@@ -787,7 +817,8 @@ class HelpPageState extends State<HelpPage> {
                   right: Utils.getDeviceWidth(context) / 2.7,
                   child: InkResponse(
                     child: Image(
-                      image: AssetImage(Utils.getAssetsImg(introShowBubbleRanking())),
+                      image: AssetImage(
+                          Utils.getAssetsImg(introShowBubbleRanking())),
                       height: headerBubHeight + 40,
                     ),
                     onTap: () {},
@@ -843,7 +874,8 @@ class HelpPageState extends State<HelpPage> {
                       right: 10,
                       child: InkResponse(
                         child: Image(
-                          image: AssetImage(Utils.getAssetsImg(introShowEnter())),
+                          image:
+                              AssetImage(Utils.getAssetsImg(introShowEnter())),
                           height: Utils.getDeviceHeight(context) / 10,
                         ),
                         onTap: () {
@@ -955,16 +987,6 @@ class HelpPageState extends State<HelpPage> {
       return "intro_bub_existing_customer_de";
     } else if (Injector.userData.language == "Chinese") {
       return "intro_bub_existing_customer_zh";
-    }
-  }
-
-  introShowBubbleAchievements() {
-    if (Injector.userData.language == "English") {
-      return "intro_bub_achievement_en";
-    } else if (Injector.userData.language == "German") {
-      return "intro_bub_achievement_de";
-    } else if (Injector.userData.language == "Chinese") {
-      return "intro_bub_achievement_zh";
     }
   }
 
@@ -1081,17 +1103,18 @@ class HelpPageState extends State<HelpPage> {
     arrTypeData.add(Const.typeNewCustomer);
     arrTypeData.add(Const.typeExistingCustomer);
 
-    if (Utils.isFeatureOn(Const.typeAchievement)) arrTypeData.add(Const.typeAchievement);
-
     if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
 
-    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager()) arrTypeData.add(Const.typeTeam);
-    if (Utils.isFeatureOn(Const.typeChallenges)) arrTypeData.add(Const.typeChallenges);
+    if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager())
+      arrTypeData.add(Const.typeTeam);
+    if (Utils.isFeatureOn(Const.typeChallenges))
+      arrTypeData.add(Const.typeChallenges);
 
     if (Utils.isFeatureOn(Const.typeOrg)) arrTypeData.add(Const.typeOrg);
     if (Utils.isFeatureOn(Const.typePl)) arrTypeData.add(Const.typePl);
 
-    if (Utils.isFeatureOn(Const.typeRanking)) arrTypeData.add(Const.typeRanking);
+    if (Utils.isFeatureOn(Const.typeRanking))
+      arrTypeData.add(Const.typeRanking);
 
     return arrTypeData;
   }

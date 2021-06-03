@@ -442,15 +442,15 @@ class CommonView {
                                       AssetImage(Utils.getAssetsImg("rewards")),
                                   width: Utils.getDeviceHeight(context) / 3.0,
                                 ),
-                                Utils.isShowUnreadCount(Const.typeAchievement)
+                                Utils.isShowUnreadCount(Const.typeReward)
                                     ? Utils.showUnreadCount(
-                                        Const.typeAchievement, 17, size.width / 20)
+                                        Const.typeReward, 17, size.width / 20)
                                     : ConstrainedBox(
                                         constraints: new BoxConstraints(
                                         minHeight: 25.0,
                                         minWidth: 25.0,
                                       )),
-                                Utils.isShowLock(Const.typeAchievement)
+                                Utils.isShowLock(Const.typeReward)
                                     ? Image(
                                         image: AssetImage(
                                             Utils.getAssetsImg("lock_rewards")),
@@ -466,7 +466,7 @@ class CommonView {
                             ),
                             onTap: () {
                               Utils.performDashboardItemClick(
-                                  context, Const.typeAchievement);
+                                  context, Const.typeReward);
                             },
                           )),
                     ),
@@ -620,33 +620,10 @@ class CommonView {
               Positioned(
                 bottom: Utils.getDeviceHeight(context) / 6,
                 left: Utils.getDeviceWidth(context) / 3.3,
-                child: Row(
-                  children: <Widget>[
-                    InkResponse(
-                      child: Stack(
-                        children: <Widget>[
-                          Image(
-                            image: AssetImage(Utils.getAssetsImg("gift")),
-                            height: Utils.getDeviceHeight(context) / 8,
-                          ),
-                          Utils.isShowUnreadCount(Const.typeReward)
-                              ? Utils.showUnreadCount(Const.typeReward, 17, 5)
-                              : Container(),
-                          Utils.isShowLock(Const.typeReward)
-                              ? Image(
-                            image: AssetImage(
-                                Utils.getAssetsImg("lock_org")),
-                            width: Utils.getDeviceWidth(context) / 4.5,
-                          )
-                              : Container(),
-                        ],
-                      ),
-                      onTap: () {
-                        Utils.performDashboardItemClick(context, Const.typeReward);
-                      },
-                    ),
-                  ],
-                )
+                child: Image(
+                  image: AssetImage(Utils.getAssetsImg("mobile")),
+                  height: Utils.getDeviceHeight(context) / 12,
+                ),
               ),
               Positioned(
                 bottom: Utils.getDeviceHeight(context) / 20,

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ Future setupLocator() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Injector.getInstance();
-  Const.setEnvironment(Environment.DEV_V2);
+  Const.setEnvironment(Environment.DEV);
   runApp(MyApp());
 }
 

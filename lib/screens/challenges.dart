@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/common_view.dart';
+import 'package:ke_employee/commonview/background.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -68,7 +68,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   Future showIntroDialog() async {
-    if (Injector.introData != null && Injector.introData.challenge1 == 0) await DisplayDialogs.showIntroChallenge1(context);
+    if (Injector.introData != null && Injector.introData.challenge1 == 0)
+      await DisplayDialogs.showIntroChallenge1(context);
   }
 
   TextEditingController searchController = TextEditingController();
@@ -117,7 +118,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
         children: <Widget>[
           InkResponse(
             child: Image(
-              image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "back" : 'back_prof')),
+              image: AssetImage(Utils.getAssetsImg(
+                  Injector.isBusinessMode ? "back" : 'back_prof')),
               width: 30,
             ),
             onTap: () {
@@ -132,11 +134,18 @@ class _ChallengesPageState extends State<ChallengesPage> {
               width: Utils.getDeviceWidth(context) / 4,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 20),
-              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 10),
+              margin: title == StringRes.challenges
+                  ? EdgeInsets.only(right: 60)
+                  : EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
-                  color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: Injector.isBusinessMode
+                      ? null
+                      : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode
+                      ? null
+                      : Border.all(width: 1, color: ColorRes.white),
+                  color:
+                      Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   image: Injector.isBusinessMode
                       ? DecorationImage(
                           image: AssetImage(
@@ -186,7 +195,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         child: Container(
           height: double.infinity,
           decoration: getBoxDecoration(),
-          child: ListView(
+          child: ListView (
             shrinkWrap: true,
             primary: false,
             children: <Widget>[
@@ -196,8 +205,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 margin: EdgeInsets.only(bottom: 5),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-                  color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15)),
+                  color: Injector.isBusinessMode
+                      ? ColorRes.blue
+                      : ColorRes.titleBlueProf,
                 ),
                 child: Text(
                   Utils.getText(context, StringRes.competitor),
@@ -237,8 +250,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                    color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    color:
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     image: Injector.isBusinessMode
                         ? DecorationImage(
                             image: AssetImage(
@@ -286,8 +302,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                    color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode
+                        ? null
+                        : BorderRadius.circular(20),
+                    color:
+                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     image: Injector.isBusinessMode
                         ? DecorationImage(
                             image: AssetImage(
@@ -307,21 +326,33 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}",
-                      style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey, fontSize: 19),
+                      "${Utils.getText(context, StringRes.my)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}",
+                      style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.fontGrey,
+                          fontSize: 19),
                     ),
                     Expanded(
                       child: Center(
                         child: Text(
                           "# ${Utils.getText(context, StringRes.question)}",
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey, fontSize: 19),
+                          style: TextStyle(
+                              color: Injector.isBusinessMode
+                                  ? ColorRes.white
+                                  : ColorRes.fontGrey,
+                              fontSize: 19),
                         ),
                       ),
                     ),
                     Text(
-                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}",
-                      style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontGrey, fontSize: 19),
+                      "${Utils.getText(context, StringRes.mHis)} ${!Injector.isBusinessMode?Utils.getText(context, StringRes.strKp):"\$"}",
+                      style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.fontGrey,
+                          fontSize: 19),
                     ),
                   ],
                 ),
@@ -362,7 +393,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   _onSelectedRewards(int index) {
-    String message = Utils.challengeString(arrRewards.length - index, arrRewards[arrRewards.length - (index + 1)], arrRewards[index]);
+    String message =Utils.challengeString(arrRewards.length - index,arrRewards[arrRewards.length - (index + 1)],arrRewards[index]);
     Utils.showLockReasonDialog(message, context, true);
     if (mounted) setState(() => selectedRewardsIndex = index);
   }
@@ -407,7 +438,12 @@ class _ChallengesPageState extends State<ChallengesPage> {
               child: Text(
                 arrFriendsToShow[index].name ?? "",
                 style: TextStyle(
-                    color: Injector.isBusinessMode ? ColorRes.white : (isSelectedFriend(index) ? ColorRes.white : ColorRes.fontGrey), fontSize: 17),
+                    color: Injector.isBusinessMode
+                        ? ColorRes.white
+                        : (isSelectedFriend(index)
+                            ? ColorRes.white
+                            : ColorRes.fontGrey),
+                    fontSize: 17),
               ),
             ),
             InkResponse(
@@ -427,7 +463,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 },
                 child: Image(
                   image: AssetImage(
-                    selectedFriendId != null && arrFriendsToShow[index].isFriend == 0
+                    selectedFriendId != null &&
+                            arrFriendsToShow[index].isFriend == 0
                         ? Utils.getAssetsImg('add_emplyee')
                         : Utils.getAssetsImg('remove_friend'),
                   ),
@@ -465,7 +502,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(Utils.getText(context, StringRes.alert)),
-      content: Text(Utils.getText(context, StringRes.alertUnFriend), style: TextStyle(color: ColorRes.textProf, fontSize: 20)),
+      content: Text(Utils.getText(context, StringRes.alertUnFriend),
+          style: TextStyle(color: ColorRes.textProf, fontSize: 20)),
       actions: [
         cancelButton,
         continueButton,
@@ -494,7 +532,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
           width: 40,
           padding: EdgeInsets.only(left: 10, right: 10),
           decoration: BoxDecoration(
-            color: Injector.isBusinessMode ? getSelectedItemColor(2, index) : getSelectedItemColor(2, index),
+            color: Injector.isBusinessMode
+                ? getSelectedItemColor(2, index)
+                : getSelectedItemColor(2, index),
             borderRadius: BorderRadius.circular(20),
           ),
           margin: EdgeInsets.symmetric(horizontal: 2),
@@ -559,16 +599,19 @@ class _ChallengesPageState extends State<ChallengesPage> {
       child: Container(
         decoration: BoxDecoration(
             color: Injector.isBusinessMode ? null : ColorRes.white,
-            border: (selectedModuleIndex != null && selectedModuleIndex == index && !Injector.isBusinessMode)
+            border: (selectedModuleIndex != null &&
+                    selectedModuleIndex == index &&
+                    !Injector.isBusinessMode)
                 ? Border.all(color: ColorRes.titleBlueProf)
                 : null,
             borderRadius: BorderRadius.circular(5),
             image: Injector.isBusinessMode
                 ? DecorationImage(
                     image: AssetImage(
-                      selectedModuleIndex != null && selectedModuleIndex == index
+                      selectedModuleIndex != null &&
+                              selectedModuleIndex == index
                           ? Utils.getAssetsImg('challenges_bg_sector')
-                          : Utils.getAssetsImg(''),
+                          : Container(),
                     ),
                     fit: BoxFit.fill)
                 : null),
@@ -581,7 +624,11 @@ class _ChallengesPageState extends State<ChallengesPage> {
               children: <Widget>[
                 Expanded(
                   child: Text(arrLearningModules[index].moduleName,
-                      style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 18)),
+                      style: TextStyle(
+                          color: Injector.isBusinessMode
+                              ? ColorRes.white
+                              : ColorRes.textProf,
+                          fontSize: 18)),
                 ),
                 RotatedBox(
                   quarterTurns: 90,
@@ -604,14 +651,21 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 Padding(padding: EdgeInsets.only(bottom: 35)),
                 LinearPercentIndicator(
                   lineHeight: 20.0,
-                  percent: ((arrLearningModules[index].moduleProgress ?? 0) / 100).toDouble(),
+                  percent:
+                      ((arrLearningModules[index].moduleProgress ?? 0) / 100)
+                          .toDouble(),
                   backgroundColor: Colors.grey,
-                  progressColor: Injector.isBusinessMode ? Colors.blue : ColorRes.titleBlueProf,
+                  progressColor: Injector.isBusinessMode
+                      ? Colors.blue
+                      : ColorRes.titleBlueProf,
                 ),
                 Positioned(
                   left: 6,
                   child: Text(
-                    arrLearningModules[index].moduleProgress.toStringAsFixed(2) + "%",
+                    arrLearningModules[index]
+                            .moduleProgress
+                            .toStringAsFixed(2) +
+                        "%",
                     style: TextStyle(color: ColorRes.white, fontSize: 18),
                   ),
                 )
@@ -625,16 +679,24 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   getBoxDecoration() {
     return BoxDecoration(
-        border: Injector.isBusinessMode ? null : Border.all(width: 2, color: ColorRes.white),
+        border: Injector.isBusinessMode
+            ? null
+            : Border.all(width: 2, color: ColorRes.white),
         color: Injector.isBusinessMode ? ColorRes.bgBusSec : ColorRes.bgProf,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15), topRight: Radius.circular(15), bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)));
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+            bottomLeft: Radius.circular(8),
+            bottomRight: Radius.circular(8)));
   }
 
   getBorderShape() {
     return RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15), topRight: Radius.circular(15), bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)));
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+            bottomLeft: Radius.circular(8),
+            bottomRight: Radius.circular(8)));
   }
 
   void friendUnFriendUser(int index, int action) {
@@ -662,7 +724,8 @@ class _ChallengesPageState extends State<ChallengesPage> {
           if (arrSearchFriends.length > 0) arrSearchFriends.removeAt(index);
           if (arrFriendsToShow.length > 0) arrFriendsToShow.removeAt(index);
           if (mounted) setState(() {});
-          Utils.showToast(Utils.getText(context, StringRes.alertUnFriendSuccess));
+          Utils.showToast(
+              Utils.getText(context, StringRes.alertUnFriendSuccess));
         }
       }
     }).catchError(() {
@@ -683,7 +746,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         rq.userId = selectedFriendId;
         rq.isChallenge = 1;
 
-        WebApi().callAPI(WebApi.rqGetLearningModule_v2, rq.toJson()).then((data) {
+        WebApi().callAPI(WebApi.rqGetLearningModule, rq.toJson()).then((data) {
 //          CommonView.showCircularProgress(false, context);
 
           if (data != null) {
@@ -694,8 +757,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
             if (arrLearningModules.length > 0) {
               selectedModuleIndex = 0;
-            } else
-              selectedModuleIndex = -1;
+            }
             if (mounted) setState(() {});
           }
         }).catchError((e) {
@@ -727,7 +789,9 @@ class _ChallengesPageState extends State<ChallengesPage> {
               isLoading = false;
             });
           }
-          if (data != null) Utils.showToast(Utils.getText(context, StringRes.alertUChallengeSent));
+          if (data != null)
+            Utils.showToast(
+                Utils.getText(context, StringRes.alertUChallengeSent));
         }).catchError((e) {
           if (mounted) {
             setState(() {
@@ -747,17 +811,16 @@ class _ChallengesPageState extends State<ChallengesPage> {
         rq.userId = Injector.userId.toString();
         rq.searchText = searchText;
 
-        WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) async {
+        WebApi().callAPI(WebApi.rqSearchFriends, rq.toJson()).then((data) {
           if (data != null) {
             List<GetFriendsData> getFriendsData = List();
 
-            await Future.forEach(data, (v) async {
-              GetFriendsData model = GetFriendsData.fromJson(v);
-              await model.decryptName();
-              getFriendsData.add(model);
+            data.forEach((v) {
+              getFriendsData.add(GetFriendsData.fromJson(v));
             });
 
-            getFriendsData.removeWhere((friend) => friend.userId == Injector.userData.userId);
+            getFriendsData.removeWhere(
+                (friend) => friend.userId == Injector.userData.userId);
 
             arrFriends = getFriendsData;
             arrFriendsToShow = getFriendsData;
@@ -855,7 +918,10 @@ class _ChallengesPageState extends State<ChallengesPage> {
       child: Container(
         margin: EdgeInsets.only(right: 15),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-        decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_switch_to_prfsnl")), fit: BoxFit.fill)),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg("bg_switch_to_prfsnl")),
+                fit: BoxFit.fill)),
         child: Text(
           Utils.getText(context, StringRes.sendChallenge),
           style: TextStyle(color: ColorRes.white, fontSize: 17),

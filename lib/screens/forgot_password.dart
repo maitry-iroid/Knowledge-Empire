@@ -1,16 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/baseController/base_button.dart';
-import 'package:ke_employee/baseController/base_textfield.dart';
 import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/manager/theme_manager.dart';
 import 'package:ke_employee/models/forgot_password.dart';
 
 class FadeRouteForgotPassword extends PageRouteBuilder {
@@ -45,19 +38,16 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
-  final codeController = TextEditingController();
   bool isLoading = false;
   ScrollController _scrollController = new ScrollController();
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    if(Const.isLandscape) {
-      return Scaffold(
+    return Scaffold(
 //        key: _scaffoldKey,
         resizeToAvoidBottomPadding: false,
       backgroundColor: ColorRes.fontDarkGrey,
@@ -102,7 +92,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         Container(height: Utils.getDeviceHeight(context) / 5),
                         Container(
                           width: Utils.getDeviceWidth(context) / 2.3,
-                          height: Utils.getDeviceHeight(context) / 1.7,
+                          height: Utils.getDeviceHeight(context) / 2,
                           margin: EdgeInsets.only(left: 20, right: 20),
                           decoration: BoxDecoration(
                             color: ColorRes.loginBg,
@@ -138,65 +128,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         ),
       )
     );
-    } else {
-      return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(44.0),
-            child: AppBar(
-              title: Text("Forgot password", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 18)),
-              leading: IconButton(icon: Icon(Icons.close, size: 24, color: ThemeManager().getTextColor()), onPressed: (){
-                Navigator.of(context).pop();
-              }),
-              actions: [
-                IconButton(
-                    icon: Icon(Icons.check, size: 24, color: ThemeManager().getTextColor()),
-                    onPressed: (){
-                      Utils.playClickSound();
-                      Utils.hideKeyboard(context);
-                      // validateData();
-                    }),
-              ],
-            )),
-        body: Scaffold(
-          backgroundColor: ThemeManager().getBgGradientLight(),
-          body: Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextFieldWithBorder(
-                    hintText: Utils.getText(context, StringRes.enterRegisteredEmail).toUpperCase(),
-                    controller: emailController,
-                    isSecure: false,
-                    fillColor: ThemeManager().getStaticGradientColor(),
-                    textInputType: TextInputType.text,
-                    validator: (value){
-                      return null;
-                    }),
-                SizedBox(height: 10),
-                TextFieldWithBorder(
-                    hintText: Utils.getText(context, StringRes.companyCode).toUpperCase(),
-                    controller: codeController,
-                    isSecure: false,
-                    fillColor: ThemeManager().getStaticGradientColor(),
-                    textInputType: TextInputType.text,
-                    validator: (value){
-                      return null;
-                    }),
-                SizedBox(height: 50),
-                BaseRaisedButton(
-                    buttonColor: ColorRes.blue,
-                    buttonText: Utils.getText(context, StringRes.send).toUpperCase(),
-                    onPressed: (){
-                      validateForm();
-                    }),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
   }
 
   showLoginForm() {
@@ -253,39 +184,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       hintStyle: TextStyle(color: ColorRes.greyText)),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-                height: 40,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    color: ColorRes.white,
-                    border: Border.all(
-                      color: ColorRes.white,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: TextField(
-                  controller: codeController,
-                  keyboardType: TextInputType.text,
-                  obscureText: false,
-                  style: TextStyle(color: ColorRes.titleBlueProf, fontSize: 15),
-                  onSubmitted: (value) {
-                    _scrollController.animateTo(
-                      0.0,
-                      curve: Curves.easeOut,
-                      duration: const Duration(milliseconds: 300),
-                    );
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText:
-                      Utils.getText(context, StringRes.companyCode)
-                          .toUpperCase(),
-                      hintStyle: TextStyle(color: ColorRes.greyText)),
-                ),
-              ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               InkResponse(
                 child: Container(
@@ -324,7 +224,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  validateForm() async {
+  validateForm() {
 //    if(currentVol != 0) {
     Utils.playClickSound();
 //    }
@@ -339,44 +239,24 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     });
 
     ForgotPasswordRequest rq = ForgotPasswordRequest();
-    String encEmail =  await EncryptionManager().stringEncryption(emailController.text.trim());
-    rq.email = encEmail;
+    rq.email = emailController.text.trim();
 
-    Injector.prefs.remove(PrefKeys.mainBaseUrl);
-    WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) {
+    WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
+      if (mounted)setState(() {
+        isLoading = false;
+      });
 
-      if (data != null && data['baseUrl'] != null) {
-        Injector.companyCode = codeController.text.trim();
-        Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
-        // Navigator.pop(context);
-        rq.companyCode = codeController.text.trim();
-        WebApi().callAPI(WebApi.rqForgotPassword, rq.toJson()).then((data) {
-          if (mounted)
-            setState(() {
-            isLoading = false;
-          });
-
-          if (data != null) {
-            Utils.showToast(Utils.getText(context, StringRes.mailSent));
-            //alert pop
-            Navigator.pop(context);
-          } else {
-            print("Data ::::::::::::::::: $data");
-          }
-        }).catchError((e) {
-          print("forgotPassword_" + e.toString());
-          if (mounted)
-            setState(() {
-            isLoading = false;
-          });
-          // Utils.showToast(e.toString());
-        });
+      if (data != null) {
+        Utils.showToast(Utils.getText(context, StringRes.mailSent));
+        //alert pop
+        Navigator.pop(context);
       }
     }).catchError((e) {
-      if (mounted)
-        setState(() {
-          isLoading = false;
-        });
+      print("forgotPassword_" + e.toString());
+      if (mounted)setState(() {
+        isLoading = false;
+      });
+      // Utils.showToast(e.toString());
     });
   }
 }

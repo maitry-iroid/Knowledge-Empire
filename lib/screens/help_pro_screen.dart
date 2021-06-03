@@ -269,14 +269,9 @@ class _HelpProScreenState extends State<HelpProScreen> {
         "ic_pro_home_exis_customer",
         Utils.getText(context, StringRes.strExistingCustomer));
 
-
-    if (Utils.isFeatureOn(Const.typeAchievement)) {
-      addInModel(Utils.getText(context, StringRes.achievement),
-          "ic_pro_home_achievement", Utils.getText(context, StringRes.strAchievement));
-    }
     if (Utils.isFeatureOn(Const.typeReward)) {
       addInModel(Utils.getText(context, StringRes.rewards),
-          "ic_pro_home_rewards", Utils.getText(context, StringRes.strReward));
+          "ic_pro_home_rewards", Utils.getText(context, StringRes.strRewards));
     }
 
     if (Utils.isFeatureOn(Const.typeTeam) && Injector.isManager()) {

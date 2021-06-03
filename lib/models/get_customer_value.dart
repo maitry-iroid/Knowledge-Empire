@@ -36,8 +36,6 @@ class CustomerValueData {
   int isEnableSound = 1;
   int mode = Const.businessMode;
   int isChallengeAvailable = 0;
-  String name;
-  String nickName;
 
   CustomerValueData(
       {this.totalEmployeeCapacity,
@@ -57,9 +55,7 @@ class CustomerValueData {
       this.isSwitchEnable,
       this.isEnableSound,
       this.mode,
-      this.isChallengeAvailable,
-      this.name,
-      this.nickName});
+      this.isChallengeAvailable});
 
   CustomerValueData.fromJson(Map<String, dynamic> json) {
     totalEmployeeCapacity = json['totalEmployeeCapacity'];
@@ -80,8 +76,6 @@ class CustomerValueData {
     isEnableSound = json['isEnableSound'];
     mode = json['mode'];
     isChallengeAvailable = json['isChallengeAvailable'];
-    name = json['name'];
-    nickName = json['nickName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -104,8 +98,6 @@ class CustomerValueData {
     data['isEnableSound'] = this.isEnableSound;
     data['mode'] = this.mode;
     data['isChallengeAvailable'] = this.isChallengeAvailable;
-    data['name'] = this.name;
-    data['nickName'] = this.nickName;
     return data;
   }
 }

@@ -76,7 +76,6 @@ class QuestionData {
   int loyalty;
   int value;
   String mediaLink;
-  String mediaThumbImage;
   List<Answer> answer;
   String correctAnswerImage;
   String inCorrectAnswerImage;
@@ -89,8 +88,6 @@ class QuestionData {
   int isFirstQuestion;
   int questionCurrentIndex;
   int answerType;
-  String expertEmail;
-  String additionalInfoLink;
 
   var winningAmount;
 
@@ -112,7 +109,6 @@ class QuestionData {
       this.loyalty,
       this.value,
       this.mediaLink,
-      this.mediaThumbImage,
       this.answer,
       this.correctAnswerImage,
       this.inCorrectAnswerImage,
@@ -124,9 +120,7 @@ class QuestionData {
       this.totalQuestion,
       this.isFirstQuestion,
       this.attemptTime,
-      this.answerType,
-      this.expertEmail,
-      this.additionalInfoLink});
+      this.answerType});
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -148,14 +142,15 @@ class QuestionData {
     value = json['value'];
     resources = json['resources'];
     mediaLink = json['mediaLink'];
-    mediaThumbImage = json['mediaThumbImage'];
     isAnsweredCorrect = json['isAnsweredCorrect'];
     answerType = json['answerType'];
     winningAmount = json['winningAmount'];
-    if (json.containsKey("questionAnswerStatus") && json['questionAnswerStatus'] != null) {
+    if (json.containsKey("questionAnswerStatus") &&
+        json['questionAnswerStatus'] != null) {
       List ansList = json['questionAnswerStatus'];
       if (ansList != null && ansList.length > 0) {
         Injector.countList = ansList.map((e) => QuestionCountWithData.fromJson(e)).toList();
+
       }
     }
 
@@ -172,8 +167,6 @@ class QuestionData {
     attemptTime = json['attemptTime'];
     totalQuestion = json['totalQuestion'];
     isFirstQuestion = json['isFirstQuestion'];
-    expertEmail = json['expertEmail'];
-    additionalInfoLink = json['additionalInfoLink'];
   }
 
   Map<String, dynamic> toJson() {
@@ -209,8 +202,6 @@ class QuestionData {
     data['attemptTime'] = this.attemptTime;
     data['totalQuestion'] = this.totalQuestion;
     data['isFirstQuestion'] = this.isFirstQuestion;
-    data['expertEmail'] = this.expertEmail;
-    data['additionalInfoLink'] = this.additionalInfoLink;
     return data;
   }
 }

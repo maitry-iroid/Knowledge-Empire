@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,15 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/animation/Explostion.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/environment_utils.dart';
 import 'package:ke_employee/helper/localization.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/dashboard_game.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/screens/login.dart';
+
 import 'home.dart';
 
 class MyApp extends StatefulWidget {
@@ -37,13 +41,23 @@ class MyAppState extends State<MyApp> {
 
     Injector.getContext(context);
 
+
+
+
+//    if (Injector.userId != null) {
+//      PushNotificationHelper(context,"my app").initPush();
+//    }
+
     super.initState();
-    EnvUtils.getOrientation();
   }
 
   @override
   Widget build(BuildContext context) {
-    EnvUtils.getOrientation();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
     return StreamBuilder(
       stream: localeBloc.locale,
       initialData: Locale('en', ''),
@@ -58,14 +72,13 @@ class MyAppState extends State<MyApp> {
                 ? ColorRes.colorBgDark
                 : ColorRes.white,
           ),
-          home:  EnvUtils.getHomeScreen(),
+          home:  Injector.userId != null ? HomePage() : LoginPage(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),
             '/engage': (BuildContext ext) => EngagementCustomer(),
             '/dashboard': (BuildContext context) => DashboardGamePage(),
           },
-//          onGenerateRoute: CustomRouter.allRoutes,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
@@ -84,7 +97,6 @@ class MyAppState extends State<MyApp> {
       },
     );
   }
-
 
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.

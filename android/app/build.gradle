@@ -23,7 +23,6 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
@@ -51,7 +50,6 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
-        checkReleaseBuilds false
     }
 
     defaultConfig {
@@ -72,8 +70,7 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works
-            shrinkResources true
-            minifyEnabled true
+            minifyEnabled false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -89,16 +86,6 @@ android {
             dimension "default"
             applicationId "com.keemployee.app"
             resValue "string", "app_name", "Knowledge Empire"
-        }
-        dev_v2 {
-            dimension "default"
-            applicationId "com.keemployee.new.app.dev"
-            resValue "string", "app_name", "KE dev v2"
-        }
-        prod_v2 {
-            dimension "default"
-            applicationId "com.keemployee.new.app"
-            resValue "string", "app_name", "KE prod v2"
         }
        // Privacy - Location When In Use Usage Description
     }
@@ -116,3 +103,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

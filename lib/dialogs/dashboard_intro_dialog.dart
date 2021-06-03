@@ -214,5 +214,30 @@ class DashboardIntroDialogState extends State<DashboardIntroDialog> {
         Navigator.pop(context);
       },
     );
+    return InkResponse(
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        alignment: Alignment.center,
+        child: Text(
+          Utils.getText(context, StringRes.gotIt),
+          style: TextStyle(
+            color: ColorRes.white,
+            fontSize: 20,
+          ),
+        ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(Utils.getAssetsImg('got_it')))),
+      ),
+      onTap: () async {
+        Injector.introData.dashboard = 1;
+        await Injector.setIntroData(Injector.introData);
+
+        await Injector.updateIntroData();
+
+        Navigator.pop(context);
+      },
+    );
   }
 }

@@ -47,7 +47,6 @@ class IntroData {
   int team1;
   int team2;
   int team3;
-  int reward2;
 
   IntroData(
       {this.dashboard,
@@ -73,9 +72,7 @@ class IntroData {
         this.challenge2,
         this.team1,
         this.team2,
-        this.team3,
-        this.reward2
-      });
+        this.team3});
 
   IntroData.fromJson(Map<String, dynamic> json) {
     dashboard = json['dashboard'];
@@ -102,7 +99,6 @@ class IntroData {
     team1 = json['team1'];
     team2 = json['team2'];
     team3 = json['team3'];
-    reward2 = json['reward2'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,7 +127,6 @@ class IntroData {
     data['team1'] = this.team1;
     data['team2'] = this.team2;
     data['team3'] = this.team3;
-    data['reward2'] = this.reward2;
     return data;
   }
 }
