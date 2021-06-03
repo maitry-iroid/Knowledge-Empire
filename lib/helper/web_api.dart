@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/login.dart';
+import 'package:flutter/material.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/login.dart';
 import 'constant.dart';
 
 class WebApi {
@@ -18,10 +20,14 @@ class WebApi {
   static String rqLogout = "logout";
   static String rqUpdateProfile = "updateProfile";
   static String rqChangePassword = "change_password";
+  static String rqPrivacyPolicy = "privacyPolicy";
 
   static String rqGetLearningModule = "getLearningModule";
+  static String rqGetLearningModule_v2 = "getLearningModule_v2";
+  static String rqGetRewards = "getRewards";
   static String rqAssignUserToModule = "assignUserToModule";
   static String rqGetQuestions = "getQuestions";
+  static String rqGetQuestions_v2 = "getQuestions_v2";
   static String rqGetOrganization = "getOrganization";
   static String rqReleaseResource = "releaseResource";
   static String rqManageOrganization = "manageOrganization";
@@ -40,6 +46,8 @@ class WebApi {
   static String rqGetDownloadQuestions = "getDownloadQuestions";
   static String rqSearchFriends = "searchFriends";
   static String rqRegisterForPush = "registerForPush";
+  static String rqRedeemReward = "redeemReward";
+
 //  static String rqUnreadBubbleCount = "unreadBubbleCount";
   static String rqGetTeamUsers = "getTeamUsers";
   static String rqGetTeamUserById = "getTeamUserById";
@@ -52,14 +60,12 @@ class WebApi {
   static String updateUserSetting = "updateUserSetting";
   static String rqGetDashboardStatus = "getDashboardStatus";
   static String getIntroText = "getIntroText";
+  static String rqVerifyCompanyCode = "verifyCompanyCode";
+  static String rqInformationActivityLog = 'informationActivityLog';
+  static String rqGetAppThemeColors = "getAppThemeColors";
 
   static getRequest(String req, String data) {
-    return {
-      'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef',
-      'apiSecret': '1a42cc080ef2464a60134473276fe42e',
-      'apiRequest': req,
-      'data': data
-    };
+    return {'apiId': 'e1530f4d52b7a5b806e2b051e72c80ef', 'apiSecret': '1a42cc080ef2464a60134473276fe42e', 'apiRequest': req, 'data': data};
   }
 
   static getUploadProfileRequest(String req, String data, File file) async {
@@ -68,9 +74,7 @@ class WebApi {
       'apiSecret': '1a42cc080ef2464a60134473276fe42e',
       'apiRequest': req,
       'data': data,
-      'profileImage': file != null
-          ? await MultipartFile.fromFile(file.path, filename: "image.jpg")
-          : null,
+      'profileImage': file != null ? await MultipartFile.fromFile(file.path, filename: "image.jpg") : null,
     });
   }
 
@@ -81,63 +85,62 @@ class WebApi {
 
     print(apiReq + "_" + json.encode(jsonMap));
 
-    final response = await dio
-        .post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap))))
-        .catchError((e) {
-//      Utils.showToast(apiReq + "_" + e.toString());
-//      Utils.showToast("Something we nt wrong");
-      return null;
-    });
+    if (!Injector.isInternetConnected) return;
 
-    print(apiReq + "==> " + response.toString());
+    var finalResponse;
 
-    if (response != null && response.statusCode == 200) {
-      BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
+    await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).then((response) {
+      if (response != null && response.statusCode == 200) {
+        print(apiReq + "==> " + response.toString());
 
-      if (_response != null) {
-        if (_response.flag == "true") {
-          if (!isUserRemovedFromCompany(_response.flag, _response.msg)) {
-            if(apiReq== rqGetDashboardStatus)
-              return jsonDecode(response.data);
-            else
-            return _response.data;
+        BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
+
+        if (_response != null) {
+          if (_response.flag == "true") {
+            if (!isUserRemovedFromCompany(_response.flag, _response.msg)) {
+              if (apiReq == rqGetDashboardStatus) {
+                finalResponse = jsonDecode(response.data);
+              } else {
+                finalResponse = _response.data;
+              }
+            } else {
+              Utils.showToast(_response.msg);
+            }
           } else {
-            Utils.showToast(_response.msg);
-            return null;
+            Utils.showToast(_response.msg ?? StringRes.somethingWrong);
           }
         } else {
-          Utils.showToast(_response.msg ?? StringRes.somethingWrong);
-          return null;
+          Utils.showToast(StringRes.somethingWrong);
         }
-      } else {
-        Utils.showToast(StringRes.somethingWrong);
-        return null;
       }
-    }
-    return null;
+    }).catchError((e) {
+      print("err_ " + apiReq + ": " + e.toString());
+//      Utils.showErrToast(apiReq + ": " + e.toString());
+    });
+
+    debugPrint("--------------------Final Response + $apiReq :: $finalResponse");
+    return finalResponse;
   }
 
-  Future<UserData> updateProfile(
-      Map<String, dynamic> jsonMap, File file) async {
+  Future<UserData> updateProfile(Map<String, dynamic> jsonMap, File file) async {
     initDio();
 
     try {
-      FormData formData = await getUploadProfileRequest(
-          rqUpdateProfile, json.encode(jsonMap), file);
+      FormData formData = await getUploadProfileRequest(rqUpdateProfile, json.encode(jsonMap), file);
 
-      final response = await dio.post("",
-          data: formData, onSendProgress: (int sent, int total) {});
+      final response = await dio.post("", data: formData, onSendProgress: (int sent, int total) {});
 
       print(response.data);
 
       if (response.statusCode == 200) {
-        BaseResponse baseResponse =
-            BaseResponse.fromJson(jsonDecode(response.data));
+        BaseResponse baseResponse = BaseResponse.fromJson(jsonDecode(response.data));
 
         if (baseResponse != null) {
-          if (baseResponse.flag == "true")
-            return UserData.fromJson(baseResponse.data);
-          else {
+          if (baseResponse.flag == "true") {
+            UserData userData = UserData.fromJson(baseResponse.data);
+            await userData.decryptRequiredData();
+            return userData;
+          } else {
             Utils.showToast(baseResponse.msg);
             return null;
           }
@@ -157,10 +160,7 @@ class WebApi {
 
   initDio() {
     String contentTypeHeader = 'application/json';
-    String authorizationHeader =
-        Injector.userData != null && Injector.userData.accessToken != null
-            ? "pig " + Injector.userData.accessToken
-            : "";
+    String authorizationHeader = Injector.userData != null && Injector.userData.accessToken != null ? "pig " + Injector.userData.accessToken : "";
     String deviceType = Injector.deviceType;
     String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
 
@@ -177,11 +177,14 @@ class WebApi {
     };
 
     BaseOptions options = new BaseOptions(
-        baseUrl: baseUrl,
-        connectTimeout: 20000,
+        baseUrl: Injector.prefs.getString(PrefKeys.mainBaseUrl) == null || Injector.prefs.getString(PrefKeys.mainBaseUrl).isEmpty
+            ? baseUrl
+            : Injector.prefs.getString(PrefKeys.mainBaseUrl),
+        connectTimeout: 120000,
         receiveTimeout: 3000,
         headers: headers);
 
+    print("finalbaseUrl :  " + options.baseUrl);
     dio.options = options;
     return dio;
   }

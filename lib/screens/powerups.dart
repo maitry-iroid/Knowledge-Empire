@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:knowledge_empire/commonview/common_view.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';
@@ -120,13 +120,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
       margin: EdgeInsets.only(left: 20, right: 10, bottom: 10),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-          borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(20),
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("business_sec_header")),
-                  fit: BoxFit.fill)
-              : null),
+          borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("business_sec_header")), fit: BoxFit.fill) : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -158,10 +153,7 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
         padding: EdgeInsets.only(top: 5, bottom: 5, left: 8),
         decoration: BoxDecoration(
             image: (selectedOrg.type == arrOrganization[index].type)
-                ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(
-                        Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")),
-                    fit: BoxFit.fill)
+                ? DecorationImage(image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")), fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -175,21 +167,14 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
-                    borderRadius: Injector.isBusinessMode
-                        ? null
-                        : BorderRadius.circular(20),
+                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg("bg_bus_sector_item")),
-                            fit: BoxFit.fill)
+                        ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_bus_sector_item")), fit: BoxFit.fill)
                         : null),
                 child: Text(
                   arrOrganization[index].name,
                   style: TextStyle(
-                    color: Injector.isBusinessMode
-                        ? ColorRes.blue
-                        : ColorRes.textProf,
+                    color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.textProf,
                     fontSize: 18,
                   ),
                   maxLines: 1,
@@ -205,16 +190,9 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                 margin: EdgeInsets.only(left: 5, right: 10, top: 2, bottom: 2),
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
-                    color:
-                        Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    borderRadius: Injector.isBusinessMode
-                        ? null
-                        : BorderRadius.circular(20),
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg("value")),
-                            fit: BoxFit.fill)
-                        : null),
+                    color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("value")), fit: BoxFit.fill) : null),
                 child: Text(
                   arrOrganization[index].level.toString(),
                   style: TextStyle(
@@ -280,31 +258,20 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    color: Injector.isBusinessMode
-                        ? ColorRes.whiteDarkBg
-                        : ColorRes.white,
+                    color: Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
                     margin: EdgeInsets.only(top: 20),
                     child: Container(
-                      padding: EdgeInsets.only(
-                          left: 10, right: 10, top: 30, bottom: 10),
+                      padding: EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
                       decoration: BoxDecoration(
-                        color: Injector.isBusinessMode
-                            ? ColorRes.bgDescription
-                            : ColorRes.white,
+                        color: Injector.isBusinessMode ? ColorRes.bgDescription : ColorRes.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Injector.isBusinessMode
-                            ? Border.all(color: ColorRes.white, width: 1)
-                            : null,
+                        border: Injector.isBusinessMode ? Border.all(color: ColorRes.white, width: 1) : null,
                       ),
                       child: SingleChildScrollView(
                         child: Text(
                           arrOrganization[selectedIndex].description,
                           textAlign: TextAlign.justify,
-                          style: TextStyle(
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.textProf,
-                              fontSize: 18),
+                          style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 18),
                         ),
                       ),
                     ),
@@ -315,22 +282,13 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                       alignment: Alignment.center,
                       height: Utils.getTitleHeight(),
                       margin: EdgeInsets.only(
-                          top: Injector.isBusinessMode ? 3 : 5,
-                          left: Utils.getDeviceWidth(context) / 10,
-                          right: Utils.getDeviceWidth(context) / 10),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 10, right: Utils.getDeviceWidth(context) / 10),
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                       decoration: BoxDecoration(
-                          color: Injector.isBusinessMode
-                              ? null
-                              : ColorRes.titleBlueProf,
+                          color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                           borderRadius: BorderRadius.circular(20),
-                          image: Injector.isBusinessMode
-                              ? DecorationImage(
-                                  image:
-                                      AssetImage(Utils.getAssetsImg("bg_blue")),
-                                  fit: BoxFit.fill)
-                              : null),
+                          image:
+                              Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
                       child: Text(
                         Utils.getText(context, StringRes.description),
                         style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -369,17 +327,12 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
                               decoration: BoxDecoration(
                                   color: ColorRes.greyText,
                                   borderRadius: BorderRadius.circular(20),
-                                  border: Injector.isBusinessMode
-                                      ? null
-                                      : Border.all(
-                                          color: ColorRes.white, width: 1)),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: Injector.isBusinessMode ? 0 : 3),
+                                  border: Injector.isBusinessMode ? null : Border.all(color: ColorRes.white, width: 1)),
+                              padding: EdgeInsets.symmetric(horizontal: Injector.isBusinessMode ? 0 : 3),
                               child: LinearPercentIndicator(
                                 width: Utils.getDeviceWidth(context) / 7,
                                 lineHeight: 25.0,
-                                percent: Utils.getProgress(
-                                    arrOrganization[selectedIndex]),
+                                percent: Utils.getProgress(arrOrganization[selectedIndex]),
                                 backgroundColor: Colors.transparent,
                                 progressColor: ColorRes.titleBlueProf,
                               ),
@@ -411,10 +364,8 @@ class _PowerUpsPageState extends State<PowerUpsPage> {
   getProgress() {
     if (arrOrganization[selectedIndex].employeeCount == null) return 0.0;
 
-    var progress = arrOrganization[selectedIndex].employeeCount /
-        (organizationData.totalEmployeeCapacity != 0
-            ? organizationData.totalEmployeeCapacity
-            : 1);
+    var progress =
+        arrOrganization[selectedIndex].employeeCount / (organizationData.totalEmployeeCapacity != 0 ? organizationData.totalEmployeeCapacity : 1);
 
     return progress.toDouble();
   }

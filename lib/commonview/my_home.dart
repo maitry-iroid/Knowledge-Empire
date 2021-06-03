@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 
 class MyHomePage extends StatefulWidget {
   final bool isCoinViseble;
@@ -14,8 +14,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation flipAnim;
   bool startAnim = false;
@@ -25,13 +24,11 @@ class _MyHomePageState extends State<MyHomePage>
   void initState() {
     super.initState();
     if (widget.isCoinViseble) {
-      controller = AnimationController(
-          duration: Duration(milliseconds: 61100), vsync: this);
-      flipAnim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
-          parent: controller, curve: Interval(0.0, 0.5, curve: Curves.linear)));
+      controller = AnimationController(duration: Duration(milliseconds: 61100), vsync: this);
+      flipAnim = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(parent: controller, curve: Interval(0.0, 0.5, curve: Curves.linear)));
       controller.forward();
     } else {
-      if(controller!=null){
+      if (controller != null) {
         controller.dispose();
       }
     }
@@ -52,8 +49,7 @@ class _MyHomePageState extends State<MyHomePage>
                 ..rotateY(2 * pi * flipAnim.value),
               alignment: Alignment.center,
               child: Image.asset(
-                Utils.getAssetsImg(
-                    Injector.isBusinessMode ? "ic_dollar" : "brain"),
+                Utils.getAssetsImg(Injector.isBusinessMode ? "ic_dollar" : "brain"),
                 height: 25,
                 width: 25,
               ),

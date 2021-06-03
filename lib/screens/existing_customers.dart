@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/BLoC/get_question_bloc.dart';
-import 'package:ke_employee/BLoC/navigation_bloc.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/homedata.dart';
+import 'package:knowledge_empire/BLoC/customer_value_bloc.dart';
+import 'package:knowledge_empire/BLoC/get_question_bloc.dart';
+import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
+import 'package:knowledge_empire/dialogs/display_dailogs.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/homedata.dart';
 
-import '../commonview/background.dart';
+import '../commonview/common_view.dart';
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 
@@ -18,13 +17,12 @@ import '../helper/web_api.dart';
 import '../injection/dependency_injection.dart';
 import '../models/questions.dart';
 import '../models/releaseResource.dart';
-import 'home.dart';
 
 /*
 *   created by Riddhi
 *
-*   All Correct attempted questions will b displayed here until its locality finishes
-*   User can stop getting locality by and can release the resource to attempt other questions
+*   All Correct attempted questions will b displayed here until its loyalty finishes
+*   User can stop getting loyalty by and can release the resource to attempt other questions
 *
 * */
 
@@ -35,19 +33,20 @@ class ExistingCustomerPage extends StatefulWidget {
 
 class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   List<QuestionData> arrQuestions = List();
+  List<QuestionData> tempArrQuestions = List();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     initContent();
+    this.tempArrQuestions = arrQuestions;
   }
 
   Future initContent() async {
-    if (Injector.introData != null &&
-        Injector.introData.existingCustomer1 == 0) {
+    if (Injector.introData != null && Injector.introData.existingCustomer1 == 0) {
       await DisplayDialogs.showIntroExisting1(context);
     }
 
@@ -71,14 +70,11 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
 //      customerValueBloc?.releaseResource(rq);
 
       CommonView.showCircularProgress(true, context);
-      WebApi()
-          .callAPI(WebApi.rqReleaseResource, rq.toJson())
-          .then((data) async {
+      WebApi().callAPI(WebApi.rqReleaseResource, rq.toJson()).then((data) async {
         CommonView.showCircularProgress(false, context);
 
         if (data != null) {
-          CustomerValueData customerValueData =
-              CustomerValueData.fromJson(data);
+          CustomerValueData customerValueData = CustomerValueData.fromJson(data);
 
           customerValueBloc?.setCustomerValue(customerValueData);
 
@@ -104,8 +100,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           children: <Widget>[
             CommonView.showBackground(context),
             Container(
-              margin: EdgeInsets.only(
-                  left: 30, right: 30, top: Utils.getHeaderHeight(context)),
+              margin: EdgeInsets.only(left: 30, right: 30, top: Utils.getHeaderHeight(context)),
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -159,13 +154,8 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
       padding: EdgeInsets.only(right: 3),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-          borderRadius:
-              Injector.isBusinessMode ? null : BorderRadius.circular(20),
-          image: Injector.isBusinessMode
-              ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg("bg_rounded")),
-                  fit: BoxFit.fill)
-              : null),
+          borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_rounded")), fit: BoxFit.fill) : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -239,15 +229,9 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.white,
-                    borderRadius: Injector.isBusinessMode
-                        ? null
-                        : BorderRadius.circular(20),
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg("bg_record_white")),
-                            fit: BoxFit.fill)
-                        : null),
+                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                    image:
+                        Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_record_white")), fit: BoxFit.fill) : null),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -275,8 +259,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                     Expanded(
                       flex: 3,
                       child: Text(
-                        arrQuestions[index].value.toString() +
-                            ' ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}',
+                        arrQuestions[index].value.toString() + ' ${!Injector.isBusinessMode ? Utils.getText(context, StringRes.strKp) : "\$"}',
                         style: TextStyle(
                           color: ColorRes.blue,
                           fontSize: 18,
@@ -301,7 +284,9 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   initialPageType: Const.typeCustomerSituation,
                   questionHomeData: arrQuestions[index],
                   isCameFromNewCustomer: false,
-                  isChallenge: false);
+                  isChallenge: false,
+                  existingQueIndex: index,
+                  existingQueList: arrQuestions);
 
 //              Navigator.push(context, FadeRouteHome(homeData: homeData));
 //              Navigator.push(_scaffoldKey.currentContext,
@@ -317,10 +302,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
             alignment: Alignment.center,
             margin: EdgeInsets.only(left: 15, right: 20),
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("close")),
-                    fit: BoxFit.fill)),
+            decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("close")), fit: BoxFit.fill)),
           ),
           onTap: () {
             Utils.isInternetConnectedWithAlert(context).then((isConnected) {
@@ -346,8 +328,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text(Utils.getText(context, StringRes.ok),
-                  style: TextStyle(fontSize: 20)),
+              child: Text(Utils.getText(context, StringRes.ok), style: TextStyle(fontSize: 20)),
               onPressed: () {
                 //alert pop
                 Navigator.of(context).pop();

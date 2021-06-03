@@ -1,24 +1,20 @@
 import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/performance.dart';
+import 'package:knowledge_empire/dialogs/display_dailogs.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/performance.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-import '../commonview/background.dart';
+import '../commonview/common_view.dart';
 import '../helper/Utils.dart';
 import '../helper/string_res.dart';
 
 import 'graph.dart';
-
-
 
 class PLPage extends StatefulWidget {
   @override
@@ -58,6 +54,7 @@ class _PLPageState extends State<PLPage> {
     ColorRes.chartSeven,
     ColorRes.chartEight,
     ColorRes.chartNine,
+    ColorRes.chartTen
   ];
 
   @override
@@ -69,19 +66,14 @@ class _PLPageState extends State<PLPage> {
   Future openIntroDialog() async {
     await Future.delayed(Duration(milliseconds: 50));
 
-    if (Injector.introData != null && Injector.introData.pl1 == 0)
-      await DisplayDialogs.showIntroPL1(context);
+    if (Injector.introData != null && Injector.introData.pl1 == 0) await DisplayDialogs.showIntroPL1(context);
 
     getPerformanceData(Const.plDay);
   }
 
   @override
   Widget build(BuildContext context) {
-    arrTime = [
-      Utils.getText(context, StringRes.day),
-      Utils.getText(context, StringRes.month),
-      Utils.getText(context, StringRes.year)
-    ];
+    arrTime = [Utils.getText(context, StringRes.day), Utils.getText(context, StringRes.month), Utils.getText(context, StringRes.year)];
     return Stack(
       children: <Widget>[
         CommonView.showBackground(context),
@@ -146,28 +138,18 @@ class _PLPageState extends State<PLPage> {
                     showCashLine(),
 
                     // cost section
-                    Utils.isFeatureOn(Const.typeOrg) &&
-                            performanceData.cost.isNotEmpty
-                        ? showListHeader(
-                            Utils.getText(context, StringRes.cost),
-                            Utils.getText(context, StringRes.employees),
+                    Utils.isFeatureOn(Const.typeOrg) && performanceData.cost.isNotEmpty
+                        ? showListHeader(Utils.getText(context, StringRes.cost), Utils.getText(context, StringRes.employees),
                             Utils.getText(context, StringRes.salaries))
                         : Container(),
-                    Utils.isFeatureOn(Const.typeOrg) &&
-                            performanceData.cost.isNotEmpty
-                        ? showListView(1)
-                        : Container(),
+                    Utils.isFeatureOn(Const.typeOrg) && performanceData.cost.isNotEmpty ? showListView(1) : Container(),
 
                     // revenue list section
                     performanceData.revenue.isNotEmpty
-                        ? showListHeader(
-                            Utils.getText(context, StringRes.revenue),
-                            Utils.getText(context, StringRes.customers),
+                        ? showListHeader(Utils.getText(context, StringRes.revenue), Utils.getText(context, StringRes.customers),
                             Utils.getText(context, StringRes.revenue))
                         : Container(),
-                    performanceData.revenue.isNotEmpty
-                        ? showListView(2)
-                        : Container(),
+                    performanceData.revenue.isNotEmpty ? showListView(2) : Container(),
                     showProfitCash(1),
                     showProfitCash(2),
 //                  showCashEnd(),
@@ -182,8 +164,7 @@ class _PLPageState extends State<PLPage> {
                 decoration: BoxDecoration(
                   border: Border.all(width: 1, color: ColorRes.white),
                   borderRadius: BorderRadius.circular(12.0),
-                  color:
-                      Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
+                  color: Injector.isBusinessMode ? Colors.black45 : ColorRes.white,
                 ),
                 child: Column(
                   children: <Widget>[
@@ -218,9 +199,7 @@ class _PLPageState extends State<PLPage> {
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.2, color: ColorRes.white),
                       borderRadius: BorderRadius.circular(5.0),
-                      image: DecorationImage(
-                          image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
-                          fit: BoxFit.fill)),
+                      image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bgPlHeader")), fit: BoxFit.fill)),
                   child: Text(
                     Utils.getText(context, StringRes.sevenDaysDevelopment),
                     style: TextStyle(color: ColorRes.white),
@@ -229,8 +208,7 @@ class _PLPageState extends State<PLPage> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(5),
-                    child: OrdinalComboBarLineChart.withSampleData(
-                        performanceData),
+                    child: OrdinalComboBarLineChart.withSampleData(performanceData),
                   ),
                 ),
                 Container(
@@ -278,10 +256,7 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.revenue),
-              style: TextStyle(
-                  color: Injector.isBusinessMode
-                      ? ColorRes.white
-                      : ColorRes.black),
+              style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.black),
             ),
           ),
           Image.asset(
@@ -292,10 +267,7 @@ class _PLPageState extends State<PLPage> {
             margin: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               Utils.getText(context, StringRes.cash),
-              style: TextStyle(
-                  color: Injector.isBusinessMode
-                      ? ColorRes.white
-                      : ColorRes.black),
+              style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.black),
             ),
           )
         ],
@@ -338,18 +310,11 @@ class _PLPageState extends State<PLPage> {
                           /*     color: Injector.isBusinessMode ? Colors.transparent : selectedDay == index ? ColorRes.titleBlueProf : ColorRes.rankingBackGround,
                          borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),*/
                           image: DecorationImage(
-                              image: AssetImage(Utils.getAssetsImg(
-                                  selectedDay == index
-                                      ? "ranking_bg_time_selected"
-                                      : "ranking_bg_time_deselected")),
+                              image: AssetImage(Utils.getAssetsImg(selectedDay == index ? "ranking_bg_time_selected" : "ranking_bg_time_deselected")),
                               fit: BoxFit.fill)),
                       child: Text(Utils.getText(context, arrTime[index]),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: selectedDay == index
-                                  ? ColorRes.white
-                                  : ColorRes.rankingProBg)),
+                          style: TextStyle(fontSize: 13, color: selectedDay == index ? ColorRes.white : ColorRes.rankingProBg)),
                     ),
                     onTap: () {
                       switch (index) {
@@ -383,36 +348,20 @@ class _PLPageState extends State<PLPage> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 7, right: 7),
                   decoration: BoxDecoration(
-                      color:
-                          Injector.isBusinessMode ? null : ColorRes.borderColor,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(Injector.isBusinessMode ? 0 : 3)),
-                      image: Injector.isBusinessMode
-                          ? DecorationImage(
-                              image:
-                                  AssetImage(Utils.getAssetsImg("bgPlPeriod")),
-                              fit: BoxFit.fill)
-                          : null),
-                  child: Text(Utils.getText(context, StringRes.lastPeriod),
-                      style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                      color: Injector.isBusinessMode ? null : ColorRes.borderColor,
+                      borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 3)),
+                      image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bgPlPeriod")), fit: BoxFit.fill) : null),
+                  child: Text(Utils.getText(context, StringRes.lastPeriod), style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 ),
                 Container(
                   height: 25,
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 7, right: 7),
                   decoration: BoxDecoration(
-                      color:
-                          Injector.isBusinessMode ? null : ColorRes.borderColor,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(Injector.isBusinessMode ? 0 : 3)),
-                      image: Injector.isBusinessMode
-                          ? DecorationImage(
-                              image:
-                                  AssetImage(Utils.getAssetsImg("bgPlPeriod")),
-                              fit: BoxFit.fill)
-                          : null),
-                  child: Text(Utils.getText(context, StringRes.thisPeriod),
-                      style: TextStyle(fontSize: 13, color: ColorRes.white)),
+                      color: Injector.isBusinessMode ? null : ColorRes.borderColor,
+                      borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 3)),
+                      image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bgPlPeriod")), fit: BoxFit.fill) : null),
+                  child: Text(Utils.getText(context, StringRes.thisPeriod), style: TextStyle(fontSize: 13, color: ColorRes.white)),
                 )
               ],
             ),
@@ -434,35 +383,19 @@ class _PLPageState extends State<PLPage> {
                 maxLines: 1,
                 overflow: TextOverflow.fade,
                 minFontSize: 4,
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Injector.isBusinessMode
-                        ? ColorRes.white
-                        : ColorRes.textProf)),
+                style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf)),
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Container(
-                  child: Text(
-                      getValidText(performanceData.cash.oneDayPreviousCash),
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Injector.isBusinessMode
-                              ? ColorRes.white
-                              : ColorRes.textProf)),
+                  child: Text(getValidText(performanceData.cash.oneDayPreviousCash),
+                      style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf)),
                 ),
                 Container(
-                  child: Text(
-                      getValidText(performanceData.cash.previousCash == 0
-                          ? 50000
-                          : performanceData.cash.previousCash),
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Injector.isBusinessMode
-                              ? ColorRes.white
-                              : ColorRes.textProf)),
+                  child: Text(getValidText(performanceData.cash.previousCash == 0 ? 50000 : performanceData.cash.previousCash),
+                      style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf)),
                 )
               ],
             ),
@@ -476,17 +409,13 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 25,
       margin: EdgeInsets.only(bottom: 5),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
-              fit: BoxFit.fill)),
+      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bgPlHeader")), fit: BoxFit.fill)),
       child: Row(
         children: <Widget>[
           Container(
             width: 125,
             padding: EdgeInsets.only(left: 6),
-            child: Text(first,
-                style: TextStyle(fontSize: 13, color: ColorRes.white)),
+            child: Text(first, style: TextStyle(fontSize: 13, color: ColorRes.white)),
           ),
           Expanded(
             child: Row(
@@ -547,9 +476,7 @@ class _PLPageState extends State<PLPage> {
           primary: false,
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: type == Const.typeCost
-              ? performanceData?.cost?.length
-              : performanceData?.revenue?.length,
+          itemCount: type == Const.typeCost ? performanceData?.cost?.length : performanceData?.revenue?.length,
 //                        physics: NeverScrollableScrollPhysics(),
 //                        shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -559,14 +486,8 @@ class _PLPageState extends State<PLPage> {
                   width: 125,
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
-                      type == Const.typeCost
-                          ? getValidText(performanceData.cost[index].name)
-                          : getValidText(performanceData.revenue[index].name),
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Injector.isBusinessMode
-                              ? ColorRes.white
-                              : ColorRes.textProf)),
+                      type == Const.typeCost ? getValidText(performanceData.cost[index].name) : getValidText(performanceData.revenue[index].name),
+                      style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf)),
                 ),
                 Expanded(
                     child: Row(
@@ -576,15 +497,9 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                         type == Const.typeCost
-                            ? getValidText(
-                                performanceData.cost[index].lastEmployee)
-                            : getValidText(performanceData
-                                .revenue[index].lastTotalCustomer),
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Injector.isBusinessMode
-                                ? ColorRes.white
-                                : ColorRes.textProf),
+                            ? getValidText(performanceData.cost[index].lastEmployee)
+                            : getValidText(performanceData.revenue[index].lastTotalCustomer),
+                        style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -592,15 +507,11 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? getValidText(
-                                  performanceData.cost[index].lastCost)
-                              : getValidText(
-                                  performanceData.revenue[index].lastRevenue),
+                              ? getValidText(performanceData.cost[index].lastCost)
+                              : getValidText(performanceData.revenue[index].lastRevenue),
                           style: TextStyle(
                             fontSize: 13,
-                            color: Injector.isBusinessMode
-                                ? ColorRes.white
-                                : ColorRes.textProf,
+                            color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf,
                           ),
                           textAlign: TextAlign.right),
                     ),
@@ -608,30 +519,18 @@ class _PLPageState extends State<PLPage> {
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? getValidText(
-                                  performanceData.cost[index].currentEmployee)
-                              : getValidText(performanceData
-                                  .revenue[index].currentTotalCustomer),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.textProf),
+                              ? getValidText(performanceData.cost[index].currentEmployee)
+                              : getValidText(performanceData.revenue[index].currentTotalCustomer),
+                          style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf),
                           textAlign: TextAlign.right),
                     ),
                     Expanded(
                       flex: 1,
                       child: Text(
                           type == Const.typeCost
-                              ? getValidText(
-                                  performanceData.cost[index].currentCost)
-                              : getValidText(performanceData
-                                  .revenue[index].currentRevenue),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Injector.isBusinessMode
-                                  ? ColorRes.white
-                                  : ColorRes.textProf),
+                              ? getValidText(performanceData.cost[index].currentCost)
+                              : getValidText(performanceData.revenue[index].currentRevenue),
+                          style: TextStyle(fontSize: 13, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf),
                           textAlign: TextAlign.right),
                     )
                   ],
@@ -646,21 +545,14 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 25,
       margin: EdgeInsets.only(right: 0, bottom: 5, top: 5),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(Utils.getAssetsImg("bgPlHeader")),
-              fit: BoxFit.fill)),
+      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bgPlHeader")), fit: BoxFit.fill)),
       child: Row(
         children: <Widget>[
           Container(
             width: 160,
             padding: EdgeInsets.only(left: 10),
             child: AutoSizeText(
-              Utils.getText(
-                  context,
-                  type == Const.typeCost
-                      ? StringRes.profit
-                      : StringRes.cashAtTheEndOfPeriod),
+              Utils.getText(context, type == Const.typeCost ? StringRes.profit : StringRes.cashAtTheEndOfPeriod),
               maxLines: 1,
               overflow: TextOverflow.fade,
               minFontSize: 4,
@@ -681,12 +573,8 @@ class _PLPageState extends State<PLPage> {
               Expanded(
                 flex: 1,
                 child: Container(
-                  child: Text(
-                      getValidText(type == 1
-                          ? getLastProfit()
-                          : performanceData.cash.previousCash),
-                      style: TextStyle(fontSize: 13, color: ColorRes.white),
-                      textAlign: TextAlign.right),
+                  child: Text(getValidText(type == 1 ? getLastProfit() : performanceData.cash.previousCash),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.right),
                 ),
               ),
               Expanded(
@@ -696,12 +584,8 @@ class _PLPageState extends State<PLPage> {
               Expanded(
                 flex: 1,
                 child: Container(
-                  child: Text(
-                      getValidText(type == 1
-                          ? getCurrentProfit()
-                          : performanceData.cash.todayCash),
-                      style: TextStyle(fontSize: 13, color: ColorRes.white),
-                      textAlign: TextAlign.right),
+                  child: Text(getValidText(type == 1 ? getCurrentProfit() : performanceData.cash.todayCash),
+                      style: TextStyle(fontSize: 13, color: ColorRes.white), textAlign: TextAlign.right),
                 ),
               )
             ],
@@ -716,8 +600,7 @@ class _PLPageState extends State<PLPage> {
         ? Container(
             height: 180,
             padding: EdgeInsets.only(left: 5),
-            child: pieChart(
-                Utils.getText(context, StringRes.costSplit), Const.typeCost),
+            child: pieChart(Utils.getText(context, StringRes.costSplit), Const.typeCost),
           )
         : Container();
   }
@@ -726,27 +609,20 @@ class _PLPageState extends State<PLPage> {
     return Container(
       height: 180,
       padding: EdgeInsets.only(left: 0),
-      child: pieChart(
-          Utils.getText(context, StringRes.revenue), Const.typeRevenue),
+      child: pieChart(Utils.getText(context, StringRes.revenue), Const.typeRevenue),
     );
   }
 
   pieChart(String title, int type) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-        Widget>[
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Container(
         height: 25,
         width: 100,
         margin: EdgeInsets.only(left: 20, top: 10),
         decoration: BoxDecoration(
             color: Injector.isBusinessMode ? null : ColorRes.borderColor,
-            borderRadius: BorderRadius.all(
-                Radius.circular(Injector.isBusinessMode ? 0 : 5)),
-            image: Injector.isBusinessMode
-                ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg("bg_piechart")),
-                    fit: BoxFit.fill)
-                : null),
+            borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),
+            image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_piechart")), fit: BoxFit.fill) : null),
         child: Center(
           child: Text(
             title,
@@ -760,27 +636,20 @@ class _PLPageState extends State<PLPage> {
             Expanded(
               child: Container(
                 child: Center(
-                    child: (type == Const.typeCost ? dataMap : openCloseMap) !=
-                            null
+                    child: (type == Const.typeCost ? dataMap : openCloseMap) != null
                         ? PieChart(
-                            dataMap:
-                                type == Const.typeCost ? dataMap : openCloseMap,
+                            dataMap: type == Const.typeCost ? dataMap : openCloseMap,
                             animationDuration: Duration(milliseconds: 800),
                             chartLegendSpacing: 32.0,
                             chartRadius: MediaQuery.of(context).size.width / 5,
                             showChartValues: false,
                             showChartValuesOutside: false,
                             chartValueBackgroundColor: Colors.transparent,
-                            colorList: type == Const.typeCost
-                                ? colorList
-                                : colorOpenCloseList,
+                            colorList: type == Const.typeCost ? colorList : colorOpenCloseList,
                             legendPosition: LegendPosition.right,
                             showChartValueLabel: false,
                             initialAngle: 0,
-                            chartValueStyle: defaultChartValueStyle.copyWith(
-                                color: type == Const.typeCost
-                                    ? ColorRes.white
-                                    : Colors.transparent),
+                            chartValueStyle: defaultChartValueStyle.copyWith(color: type == Const.typeCost ? ColorRes.white : Colors.transparent),
                             showLegends: false,
                             chartType: ChartType.disc,
                           )
@@ -793,9 +662,7 @@ class _PLPageState extends State<PLPage> {
                 margin: EdgeInsets.only(left: 00),
                 child: ListView.builder(
 //                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: type == Const.typeCost
-                        ? performanceData?.cost?.length
-                        : performanceData?.revenue?.length,
+                    itemCount: type == Const.typeCost ? performanceData?.cost?.length : performanceData?.revenue?.length,
                     itemBuilder: (context, index) {
                       return Row(
                         children: <Widget>[
@@ -803,21 +670,12 @@ class _PLPageState extends State<PLPage> {
                             height: 13,
                             width: 13,
                             margin: EdgeInsets.only(right: 5, top: 5),
-                            decoration: BoxDecoration(
-                                color: type == Const.typeCost
-                                    ? colorList[index]
-                                    : colorOpenCloseList[index]),
+                            decoration: BoxDecoration(color: type == Const.typeCost ? colorList[index] : colorOpenCloseList[index]),
                           ),
                           Expanded(
                             child: Text(
-                              type == Const.typeCost
-                                  ? performanceData.cost[index].name
-                                  : performanceData.revenue[index].name ?? "",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Injector.isBusinessMode
-                                      ? ColorRes.white
-                                      : ColorRes.textProf),
+                              type == Const.typeCost ? performanceData.cost[index].name : performanceData.revenue[index].name ?? "",
+                              style: TextStyle(fontSize: 12, color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf),
                             ),
                           )
                         ],
@@ -865,15 +723,13 @@ class _PLPageState extends State<PLPage> {
                 dataMap.clear();
                 openCloseMap.clear();
                 performanceData.cost.forEach((cost) {
-                  dataMap.putIfAbsent(
-                      cost.name, () => cost.currentCost.toDouble());
+                  dataMap.putIfAbsent(cost.name, () => cost.currentCost.toDouble());
                 });
 
                 print(dataMap);
 
                 performanceData.revenue.forEach((revenue) {
-                  openCloseMap.putIfAbsent(
-                      revenue.name, () => revenue.currentRevenue.toDouble());
+                  openCloseMap.putIfAbsent(revenue.name, () => revenue.currentRevenue.toDouble());
                 });
               });
           }
@@ -901,7 +757,7 @@ class _PLPageState extends State<PLPage> {
     });
 
     performanceData.revenue.forEach((cost) {
-      totalCost += cost.lastRevenue ?? 0;
+      totalProfit += cost.lastRevenue ?? 0;
     });
 
     return (totalCost - totalProfit).abs().toString();
@@ -916,7 +772,7 @@ class _PLPageState extends State<PLPage> {
     });
 
     performanceData.revenue.forEach((cost) {
-      totalCost += cost.currentRevenue ?? 0;
+      totalProfit += cost.currentRevenue ?? 0;
     });
 
     return (totalCost - totalProfit).abs().toString();

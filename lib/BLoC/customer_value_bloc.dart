@@ -1,10 +1,8 @@
-import 'package:ke_employee/BLoC/repository.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/bailout.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/releaseResource.dart';
+import 'package:knowledge_empire/BLoC/repository.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/releaseResource.dart';
 import 'package:rxdart/rxdart.dart';
 
 final customerValueBloc = CustomerValueBloc();
@@ -14,8 +12,7 @@ class CustomerValueBloc {
 
   final _assignModuleSubject = PublishSubject<CustomerValueData>();
 
-  Observable<CustomerValueData> get customerValue =>
-      _assignModuleSubject.stream;
+  Observable<CustomerValueData> get customerValue => _assignModuleSubject.stream;
 
   getCustomerValue(CustomerValueRequest rq) async {
     dynamic data = await _repository.getCustomerValue(rq);
@@ -25,8 +22,7 @@ class CustomerValueBloc {
       await Injector.setCustomerValueData(customerValueData);
 
       if (customerValueData.isChallengeAvailable == 1) {
-        Injector.homeStreamController
-            ?.add("${Const.openPendingChallengeDialog}");
+        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
       }
 
       _assignModuleSubject.add(customerValueData);

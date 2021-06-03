@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 
 class AppLocalizations {
   AppLocalizations(this.locale);

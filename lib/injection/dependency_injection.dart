@@ -10,19 +10,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/intro.dart';
-import 'package:ke_employee/models/intro_model.dart';
-import 'package:ke_employee/models/login.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:knowledge_empire/BLoC/locale_bloc.dart';
+import 'package:knowledge_empire/commonview/challenge_header.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:knowledge_empire/models/UpdateDialogModel.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/intro.dart';
+import 'package:knowledge_empire/models/intro_model.dart';
+import 'package:knowledge_empire/models/login.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
+import 'package:knowledge_empire/models/privay_policy.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
@@ -34,8 +36,6 @@ import 'dart:ui' as ui;
 * */
 
 class Injector {
-
-
   static SharedPreferences prefs;
 
   // Device's Unique Id
@@ -69,6 +69,9 @@ class Injector {
   // Is password changed by user when first time login? - it is necessary coz initially admin generated password is assigned to every user.
   static bool isPasswordChange = false;
 
+  // Is nickname changed by user when first time login? - it is necessary coz initially admin generated nickname is assigned to every user.
+  static bool isNickNameChange = false;
+
   // To store Images, Videos in Cache for offline mode
   static DefaultCacheManager cacheManager;
 
@@ -76,8 +79,7 @@ class Injector {
   static StreamController<String> headerStreamController;
 
   // to notify Home UI values when any changes made related to their value occurs.
-  static StreamController<String> homeStreamController =
-      new StreamController<String>();
+  static StreamController<String> homeStreamController = new StreamController<String>();
 
   static ui.Image image;
 
@@ -114,6 +116,11 @@ class Injector {
 
   static IntroModel introModel;
 
+  static bool isInternetConnected = true;
+
+  static String language = StringRes.strDefault;
+  static String companyCode;
+
   Injector._internal();
 
   // Pending challenge question count to Attempt
@@ -122,6 +129,8 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
+
+    isInternetConnected = await Utils.isInternetConnected();
 
     deviceType = Platform.operatingSystem;
     print(deviceType);
@@ -139,13 +148,28 @@ class Injector {
     init();
   }
 
+  // check privacy policy is accepted by user or not.
+  static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context) {
+    if (Injector.userData.isSeenPrivacyPolicy != 1) {
+      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response) {
+        if (response.isSeenPrivacyPolicy != 1 &&
+            response.privacyPolicyTitle != "" &&
+            response.privacyPolicyContent != "" &&
+            response.privacyPolicyAcceptText != "") {
+          Utils.showPrivacyPolicyDialog(_scaffoldKey, false, Injector.userData.activeCompany, response.privacyPolicyTitle,
+              response.privacyPolicyContent, response.privacyPolicyAcceptText,
+              completion: (status) {});
+        }
+      });
+    }
+  }
+
   static getContext(BuildContext context) {
     buildContext = context;
   }
 
   static Future<Null> init() async {
-    final ByteData data =
-        await rootBundle.load(Utils.getAssetsImg("small_coin"));
+    final ByteData data = await rootBundle.load(Utils.getAssetsImg("small_coin"));
     image = await loadImage(new Uint8List.view(data.buffer));
   }
 
@@ -163,29 +187,29 @@ class Injector {
 
       userId = userData.userId;
 
+      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+
       if (prefs.getString(PrefKeys.customerValueData) != null) {
-        customerValueData = CustomerValueData.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.customerValueData)));
+        customerValueData = CustomerValueData.fromJson(jsonDecode(prefs.getString(PrefKeys.customerValueData)));
 
         isSoundEnable = customerValueData.isEnableSound == 1;
       }
 
       if (prefs.getString(PrefKeys.introData) != null) {
-        introData =
-            IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
+        introData = IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
 
         updateIntroData();
       }
 
       if (prefs.getString(PrefKeys.dashboardStatusData) != null) {
-        dashboardStatusResponse = DashboardStatusResponse.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.dashboardStatusData)));
+        dashboardStatusResponse = DashboardStatusResponse.fromJson(jsonDecode(prefs.getString(PrefKeys.dashboardStatusData)));
       }
 
       headerStreamController = StreamController.broadcast();
       homeStreamController = StreamController.broadcast();
       cacheManager = DefaultCacheManager();
 
+      print("Shared pref ::::::::: ${prefs.getInt(PrefKeys.mode)}");
       mode = prefs.getInt(PrefKeys.mode) ?? Const.businessMode;
       isBusinessMode = mode == Const.businessMode;
 
@@ -193,14 +217,23 @@ class Injector {
       getIntroText();
 
       if (prefs.getString(PrefKeys.introModel) != null) {
-        introModel = IntroModel.fromJson(
-            jsonDecode(prefs.getString(PrefKeys.introModel)));
+        introModel = IntroModel.fromJson(jsonDecode(prefs.getString(PrefKeys.introModel)));
       }
     }
   }
 
   static logout() async {
+    //Get email and company code before clearing shared preference data
+    String email = Injector.prefs.getString(PrefKeys.emailId);
+    String companyCode = Injector.prefs.getString(PrefKeys.companyCode);
+
+    //Clear shared preference data
     await Injector.prefs.clear();
+
+    //Again store email and company code for pre-filling data in login page
+    await Injector.prefs.setString(PrefKeys.emailId, email);
+    await Injector.prefs.setString(PrefKeys.companyCode, companyCode);
+
     userData = null;
     userId = null;
     customerValueData = null;
@@ -216,6 +249,7 @@ class Injector {
   }
 
   static setUserData(UserData _user, bool isLanguage) async {
+    print("Userdata ::: " + json.encode(_user.toJson()));
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
     userData = _user;
@@ -226,31 +260,36 @@ class Injector {
   }
 
   static setCustomerValueData(CustomerValueData _customerValueData) async {
-    await Injector.prefs.setString(
-        PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
+    await Injector.prefs.setString(PrefKeys.customerValueData, jsonEncode(_customerValueData.toJson()));
 
     customerValueData = _customerValueData;
+
+    userData.name = customerValueData.name;
+    userData.nickName = customerValueData.nickName;
+
+    await userData.decryptName();
+    await userData.decryptNickName();
+
+    Injector.setUserData(userData, false);
 
     isSoundEnable = customerValueData.isEnableSound == 1;
 
     if (mode != _customerValueData.mode) {
       updateMode(customerValueData.mode);
-      localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
+      // localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     }
   }
 
   static setIntroData(IntroData _introData) async {
     if (_introData != null) {
-      await Injector.prefs
-          .setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
+      await Injector.prefs.setString(PrefKeys.introData, jsonEncode(_introData.toJson()));
       introData = _introData;
     }
   }
 
   static setIntroModel(IntroModel _introModel) async {
     if (_introModel != null) {
-      await Injector.prefs
-          .setString(PrefKeys.introModel, jsonEncode(_introModel.toJson()));
+      await Injector.prefs.setString(PrefKeys.introModel, jsonEncode(_introModel.toJson()));
       introModel = _introModel;
     }
   }
@@ -291,6 +330,17 @@ class Injector {
         WebApi().callAPI(WebApi.getIntroText, rq.toJson()).then((data) async {
           if (data != null) {
             introModel = IntroModel.fromJson(data);
+
+            String decryptedName = await EncryptionManager().stringDecryption(introModel.firstName);
+            introModel.profile1 = introModel.profile1.replaceAll(introModel.firstName, decryptedName);
+            introModel.learningModule1 = introModel.learningModule1.replaceAll(introModel.firstName, decryptedName);
+            introModel.existingCustomer1 = introModel.existingCustomer1.replaceAll(introModel.firstName, decryptedName);
+            introModel.org1 = introModel.org1.replaceAll(introModel.firstName, decryptedName);
+            introModel.pl1 = introModel.pl1.replaceAll(introModel.firstName, decryptedName);
+            introModel.ranking1 = introModel.ranking1.replaceAll(introModel.firstName, decryptedName);
+            introModel.challenge1 = introModel.challenge1.replaceAll(introModel.firstName, decryptedName);
+            introModel.reward2 = introModel.reward2.replaceAll(introModel.firstName, decryptedName);
+
             await Injector.setIntroModel(introModel);
           }
         }).catchError((e) {
@@ -320,8 +370,7 @@ class Injector {
     });
   }
 
-  static Future<UpdateDialogModel> getCurrentVersion(
-      BuildContext context) async {
+  static Future<UpdateDialogModel> getCurrentVersion(BuildContext context) async {
     bool isConnected = await Utils.isInternetConnected();
     if (isConnected) {
       bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
@@ -329,8 +378,7 @@ class Injector {
         "userId": Injector.userId != null ? Injector.userId.toString() : null,
         "appVersion": packageInfo.version,
         "deviceType": isIOS ? "ios" : "android",
-        "language":
-            Injector.userData != null ? Injector.userData.language : "English"
+        "language": Injector.userData != null ? Injector.userData.language : "English"
       };
       Map data = await WebApi().callAPI(WebApi.forceUpdate, map);
       if (data != null) {
@@ -348,8 +396,7 @@ class Injector {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)), //this right here
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
             child: Container(
               height: 200,
               child: Padding(
@@ -359,9 +406,7 @@ class Injector {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'What do you want to remember?'),
+                      decoration: InputDecoration(border: InputBorder.none, hintText: 'What do you want to remember?'),
                     ),
                     SizedBox(
                       width: 320.0,

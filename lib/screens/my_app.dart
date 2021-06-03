@@ -1,24 +1,20 @@
 import 'dart:async';
-
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/animation/Explostion.dart';
-import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/localization.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/dashboard_game.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/screens/login.dart';
-
+import 'package:knowledge_empire/BLoC/locale_bloc.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/environment_utils.dart';
+import 'package:knowledge_empire/helper/localization.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/screens/dashboard_game.dart';
+import 'package:knowledge_empire/screens/engagement_customer.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/screens/login.dart';
 import 'home.dart';
 
 class MyApp extends StatefulWidget {
@@ -41,23 +37,13 @@ class MyAppState extends State<MyApp> {
 
     Injector.getContext(context);
 
-
-
-
-//    if (Injector.userId != null) {
-//      PushNotificationHelper(context,"my app").initPush();
-//    }
-
     super.initState();
+    EnvUtils.getOrientation();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-
+    EnvUtils.getOrientation();
     return StreamBuilder(
       stream: localeBloc.locale,
       initialData: Locale('en', ''),
@@ -68,17 +54,16 @@ class MyAppState extends State<MyApp> {
           theme: ThemeData(
             accentColor: ColorRes.transparent,
             fontFamily: 'TrulyMadly',
-            backgroundColor: Injector.mode == Const.businessMode
-                ? ColorRes.colorBgDark
-                : ColorRes.white,
+            backgroundColor: Injector.mode == Const.businessMode ? ColorRes.colorBgDark : ColorRes.white,
           ),
-          home:  Injector.userId != null ? HomePage() : LoginPage(),
+          home: EnvUtils.getHomeScreen(),
           routes: <String, WidgetBuilder>{
             '/login': (BuildContext context) => LoginPage(),
             '/home': (BuildContext context) => HomePage(),
             '/engage': (BuildContext ext) => EngagementCustomer(),
             '/dashboard': (BuildContext context) => DashboardGamePage(),
           },
+//          onGenerateRoute: CustomRouter.allRoutes,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),

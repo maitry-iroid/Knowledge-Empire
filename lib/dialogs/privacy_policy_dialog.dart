@@ -1,0 +1,189 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/privay_policy.dart';
+
+class PrivacyPolicyDialog extends StatefulWidget {
+  PrivacyPolicyDialog(
+      {Key key,
+      this.scaffoldKey,
+      this.isFromProfile,
+      this.companyId,
+      this.privacyPolicyTitle,
+      this.privacyPolicyContent,
+      this.privacyPolicyAcceptText,
+      this.completion})
+      : super(key: key);
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  final bool isFromProfile;
+  final String privacyPolicyTitle;
+  final String privacyPolicyContent;
+  final String privacyPolicyAcceptText;
+  final void Function(bool) completion;
+  final int companyId;
+
+  @override
+  PrivacyPolicyDialogState createState() => new PrivacyPolicyDialogState();
+}
+
+class PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final nickNameController = TextEditingController();
+  bool isLoading = false;
+
+  bool isAccepted = false;
+
+  void _onRememberMeChanged(bool newValue) => setState(() {
+        isAccepted = newValue;
+
+        if (isAccepted) {
+        } else {}
+      });
+
+  @override
+  void initState() {
+    super.initState();
+    Utils.isPrivacyPolicyDialogOpen = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.transparent,
+          body: showSetupPin(context),
+        ),
+        onWillPop: () {
+          return Future.value(false);
+        });
+  }
+
+  showSetupPin(BuildContext context) {
+    return Center(
+      child: Stack(
+        fit: StackFit.loose,
+        children: <Widget>[
+          Container(
+            width: Utils.getDeviceWidth(context) / 1.2,
+            height: Utils.getDeviceHeight(context) / 1.3,
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            padding: EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    Utils.getAssetsImg('bg_change_pass'),
+                  ),
+                  fit: BoxFit.fill),
+            ),
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 3),
+                  child: Text(widget.privacyPolicyTitle, style: TextStyle(color: ColorRes.black, fontSize: 17, fontWeight: FontWeight.w700)),
+                ),
+                SizedBox(height: 10),
+                Expanded(
+                    child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: SingleChildScrollView(
+                    child: Text(widget.privacyPolicyContent, style: TextStyle(color: ColorRes.black, fontSize: 16)),
+                  ),
+                )),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                          child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Checkbox(activeColor: ColorRes.headerBlue, value: isAccepted, onChanged: _onRememberMeChanged),
+                          Expanded(
+                              child: Text(widget.privacyPolicyAcceptText,
+                                  maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: ColorRes.black, fontSize: 16)))
+                        ],
+                      )),
+                      SizedBox(width: 40),
+                      widget.isFromProfile
+                          ? InkResponse(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    height: 40,
+                                    width: 100,
+                                    margin: EdgeInsets.only(right: 10),
+                                    decoration: BoxDecoration(
+                                        color: ColorRes.headerBlue, borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white)),
+                                    child: Text(
+                                      Utils.getText(context, StringRes.decline),
+                                      style: TextStyle(fontSize: 17, color: ColorRes.white),
+                                    )),
+                              ),
+                              onTap: () {
+                                Utils.playClickSound();
+                                Utils.hideKeyboard(context);
+                                Utils.isPrivacyPolicyDialogOpen = false;
+                                Navigator.of(context).pop();
+                              })
+                          : Container(),
+                      InkResponse(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: isAccepted == true ? ColorRes.headerBlue : ColorRes.greyText,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: Colors.white)),
+                                child: Text(
+                                  Utils.getText(context, StringRes.accept),
+                                  style: TextStyle(fontSize: 17, color: ColorRes.white),
+                                )),
+                          ),
+                          onTap: () {
+                            if (isAccepted == true) Utils.playClickSound();
+                            Utils.hideKeyboard(context);
+                            if (isAccepted == true) {
+                              if (widget.completion != null) {
+                                apiCallPrivacyPolicy(Injector.userData.userId, Const.typeUpdateAccessTime.toString(), widget.companyId, (response) {
+                                  Injector.userData.isSeenPrivacyPolicy = 1;
+                                  Injector.setUserData(Injector.userData, false);
+                                  widget.completion(true);
+                                });
+                              }
+                              Navigator.of(context).pop();
+                            }
+                          })
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          showCircularProgress()
+        ],
+      ),
+    );
+  }
+
+  Widget showCircularProgress() {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
+}

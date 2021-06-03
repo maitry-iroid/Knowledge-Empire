@@ -31,5 +31,3 @@ Future setupLocator() async {
   Const.setEnvironment(Environment.DEV);
   runApp(MyApp());
 }
-
-

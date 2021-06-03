@@ -7,38 +7,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/BLoC/navigation_bloc.dart';
-import 'package:ke_employee/commonview/pdf_viewer.dart';
-import 'package:ke_employee/dialogs/change_password.dart';
+import 'package:knowledge_empire/BLoC/customer_value_bloc.dart';
+import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
+import 'package:knowledge_empire/baseController/base_text.dart';
+import 'package:knowledge_empire/commonview/pdf_viewer.dart';
+import 'package:knowledge_empire/dialogs/change_password.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:knowledge_empire/dialogs/companycode_dialog.dart';
+import 'package:knowledge_empire/dialogs/nickname_dialog.dart';
+import 'package:knowledge_empire/dialogs/privacy_policy_dialog.dart';
+import 'package:knowledge_empire/manager/screens_manager.dart';
+import 'package:knowledge_empire/manager/theme_manager.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
+import 'package:knowledge_empire/screens/more_info.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:ke_employee/dialogs/loader.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/manage_organization.dart';
-import 'package:ke_employee/models/organization.dart';
-import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/models/submit_answer.dart';
-import 'package:ke_employee/screens/organization.dart';
+import 'package:knowledge_empire/dialogs/loader.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/models/homedata.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/manage_organization.dart';
+import 'package:knowledge_empire/models/organization.dart';
+import 'package:knowledge_empire/models/questions.dart';
+import 'package:knowledge_empire/models/submit_answer.dart';
+import 'package:knowledge_empire/screens/organization.dart';
 import 'package:path/path.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'constant.dart';
 import 'localization.dart';
 
 class Utils {
+  static bool isPrivacyPolicyDialogOpen = false;
+
   static double getDeviceWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
@@ -53,6 +63,89 @@ class Utils {
 
   static getAssetsImgJpg(String name) {
     return "assets/images/" + name + ".jpg";
+  }
+
+  static showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          backgroundColor: ThemeManager().getStaticGradientColor(),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          buttonPadding: EdgeInsets.all(0),
+          actionsPadding: EdgeInsets.all(0),
+          content: BaseText(
+              text: "Are you sure you want to unsubscribe to the module? All progress wil be lost.",
+              textColor: ThemeManager().getDarkColor(),
+              fontSize: 13,
+              fontWeight: FontWeight.normal,
+              textAlign: TextAlign.center),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new Expanded(
+                child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    //                    <--- top side
+                    color: ThemeManager().getDarkColor(),
+                    width: 0.5,
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.all(0),
+              padding: EdgeInsets.all(0),
+              width: Utils.getDeviceWidth(context),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          //                    <--- top side
+                          color: ThemeManager().getDarkColor(),
+                          width: 0.5,
+                        ),
+                      ),
+                    ),
+                    child: FlatButton(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      child: new BaseText(
+                          text: "Yes",
+                          textColor: ThemeManager().getDarkColor(),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.center),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  )),
+                  Expanded(
+                      child: FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    child: new BaseText(
+                        text: "No",
+                        textColor: ThemeManager().getBadgeColor(),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )),
+                ],
+              ),
+            )),
+          ],
+        );
+      },
+    );
   }
 
   static showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
@@ -71,25 +164,40 @@ class Utils {
   }
 
   static showToast(String message) {
-//    _scaffoldKey.currentState.showSnackBar(SnackBar(
-//      content: Text(message),
-//      duration: const Duration(milliseconds: 2000),
-//    ));
-
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.black87,
-        textColor: Colors.white);
+        msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.black87, textColor: Colors.white);
+  }
+
+  static showErrToast(String message) {
+    Fluttertoast.showToast(
+        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.redAccent, textColor: Colors.white);
+  }
+
+  static showSuccessToast(String message) {
+    Fluttertoast.showToast(
+        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.green, textColor: Colors.white);
+  }
+
+  static Future<String> initPlatformState() async {
+    String timezone;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      timezone = await FlutterNativeTimezone.getLocalTimezone();
+    } on PlatformException {
+      timezone = 'Failed to get the timezone.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    return timezone;
   }
 
   static Future<bool> isInternetConnectedWithAlert(BuildContext context) async {
     bool isConnected = false;
 
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
     } else {
       showToast(Utils.getText(context, StringRes.noInternet));
@@ -103,8 +211,7 @@ class Utils {
     bool isConnected = false;
 
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       isConnected = true;
     } else {
       isConnected = false;
@@ -113,8 +220,7 @@ class Utils {
   }
 
   static showLoader(BuildContext context) async {
-    await showDialog(
-        context: context, builder: (BuildContext context) => Loader());
+    await showDialog(context: context, builder: (BuildContext context) => Loader());
   }
 
   static closeLoader(BuildContext context) {
@@ -225,14 +331,41 @@ class Utils {
     return AppLocalizations.of(context).text(text) ?? text;
   }
 
+  static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) async {
+    await showDialog(context: _scaffoldKey.currentContext, builder: (BuildContext context) => NickNameDialog(isFromProfile: isFromProfile));
+  }
 
-  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey,
-      bool isFromProfile, bool isOldPasswordRequired) {
-    showDialog(
+  static showPrivacyPolicyDialog(
+      GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, int companyId, String title, String content, String acceptText,
+      {void Function(bool) completion}) async {
+    print("Title text :-------------------------------------------------------- $title");
+    if (Utils.isPrivacyPolicyDialogOpen == true) {
+      Navigator.of(_scaffoldKey.currentContext).pop();
+    }
+    await showDialog(
         context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => ChangePasswordDialog(
-            isFromProfile: isFromProfile,
-            isOldPasswordRequired: isOldPasswordRequired));
+        builder: (BuildContext context) => PrivacyPolicyDialog(
+              isFromProfile: isFromProfile,
+              companyId: companyId,
+              privacyPolicyTitle: title,
+              privacyPolicyContent: content,
+              privacyPolicyAcceptText: acceptText,
+              completion: (status) {
+                Utils.isPrivacyPolicyDialogOpen = false;
+                completion(status);
+              },
+            ));
+  }
+
+  static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) async {
+    await showDialog(
+        context: _scaffoldKey.currentContext,
+        builder: (BuildContext context) =>
+            ChangePasswordDialog(scaffoldKey: _scaffoldKey, isFromProfile: isFromProfile, isOldPasswordRequired: isOldPasswordRequired));
+  }
+
+  static Future showVerifyCompanyDialog(GlobalKey<ScaffoldState> _scaffoldKey) async {
+    await showDialog(context: _scaffoldKey.currentContext, builder: (BuildContext context) => VerifyCompanyDialog());
   }
 
   static String generateMd5(String input) {
@@ -240,8 +373,9 @@ class Utils {
   }
 
   static getSecret(String email, String password) {
-    String text =
-        email.split('').reversed.join() + password.split('').reversed.join();
+    String newEmail = email.replaceAll("\n", "");
+    print("------------------- new email ::::: ${newEmail}");
+    String text = newEmail.split('').reversed.join() + password.split('').reversed.join();
     return generateMd5(text);
   }
 
@@ -259,17 +393,18 @@ class Utils {
   static playBackgroundMusic() async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
-    if (Injector.isBusinessMode &&
-        Injector.isSoundEnable != null &&
-        Injector.isSoundEnable) {
+    print('--------before isPlaySound-----------------$isPlaySound');
+    if (Injector.isBusinessMode && Injector.isSoundEnable != null && Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
     }
+    print('--------after isPlaySound-----------------$isPlaySound');
     await playSound(isPlaySound);
   }
 
   static Future playSound(bool isPlaySound) async {
+    print('--------in method isPlaySound-----------------$isPlaySound');
     try {
       if (isPlaySound) {
         final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
@@ -290,8 +425,7 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("achievement_music.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static playClickSound() {
@@ -304,28 +438,23 @@ class Utils {
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("coin_sound.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("wrong_answer.wav");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static achievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("achievement_music.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static proCorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("pro_right_answer.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proIncorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable)
-      Injector.audioCache.play("pro_wrong_answer.mp3");
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
 //  static audioPlay(String path) async {
@@ -356,9 +485,7 @@ class Utils {
   }
 
   static getCurrentFormattedDate() {
-    var now = new DateTime.fromMillisecondsSinceEpoch(
-        DateTime.now().millisecondsSinceEpoch,
-        isUtc: true);
+    var now = new DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch, isUtc: true);
     var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
     String formatted = formatter.format(now);
     print(formatted);
@@ -368,8 +495,7 @@ class Utils {
   static void callSubmitAnswerApi(BuildContext context) {
     if (Injector.prefs.getString(PrefKeys.answerData) == null) return;
 
-    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(
-        jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
+    SubmitAnswerRequest rq = SubmitAnswerRequest.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.answerData)));
 
     WebApi().callAPI(WebApi.rqSubmitAnswers, rq.toJson()).then((data) async {
       if (data != null) {
@@ -402,8 +528,7 @@ class Utils {
     int finalValue = 0;
     try {
       var a = 500 + min(50 * questionData.daysInList, 350) + random * 150;
-      var b = (1 +
-          (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+      var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
       var c = (1 + (Injector.customerValueData.valueBonus / 100));
 
       finalValue = (a * b * c).round();
@@ -436,10 +561,8 @@ class Utils {
     var random = ((Random().nextInt(10))) / 10;
     int finalValue = 0;
     try {
-      var a = max(pow(min(questionData.counter, 10), 1.2), 1) +
-          min(questionData.counter, 10) * random;
-      var b = (1 +
-          (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
+      var a = max(pow(min(questionData.counter, 10), 1.2), 1) + min(questionData.counter, 10) * random;
+      var b = (1 + (0.01 * min(Injector.customerValueData.totalAttemptedQuestion, 900)));
       var c = (2 - (Injector.customerValueData.resourceBonus / 100));
 
       finalValue = (a * b * c).round();
@@ -478,43 +601,34 @@ class Utils {
     }
   }
 
-  static updateAttemptTimeInQuestionDataLocally(
-      int questionId, String attemptTime) async {
+  static updateAttemptTimeInQuestionDataLocally(int questionId, String attemptTime) async {
     List<QuestionData> arrQuestions = List();
 
-    QuestionsResponse questionsResponse = QuestionsResponse.fromJson(
-        jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
+    QuestionsResponse questionsResponse = QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData)));
     arrQuestions = questionsResponse.data;
 
-    QuestionData questionData =
-        arrQuestions.where((que) => que.questionId == questionId).first;
+    QuestionData questionData = arrQuestions.where((que) => que.questionId == questionId).first;
     questionData.attemptTime = attemptTime;
 
     questionsResponse.data = arrQuestions;
 
-    await Injector.prefs.setString(
-        PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
+    await Injector.prefs.setString(PrefKeys.questionData, jsonEncode(questionsResponse.toJson()));
   }
 
   static List<QuestionData> getQuestionsLocally(int type) {
     List<QuestionData> arrFinalQuestion = List();
 
     if (Injector.prefs.getString(PrefKeys.questionData) != null) {
-      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(
-              jsonDecode(Injector.prefs.getString(PrefKeys.questionData)))
-          .data;
+      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData))).data;
 
       arrQuestionsLocal.forEach((questionData) {
-        if (questionData.attemptTime == null ||
-            questionData.attemptTime.isEmpty) {
+        if (questionData.attemptTime == null || questionData.attemptTime.isEmpty) {
           arrFinalQuestion.add(questionData);
         } else {
-          DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss")
-              .parse(questionData.attemptTime);
+          DateTime newDateTimeObj2 = new DateFormat("yyyy-MM-dd HH:mm:ss").parse(questionData.attemptTime);
           if (type == Const.getNewQueType
               ? newDateTimeObj2.difference(DateTime.now()).inDays > 1
-              : newDateTimeObj2.difference(DateTime.now()).inDays <= 1)
-            arrFinalQuestion.add(questionData);
+              : newDateTimeObj2.difference(DateTime.now()).inDays <= 1) arrFinalQuestion.add(questionData);
         }
       });
     }
@@ -558,23 +672,21 @@ class Utils {
   }
 
   static performDashboardItemClick(BuildContext context, String type) async {
-    if (Injector.isSoundEnable!=null && Injector.isSoundEnable) {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
       Injector.audioCache.play("all_button_clicks.wav");
     }
 
     if (type == Const.typeOrg ||
         type == Const.typeChallenges ||
+        type == Const.typeAchievement ||
         type == Const.typeReward ||
         type == Const.typeRanking ||
         type == Const.typeTeam ||
         type == Const.typePl) {
       bool isConnected = await isInternetConnected();
 
-
       if (Injector.dashboardStatusResponse != null) {
-        OnOffFeatureData data = Injector.dashboardStatusResponse.data
-            .where((obj) => obj.type == int.parse(type))
-            ?.first;
+        OnOffFeatureData data = Injector.dashboardStatusResponse.data.where((obj) => obj.type == int.parse(type))?.first;
 
         if (data != null && data.isFeatureOn == 0) return;
 
@@ -599,8 +711,7 @@ class Utils {
         Utils.performDashboardItemClick(context, type);
       },
       child: Container(
-        foregroundDecoration:
-            BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
+        foregroundDecoration: BoxDecoration(color: ColorRes.white.withOpacity(0.5)),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -662,8 +773,7 @@ class Utils {
 
   static getCacheNetworkImage(String url) {
     if (url.isNotEmpty) {
-      return CachedNetworkImageProvider(url,
-          scale: 1, cacheManager: Injector.cacheManager);
+      return CachedNetworkImageProvider(url, scale: 1, cacheManager: Injector.cacheManager);
     } else
       return AssetImage(Utils.getAssetsImg("user_org"));
   }
@@ -698,9 +808,7 @@ class Utils {
           ),
           child: getCount(type) > 0
               ? new DecoratedBox(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: ColorRes.greenDot),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorRes.greenDot),
                   child: Center(
                     child: Text(
                       getCount(type).toString(),
@@ -714,11 +822,7 @@ class Utils {
   static int getCount(String _type) {
     if (Injector.dashboardStatusResponse != null) {
       return Injector.dashboardStatusResponse.data.length > 0
-          ? (Injector.dashboardStatusResponse.data
-                  ?.where((obj) => obj.type == int.parse(_type))
-                  ?.first
-                  ?.unreadCount ??
-              00)
+          ? (Injector.dashboardStatusResponse.data?.where((obj) => obj.type == int.parse(_type))?.first?.unreadCount ?? 00)
           : 00;
     } else
       return 0;
@@ -877,13 +981,11 @@ class Utils {
 //        .document(userId)
 //        .updateData({Const.keyBadgeCount: FieldValue.increment(1)});
 //  }
-  static void showLockReasonDialog(
-      String typeOrg, BuildContext context, isForInternet) {
+  static void showLockReasonDialog(String typeOrg, BuildContext context, isForInternet) {
     showDialog(
         context: context,
         builder: (BuildContext context) => OrgInfoDialog(
-              text: Utils.getText(context,
-                  isForInternet ? typeOrg : getLockReasonText(typeOrg)),
+              text: Utils.getText(context, isForInternet ? typeOrg : getLockReasonText(typeOrg)),
               isForIntroDialog: true,
             ));
   }
@@ -897,6 +999,8 @@ class Utils {
       return StringRes.unLockPl;
     else if (type == Const.typeRanking)
       return StringRes.unLockRanking;
+    else if (type == Const.typeAchievement)
+      return StringRes.unLockReward;
     else if (type == Const.typeReward)
       return StringRes.unLockReward;
     else
@@ -908,10 +1012,7 @@ class Utils {
       List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
 
       if (data.length > 0) {
-        int status = data
-            .where((obj) => obj.type == int.parse(type))
-            ?.first
-            ?.isFeatureOn;
+        int status = data.where((obj) => obj.type == int.parse(type))?.first?.isFeatureOn;
 
         return status == 1;
       }
@@ -925,8 +1026,7 @@ class Utils {
       List<OnOffFeatureData> data = Injector.dashboardStatusResponse.data;
 
       if (data.length > 0) {
-        int status =
-            data.where((obj) => obj.type == int.parse(type))?.first?.isUnlock;
+        int status = data.where((obj) => obj.type == int.parse(type))?.first?.isUnlock;
 
         return status == 0;
       }
@@ -943,7 +1043,7 @@ class Utils {
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
 
-  static void getCustomerValues() {
+  static void callCustomerValuesApi() {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 

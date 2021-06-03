@@ -1,12 +1,9 @@
-import 'package:ke_employee/BLoC/repository.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/bailout.dart';
-import 'package:ke_employee/models/get_customer_value.dart';
-import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/models/releaseResource.dart';
+import 'package:knowledge_empire/BLoC/repository.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/questions.dart';
 import 'package:rxdart/rxdart.dart';
 
 final getQuestionsBloc = GetQuestionsBloc();
@@ -18,11 +15,11 @@ class GetQuestionsBloc {
 
   Observable<List<QuestionData>> get getQuestions => _getQuestionSubject.stream;
 
-  getQuestion(QuestionRequest rq) async {
+  Future<List<QuestionData>> getQuestion(QuestionRequest rq) async {
     bool isInternetConnected = await Utils.isInternetConnected();
     List<QuestionData> arrQuestions = List();
     if (isInternetConnected) {
-      dynamic data = await Injector.webApi.callAPI(WebApi.rqGetQuestions, rq.toJson());
+      var data = await Injector.webApi.callAPI(WebApi.rqGetQuestions_v2, rq.toJson());
       if (data != null) {
         data.forEach((v) {
           arrQuestions.add(QuestionData.fromJson(v));
@@ -38,14 +35,17 @@ class GetQuestionsBloc {
       }
 
       _getQuestionSubject.sink.add(arrQuestions);
-    }else {
+    } else {
       arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
       _getQuestionSubject.sink.add(arrQuestions);
       print(arrQuestions);
     }
+    print("=========");
+    print(arrQuestions.length);
+    return arrQuestions;
   }
 
-  updateQuestions(List<QuestionData> arrQuestions){
+  updateQuestions(List<QuestionData> arrQuestions) {
     _getQuestionSubject.sink.add(arrQuestions);
   }
 

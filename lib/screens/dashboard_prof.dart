@@ -2,18 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/background.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/intro.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:knowledge_empire/commonview/common_view.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/intro.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
 
 import '../helper/constant.dart';
-
 
 /*
 *   created by Riddhi
@@ -38,6 +37,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
     arrType = initFeatureDataArray();
     getDashboardStatus();
+
+    Utils.callCustomerValuesApi();
 
     if (Injector.introData == null) {
       getIntroData();
@@ -66,12 +67,10 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
         WebApi().callAPI(WebApi.rqGetDashboardStatus, rq.toJson()).then((data) {
           if (data != null) {
-            DashboardStatusResponse response =
-                DashboardStatusResponse.fromJson(data);
+            DashboardStatusResponse response = DashboardStatusResponse.fromJson(data);
 
             if (response.data.isNotEmpty) {
-              Injector.prefs.setString(
-                  PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
+              Injector.prefs.setString(PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
               Injector.dashboardStatusResponse = response;
 
               arrType = initFeatureDataArray();
@@ -91,9 +90,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       width: 30,
       height: 30,
       margin: EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: ColorRes.colorPrimary)),
+      decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: ColorRes.colorPrimary)),
     );
   }
 
@@ -122,8 +119,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image:
-                        AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),
+                    image: AssetImage(Utils.getAssetsImg("ic_pro_bg_main_card")),
                     //bg_main_card
                     fit: BoxFit.fill)),
             child: Row(
@@ -149,8 +145,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                   child: Text(
                     getTitle(type),
                     maxLines: 2,
-                    style:
-                        TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
+                    style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
                     overflow: TextOverflow.ellipsis,
                   ),
                 )
@@ -179,6 +174,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return Utils.getText(context, StringRes.challenges);
     else if (type == Const.typePl)
       return Utils.getText(context, StringRes.pl);
+    else if (type == Const.typeAchievement)
+      return Utils.getText(context, StringRes.achievement);
     else if (type == Const.typeReward)
       return Utils.getText(context, StringRes.rewards);
     else if (type == Const.typeRanking)
@@ -202,6 +199,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
       return "ic_pro_home_challenges";
     else if (type == Const.typePl)
       return "ic_pro_home_pl";
+    else if (type == Const.typeAchievement)
+      return "ic_pro_home_achievement";
     else if (type == Const.typeReward)
       return "ic_pro_home_rewards";
     else if (type == Const.typeRanking)
@@ -244,6 +243,8 @@ class DashboardProfPageState extends State<DashboardProfPage> {
     arrTypeData.add(Const.typeBusinessSector);
     arrTypeData.add(Const.typeNewCustomer);
     arrTypeData.add(Const.typeExistingCustomer);
+
+    if (Utils.isFeatureOn(Const.typeAchievement)) arrTypeData.add(Const.typeAchievement);
 
     if (Utils.isFeatureOn(Const.typeReward)) arrTypeData.add(Const.typeReward);
 

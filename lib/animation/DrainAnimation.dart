@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
 
 class DrainAnimation extends StatefulWidget {
   final String icon;
@@ -15,8 +15,6 @@ class _DrainAnimationState extends State<DrainAnimation> {
   bool visible = false;
   String coin = "coin";
 
-
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -28,11 +26,7 @@ class _DrainAnimationState extends State<DrainAnimation> {
           child: Container(
             width: 20.0,
             height: 20.0,
-            child: AnimatedOpacity(
-                duration: Duration(seconds: 1),
-                opacity: 1.0,
-                child: Image.asset(Utils.getAssetsImg(coin),
-                    width: 10, height: 10)),
+            child: AnimatedOpacity(duration: Duration(seconds: 1), opacity: 1.0, child: Image.asset(Utils.getAssetsImg(coin), width: 10, height: 10)),
           ),
         ),
         AnimatedPositioned(
@@ -49,8 +43,7 @@ class _DrainAnimationState extends State<DrainAnimation> {
             child: AnimatedOpacity(
                 duration: Duration(milliseconds: visible ? 600 : 0),
                 opacity: visible ? 0.0 : 1.0,
-                child: Image.asset(Utils.getAssetsImg(coin),
-                    width: 10, height: 10)),
+                child: Image.asset(Utils.getAssetsImg(coin), width: 10, height: 10)),
           ),
         ),
         RaisedButton(
