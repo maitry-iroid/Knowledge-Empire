@@ -2,23 +2,25 @@ import 'package:knowledge_empire/injection/dependency_injection.dart';
 
 import 'flavor_config.dart';
 
-enum Environment { DEV, PROD }
+enum Environment { DEV, PROD, DEV_V2, PROD_V2 }
 
 class Const {
   static var deviceType = "android";
   static Environment envType;
+  static bool isLandscape = true;
 
   static var typeHome = "0";
   static var typeBusinessSector = "1";
   static var typeNewCustomer = "2";
   static var typeExistingCustomer = "3";
-  static var typeReward = "4";
+  static var typeAchievement = "4";
   static var typeTeam = "5";
   static var typeChallenges = "6";
   static var typeOrg = "7";
   static var typePl = "8";
   static var typeRanking = "9";
-  static var typeProfile = "10";
+  static var typeReward = "10";
+  static var typeProfile = "15";
   static var typeHelp = "11";
   static var typeEngagement = "12";
   static var typeCustomerSituation = "13";
@@ -62,7 +64,11 @@ class Const {
 // answer type is text or media
   static var typeAnswerText = 1;
   static var typeAnswerMedia = 2;
+  static var typeAnswerMediaWithQuestion = 3;
 
+  // privacy policy type
+  static var typeGetPrivacyPolicy = 1;
+  static var typeUpdateAccessTime = 2;
 
   static var typeCamera = 101;
   static var typeGallery = 102;
@@ -97,13 +103,19 @@ class Const {
 
   static void setEnvironment(Environment env) {
     envType = env;
-    Injector.isDev = envType == Environment.DEV;
+    Injector.isDev = (envType == Environment.DEV) || (envType == Environment.DEV_V2);
     switch (env) {
       case Environment.DEV:
         _config = AppConfig.devConfig();
         break;
       case Environment.PROD:
         _config = AppConfig.prodConfig();
+        break;
+      case Environment.DEV_V2:
+        _config = AppConfig.devV2Config();
+        break;
+      case Environment.PROD_V2:
+        _config = AppConfig.prodV2Config();
         break;
     }
   }

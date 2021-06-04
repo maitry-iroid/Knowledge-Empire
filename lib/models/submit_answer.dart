@@ -3,18 +3,20 @@ class SubmitAnswerRequest {
   int totalQuestionAnswered;
   int isChallenge;
   int challengeId;
+  String timezone;
   List<SubmitAnswer> answer;
 
   SubmitAnswerRequest(
       {this.userId,
         this.totalQuestionAnswered,
-        this.answer});
+        this.answer, this.timezone});
 
   SubmitAnswerRequest.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     isChallenge = json['isChallenge'];
     challengeId = json['challengeId'];
     totalQuestionAnswered = json['totalQuestionAnswered'];
+    timezone = json['timezone'];
     if (json['answer'] != null) {
       answer = new List<SubmitAnswer>();
       json['answer'].forEach((v) {
@@ -28,6 +30,7 @@ class SubmitAnswerRequest {
     data['userId'] = this.userId;
     data['isChallenge'] = this.isChallenge;
     data['challengeId'] = this.challengeId;
+    data['timezone'] = this.timezone;
     data['totalQuestionAnswered'] = this.totalQuestionAnswered;
     if (this.answer != null) {
       data['answer'] = this.answer.map((v) => v.toJson()).toList();

@@ -12,6 +12,8 @@ class HomeData {
   bool isChallenge;
   bool isCameFromNewCustomer;
   bool isReadyForChallenge;
+  int existingQueIndex;
+  List<QuestionData> existingQueList;
   List<GetFriendsData> arrFriends = List();
 
   HomeData({
@@ -24,5 +26,7 @@ class HomeData {
     this.isReadyForChallenge,
     this.isCameFromNewCustomer,
     this.arrFriends,
+    this.existingQueIndex,
+    this.existingQueList
   });
 }

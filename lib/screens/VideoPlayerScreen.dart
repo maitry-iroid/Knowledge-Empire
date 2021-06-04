@@ -15,6 +15,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
+
     _videoPlayerController1 = VideoPlayerController.network(
         'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
     _videoPlayerController1.initialize().then((_) {
@@ -26,6 +27,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     });
 
   }
+
 
   @override
   void dispose() {
