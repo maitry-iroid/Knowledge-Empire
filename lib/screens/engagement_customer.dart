@@ -405,16 +405,18 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
             Container(
               alignment: Alignment.center,
               height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              width: 200,
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
                   color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
                   image:
                       Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
               child: Text(
-                Utils.getText(context, StringRes.engagement),
+                questionDataEngCustomer.title ?? Utils.getText(context, StringRes.engagement),
                 style: TextStyle(color: ColorRes.white, fontSize: 18),
                 textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             InkResponse(

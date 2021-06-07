@@ -28,23 +28,23 @@ class FadeRouteLogin extends PageRouteBuilder {
 
   FadeRouteLogin({this.page})
       : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) =>
-    page,
-    transitionsBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) =>
-        FadeTransition(
-          opacity: animation,
-          child: LoginPage(),
-        ),
-  );
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: LoginPage(),
+          ),
+        );
 }
 
 class LoginPage extends StatefulWidget {
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     verifyCompany();
     preFillData();
-    callVersionApi();
+    // callVersionApi();
   }
 
   void callVersionApi() async {
@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(Const.envType == Environment.DEV || Const.envType == Environment.PROD) {
+    if (Const.envType == Environment.DEV || Const.envType == Environment.PROD) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
@@ -154,23 +154,19 @@ class _LoginPageState extends State<LoginPage> {
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: ColorRes.white,
-        body: SafeArea(
-            child: this.showMainView()
-        ),
+        body: SafeArea(child: this.showMainView()),
       );
     }
   }
 
-  Widget showMainView(){
+  Widget showMainView() {
     return Container(
       padding: EdgeInsets.all(10),
       color: ColorRes.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-              flex: 2,
-              child: Image.asset(Utils.getAssetsImg('logo_login'), width: Utils.getDeviceWidth(context))),
+          Expanded(flex: 2, child: Image.asset(Utils.getAssetsImg('logo_login'), width: Utils.getDeviceWidth(context))),
           Expanded(child: Container()),
           Expanded(
               flex: 5,
@@ -182,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: Utils.getText(context, StringRes.usernameText),
                       controller: emailController,
                       fillColor: ColorRes.white,
-                      validator: (value){
+                      validator: (value) {
                         return null;
                       }),
                   SizedBox(height: Utils.getDeviceHeight(context) / 60),
@@ -191,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: passwordController,
                       isSecure: true,
                       fillColor: ColorRes.white,
-                      validator: (value){
+                      validator: (value) {
                         return null;
                       }),
                   SizedBox(height: Utils.getDeviceHeight(context) / 60),
@@ -200,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: codeController,
                       isSecure: false,
                       fillColor: ColorRes.white,
-                      validator: (value){
+                      validator: (value) {
                         return null;
                       }),
 //                  SizedBox(height: 15),
@@ -209,18 +205,20 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkResponse(
-                        onTap: (){
+                        onTap: () {
                           Utils.playClickSound();
                           Navigator.push(context, FadeRouteForgotPassword());
                         },
-                        child: Text(Utils.getText(context, StringRes.forgotPassword), style: TextStyle(color: ColorRes.blue, fontSize: 16, fontWeight: FontWeight.bold)),
+                        child: Text(Utils.getText(context, StringRes.forgotPassword),
+                            style: TextStyle(color: ColorRes.blue, fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                       InkResponse(
-                        onTap: (){
+                        onTap: () {
                           Utils.playClickSound();
                           selectLanguagesAlert(context);
                         },
-                        child: Text(Utils.getText(context, StringRes.changeLanguage), style: TextStyle(color: ColorRes.blue, fontSize: 16, fontWeight: FontWeight.bold)),
+                        child: Text(Utils.getText(context, StringRes.changeLanguage),
+                            style: TextStyle(color: ColorRes.blue, fontSize: 16, fontWeight: FontWeight.bold)),
                       )
                     ],
                   )
@@ -238,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
                       textColor: Colors.white,
                       borderColor: Colors.white,
                       buttonText: Utils.getText(context, StringRes.login),
-                      onPressed: (){
+                      onPressed: () {
                         Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
                           if (isConnected) validateForm();
                         });
@@ -246,10 +244,13 @@ class _LoginPageState extends State<LoginPage> {
                       }),
                   SizedBox(height: 10),
                   InkResponse(
-                    onTap: (){
-                      _launchEmail("support@knowledge-empire.com");
-                    },
-                      child: Center(child: Text(Utils.getText(context, StringRes.requestDemoAccount), style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),)),
+                      onTap: () {
+                        _launchEmail("support@knowledge-empire.com");
+                      },
+                      child: Center(
+                        child: Text(Utils.getText(context, StringRes.requestDemoAccount),
+                            style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),
+                      )),
                   Expanded(child: Container()),
                   Center(
                     child: Text(
@@ -285,55 +286,55 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Expanded(
                     child: Row(
-                      children: [
-                        Expanded(child: showEmailView()),
-                        SizedBox(width: 10),
-                        Expanded(child: showCompanyCodeView()),
-                      ],
-                    )),
+                  children: [
+                    Expanded(child: showEmailView()),
+                    SizedBox(width: 10),
+                    Expanded(child: showCompanyCodeView()),
+                  ],
+                )),
                 Expanded(
                     child: Row(
-                      children: [
-                        Expanded(child: showPassword()),
-                        SizedBox(width: 10),
-                        Expanded(child: showLoginButton()),
-                      ],
-                    )),
+                  children: [
+                    Expanded(child: showPassword()),
+                    SizedBox(width: 10),
+                    Expanded(child: showLoginButton()),
+                  ],
+                )),
                 Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [SizedBox(width: 50), Expanded(child: showForgotPasswordView()), Expanded(child: showChangeLanguageView())],
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(width: 50),
-                                      Expanded(child: showRequestDemoAccountView()),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            )),
-                        showVersion(),
-                      ],
-                    )),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [SizedBox(width: 50), Expanded(child: showForgotPasswordView()), Expanded(child: showChangeLanguageView())],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: 50),
+                                  Expanded(child: showRequestDemoAccountView()),
+                                ],
+                              ),
+                            )
+                          ],
+                        )),
+                    showVersion(),
+                  ],
+                )),
 //                 Expanded(
 //                     child: Container(
 //                         alignment: Alignment.center,
@@ -444,8 +445,12 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   Container(
                       margin: EdgeInsets.all(40),
-                      width:  (Const.envType == Environment.DEV || Const.envType == Environment.PROD) ? Utils.getDeviceWidth(context) / 3.0 : Utils.getDeviceWidth(context) / 1.5,
-                      height: (Const.envType == Environment.DEV || Const.envType == Environment.PROD) ? Utils.getDeviceHeight(context) / 1.9 : Utils.getDeviceHeight(context) / 4.5,
+                      width: (Const.envType == Environment.DEV || Const.envType == Environment.PROD)
+                          ? Utils.getDeviceWidth(context) / 3.0
+                          : Utils.getDeviceWidth(context) / 1.5,
+                      height: (Const.envType == Environment.DEV || Const.envType == Environment.PROD)
+                          ? Utils.getDeviceHeight(context) / 1.9
+                          : Utils.getDeviceHeight(context) / 4.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: ColorRes.white,
@@ -605,13 +610,13 @@ class _LoginPageState extends State<LoginPage> {
                       privacyPolicyResponse.privacyPolicyAcceptText != "") {
                     Utils.showPrivacyPolicyDialog(_scaffoldKey, false, userData.activeCompany, privacyPolicyResponse.privacyPolicyTitle,
                         privacyPolicyResponse.privacyPolicyContent, privacyPolicyResponse.privacyPolicyAcceptText, completion: (status) {
-                          if (status == true) {
-                            // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
-                            moveToChangePasswordOrDashboard();
-                          } else {
-                            Navigator.of(context).pop();
-                          }
-                        });
+                      if (status == true) {
+                        // localeBloc.setLocale(Utils.getIndexLocale(userData.language));
+                        moveToChangePasswordOrDashboard();
+                      } else {
+                        Navigator.of(context).pop();
+                      }
+                    });
                   } else {
                     moveToChangePasswordOrDashboard();
                   }
@@ -646,7 +651,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void navigateToDashboard() {
     print("Navigate to dashboard--------------------------------------------------------");
-      Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
+    Navigator.pushAndRemoveUntil(context, FadeRouteHome(), ModalRoute.withName("/login"));
   }
 
   showCompanyCodeView() {
@@ -831,7 +836,7 @@ class _LoginPageState extends State<LoginPage> {
 
   showRequestDemoAccountView() {
     return InkResponse(
-      onTap: (){
+      onTap: () {
         _launchEmail("support@knowledge-empire.com");
       },
       child: Align(

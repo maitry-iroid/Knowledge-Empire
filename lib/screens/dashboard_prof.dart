@@ -143,7 +143,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                 ),
                 Expanded(
                   child: Text(
-                    getTitle(type),
+                    Utils.getText(context, getTitle(type)),
                     maxLines: 2,
                     style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
                     overflow: TextOverflow.ellipsis,
@@ -163,25 +163,25 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
   getTitle(String type) {
     if (type == Const.typeBusinessSector)
-      return Utils.getText(context, StringRes.businessSector);
+      return StringRes.businessSector;
     else if (type == Const.typeNewCustomer)
-      return Utils.getText(context, StringRes.newCustomers);
+      return StringRes.newCustomers;
     else if (type == Const.typeExistingCustomer)
-      return Utils.getText(context, StringRes.existingCustomers);
+      return StringRes.existingCustomers;
     else if (type == Const.typeOrg)
-      return Utils.getText(context, StringRes.organizations);
+      return StringRes.organizations;
     else if (type == Const.typeChallenges)
-      return Utils.getText(context, StringRes.challenges);
+      return StringRes.challenges;
     else if (type == Const.typePl)
-      return Utils.getText(context, StringRes.pl);
+      return StringRes.pl;
     else if (type == Const.typeAchievement)
-      return Utils.getText(context, StringRes.achievement);
+      return StringRes.achievement;
     else if (type == Const.typeReward)
-      return Utils.getText(context, StringRes.rewards);
+      return StringRes.rewards;
     else if (type == Const.typeRanking)
-      return Utils.getText(context, StringRes.ranking);
+      return StringRes.ranking;
     else if (type == Const.typeTeam)
-      return Utils.getText(context, StringRes.team);
+      return StringRes.team;
     else
       return "";
   }

@@ -333,7 +333,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   void initStateMethods() async {
     HomeUtils.callDashboardStatusApi();
 
-    HomeUtils.callVersionApi(context);
+    // HomeUtils.callVersionApi(context);
 
     HomeUtils.initPush(context);
 

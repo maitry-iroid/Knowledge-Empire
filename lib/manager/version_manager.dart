@@ -32,16 +32,11 @@ class VersionManager {
   }
 
   static String getMode() {
-    if(Const.envType == Environment.DEV)
+    if (Const.envType == Environment.DEV)
       return "D";
-    else if(Const.envType == Environment.PROD)
+    else if (Const.envType == Environment.PROD)
       return "P";
-    else if(Const.envType == Environment.DEV_V2)
-      return "D-V2";
-    else if(Const.envType == Environment.PROD_V2)
-      return "P-V2";
     else
       return "D";
   }
-
 }

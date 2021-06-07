@@ -356,24 +356,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       ),
                     ],
                   ),
-                  InkResponse(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 145,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
-                      child: Text(
-                        Utils.getText(context, StringRes.backToList),
-                        style: TextStyle(color: ColorRes.white, fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    onTap: () async {
-                      Utils.playClickSound();
-                      navigationBloc
-                          .updateNavigation(HomeData(initialPageType: isCameFromNewCustomer ? Const.typeNewCustomer : Const.typeExistingCustomer));
-                    },
-                  ),
                   Container(
                     alignment: Alignment.center,
                     height: 30,
@@ -404,36 +386,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                     ),
                     onTap: () async {
                       Utils.playClickSound();
-                      if (isChallenge != null && isChallenge) {
-                        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
-
-                        /* if (nextChallengeQuestionData != null &&
-                      nextChallengeQuestionData.challengeId != null) {
-
-                    navigationBloc.updateNavigation(HomeData(
-                        initialPageType: Const.typeEngagement,
-                        isChallenge: isChallenge,mani
-                        questionHomeData: nextChallengeQuestionData));
-                  }*/
-                      } else if (isCameFromNewCustomer != null && isCameFromNewCustomer) {
-                        QuestionRequest rq = QuestionRequest();
-                        rq.userId = Injector.userData.userId;
-                        rq.type = Const.getNewQueType;
-                        List<QuestionData> arrQuestions = await getQuestionsBloc.getQuestion(rq);
-
-                        print("======================= perform next ======================");
-                        print(arrQuestions.length);
-
-                        if (arrQuestions != null && arrQuestions.length > 0) {
-                          HomeData homeData =
-                              HomeData(initialPageType: Const.typeEngagement, questionHomeData: arrQuestions[0], value: arrQuestions[0].value);
-
-                          navigationBloc.updateNavigation(homeData);
-                        } else
-                          navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeHome));
-                      } else {
-                        navigationBloc.updateNavigation(HomeData(initialPageType: Const.typeExistingCustomer));
-                      }
+                      Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
                     },
                   )
                 ],
