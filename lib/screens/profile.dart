@@ -411,7 +411,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         onTap: Injector.customerValueData != null && Injector.customerValueData.totalBalance <= 0
                             ? () async {
-                                Injector.audioCache.clearCache();
+                          //TODO AUDIO
+                                // Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
 //                                Injector.audioPlayerBg.pause();
                                 Utils.playClickSound();
@@ -1086,7 +1087,7 @@ class _ProfilePageState extends State<ProfilePage> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    File tempImage = await ImagePicker.pickImage(
+    XFile tempImage = await ImagePicker().pickImage(
       source: type == Const.typeGallery ? ImageSource.gallery : ImageSource.camera,
       imageQuality: Const.imgQuality,
     );
@@ -1098,7 +1099,7 @@ class _ProfilePageState extends State<ProfilePage> {
           DeviceOrientation.landscapeRight,
         ]);
         photoUrl = "";
-        _image = tempImage;
+        _image = File(tempImage.path);
         if (_image != null) {
           updateProfile();
         }

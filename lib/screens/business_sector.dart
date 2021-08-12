@@ -5,7 +5,6 @@ import 'package:background_fetch/background_fetch.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:knowledge_empire/commonview/common_view.dart';
 import 'package:knowledge_empire/dialogs/display_dailogs.dart';
 import 'package:knowledge_empire/helper/prefkeys.dart';
@@ -16,6 +15,7 @@ import 'package:knowledge_empire/manager/media_manager.dart';
 import 'package:knowledge_empire/models/manage_module_permission.dart';
 import 'package:knowledge_empire/models/questions.dart';
 import 'package:video_player/video_player.dart';
+
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
@@ -55,7 +55,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   int maxVol, currentVol;
 
   bool isSwitched = false;
-  PDFDocument _pdfDocument;
   bool _isLoading = false;
   String _pdfPath = '';
 
@@ -64,18 +63,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     super.initState();
 
     showIntroDialog();
-  }
-
-  Future getPDF(String url) async {
-    if (selectedModule != null && url != null) {
-      _pdfPath = url;
-      _pdfDocument = await PDFDocument.fromURL(url);
-    }
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
   }
 
   Future<void> initVideoController(String link) async {
@@ -101,7 +88,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   @override
   void dispose() {
     _controller?.pause();
-    Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+    //TODO AUDIO
+    // Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
     super.dispose();
   }
 
@@ -278,13 +266,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           setState(() {
             selectedModule = arrFinalLearningModules[index];
             isSwitched = selectedModule.isDownloadEnable == 1;
-
-            if (Utils.isPdf(selectedModule.mediaLink)) {
-              Future.delayed(Duration.zero, () async {
-                await this.getPDF(selectedModule.mediaLink);
-              });
-            }
-
             if (Utils.isVideo(selectedModule.mediaLink)) {
               Injector.audioPlayerBg.stop();
               Future.delayed(Duration.zero, () async {
@@ -415,11 +396,6 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             if (arrLearningModules.length > 0 && (selectedModule.moduleId == null)) {
               selectedModule = arrLearningModules[0];
               isSwitched = selectedModule.isDownloadEnable == 1;
-              if (Utils.isPdf(selectedModule.mediaLink)) {
-                Future.delayed(Duration.zero, () async {
-                  await this.getPDF(selectedModule.mediaLink);
-                });
-              }
 
               if (Utils.isVideo(selectedModule.mediaLink)) {
                 Injector.audioPlayerBg.stop();
@@ -833,7 +809,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
-              pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.mediaLink),
+              isPdfLoading: _isLoading, pdfFilePath: selectedModule.mediaLink),
         );
       } else if (Utils.isVideo(selectedModule?.mediaLink)) {
         return Container(

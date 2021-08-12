@@ -13,7 +13,7 @@ class GetQuestionsBloc {
 
   final _getQuestionSubject = PublishSubject<List<QuestionData>>();
 
-  Observable<List<QuestionData>> get getQuestions => _getQuestionSubject.stream;
+  Stream<List<QuestionData>> get getQuestions => _getQuestionSubject.stream;
 
   Future<List<QuestionData>> getQuestion(QuestionRequest rq) async {
     bool isInternetConnected = await Utils.isInternetConnected();

@@ -7,7 +7,7 @@ final getChallengeQueBloc = GetChallengeQueBloc();
 class GetChallengeQueBloc {
   final _getChallengeQuestion = PublishSubject<List<QuestionCountWithData>>();
 
-  Observable<List<QuestionCountWithData>> get getChallenge => _getChallengeQuestion.stream;
+  Stream<List<QuestionCountWithData>> get getChallenge => _getChallengeQuestion.stream;
 
   Future getChallengeQuestion() {
     _getChallengeQuestion.sink.add(Injector.countList);

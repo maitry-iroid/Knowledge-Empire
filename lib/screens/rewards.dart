@@ -1,6 +1,5 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:knowledge_empire/commonview/common_view.dart';
 import 'package:knowledge_empire/dialogs/display_dailogs.dart';
 import 'package:knowledge_empire/helper/Utils.dart';
@@ -34,7 +33,6 @@ class _RewardsPageState extends State<RewardsPage> {
 
   String _pdfPath = '';
   String _previewPath;
-  PDFDocument _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -51,20 +49,9 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   void dispose() {
     _controller?.pause();
-    Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+    //TODO AUDIO
+    // Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
     super.dispose();
-  }
-
-  Future getPDF(String url) async {
-    if (selectedModule != null && url != null) {
-      _pdfPath = url;
-      _pdfDocument = await PDFDocument.fromURL(url);
-    }
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
   }
 
   Future<void> initVideoController(String link) async {
@@ -416,12 +403,6 @@ class _RewardsPageState extends State<RewardsPage> {
             selectedIndex = index;
             _controller?.pause();
 
-            if (Utils.isPdf(selectedModule.media)) {
-              Future.delayed(Duration.zero, () async {
-                await this.getPDF(selectedModule.media);
-              });
-            }
-
             if (Utils.isVideo(selectedModule.media)) {
               Injector.audioPlayerBg.stop();
               Future.delayed(Duration.zero, () async {
@@ -440,7 +421,7 @@ class _RewardsPageState extends State<RewardsPage> {
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb,
-              pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.media),
+              isPdfLoading: _isLoading, pdfFilePath: selectedModule.media),
         );
       } else if (Utils.isVideo(selectedModule?.media)) {
         return Container(
@@ -552,11 +533,6 @@ class _RewardsPageState extends State<RewardsPage> {
 
             if (arrRewards.length > 0) {
               selectedModule = arrRewards[selectedIndex];
-              if (Utils.isPdf(selectedModule.media)) {
-                Future.delayed(Duration.zero, () async {
-                  await this.getPDF(selectedModule.media);
-                });
-              }
 
               if (Utils.isVideo(selectedModule.media)) {
                 Injector.audioPlayerBg.stop();

@@ -11,7 +11,6 @@ import 'package:knowledge_empire/helper/prefkeys.dart';
 import 'package:knowledge_empire/helper/string_res.dart';
 import 'package:knowledge_empire/helper/web_api.dart';
 import 'package:knowledge_empire/injection/dependency_injection.dart';
-import 'package:knowledge_empire/manager/encryption_manager.dart';
 import 'package:knowledge_empire/models/push_model.dart';
 import 'package:knowledge_empire/models/register_for_push.dart';
 
@@ -39,7 +38,8 @@ class PushNotificationHelper {
     var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await Injector.flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
 
-    await Injector.firebaseMessaging.requestNotificationPermissions();
+    //TODO AUDIO
+    // await Injector.firebaseMessaging.requestNotificationPermissions();
 
     await Injector.firebaseMessaging.getToken().then((token) {
       print("token : " + token);
@@ -55,22 +55,23 @@ class PushNotificationHelper {
   }
 
   void firebaseCloudMessagingListeners() async {
-    Injector.firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('on message $message');
-        showNotification(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        // Trigger on notification tap when app is in background.
-        print('on resume $message');
-        Utils.showSuccessToast("Trigger on notification tap when app is in background.");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        // Trigger on notification tap when app is terminated.
-        print('on launch $message');
-        Utils.showSuccessToast("Trigger on notification tap when app is terminated.");
-      },
-    );
+    //TODO AUDIO
+    // Injector.firebaseMessaging.configure(
+    //   onMessage: (Map<String, dynamic> message) async {
+    //     print('on message $message');
+    //     showNotification(message);
+    //   },
+    //   onResume: (Map<String, dynamic> message) async {
+    //     // Trigger on notification tap when app is in background.
+    //     print('on resume $message');
+    //     Utils.showSuccessToast("Trigger on notification tap when app is in background.");
+    //   },
+    //   onLaunch: (Map<String, dynamic> message) async {
+    //     // Trigger on notification tap when app is terminated.
+    //     print('on launch $message');
+    //     Utils.showSuccessToast("Trigger on notification tap when app is terminated.");
+    //   },
+    // );
   }
 
   Future<void> onDidReceiveLocalNotification(int id, String title, String body, String payload) async {

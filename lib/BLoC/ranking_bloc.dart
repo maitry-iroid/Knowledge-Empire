@@ -16,8 +16,8 @@ class GetRankingDataBloc {
   final _getGroupSubject = PublishSubject<List<GetUserGroupData>>();
   final _getFriendsSubject = PublishSubject<List<GetFriendsData>>();
 
-  Observable<List<GetUserGroupData>> get getGroups => _getGroupSubject.stream;
-  Observable<List<GetFriendsData>> get getFriends => _getFriendsSubject.stream;
+  Stream<List<GetUserGroupData>> get getGroups => _getGroupSubject.stream;
+  Stream<List<GetFriendsData>> get getFriends => _getFriendsSubject.stream;
 //
 //  getFriendsData(GetFriendsRequest rq) async {
 //    bool isInternetConnected = await Utils.isInternetConnectedWithAlert(context);

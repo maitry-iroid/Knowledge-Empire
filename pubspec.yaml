@@ -49,7 +49,7 @@ dependencies:
   #  background_fetch:
   #    git:
   #      url: https://github.com/transistorsoft/flutter_background_fetch
-  background_fetch: '^0.7.0'
+#  background_fetch: '^0.7.0'
   firebase_messaging:
   firebase_core:
   flutter_local_notifications:

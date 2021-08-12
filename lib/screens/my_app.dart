@@ -1,20 +1,20 @@
 import 'dart:async';
+
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:knowledge_empire/BLoC/locale_bloc.dart';
 import 'package:knowledge_empire/helper/constant.dart';
 import 'package:knowledge_empire/helper/environment_utils.dart';
 import 'package:knowledge_empire/helper/localization.dart';
-import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/res.dart';
 import 'package:knowledge_empire/injection/dependency_injection.dart';
 import 'package:knowledge_empire/screens/dashboard_game.dart';
 import 'package:knowledge_empire/screens/engagement_customer.dart';
-import 'package:knowledge_empire/helper/res.dart';
 import 'package:knowledge_empire/screens/login.dart';
+
 import 'home.dart';
 
 class MyApp extends StatefulWidget {
@@ -25,13 +25,13 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   int _status = 0;
 
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   void initState() {
     print("weburl-------" + Const.webUrl);
-
-    Injector.audioCache.loadAll(['all_button_clicks.wav']);
+    //TODO AUDIO
+    // Injector.audioCache.loadAll(['all_button_clicks.wav']);
 
     initPlatformState();
 

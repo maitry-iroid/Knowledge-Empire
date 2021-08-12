@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:knowledge_empire/BLoC/get_question_bloc.dart';
 import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
 import 'package:knowledge_empire/helper/Utils.dart';
@@ -71,7 +70,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   //todo pdf viewer
   String _pdfPath = '';
   String _previewPath;
-  PDFDocument _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -99,7 +97,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     if (Utils.isVideo(questionDataEngCustomer.mediaLink) && questionDataEngCustomer.answerType != Const.typeAnswerMedia) {
 //      Injector.audioPlayerBg.stop();
-      (Injector.isBusinessMode && (Injector.isSoundEnable ?? false)) ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+      //TODO AUDIO
+//       (Injector.isBusinessMode && (Injector.isSoundEnable ?? false)) ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       Future.delayed(Duration.zero, () async {
         await this.initVideoController(questionDataEngCustomer.mediaLink);
       });
@@ -171,9 +170,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       // _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
 
       // Load from URL
-      _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
-        print(e);
-      });
 
       if (mounted) {
         setState(() {
@@ -626,7 +622,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               widget.homeData.questionHomeData.answerType == Const.typeAnswerText ||
                       widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                   ? MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
-                      pdfDocument: _pdfDocument,
                       isPdfLoading: isLoading,
                       pdfFilePath: _pdfPath,
                       chewieController: _chewieController,
@@ -634,7 +629,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       videoLoop: questionDataEngCustomer.videoLoop,
                       videoPlay: questionDataEngCustomer.videoPlay)
                   : MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
-                      pdfDocument: _pdfDocument, isPdfLoading: isLoading, pdfFilePath: _pdfPath),
+                       isPdfLoading: isLoading, pdfFilePath: _pdfPath),
               showQueDescription(context)
             ],
           ),

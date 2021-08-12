@@ -1,9 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -15,34 +19,27 @@ import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
 import 'package:knowledge_empire/baseController/base_text.dart';
 import 'package:knowledge_empire/commonview/pdf_viewer.dart';
 import 'package:knowledge_empire/dialogs/change_password.dart';
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:knowledge_empire/dialogs/companycode_dialog.dart';
+import 'package:knowledge_empire/dialogs/loader.dart';
 import 'package:knowledge_empire/dialogs/nickname_dialog.dart';
 import 'package:knowledge_empire/dialogs/privacy_policy_dialog.dart';
-import 'package:knowledge_empire/manager/screens_manager.dart';
-import 'package:knowledge_empire/manager/theme_manager.dart';
-import 'package:knowledge_empire/models/on_off_feature.dart';
-import 'package:knowledge_empire/screens/more_info.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:knowledge_empire/dialogs/loader.dart';
 import 'package:knowledge_empire/helper/prefkeys.dart';
 import 'package:knowledge_empire/helper/res.dart';
 import 'package:knowledge_empire/helper/string_res.dart';
 import 'package:knowledge_empire/helper/web_api.dart';
-import 'package:knowledge_empire/models/homedata.dart';
 import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/manager/theme_manager.dart';
 import 'package:knowledge_empire/models/get_customer_value.dart';
+import 'package:knowledge_empire/models/homedata.dart';
 import 'package:knowledge_empire/models/manage_organization.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
 import 'package:knowledge_empire/models/organization.dart';
 import 'package:knowledge_empire/models/questions.dart';
 import 'package:knowledge_empire/models/submit_answer.dart';
 import 'package:knowledge_empire/screens/organization.dart';
 import 'package:path/path.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'constant.dart';
 import 'localization.dart';
 
@@ -410,8 +407,9 @@ class Utils {
         final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
         print(file.path);
         await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
-        await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
-        Injector.audioPlayerBg.play(file.path, isLocal: true);
+        //TODO AUDIO
+        // await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
+        // Injector.audioPlayerBg.play(file.path, isLocal: true);
       } else {
         Injector.audioPlayerBg.stop();
       }
@@ -425,12 +423,14 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
+    //TODO AUDIO
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static playClickSound() {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      Injector.audioCache.play("all_button_clicks.wav");
+      //TODO AUDIO
+      // Injector.audioCache.play("all_button_clicks.wav");
     }
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
@@ -438,23 +438,28 @@ class Utils {
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
+    //TODO AUDIO
+//     if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
+    //TODO AUDIO
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static achievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
+    //TODO AUDIO
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static proCorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
+    //TODO AUDIO
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proIncorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
+    //TODO AUDIO
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
 //  static audioPlay(String path) async {
@@ -512,7 +517,8 @@ class Utils {
 
   static FileInfo getCacheFile(String url) {
     try {
-      return Injector.cacheManager.getFileFromMemory(url);
+      //TODO AUDIO
+      // return Injector.cacheManager.getFileFromMemory(url);
     } catch (e) {
       print(e);
       return null;
@@ -673,7 +679,8 @@ class Utils {
 
   static performDashboardItemClick(BuildContext context, String type) async {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      Injector.audioCache.play("all_button_clicks.wav");
+      //TODO AUDIO
+      // Injector.audioCache.play("all_button_clicks.wav");
     }
 
     if (type == Const.typeOrg ||

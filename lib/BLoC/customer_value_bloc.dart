@@ -12,7 +12,7 @@ class CustomerValueBloc {
 
   final _assignModuleSubject = PublishSubject<CustomerValueData>();
 
-  Observable<CustomerValueData> get customerValue => _assignModuleSubject.stream;
+  Stream<CustomerValueData> get customerValue => _assignModuleSubject.stream;
 
   getCustomerValue(CustomerValueRequest rq) async {
     dynamic data = await _repository.getCustomerValue(rq);
