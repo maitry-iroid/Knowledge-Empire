@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audio_cache.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:device_id/device_id.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:knowledge_empire/BLoC/locale_bloc.dart';
 import 'package:knowledge_empire/commonview/challenge_header.dart';
 import 'package:knowledge_empire/helper/Utils.dart';
@@ -92,12 +93,13 @@ class Injector {
   // Is sound enabled from Profile > Settings bt the user (tap sound or background sound, achievement sound etc..)
   static bool isSoundEnable;
 
+  //TODO audio
   // For caching sound files once so it won't load every time
-  static AudioCache audioCache = AudioCache(prefix: 'sounds/');
-  static AudioCache audioCacheBg = AudioCache(prefix: 'sounds/');
+  // static AudioCache audioCache = AudioCache(prefix: 'sounds/');
+  // static AudioCache audioCacheBg = AudioCache(prefix: 'sounds/');
 
   // To play sound files
-  static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
+  static AudioPlayer audioPlayerBg = AudioPlayer();
 
   // is Development environment
   static bool isDev = true;
@@ -135,7 +137,7 @@ class Injector {
     deviceType = Platform.operatingSystem;
     print(deviceType);
 
-    firebaseMessaging = FirebaseMessaging();
+    firebaseMessaging = FirebaseMessaging.instance;
 
     webApi = WebApi();
 

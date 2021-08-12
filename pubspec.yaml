@@ -44,7 +44,7 @@ dependencies:
   video_player:
   path:
   #simple_pdf_viewer
-  flutter_cache_manager:
+  flutter_cache_manager: ^3.1.2
   cached_network_image:
   #  background_fetch:
   #    git:
@@ -54,7 +54,8 @@ dependencies:
   firebase_core:
   flutter_local_notifications:
   connectivity:
-  audioplayers:
+#  audioplayers:
+  just_audio: ^0.9.5
   #simple_animations
   pie_chart: ^3.1.1
   package_info:
@@ -68,13 +69,13 @@ dependencies:
   #animated_background
   shimmer:
   open_appstore:
-  pdf_previewer: ^0.1.3+3
+#  pdf_previewer:
   auto_size_text:
   chewie:
   like_button:
   simple_animations:
   characters:
-  flutter_plugin_pdf_viewer:
+#  flutter_plugin_pdf_viewer:
   flutter_native_timezone:
   flutter_emoji:
   flutter_native_splash:
