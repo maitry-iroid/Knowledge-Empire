@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -556,38 +556,38 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //            PushNotificationHelper(context).showLocalNotification(
 //                101, Utils.getText(context, StringRes.downloading));
 
-            await BackgroundFetch.start().then((int status) async {
-//              if (mounted)setState(() {
-//                arrLearningModules
-//                    .firstWhere((module) => module.moduleId == moduleId)
-//                    .isDownloading = true;
-//              });
-
-              await Injector.prefs.setString("datta", "scsdc");
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
-            }).catchError((e) {
-              if (moduleId != null) {
-//                if (mounted)setState(() {
-//                  arrLearningModules
-//                      .firstWhere((module) => module.moduleId == moduleId)
-//                      .isDownloading = false;
-//                });
-              }
-            }).whenComplete(() {
-              if (i == arrQuestions.length - 1) Injector.flutterLocalNotificationsPlugin.cancel(101);
-
-//              if (mounted)setState(() {
-//                arrLearningModules
-//                    .firstWhere((module) => module.moduleId == moduleId)
-//                    .isDownloading = false;
-//              });
-            });
-            await BackgroundFetch.start().then((int status) async {
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].inCorrectAnswerImage);
-            });
-            await BackgroundFetch.start().then((int status) async {
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].correctAnswerImage);
-            });
+//             await BackgroundFetch.start().then((int status) async {
+// //              if (mounted)setState(() {
+// //                arrLearningModules
+// //                    .firstWhere((module) => module.moduleId == moduleId)
+// //                    .isDownloading = true;
+// //              });
+//
+//               await Injector.prefs.setString("datta", "scsdc");
+//               await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
+//             }).catchError((e) {
+//               if (moduleId != null) {
+// //                if (mounted)setState(() {
+// //                  arrLearningModules
+// //                      .firstWhere((module) => module.moduleId == moduleId)
+// //                      .isDownloading = false;
+// //                });
+//               }
+//             }).whenComplete(() {
+//               if (i == arrQuestions.length - 1) Injector.flutterLocalNotificationsPlugin.cancel(101);
+//
+// //              if (mounted)setState(() {
+// //                arrLearningModules
+// //                    .firstWhere((module) => module.moduleId == moduleId)
+// //                    .isDownloading = false;
+// //              });
+//             });
+//             await BackgroundFetch.start().then((int status) async {
+//               await Injector.cacheManager.getSingleFile(arrQuestions[i].inCorrectAnswerImage);
+//             });
+//             await BackgroundFetch.start().then((int status) async {
+//               await Injector.cacheManager.getSingleFile(arrQuestions[i].correctAnswerImage);
+//             });
           }
 
           if (moduleId != null) {

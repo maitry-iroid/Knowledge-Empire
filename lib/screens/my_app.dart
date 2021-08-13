@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,31 +85,31 @@ class MyAppState extends State<MyApp> {
 
   Future<void> initPlatformState() async {
     // Configure BackgroundFetch.
-    BackgroundFetch.configure(
-            BackgroundFetchConfig(
-              minimumFetchInterval: 15,
-              forceAlarmManager: false,
-              stopOnTerminate: false,
-              startOnBoot: true,
-              enableHeadless: true,
-              requiresBatteryNotLow: false,
-              requiresCharging: false,
-              requiresStorageNotLow: false,
-              requiresDeviceIdle: false,
-              requiredNetworkType: NetworkType.NONE,
-            ),
-            _onBackgroundFetch)
-        .then((int status) {
-      print('[BackgroundFetch] configure success: $status');
-      setState(() {
-        _status = status;
-      });
-    }).catchError((e) {
-      print('[BackgroundFetch] configure ERROR: $e');
-      setState(() {
-        _status = e;
-      });
-    });
+    // BackgroundFetch.configure(
+    //         BackgroundFetchConfig(
+    //           minimumFetchInterval: 15,
+    //           forceAlarmManager: false,
+    //           stopOnTerminate: false,
+    //           startOnBoot: true,
+    //           enableHeadless: true,
+    //           requiresBatteryNotLow: false,
+    //           requiresCharging: false,
+    //           requiresStorageNotLow: false,
+    //           requiresDeviceIdle: false,
+    //           requiredNetworkType: NetworkType.NONE,
+    //         ),
+    //         _onBackgroundFetch)
+    //     .then((int status) {
+    //   print('[BackgroundFetch] configure success: $status');
+    //   setState(() {
+    //     _status = status;
+    //   });
+    // }).catchError((e) {
+    //   print('[BackgroundFetch] configure ERROR: $e');
+    //   setState(() {
+    //     _status = e;
+    //   });
+    // });
 
 //    BackgroundFetch.scheduleTask(TaskConfig(
 //        taskId: "com.transistorsoft.customtask",
@@ -120,10 +120,10 @@ class MyAppState extends State<MyApp> {
 //        enableHeadless: true));
 
     // Optionally query the current BackgroundFetch status.
-    int status = await BackgroundFetch.status;
-    setState(() {
-      _status = status;
-    });
+    // int status = await BackgroundFetch.status;
+    // setState(() {
+    //   _status = status;
+    // });
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -142,16 +142,16 @@ class MyAppState extends State<MyApp> {
 //    // Persist fetch events in SharedPreferences
 //    prefs.setString(EVENTS_KEY, jsonEncode(_events));
 
-    if (taskId == "flutter_background_fetch") {
-      // Schedule a one-shot task when fetch event received (for testing).
-      BackgroundFetch.scheduleTask(TaskConfig(
-          taskId: "com.transistorsoft.customtask",
-          delay: 5000,
-          periodic: false,
-          forceAlarmManager: true,
-          stopOnTerminate: false,
-          enableHeadless: true));
-    }
-    BackgroundFetch.finish(taskId);
+    // if (taskId == "flutter_background_fetch") {
+    //   // Schedule a one-shot task when fetch event received (for testing).
+    //   BackgroundFetch.scheduleTask(TaskConfig(
+    //       taskId: "com.transistorsoft.customtask",
+    //       delay: 5000,
+    //       periodic: false,
+    //       forceAlarmManager: true,
+    //       stopOnTerminate: false,
+    //       enableHeadless: true));
+    // }
+    // BackgroundFetch.finish(taskId);
   }
 }
