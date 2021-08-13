@@ -98,7 +98,7 @@ class MediaManager{
 
   showMediaView(BuildContext context, String path, String thumbImage,
       {PDFDocument pdfDocument, bool isPdfLoading = false, ChewieController chewieController, VideoPlayerController videoPlayerController, int videoPlay, int videoLoop}) {
-    if(chewieController != null && (videoPlayerController?.value?.initialized ?? false) && Utils.isVideo(path)){
+    if(chewieController != null && (videoPlayerController?.value?.isInitialized ?? false) && Utils.isVideo(path)){
       return Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           height: Utils.getDeviceHeight(context) / 1.5,
@@ -107,7 +107,7 @@ class MediaManager{
             color: ColorRes.white,
           ),
           child: Utils.isVideo(path) &&
-              (videoPlayerController?.value?.initialized ?? false)
+              (videoPlayerController?.value?.isInitialized ?? false)
               ? Chewie(controller: chewieController) : Container(color: ColorRes.white,));
     }else{
       if (Utils.isImage(path) || Utils.isVideo(path)) {
@@ -305,7 +305,7 @@ class ExpandMediaState extends State<ExpandMedia>
                               color: ColorRes.white,
                             ),
                             child: Utils.isVideo(widget.link) &&
-                                (_controller?.value?.initialized ?? false)
+                                (_controller?.value?.isInitialized ?? false)
                                 ? Chewie(
                               controller: _chewieController,
                             )

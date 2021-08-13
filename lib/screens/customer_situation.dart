@@ -319,7 +319,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       );
     } else if (Utils.isVideo(path) &&
         _controller != null &&
-        _controller.value.initialized) {
+        _controller.value.isInitialized) {
       print("isVideo = true");
 
       return Stack(
@@ -1408,7 +1408,7 @@ class CorrectWrongMediaAlertState extends State<CorrectWrongMediaAlert>
             )),
       );
     } else if (Utils.isVideo(correctWrongImage()) &&
-        _controller.value.initialized) {
+        _controller.value.isInitialized) {
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
         child: Stack(

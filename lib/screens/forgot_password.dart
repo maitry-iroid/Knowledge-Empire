@@ -59,7 +59,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     if(Const.isLandscape) {
       return Scaffold(
 //        key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
       backgroundColor: ColorRes.fontDarkGrey,
       body: Container(
 
