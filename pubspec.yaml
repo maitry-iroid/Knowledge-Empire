@@ -50,7 +50,7 @@ dependencies:
   #    git:
   #      url: https://github.com/transistorsoft/flutter_background_fetch
 #  background_fetch: '^0.7.0'
-  firebase_messaging:
+  firebase_messaging: 10.0.2
   firebase_core:
   flutter_local_notifications:
   connectivity:
