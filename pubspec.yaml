@@ -33,7 +33,7 @@ dependencies:
   intl:
   device_id:
   percent_indicator:
-  fluttertoast:
+  fluttertoast: ^8.0.8
   shared_preferences:
   bubble_tab_indicator:
   flutter_localizations:

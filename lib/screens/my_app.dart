@@ -1,6 +1,7 @@
 import 'dart:async';
 
 // import 'package:background_fetch/background_fetch.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

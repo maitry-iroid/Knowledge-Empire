@@ -1,6 +1,7 @@
 import 'dart:async';
 
 // import 'package:background_fetch/background_fetch.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ void backgroundFetchHeadlessTask(String taskId) async {
 
 Future setupLocator() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp();
   await Injector.getInstance();
   Const.setEnvironment(Environment.PROD);
   runApp(MyApp());
