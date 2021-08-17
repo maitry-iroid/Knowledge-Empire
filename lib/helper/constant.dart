@@ -2,7 +2,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'flavor_config.dart';
 
-enum Environment { DEV, PROD, DEV_V2, PROD_V2 }
+enum Environment { DEV, PROD }
 
 class Const {
   static var deviceType = "android";
@@ -103,7 +103,7 @@ class Const {
 
   static void setEnvironment(Environment env) {
     envType = env;
-    Injector.isDev = (envType == Environment.DEV) || (envType == Environment.DEV_V2);
+    Injector.isDev = (envType == Environment.DEV );
     switch (env) {
       case Environment.DEV:
         _config = AppConfig.devConfig();
@@ -111,12 +111,7 @@ class Const {
       case Environment.PROD:
         _config = AppConfig.prodConfig();
         break;
-      case Environment.DEV_V2:
-        _config = AppConfig.devV2Config();
-        break;
-      case Environment.PROD_V2:
-        _config = AppConfig.prodV2Config();
-        break;
+
     }
   }
 
