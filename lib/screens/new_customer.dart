@@ -7,8 +7,9 @@ import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/homedata.dart';
+
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../models/questions.dart';
@@ -216,24 +217,27 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       children: <Widget>[
                         Expanded(
                           flex: 4,
-                          child: Text(
-//                      Utils.getText(context, StringRes.newCustomers),
+                          child: AutoSizeText(
                             arrQuestions[index].title,
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            minFontSize: 4,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: ColorRes.textRecordBlue,
                               fontSize: 18,
                             ),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
                           ),
                         ),
                         Expanded(
                           flex: 5,
-                          child: Text(
+                          child: AutoSizeText(
                             arrQuestions[index].moduleName,
-                            style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
-                            textAlign: TextAlign.center,
                             maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            minFontSize: 4,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
                           ),
                         ),
                         Expanded(

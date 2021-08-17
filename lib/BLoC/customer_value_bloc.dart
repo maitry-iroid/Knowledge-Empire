@@ -12,8 +12,7 @@ class CustomerValueBloc {
 
   final _assignModuleSubject = PublishSubject<CustomerValueData>();
 
-  Observable<CustomerValueData> get customerValue =>
-      _assignModuleSubject.stream;
+  Stream<CustomerValueData> get customerValue => _assignModuleSubject.stream;
 
   getCustomerValue(CustomerValueRequest rq) async {
     dynamic data = await _repository.getCustomerValue(rq);
@@ -23,8 +22,7 @@ class CustomerValueBloc {
       await Injector.setCustomerValueData(customerValueData);
 
       if (customerValueData.isChallengeAvailable == 1) {
-        Injector.homeStreamController
-            ?.add("${Const.openPendingChallengeDialog}");
+        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
       }
 
       _assignModuleSubject.add(customerValueData);

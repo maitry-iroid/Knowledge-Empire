@@ -16,8 +16,8 @@ class GetRankingDataBloc {
   final _getGroupSubject = PublishSubject<List<GetUserGroupData>>();
   final _getFriendsSubject = PublishSubject<List<GetFriendsData>>();
 
-  Observable<List<GetUserGroupData>> get getGroups => _getGroupSubject.stream;
-  Observable<List<GetFriendsData>> get getFriends => _getFriendsSubject.stream;
+  Stream<List<GetUserGroupData>> get getGroups => _getGroupSubject.stream;
+  Stream<List<GetFriendsData>> get getFriends => _getFriendsSubject.stream;
 //
 //  getFriendsData(GetFriendsRequest rq) async {
 //    bool isInternetConnected = await Utils.isInternetConnectedWithAlert(context);
@@ -57,8 +57,7 @@ class GetRankingDataBloc {
     arrGroups.add(grp3);
 
     if (isInternetConnected) {
-      dynamic data =
-          await Injector.webApi.callAPI(WebApi.rqGetUserGroups, rq.toJson());
+      dynamic data = await Injector.webApi.callAPI(WebApi.rqGetUserGroups, rq.toJson());
 
       if (data != null) {
         data.forEach((v) {
@@ -66,8 +65,7 @@ class GetRankingDataBloc {
         });
       }
     }
-    if (arrGroups != null && arrGroups.isNotEmpty)
-      _getGroupSubject.sink.add(arrGroups);
+    if (arrGroups != null && arrGroups.isNotEmpty) _getGroupSubject.sink.add(arrGroups);
   }
 
 //  updateQuestions(List<QuestionData> arrQuestions) async {

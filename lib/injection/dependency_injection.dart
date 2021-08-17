@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:audioplayers/audio_cache.dart';
+import 'dart:ui' as ui;
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:device_id/device_id.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,7 +28,6 @@ import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:ui' as ui;
 
 /*
 *
@@ -119,7 +119,7 @@ class Injector {
   static bool isInternetConnected = true;
 
   static String language = StringRes.strDefault;
-  static String companyCode ;
+  static String companyCode;
 
   Injector._internal();
 

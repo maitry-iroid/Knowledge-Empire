@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/BLoC/ranking_bloc.dart';
@@ -6,13 +7,14 @@ import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/listItem/group_item.dart';
 import 'package:ke_employee/listItem/time_item.dart';
-import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/friend_unfriend_user.dart';
 import 'package:ke_employee/models/get_friends.dart';
 import 'package:ke_employee/models/get_user_group.dart';
+import 'package:ke_employee/models/homedata.dart';
+
 import '../commonview/common_view.dart';
 import '../helper/constant.dart';
 
@@ -394,6 +396,7 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   showUserDetails(int index) {
+    print(arrFriends[index].name);
     return Expanded(
       flex: 16,
       child: Container(
@@ -465,25 +468,15 @@ class _RankingPageState extends State<RankingPage> {
                       ),
                     ),
                     Expanded(
-                      child: Text(arrFriends[index].name ?? "",
+                      child: AutoSizeText(arrFriends[index].name ?? "",
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          minFontSize: 12,
                           style: TextStyle(color: isCurrentUser(index) ? ColorRes.white : ColorRes.textBlue, fontSize: 17),
                           textAlign: TextAlign.left),
                     ),
                   ],
                 ),
-              ),
-              Container(
-                color: isCurrentUser(index) ? ColorRes.white : ColorRes.greyText,
-                width: 1,
-                margin: EdgeInsets.only(top: isCurrentUser(index) ? 10 : 6, bottom: isCurrentUser(index) ? 10 : 6),
-              ),
-              Expanded(
-                flex: 3,
-                child: Text(arrFriends[index].companyName ?? "",
-                    maxLines: 1,
-                    style: TextStyle(color: isCurrentUser(index) ? ColorRes.white : ColorRes.greyText, fontSize: 17),
-                    textAlign: TextAlign.center),
               ),
               Container(
                 height: 60,
@@ -715,18 +708,13 @@ class _RankingPageState extends State<RankingPage> {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 18),
+                    padding: EdgeInsets.only(left: 50),
                     child: Text(
                       Utils.getText(context, StringRes.name),
                       style: TextStyle(color: ColorRes.white, fontSize: 15),
                       maxLines: 1,
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Text(Utils.getText(context, StringRes.companyName),
-                      style: TextStyle(color: ColorRes.white, fontSize: 15), maxLines: 1, textAlign: TextAlign.center),
                 ),
                 Padding(
                   padding: EdgeInsets.only(right: 10),

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import 'package:ke_employee/baseController/base_text.dart';
 import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -16,6 +18,7 @@ import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/manage_module_permission.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:video_player/video_player.dart';
+
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
@@ -79,8 +82,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   }
 
   Future<void> initVideoController(String link) async {
-    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) {
-      _controller = Utils.getCacheFile(link) != null ? VideoPlayerController.file(Utils.getCacheFile(link).file) : VideoPlayerController.network(link)
+    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) async {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(await Utils.getCacheFile(link).then((value) => value.file))
+          : VideoPlayerController.network(link)
         ..initialize().then((_) {
           if (mounted)
             setState(() {
@@ -208,7 +213,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             Expanded(
               flex: 9,
               child: Container(
-//                  height: Injector.isBusinessMode ? 33 : 35,
+                  height: Injector.isBusinessMode ? 42 : 45,
                   margin: EdgeInsets.only(top: Injector.isBusinessMode ? 2 : 0),
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   alignment: Alignment.center,
@@ -222,14 +227,15 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Text(
+                      AutoSizeText(
                         arrFinalLearningModules[index].moduleName,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        minFontSize: 4,
                         style: TextStyle(
                           color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.textProf,
                           fontSize: 15,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       Opacity(
                         opacity: arrFinalLearningModules[index].isAssign == 1 ? 1.0 : 0.0,
@@ -371,7 +377,20 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     return Container(
       color: Injector.isBusinessMode ? null : Color(0xFFeaeaea),
       child: ListView(
-        children: <Widget>[showImageView(context), showDescriptionView(), showDownloadSubscribeOptions()],
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 15.0, right: 15, left: 15),
+            child: BaseText(
+                text: selectedModule.moduleName,
+                textColor: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf,
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center),
+          ),
+          showImageView(context),
+          showDescriptionView(),
+          showDownloadSubscribeOptions()
+        ],
       ),
     );
   }
@@ -580,38 +599,38 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //            PushNotificationHelper(context).showLocalNotification(
 //                101, Utils.getText(context, StringRes.downloading));
 
-            await BackgroundFetch.start().then((int status) async {
-//              if (mounted)setState(() {
-//                arrLearningModules
-//                    .firstWhere((module) => module.moduleId == moduleId)
-//                    .isDownloading = true;
-//              });
-
-              await Injector.prefs.setString("datta", "scsdc");
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
-            }).catchError((e) {
-              if (moduleId != null) {
-//                if (mounted)setState(() {
-//                  arrLearningModules
-//                      .firstWhere((module) => module.moduleId == moduleId)
-//                      .isDownloading = false;
-//                });
-              }
-            }).whenComplete(() {
-              if (i == arrQuestions.length - 1) Injector.flutterLocalNotificationsPlugin.cancel(101);
-
-//              if (mounted)setState(() {
-//                arrLearningModules
-//                    .firstWhere((module) => module.moduleId == moduleId)
-//                    .isDownloading = false;
-//              });
-            });
-            await BackgroundFetch.start().then((int status) async {
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].inCorrectAnswerImage);
-            });
-            await BackgroundFetch.start().then((int status) async {
-              await Injector.cacheManager.getSingleFile(arrQuestions[i].correctAnswerImage);
-            });
+//             await BackgroundFetch.start().then((int status) async {
+// //              if (mounted)setState(() {
+// //                arrLearningModules
+// //                    .firstWhere((module) => module.moduleId == moduleId)
+// //                    .isDownloading = true;
+// //              });
+//
+//               await Injector.prefs.setString("datta", "scsdc");
+//               await Injector.cacheManager.getSingleFile(arrQuestions[i].mediaLink);
+//             }).catchError((e) {
+//               if (moduleId != null) {
+// //                if (mounted)setState(() {
+// //                  arrLearningModules
+// //                      .firstWhere((module) => module.moduleId == moduleId)
+// //                      .isDownloading = false;
+// //                });
+//               }
+//             }).whenComplete(() {
+//               if (i == arrQuestions.length - 1) Injector.flutterLocalNotificationsPlugin.cancel(101);
+//
+// //              if (mounted)setState(() {
+// //                arrLearningModules
+// //                    .firstWhere((module) => module.moduleId == moduleId)
+// //                    .isDownloading = false;
+// //              });
+//             });
+//             await BackgroundFetch.start().then((int status) async {
+//               await Injector.cacheManager.getSingleFile(arrQuestions[i].inCorrectAnswerImage);
+//             });
+//             await BackgroundFetch.start().then((int status) async {
+//               await Injector.cacheManager.getSingleFile(arrQuestions[i].correctAnswerImage);
+//             });
           }
 
           if (moduleId != null) {
@@ -830,21 +849,18 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     if ((selectedModule?.mediaLink ?? "") != "" && (selectedModule?.mediaThumbImage ?? "") != "") {
       if (Utils.isPdf(selectedModule?.mediaLink)) {
         return Container(
-          margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
               pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.mediaLink),
         );
       } else if (Utils.isVideo(selectedModule?.mediaLink)) {
         return Container(
-          margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
               videoPlayerController: _controller, chewieController: _chewieController),
         );
       } else {
         return Container(
-          margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage),
         );
@@ -886,10 +902,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-            Utils.getText(context, StringRes.downloadText) +
-                " " +
-                selectedModule.fileSize.toString() +
-                Utils.getText(context, StringRes.sizeInKb),
+            Utils.getText(context, StringRes.downloadText) + " " + selectedModule.fileSize.toString() + Utils.getText(context, StringRes.sizeInKb),
             style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue, fontSize: 17),
           )
         : Container();

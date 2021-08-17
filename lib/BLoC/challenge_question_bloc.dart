@@ -2,14 +2,12 @@ import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:rxdart/rxdart.dart';
 
-
 final getChallengeQueBloc = GetChallengeQueBloc();
 
 class GetChallengeQueBloc {
   final _getChallengeQuestion = PublishSubject<List<QuestionCountWithData>>();
 
-  Observable<List<QuestionCountWithData>> get getChallenge =>
-      _getChallengeQuestion.stream;
+  Stream<List<QuestionCountWithData>> get getChallenge => _getChallengeQuestion.stream;
 
   Future getChallengeQuestion() {
     _getChallengeQuestion.sink.add(Injector.countList);

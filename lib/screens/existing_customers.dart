@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:ke_employee/models/homedata.dart';
 import '../commonview/common_view.dart';
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
-
 import '../helper/res.dart';
 import '../helper/string_res.dart';
 import '../helper/web_api.dart';
@@ -237,23 +237,27 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   children: <Widget>[
                     Expanded(
                       flex: 5,
-                      child: Text(
+                      child: AutoSizeText(
                         arrQuestions[index].title,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        minFontSize: 4,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: ColorRes.blue,
                           fontSize: 18,
                         ),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
                       ),
                     ),
                     Expanded(
                       flex: 6,
-                      child: Text(
+                      child: AutoSizeText(
                         arrQuestions[index].moduleName,
-                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
-                        textAlign: TextAlign.center,
                         maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        minFontSize: 4,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: ColorRes.blue, fontSize: 18),
                       ),
                     ),
                     Expanded(
@@ -286,8 +290,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                   isCameFromNewCustomer: false,
                   isChallenge: false,
                   existingQueIndex: index,
-                existingQueList: arrQuestions
-              );
+                  existingQueList: arrQuestions);
 
 //              Navigator.push(context, FadeRouteHome(homeData: homeData));
 //              Navigator.push(_scaffoldKey.currentContext,

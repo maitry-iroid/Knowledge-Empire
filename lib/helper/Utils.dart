@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -15,35 +20,29 @@ import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/baseController/base_text.dart';
 import 'package:ke_employee/commonview/pdf_viewer.dart';
 import 'package:ke_employee/dialogs/change_password.dart';
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:ke_employee/dialogs/companycode_dialog.dart';
+import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/dialogs/nickname_dialog.dart';
 import 'package:ke_employee/dialogs/privacy_policy_dialog.dart';
-import 'package:ke_employee/manager/screens_manager.dart';
-import 'package:ke_employee/manager/theme_manager.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
-import 'package:ke_employee/screens/more_info.dart';
-import 'package:ke_employee/screens_portrait/drawer.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:ke_employee/dialogs/loader.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/screens_manager.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/manage_organization.dart';
+import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization.dart';
+import 'package:ke_employee/screens_portrait/drawer.dart';
 import 'package:path/path.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'constant.dart';
 import 'localization.dart';
 
@@ -74,42 +73,38 @@ class Utils {
         title: Text(item == BottomItems.profileAndSettings ? item.title : "", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 17)),
         leading: IconButton(
             icon: Icon(Icons.menu, size: 24, color: ThemeManager().getTextColor()),
-            onPressed: (){
-              Navigator.of(context).push(
-                  PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) {
-                        return DrawerPortrait();
-                      }
-                  ));
+            onPressed: () {
+              Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return DrawerPortrait();
+                  }));
             }),
         actions: [
-          item != BottomItems.profileAndSettings ? Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child : Center(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  height: AppBar().preferredSize.height / 2.7,
-                  decoration: BoxDecoration(
-                      color: ThemeManager().getLightColor(),
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.lightbulb_outline, size: 14, color: ThemeManager().getHeaderColor()),
-                      SizedBox(width: 5),
-                      Text("3000", style: TextStyle(color: ThemeManager().getHeaderColor(), fontSize: 12))
-                    ],
-                  ),
-                ),
-              )
-          ) : Container()
+          item != BottomItems.profileAndSettings
+              ? Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      height: AppBar().preferredSize.height / 2.7,
+                      decoration: BoxDecoration(color: ThemeManager().getLightColor(), borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          Icon(Icons.lightbulb_outline, size: 14, color: ThemeManager().getHeaderColor()),
+                          SizedBox(width: 5),
+                          Text("3000", style: TextStyle(color: ThemeManager().getHeaderColor(), fontSize: 12))
+                        ],
+                      ),
+                    ),
+                  ))
+              : Container()
         ],
       ),
     );
   }
 
-  static showAlertDialog(BuildContext context){
+  static showAlertDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -117,8 +112,7 @@ class Utils {
         return AlertDialog(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           backgroundColor: ThemeManager().getStaticGradientColor(),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           buttonPadding: EdgeInsets.all(0),
           actionsPadding: EdgeInsets.all(0),
           content: BaseText(
@@ -126,66 +120,67 @@ class Utils {
               textColor: ThemeManager().getDarkColor(),
               fontSize: 13,
               fontWeight: FontWeight.normal,
-              textAlign: TextAlign.center
-          ),
+              textAlign: TextAlign.center),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide( //                    <--- top side
-                        color: ThemeManager().getDarkColor(),
-                        width: 0.5,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    //                    <--- top side
+                    color: ThemeManager().getDarkColor(),
+                    width: 0.5,
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.all(0),
+              padding: EdgeInsets.all(0),
+              width: Utils.getDeviceWidth(context),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          //                    <--- top side
+                          color: ThemeManager().getDarkColor(),
+                          width: 0.5,
+                        ),
                       ),
                     ),
-                  ),
-                  margin: EdgeInsets.all(0),
-                  padding: EdgeInsets.all(0),
-                  width: Utils.getDeviceWidth(context),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                right: BorderSide( //                    <--- top side
-                                  color: ThemeManager().getDarkColor(),
-                                  width: 0.5,
-                                ),
-                              ),
-                            ),
-                            child: FlatButton(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              child: new BaseText(
-                                  text: "Yes",
-                                  textColor: ThemeManager().getDarkColor(),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.center),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          )),
-                      Expanded(
-                          child: FlatButton(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            child: new BaseText(
-                                text: "No",
-                                textColor: ThemeManager().getBadgeColor(),
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                textAlign: TextAlign.center),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )),
-                    ],
-                  ),
-                )),
+                    child: FlatButton(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      child: new BaseText(
+                          text: "Yes",
+                          textColor: ThemeManager().getDarkColor(),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.center),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  )),
+                  Expanded(
+                      child: FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    child: new BaseText(
+                        text: "No",
+                        textColor: ThemeManager().getBadgeColor(),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )),
+                ],
+              ),
+            )),
           ],
         );
       },
@@ -208,18 +203,16 @@ class Utils {
   }
 
   static showToast(String message) {
-
     Fluttertoast.showToast(
         msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.black87, textColor: Colors.white);
   }
-  static showErrToast(String message) {
 
+  static showErrToast(String message) {
     Fluttertoast.showToast(
         msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.redAccent, textColor: Colors.white);
   }
 
   static showSuccessToast(String message) {
-
     Fluttertoast.showToast(
         msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.green, textColor: Colors.white);
   }
@@ -411,10 +404,7 @@ class Utils {
   }
 
   static Future showVerifyCompanyDialog(GlobalKey<ScaffoldState> _scaffoldKey) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => VerifyCompanyDialog(
-            ));
+    await showDialog(context: _scaffoldKey.currentContext, builder: (BuildContext context) => VerifyCompanyDialog());
   }
 
   static String generateMd5(String input) {
@@ -559,9 +549,9 @@ class Utils {
     });
   }
 
-  static FileInfo getCacheFile(String url) {
+  static Future<FileInfo> getCacheFile(String url) async {
     try {
-      return Injector.cacheManager.getFileFromMemory(url);
+      return await Injector.cacheManager.getFileFromMemory(url);
     } catch (e) {
       print(e);
       return null;

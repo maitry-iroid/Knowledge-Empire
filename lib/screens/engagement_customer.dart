@@ -1,13 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
+
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-import 'package:ke_employee/BLoC/get_question_bloc.dart';
 import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -19,9 +18,9 @@ import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
-import 'package:pdf_previewer/pdf_previewer.dart';
-import '../commonview/common_view.dart';
 import 'package:video_player/video_player.dart';
+
+import '../commonview/common_view.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../models/questions.dart';
@@ -160,17 +159,19 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
   Future getPdf() async {
     if (questionData != null && questionData.mediaLink != null && Utils.isPdf(questionData.mediaLink)) {
-      if (Utils.getCacheFile(questionData.mediaLink) != null) {
-        File fetchedFile = Utils.getCacheFile(questionData.mediaLink).file;
-        _pdfPath = fetchedFile.path;
-      } else {
-        File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
-        _pdfPath = fetchedFile.path;
-      }
-      _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
-
-      // Load from URL
-      _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
+      // if (await Utils.getCacheFile(await questionData.mediaLink).then((value) => value.file) != null) {
+      //   File fetchedFile = await Utils.getCacheFile(await questionData.mediaLink).then((value) => value.file);
+      //   _pdfPath = fetchedFile.path;
+      // } else {
+      //   File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
+      //   _pdfPath = fetchedFile.path;
+      // }
+      // _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+      //
+      // // Load from URL
+      // print("_pdfPath+++++++++++++++++++${_pdfPath}");
+      // // _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
+      _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
         print(e);
       });
 
@@ -411,7 +412,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                   image:
                       Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
               child: Text(
-                Utils.getText(context, StringRes.engagement),
+                // Utils.getText(context, StringRes.engagement),
+                questionData.title,
                 style: TextStyle(color: ColorRes.white, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
@@ -497,22 +499,38 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               MediaManager().showQueMedia(context, ColorRes.white, arrAnswer.elementAt(index).answer,
                   arrAnswer.elementAt(index).thumbImage ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
               Padding(
-                  padding: EdgeInsets.only(top: 15, right: 15),
+                padding: EdgeInsets.only(top: 10, right: 10),
+                child: InkWell(
+                  onTap: () {
+                    Utils.playClickSound();
+                    if (mounted) {
+                      setState(() {
+                        arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+                      });
+                    }
+                  },
                   child: Transform.scale(
-                    scale: 1.7,
-                    child: Checkbox(
-                        checkColor: ColorRes.white,
-                        activeColor: ColorRes.greenDot,
-                        value: arrAnswer[index].isSelected ? true : false,
-                        onChanged: (value) {
-                          Utils.playClickSound();
-                          if (mounted) {
-                            setState(() {
-                              arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
-                            });
-                          }
-                        }),
-                  ))
+                      scale: 1.7,
+                      child: Image.asset(
+                        Utils.getAssetsImg(arrAnswer[index].isSelected ? "selectedCheckBox" : "unselectedCheckBox"),
+                        height: 15,
+                        width: 15,
+                      )),
+                ),
+                // child: Checkbox(
+                //     checkColor: ColorRes.white,
+                //     activeColor: ColorRes.greenDot,
+                //     value: arrAnswer[index].isSelected ? true : false,
+                //     onChanged: (value) {
+                //       Utils.playClickSound();
+                //       if (mounted) {
+                //         setState(() {
+                //           arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
+                //         });
+                //       }
+                //     }),
+                // ))
+              )
             ],
           );
         });
@@ -594,8 +612,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   Future<void> initVideoController(String link) async {
-    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) {
-      _controller = Utils.getCacheFile(link) != null ? VideoPlayerController.file(Utils.getCacheFile(link).file) : VideoPlayerController.network(link)
+    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) async {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(await Utils.getCacheFile(link).then((value) => value.file))
+          : VideoPlayerController.network(link)
         ..initialize().then((_) {
           if (mounted)
             setState(() {
@@ -620,16 +640,16 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              widget.homeData.questionHomeData.answerType == Const.typeAnswerText || widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
+              widget.homeData.questionHomeData.answerType == Const.typeAnswerText ||
+                      widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                   ? MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
                       pdfDocument: _pdfDocument,
                       isPdfLoading: isLoading,
                       pdfFilePath: _pdfPath,
                       chewieController: _chewieController,
                       videoPlayerController: _controller,
-                videoLoop: questionDataEngCustomer.videoLoop,
-                videoPlay: questionDataEngCustomer.videoPlay
-              )
+                      videoLoop: questionDataEngCustomer.videoLoop,
+                      videoPlay: questionDataEngCustomer.videoPlay)
                   : MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
                       pdfDocument: _pdfDocument, isPdfLoading: isLoading, pdfFilePath: _pdfPath),
               showQueDescription(context)

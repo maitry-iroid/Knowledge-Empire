@@ -30,8 +30,8 @@ import '../helper/constant.dart';
 import '../helper/prefkeys.dart';
 import '../helper/res.dart';
 import '../helper/string_res.dart';
-import 'login.dart';
 import '../models/logout.dart';
+import 'login.dart';
 
 /*
 *   created by Riddhi
@@ -411,7 +411,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         onTap: Injector.customerValueData != null && Injector.customerValueData.totalBalance <= 0
                             ? () async {
-                                Injector.audioCache.clearCache();
+                                // Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
 //                                Injector.audioPlayerBg.pause();
                                 Utils.playClickSound();
@@ -1086,7 +1086,7 @@ class _ProfilePageState extends State<ProfilePage> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    File tempImage = await ImagePicker.pickImage(
+    PickedFile tempImage = await ImagePicker().getImage(
       source: type == Const.typeGallery ? ImageSource.gallery : ImageSource.camera,
       imageQuality: Const.imgQuality,
     );
@@ -1098,7 +1098,7 @@ class _ProfilePageState extends State<ProfilePage> {
           DeviceOrientation.landscapeRight,
         ]);
         photoUrl = "";
-        _image = tempImage;
+        _image = File(tempImage.path);
         if (_image != null) {
           updateProfile();
         }

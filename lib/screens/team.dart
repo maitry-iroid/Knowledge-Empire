@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/customer_value_bloc.dart';
@@ -184,7 +185,7 @@ class _TeamPageState extends State<TeamPage> {
           child: secondScreen != true
               ? Row(
                   children: <Widget>[
-                    listTextData(user?.name ?? "", TextAlign.left),
+                    listTextData(user?.name ?? "", TextAlign.left, isForName: true),
                     listTextData(user?.lastLog.toString() ?? "", TextAlign.center),
                     listTextData(user?.points.toString() ?? "", TextAlign.center),
                     listTextData(user?.correct.toString() ?? "", TextAlign.center)
@@ -196,7 +197,7 @@ class _TeamPageState extends State<TeamPage> {
                 )
               : Row(
                   children: <Widget>[
-                    listTextData(module?.name, TextAlign.left),
+                    listTextData(module?.name, TextAlign.left, isForName: true),
                     listTextData(module?.level.toString(), TextAlign.center),
                     listTextData(module?.complete.toString(), TextAlign.center)
                   ],
@@ -233,14 +234,23 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-  listTextData(String text, TextAlign textAlign) {
+  listTextData(String text, TextAlign textAlign, {bool isForName = false}) {
     return Expanded(
       child: Container(
-        child: Text(
-          text,
-          textAlign: textAlign,
-          style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 16),
-        ),
+        child: isForName
+            ? AutoSizeText(
+                text,
+                maxLines: 1,
+                overflow: TextOverflow.fade,
+                minFontSize: 4,
+                textAlign: textAlign,
+                style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 16),
+              )
+            : Text(
+                text,
+                textAlign: textAlign,
+                style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 16),
+              ),
       ),
     );
   }
@@ -531,22 +541,26 @@ class _TeamPageState extends State<TeamPage> {
           CommonView.showCircularProgress(false, context);
 
           if (data != null) {
+            print("data================");
+            print(data);
             teamUserData = TeamUserData.fromJson(data);
             TeamUserData teamUserData1 = TeamUserData();
 
             await Future.forEach(teamUserData.users, (Users user) async {
               print("element");
               print(user.name);
-              if(user.name.contains(" ")){
-                user.name = await EncryptionManager().stringDecryption(user.name.split(" ").first) + " " + await EncryptionManager().stringDecryption(user.name.split(" ").last);
-              }else{
+              if (user.name.contains(" ")) {
+                user.name = await EncryptionManager().stringDecryption(user.name.split(" ").first) +
+                    " " +
+                    await EncryptionManager().stringDecryption(user.name.split(" ").last);
+              } else {
                 user.name = await EncryptionManager().stringDecryption(user.name);
               }
             }).then((value) {
+              setState(() {});
               print(teamUserData.users.map((e) => e.name).toList());
               initGraphData();
             });
-            if (mounted) setState(() {});
           }
         }).catchError((e) {
           //CommonView.showCircularProgress(false, context);
@@ -599,9 +613,11 @@ class _TeamPageState extends State<TeamPage> {
 
           if (data != null) {
             teamUserByIdData = TeamUserByIdData.fromJson(data);
-            if(teamUserByIdData.name.contains(" ")){
-              teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name.split(" ").first) + " " + await EncryptionManager().stringDecryption(teamUserByIdData.name.split(" ").last);
-            }else{
+            if (teamUserByIdData.name.contains(" ")) {
+              teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name.split(" ").first) +
+                  " " +
+                  await EncryptionManager().stringDecryption(teamUserByIdData.name.split(" ").last);
+            } else {
               teamUserByIdData.name = await EncryptionManager().stringDecryption(teamUserByIdData.name);
             }
             initGraphData();

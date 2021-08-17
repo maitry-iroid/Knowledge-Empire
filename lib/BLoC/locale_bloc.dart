@@ -4,10 +4,9 @@ import 'package:rxdart/rxdart.dart';
 final localeBloc = LocaleBloc();
 
 class LocaleBloc {
-
   final _assignLocaleSubject = PublishSubject<Locale>();
 
-  Observable<Locale> get locale => _assignLocaleSubject.stream;
+  Stream<Locale> get locale => _assignLocaleSubject.stream;
 
   setLocale(int index) async {
     if (index == 0)
@@ -20,8 +19,6 @@ class LocaleBloc {
       _assignLocaleSubject.sink.add(Locale('en', ''));
     return _assignLocaleSubject.stream.distinct();
   }
-
-
 
   dispose() {
     _assignLocaleSubject.close();

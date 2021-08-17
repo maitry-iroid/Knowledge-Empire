@@ -1,6 +1,7 @@
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -68,8 +69,10 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   Future<void> initVideoController(String link) async {
-    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) {
-      _controller = Utils.getCacheFile(link) != null ? VideoPlayerController.file(Utils.getCacheFile(link).file) : VideoPlayerController.network(link)
+    await Injector.cacheManager.getFileFromCache(link).then((fileInfo) async {
+      _controller = Utils.getCacheFile(link) != null
+          ? VideoPlayerController.file(await Utils.getCacheFile(link).then((value) => value.file))
+          : VideoPlayerController.network(link)
         ..initialize().then((_) {
           if (mounted)
             setState(() {
@@ -369,15 +372,16 @@ class _RewardsPageState extends State<RewardsPage> {
                     image: Injector.isBusinessMode
                         ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_bus_sector_item")), fit: BoxFit.fill)
                         : null),
-                child: Text(
+                child: AutoSizeText(
                   arrFinalRewards[index].reward,
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
+                  minFontSize: 7,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.textProf,
                     fontSize: 15,
                   ),
-                  maxLines: 1,
-                  softWrap: false,
-                  overflow: TextOverflow.fade,
                 ),
               ),
             ),

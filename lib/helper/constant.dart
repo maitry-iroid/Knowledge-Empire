@@ -28,7 +28,6 @@ class Const {
 
   // push type
 
-
   static var pushTypeAll = 1;
   static var pushTypeChallenge = 2;
   static var pushTypeWinChallenge = 3;
@@ -88,18 +87,17 @@ class Const {
   static int typeCost = 1;
   static int typeRevenue = 2;
 
-
   static FlavorConfig _config;
 
   //language
   static var english = "English";
-  static var german  = "German";
+  static var german = "German";
   static var chinese = "Chinese";
 
   //pl screen dd_mm_yy
-  static int plDay   = 1;
+  static int plDay = 1;
   static int plMonth = 2;
-  static int plYear  = 3;
+  static int plYear = 3;
 
   static void setEnvironment(Environment env) {
     envType = env;
@@ -110,12 +108,6 @@ class Const {
         break;
       case Environment.PROD:
         _config = AppConfig.prodConfig();
-        break;
-      case Environment.DEV_V2:
-        _config = AppConfig.devV2Config();
-        break;
-      case Environment.PROD_V2:
-        _config = AppConfig.prodV2Config();
         break;
     }
   }
