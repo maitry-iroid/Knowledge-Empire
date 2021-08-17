@@ -36,10 +36,6 @@ class VersionManager {
       return "D";
     else if(Const.envType == Environment.PROD)
       return "P";
-    else if(Const.envType == Environment.DEV_V2)
-      return "D-V2";
-    else if(Const.envType == Environment.PROD_V2)
-      return "P-V2";
     else
       return "D";
   }
