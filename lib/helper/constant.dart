@@ -101,7 +101,7 @@ class Const {
 
   static void setEnvironment(Environment env) {
     envType = env;
-    Injector.isDev = (envType == Environment.DEV );
+    Injector.isDev = (envType == Environment.DEV);
     switch (env) {
       case Environment.DEV:
         _config = AppConfig.devConfig();
@@ -109,7 +109,6 @@ class Const {
       case Environment.PROD:
         _config = AppConfig.prodConfig();
         break;
-
     }
   }
 
