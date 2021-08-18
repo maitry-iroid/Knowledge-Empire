@@ -1,4 +1,4 @@
-import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:ke_employee/helper/string_res.dart';
 
 enum OtherTabOptions { ranking, achievement, awards, performance, team, challenges, history }
 

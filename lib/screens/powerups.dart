@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/commonview/common_view.dart';
-import 'package:knowledge_empire/helper/string_res.dart';
-import 'package:knowledge_empire/helper/web_api.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
-import 'package:knowledge_empire/screens/refreshAnimation.dart';
+import 'package:ke_employee/commonview/common_view.dart';
+import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../helper/Utils.dart';

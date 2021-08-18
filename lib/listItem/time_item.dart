@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/helper/Utils.dart';
-import 'package:knowledge_empire/helper/res.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class TimeItem extends StatefulWidget {
   final String title;

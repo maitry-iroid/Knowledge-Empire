@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:ke_employee/helper/Utils.dart';
 
 import 'ParticleModel.dart';
 

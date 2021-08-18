@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'dart:ui' as ui;
 
 class ExplosionWidget extends StatefulWidget {

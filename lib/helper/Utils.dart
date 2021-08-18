@@ -39,7 +39,6 @@ import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization.dart';
-import 'package:ke_employee/screens_portrait/drawer.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -77,7 +76,7 @@ class Utils {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
-                    return DrawerPortrait();
+                    // return DrawerPortrait();
                   }));
             }),
         actions: [

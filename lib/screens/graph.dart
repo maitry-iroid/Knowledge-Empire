@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:knowledge_empire/helper/Utils.dart';
-import 'package:knowledge_empire/helper/constant.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
-import 'package:knowledge_empire/models/performance.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/performance.dart';
 
 class OrdinalComboBarLineChart extends StatelessWidget {
   final List<charts.Series> seriesList;

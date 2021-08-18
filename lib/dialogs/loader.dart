@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/helper/res.dart';
+import 'package:ke_employee/helper/res.dart';
 
 class Loader extends StatefulWidget {
   @override

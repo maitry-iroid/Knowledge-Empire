@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
-import 'package:knowledge_empire/dialogs/intro_sreen_dailog.dart';
-import 'package:knowledge_empire/helper/Utils.dart';
-import 'package:knowledge_empire/helper/constant.dart';
-import 'package:knowledge_empire/helper/prefkeys.dart';
-import 'package:knowledge_empire/helper/res.dart';
-import 'package:knowledge_empire/helper/string_res.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
-import 'package:knowledge_empire/models/homedata.dart';
-import 'package:knowledge_empire/models/questions.dart';
-import 'package:knowledge_empire/screens/help_pro_screen.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:ke_employee/dialogs/intro_sreen_dailog.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/homedata.dart';
+import 'package:ke_employee/models/questions.dart';
+import 'package:ke_employee/screens/help_pro_screen.dart';
 import 'package:open_appstore/open_appstore.dart';
 
 class DisplayDialogs {

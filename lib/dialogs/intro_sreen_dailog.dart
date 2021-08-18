@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:knowledge_empire/commonview/header.dart';
-import 'package:knowledge_empire/helper/ResponsiveUi.dart';
-import 'package:knowledge_empire/helper/Utils.dart';
-import 'package:knowledge_empire/helper/res.dart';
-import 'package:knowledge_empire/helper/string_res.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:ke_employee/commonview/header.dart';
+import 'package:ke_employee/helper/ResponsiveUi.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class IntroScreenDialog extends StatefulWidget {
   final String titleText, desTextLine, btnName, imageName;

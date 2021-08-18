@@ -1,5 +1,5 @@
-import 'package:knowledge_empire/helper/constant.dart';
-import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:ke_employee/helper/constant.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 
 class LoginRequest {
   String email;

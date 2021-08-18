@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/helper/Utils.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class MyHomePage extends StatefulWidget {
   final bool isCoinViseble;

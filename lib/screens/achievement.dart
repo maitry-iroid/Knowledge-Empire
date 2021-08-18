@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/dialogs/display_dailogs.dart';
-import 'package:knowledge_empire/helper/web_api.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
-import 'package:knowledge_empire/models/get_achievement.dart';
+import 'package:ke_employee/dialogs/display_dailogs.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_achievement.dart';
 
 import '../commonview/common_view.dart';
 import '../helper/Utils.dart';

@@ -1,8 +1,8 @@
-import 'package:knowledge_empire/helper/web_api.dart';
-import 'package:knowledge_empire/models/bailout.dart';
-import 'package:knowledge_empire/models/get_customer_value.dart';
-import 'package:knowledge_empire/models/releaseResource.dart';
-import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/models/bailout.dart';
+import 'package:ke_employee/models/get_customer_value.dart';
+import 'package:ke_employee/models/releaseResource.dart';
+import 'package:ke_employee/helper/web_api.dart';
 
 class Repository {
   WebApi webApi = WebApi();

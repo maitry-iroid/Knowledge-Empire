@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/manager/theme_manager.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
 
 class AppThemeColorRequest {
   int userId;

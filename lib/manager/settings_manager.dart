@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:knowledge_empire/manager/theme_manager.dart';
+import 'package:ke_employee/manager/theme_manager.dart';
 
 enum SettingsOptions { language, switchMode, sound, selectCompany, changePassword, privacyAndPolicy, termsAnsConditions, contactUs, logout }
 

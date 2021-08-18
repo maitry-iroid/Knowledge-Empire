@@ -1,4 +1,4 @@
-import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 import 'constant.dart';
 

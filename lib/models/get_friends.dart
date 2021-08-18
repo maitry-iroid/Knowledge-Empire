@@ -1,4 +1,4 @@
-import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
 
 class GetFriendsRequest {
   int userId;

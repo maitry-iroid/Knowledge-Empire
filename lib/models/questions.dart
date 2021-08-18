@@ -1,6 +1,6 @@
-import 'package:knowledge_empire/BLoC/challenge_question_bloc.dart';
-import 'package:knowledge_empire/commonview/challenge_header.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
+import 'package:ke_employee/commonview/challenge_header.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 
 class QuestionRequest {
   int userId;

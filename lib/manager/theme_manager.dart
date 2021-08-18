@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:knowledge_empire/helper/Utils.dart';
-import 'package:knowledge_empire/helper/prefkeys.dart';
-import 'package:knowledge_empire/helper/web_api.dart';
-import 'package:knowledge_empire/injection/dependency_injection.dart';
-import 'package:knowledge_empire/manager/theme_color.dart';
+import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/manager/theme_color.dart';
 
 class ThemeManager {
   static final ThemeManager _singleton = ThemeManager._internal();

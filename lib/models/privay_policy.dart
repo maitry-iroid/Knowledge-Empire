@@ -1,4 +1,4 @@
-import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:ke_employee/helper/web_api.dart';
 
 class PrivacyPolicyRequest {
   int userId;
