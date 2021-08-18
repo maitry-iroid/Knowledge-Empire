@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   int _status = 0;
 
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+  final FirebaseMessaging firebaseMessaging = Injector.firebaseMessaging;
 
   @override
   void initState() {
