@@ -69,7 +69,7 @@ dependencies:
   webview_flutter:
   url_encoder:
   mailto:
-  advance_pdf_viewer: ^2.0.0
+  advance_pdf_viewer: 1.2.2
 
   #  flutter_plugin_pdf_viewer: ^1.0.7
 
