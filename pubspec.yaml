@@ -42,7 +42,7 @@ dependencies:
   firebase_core:
   flutter_local_notifications:
   connectivity:
-  audioplayers:
+#  audioplayers:
   #simple_animations: ^1.2.0
   pie_chart:
   package_info:
@@ -69,7 +69,7 @@ dependencies:
   webview_flutter:
   url_encoder:
   mailto:
-  advance_pdf_viewer: ^2.0.0
+#  advance_pdf_viewer: ^2.0.0
 
   #  flutter_plugin_pdf_viewer: ^1.0.7
 

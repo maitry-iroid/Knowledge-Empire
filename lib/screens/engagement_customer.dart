@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+// import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -70,7 +70,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   //todo pdf viewer
   String _pdfPath = '';
   String _previewPath;
-  PDFDocument _pdfDocument;
+  var _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -98,7 +98,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     if (Utils.isVideo(questionDataEngCustomer.mediaLink) && questionDataEngCustomer.answerType != Const.typeAnswerMedia) {
 //      Injector.audioPlayerBg.stop();
-      (Injector.isBusinessMode && (Injector.isSoundEnable ?? false)) ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+      (Injector.isBusinessMode && (Injector.isSoundEnable ?? false))
+          ? Injector.performAudioAction(Const.resume)
+          : Injector.performAudioAction(Const.stop);
       Future.delayed(Duration.zero, () async {
         await this.initVideoController(questionDataEngCustomer.mediaLink);
       });
@@ -171,9 +173,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       // // Load from URL
       // print("_pdfPath+++++++++++++++++++${_pdfPath}");
       // // _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
-      _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
-        print(e);
-      });
+      //TODO
+      // _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
+      //   print(e);
+      // });
 
       if (mounted) {
         setState(() {
@@ -211,7 +214,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               borderRadius: BorderRadius.circular(15),
               border: Border.all(width: 1, color: arrAnswer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
               color: arrAnswer[index].isSelected ? ColorRes.blueMenuSelected : ColorRes.white,
-              image: Injector.isBusinessMode ? (DecorationImage(image: AssetImage(checkAnswer(index)), fit: BoxFit.cover)) : null),
+              image:
+                  Injector.isBusinessMode ? (DecorationImage(image: AssetImage(checkAnswer(index)), fit: BoxFit.cover)) : null),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -409,8 +413,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               decoration: BoxDecoration(
                   borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
                   color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                  image:
-                      Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
+                  image: Injector.isBusinessMode
+                      ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill))
+                      : null),
               child: Text(
                 // Utils.getText(context, StringRes.engagement),
                 questionData.title,
@@ -423,7 +428,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 alignment: Alignment.center,
                 width: 100,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill)),
                 child: Text(
                   Utils.getText(context, StringRes.next),
                   style: TextStyle(color: ColorRes.white, fontSize: 16),
@@ -480,7 +486,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     letterSpacing: 0.5)),
             Expanded(
                 child: Text(widget.homeData.questionHomeData.question,
-                    maxLines: 5, style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey, fontSize: 16)))
+                    maxLines: 5,
+                    style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.fontDarkGrey, fontSize: 16)))
           ],
         ));
   }
@@ -567,7 +574,8 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     submitAnswer.questionId = questionData.questionId;
     submitAnswer.moduleId = questionData.moduleId;
     if (!isChallenge) {
-      submitAnswer.counter = max(questionData.isAnsweredCorrect == 1 ? (questionData.counter + 1) : (questionData.counter ~/ 2).round(), 0);
+      submitAnswer.counter =
+          max(questionData.isAnsweredCorrect == 1 ? (questionData.counter + 1) : (questionData.counter ~/ 2).round(), 0);
       submitAnswer.loyalty = questionData.loyalty;
       submitAnswer.value = questionData.value;
       submitAnswer.resources = questionData.resources;
@@ -605,7 +613,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
     } else {
       HomeData homeData = HomeData(
-          initialPageType: Const.typeCustomerSituation, questionHomeData: questionData, isChallenge: isChallenge, isCameFromNewCustomer: true);
+          initialPageType: Const.typeCustomerSituation,
+          questionHomeData: questionData,
+          isChallenge: isChallenge,
+          isCameFromNewCustomer: true);
 
       navigationBloc.updateNavigation(homeData);
     }
@@ -702,8 +713,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                     borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                     border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
                     color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
-                    image:
-                        Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill) : null),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)
+                        : null),
                 child: Text(
                   Utils.getText(context, StringRes.answers),
                   style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -732,8 +744,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         image:
 //                                  Injector.isBusinessMode ?
                             DecorationImage(
-                                image: AssetImage(
-                                    Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
+                                image: AssetImage(Injector.isBusinessMode
+                                    ? Utils.getAssetsImg("full_expand_question_answers")
+                                    : Utils.getAssetsImg("expand_pro")),
                                 fit: BoxFit.fill))),
               ),
             )
@@ -785,7 +798,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
-            decoration: ShapeDecoration(color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+            decoration: ShapeDecoration(
+                color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Stack(
@@ -884,7 +898,9 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
           padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
           decoration: BoxDecoration(
               borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-              border: Injector.isBusinessMode ? null : Border.all(width: 1, color: arrAnswer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
+              border: Injector.isBusinessMode
+                  ? null
+                  : Border.all(width: 1, color: arrAnswer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
               color: Injector.isBusinessMode ? null : (arrAnswer[index].isSelected ? ColorRes.blueMenuSelected : ColorRes.white),
               image: Injector.isBusinessMode ? (DecorationImage(image: AssetImage(checkAnswer(index)), fit: BoxFit.fill)) : null),
           child: Row(
@@ -981,7 +997,8 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
         child: ScaleTransition(
           scale: scaleAnimation,
           child: Container(
-            decoration: ShapeDecoration(color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+            decoration: ShapeDecoration(
+                color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Stack(
@@ -1061,7 +1078,8 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
 //                                          : null
                                       ))
                               : Container(
@@ -1071,7 +1089,8 @@ class FunkyOverlayState extends State<FunkyOverlay> with SingleTickerProviderSta
                                   decoration: BoxDecoration(
                                       image:
 //                                      Injector.isBusinessMode ?
-                                          DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
+                                          DecorationImage(
+                                              image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain)
 //                                          : null
                                       )))),
                     )

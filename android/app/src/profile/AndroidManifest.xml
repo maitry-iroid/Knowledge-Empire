@@ -1,5 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.keemployee.knowledge_empire">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    package="com.keemployee.knowledge_empire">-->
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
