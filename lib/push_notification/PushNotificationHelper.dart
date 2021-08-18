@@ -38,7 +38,7 @@ class PushNotificationHelper {
     var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await Injector.flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
 
-    await Injector.firebaseMessaging.requestPermission();
+    await Injector.firebaseMessaging.requestNotificationPermissions();
 
     await Injector.firebaseMessaging.getToken().then((token) {
       print("token : " + token);
