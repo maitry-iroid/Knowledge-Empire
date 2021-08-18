@@ -1,59 +1,45 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:connectivity/connectivity.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
-import 'package:ke_employee/BLoC/customer_value_bloc.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/BLoC/navigation_bloc.dart';
-import 'package:ke_employee/animation/Explostion.dart';
-import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/commonview/dummy_header.dart';
-import 'package:ke_employee/commonview/my_home.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/ResponsiveUi.dart';
-import 'package:ke_employee/helper/home_utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/listItem/menu_item.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/drawer_item.dart';
-import 'package:ke_employee/models/get_challenges.dart';
-import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
-import 'package:ke_employee/models/privay_policy.dart';
-import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
-import 'package:ke_employee/screens/customer_situation.dart';
-import 'package:ke_employee/screens/challenges.dart';
-import 'package:ke_employee/screens/dashboard_prof.dart';
-import 'package:ke_employee/screens/dashboard_game.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/screens/existing_customers.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/help_screen.dart';
-import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/screens/new_customer.dart';
-import 'package:ke_employee/screens/organization.dart';
-import 'package:ke_employee/screens/powerups.dart';
-import 'package:ke_employee/screens/profile.dart';
-import 'package:ke_employee/screens/ranking.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
-import 'package:ke_employee/screens/achievement.dart';
-import 'package:ke_employee/screens/rewards.dart';
-import 'package:ke_employee/screens/team.dart';
-import 'package:ke_employee/screens_portrait/bottom_navigation.dart';
-import 'P+L.dart';
-import 'business_sector.dart';
+import 'package:knowledge_empire/BLoC/customer_value_bloc.dart';
+import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
+import 'package:knowledge_empire/commonview/challenge_header.dart';
+import 'package:knowledge_empire/commonview/dummy_header.dart';
+import 'package:knowledge_empire/commonview/my_home.dart';
+import 'package:knowledge_empire/dialogs/display_dailogs.dart';
+import 'package:knowledge_empire/helper/ResponsiveUi.dart';
+import 'package:knowledge_empire/helper/home_utils.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/listItem/menu_item.dart';
+import 'package:knowledge_empire/models/drawer_item.dart';
+import 'package:knowledge_empire/models/homedata.dart';
+import 'package:knowledge_empire/models/privay_policy.dart';
+import 'package:knowledge_empire/screens/achievement.dart';
+import 'package:knowledge_empire/screens/challenges.dart';
+import 'package:knowledge_empire/screens/customer_situation.dart';
+import 'package:knowledge_empire/screens/dashboard_game.dart';
+import 'package:knowledge_empire/screens/dashboard_prof.dart';
+import 'package:knowledge_empire/screens/engagement_customer.dart';
+import 'package:knowledge_empire/screens/existing_customers.dart';
+import 'package:knowledge_empire/screens/help_screen.dart';
+import 'package:knowledge_empire/screens/new_customer.dart';
+import 'package:knowledge_empire/screens/organization.dart';
+import 'package:knowledge_empire/screens/powerups.dart';
+import 'package:knowledge_empire/screens/profile.dart';
+import 'package:knowledge_empire/screens/ranking.dart';
+import 'package:knowledge_empire/screens/refreshAnimation.dart';
+import 'package:knowledge_empire/screens/rewards.dart';
+import 'package:knowledge_empire/screens/team.dart';
+
 import '../commonview/header.dart';
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/res.dart';
 import '../helper/string_res.dart';
 import '../models/get_friends.dart';
-import 'package:flutter/services.dart';
+import 'P+L.dart';
+import 'business_sector.dart';
 
 /*
 *  created by Riddhi
@@ -68,9 +54,9 @@ class FadeRouteHome extends PageRouteBuilder {
 
   FadeRouteHome()
       : super(
-          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => Const.isLandscape ? HomePage() : BottomNavigationPortrait(),
+          pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => HomePage(),
           transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) =>
-              FadeTransition(opacity: animation, child: Const.isLandscape ? HomePage() : BottomNavigationPortrait()),
+              FadeTransition(opacity: animation, child: HomePage()),
         );
 }
 
@@ -82,7 +68,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerProviderStateMixin implements RefreshAnimation {
-
   bool startAnim = false;
   int duration = 1;
   bool isCoinVisible = false;
@@ -112,7 +97,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
         Injector.checkPrivacyPolicy(HomeUtils.scaffoldKey, context);
       });
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-        Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        //TODO AUDIO
+        // Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       }
     } else if (state == AppLifecycleState.inactive) {
       Injector.audioPlayerBg.pause();
@@ -335,7 +321,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   void initStateMethods() async {
     HomeUtils.callDashboardStatusApi();
 
-    HomeUtils.callVersionApi(context);
+    // HomeUtils.callVersionApi(context);
 
     HomeUtils.initPush(context);
 

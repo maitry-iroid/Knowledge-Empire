@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/common_view.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/header_utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:knowledge_empire/commonview/common_view.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/header_utils.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../commonview/header.dart';
 import '../helper/constant.dart';
@@ -383,15 +383,15 @@ class HelpPageState extends State<HelpPage> {
             ],
           ),
         ),
-        getSelectedType() == Const.typeReward ? Container(
-           child: Positioned(
-              bottom: Utils.getDeviceHeight(context) / 6.5,
-              left: Utils.getDeviceWidth(context) / 3.5,
-              child: Image(
-                image: AssetImage(Utils.getAssetsImg('ic_gift_drawer')),
-              )
-            )
-        ) : Container()
+        getSelectedType() == Const.typeReward
+            ? Container(
+                child: Positioned(
+                    bottom: Utils.getDeviceHeight(context) / 6.5,
+                    left: Utils.getDeviceWidth(context) / 3.5,
+                    child: Image(
+                      image: AssetImage(Utils.getAssetsImg('ic_gift_drawer')),
+                    )))
+            : Container()
       ],
     );
   }

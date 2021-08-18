@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ke_employee/animation/Explostion.dart';
-import 'package:ke_employee/commonview/achievement_dialog.dart';
-import 'package:ke_employee/helper/ResponsiveUi.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/models/information_activity_log.dart';
-import 'package:ke_employee/models/push_model.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
-import 'package:ke_employee/screens/more_info.dart';
+import 'package:knowledge_empire/animation/Explostion.dart';
+import 'package:knowledge_empire/commonview/achievement_dialog.dart';
+import 'package:knowledge_empire/helper/ResponsiveUi.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:knowledge_empire/models/information_activity_log.dart';
+import 'package:knowledge_empire/models/push_model.dart';
+import 'package:knowledge_empire/screens/engagement_customer.dart';
+import 'package:knowledge_empire/screens/more_info.dart';
 import 'package:mailto/mailto.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_encoder/url_encoder.dart';
@@ -218,8 +218,8 @@ class CommonView {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-
-  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataTitle, String dataText, bool isMediaQue, String dataId) {
+  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataTitle, String dataText,
+      bool isMediaQue, String dataId) {
     return InkResponse(
       onTap: () async {
         Utils.playClickSound();
@@ -249,10 +249,11 @@ class CommonView {
         String subjectData = isModule ? "Module" : "Question";
         String queText = isModule || isMediaQue ? "" : "Question Text:";
         String supportReq = "Support request: [Type your message here]";
-        
+
         // String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}';
         String subject = 'Support request for Knowledge Empire $subjectData: $dataTitle';
-        String body = "Dear Expert, \n\nThis is a Knowledge Empire Support request: \nFrom:${Injector.userData.email} \nFor $subjectData: $dataTitle \n$queText $dataText \n$supportReq \n\nBest Regards, \nYour Knowledge Empire Team";
+        String body =
+            "Dear Expert, \n\nThis is a Knowledge Empire Support request: \nFrom:${Injector.userData.email} \nFor $subjectData: $dataTitle \n$queText $dataText \n$supportReq \n\nBest Regards, \nYour Knowledge Empire Team";
 
         // Print logs and execute
         print("title::::: $mail");

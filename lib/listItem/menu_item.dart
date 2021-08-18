@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/drawer_item.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/drawer_item.dart';
 
 class MenuItem extends StatelessWidget {
-
   DrawerItem item;
   String _currentPage;
 
@@ -14,8 +13,7 @@ class MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
+      padding: EdgeInsets.symmetric(vertical: Injector.isBusinessMode ? 8 : 5, horizontal: 5),
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
           color: Injector.isBusinessMode
@@ -32,10 +30,7 @@ class MenuItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           image: Injector.isBusinessMode
               ? DecorationImage(
-                  image: AssetImage(Utils.getAssetsImg(item.key == _currentPage
-                      ? "slide_menu_highlight"
-                      : "bg_menu")),
-                  fit: BoxFit.fill)
+                  image: AssetImage(Utils.getAssetsImg(item.key == _currentPage ? "slide_menu_highlight" : "bg_menu")), fit: BoxFit.fill)
               : null),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

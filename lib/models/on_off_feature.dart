@@ -1,4 +1,3 @@
-
 class DashboardStatusRequest {
   int userId;
 
@@ -14,6 +13,7 @@ class DashboardStatusRequest {
     return data;
   }
 }
+
 class DashboardStatusResponse {
   String flag;
   String result;
@@ -52,7 +52,7 @@ class OnOffFeatureData {
   int isUnlock;
   int unreadCount;
 
-  OnOffFeatureData({this.type, this.isFeatureOn,this.isUnlock,this.unreadCount});
+  OnOffFeatureData({this.type, this.isFeatureOn = 0, this.isUnlock = 0, this.unreadCount = 0});
 
   OnOffFeatureData.fromJson(Map<String, dynamic> json) {
     type = json['type'];

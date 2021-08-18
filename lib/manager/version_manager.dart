@@ -4,6 +4,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
+
 class VersionManager {
   /*
   *           IMPORTANT
@@ -32,12 +33,11 @@ class VersionManager {
   }
 
   static String getMode() {
-    if(Const.envType == Environment.DEV)
+    if (Const.envType == Environment.DEV)
       return "D";
-    else if(Const.envType == Environment.PROD)
+    else if (Const.envType == Environment.PROD)
       return "P";
     else
       return "D";
   }
-
 }

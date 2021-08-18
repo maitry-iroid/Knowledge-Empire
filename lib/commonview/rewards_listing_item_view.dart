@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/manager/theme_manager.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/manager/theme_manager.dart';
 
 class RewardsListingItemView extends StatelessWidget {
   final int index;
@@ -31,21 +31,19 @@ class RewardsListingItemView extends StatelessWidget {
   showLeftView(BuildContext context) {
     return Expanded(
         child: Container(
-          child: Row(
-            children: [
-              Container(
-                  decoration: BoxDecoration(
-                      color: ColorRes.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: ThemeManager().getDarkColor().withOpacity(ThemeManager().getOpacity1()), width: 0.5)
-                  ),
-                  child : Image.asset(Utils.getAssetsImg("book"), height: Utils.getDeviceHeight(context) * 0.11)
-              ),
-              SizedBox(width: 10),
-              Text("Finance", style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
-            ],
-          ),
-        ));
+      child: Row(
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                  color: ColorRes.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: ThemeManager().getDarkColor().withOpacity(ThemeManager().getOpacity1()), width: 0.5)),
+              child: Image.asset(Utils.getAssetsImg("book"), height: Utils.getDeviceHeight(context) * 0.11)),
+          SizedBox(width: 10),
+          Text("Finance", style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
+        ],
+      ),
+    ));
   }
 
   showRightView(BuildContext context) {
@@ -56,9 +54,8 @@ class RewardsListingItemView extends StatelessWidget {
         children: [
           Expanded(
               child: Container(
-                child:  Text("850 kpt", textAlign: TextAlign.center, style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
-              )
-          ),
+            child: Text("850 kpt", textAlign: TextAlign.center, style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
+          )),
         ],
       ),
     );

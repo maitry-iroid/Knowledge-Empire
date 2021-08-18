@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ke_employee/commonview/common_view.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/intro.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
+import 'package:knowledge_empire/commonview/common_view.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/intro.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
 
 import '../helper/constant.dart';
 
@@ -143,7 +143,7 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                 ),
                 Expanded(
                   child: Text(
-                    getTitle(type),
+                    Utils.getText(context, getTitle(type)),
                     maxLines: 2,
                     style: TextStyle(color: ColorRes.colorPrimary, fontSize: 20),
                     overflow: TextOverflow.ellipsis,
@@ -163,25 +163,25 @@ class DashboardProfPageState extends State<DashboardProfPage> {
 
   getTitle(String type) {
     if (type == Const.typeBusinessSector)
-      return Utils.getText(context, StringRes.businessSector);
+      return StringRes.businessSector;
     else if (type == Const.typeNewCustomer)
-      return Utils.getText(context, StringRes.newCustomers);
+      return StringRes.newCustomers;
     else if (type == Const.typeExistingCustomer)
-      return Utils.getText(context, StringRes.existingCustomers);
+      return StringRes.existingCustomers;
     else if (type == Const.typeOrg)
-      return Utils.getText(context, StringRes.organizations);
+      return StringRes.organizations;
     else if (type == Const.typeChallenges)
-      return Utils.getText(context, StringRes.challenges);
+      return StringRes.challenges;
     else if (type == Const.typePl)
-      return Utils.getText(context, StringRes.pl);
+      return StringRes.pl;
     else if (type == Const.typeAchievement)
-      return Utils.getText(context, StringRes.achievement);
+      return StringRes.achievement;
     else if (type == Const.typeReward)
-      return Utils.getText(context, StringRes.rewards);
+      return StringRes.rewards;
     else if (type == Const.typeRanking)
-      return Utils.getText(context, StringRes.ranking);
+      return StringRes.ranking;
     else if (type == Const.typeTeam)
-      return Utils.getText(context, StringRes.team);
+      return StringRes.team;
     else
       return "";
   }

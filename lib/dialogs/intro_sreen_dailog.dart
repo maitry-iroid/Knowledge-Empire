@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:ke_employee/commonview/header.dart';
-import 'package:ke_employee/helper/ResponsiveUi.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:knowledge_empire/commonview/header.dart';
+import 'package:knowledge_empire/helper/ResponsiveUi.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 
 class IntroScreenDialog extends StatefulWidget {
   final String titleText, desTextLine, btnName, imageName;
@@ -63,16 +63,10 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
           body: Stack(
             children: <Widget>[
               Positioned(
-                top: widget.cardMoveBottom != null
-                    ? size.height / widget.cardMoveBottom
-                    : null,
-                right: widget.cardMoveLeft != null
-                    ? size.width / widget.cardMoveLeft
-                    : null,
+                top: widget.cardMoveBottom != null ? size.height / widget.cardMoveBottom : null,
+                right: widget.cardMoveLeft != null ? size.width / widget.cardMoveLeft : null,
                 child: Align(
-                  alignment: widget.cardAlignment != null
-                      ? widget.cardAlignment
-                      : Alignment.center,
+                  alignment: widget.cardAlignment != null ? widget.cardAlignment : Alignment.center,
                   child: Container(
 //                    height: widget.cardHeight != null
 //                        ? size.height / widget.cardHeight
@@ -80,16 +74,12 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
 //                    width: widget.cardWidth != null
 //                        ? size.width / widget.cardWidth
 //                        : size.width / 1.4,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: size.width / 8, vertical: size.height / 7),
+                    margin: EdgeInsets.symmetric(horizontal: size.width / 8, vertical: size.height / 7),
                     padding: EdgeInsets.only(
                       top: size.height / 30.7,
                       bottom: size.height / 30.7,
                     ),
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(size.width / 25.7)),
+                    decoration: BoxDecoration(border: Border.all(), color: Colors.white, borderRadius: BorderRadius.circular(size.width / 25.7)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -97,28 +87,18 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                         SizedBox(height: Utils.getDeviceWidth(context) / 80),
                         Text(widget.titleText,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.title.copyWith(
-                                color: ColorRes.black,
-                                fontWeight: FontWeight.w800)),
+                            style: Theme.of(context).textTheme.title.copyWith(color: ColorRes.black, fontWeight: FontWeight.w800)),
                         SizedBox(height: Utils.getDeviceWidth(context) / 60),
-                        widget.desTextLine != null &&
-                                widget.desTextLine.isNotEmpty
+                        widget.desTextLine != null && widget.desTextLine.isNotEmpty
                             ? Expanded(
                                 child: SingleChildScrollView(
                                   child: Column(
                                     children: <Widget>[
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            right: Injector.isBusinessMode
-                                                ? getPaddingByImage()
-                                                : size.height / 30.7,
-                                            left: size.height / 30.7),
+                                            right: Injector.isBusinessMode ? getPaddingByImage() : size.height / 30.7, left: size.height / 30.7),
                                         child: Text(widget.desTextLine,
-                                            textAlign: TextAlign.start,
-                                            maxLines: null,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .title),
+                                            textAlign: TextAlign.start, maxLines: null, style: Theme.of(context).textTheme.title),
                                       ),
                                     ],
                                   ),
@@ -174,38 +154,26 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
             children: <Widget>[
               Positioned(
                 child: Align(
-                  alignment: widget.cardAlignment != null
-                      ? widget.cardAlignment
-                      : Alignment.center,
+                  alignment: widget.cardAlignment != null ? widget.cardAlignment : Alignment.center,
                   child: Container(
                     height: size.height / 1.9,
                     width: size.width / 1.7,
                     padding: EdgeInsets.all(size.height / 30.7),
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(size.width / 25.7)),
+                    decoration: BoxDecoration(border: Border.all(), color: Colors.white, borderRadius: BorderRadius.circular(size.width / 25.7)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: Utils.getDeviceWidth(context) / 80),
                         Text(widget.titleText,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: Utils.getDeviceWidth(context) / 45,
-                                fontWeight: FontWeight.bold)),
+                            textAlign: TextAlign.center, style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 45, fontWeight: FontWeight.bold)),
                         SizedBox(height: Utils.getDeviceWidth(context) / 60),
-                        widget.desTextLine != null &&
-                                widget.desTextLine.isNotEmpty
+                        widget.desTextLine != null && widget.desTextLine.isNotEmpty
                             ? Expanded(
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.vertical,
                                   child: Text(widget.desTextLine,
-                                      maxLines: null,
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontSize: size.width / 50.5)),
+                                      maxLines: null, textAlign: TextAlign.start, style: TextStyle(fontSize: size.width / 50.5)),
                                 ),
                               )
                             : Container(),
@@ -216,18 +184,12 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                               width: size.width / 3.5,
                               height: size.height / 16,
                               decoration: BoxDecoration(
-                                  color: widget.btnColor != null
-                                      ? widget.btnColor
-                                      : Colors.grey,
-                                  border: Border.all(
-                                      color: ColorRes.header, width: 1),
+                                  color: widget.btnColor != null ? widget.btnColor : Colors.grey,
+                                  border: Border.all(color: ColorRes.header, width: 1),
                                   borderRadius: BorderRadius.circular(5)),
                               child: Center(
                                 //  child: Text("",
-                                child: Text(widget.btnName,
-                                    style: TextStyle(
-                                        fontSize: size.width / 46.5,
-                                        color: ColorRes.white)),
+                                child: Text(widget.btnName, style: TextStyle(fontSize: size.width / 46.5, color: ColorRes.white)),
                               )),
                         )
                       ],
@@ -236,19 +198,11 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                 ),
               ),
               Positioned(
-                  right: widget.imageMoveRight != null
-                      ? size.width / widget.imageMoveRight
-                      : size.width / 9.0,
-                  bottom: widget.imageMoveTop != null
-                      ? size.height / widget.imageMoveTop
-                      : size.height / 5.3,
+                  right: widget.imageMoveRight != null ? size.width / widget.imageMoveRight : size.width / 9.0,
+                  bottom: widget.imageMoveTop != null ? size.height / widget.imageMoveTop : size.height / 5.3,
                   child: Image.asset(Utils.getAssetsImg(widget.imageName),
-                      height: widget.imageHeight != null
-                          ? size.height / widget.imageHeight
-                          : size.height / 1.85,
-                      width: widget.imageWidth != null
-                          ? size.height / widget.imageWidth
-                          : size.width / 4.5,
+                      height: widget.imageHeight != null ? size.height / widget.imageHeight : size.height / 1.85,
+                      width: widget.imageWidth != null ? size.height / widget.imageWidth : size.width / 4.5,
                       fit: BoxFit.contain)),
               Positioned(
                 bottom: Utils.getDeviceWidth(context) / 60,
@@ -257,18 +211,13 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                   height: Utils.getDeviceWidth(context) / 20,
                   width: Utils.getDeviceWidth(context) / 5,
                   decoration: BoxDecoration(
-                      color: ColorRes.blue,
-                      border: Border.all(color: ColorRes.header, width: 2),
-                      borderRadius: BorderRadius.circular(5)),
+                      color: ColorRes.blue, border: Border.all(color: ColorRes.header, width: 2), borderRadius: BorderRadius.circular(5)),
                   padding: EdgeInsets.all(Utils.getDeviceWidth(context) / 100),
                   child: Center(
                     child: Text(
                       Utils.getText(context, StringRes.skipTutorial),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: ColorRes.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: Utils.getDeviceWidth(context) / 45),
+                      style: TextStyle(color: ColorRes.white, fontWeight: FontWeight.w800, fontSize: Utils.getDeviceWidth(context) / 45),
                     ),
                   ),
                 ),
@@ -362,16 +311,11 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                 width: size.width / 3.5,
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 padding: EdgeInsets.symmetric(vertical: 2),
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    border: Border.all(color: ColorRes.header, width: 1),
-                    borderRadius: BorderRadius.circular(5)),
+                decoration:
+                    BoxDecoration(color: Colors.grey, border: Border.all(color: ColorRes.header, width: 1), borderRadius: BorderRadius.circular(5)),
                 child: Center(
-                  child: Text(Utils.getText(context, StringRes.updateLatter),
-                      style: Theme.of(context)
-                          .textTheme
-                          .title
-                          .copyWith(color: ColorRes.white)),
+                  child:
+                      Text(Utils.getText(context, StringRes.updateLatter), style: Theme.of(context).textTheme.title.copyWith(color: ColorRes.white)),
                 )),
           )
         : Container();
@@ -389,11 +333,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
               border: Border.all(color: ColorRes.header, width: 1),
               borderRadius: BorderRadius.circular(5)),
           child: Center(
-            child: Text(widget.btnName != null ? widget.btnName : "",
-                style: Theme.of(context)
-                    .textTheme
-                    .title
-                    .copyWith(color: ColorRes.white)),
+            child: Text(widget.btnName != null ? widget.btnName : "", style: Theme.of(context).textTheme.title.copyWith(color: ColorRes.white)),
           )),
     );
   }

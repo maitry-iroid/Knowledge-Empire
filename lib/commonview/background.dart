@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ke_employee/animation/Explostion.dart';
-import 'package:ke_employee/commonview/achievement_dialog.dart';
-import 'package:ke_employee/helper/ResponsiveUi.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/constant.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/models/push_model.dart';
-import 'package:ke_employee/screens/engagement_customer.dart';
+import 'package:knowledge_empire/animation/Explostion.dart';
+import 'package:knowledge_empire/commonview/achievement_dialog.dart';
+import 'package:knowledge_empire/helper/ResponsiveUi.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/constant.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/helper/string_res.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/models/push_model.dart';
+import 'package:knowledge_empire/screens/engagement_customer.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CommonView {

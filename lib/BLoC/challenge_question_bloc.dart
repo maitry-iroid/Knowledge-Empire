@@ -1,5 +1,5 @@
-import 'package:ke_employee/commonview/challenge_header.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:knowledge_empire/commonview/challenge_header.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
 import 'package:rxdart/rxdart.dart';
 
 final getChallengeQueBloc = GetChallengeQueBloc();

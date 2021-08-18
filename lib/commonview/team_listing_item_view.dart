@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ke_employee/helper/Utils.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/manager/theme_manager.dart';
+import 'package:knowledge_empire/helper/Utils.dart';
+import 'package:knowledge_empire/helper/res.dart';
+import 'package:knowledge_empire/manager/theme_manager.dart';
 
 class TeamListingItemView extends StatelessWidget {
   final int index;
@@ -32,29 +32,28 @@ class TeamListingItemView extends StatelessWidget {
   showLeftView(BuildContext context) {
     return Expanded(
         child: Container(
-          child: Row(
+      child: Row(
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                  color: ColorRes.white,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: ThemeManager().getDarkColor().withOpacity(ThemeManager().getOpacity1()), width: 0.5)),
+              child: Image.asset(Utils.getAssetsImg("book"), height: Utils.getDeviceHeight(context) * 0.11)),
+          SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  decoration: BoxDecoration(
-                      color: ColorRes.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: ThemeManager().getDarkColor().withOpacity(ThemeManager().getOpacity1()), width: 0.5)
-                  ),
-                  child : Image.asset(Utils.getAssetsImg("book"), height: Utils.getDeviceHeight(context) * 0.11)
-              ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Finance", style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
-                  isSecondText
-                      ? Text("Marco Denzrl", style: TextStyle(color: ThemeManager().getDarkColor().withOpacity(ThemeManager().getOpacity1()), fontSize: 12))
-                      : Container()
-                ],
-              )
+              Text("Finance", style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
+              isSecondText
+                  ? Text("Marco Denzrl",
+                      style: TextStyle(color: ThemeManager().getDarkColor().withOpacity(ThemeManager().getOpacity1()), fontSize: 12))
+                  : Container()
             ],
-          ),
-        ));
+          )
+        ],
+      ),
+    ));
   }
 
   showRightView(BuildContext context) {
@@ -70,9 +69,8 @@ class TeamListingItemView extends StatelessWidget {
           ),
           Expanded(
               child: Container(
-                child:  Text("81%", textAlign: TextAlign.center, style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
-              )
-          ),
+            child: Text("81%", textAlign: TextAlign.center, style: TextStyle(color: ThemeManager().getDarkColor(), fontSize: 15)),
+          )),
         ],
       ),
     );

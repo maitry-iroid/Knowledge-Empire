@@ -6,28 +6,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
-import 'package:ke_employee/BLoC/locale_bloc.dart';
-import 'package:ke_employee/animation/Explostion.dart';
-import 'package:ke_employee/dialogs/display_dailogs.dart';
-import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/get_challenges.dart';
-import 'package:ke_employee/models/homedata.dart';
-import 'package:ke_employee/models/on_off_feature.dart';
-import 'package:ke_employee/models/privay_policy.dart';
-import 'package:ke_employee/models/questions.dart';
-import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
+import 'package:knowledge_empire/BLoC/challenge_question_bloc.dart';
+import 'package:knowledge_empire/BLoC/locale_bloc.dart';
+import 'package:knowledge_empire/animation/Explostion.dart';
+import 'package:knowledge_empire/dialogs/display_dailogs.dart';
+import 'package:knowledge_empire/helper/prefkeys.dart';
+import 'package:knowledge_empire/helper/web_api.dart';
+import 'package:knowledge_empire/injection/dependency_injection.dart';
+import 'package:knowledge_empire/manager/encryption_manager.dart';
+import 'package:knowledge_empire/models/UpdateDialogModel.dart';
+import 'package:knowledge_empire/models/get_challenges.dart';
+import 'package:knowledge_empire/models/homedata.dart';
+import 'package:knowledge_empire/models/on_off_feature.dart';
+import 'package:knowledge_empire/models/privay_policy.dart';
+import 'package:knowledge_empire/models/questions.dart';
+import 'package:knowledge_empire/push_notification/PushNotificationHelper.dart';
+import 'package:knowledge_empire/screens/refreshAnimation.dart';
 import 'Utils.dart';
-import 'package:ke_employee/BLoC/navigation_bloc.dart';
+import 'package:knowledge_empire/BLoC/navigation_bloc.dart';
 import 'constant.dart';
 
 class HomeUtils {
-
   static GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<ExplosionWidgetState> explosionWidgetStateKey = new GlobalKey<ExplosionWidgetState>();
   static String currentPage = Const.typeHome;
@@ -39,7 +38,6 @@ class HomeUtils {
   bool isCoinVisible = false;
 
   HomeData homeData;
-
 
   static void initHome(BuildContext context) {
     print("Home Initstate:----------------------------------------------------------");
@@ -153,7 +151,6 @@ class HomeUtils {
   }
 
   static void initCheckNetworkConnectivity(BuildContext context) {
-
     connectivitySubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       if (result != ConnectivityResult.none) {
         Injector.isInternetConnected = true;
@@ -176,5 +173,4 @@ class HomeUtils {
       appBadgeSupported = 'Failed to get badge support.';
     }
   }
-
 }
