@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
@@ -29,10 +30,10 @@ class _GroupItemState extends State<GroupItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
-        width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode ? 7.5 : 10),
-        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 8, horizontal: 0) : EdgeInsets.symmetric(vertical: 3, horizontal: 2),
+        // width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode ? 7.5 : 8),
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 8, horizontal: 0) : EdgeInsets.symmetric(vertical: 3, horizontal: 4),
         padding: EdgeInsets.symmetric(horizontal: 0),
-        alignment: Alignment.center,
+        // alignment: Alignment.center,
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode

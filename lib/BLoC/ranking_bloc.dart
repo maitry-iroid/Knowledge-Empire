@@ -51,6 +51,9 @@ class GetRankingDataBloc {
     GetUserGroupData grp3 = GetUserGroupData();
     grp3.groupId = 3;
     grp3.name = Utils.getText(context, StringRes.friends);
+    GetUserGroupData grp4 = GetUserGroupData();
+    grp4.groupId = 5;
+    grp4.name = Utils.getText(context, StringRes.department);
 
     arrGroups.add(grp1);
     arrGroups.add(grp2);
@@ -63,6 +66,7 @@ class GetRankingDataBloc {
         data.forEach((v) {
           arrGroups.add(GetUserGroupData.fromJson(v));
         });
+        arrGroups.add(grp4);
       }
     }
     if (arrGroups != null && arrGroups.isNotEmpty) _getGroupSubject.sink.add(arrGroups);

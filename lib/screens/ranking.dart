@@ -34,7 +34,7 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   int selectedLeftCategory = 0;
   int selectedGroup = 0;
-  int selectedTime = 0;
+  int selectedTime = -2;
 
   List<GetFriendsData> arrFriends = List();
   List<GetUserGroupData> arrGroups = List();
@@ -81,7 +81,12 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
-    arrTime = [Utils.getText(context, StringRes.day), Utils.getText(context, StringRes.month), Utils.getText(context, StringRes.year)];
+    arrTime = [
+      Utils.getText(context, StringRes.total),
+      Utils.getText(context, StringRes.day),
+      Utils.getText(context, StringRes.month),
+      Utils.getText(context, StringRes.year)
+    ];
     return Scaffold(
       key: _scaffoldKey,
       body: Stack(
@@ -116,7 +121,11 @@ class _RankingPageState extends State<RankingPage> {
     if (selectedTime != index) {
       if (mounted)
         setState(() {
-          selectedTime = index;
+          if (index == 0) {
+            selectedTime = index - 2;
+          } else {
+            selectedTime = index - 1;
+          }
           print(selectedTime.toString());
         });
       getFriends(true, false);
@@ -126,15 +135,18 @@ class _RankingPageState extends State<RankingPage> {
   showFirstColumn() {
     return Container(
       color: Injector.isBusinessMode ? Colors.transparent : ColorRes.rankingBackGround,
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            showLeftItem(0, StringRes.revenue),
-            showLeftItem(1, StringRes.profit),
+            // showLeftItem(0, StringRes.revenue),
+            // showLeftItem(1, StringRes.profit),
+            showLeftItem(4, StringRes.strBalance),
             showLeftItem(2, StringRes.hashCustomers),
             showLeftItem(3, StringRes.brand),
-            showLeftItem(4, StringRes.strBalance),
+            showLeftItem(5, StringRes.challenges),
           ],
         ),
       ),
@@ -212,7 +224,7 @@ class _RankingPageState extends State<RankingPage> {
       },
       child: Container(
 //          width: Utils.getDeviceHeight(context)/5,
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: Column(
           children: <Widget>[
             Container(
@@ -253,6 +265,8 @@ class _RankingPageState extends State<RankingPage> {
       return "ic_bs_rk_price_tag";
     } else if (type == 4) {
       return "balance_grey_png";
+    } else if (type == 5) {
+      return "ic_pro_home_challenges";
     } else {
       return "ic_bs_rk_revenue";
     }
@@ -662,7 +676,7 @@ class _RankingPageState extends State<RankingPage> {
                 return TimeItem(
                   selectTime,
                   index: index,
-                  isSelected: selectedTime == index ? true : false,
+                  isSelected: index == 0 ? (selectedTime == -2 ? true : false) : ((selectedTime + 1) == index ? true : false),
                   title: arrTime[index],
                 );
               },

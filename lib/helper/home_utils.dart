@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
+import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/animation/Explostion.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -21,9 +22,8 @@ import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/push_notification/PushNotificationHelper.dart';
-import 'package:ke_employee/screens/refreshAnimation.dart';
+
 import 'Utils.dart';
-import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'constant.dart';
 
 class HomeUtils {
@@ -64,6 +64,7 @@ class HomeUtils {
             DashboardStatusResponse response = DashboardStatusResponse.fromJson(data);
 
             if (response.data.isNotEmpty) {
+              print(response.data);
               Injector.prefs.setString(PrefKeys.dashboardStatusData, jsonEncode(response.toJson()));
               Injector.dashboardStatusResponse = response;
 

@@ -156,6 +156,7 @@ class StringRes {
   static var points = "points";
   static var correct = "correct";
   static var department_ = "department_";
+  static var department = "department";
   static var resets_ = "resets_";
   static var name_ = "name_";
   static var cost = "cost";
@@ -181,6 +182,7 @@ class StringRes {
   static var day = "day";
   static var month = "month";
   static var year = "year";
+  static var total = "total";
   static var lastPeriod = "lastPeriod";
   static var thisPeriod = "thisPeriod";
   static var sevenDaysDevelopment = "sevenDaysDevelopment";
@@ -583,6 +585,7 @@ class StringRes {
       'points': "Points",
       'correct': "%Correct",
       'department_': "Department:",
+      'department': "Department",
       'resets_': "Resets:",
       'name_': "Name:",
       'cost': "Cost",
@@ -605,6 +608,7 @@ class StringRes {
       'day': "Day",
       'month': "Month",
       'year': "Year",
+      "total": "total",
       'lastPeriod': "Last Period",
       'thisPeriod': "This Period",
 
@@ -1010,6 +1014,7 @@ class StringRes {
       'points': "Punkte",
       'correct': "% Korrekt",
       'department_': "Abteilung:",
+      'department': "Abteilung",
       'resets_': "Neustarts:",
       'name_': "Name:",
       'cost': "Kosten",
@@ -1035,6 +1040,7 @@ class StringRes {
       'day': "Tag",
       'month': "Monat",
       'year': "Jahr",
+      "total": "total",
       'lastPeriod': "Letzte Periode",
       'thisPeriod': "Aktuelle Periode",
 
@@ -1422,6 +1428,7 @@ class StringRes {
       'points': "点数",
       'correct': "%正确",
       'department_': "部门:",
+      'department': "部门",
       'resets_': "重启:",
       'name_': "名字::",
       'cost': "成本",
@@ -1446,6 +1453,7 @@ class StringRes {
       'day': "日期",
       'month': "月",
       'year': "年",
+      "total": "total",
       'lastPeriod': "上一时期",
       'thisPeriod': "这一时期",
 
@@ -2009,6 +2017,7 @@ class StringRes {
       'points': 'Points',
       'correct': '%Correct',
       'department_': 'Category:',
+      'department': 'Category',
       'resets_': 'Resets:',
       'name_': 'Name:',
       'cost': 'Deductions',
@@ -2020,6 +2029,7 @@ class StringRes {
       'day': 'Day',
       'month': 'Month',
       'year': 'Year',
+      "total": "total",
       'lastPeriod': 'Last Period',
       'thisPeriod': 'This Period',
       'alertWantToBailOut': 'Are you sure you want to restart',
@@ -2195,6 +2205,7 @@ class StringRes {
       'points': 'Punkte',
       'correct': '% korrekt',
       'department_': 'Kategorie:',
+      'department': 'Kategorie',
       'resets_': 'Neustarts:',
       'name_': 'Name:',
       'cost': 'Abzüge',
@@ -2213,6 +2224,7 @@ class StringRes {
       'day': 'Tag',
       'month': 'Monat',
       'year': 'Jahr',
+      "total": "total",
       'lastPeriod': 'Letzte Periode',
       'thisPeriod': 'Aktuelle Periode',
       'alertWantToBailOut': 'Wirklich neu beginnen?',
@@ -2613,6 +2625,7 @@ class StringRes {
       'points': '%正确',
       'correct': '类别:',
       'department_': '重置:',
+      'department': '重置',
       'resets_': '名字:',
       'name_': '扣除',
       'cost': '您',
@@ -2631,6 +2644,7 @@ class StringRes {
       'day': '月',
       'month': '年',
       'year': '上一时期',
+      "total": "total",
       'lastPeriod': '这一时期',
       'thisPeriod': '您确定要重新开始吗',
       'alertWantToBailOut': '噢，没有找到此用户的学习模块。',

@@ -1,4 +1,5 @@
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:video_player/video_player.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 VideoPlayerController _controller;
 ChewieController _chewieController;
@@ -49,8 +51,7 @@ class MediaManager {
                   height: MediaQuery.of(context).size.height / 2.5,
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: borderColor, width: 3)),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: borderColor, width: 3)),
                   child: showMediaView(context, answer, thumbImage,
                       pdfDocument: pdfDocument,
                       isPdfLoading: isPdfLoading,
@@ -75,15 +76,12 @@ class MediaManager {
             width: Utils.getDeviceWidth(context) / 20,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(Injector.isBusinessMode
-                        ? Utils.getAssetsImg("full_expand_question_answers")
-                        : Utils.getAssetsImg("expand_pro")),
+                    image:
+                        AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
                     fit: BoxFit.fill))),
         onTap: () {
           Utils.playClickSound();
-          showDialog(
-              context: context,
-              builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link, videoPlay: videoPlay, videoLoop: videoLoop));
+          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link, videoPlay: videoPlay, videoLoop: videoLoop));
         },
       ),
     );
@@ -98,9 +96,7 @@ class MediaManager {
 //    )
 //        : Container();
 
-    showDialog(
-        context: context,
-        builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop));
+    showDialog(context: context, builder: (_) => ExpandMedia(link: link, pdfPath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop));
   }
 
   showMediaView(BuildContext context, String path, String thumbImage,
@@ -139,8 +135,7 @@ class MediaManager {
                     Radius.circular(10),
                   ),
                   image: DecorationImage(
-                    image:
-                        CachedNetworkImageProvider(thumbImage, scale: Const.imgScaleProfile, cacheManager: Injector.cacheManager),
+                    image: CachedNetworkImageProvider(thumbImage, scale: Const.imgScaleProfile, cacheManager: Injector.cacheManager),
                     fit: BoxFit.cover,
                   )),
             ),
@@ -149,15 +144,13 @@ class MediaManager {
                     child: MaterialButton(
                       height: 60,
                       onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) => ExpandMedia(link: path, videoLoop: videoLoop, videoPlay: videoPlay));
+                        showDialog(context: context, builder: (_) => ExpandMedia(link: path, videoLoop: videoLoop, videoPlay: videoPlay));
                       },
                       child: Container(
                         width: Utils.getDeviceHeight(context) / 10,
                         height: Utils.getDeviceHeight(context) / 10,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage(Utils.getAssetsImg("play_button")), fit: BoxFit.scaleDown)),
+                        decoration:
+                            BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("play_button")), fit: BoxFit.scaleDown)),
                       ),
                     ),
                   )
@@ -172,7 +165,7 @@ class MediaManager {
             padding: EdgeInsets.all(3),
             decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
 //        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
-//             child: PDFViewer(document: pdfDocument, showPicker: false),
+            child: PDFViewer(document: pdfDocument, showPicker: false),
             // child: WebView(
             //   initialUrl: path,
             // ),
@@ -260,7 +253,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
   }
 
   Future<void> loadPdf() async {
-    /*  print("----------------  pdf path :: ${widget.link}");
+    print("----------------  pdf path :: ${widget.link}");
     PDFDocument doc = await PDFDocument.fromURL(widget.link);
     await doc.get(page: 1);
     if (mounted) {
@@ -268,7 +261,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
         this.document = doc;
         isPdfLoading = false;
       });
-    }*/
+    }
   }
 
   bool checkimg = true;
@@ -296,8 +289,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
               scale: scaleAnimation,
               child: Container(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: ShapeDecoration(
-                    color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
+                decoration: ShapeDecoration(color: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0))),
                 child: Padding(
                     padding: const EdgeInsets.all(0.0),
                     child: Stack(
@@ -321,18 +313,19 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                                     controller: _chewieController,
                                   )
                                 : (Utils.isPdf(widget.link)
-                                    ? (/*document != null
+                                    ? /*(document != null
                                         ? PDFViewer(
                                             document: document,
                                             showPicker: false,
                                             zoomSteps: 4,
                                           )
-                                        :*/
-                                        Center(child: CircularProgressIndicator()))
+                                        : Center(child: CircularProgressIndicator()))*/
+                                    WebView(
+                                        initialUrl: widget.link,
+                                      )
                                     : Container(
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: Utils.getCacheNetworkImage(widget.link), fit: BoxFit.cover)),
+                                        decoration:
+                                            BoxDecoration(image: DecorationImage(image: Utils.getCacheNetworkImage(widget.link), fit: BoxFit.cover)),
                                       )),
                           ),
                         ),
@@ -356,8 +349,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                                     height: Utils.getDeviceWidth(context) / 30,
                                     width: Utils.getDeviceWidth(context) / 30,
                                     decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain))))),
+                                        image: DecorationImage(image: AssetImage(Utils.getAssetsImg("close_dialog")), fit: BoxFit.contain))))),
                       ],
                     )),
               ),

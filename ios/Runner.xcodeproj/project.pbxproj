@@ -315,6 +315,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
@@ -325,6 +326,7 @@
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
+				"${BUILT_PRODUCTS_DIR}/cipher2/cipher2.framework",
 				"${BUILT_PRODUCTS_DIR}/connectivity/connectivity.framework",
 				"${BUILT_PRODUCTS_DIR}/device_id/device_id.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_app_badger/flutter_app_badger.framework",
@@ -347,6 +349,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
@@ -357,6 +360,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cipher2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/connectivity.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/device_id.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/flutter_app_badger.framework",
@@ -471,7 +475,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -501,7 +504,7 @@
 				CURRENT_PROJECT_VERSION = 1.3.0.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -558,7 +561,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -588,7 +590,7 @@
 				CURRENT_PROJECT_VERSION = 1.3.0.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -645,7 +647,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -681,7 +682,7 @@
 				CURRENT_PROJECT_VERSION = 1.3.0.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -739,7 +740,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -770,7 +770,7 @@
 				CURRENT_PROJECT_VERSION = 1.3.0.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -827,7 +827,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -883,7 +882,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -915,7 +913,7 @@
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -953,7 +951,7 @@
 				CURRENT_PROJECT_VERSION = 1.3.0.1;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/SDK/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",

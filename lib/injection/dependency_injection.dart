@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-// import 'package:audioplayers/audioplayers.dart';
 import 'package:device_id/device_id.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -152,8 +151,7 @@ class Injector {
   // check privacy policy is accepted by user or not.
   static checkPrivacyPolicy(GlobalKey<ScaffoldState> _scaffoldKey, BuildContext context) {
     if (Injector.userData.isSeenPrivacyPolicy != 1) {
-      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany,
-          (response) {
+      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response) {
         if (response.isSeenPrivacyPolicy != 1 &&
             response.privacyPolicyTitle != "" &&
             response.privacyPolicyContent != "" &&
