@@ -119,4 +119,9 @@ class Const {
   static get appName {
     return _config.appName;
   }
+
+  static var resume = "resume";
+  static var start = "start";
+  static var pause = "pause";
+  static var stop = "stop";
 }

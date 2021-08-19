@@ -1,10 +1,11 @@
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+// import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
@@ -35,7 +36,7 @@ class _RewardsPageState extends State<RewardsPage> {
 
   String _pdfPath = '';
   String _previewPath;
-  PDFDocument _pdfDocument;
+  var _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -52,14 +53,16 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   void dispose() {
     _controller?.pause();
-    Injector.isSoundEnable && Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+    Injector.isSoundEnable && Injector.isBusinessMode
+        ? Injector.performAudioAction(Const.resume)
+        : Injector.performAudioAction(Const.stop);
     super.dispose();
   }
 
   Future getPDF(String url) async {
     if (selectedModule != null && url != null) {
       _pdfPath = url;
-      _pdfDocument = await PDFDocument.fromURL(url);
+      // _pdfDocument = await PDFDocument.fromURL(url);
     }
     if (mounted) {
       setState(() {
@@ -222,7 +225,9 @@ class _RewardsPageState extends State<RewardsPage> {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-          image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("business_sec_header")), fit: BoxFit.fill) : null),
+          image: Injector.isBusinessMode
+              ? DecorationImage(image: AssetImage(Utils.getAssetsImg("business_sec_header")), fit: BoxFit.fill)
+              : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -300,7 +305,8 @@ class _RewardsPageState extends State<RewardsPage> {
                 borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                 image: Injector.isBusinessMode
                     ? DecorationImage(
-                        image: AssetImage(Utils.getAssetsImg(selectedModule.isRedeem == 0 ? "bg_disable_subscribe" : "bg_subscribe")),
+                        image: AssetImage(
+                            Utils.getAssetsImg(selectedModule.isRedeem == 0 ? "bg_disable_subscribe" : "bg_subscribe")),
                         fit: BoxFit.fill)
                     : null),
             child: Text(
@@ -354,7 +360,8 @@ class _RewardsPageState extends State<RewardsPage> {
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.rewardId == arrFinalRewards[index].rewardId)
-                ? DecorationImage(image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")), fit: BoxFit.fill)
+                ? DecorationImage(
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")), fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -395,7 +402,9 @@ class _RewardsPageState extends State<RewardsPage> {
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                    image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("value")), fit: BoxFit.fill) : null),
+                    image: Injector.isBusinessMode
+                        ? DecorationImage(image: AssetImage(Utils.getAssetsImg("value")), fit: BoxFit.fill)
+                        : null),
                 child: Text(
                   arrFinalRewards[index].points.toString(),
                   style: TextStyle(
@@ -427,7 +436,7 @@ class _RewardsPageState extends State<RewardsPage> {
             }
 
             if (Utils.isVideo(selectedModule.media)) {
-              Injector.audioPlayerBg.stop();
+              Injector.performAudioAction(Const.stop);
               Future.delayed(Duration.zero, () async {
                 await this.initVideoController(selectedModule.media);
               });
@@ -500,12 +509,16 @@ class _RewardsPageState extends State<RewardsPage> {
             child: Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(
-                  top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 9, right: Utils.getDeviceWidth(context) / 9),
+                  top: Injector.isBusinessMode ? 3 : 5,
+                  left: Utils.getDeviceWidth(context) / 9,
+                  right: Utils.getDeviceWidth(context) / 9),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.circular(20),
-                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill)
+                      : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -563,7 +576,7 @@ class _RewardsPageState extends State<RewardsPage> {
               }
 
               if (Utils.isVideo(selectedModule.media)) {
-                Injector.audioPlayerBg.stop();
+                Injector.performAudioAction(Const.stop);
                 Future.delayed(Duration.zero, () async {
                   await this.initVideoController(selectedModule.media);
                 });

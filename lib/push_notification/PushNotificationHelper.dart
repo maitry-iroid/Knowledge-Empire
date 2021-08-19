@@ -38,7 +38,7 @@ class PushNotificationHelper {
     var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await Injector.flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
 
-    await Injector.firebaseMessaging.requestNotificationPermissions();
+    await Injector.firebaseMessaging.requestPermission();
 
     await Injector.firebaseMessaging.getToken().then((token) {
       print("token : " + token);
@@ -221,10 +221,12 @@ class PushNotificationHelper {
   }
 
   showLocalNotification(int id, String body) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails('your channel id', 'your channel name', 'your channel description',
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
         importance: Importance.max, priority: Priority.high, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+    var platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await Injector.flutterLocalNotificationsPlugin.show(id, body, body, platformChannelSpecifics, payload: 'item x');
   }
 }

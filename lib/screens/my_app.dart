@@ -31,7 +31,8 @@ class MyAppState extends State<MyApp> {
   void initState() {
     print("weburl-------" + Const.webUrl);
 
-    Injector.audioCache.loadAll(['all_button_clicks.wav']);
+    //TODO
+    // Injector.audioCache.loadAll(['all_button_clicks.wav']);
 
     initPlatformState();
 

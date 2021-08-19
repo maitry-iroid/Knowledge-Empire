@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:crypto/crypto.dart';
@@ -69,7 +69,8 @@ class Utils {
       preferredSize: Size.fromHeight(44.0), // here the desired height
       child: AppBar(
         backgroundColor: ThemeManager().getHeaderColor(),
-        title: Text(item == BottomItems.profileAndSettings ? item.title : "", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 17)),
+        title: Text(item == BottomItems.profileAndSettings ? item.title : "",
+            style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 17)),
         leading: IconButton(
             icon: Icon(Icons.menu, size: 24, color: ThemeManager().getTextColor()),
             onPressed: () {
@@ -203,17 +204,29 @@ class Utils {
 
   static showToast(String message) {
     Fluttertoast.showToast(
-        msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.black87, textColor: Colors.white);
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white);
   }
 
   static showErrToast(String message) {
     Fluttertoast.showToast(
-        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.redAccent, textColor: Colors.white);
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white);
   }
 
   static showSuccessToast(String message) {
     Fluttertoast.showToast(
-        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.green, textColor: Colors.white);
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+        textColor: Colors.white);
   }
 
   static Future<String> initPlatformState() async {
@@ -370,7 +383,8 @@ class Utils {
   }
 
   static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) async {
-    await showDialog(context: _scaffoldKey.currentContext, builder: (BuildContext context) => NickNameDialog(isFromProfile: isFromProfile));
+    await showDialog(
+        context: _scaffoldKey.currentContext, builder: (BuildContext context) => NickNameDialog(isFromProfile: isFromProfile));
   }
 
   static showPrivacyPolicyDialog(
@@ -398,8 +412,8 @@ class Utils {
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) =>
-            ChangePasswordDialog(scaffoldKey: _scaffoldKey, isFromProfile: isFromProfile, isOldPasswordRequired: isOldPasswordRequired));
+        builder: (BuildContext context) => ChangePasswordDialog(
+            scaffoldKey: _scaffoldKey, isFromProfile: isFromProfile, isOldPasswordRequired: isOldPasswordRequired));
   }
 
   static Future showVerifyCompanyDialog(GlobalKey<ScaffoldState> _scaffoldKey) async {
@@ -448,10 +462,10 @@ class Utils {
         final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
         print(file.path);
         await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
-        await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
-        Injector.audioPlayerBg.play(file.path, isLocal: true);
+        // await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
+        // Injector.audioPlayerBg.play(file.path, isLocal: true);
       } else {
-        Injector.audioPlayerBg.stop();
+        // Injector.audioPlayerBg.stop();
       }
     } catch (e) {
       print(e);
@@ -463,12 +477,12 @@ class Utils {
   }
 
   static playAchievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static playClickSound() {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      Injector.audioCache.play("all_button_clicks.wav");
+      // Injector.audioCache.play("all_button_clicks.wav");
     }
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
@@ -476,23 +490,23 @@ class Utils {
 
   static correctAnswerSound() async {
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
+//     if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static achievementSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static proCorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proIncorrectAnswerSound() async {
-    if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
+    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
 //  static audioPlay(String path) async {
@@ -657,7 +671,8 @@ class Utils {
     List<QuestionData> arrFinalQuestion = List();
 
     if (Injector.prefs.getString(PrefKeys.questionData) != null) {
-      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData))).data;
+      List<QuestionData> arrQuestionsLocal =
+          QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData))).data;
 
       arrQuestionsLocal.forEach((questionData) {
         if (questionData.attemptTime == null || questionData.attemptTime.isEmpty) {
@@ -711,7 +726,7 @@ class Utils {
 
   static performDashboardItemClick(BuildContext context, String type) async {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      Injector.audioCache.play("all_button_clicks.wav");
+      // Injector.audioCache.play("all_button_clicks.wav");
     }
 
     if (type == Const.typeOrg ||
