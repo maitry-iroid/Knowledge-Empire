@@ -1,11 +1,7 @@
 PODS:
-  - cipher2 (0.0.1):
-    - CryptoSwift (~> 0.13.1)
-    - Flutter
   - connectivity (0.0.1):
     - Flutter
     - Reachability
-  - CryptoSwift (0.13.1)
   - device_id (0.0.1):
     - Flutter
   - Firebase/CoreOnly (8.5.0):
@@ -110,7 +106,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - cipher2 (from `.symlinks/plugins/cipher2/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_id (from `.symlinks/plugins/device_id/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -135,7 +130,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - CryptoSwift
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -150,8 +144,6 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
-  cipher2:
-    :path: ".symlinks/plugins/cipher2/ios"
   connectivity:
     :path: ".symlinks/plugins/connectivity/ios"
   device_id:
@@ -196,9 +188,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
-  cipher2: 215b8aa78b783cf5a17eb7b72fda55d025dbeefc
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
-  CryptoSwift: ff68c35a53e03177d31aaa2c1e8b3e010aeed6cb
   device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   Firebase: ff8c73105b90e33e1dc6c8e5445d7adc2ccdc7c1
   firebase_core: 82d486a6231b636aea229bd471bceca82cbe00a6
