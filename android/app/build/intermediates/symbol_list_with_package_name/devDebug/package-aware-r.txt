@@ -45,6 +45,7 @@ dimen subtitle_outline_width
 dimen subtitle_shadow_offset
 dimen subtitle_shadow_radius
 drawable corner
+drawable ic_launcher
 drawable launch_background
 drawable notification_action_background
 drawable notification_bg

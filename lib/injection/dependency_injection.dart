@@ -135,7 +135,7 @@ class Injector {
     deviceType = Platform.operatingSystem;
     print(deviceType);
 
-    firebaseMessaging = Injector.firebaseMessaging;
+    firebaseMessaging = FirebaseMessaging.instance;
 
     webApi = WebApi();
 

@@ -55,9 +55,8 @@ class FadeRouteHome extends PageRouteBuilder {
   FadeRouteHome()
       : super(
           pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => HomePage(),
-          transitionsBuilder:
-              (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) =>
-                  FadeTransition(opacity: animation, child: HomePage()),
+          transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) =>
+              FadeTransition(opacity: animation, child: HomePage()),
         );
 }
 
@@ -90,8 +89,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     print("---------------------------App state ::: $state-------------------------------");
     if (state == AppLifecycleState.resumed) {
       Utils.removeBadge();
-      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany,
-          (response) {
+      apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response) {
         if (response.isSeenPrivacyPolicy == 0) {
           Injector.userData.isSeenPrivacyPolicy = 0;
           Injector.setUserData(Injector.userData, false);
@@ -147,17 +145,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
           ),
           backgroundColor: ColorRes.colorBgDark,
           body: SafeArea(
-              child: Stack(
-            children: <Widget>[
-              getDrawerItemWidget(),
-              buildHeaderView(),
-              coinAnimation(),
+            child: Stack(
+              children: <Widget>[
+                getDrawerItemWidget(),
+                buildHeaderView(),
+                coinAnimation(),
 
-              // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeEmployee),   3.16,employeeDrainNotifier),
-              //animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeSalesPersons),   2.38,saleDrainNotifier),
-              // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeServicesPerson),   1.78,serviceDrainNotifier),
-            ],
-          )),
+                // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeEmployee),   3.16,employeeDrainNotifier),
+                //animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeSalesPersons),   2.38,saleDrainNotifier),
+                // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeServicesPerson),   1.78,serviceDrainNotifier),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -206,9 +205,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     } else if (HomeUtils.currentPage == Const.typeReward) {
       return RewardsPage();
     } else if (HomeUtils.currentPage == Const.typeOrg) {
-      return Injector.isBusinessMode
-          ? OrganizationsPage2(mRefreshAnimation: mRefreshAnimation)
-          : PowerUpsPage(mRefreshAnimation: mRefreshAnimation);
+      return Injector.isBusinessMode ? OrganizationsPage2(mRefreshAnimation: mRefreshAnimation) : PowerUpsPage(mRefreshAnimation: mRefreshAnimation);
     } else if (HomeUtils.currentPage == Const.typeRanking) {
       return RankingPage();
     } else if (HomeUtils.currentPage == Const.typePl) {
@@ -237,29 +234,23 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
                 scaffoldKey: HomeUtils.scaffoldKey,
                 isShowMenu: true,
                 isChallenge: homeData.isChallenge,
-                currentIndex: homeData != null &&
-                        homeData.questionHomeData != null &&
-                        homeData.questionHomeData.questionCurrentIndex != null
+                currentIndex: homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.questionCurrentIndex != null
                     ? homeData.questionHomeData.questionCurrentIndex
                     : 0,
-                challengeCount:
-                    homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.totalQuestion != null
-                        ? homeData.questionHomeData.totalQuestion
-                        : 0),
+                challengeCount: homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.totalQuestion != null
+                    ? homeData.questionHomeData.totalQuestion
+                    : 0),
             value
                 ? DummyView(
                     scaffoldKey: HomeUtils.scaffoldKey,
                     isShowMenu: true,
                     isChallenge: homeData.isChallenge,
-                    currentIndex: homeData != null &&
-                            homeData.questionHomeData != null &&
-                            homeData.questionHomeData.questionCurrentIndex != null
+                    currentIndex: homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.questionCurrentIndex != null
                         ? homeData.questionHomeData.questionCurrentIndex
                         : 0,
-                    challengeCount:
-                        homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.totalQuestion != null
-                            ? homeData.questionHomeData.totalQuestion
-                            : 0)
+                    challengeCount: homeData != null && homeData.questionHomeData != null && homeData.questionHomeData.totalQuestion != null
+                        ? homeData.questionHomeData.totalQuestion
+                        : 0)
                 : Container(),
           ],
         );
@@ -309,9 +300,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     if (homeData != null) {
       print(homeData);
       first = HomeUtils.currentPage == Const.typeCustomerSituation &&
-          ((homeData.isCameFromNewCustomer != null &&
-              homeData.isCameFromNewCustomer &&
-              homeData.questionHomeData.isAnsweredCorrect == 1));
+          ((homeData.isCameFromNewCustomer != null && homeData.isCameFromNewCustomer && homeData.questionHomeData.isAnsweredCorrect == 1));
       second = homeData.isChallenge != null && homeData.isChallenge && homeData.questionHomeData != null
           ? homeData.questionHomeData.isAnsweredCorrect != null
               ? homeData.questionHomeData.isAnsweredCorrect == 1
@@ -320,8 +309,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     }
     if (first || second) {
       if (!homeData.isChallenge || (Injector.countList.length == homeData.questionHomeData.questionCurrentIndex)) {
-        int index = Injector.countList.indexWhere((QuestionCountWithData mQuestionCountWithData) =>
-            mQuestionCountWithData.isCorrect != null ? !mQuestionCountWithData.isCorrect : false);
+        int index = Injector.countList.indexWhere(
+            (QuestionCountWithData mQuestionCountWithData) => mQuestionCountWithData.isCorrect != null ? !mQuestionCountWithData.isCorrect : false);
         if (homeData.isCameFromNewCustomer || index == -1) {
           isCoinVisible = true;
         }
@@ -377,7 +366,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   void dispose() {
     // Injector.homeStreamController.close();
     HomeUtils.connectivitySubscription?.cancel();
-    HomeUtils.headerNotifier.dispose();
+    HomeUtils.headerNotifier.removeListener(() {});
     super.dispose();
   }
 
@@ -450,30 +439,28 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
   List<DrawerItem> initDrawerItems() {
     List<DrawerItem> drawerItems = List();
 
-    drawerItems.add(DrawerItem(
-        Utils.getText(context, StringRes.home), Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home", Const.typeHome));
+    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.home), Injector.isBusinessMode ? "main_screen_icon" : "ic_pro_home", Const.typeHome));
 
     drawerItems.add(DrawerItem(Utils.getText(context, StringRes.businessSector),
         Injector.isBusinessMode ? "business_sectors" : "ic_pro_home_business", Const.typeBusinessSector));
 
-    drawerItems.add(DrawerItem(Utils.getText(context, StringRes.newCustomers),
-        Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer", Const.typeNewCustomer));
+    drawerItems.add(DrawerItem(
+        Utils.getText(context, StringRes.newCustomers), Injector.isBusinessMode ? "new-customer" : "ic_pro_home_customer", Const.typeNewCustomer));
 
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.existingCustomers),
-          Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer", Const.typeExistingCustomer),
+      DrawerItem(Utils.getText(context, StringRes.existingCustomers), Injector.isBusinessMode ? "existing" : "ic_pro_home_exis_customer",
+          Const.typeExistingCustomer),
     );
 
     if (Utils.isFeatureOn(Const.typeAchievement))
       drawerItems.add(
-        DrawerItem(Utils.getText(context, StringRes.achievement), Injector.isBusinessMode ? "rewards" : "ic_pro_home_achievement",
-            Const.typeAchievement),
+        DrawerItem(
+            Utils.getText(context, StringRes.achievement), Injector.isBusinessMode ? "rewards" : "ic_pro_home_achievement", Const.typeAchievement),
       );
 
     if (Utils.isFeatureOn(Const.typeReward))
       drawerItems.add(
-        DrawerItem(Utils.getText(context, StringRes.rewards), Injector.isBusinessMode ? "ic_gift_drawer" : "ic_pro_home_rewards",
-            Const.typeReward),
+        DrawerItem(Utils.getText(context, StringRes.rewards), Injector.isBusinessMode ? "ic_gift_drawer" : "ic_pro_home_rewards", Const.typeReward),
       );
 
     if (Injector.isManager() && Utils.isFeatureOn(Const.typeTeam))
@@ -483,29 +470,27 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
 
     if (Utils.isFeatureOn(Const.typeChallenges))
       drawerItems.add(
-        DrawerItem(Utils.getText(context, StringRes.challenges),
-            Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges", Const.typeChallenges),
+        DrawerItem(
+            Utils.getText(context, StringRes.challenges), Injector.isBusinessMode ? "challenges" : "ic_pro_home_challenges", Const.typeChallenges),
       );
 
     if (Utils.isFeatureOn(Const.typeOrg))
       drawerItems.add(
-        DrawerItem(Utils.getText(context, StringRes.organizations),
-            Injector.isBusinessMode ? "organization" : "ic_pro_home_organization", Const.typeOrg),
+        DrawerItem(
+            Utils.getText(context, StringRes.organizations), Injector.isBusinessMode ? "organization" : "ic_pro_home_organization", Const.typeOrg),
       );
 
     if (Utils.isFeatureOn(Const.typePl))
       drawerItems.add(
-        DrawerItem(
-            Utils.getText(context, StringRes.pl), Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl", Const.typePl),
+        DrawerItem(Utils.getText(context, StringRes.pl), Injector.isBusinessMode ? "profit-loss" : "ic_pro_home_pl", Const.typePl),
       );
 
     if (Utils.isFeatureOn(Const.typeRanking))
-      drawerItems.add(DrawerItem(Utils.getText(context, StringRes.ranking),
-          Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking", Const.typeRanking));
+      drawerItems
+          .add(DrawerItem(Utils.getText(context, StringRes.ranking), Injector.isBusinessMode ? "ranking" : "ic_pro_home_ranking", Const.typeRanking));
 
     drawerItems.add(
-      DrawerItem(Utils.getText(context, StringRes.profile), Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile",
-          Const.typeProfile),
+      DrawerItem(Utils.getText(context, StringRes.profile), Injector.isBusinessMode ? "profile_icon" : "ic_pro_profile", Const.typeProfile),
     );
 
     drawerItems.add(
