@@ -9,7 +9,6 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:video_player/video_player.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 VideoPlayerController _controller;
 ChewieController _chewieController;
@@ -100,7 +99,7 @@ class MediaManager {
   }
 
   showMediaView(BuildContext context, String path, String thumbImage,
-      {var pdfDocument,
+      {PDFDocument pdfDocument,
       bool isPdfLoading = false,
       ChewieController chewieController,
       VideoPlayerController videoPlayerController,
@@ -159,6 +158,7 @@ class MediaManager {
         );
       } else if (Utils.isPdf(path)) {
         print("PATH++++++++++++++++++${path}");
+        print("PATH++++++++++++++++++${pdfDocument}");
         if (pdfDocument != null) {
           return Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -258,6 +258,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
     await doc.get(page: 1);
     if (mounted) {
       setState(() {
+        print("----------------  pdf doc :: ${doc}");
         this.document = doc;
         isPdfLoading = false;
       });
@@ -313,16 +314,13 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                                     controller: _chewieController,
                                   )
                                 : (Utils.isPdf(widget.link)
-                                    ? /*(document != null
+                                    ? (document != null
                                         ? PDFViewer(
                                             document: document,
                                             showPicker: false,
                                             zoomSteps: 4,
                                           )
-                                        : Center(child: CircularProgressIndicator()))*/
-                                    WebView(
-                                        initialUrl: widget.link,
-                                      )
+                                        : Center(child: CircularProgressIndicator()))
                                     : Container(
                                         decoration:
                                             BoxDecoration(image: DecorationImage(image: Utils.getCacheNetworkImage(widget.link), fit: BoxFit.cover)),
