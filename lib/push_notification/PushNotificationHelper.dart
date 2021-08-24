@@ -36,7 +36,9 @@ class PushNotificationHelper {
       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
     );
     var initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-    await Injector.flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
+    await Injector.flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification).catchError((e) {
+      print("Localnotification exception: " + e.message);
+    });
 
     await Injector.firebaseMessaging.requestPermission();
 

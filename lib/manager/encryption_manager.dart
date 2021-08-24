@@ -1,5 +1,4 @@
-// import 'package:cipher2/cipher2.dart';
-// import 'package:cipher2/cipher2.dart';
+import 'package:cipher2/cipher2.dart';
 import 'package:flutter/services.dart';
 
 class EncryptionManager {
@@ -10,7 +9,7 @@ class EncryptionManager {
     String encryptedString = '';
     try {
       // encrytion
-      // encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
+      encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
       // print("testEncrytion case2: success");
     } on PlatformException catch (e) {
       if (e.code == "ERROR_INVALID_KEY_OR_IV_LENGTH") {

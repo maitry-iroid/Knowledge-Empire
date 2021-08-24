@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ansicolor/ansicolor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -83,7 +84,8 @@ class WebApi {
   Future<dynamic> callAPI(String apiReq, Map<String, dynamic> jsonMap) async {
     initDio();
 
-    print(apiReq + "_" + json.encode(jsonMap));
+    print("----------------------------------- API Request --------------------------------");
+    print("API - " + apiReq + "\nBODY - " + json.encode(jsonMap) + "\n\n");
 
     if (!Injector.isInternetConnected) return;
 
@@ -91,8 +93,9 @@ class WebApi {
 
     await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).then((response) {
       if (response != null && response.statusCode == 200) {
-        print(apiReq + "==> " + response.toString());
-
+        print("---------------------------------- API response --------------------------------");
+        debugPrint("API - " + apiReq + "\nRESPONSE - " + response.toString() + "\n\n");
+        // print("------------------ //////////// -------------------");
         BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
 
         if (_response != null) {
@@ -118,7 +121,7 @@ class WebApi {
 //      Utils.showErrToast(apiReq + ": " + e.toString());
     });
 
-    debugPrint("--------------------Final Response + $apiReq :: $finalResponse");
+    // debugPrint("--------------------Final Response + $apiReq :: $finalResponse");
     return finalResponse;
   }
 
@@ -164,10 +167,10 @@ class WebApi {
     String deviceType = Injector.deviceType;
     String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
 
-    print("contentTypeHeader " + contentTypeHeader);
-    print("accessToken " + authorizationHeader);
-    print("devicetype " + deviceType);
-    print("deviceid " + deviceId);
+    // print("contentTypeHeader " + contentTypeHeader);
+    // print("accessToken " + authorizationHeader);
+    // print("devicetype " + deviceType);
+    // print("deviceid " + deviceId);
 
     var headers = {
       HttpHeaders.contentTypeHeader: contentTypeHeader,

@@ -563,29 +563,26 @@ class _LoginPageState extends State<LoginPage> {
     Injector.prefs.remove(PrefKeys.mainBaseUrl);
     await WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) async {
       CommonView.showCircularProgress(false, context);
-
+      print("riddhi====");
       if (data != null && data['baseUrl'] != null) {
         Injector.companyCode = codeController.text.trim();
         await Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
         // Navigator.pop(context);
 
-        LoginRequest loginRequest = LoginRequest();
-
         String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
-        loginRequest.email = encEmail;
-        print('--------Before Email : ${loginRequest.email}');
-        loginRequest.password = Utils.generateMd5(passwordController.text.trim());
+        String encPass = Utils.generateMd5(passwordController.text.trim());
 
-        loginRequest.secret = Utils.getSecret(encEmail, loginRequest.password);
-        print('--------After Email : ${loginRequest.email}');
-        print('--------Password : ${loginRequest.password}');
-        print('--------Secret : ${loginRequest.secret}');
-        loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
-        loginRequest.companyCode = Injector.companyCode;
+        LoginRequest loginRequest = LoginRequest(
+            email: encEmail,
+            password: encPass,
+            secret: Utils.getSecret(encEmail, encPass),
+            language: (Injector.language == StringRes.strDefault ? null : Injector.language),
+            companyCode: Injector.companyCode);
 
         Utils.hideKeyboard(context);
 
         CommonView.showCircularProgress(true, context);
+
         print(loginRequest.toJson());
         WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
           CommonView.showCircularProgress(false, context);

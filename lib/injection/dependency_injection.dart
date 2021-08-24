@@ -249,7 +249,7 @@ class Injector {
   }
 
   static setUserData(UserData _user, bool isLanguage) async {
-    print("Userdata ::: " + json.encode(_user.toJson()));
+    // print("Userdata ::: " + json.encode(_user.toJson()));
     await Injector.prefs.setString(PrefKeys.user, json.encode(_user.toJson()));
 
     userData = _user;

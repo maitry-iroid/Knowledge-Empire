@@ -38,7 +38,7 @@ dependencies:
   flutter_cache_manager:
   cached_network_image:
 #  background_fetch: ^0.5.5
-  firebase_messaging:
+  firebase_messaging: ^10.0.5
   firebase_core:
   flutter_local_notifications:
   connectivity:
@@ -65,12 +65,13 @@ dependencies:
   flutter_native_timezone:
   flutter_emoji:
   flutter_native_splash:
-#  cipher2:
+  cipher2:
   webview_flutter:
   url_encoder:
   mailto:
   advance_pdf_viewer: 2.0.0
   firebase_analytics:
+  ansicolor: ^2.0.1
 
   #  flutter_plugin_pdf_viewer: ^1.0.7
 

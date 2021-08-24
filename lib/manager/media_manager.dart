@@ -33,8 +33,8 @@ class MediaManager {
       VideoPlayerController videoPlayerController,
       int videoPlay,
       int videoLoop}) {
-    print("answer+++++++++++");
-    print(answer);
+    // print("answer+++++++++++");
+    // print(answer);
     return InkResponse(
         onTap: () {
           performImageClick(context, answer, pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop);
@@ -157,8 +157,8 @@ class MediaManager {
           ],
         );
       } else if (Utils.isPdf(path)) {
-        print("PATH++++++++++++++++++${path}");
-        print("PATH++++++++++++++++++${pdfDocument}");
+        // print("PATH++++++++++++++++++${path}");
+        // print("PATH++++++++++++++++++${pdfDocument}");
         if (pdfDocument != null) {
           return Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
