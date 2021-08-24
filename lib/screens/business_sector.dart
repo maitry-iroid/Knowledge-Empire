@@ -106,15 +106,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   @override
   void dispose() {
     _controller?.pause();
-    Injector.isSoundEnable && Injector.isBusinessMode
-        ? Injector.performAudioAction(Const.resume)
-        : Injector.performAudioAction(Const.stop);
+    Injector.isSoundEnable && Injector.isBusinessMode ? Injector.performAudioAction(Const.resume) : Injector.performAudioAction(Const.stop);
     super.dispose();
   }
 
   Future<void> showIntroDialog() async {
-    if (Injector.introData != null && Injector.introData.learningModule1 == 0)
-      await DisplayDialogs.showIntroLearningModule1(context);
+    if (Injector.introData != null && Injector.introData.learningModule1 == 0) await DisplayDialogs.showIntroLearningModule1(context);
 
     //TODO for testing, don't remove this
 //    await DisplayDialogs.showIntroPL1(context); //  PL
@@ -133,10 +130,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       if (isConnected) {
         fetchLearningModules();
       } else {
-        if (Injector.prefs.getString(PrefKeys.learningModles) != null &&
-            Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
-          arrFinalLearningModules =
-              LearningModuleResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.learningModles))).data;
+        if (Injector.prefs.getString(PrefKeys.learningModles) != null && Injector.prefs.getString(PrefKeys.learningModles).isNotEmpty) {
+          arrFinalLearningModules = LearningModuleResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.learningModles))).data;
           if (arrFinalLearningModules.length > 0) if (mounted) setState(() {});
         }
       }
@@ -178,9 +173,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
       decoration: BoxDecoration(
           color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
           borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-          image: Injector.isBusinessMode
-              ? DecorationImage(image: AssetImage(Utils.getAssetsImg("business_sec_header")), fit: BoxFit.fill)
-              : null),
+          image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("business_sec_header")), fit: BoxFit.fill) : null),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -212,8 +205,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         padding: EdgeInsets.only(top: 6, bottom: 6, left: 8),
         decoration: BoxDecoration(
             image: (selectedModule.moduleId == arrFinalLearningModules[index].moduleId)
-                ? DecorationImage(
-                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")), fit: BoxFit.fill)
+                ? DecorationImage(image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "bs_bg" : "bg_bs_prof")), fit: BoxFit.fill)
                 : null),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -272,9 +264,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 decoration: BoxDecoration(
                     color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                     borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                    image: Injector.isBusinessMode
-                        ? DecorationImage(image: AssetImage(Utils.getAssetsImg("value")), fit: BoxFit.fill)
-                        : null),
+                    image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("value")), fit: BoxFit.fill) : null),
                 child: Text(
                   arrFinalLearningModules[index].question,
                   style: TextStyle(
@@ -605,7 +595,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
           //Injector.cacheManager.emptyCache();
 
-          for (int i = 0; i < arrQuestions.length; i++) {
+          //TODO commented by riddhi
+          /*  for (int i = 0; i < arrQuestions.length; i++) {
 //            PushNotificationHelper(context).showLocalNotification(
 //                101, Utils.getText(context, StringRes.downloading));
 
@@ -641,7 +632,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 //             await BackgroundFetch.start().then((int status) async {
 //               await Injector.cacheManager.getSingleFile(arrQuestions[i].correctAnswerImage);
 //             });
-          }
+          }*/
 
           if (moduleId != null) {
 //            if (mounted)setState(() {
@@ -745,16 +736,12 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             child: Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(
-                  top: Injector.isBusinessMode ? 3 : 5,
-                  left: Utils.getDeviceWidth(context) / 9,
-                  right: Utils.getDeviceWidth(context) / 9),
+                  top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 9, right: Utils.getDeviceWidth(context) / 9),
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                   color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
                   borderRadius: BorderRadius.circular(20),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill)
-                      : null),
+                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -822,8 +809,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                     borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
                     image: Injector.isBusinessMode
                         ? DecorationImage(
-                            image: AssetImage(Utils.getAssetsImg(
-                                selectedModule.isSubscribedFromBackend == 1 ? "bg_disable_subscribe" : "bg_subscribe")),
+                            image:
+                                AssetImage(Utils.getAssetsImg(selectedModule.isSubscribedFromBackend == 1 ? "bg_disable_subscribe" : "bg_subscribe")),
                             fit: BoxFit.fill)
                         : null),
                 child: Text(
@@ -847,16 +834,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
   showContactExpertView() {
     return selectedModule.expertEmail != null && selectedModule.expertEmail != ""
-        ? CommonView.showContactExpert(
-            context,
-            Utils.getText(context, StringRes.contactExpert),
-            true,
-            selectedModule?.expertEmail ?? "Contact Expert",
-            true,
-            this.selectedModule.moduleName,
-            "",
-            false,
-            this.selectedModule.moduleId.toString())
+        ? CommonView.showContactExpert(context, Utils.getText(context, StringRes.contactExpert), true,
+            selectedModule?.expertEmail ?? "Contact Expert", true, this.selectedModule.moduleName, "", false, this.selectedModule.moduleId.toString())
         : Container();
   }
 
@@ -924,10 +903,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   showFileSize() {
     return selectedModule != null && selectedModule.fileSize != null
         ? Text(
-            Utils.getText(context, StringRes.downloadText) +
-                " " +
-                selectedModule.fileSize.toString() +
-                Utils.getText(context, StringRes.sizeInKb),
+            Utils.getText(context, StringRes.downloadText) + " " + selectedModule.fileSize.toString() + Utils.getText(context, StringRes.sizeInKb),
             style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.blue, fontSize: 17),
           )
         : Container();
