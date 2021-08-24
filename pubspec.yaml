@@ -70,6 +70,7 @@ dependencies:
   url_encoder:
   mailto:
   advance_pdf_viewer: 2.0.0
+  firebase_analytics:
 
   #  flutter_plugin_pdf_viewer: ^1.0.7
 

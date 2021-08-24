@@ -17,6 +17,7 @@ MERGED from [:wakelock] /Users/iroid/Documents/Projects/ke-employee-flutter-new/
 MERGED from [:shared_preferences] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/shared_preferences/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-46:12
 MERGED from [:webview_flutter] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/webview_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-19:12
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
 MERGED from [:fluttertoast] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:advance_pdf_viewer] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/advance_pdf_viewer/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -32,15 +33,23 @@ MERGED from [androidx.multidex:multidex:2.0.1] /Users/iroid/.gradle/caches/trans
 MERGED from [androidx.media:media:1.1.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e73f1eaafaae9164cc8e6b9328a222e7/media-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.webkit:webkit:1.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/827c4253b0d3d1312c37425c1ca5f799/webkit-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:17:1-58:12
+MERGED from [com.google.firebase:firebase-analytics:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/3b94a98995b71ef2f02a61f98bf4dd82/jetified-firebase-analytics-19.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:17:1-36:12
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:15:1-34:12
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:2:1-24:12
 MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:15:1-40:12
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:17:1-46:12
+MERGED from [com.google.android.gms:play-services-measurement-sdk:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a8ecb648515c1d3f8da5c6c3752aa6e5/jetified-play-services-measurement-sdk-19.0.0/AndroidManifest.xml:17:1-25:12
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:2:1-13:12
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:17:1-31:12
 MERGED from [com.google.android.gms:play-services-stats:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/ccb096213b2316f144e74f28718170b1/jetified-play-services-stats-17.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/d68d3b4a010f7ced000cc63fa2a9778a/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-installations-interop:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/69824633d3bd278a8002fa43c62c2791/jetified-firebase-installations-interop-17.0.0/AndroidManifest.xml:15:1-23:12
 MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/88059be9ebcb88774940ba5bdd2cc036/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/6c730579034a17512b25dfcbdcf08f6e/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.gms:play-services-ads-identifier:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/109ade43c9fb5852b2621e76a4acf522/jetified-play-services-ads-identifier-17.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.android.gms:play-services-measurement-base:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a44bce4b27ecd316b9dbe4edd5ab1b9e/jetified-play-services-measurement-base-19.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/0ec345dc0f82d192476ae13ccaef75f2/jetified-play-services-basement-17.0.0/AndroidManifest.xml:17:1-28:12
 MERGED from [androidx.fragment:fragment:1.1.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a0489aae6ca691b5067ca0d0b2e7fa2f/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/118e115ab25deac5a17e7e2cb280355e/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -100,10 +109,20 @@ MERGED from /Users/iroid/Documents/Projects/ke-employee-flutter-new/android/app/
 MERGED from /Users/iroid/Documents/Projects/ke-employee-flutter-new/android/app/src/main/AndroidManifest.xml:12:5-66
 MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-67
 MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-67
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-67
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-67
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:22:5-67
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:22:5-67
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:11:5-67
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:11:5-67
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:8:5-67
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:23:5-67
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/511de4202c37573f6ab73b3611c37e27/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:26:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/511de4202c37573f6ab73b3611c37e27/jetified-transport-backend-cct-3.0.0/AndroidManifest.xml:26:5-67
 	android:name
@@ -124,18 +143,30 @@ MERGED from [:flutter_local_notifications] /Users/iroid/Documents/Projects/ke-em
 MERGED from [:flutter_local_notifications] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-21:19
 MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-44:19
 MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-44:19
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-17:19
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-17:19
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:url_launcher] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
 MERGED from [:url_launcher] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/url_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:27:5-56:19
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:27:5-56:19
+MERGED from [com.google.firebase:firebase-analytics:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/3b94a98995b71ef2f02a61f98bf4dd82/jetified-firebase-analytics-19.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.firebase:firebase-analytics:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/3b94a98995b71ef2f02a61f98bf4dd82/jetified-firebase-analytics-19.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:26:5-34:19
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:26:5-34:19
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:24:5-32:19
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:24:5-32:19
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:14:5-22:19
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:14:5-22:19
 MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:25:5-38:19
 MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:25:5-38:19
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:28:5-44:19
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:28:5-44:19
+MERGED from [com.google.android.gms:play-services-measurement-sdk:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a8ecb648515c1d3f8da5c6c3752aa6e5/jetified-play-services-measurement-sdk-19.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-measurement-sdk:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a8ecb648515c1d3f8da5c6c3752aa6e5/jetified-play-services-measurement-sdk-19.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:28:5-29:19
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:28:5-29:19
 MERGED from [com.google.android.gms:play-services-stats:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/ccb096213b2316f144e74f28718170b1/jetified-play-services-stats-17.0.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-stats:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/ccb096213b2316f144e74f28718170b1/jetified-play-services-stats-17.0.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/d68d3b4a010f7ced000cc63fa2a9778a/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:7:5-8:19
@@ -144,6 +175,10 @@ MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/iroid/.gr
 MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/88059be9ebcb88774940ba5bdd2cc036/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/6c730579034a17512b25dfcbdcf08f6e/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:22:5-23:19
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/6c730579034a17512b25dfcbdcf08f6e/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-ads-identifier:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/109ade43c9fb5852b2621e76a4acf522/jetified-play-services-ads-identifier-17.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-ads-identifier:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/109ade43c9fb5852b2621e76a4acf522/jetified-play-services-ads-identifier-17.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a44bce4b27ecd316b9dbe4edd5ab1b9e/jetified-play-services-measurement-base-19.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a44bce4b27ecd316b9dbe4edd5ab1b9e/jetified-play-services-measurement-base-19.0.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/0ec345dc0f82d192476ae13ccaef75f2/jetified-play-services-basement-17.0.0/AndroidManifest.xml:22:5-26:19
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/0ec345dc0f82d192476ae13ccaef75f2/jetified-play-services-basement-17.0.0/AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.core:core:1.3.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dff7ab6107da566298237dae3dba4d10/core-1.3.0/AndroidManifest.xml:24:5-89
@@ -242,6 +277,8 @@ MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-fl
 MERGED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:webview_flutter] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/webview_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:webview_flutter] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/webview_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/fluttertoast/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
@@ -272,14 +309,24 @@ MERGED from [androidx.webkit:webkit:1.0.0] /Users/iroid/.gradle/caches/transform
 MERGED from [androidx.webkit:webkit:1.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/827c4253b0d3d1312c37425c1ca5f799/webkit-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-analytics:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/3b94a98995b71ef2f02a61f98bf4dd82/jetified-firebase-analytics-19.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-analytics:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/3b94a98995b71ef2f02a61f98bf4dd82/jetified-firebase-analytics-19.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:6:5-8:41
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:6:5-8:41
 MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a8ecb648515c1d3f8da5c6c3752aa6e5/jetified-play-services-measurement-sdk-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a8ecb648515c1d3f8da5c6c3752aa6e5/jetified-play-services-measurement-sdk-19.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-stats:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/ccb096213b2316f144e74f28718170b1/jetified-play-services-stats-17.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-stats:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/ccb096213b2316f144e74f28718170b1/jetified-play-services-stats-17.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/d68d3b4a010f7ced000cc63fa2a9778a/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:5:5-44
@@ -290,6 +337,12 @@ MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/iroid/.gr
 MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/88059be9ebcb88774940ba5bdd2cc036/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/6c730579034a17512b25dfcbdcf08f6e/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/6c730579034a17512b25dfcbdcf08f6e/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/109ade43c9fb5852b2621e76a4acf522/jetified-play-services-ads-identifier-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/109ade43c9fb5852b2621e76a4acf522/jetified-play-services-ads-identifier-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a44bce4b27ecd316b9dbe4edd5ab1b9e/jetified-play-services-measurement-base-19.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a44bce4b27ecd316b9dbe4edd5ab1b9e/jetified-play-services-measurement-base-19.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/0ec345dc0f82d192476ae13ccaef75f2/jetified-play-services-basement-17.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/0ec345dc0f82d192476ae13ccaef75f2/jetified-play-services-basement-17.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.fragment:fragment:1.1.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a0489aae6ca691b5067ca0d0b2e7fa2f/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -422,22 +475,42 @@ ADDED from [:flutter_local_notifications] /Users/iroid/Documents/Projects/ke-emp
 		ADDED from [:flutter_local_notifications] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:18:25-79
 uses-permission#android.permission.WAKE_LOCK
 ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-68
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-68
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-68
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:23:5-68
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:23:5-68
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:24:5-68
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:24:5-68
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:25:5-68
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:9:5-68
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:9:5-68
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:25:5-68
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:25:5-68
 	android:name
 		ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-65
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-79
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
 MERGED from [:connectivity] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
 MERGED from [:connectivity] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:22:5-79
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:22:5-79
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:23:5-79
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:10:5-79
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:7:5-79
 MERGED from [com.google.android.gms:play-services-cloud-messaging:16.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/b73379bf094423a32aa92f6918fbb332/jetified-play-services-cloud-messaging-16.0.0/AndroidManifest.xml:7:5-79
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-measurement-sdk-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/e4f7a5dc831dc0d3ff8ddbd10f4cc184/jetified-play-services-measurement-sdk-api-19.0.0/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/iroid/.gradle/caches/transforms-2/files-2.1/36d302a3a34ec528de515be28c60323a/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.14.1] /Users/iroid/.gradle/caches/transforms-2/files-2.1/36d302a3a34ec528de515be28c60323a/jetified-exoplayer-core-2.14.1/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.exoplayer:exoplayer-common:2.14.1] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2649a4111675cc9f9e5f82d61e07f1c5/jetified-exoplayer-common-2.14.1/AndroidManifest.xml:24:5-79
@@ -484,10 +557,14 @@ ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flu
 		ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:29:25-78
 service#com.google.firebase.components.ComponentDiscoveryService
 ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:33:9-37:19
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-16:19
+MERGED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-16:19
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
 MERGED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:49:9-55:19
 MERGED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:49:9-55:19
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:27:9-33:19
+MERGED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:27:9-33:19
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:25:9-31:19
 MERGED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:25:9-31:19
 MERGED from [com.google.firebase:firebase-installations:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/c06fbfa24257c70c94541aa8db636a98/jetified-firebase-installations-17.0.0/AndroidManifest.xml:15:9-21:19
@@ -518,6 +595,12 @@ ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flu
 		ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:43:13-35
 	android:name
 		ADDED from [:firebase_messaging] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:40:13-102
+meta-data#com.google.firebase.components:io.flutter.plugins.firebaseanalytics.FlutterFirebaseAppRegistrar
+ADDED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-15:85
+	android:value
+		ADDED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-82
+	android:name
+		ADDED from [:firebase_analytics] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_analytics/intermediates/library_manifest/debug/AndroidManifest.xml:14:17-127
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar
 ADDED from [:firebase_core] /Users/iroid/Documents/Projects/ke-employee-flutter-new/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
 	android:value
@@ -560,6 +643,12 @@ ADDED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/
 		ADDED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:54:17-82
 	android:name
 		ADDED from [com.google.firebase:firebase-messaging:22.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/a3174804bce96acc204500589676e879/jetified-firebase-messaging-22.0.0/AndroidManifest.xml:53:17-119
+meta-data#com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar
+ADDED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:30:13-32:85
+	android:value
+		ADDED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:32:17-82
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement-api:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/cae57886795a42da27c3d3fb8e994de8/jetified-play-services-measurement-api-19.0.0/AndroidManifest.xml:31:17-139
 meta-data#com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar
 ADDED from [com.google.firebase:firebase-datatransport:18.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/dcf94273fc7775d4f9b3c8a25ca6df28/jetified-firebase-datatransport-18.0.0/AndroidManifest.xml:28:13-30:85
 	android:value
@@ -584,6 +673,38 @@ ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/cac
 		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:31:13-36
 	android:name
 		ADDED from [com.google.firebase:firebase-common:20.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/4303f81154cde13901efa2a4e1548246/jetified-firebase-common-20.0.0/AndroidManifest.xml:27:13-77
+uses-permission#com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:26:5-110
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:26:5-110
+MERGED from [com.google.android.gms:play-services-measurement-impl:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/43f6ce8505b2e3f388fe46edafb3319f/jetified-play-services-measurement-impl-19.0.0/AndroidManifest.xml:26:5-110
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:26:22-107
+receiver#com.google.android.gms.measurement.AppMeasurementReceiver
+ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:29:9-33:20
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:31:13-35
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:32:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:30:13-85
+service#com.google.android.gms.measurement.AppMeasurementService
+ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:35:9-38:40
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:38:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:36:13-84
+service#com.google.android.gms.measurement.AppMeasurementJobService
+ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:39:9-43:72
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:41:13-35
+	android:exported
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:42:13-37
+	android:permission
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:43:13-69
+	android:name
+		ADDED from [com.google.android.gms:play-services-measurement:19.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/2daaf327a58928167189d0d6fe0096e0/jetified-play-services-measurement-19.0.0/AndroidManifest.xml:40:13-87
 meta-data#com.google.android.gms.version
 ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/iroid/.gradle/caches/transforms-2/files-2.1/0ec345dc0f82d192476ae13ccaef75f2/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
 	android:value

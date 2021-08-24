@@ -111,9 +111,6 @@ class DashboardProfPageState extends State<DashboardProfPage> {
   }
 
   showMainItem(String type) {
-    print("=======type====$type");
-    print("=======Utils.showUnreadCount(type, 2, 2)====${Utils.getCount(type).toString()}");
-    print("=======Utils.isShowUnreadCount(type)====${Utils.isShowUnreadCount(type)}");
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
