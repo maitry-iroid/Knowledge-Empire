@@ -45,7 +45,8 @@ dimen subtitle_outline_width
 dimen subtitle_shadow_offset
 dimen subtitle_shadow_radius
 drawable corner
-drawable ic_launcher
+drawable ic_launcher_background
+drawable ic_launcher_foreground
 drawable launch_background
 drawable notification_action_background
 drawable notification_bg
@@ -153,6 +154,7 @@ layout notification_template_part_chronometer
 layout notification_template_part_time
 layout toast_custom
 mipmap ic_launcher
+mipmap ic_launcher_round
 string app_name
 string common_google_play_services_unknown_issue
 string default_web_client_id
