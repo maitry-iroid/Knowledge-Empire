@@ -11,9 +11,9 @@ final getQuestionsBloc = GetQuestionsBloc();
 class GetQuestionsBloc {
   Repository _repository = Repository();
 
-  final _getQuestionSubject = PublishSubject<List<QuestionData>>();
+  final getQuestionSubject = PublishSubject<List<QuestionData>>();
 
-  Stream<List<QuestionData>> get getQuestions => _getQuestionSubject.stream;
+  Stream<List<QuestionData>> get getQuestions => getQuestionSubject.stream;
 
   Future<List<QuestionData>> getQuestion(QuestionRequest rq) async {
     bool isInternetConnected = await Utils.isInternetConnected();
@@ -34,10 +34,10 @@ class GetQuestionsBloc {
         }
       }
 
-      _getQuestionSubject.sink.add(arrQuestions);
+      getQuestionSubject.sink.add(arrQuestions);
     } else {
       arrQuestions = Utils.getQuestionsLocally(Const.getExistingQueType);
-      _getQuestionSubject.sink.add(arrQuestions);
+      getQuestionSubject.sink.add(arrQuestions);
       print(arrQuestions);
     }
     print("=========");
@@ -46,10 +46,10 @@ class GetQuestionsBloc {
   }
 
   updateQuestions(List<QuestionData> arrQuestions) {
-    _getQuestionSubject.sink.add(arrQuestions);
+    getQuestionSubject.sink.add(arrQuestions);
   }
 
   dispose() {
-    _getQuestionSubject.close();
+    getQuestionSubject.close();
   }
 }

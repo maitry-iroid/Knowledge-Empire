@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ import 'package:pie_chart/pie_chart.dart';
 import '../commonview/common_view.dart';
 import '../helper/Utils.dart';
 import '../helper/string_res.dart';
-
 import 'graph.dart';
 
 class PLPage extends StatefulWidget {
@@ -631,10 +631,11 @@ class _PLPageState extends State<PLPage> {
         ),
       ),
       Expanded(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: <Widget>[
+              Container(
                 child: Center(
                     child: (type == Const.typeCost ? dataMap : openCloseMap) != null
                         ? PieChart(
@@ -642,22 +643,20 @@ class _PLPageState extends State<PLPage> {
                             animationDuration: Duration(milliseconds: 800),
                             chartLegendSpacing: 32.0,
                             chartRadius: MediaQuery.of(context).size.width / 5,
-                      colorList: type == Const.typeCost ? colorList : colorOpenCloseList,
-                      // showChartValues: false,
-                      // showChartValuesOutside: false,
-                      // chartValueBackgroundColor: Colors.transparent,
-                      //       legendPosition: LegendPosition.right,
-                      //       showChartValueLabel: false,
-                      //       initialAngle: 0,
-                      //       chartValueStyle: defaultChartValueStyle.copyWith(color: type == Const.typeCost ? ColorRes.white : Colors.transparent),
-                      //       showLegends: false,
+                            colorList: type == Const.typeCost ? colorList : colorOpenCloseList,
+                            // showChartValues: false,
+                            // showChartValuesOutside: false,
+                            // chartValueBackgroundColor: Colors.transparent,
+                            //       legendPosition: LegendPosition.right,
+                            //       showChartValueLabel: false,
+                            //       initialAngle: 0,
+                            //       chartValueStyle: defaultChartValueStyle.copyWith(color: type == Const.typeCost ? ColorRes.white : Colors.transparent),
+                            //       showLegends: false,
                             chartType: ChartType.disc,
                           )
                         : Container()),
               ),
-            ),
-            Expanded(
-              child: Container(
+              Container(
                 width: 80,
                 margin: EdgeInsets.only(left: 00),
                 child: ListView.builder(
@@ -681,10 +680,10 @@ class _PLPageState extends State<PLPage> {
                         ],
                       );
                     }),
-              ),
-            )
+              )
 //                  : Container()
-          ],
+            ],
+          ),
         ),
       )
     ]);

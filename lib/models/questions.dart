@@ -1,4 +1,3 @@
-import 'package:ke_employee/BLoC/challenge_question_bloc.dart';
 import 'package:ke_employee/commonview/challenge_header.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 
@@ -91,42 +90,46 @@ class QuestionData {
   int answerType;
   String expertEmail;
   String additionalInfoLink;
-
+  int targetLevel;
+  int currentRetention;
   var winningAmount;
 
-  QuestionData(
-      {this.questionId,
-      this.challengeId,
-      this.title,
-      this.firstName,
-      this.lastName,
-      this.profileImage,
-      this.question,
-      this.moduleName,
-      this.moduleId,
-      this.companyId,
-      this.daysInList,
-      this.counter,
-      this.description,
-      this.correctAnswerId,
-      this.loyalty,
-      this.value,
-      this.mediaLink,
-      this.mediaThumbImage,
-      this.answer,
-      this.correctAnswerImage,
-      this.inCorrectAnswerImage,
-      this.videoPlay,
-      this.videoLoop,
-      this.winningAmount,
-      this.isAnsweredCorrect,
-      this.questionCurrentIndex,
-      this.totalQuestion,
-      this.isFirstQuestion,
-      this.attemptTime,
-      this.answerType,
-      this.expertEmail,
-      this.additionalInfoLink});
+  QuestionData({
+    this.questionId,
+    this.challengeId,
+    this.title,
+    this.firstName,
+    this.lastName,
+    this.profileImage,
+    this.question,
+    this.moduleName,
+    this.moduleId,
+    this.companyId,
+    this.daysInList,
+    this.counter,
+    this.description,
+    this.correctAnswerId,
+    this.loyalty,
+    this.value,
+    this.mediaLink,
+    this.mediaThumbImage,
+    this.answer,
+    this.correctAnswerImage,
+    this.inCorrectAnswerImage,
+    this.videoPlay,
+    this.videoLoop,
+    this.winningAmount,
+    this.isAnsweredCorrect,
+    this.questionCurrentIndex,
+    this.totalQuestion,
+    this.isFirstQuestion,
+    this.attemptTime,
+    this.answerType,
+    this.expertEmail,
+    this.additionalInfoLink,
+    this.targetLevel,
+    this.currentRetention,
+  });
 
   QuestionData.fromJson(Map<String, dynamic> json) {
     questionId = json['questionId'];
@@ -174,6 +177,8 @@ class QuestionData {
     isFirstQuestion = json['isFirstQuestion'];
     expertEmail = json['expertEmail'];
     additionalInfoLink = json['additionalInfoLink'];
+    targetLevel = json['targetLevel'];
+    currentRetention = json['currentRetention'];
   }
 
   Map<String, dynamic> toJson() {
@@ -211,6 +216,8 @@ class QuestionData {
     data['isFirstQuestion'] = this.isFirstQuestion;
     data['expertEmail'] = this.expertEmail;
     data['additionalInfoLink'] = this.additionalInfoLink;
+    data['targetLevel'] = this.targetLevel;
+    data['currentRetention'] = this.currentRetention;
     return data;
   }
 }
