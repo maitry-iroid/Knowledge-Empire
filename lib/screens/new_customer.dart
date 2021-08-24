@@ -26,6 +26,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
   int loyaltyBonus = 0;
   int resourceBonus = 0;
   int valueBonus = 0;
+  bool isAscSelected = false;
+  bool isDescSelected = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -58,7 +60,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    CommonView.showTitle(context, StringRes.newCustomers),
+                    showTitle(context, StringRes.newCustomers),
 //                    showValueText("value bonus : " +
 //                        Injector.customerValueData.valueBonus.toString()),
 //                    showValueText("loyalty bonus : " +
@@ -119,7 +121,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: AutoSizeText(
               Utils.getText(context, StringRes.sector),
               style: TextStyle(color: Colors.white, fontSize: 18),
@@ -130,9 +132,9 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: AutoSizeText(
-              Utils.getText(context, StringRes.value),
+              Utils.getText(context, "Level"),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               overflow: TextOverflow.fade,
@@ -140,17 +142,39 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               minFontSize: 4,
             ),
           ),
-          // Expanded(
-          //   flex: 3,
-          //   child: AutoSizeText(
-          //     Utils.getText(context, StringRes.loyalty),
-          //     style: TextStyle(color: Colors.white, fontSize: 18),
-          //     textAlign: TextAlign.center,
-          //     overflow: TextOverflow.fade,
-          //     maxLines: 1,
-          //     minFontSize: 4,
-          //   ),
-          // ),
+          Expanded(
+            flex: 4,
+            child: AutoSizeText(
+              Utils.getText(context, "Retention"),
+              style: TextStyle(color: Colors.white, fontSize: 18),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              minFontSize: 4,
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: AutoSizeText(
+              Utils.getText(context, "DaysInLimit"),
+              style: TextStyle(color: Colors.white, fontSize: 18),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              minFontSize: 4,
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: AutoSizeText(
+              Utils.getText(context, StringRes.points),
+              style: TextStyle(color: Colors.white, fontSize: 18),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              minFontSize: 4,
+            ),
+          ),
           Utils.isFeatureOn(Const.typeOrg)
               ? Expanded(
                   flex: 3,
@@ -162,15 +186,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                   ),
                 )
               : Container(),
-          Expanded(
-            flex: 3,
-            child: AutoSizeText(
-              Utils.getText(context, StringRes.engage),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-            ),
-          ),
         ],
       ),
     );
@@ -220,8 +235,8 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           child: AutoSizeText(
                             arrQuestions[index].title,
                             maxLines: 1,
-                            overflow: TextOverflow.fade,
-                            minFontSize: 4,
+                            overflow: TextOverflow.ellipsis,
+                            minFontSize: 8,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: ColorRes.textRecordBlue,
@@ -230,7 +245,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           ),
                         ),
                         Expanded(
-                          flex: 5,
+                          flex: 4,
                           child: AutoSizeText(
                             arrQuestions[index].moduleName,
                             maxLines: 1,
@@ -242,17 +257,39 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         ),
                         Expanded(
                           flex: 3,
+                          child: AutoSizeText(
+                            arrQuestions[index].targetLevel.toString(),
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            minFontSize: 4,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 4,
+                          child: AutoSizeText(
+                            arrQuestions[index].currentRetention.toString(),
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            minFontSize: 4,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            ("${arrQuestions[index].daysInList.toString()}"),
+                            style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 4,
                           child: kePoint(index),
                         ),
-                        // Expanded(
-                        //   flex: 3,
-                        //   child: Text(
-                        //     ("${arrQuestions[index].loyalty.toString()} d"),
-                        //     style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
-                        //     textAlign: TextAlign.center,
-                        //     maxLines: 1,
-                        //   ),
-                        // ),
                         Utils.isFeatureOn(Const.typeOrg)
                             ? Expanded(
                                 flex: 3,
@@ -267,21 +304,138 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       ],
                     )),
               ),
-              Container(
-                  height: Injector.isBusinessMode ? 35 : 28,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(left: 10, right: 2),
-                  padding: EdgeInsets.only(left: 15, right: 15),
-                  decoration: BoxDecoration(
-                      color: Injector.isBusinessMode ? null : ColorRes.headerBlue,
-                      borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                      image:
-                          Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_engage_now")), fit: BoxFit.fill) : null),
-                  child: Text(
-                    Utils.getText(_scaffoldKey.currentContext, StringRes.engageNow),
-                    style: TextStyle(color: ColorRes.white, fontSize: 16),
-                  )),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  showTitle(BuildContext context, String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          InkResponse(
+            child: Image(
+              image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "back" : 'back_prof')),
+              width: 30,
+            ),
+            onTap: () {
+              Utils.playClickSound();
+              Utils.performBack(context);
+            },
+          ),
+          Spacer(),
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+                color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                image: Injector.isBusinessMode
+                    ? DecorationImage(
+                        image: AssetImage(
+                          Utils.getAssetsImg("bg_blue"),
+                        ),
+                        fit: BoxFit.fill)
+                    : null),
+            child: Text(
+              Utils.getText(context, Utils.getText(context, title)),
+              style: TextStyle(
+                color: ColorRes.white,
+                fontSize: DimenRes.titleTextSize,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Spacer(),
+          InkWell(
+            onTap: () async {
+              if (isDescSelected) {
+                isDescSelected = false;
+              }
+              isAscSelected = !isAscSelected;
+              if (isAscSelected) {
+                arrQuestions.sort((a, b) => (a.daysInList).compareTo(b.daysInList));
+                getQuestionsBloc.getQuestionSubject.sink.add(arrQuestions);
+              } else {
+                QuestionRequest rq = QuestionRequest();
+                rq.userId = Injector.userData.userId;
+                rq.type = Const.getNewQueType;
+                await getQuestionsBloc.getQuestion(rq);
+              }
+              setState(() {});
+            },
+            child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+                  color: Injector.isBusinessMode ? null : (isAscSelected ? ColorRes.titleBlueProf : ColorRes.lightGrey),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(
+                            Utils.getAssetsImg("bg_blue"),
+                          ),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                "Asc",
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: DimenRes.titleTextSize,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () async {
+              if (isAscSelected) {
+                isAscSelected = false;
+              }
+              isDescSelected = !isDescSelected;
+              if (isDescSelected) {
+                arrQuestions.sort((a, b) => (b.daysInList).compareTo(a.daysInList));
+                getQuestionsBloc.getQuestionSubject.sink.add(arrQuestions);
+              } else {
+                QuestionRequest rq = QuestionRequest();
+                rq.userId = Injector.userData.userId;
+                rq.type = Const.getNewQueType;
+                await getQuestionsBloc.getQuestion(rq);
+              }
+              setState(() {});
+            },
+            child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+                  color: Injector.isBusinessMode ? null : (isDescSelected ? ColorRes.titleBlueProf : ColorRes.lightGrey),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(
+                            Utils.getAssetsImg("bg_blue"),
+                          ),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                "Desc",
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: DimenRes.titleTextSize,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
         ],
       ),
@@ -341,7 +495,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
 
   showData(List<QuestionData> data) {
     arrQuestions = data;
-
     return ListView.builder(
       itemCount: arrQuestions.length,
       itemBuilder: (BuildContext context, int index) {
