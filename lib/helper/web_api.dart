@@ -9,6 +9,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:pretty_json/pretty_json.dart';
 import 'constant.dart';
 
 class WebApi {
@@ -84,8 +85,8 @@ class WebApi {
   Future<dynamic> callAPI(String apiReq, Map<String, dynamic> jsonMap) async {
     initDio();
 
-    print("----------------------------------- API Request --------------------------------");
-    print("API - " + apiReq + "\nBODY - " + json.encode(jsonMap) + "\n\n");
+    print("----------------------------------- API request > " + apiReq + " --------------------------------");
+    print("BODY - " + json.encode(jsonMap) + "\n\n");
 
     if (!Injector.isInternetConnected) return;
 
@@ -93,10 +94,9 @@ class WebApi {
 
     await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).then((response) {
       if (response != null && response.statusCode == 200) {
-        print("---------------------------------- API response --------------------------------");
-        debugPrint("API - " + apiReq + "\nRESPONSE - " + response.toString() + "\n\n");
-        // print("------------------ //////////// -------------------");
+        print("---------------------------------- API response > " + apiReq + "--------------------------------");
         BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
+        print(prettyJson(_response.toJson(), indent: 2));
 
         if (_response != null) {
           if (_response.flag == "true") {
@@ -187,7 +187,7 @@ class WebApi {
         receiveTimeout: 3000,
         headers: headers);
 
-    print("finalbaseUrl :  " + options.baseUrl);
+    // print("finalbaseUrl :  " + options.baseUrl);
     dio.options = options;
     return dio;
   }

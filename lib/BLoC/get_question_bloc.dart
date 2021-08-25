@@ -17,13 +17,11 @@ class GetQuestionsBloc {
 
   Future<List<QuestionData>> getQuestion(QuestionRequest rq) async {
     bool isInternetConnected = await Utils.isInternetConnected();
-    List<QuestionData> arrQuestions = List();
+    List<QuestionData> arrQuestions = [];
     if (isInternetConnected) {
       var data = await Injector.webApi.callAPI(WebApi.rqGetQuestions_v2, rq.toJson());
       if (data != null) {
-        data.forEach((v) {
-          arrQuestions.add(QuestionData.fromJson(v));
-        });
+        arrQuestions = (data as List).map((i) => QuestionData.fromJson(i)).toList();
 
         if (rq.type == Const.getNewQueType) {
           for (int i = 0; i < arrQuestions.length; i++) {
