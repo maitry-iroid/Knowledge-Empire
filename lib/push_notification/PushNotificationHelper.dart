@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -55,22 +56,44 @@ class PushNotificationHelper {
   }
 
   void firebaseCloudMessagingListeners() async {
-    // Injector.firebaseMessaging.configure(
-    //   onMessage: (Map<String, dynamic> message) async {
-    //     print('on message $message');
-    //     showNotification(message);
-    //   },
-    //   onResume: (Map<String, dynamic> message) async {
-    //     // Trigger on notification tap when app is in background.
-    //     print('on resume $message');
-    //     Utils.showSuccessToast("Trigger on notification tap when app is in background.");
-    //   },
-    //   onLaunch: (Map<String, dynamic> message) async {
-    //     // Trigger on notification tap when app is terminated.
-    //     print('on launch $message');
-    //     Utils.showSuccessToast("Trigger on notification tap when app is terminated.");
-    //   },
-    // );
+    Injector.firebaseMessaging.getInitialMessage().then((RemoteMessage message) {
+      print("=====  getInitialMessage  ===========");
+      print(message);
+      RemoteNotification notification = message?.notification;
+      // AndroidNotification android = message.notification?.android;
+      if (message?.data != null) {
+        showNotification(message);
+        // Utils.goNextFromNotification(int.parse(message?.data["type"]), false,
+        //     "firebaseMessaging.getInitialMessage().then", context);
+      }
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("===== onMessage ========");
+      print("notification===");
+      print(message.notification?.title);
+      print(message.notification?.body);
+      print("data===");
+      print(message.data);
+      showNotification(message);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("===== onMessageOpenedApp ========");
+      print("===== onMessage ========");
+      print("notification===");
+      print(message.notification);
+      print("data===");
+      print(message.data);
+      RemoteNotification notification = message.notification;
+      // AndroidNotification android = message.notification?.android;
+      print(message.data["senderId"]);
+      showNotification(message);
+      // if (message.data != null) {
+      //   showNotification(notification, message.data["senderId"]);
+      //   Utils.goNextFromNotification(int.parse(message.data["type"]), true,
+      //       "FirebaseMessaging.onMessageOpenedApp.", context);
+      // }
+    });
   }
 
   Future<void> onDidReceiveLocalNotification(int id, String title, String body, String payload) async {
@@ -120,69 +143,40 @@ class PushNotificationHelper {
     });
   }
 
-  Future<void> showNotification(Map<String, dynamic> message) async {
-    Injector.notificationID++;
+  showLocalNotification(int id, String title, String body) async {
+    print("riddhi====");
 
-    String title = "";
-    String body = "";
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
+
+    //TODO keep in MIND , add config in AppDelegate.swift to get push in foreground
+    const iOSPlatformChannelSpecifics = const IOSNotificationDetails(badgeNumber: 1, presentAlert: true);
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+    await Injector.flutterLocalNotificationsPlugin
+        .show(id ?? 1, title, body, platformChannelSpecifics)
+        .then((value) => print("done==="))
+        .catchError((e) {
+      print("exception====");
+      print(e);
+    });
+  }
+
+  Future<void> showNotification(RemoteMessage message) async {
+    Injector.notificationID++;
 
     print(message);
 
-    // String fname = "";
-    // String lname = "";
-
     Utils.addBadge();
 
-    try {
-      if (Platform.isIOS) {
-        title = message['aps']['alert']['title'];
-        body = message['aps']['alert']['body'];
-
-        // fname = message['gcm.notification.firstName'];
-        // lname = message['gcm.notification.lastName'];
-
-      } else if (Platform.isAndroid) {
-        title = message['notification']['title'];
-        body = message['notification']['body'];
-
-        // fname = message['data']['firstName'];
-        // lname = message['data']['lastName'];
-
-      }
-
-      // print("::::::::: Original body :::::::: ${body}\n::::::::::::");
-
-      // if (fname != null) {
-      //   String decrptyedFName = await EncryptionManager().stringDecryption(fname);
-      //   body = body.replaceAll(fname, decrptyedFName);
-      // }
-      //
-      // if (lname != null) {
-      //   String decrptyedLName = await EncryptionManager().stringDecryption(lname);
-      //   body = body.replaceAll(lname, decrptyedLName);
-      // }
-
-      // print("::::::::: Decrypted body :::::::: ${body}\n::::::::::::");
-
-      showLocalNotification(Injector.notificationID, body);
-
-//      title = message['title'];
-//      body = message['body'];
-    } catch (e) {
-      print(e);
-    }
+    showLocalNotification(Injector.notificationID, message.notification?.title, message?.notification?.body);
 
     PushModel pushModel;
-    if (Injector.deviceType == "android") {
-      if (message['data'] != null) {
-        mPushModel = new PushModel.fromJson(message['data']);
-      }
-    } else {
-      if (message != null) {
-        mPushModel = new PushModel.fromJson(message);
-      }
+    if (message.data != null) {
+      mPushModel = new PushModel.fromJson(message.data);
     }
-
     String btnText = "";
     if (mPushModel.notificationType == Const.pushTypeChallenge.toString() && Utils.isFeatureOn(Const.typeChallenges)) {
       Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
@@ -217,15 +211,7 @@ class PushNotificationHelper {
 
       CommonView().collectorDialog(context, mPushModel, btnText);
     } else {
-      showLocalNotification(Injector.notificationID, body);
+      showLocalNotification(Injector.notificationID, message.notification?.title, message.notification?.body);
     }
-  }
-
-  showLocalNotification(int id, String body) async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails('your channel id', 'your channel name', 'your channel description',
-        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
-    await Injector.flutterLocalNotificationsPlugin.show(id, body, body, platformChannelSpecifics, payload: 'item x');
   }
 }
