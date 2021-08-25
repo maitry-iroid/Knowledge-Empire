@@ -125,3 +125,10 @@ class Const {
   static var pause = "pause";
   static var stop = "stop";
 }
+
+class CertificationCriteriaType {
+  static String none = "None";
+  static String level = "Level";
+  static String retention = "Retention";
+  static String both = "Both";
+}
