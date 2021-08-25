@@ -269,7 +269,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                         Expanded(
                           flex: 4,
                           child: AutoSizeText(
-                            arrQuestions[index].currentRetention.toString(),
+                            arrQuestions[index].currentRetention.toString() + " %",
                             maxLines: 1,
                             overflow: TextOverflow.fade,
                             minFontSize: 4,

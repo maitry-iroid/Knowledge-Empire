@@ -69,8 +69,7 @@ class Utils {
       preferredSize: Size.fromHeight(44.0), // here the desired height
       child: AppBar(
         backgroundColor: ThemeManager().getHeaderColor(),
-        title: Text(item == BottomItems.profileAndSettings ? item.title : "",
-            style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 17)),
+        title: Text(item == BottomItems.profileAndSettings ? item.title : "", style: TextStyle(color: ThemeManager().getTextColor(), fontSize: 17)),
         leading: IconButton(
             icon: Icon(Icons.menu, size: 24, color: ThemeManager().getTextColor()),
             onPressed: () {
@@ -204,29 +203,17 @@ class Utils {
 
   static showToast(String message) {
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.black87,
-        textColor: Colors.white);
+        msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.black87, textColor: Colors.white);
   }
 
   static showErrToast(String message) {
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white);
+        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.redAccent, textColor: Colors.white);
   }
 
   static showSuccessToast(String message) {
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
-        textColor: Colors.white);
+        msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.green, textColor: Colors.white);
   }
 
   static Future<String> initPlatformState() async {
@@ -383,8 +370,7 @@ class Utils {
   }
 
   static showNickNameDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile) async {
-    await showDialog(
-        context: _scaffoldKey.currentContext, builder: (BuildContext context) => NickNameDialog(isFromProfile: isFromProfile));
+    await showDialog(context: _scaffoldKey.currentContext, builder: (BuildContext context) => NickNameDialog(isFromProfile: isFromProfile));
   }
 
   static showPrivacyPolicyDialog(
@@ -412,8 +398,8 @@ class Utils {
   static showChangePasswordDialog(GlobalKey<ScaffoldState> _scaffoldKey, bool isFromProfile, bool isOldPasswordRequired) async {
     await showDialog(
         context: _scaffoldKey.currentContext,
-        builder: (BuildContext context) => ChangePasswordDialog(
-            scaffoldKey: _scaffoldKey, isFromProfile: isFromProfile, isOldPasswordRequired: isOldPasswordRequired));
+        builder: (BuildContext context) =>
+            ChangePasswordDialog(scaffoldKey: _scaffoldKey, isFromProfile: isFromProfile, isOldPasswordRequired: isOldPasswordRequired));
   }
 
   static Future showVerifyCompanyDialog(GlobalKey<ScaffoldState> _scaffoldKey) async {
@@ -653,6 +639,20 @@ class Utils {
     }
   }
 
+  static getCertificationTypeString(String type) {
+    if (type == "-1") {
+      return CertificationCriteriaType.none;
+    } else if (type == "1") {
+      return CertificationCriteriaType.level;
+    } else if (type == "2") {
+      return CertificationCriteriaType.retention;
+    } else if (type == "3") {
+      return CertificationCriteriaType.both;
+    } else {
+      return "";
+    }
+  }
+
   static updateAttemptTimeInQuestionDataLocally(int questionId, String attemptTime) async {
     List<QuestionData> arrQuestions = List();
 
@@ -671,8 +671,7 @@ class Utils {
     List<QuestionData> arrFinalQuestion = List();
 
     if (Injector.prefs.getString(PrefKeys.questionData) != null) {
-      List<QuestionData> arrQuestionsLocal =
-          QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData))).data;
+      List<QuestionData> arrQuestionsLocal = QuestionsResponse.fromJson(jsonDecode(Injector.prefs.getString(PrefKeys.questionData))).data;
 
       arrQuestionsLocal.forEach((questionData) {
         if (questionData.attemptTime == null || questionData.attemptTime.isEmpty) {

@@ -69,7 +69,14 @@ class LearningModuleData {
   int supportFileType;
   int videoPlay;
   int videoLoop;
-
+  int complete;
+  int level;
+  int targetLevel;
+  int retentionRate;
+  int currentRetention;
+  int certificationCriteria;
+  String certificateDate;
+  int totalOpenQuestionCount;
 
   LearningModuleData();
 
@@ -91,6 +98,14 @@ class LearningModuleData {
     supportFileType = json['supportFileType'];
     videoPlay = json['videoPlay'];
     videoLoop = json['videoLoop'];
+    complete = json['complete'];
+    level = json['level'];
+    if (json['targetLevel'] != null) targetLevel = json['targetLevel'];
+    if (json['retentionRate'] != null) retentionRate = json['retentionRate'];
+    currentRetention = json['currentRetention'];
+    certificationCriteria = json['certificationCriteria'];
+    certificateDate = json['certificateDate'];
+    totalOpenQuestionCount = json['totalOpenQuestionCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -111,6 +126,14 @@ class LearningModuleData {
     data['supportFileType'] = this.supportFileType;
     data['videoPlay'] = this.videoPlay;
     data['videoLoop'] = this.videoLoop;
+    data['complete'] = this.complete;
+    data['level'] = this.level;
+    // data['targetLevel'] = this.targetLevel;
+    data['retentionRate'] = this.retentionRate;
+    data['currentRetention'] = this.currentRetention;
+    data['certificationCriteria'] = this.certificationCriteria;
+    data['certificateDate'] = this.certificateDate;
+    data['totalOpenQuestionCount'] = this.totalOpenQuestionCount;
     return data;
   }
 }

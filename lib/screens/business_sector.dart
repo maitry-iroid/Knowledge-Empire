@@ -3,6 +3,7 @@ import 'dart:ui';
 
 // import 'package:background_fetch/background_fetch.dart';
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,7 +73,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   Future getPDF(String url) async {
     if (selectedModule != null && url != null) {
       _pdfPath = url;
-      // _pdfDocument = await PDFDocument.fromURL(url);
+      _pdfDocument = await PDFDocument.fromURL(url);
     }
     if (mounted) {
       setState(() {
@@ -389,6 +390,9 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           ),
           showImageView(context),
           showDescriptionView(),
+          showTargetLevelView(),
+          showTargetRetentionView(),
+          showCertificationCriteriaView(),
           showDownloadSubscribeOptions()
         ],
       ),
@@ -744,6 +748,172 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: Text(
                 Utils.getText(context, StringRes.description),
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showTargetLevelView() {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color: Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            margin: EdgeInsets.only(top: 20),
+            child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode ? ColorRes.bgDescription : ColorRes.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Injector.isBusinessMode ? Border.all(color: ColorRes.white, width: 1) : null,
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  // selectedModule.targetLevel.toString() ?? "",
+                  "",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 9, right: Utils.getDeviceWidth(context) / 9),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.circular(20),
+                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
+              child: AutoSizeText(
+                Utils.getText(context, "Target Level"),
+                minFontSize: 8,
+                maxLines: 1,
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showTargetRetentionView() {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color: Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            margin: EdgeInsets.only(top: 20),
+            child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode ? ColorRes.bgDescription : ColorRes.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Injector.isBusinessMode ? Border.all(color: ColorRes.white, width: 1) : null,
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  selectedModule.retentionRate.toString() + " %",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 9, right: Utils.getDeviceWidth(context) / 9),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.circular(20),
+                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
+              child: AutoSizeText(
+                Utils.getText(context, "Target Retention"),
+                minFontSize: 8,
+                maxLines: 1,
+                style: TextStyle(color: ColorRes.white, fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  showCertificationCriteriaView() {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            color: Injector.isBusinessMode ? ColorRes.whiteDarkBg : ColorRes.white,
+            margin: EdgeInsets.only(top: 20),
+            child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 30, bottom: 10),
+              decoration: BoxDecoration(
+                color: Injector.isBusinessMode ? ColorRes.bgDescription : ColorRes.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Injector.isBusinessMode ? Border.all(color: ColorRes.white, width: 1) : null,
+              ),
+              child: SingleChildScrollView(
+                child: Text(
+                  Utils.getCertificationTypeString(selectedModule.certificationCriteria.toString()),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  top: Injector.isBusinessMode ? 3 : 5, left: Utils.getDeviceWidth(context) / 9, right: Utils.getDeviceWidth(context) / 9),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Injector.isBusinessMode ? null : ColorRes.titleBlueProf,
+                  borderRadius: BorderRadius.circular(20),
+                  image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
+              child: AutoSizeText(
+                Utils.getText(context, "Certification Criteria"),
+                minFontSize: 10,
+                maxLines: 1,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
