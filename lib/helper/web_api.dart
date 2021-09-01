@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ansicolor/ansicolor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
@@ -8,6 +9,7 @@ import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:pretty_json/pretty_json.dart';
 import 'constant.dart';
 
 class WebApi {
@@ -83,7 +85,8 @@ class WebApi {
   Future<dynamic> callAPI(String apiReq, Map<String, dynamic> jsonMap) async {
     initDio();
 
-    print(apiReq + "_" + json.encode(jsonMap));
+    print("----------------------------------- API request > " + apiReq + " --------------------------------");
+    print("BODY - " + json.encode(jsonMap) + "\n\n");
 
     if (!Injector.isInternetConnected) return;
 
@@ -91,9 +94,9 @@ class WebApi {
 
     await dio.post("", data: json.encode(getRequest(apiReq, json.encode(jsonMap)))).then((response) {
       if (response != null && response.statusCode == 200) {
-        print(apiReq + "==> " + response.toString());
-
+        print("---------------------------------- API response > " + apiReq + "--------------------------------");
         BaseResponse _response = BaseResponse.fromJson(jsonDecode(response.data));
+        print(prettyJson(_response.toJson(), indent: 2));
 
         if (_response != null) {
           if (_response.flag == "true") {
@@ -118,7 +121,7 @@ class WebApi {
 //      Utils.showErrToast(apiReq + ": " + e.toString());
     });
 
-    debugPrint("--------------------Final Response + $apiReq :: $finalResponse");
+    // debugPrint("--------------------Final Response + $apiReq :: $finalResponse");
     return finalResponse;
   }
 
@@ -164,10 +167,10 @@ class WebApi {
     String deviceType = Injector.deviceType;
     String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
 
-    print("contentTypeHeader " + contentTypeHeader);
-    print("accessToken " + authorizationHeader);
-    print("devicetype " + deviceType);
-    print("deviceid " + deviceId);
+    // print("contentTypeHeader " + contentTypeHeader);
+    // print("accessToken " + authorizationHeader);
+    // print("devicetype " + deviceType);
+    // print("deviceid " + deviceId);
 
     var headers = {
       HttpHeaders.contentTypeHeader: contentTypeHeader,
@@ -184,7 +187,7 @@ class WebApi {
         receiveTimeout: 3000,
         headers: headers);
 
-    print("finalbaseUrl :  " + options.baseUrl);
+    // print("finalbaseUrl :  " + options.baseUrl);
     dio.options = options;
     return dio;
   }

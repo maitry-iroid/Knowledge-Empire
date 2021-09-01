@@ -8,7 +8,7 @@ class LoginRequest {
   String language;
   String companyCode;
 
-  LoginRequest({this.email, this.password, this.secret, this.language});
+  LoginRequest({this.email, this.password, this.secret, this.language, this.companyCode});
 
   LoginRequest.fromJson(Map<String, dynamic> json) {
     email = json['email'];

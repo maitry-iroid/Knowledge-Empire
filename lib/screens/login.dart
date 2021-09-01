@@ -20,7 +20,12 @@ import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
+import 'package:ke_employee/helper/res.dart';
+import 'package:ke_employee/helper/string_res.dart';
+import 'package:ke_employee/helper/web_api.dart';
+import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
+import 'package:ke_employee/models/login.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
@@ -568,27 +573,21 @@ class _LoginPageState extends State<LoginPage> {
         Injector.companyCode = codeController.text.trim();
         await Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
         // Navigator.pop(context);
-        LoginRequest loginRequest = LoginRequest();
 
-        String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim()).catchError((e) {
-          print("--------Before Email==12345 : CATCH ERROR");
-          print(e);
-        });
-        print('--------Before Email==12345 :   $encEmail}');
-        loginRequest.email = encEmail;
-        print('--------Before Email : ${loginRequest.email}');
-        loginRequest.password = Utils.generateMd5(passwordController.text.trim());
+        String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
+        String encPass = Utils.generateMd5(passwordController.text.trim());
 
-        loginRequest.secret = Utils.getSecret(encEmail, loginRequest.password);
-        print('--------After Email : ${loginRequest.email}');
-        print('--------Password : ${loginRequest.password}');
-        print('--------Secret : ${loginRequest.secret}');
-        loginRequest.language = Injector.language == StringRes.strDefault ? null : Injector.language;
-        loginRequest.companyCode = Injector.companyCode;
+        LoginRequest loginRequest = LoginRequest(
+            email: encEmail,
+            password: encPass,
+            secret: Utils.getSecret(encEmail, encPass),
+            language: (Injector.language == StringRes.strDefault ? null : Injector.language),
+            companyCode: Injector.companyCode);
 
         Utils.hideKeyboard(context);
 
         CommonView.showCircularProgress(true, context);
+
         print(loginRequest.toJson());
         WebApi().callAPI(WebApi.rqLogin, loginRequest.toJson()).then((data) async {
           CommonView.showCircularProgress(false, context);

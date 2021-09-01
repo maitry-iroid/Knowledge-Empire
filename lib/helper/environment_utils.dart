@@ -19,8 +19,8 @@ class EnvUtils {
   }
 
   static getOrientation() {
-    print("-------mode-----------");
-    print(Const.envType == Environment.DEV || Const.envType == Environment.PROD);
+    // print("-------mode-----------");
+    // print(Const.envType == Environment.DEV || Const.envType == Environment.PROD);
     if (Const.envType == Environment.DEV || Const.envType == Environment.PROD) {
       Const.isLandscape = true;
       SystemChrome.setPreferredOrientations([
