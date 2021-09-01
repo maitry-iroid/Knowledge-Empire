@@ -1095,12 +1095,12 @@ class Utils {
     return Utils.isFeatureOn(type) && Utils.isLocked(type);
   }
 
-  static void callCustomerValuesApi() {
+  static void callCustomerValuesApi({bool isNavigate = true}) {
     CustomerValueRequest rq = CustomerValueRequest();
     rq.userId = Injector.userData.userId;
 
     Utils.isInternetConnected().then((isConnected) {
-      if (isConnected) customerValueBloc?.getCustomerValue(rq);
+      if (isConnected) customerValueBloc?.getCustomerValue(rq, isNavigate: isNavigate);
     });
   }
 }

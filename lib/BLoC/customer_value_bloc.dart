@@ -14,7 +14,7 @@ class CustomerValueBloc {
 
   Stream<CustomerValueData> get customerValue => _assignModuleSubject.stream;
 
-  getCustomerValue(CustomerValueRequest rq) async {
+  getCustomerValue(CustomerValueRequest rq, {bool isNavigate = true}) async {
     dynamic data = await _repository.getCustomerValue(rq);
 
     if (data != null) {
@@ -22,7 +22,9 @@ class CustomerValueBloc {
       await Injector.setCustomerValueData(customerValueData);
 
       if (customerValueData.isChallengeAvailable == 1) {
-        Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+        if (isNavigate) {
+          Injector.homeStreamController?.add("${Const.openPendingChallengeDialog}");
+        }
       }
 
       _assignModuleSubject.add(customerValueData);

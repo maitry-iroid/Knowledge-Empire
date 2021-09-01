@@ -65,7 +65,7 @@ dependencies:
   flutter_native_timezone:
   flutter_emoji:
   flutter_native_splash:
-#  cipher2:
+  cipher2:
   webview_flutter:
   url_encoder:
   mailto:

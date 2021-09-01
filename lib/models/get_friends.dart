@@ -34,7 +34,6 @@ class GetFriendsRequest {
   }
 }
 
-
 class GetFriendsData {
   int userId;
   String name;
@@ -60,15 +59,29 @@ class GetFriendsData {
   }
 
   decryptName() async {
+    print("======this.name===${this.name}");
     List<String> fullName = this.name.toString().split(" ");
+    print("======this.name===${fullName.first}");
+    print("======this.name===${fullName.last}");
     this.name = "";
     if (fullName.length > 0) {
       if (fullName.length > 1) {
-        String decryptedFName = await EncryptionManager().stringDecryption(fullName.first);
-        String decryptedLName = await EncryptionManager().stringDecryption(fullName.last);
+        String decryptedFName = await EncryptionManager().stringDecryption(fullName.first).catchError((e) {
+          print("====decryptedFName====error");
+          print(e);
+        });
+        String decryptedLName = await EncryptionManager().stringDecryption(fullName.last).catchError((e) {
+          print("====decryptedFName====error");
+          print(e);
+        });
+        print("====decryptedFName====$decryptedFName");
+        print("====decryptedLName====$decryptedLName");
         this.name = decryptedFName + " " + decryptedLName;
       } else {
-        String decryptedFName = await EncryptionManager().stringDecryption(fullName.first);
+        String decryptedFName = await EncryptionManager().stringDecryption(fullName.first).catchError((e) {
+          print("====decryptedFName====error");
+          print(e);
+        });
         this.name = decryptedFName;
       }
     }
@@ -87,4 +100,3 @@ class GetFriendsData {
     return data;
   }
 }
-

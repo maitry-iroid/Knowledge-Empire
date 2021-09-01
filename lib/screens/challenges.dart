@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/res.dart';
@@ -11,6 +11,7 @@ import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/search_friend.dart';
 import 'package:ke_employee/models/send_challenge.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
 import '../helper/Utils.dart';
 import '../helper/string_res.dart';
 import '../helper/web_api.dart';
@@ -389,6 +390,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
   }
 
   showFriendItem(int index) {
+    print(arrFriendsToShow[index].name);
     return GestureDetector(
       onTap: () {
         Utils.playClickSound();
@@ -756,11 +758,14 @@ class _ChallengesPageState extends State<ChallengesPage> {
               GetFriendsData model = GetFriendsData.fromJson(v);
               await model.decryptName();
               getFriendsData.add(model);
+              print("====model.name====${model.name}");
             });
 
             getFriendsData.removeWhere((friend) => friend.userId == Injector.userData.userId);
 
             arrFriends = getFriendsData;
+            print("getFriendsData.toSet().toList()");
+            print(getFriendsData.toSet().toList());
             arrFriendsToShow = getFriendsData;
 
             if (arrFriendsToShow.length > 0) {

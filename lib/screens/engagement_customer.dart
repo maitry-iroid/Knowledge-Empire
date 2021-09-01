@@ -361,7 +361,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       if (data != null) {
 //        QuestionData questionData = QuestionData.fromJson(data);
         navigateToSituation(context, questionData);
-        Utils.callCustomerValuesApi();
+        Utils.callCustomerValuesApi(isNavigate: false);
       }
     }).catchError((e) {
       print("submitChallenge_" + e.toString());
@@ -436,7 +436,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               ),
               onTap: () {
                 Utils.playClickSound();
-
                 if (isChallenge)
                   performSubmitChallenge(context);
                 else

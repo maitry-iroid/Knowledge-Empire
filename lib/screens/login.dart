@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart' as Foundation;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/BLoC/locale_bloc.dart';
@@ -10,17 +10,17 @@ import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
-import 'package:ke_employee/manager/version_manager.dart';
-import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/privay_policy.dart';
-import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/screens/home.dart';
+import 'package:ke_employee/manager/encryption_manager.dart';
+import 'package:ke_employee/manager/version_manager.dart';
+import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/login.dart';
+import 'package:ke_employee/models/privay_policy.dart';
+import 'package:ke_employee/screens/forgot_password.dart';
+import 'package:ke_employee/screens/home.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
@@ -568,10 +568,13 @@ class _LoginPageState extends State<LoginPage> {
         Injector.companyCode = codeController.text.trim();
         await Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
         // Navigator.pop(context);
-
         LoginRequest loginRequest = LoginRequest();
 
-        String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim());
+        String encEmail = await EncryptionManager().stringEncryption(emailController.text.trim()).catchError((e) {
+          print("--------Before Email==12345 : CATCH ERROR");
+          print(e);
+        });
+        print('--------Before Email==12345 :   $encEmail}');
         loginRequest.email = encEmail;
         print('--------Before Email : ${loginRequest.email}');
         loginRequest.password = Utils.generateMd5(passwordController.text.trim());
