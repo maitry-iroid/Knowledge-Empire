@@ -330,7 +330,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
 
         await Injector.prefs.remove(PrefKeys.answerData);
         Injector.setCustomerValueData(customerValueData);
-
         navigateToSituation(context, null);
       }
     }).catchError((e) {

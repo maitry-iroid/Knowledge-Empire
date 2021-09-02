@@ -77,6 +77,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   @override
   void initState() {
+    print("=====HONEY====init====");
     questionDataCustSituation = widget.homeData.questionHomeData;
     isChallenge = widget.homeData.isChallenge;
     isCameFromNewCustomer = widget.homeData.isCameFromNewCustomer;

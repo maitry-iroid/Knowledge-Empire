@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
+import 'package:ke_employee/models/get_learning_module.dart';
 import 'package:ke_employee/models/performance.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -28,11 +29,14 @@ class _PLPageState extends State<PLPage> {
 
   Map<String, double> dataMap = Map();
   Map<String, double> openCloseMap = Map();
+  bool isPerformanceSelected = true;
+  bool isTargetSelected = false;
 
   PerformanceData performanceData;
 
   int selectedDay = 0;
   bool isLoading = false;
+  List<LearningModuleData> arrLearningModule = [];
 
   List<Color> colorOpenCloseList = [
     ColorRes.chartOne,
@@ -81,7 +85,7 @@ class _PLPageState extends State<PLPage> {
           padding: EdgeInsets.only(top: Utils.getHeaderHeight(context)),
           child: Column(
             children: <Widget>[
-              CommonView.showTitle(context, StringRes.pl),
+              showTitle(context, StringRes.pl),
               performanceData != null ? mainBody() : Container()
 //             Expanded(
 //               child:  Row(
@@ -114,12 +118,319 @@ class _PLPageState extends State<PLPage> {
   }
 
   mainBody() {
+    if (isPerformanceSelected) {
+      return Expanded(
+          child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[showListAndPieChart(), showLinearHybridGraph()],
+        ),
+      ));
+    } else {
+      return Expanded(
+          child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
+          showTargetTitles(),
+          arrLearningModule != null && arrLearningModule.length > 0
+              ? showTargetValues()
+              : Expanded(
+                  child: Center(
+                    child: Text(
+                      "No Targets Found",
+                      style: TextStyle(
+                        color: ColorRes.titleBlueProf,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+        ],
+      ));
+    }
+  }
+
+  showTargetValues() {
     return Expanded(
-        child: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[showListAndPieChart(), showLinearHybridGraph()],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
+          itemCount: arrLearningModule.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                getSingleValueContainer(4, arrLearningModule[index].moduleName, maxLines: 1, align: TextAlign.start),
+                getDoublevalueContainer(3, arrLearningModule[index].targetLevel.toString(), arrLearningModule[index].level.toString()),
+                getDoublevalueContainer(
+                    3, arrLearningModule[index].retentionRate.toString() + "%", arrLearningModule[index].currentRetention.toString() + "%"),
+                getDoublevalueContainer(3, Utils.getCertificationTypeString(arrLearningModule[index].certificationCriteria.toString()),
+                    arrLearningModule[index].certificateDate),
+                getSingleValueContainer(2, "% ${arrLearningModule[index].complete}"),
+              ],
+            );
+          },
+        ),
       ),
-    ));
+    );
+  }
+
+  showTargetTitles() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              getSingleTitleContainer(4, ""),
+              getSingleTitleContainer(3, "Level"),
+              getSingleTitleContainer(3, "Retension"),
+              getSingleTitleContainer(3, "Certification"),
+              getSingleTitleContainer(2, "Questions"),
+            ],
+          ),
+          Row(
+            children: [
+              getSingleTitleContainer(4, "Learning Module"),
+              getDoubleTitleContainer(3, "Target", "Current"),
+              getDoubleTitleContainer(3, "Target", "Current"),
+              getDoubleTitleContainer(3, "Criteria", "Date"),
+              getSingleTitleContainer(2, "% answered"),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  getSingleTitleContainer(int flex, String title, {int maxLines, TextAlign align}) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 2, horizontal: 5) : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Injector.isBusinessMode ? Colors.transparent : ColorRes.titleBlueProf,
+          borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),
+        ),
+        child: AutoSizeText(
+          title,
+          style: TextStyle(
+            color: ColorRes.white,
+            fontSize: 14,
+          ),
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          minFontSize: 8,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
+
+  getDoubleTitleContainer(int flex, String firstTitle, String secondtitle, {int maxLines, TextAlign align}) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 2, horizontal: 5) : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Injector.isBusinessMode ? Colors.transparent : ColorRes.titleBlueProf,
+          borderRadius: BorderRadius.all(Radius.circular(Injector.isBusinessMode ? 0 : 5)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                child: AutoSizeText(
+                  firstTitle,
+                  style: TextStyle(
+                    color: ColorRes.white,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  minFontSize: 8,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                secondtitle,
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+                minFontSize: 8,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  getSingleValueContainer(int flex, String title, {int maxLines, TextAlign align}) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 2, horizontal: 5) : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+        child: AutoSizeText(
+          title != "" ? title : "-",
+          style: TextStyle(
+            color: ColorRes.titleBlueProf,
+            fontSize: 14,
+          ),
+          maxLines: maxLines ?? 1,
+          textAlign: align ?? TextAlign.center,
+          minFontSize: 8,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+  }
+
+  getDoublevalueContainer(int flex, String firstTitle, String secondtitle, {int maxLines, TextAlign align}) {
+    return Expanded(
+      flex: flex,
+      child: Container(
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 2, horizontal: 5) : EdgeInsets.symmetric(vertical: 2, horizontal: 0),
+        alignment: Alignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                child: AutoSizeText(
+                  firstTitle != "" ? firstTitle : "-",
+                  style: TextStyle(
+                    color: ColorRes.titleBlueProf,
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.center,
+                  minFontSize: 8,
+                  maxLines: maxLines ?? 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              child: AutoSizeText(
+                secondtitle != "" ? secondtitle : "-",
+                style: TextStyle(
+                  color: ColorRes.titleBlueProf,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+                minFontSize: 8,
+                maxLines: maxLines ?? 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  showTitle(BuildContext context, String title, {bool isShowBackButton = true}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          isShowBackButton
+              ? InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "back" : 'back_prof')),
+                    width: 30,
+                  ),
+                  onTap: () {
+                    Utils.playClickSound();
+                    Utils.performBack(context);
+                  },
+                )
+              : Container(),
+          Spacer(),
+          InkWell(
+            onTap: () {
+              isTargetSelected = !isTargetSelected;
+              if (isTargetSelected) {
+                isPerformanceSelected = false;
+              }
+              fetchLearningModules();
+            },
+            child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+                  color: Injector.isBusinessMode ? null : (!isTargetSelected ? ColorRes.lightGrey : ColorRes.titleBlueProf),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(
+                            Utils.getAssetsImg("bg_blue"),
+                          ),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                "Target",
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: DimenRes.titleTextSize,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              isPerformanceSelected = !isPerformanceSelected;
+              if (isPerformanceSelected) {
+                isTargetSelected = false;
+              }
+              setState(() {});
+            },
+            child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+                  color: Injector.isBusinessMode ? null : (!isPerformanceSelected ? ColorRes.lightGrey : ColorRes.titleBlueProf),
+                  image: Injector.isBusinessMode
+                      ? DecorationImage(
+                          image: AssetImage(
+                            Utils.getAssetsImg("bg_blue"),
+                          ),
+                          fit: BoxFit.fill)
+                      : null),
+              child: Text(
+                Utils.getText(context, Utils.getText(context, title)),
+                style: TextStyle(
+                  color: ColorRes.white,
+                  fontSize: DimenRes.titleTextSize,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Spacer(),
+        ],
+      ),
+    );
   }
 
   showListAndPieChart() {
@@ -690,6 +1001,42 @@ class _PLPageState extends State<PLPage> {
   }
 
 //  int selectedType = 1;
+
+  void fetchLearningModules() async {
+    if (mounted)
+      setState(() {
+        arrLearningModule.clear();
+        isLoading = true;
+      });
+
+    GetLearningModuleRequest rq = GetLearningModuleRequest();
+    rq.userId = Injector.userId;
+
+    WebApi().callAPI(WebApi.rqGetLearningModule_v2, rq.toJson()).then((data) async {
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+
+      if (data != null) {
+        int i = 0;
+        data.forEach((v) {
+          LearningModuleData module = LearningModuleData.fromJson(v);
+          module.index = i;
+          arrLearningModule.add(module);
+          i++;
+        });
+      }
+      setState(() {});
+    }).catchError((e) {
+      print("getLeariningModule_" + e.toString());
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
+      // Utils.showToast(e.toString());
+    });
+  }
 
   Future getPerformanceData(int plDay) async {
     Utils.isInternetConnected().then((isConnected) {

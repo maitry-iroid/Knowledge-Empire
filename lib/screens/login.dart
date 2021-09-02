@@ -20,12 +20,7 @@ import 'package:ke_employee/models/UpdateDialogModel.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
-import 'package:ke_employee/helper/res.dart';
-import 'package:ke_employee/helper/string_res.dart';
-import 'package:ke_employee/helper/web_api.dart';
-import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/screens/home.dart';
-import 'package:ke_employee/models/login.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
@@ -581,7 +576,7 @@ class _LoginPageState extends State<LoginPage> {
             email: encEmail,
             password: encPass,
             secret: Utils.getSecret(encEmail, encPass),
-            language: (Injector.language == StringRes.strDefault ? null : Injector.language),
+            language: (Injector.language == StringRes.strDefault ? "null" : Injector.language),
             companyCode: Injector.companyCode);
 
         Utils.hideKeyboard(context);

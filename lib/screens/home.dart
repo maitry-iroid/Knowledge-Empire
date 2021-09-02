@@ -281,6 +281,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
       top: !isCoinVisible ? top : 5,
       left: !isCoinVisible ? left : Utils.getDeviceWidth(context) / 1.1,
       onEnd: () {
+        print("=====HONEY====COINANIMATION====");
         isCoinVisible = false;
         if (Injector.customerValueData != null) customerValueBloc.setCustomerValue(Injector.customerValueData);
         homeData.isCameFromNewCustomer = false;

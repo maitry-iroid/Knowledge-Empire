@@ -17,7 +17,6 @@ import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/more_info.dart';
 import 'package:mailto/mailto.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:url_encoder/url_encoder.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CommonView {
@@ -31,23 +30,25 @@ class CommonView {
         : BoxDecoration(color: ColorRes.bgProf);
   }
 
-  static showTitle(BuildContext context, String title) {
+  static showTitle(BuildContext context, String title, {bool isShowBackButton = true}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          InkResponse(
-            child: Image(
-              image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "back" : 'back_prof')),
-              width: 30,
-            ),
-            onTap: () {
-              Utils.playClickSound();
-              Utils.performBack(context);
-            },
-          ),
+          isShowBackButton
+              ? InkResponse(
+                  child: Image(
+                    image: AssetImage(Utils.getAssetsImg(Injector.isBusinessMode ? "back" : 'back_prof')),
+                    width: 30,
+                  ),
+                  onTap: () {
+                    Utils.playClickSound();
+                    Utils.performBack(context);
+                  },
+                )
+              : Container(),
           Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
