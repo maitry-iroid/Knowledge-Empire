@@ -151,7 +151,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   getTimeZone() async {
-    String timezone = await Utils.initPlatformState();
+    String timezone = Utils.initPlatformState();
     print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
     if (!mounted) return;
 

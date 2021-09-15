@@ -22,7 +22,7 @@ dependencies:
     sdk: flutter
 
   intl:
-  device_id:
+  device_info_plus:
   percent_indicator:
   fluttertoast:
   shared_preferences:
@@ -34,44 +34,32 @@ dependencies:
   dio:
   video_player:
   path:
-  #simple_pdf_viewer: 0.2.1
   flutter_cache_manager:
   cached_network_image:
 #  background_fetch: ^0.5.5
-  firebase_messaging: ^10.0.5
-  firebase_core:
+  firebase_messaging:
+#  firebase_core:
   flutter_local_notifications:
   connectivity:
-#  audioplayers:
-  #simple_animations: ^1.2.0
+  audioplayers:
   pie_chart:
   package_info:
   rxdart:
   charts_flutter:
-  http:
   flutter_spinkit:
   flutter_app_badger:
   carousel_slider:
   url_launcher:
-  #animated_background:
   shimmer:
-  open_appstore:
-  pdf_previewer:
+  launch_review: ^3.0.1
   auto_size_text:
   chewie:
-  like_button:
-  simple_animations:
-  characters:
-  flutter_native_timezone:
   flutter_emoji:
-  flutter_native_splash:
   cipher2:
   webview_flutter:
-  url_encoder:
   mailto:
-  advance_pdf_viewer: 2.0.0
+  advance_pdf_viewer: 2.0.0  # no web
   firebase_analytics:
-  ansicolor: ^2.0.1
   pretty_json: ^2.0.0
 
   #  flutter_plugin_pdf_viewer: ^1.0.7

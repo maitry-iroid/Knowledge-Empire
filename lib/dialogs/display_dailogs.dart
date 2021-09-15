@@ -10,7 +10,7 @@ import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/screens/help_pro_screen.dart';
-import 'package:open_appstore/open_appstore.dart';
+import 'package:launch_review/launch_review.dart';
 
 class DisplayDialogs {
   //todo li_wei  image configuration
@@ -178,7 +178,9 @@ class DisplayDialogs {
               desTextLine: message,
               onTapBtn: () async {
                 //Navigator.pop(context);
-                OpenAppstore.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: "id1491903275");
+                LaunchReview.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: "id1491903275");
+
+                // OpenAppstore.launch(androidAppId: Injector.packageInfo.packageName, iOSAppId: "id1491903275");
               },
               onTapSecondBtn: () {
                 Injector.prefs.setString(PrefKeys.isCancelDialog, DateTime.now().toString());

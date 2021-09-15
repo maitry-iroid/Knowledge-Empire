@@ -87,7 +87,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                         SizedBox(height: Utils.getDeviceWidth(context) / 80),
                         Text(widget.titleText,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.title.copyWith(color: ColorRes.black, fontWeight: FontWeight.w800)),
+                            style: Theme.of(context).textTheme.headline1.copyWith(color: ColorRes.black, fontWeight: FontWeight.w800)),
                         SizedBox(height: Utils.getDeviceWidth(context) / 60),
                         widget.desTextLine != null && widget.desTextLine.isNotEmpty
                             ? Expanded(
@@ -98,7 +98,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                         padding: EdgeInsets.only(
                                             right: Injector.isBusinessMode ? getPaddingByImage() : size.height / 30.7, left: size.height / 30.7),
                                         child: Text(widget.desTextLine,
-                                            textAlign: TextAlign.start, maxLines: null, style: Theme.of(context).textTheme.title),
+                                            textAlign: TextAlign.start, maxLines: null, style: Theme.of(context).textTheme.bodyText1),
                                       ),
                                     ],
                                   ),
@@ -314,8 +314,8 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                 decoration:
                     BoxDecoration(color: Colors.grey, border: Border.all(color: ColorRes.header, width: 1), borderRadius: BorderRadius.circular(5)),
                 child: Center(
-                  child:
-                      Text(Utils.getText(context, StringRes.updateLatter), style: Theme.of(context).textTheme.title.copyWith(color: ColorRes.white)),
+                  child: Text(Utils.getText(context, StringRes.updateLatter),
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(color: ColorRes.white)),
                 )),
           )
         : Container();
@@ -333,7 +333,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
               border: Border.all(color: ColorRes.header, width: 1),
               borderRadius: BorderRadius.circular(5)),
           child: Center(
-            child: Text(widget.btnName != null ? widget.btnName : "", style: Theme.of(context).textTheme.title.copyWith(color: ColorRes.white)),
+            child: Text(widget.btnName != null ? widget.btnName : "", style: Theme.of(context).textTheme.bodyText1.copyWith(color: ColorRes.white)),
           )),
     );
   }
