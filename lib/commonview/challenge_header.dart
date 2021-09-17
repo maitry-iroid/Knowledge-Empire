@@ -131,7 +131,7 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
             border: Border.all(color: widget.currentIndex == index ? ColorRes.blue : ColorRes.white),
             shape: BoxShape.circle),
         child: Center(
-          child: Text((index + 1).toString(), style: Theme.of(context).textTheme.body1.copyWith(color: ColorRes.white)),
+          child: Text((index + 1).toString(), style: Theme.of(context).textTheme.bodyText2.copyWith(color: ColorRes.white)),
         ),
       );
     } else if (!Injector.countList[index].isCorrect) {
@@ -160,7 +160,7 @@ class _ChallengeHeaderState extends State<ChallengeHeader> {
         height: 30,
         decoration: BoxDecoration(color: ColorRes.blue, border: Border.all(color: Colors.white), shape: BoxShape.circle),
         child: Center(
-          child: Text((index + 1).toString(), style: Theme.of(context).textTheme.body1.copyWith(color: ColorRes.white)),
+          child: Text((index + 1).toString(), style: Theme.of(context).textTheme.bodyText2.copyWith(color: ColorRes.white)),
         ),
       );
     }

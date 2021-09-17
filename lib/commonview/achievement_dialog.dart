@@ -22,9 +22,7 @@ class AchievementDialog extends StatefulWidget {
   _AchievementDialogState createState() => _AchievementDialogState();
 }
 
-class _AchievementDialogState extends State<AchievementDialog>
-    with SingleTickerProviderStateMixin {
-
+class _AchievementDialogState extends State<AchievementDialog> with SingleTickerProviderStateMixin {
   ByteData _byteData;
   Size _imageSize;
   AnimationController _animationController;
@@ -33,21 +31,19 @@ class _AchievementDialogState extends State<AchievementDialog>
   void initState() {
     super.initState();
 
-    _animationController =
-        AnimationController(duration: Duration(seconds: 2), vsync: this)
-          ..addStatusListener(
-            (AnimationStatus status) {
-              if (status == AnimationStatus.completed) {
-                print('completed');
-              }
-            },
-          );
+    _animationController = AnimationController(duration: Duration(seconds: 2), vsync: this)
+      ..addStatusListener(
+        (AnimationStatus status) {
+          if (status == AnimationStatus.completed) {
+            print('completed');
+          }
+        },
+      );
 
-    Future.delayed(Duration(milliseconds: 500)).then((_){
+    Future.delayed(Duration(milliseconds: 500)).then((_) {
       Utils.achievementSound();
       onTap();
     });
-
   }
 
   @override
@@ -125,43 +121,28 @@ class _AchievementDialogState extends State<AchievementDialog>
                   Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: ColorRes.fontDarkGrey,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: ColorRes.borderRewardsName)),
-                    child: Text(widget.mPushModel.achievementName ?? "",
-                        style: TextStyle(color: ColorRes.white, fontSize: 15)),
+                        color: ColorRes.fontDarkGrey, borderRadius: BorderRadius.circular(18), border: Border.all(color: ColorRes.borderRewardsName)),
+                    child: Text(widget.mPushModel.achievementName ?? "", style: TextStyle(color: ColorRes.white, fontSize: 15)),
                   ),
                   SizedBox(height: 15),
-
                   Container(
                     width: Utils.getDeviceWidth(context) / 3.5,
                     height: Utils.getDeviceHeight(context) / 3.5,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                Utils.getAssetsImg("bg_collector")))),
-                    child: Image.asset(imageFomType(widget.mPushModel.level),
-                        fit: BoxFit.contain),
+                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_collector")))),
+                    child: Image.asset(imageFomType(widget.mPushModel.level), fit: BoxFit.contain),
                   ),
                   SizedBox(height: 15),
                   Text("${widget.mPushModel.achievementText ?? ""}",
                       maxLines: 2,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .body2
-                          .copyWith(color: ColorRes.white, fontSize: 20)),
+                      style: Theme.of(context).textTheme.bodyText2.copyWith(color: ColorRes.white, fontSize: 20)),
                   SizedBox(height: 10),
                   InkResponse(
                     child: Container(
                       padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: ColorRes.header,
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(color: ColorRes.white)),
-                      child: Text(widget.btnText,
-                          style:
-                              TextStyle(color: ColorRes.white, fontSize: 15)),
+                      decoration:
+                          BoxDecoration(color: ColorRes.header, borderRadius: BorderRadius.circular(18), border: Border.all(color: ColorRes.white)),
+                      child: Text(widget.btnText, style: TextStyle(color: ColorRes.white, fontSize: 15)),
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -213,5 +194,4 @@ class _AchievementDialogState extends State<AchievementDialog>
         break;
     }
   }
-
 }

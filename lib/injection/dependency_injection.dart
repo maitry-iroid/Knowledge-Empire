@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:device_id/device_id.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -121,6 +121,8 @@ class Injector {
   static String language = StringRes.strDefault;
   static String companyCode;
 
+  static DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
   Injector._internal();
 
   // Pending challenge question count to Attempt
@@ -141,8 +143,7 @@ class Injector {
 
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-    deviceId = await DeviceId.getID;
-    print(deviceId);
+    deviceId = await getdeviceId();
 
     updateInstance();
     init();
@@ -441,5 +442,22 @@ class Injector {
     //   default:
     //     audioPlayerBg.stop();
     // }
+  }
+
+  static Future<String> getdeviceId() async {
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
+      deviceId = androidInfo.id;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
+      deviceId = iosInfo.identifierForVendor;
+    } else {
+      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+      print('Running on ${webBrowserInfo.userAgent}');
+      deviceId = webBrowserInfo.vendor; // e.g. "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0"
+    }
+    print(deviceId);
   }
 }
