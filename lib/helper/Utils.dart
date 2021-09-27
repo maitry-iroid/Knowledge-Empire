@@ -12,6 +12,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 // import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -216,11 +217,12 @@ class Utils {
         msg: message, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM, backgroundColor: Colors.green, textColor: Colors.white);
   }
 
-  static String initPlatformState() {
+  static Future<String> initPlatformState() async {
     String timezone;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      timezone = DateTime.now().timeZoneName;
+      // timezone = DateTime.now().timeZoneName;
+      timezone = await FlutterNativeTimezone.getLocalTimezone();
       print("timezone : ===== " + timezone);
     } on PlatformException {
       timezone = 'Failed to get the timezone.';

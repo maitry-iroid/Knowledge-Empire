@@ -61,6 +61,7 @@ dependencies:
   advance_pdf_viewer: 2.0.0  # no web
   firebase_analytics:
   pretty_json: ^2.0.0
+  flutter_native_timezone:
 
   #  flutter_plugin_pdf_viewer: ^1.0.7
 
