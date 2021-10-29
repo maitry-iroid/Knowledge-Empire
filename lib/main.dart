@@ -30,6 +30,6 @@ Future setupLocator() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Injector.getInstance();
-  Const.setEnvironment(Environment.DEV);
+  Const.setEnvironment(Environment.PROD);
   runApp(MyApp());
 }

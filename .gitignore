@@ -44,3 +44,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+ios/Runner.ipa
+ios/Runner.app.dSYM.zip
+ios/Podfile.lock
+ios/build/.
+ios/build/*
+#android/app/build/.
+#android/app/build/*

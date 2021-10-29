@@ -1,5 +1,5 @@
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+// import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,7 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:video_player/video_player.dart';
 
 VideoPlayerController _controller;
@@ -26,8 +27,7 @@ class MediaManager {
   bool isLoading = false;
 
   showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage,
-      {var pdfDocument,
-      bool isPdfLoading = false,
+      {bool isPdfLoading = false,
       String pdfFilePath,
       ChewieController chewieController,
       VideoPlayerController videoPlayerController,
@@ -52,7 +52,6 @@ class MediaManager {
                   padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: borderColor, width: 3)),
                   child: showMediaView(context, answer, thumbImage,
-                      pdfDocument: pdfDocument,
                       isPdfLoading: isPdfLoading,
                       chewieController: chewieController,
                       videoPlayerController: videoPlayerController,
@@ -99,7 +98,7 @@ class MediaManager {
   }
 
   showMediaView(BuildContext context, String path, String thumbImage,
-      {PDFDocument pdfDocument,
+      {var pdfDocument,
       bool isPdfLoading = false,
       ChewieController chewieController,
       VideoPlayerController videoPlayerController,
@@ -165,7 +164,7 @@ class MediaManager {
             padding: EdgeInsets.all(3),
             decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
 //        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
-            child: PDFViewer(document: pdfDocument, showPicker: false),
+            child: SfPdfViewer.network(path),
             // child: WebView(
             //   initialUrl: path,
             // ),
@@ -225,7 +224,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
       });
     }
 
-    if (Utils.isPdf(widget.link)) loadPdf();
+    // if (Utils.isPdf(widget.link)) loadPdf();
   }
 
   Future<void> initVideoController(String link) async {
@@ -253,16 +252,16 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
   }
 
   Future<void> loadPdf() async {
-    print("----------------  pdf path :: ${widget.link}");
-    PDFDocument doc = await PDFDocument.fromURL(widget.link);
-    await doc.get(page: 1);
-    if (mounted) {
-      setState(() {
-        print("----------------  pdf doc :: ${doc}");
-        this.document = doc;
-        isPdfLoading = false;
-      });
-    }
+    // print("----------------  pdf path :: ${widget.link}");
+    // PDFDocument doc = await PDFDocument.fromURL(widget.link);
+    // await doc.get(page: 1);
+    // if (mounted) {
+    //   setState(() {
+    //     print("----------------  pdf doc :: ${doc}");
+    //     this.document = doc;
+    //     isPdfLoading = false;
+    //   });
+    // }
   }
 
   bool checkimg = true;
@@ -314,13 +313,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                                     controller: _chewieController,
                                   )
                                 : (Utils.isPdf(widget.link)
-                                    ? (document != null
-                                        ? PDFViewer(
-                                            document: document,
-                                            showPicker: false,
-                                            zoomSteps: 4,
-                                          )
-                                        : Center(child: CircularProgressIndicator()))
+                                    ? (document != null ? SfPdfViewer.network(widget.link) : Center(child: CircularProgressIndicator()))
                                     : Container(
                                         decoration:
                                             BoxDecoration(image: DecorationImage(image: Utils.getCacheNetworkImage(widget.link), fit: BoxFit.cover)),

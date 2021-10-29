@@ -92,7 +92,7 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   getTimeZone() async {
-    String timezone = Utils.initPlatformState();
+    String timezone = await Utils.initPlatformState();
     if (!mounted) return;
 
     setState(() {
@@ -445,7 +445,7 @@ class _RewardsPageState extends State<RewardsPage> {
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.media, selectedModule.mediaThumb,
-              pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.media),
+              isPdfLoading: _isLoading, pdfFilePath: selectedModule.media),
         );
       } else if (Utils.isVideo(selectedModule?.media)) {
         return Container(

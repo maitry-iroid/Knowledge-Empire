@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-// import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -58,7 +56,34 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   QuestionData questionDataEngCustomer;
   bool isChallenge;
   String _timeZone = "Unknown";
-  List alphaIndex = ["A", "B", "C", "D"];
+  List alphaIndex = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ];
 
   String urlPDFPath = "";
   String assetPDFPath = "";
@@ -71,7 +96,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   //todo pdf viewer
   String _pdfPath = '';
   String _previewPath;
-  var _pdfDocument;
+  // var _pdfDocument;
   bool _isLoading = false;
   int _pageNumber = 1;
 
@@ -151,7 +176,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   getTimeZone() async {
-    String timezone = Utils.initPlatformState();
+    String timezone = await Utils.initPlatformState();
     print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
     if (!mounted) return;
 
@@ -175,9 +200,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       // print("_pdfPath+++++++++++++++++++${_pdfPath}");
       // // _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
       //TODO
-      _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
-        print(e);
-      });
+      // _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
+      //   print(e);
+      // });
 
       if (mounted) {
         setState(() {
@@ -645,7 +670,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
               widget.homeData.questionHomeData.answerType == Const.typeAnswerText ||
                       widget.homeData.questionHomeData.answerType == Const.typeAnswerMediaWithQuestion
                   ? MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
-                      pdfDocument: _pdfDocument,
                       isPdfLoading: isLoading,
                       pdfFilePath: _pdfPath,
                       chewieController: _chewieController,
@@ -653,7 +677,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                       videoLoop: questionDataEngCustomer.videoLoop,
                       videoPlay: questionDataEngCustomer.videoPlay)
                   : MediaManager().showQueMedia(context, ColorRes.white, questionData.mediaLink, questionData.mediaThumbImage,
-                      pdfDocument: _pdfDocument, isPdfLoading: isLoading, pdfFilePath: _pdfPath),
+                      isPdfLoading: isLoading, pdfFilePath: _pdfPath),
               showQueDescription(context)
             ],
           ),

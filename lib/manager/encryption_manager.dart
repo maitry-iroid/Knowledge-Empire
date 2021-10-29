@@ -11,7 +11,7 @@ class EncryptionManager {
     try {
       // encrytion
       encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
-      // print("testEncrytion case2: success");
+      print("testEncrytion case2: success");
     } on PlatformException catch (e) {
       if (e.code == "ERROR_INVALID_KEY_OR_IV_LENGTH") {
         // print("testEncrytion ==${plainText}== case2: pass : ${e.toString()}");
@@ -20,7 +20,7 @@ class EncryptionManager {
       }
     }
 
-    // String encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
+    encryptedString = await Cipher2.encryptAesCbc128Padding7(plainText, key, iv);
 
     // print('-----------------------------------------');
     // print('Plain Text: $plainText');
@@ -34,7 +34,7 @@ class EncryptionManager {
     String decryptedString = "";
     try {
       // decryption
-      decryptedString = await Cipher2.decryptAesCbc128Padding7(cypherText, key, iv);
+      // decryptedString = await Cipher2.decryptAesCbc128Padding7(cypherText, key, iv);
       // print("testDecrytion case2: success");
     } on PlatformException catch (e) {
       if (e.code == "ERROR_INVALID_KEY_OR_IV_LENGTH") {

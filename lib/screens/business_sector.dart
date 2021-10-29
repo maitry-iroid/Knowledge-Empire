@@ -3,7 +3,6 @@ import 'dart:ui';
 
 // import 'package:background_fetch/background_fetch.dart';
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,7 +58,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   int maxVol, currentVol;
 
   bool isSwitched = false;
-  var _pdfDocument;
+
+  // var _pdfDocument;
   bool _isLoading = false;
   String _pdfPath = '';
 
@@ -73,7 +73,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
   Future getPDF(String url) async {
     if (selectedModule != null && url != null) {
       _pdfPath = url;
-      _pdfDocument = await PDFDocument.fromURL(url);
+      // _pdfDocument = await PDFDocument.fromURL(url);
     }
     if (mounted) {
       setState(() {
@@ -1022,7 +1022,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: MediaManager().showQueMedia(context, ColorRes.white, selectedModule.mediaLink, selectedModule.mediaThumbImage,
-              pdfDocument: _pdfDocument, isPdfLoading: _isLoading, pdfFilePath: selectedModule.mediaLink),
+              isPdfLoading: _isLoading, pdfFilePath: selectedModule.mediaLink),
         );
       } else if (Utils.isVideo(selectedModule?.mediaLink)) {
         return Container(
