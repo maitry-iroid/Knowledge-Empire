@@ -543,11 +543,11 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.servingYourExisting),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine: Injector.introModel.existingCustomer1,
+            desTextLine: Injector.introModel?.existingCustomer1,
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
-              Injector.introData.existingCustomer1 = 1;
+              Injector.introData?.existingCustomer1 = 1;
               await Injector.setIntroData(Injector.introData);
               Injector.updateIntroData();
 //              await Injector.updateIntroDialogType(Const.introListOfExistingCustomers);
@@ -572,11 +572,11 @@ class DisplayDialogs {
             titleText: Utils.getText(context, StringRes.listOfExisting),
             btnName: Utils.getText(context, StringRes.next),
             btnColor: ColorRes.blue,
-            desTextLine: Injector.introModel.existingCustomer2,
+            desTextLine: Injector.introModel?.existingCustomer2,
             onTapBtn: () async {
               Utils.playClickSound();
               Navigator.pop(context);
-              Injector.introData.existingCustomer2 = 1;
+              Injector.introData?.existingCustomer2 = 1;
               await Injector.setIntroData(Injector.introData);
               Injector.updateIntroData();
               //showReadyForBusiness(context);

@@ -146,9 +146,8 @@ class PushNotificationHelper {
   showLocalNotification(int id, String title, String body) async {
     print("riddhi====");
 
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel description',
-        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails('your channel id', 'your channel name', importance: Importance.max, priority: Priority.high, ticker: 'ticker');
 
     //TODO keep in MIND , add config in AppDelegate.swift to get push in foreground
     const iOSPlatformChannelSpecifics = const IOSNotificationDetails(badgeNumber: 1, presentAlert: true);

@@ -46,7 +46,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
   }
 
   Future initContent() async {
-    if (Injector.introData != null && Injector.introData.existingCustomer1 == 0) {
+    if (Injector.introData != null && Injector?.introData?.existingCustomer1 == 0) {
       await DisplayDialogs.showIntroExisting1(context);
     }
 

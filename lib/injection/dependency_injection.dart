@@ -350,7 +350,7 @@ class Injector {
             String decryptedName = await EncryptionManager().stringDecryption(introModel.firstName);
             introModel.profile1 = introModel.profile1.replaceAll(introModel.firstName, decryptedName);
             introModel.learningModule1 = introModel.learningModule1.replaceAll(introModel.firstName, decryptedName);
-            introModel.existingCustomer1 = introModel.existingCustomer1.replaceAll(introModel.firstName, decryptedName);
+            introModel?.existingCustomer1 = introModel?.existingCustomer1?.replaceAll(introModel.firstName, decryptedName);
             introModel.org1 = introModel.org1.replaceAll(introModel.firstName, decryptedName);
             introModel.pl1 = introModel.pl1.replaceAll(introModel.firstName, decryptedName);
             introModel.ranking1 = introModel.ranking1.replaceAll(introModel.firstName, decryptedName);

@@ -29,11 +29,11 @@ dependencies:
   bubble_tab_indicator:
   flutter_localizations:
     sdk: flutter
-  flutter_introduction_tooltip:
+#  super_tooltip: ^1.0.1
   image_picker:
   dio:
   video_player:
-  path:
+#  path:
   flutter_cache_manager:
   cached_network_image:
 #  background_fetch: ^0.5.5
@@ -58,7 +58,8 @@ dependencies:
   cipher2:
   webview_flutter:
   mailto:
-  advance_pdf_viewer: 2.0.0  # no web
+#  advance_pdf_viewer: 2.0.0  # no web
+  syncfusion_flutter_pdfviewer: ^19.3.47-beta
   firebase_analytics:
   pretty_json: ^2.0.0
   flutter_native_timezone:

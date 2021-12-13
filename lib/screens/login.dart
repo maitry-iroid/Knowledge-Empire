@@ -573,7 +573,7 @@ class _LoginPageState extends State<LoginPage> {
         String encPass = Utils.generateMd5(passwordController.text.trim());
 
         LoginRequest loginRequest = LoginRequest(
-            email: encEmail,
+            email: await EncryptionManager().stringEncryption(emailController.text.trim()),
             password: encPass,
             secret: Utils.getSecret(encEmail, encPass),
             language: (Injector.language == StringRes.strDefault ? "" : Injector.language),
