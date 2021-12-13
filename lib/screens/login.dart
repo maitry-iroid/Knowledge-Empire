@@ -576,7 +576,7 @@ class _LoginPageState extends State<LoginPage> {
             email: encEmail,
             password: encPass,
             secret: Utils.getSecret(encEmail, encPass),
-            language: (Injector.language == StringRes.strDefault ? "null" : Injector.language),
+            language: (Injector.language == StringRes.strDefault ? "" : Injector.language),
             companyCode: Injector.companyCode);
 
         Utils.hideKeyboard(context);

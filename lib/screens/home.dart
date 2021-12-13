@@ -98,11 +98,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
       });
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
         //TODO AUDIO
+        Injector.performAudioAction(Const.start);
         // Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
       }
     } else if (state == AppLifecycleState.inactive) {
+      //TODO AUDIO
       Injector.performAudioAction(Const.pause);
     } else if (state == AppLifecycleState.paused) {
+      Injector.performAudioAction(Const.pause);
       Injector.updateIntroData();
     }
   }
@@ -332,14 +335,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
     HomeUtils.initPendingChallengeStream(context);
 
     Utils.callCustomerValuesApi();
-
-    await Utils.playBackgroundMusic();
-
     WidgetsBinding.instance.addObserver(this);
     HomeUtils.initCheckNetworkConnectivity(context);
-
+    await Utils.playBackgroundMusic("====HOME====");
     HomeUtils.initPlatformState();
-
     Utils.removeBadge();
 
     navigationBloc.updateNavigation(HomeData(initialPageType: HomeUtils.currentPage));

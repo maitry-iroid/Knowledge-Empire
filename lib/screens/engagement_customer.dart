@@ -58,7 +58,34 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   QuestionData questionDataEngCustomer;
   bool isChallenge;
   String _timeZone = "Unknown";
-  List alphaIndex = ["A", "B", "C", "D"];
+  List alphaIndex = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ];
 
   String urlPDFPath = "";
   String assetPDFPath = "";
@@ -151,7 +178,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
   }
 
   getTimeZone() async {
-    String timezone = Utils.initPlatformState();
+    String timezone = await Utils.initPlatformState();
     print("::::::::::::::::::::::::::::::: Timezone : $timezone ::::::::::::::::::::::::::::::::");
     if (!mounted) return;
 

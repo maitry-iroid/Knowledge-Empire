@@ -92,7 +92,7 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   getTimeZone() async {
-    String timezone = Utils.initPlatformState();
+    String timezone = await Utils.initPlatformState();
     if (!mounted) return;
 
     setState(() {

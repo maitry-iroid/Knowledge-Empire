@@ -276,8 +276,8 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
           // Injector.audioPlayerBg.resume();
         }
         if (Utils.isVideo(widget.link)) {
-          _chewieController.pause();
-          _controller.pause();
+          _chewieController?.pause();
+          _controller?.pause();
         }
         Navigator.pop(context);
       },
@@ -337,8 +337,8 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                                     // Injector.audioPlayerBg.resume();
                                   }
                                   if (Utils.isVideo(widget.link)) {
-                                    _chewieController.pause();
-                                    _controller.pause();
+                                    _chewieController?.pause();
+                                    _controller?.pause();
                                   }
                                   Navigator.pop(context);
                                 },

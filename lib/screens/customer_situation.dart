@@ -71,7 +71,34 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   int existingQuesIndex = 0;
   int index = 1;
 
-  List alphaIndex = ['A', 'B', 'C', 'D'];
+  List alphaIndex = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ];
 
   selectItem(index) {}
 

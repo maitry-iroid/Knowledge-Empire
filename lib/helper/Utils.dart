@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
-// import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -41,7 +38,6 @@ import 'package:ke_employee/models/questions.dart';
 import 'package:ke_employee/models/submit_answer.dart';
 import 'package:ke_employee/screens/organization.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'constant.dart';
 import 'localization.dart';
@@ -431,15 +427,17 @@ class Utils {
 //    currentVol = await Volume.getVol;
 //  }
 
-  static playBackgroundMusic() async {
+  static playBackgroundMusic(String s) async {
     // Injector.audioCache.play("game_bg_music.mp3");
     bool isPlaySound = false;
+    print('--------before-----------------$s');
     print('--------before isPlaySound-----------------$isPlaySound');
     if (Injector.isBusinessMode && Injector.isSoundEnable != null && Injector.isSoundEnable) {
       isPlaySound = true;
     } else {
       isPlaySound = false;
     }
+    print("Injector.isSoundEnable====${Injector.isSoundEnable}");
     print('--------after isPlaySound-----------------$isPlaySound');
     await playSound(isPlaySound);
   }
@@ -448,13 +446,17 @@ class Utils {
     print('--------in method isPlaySound-----------------$isPlaySound');
     try {
       if (isPlaySound) {
-        final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
-        print(file.path);
-        await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
+        // final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
+        // print(file.path);
+        // await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
         // await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
         // Injector.audioPlayerBg.play(file.path, isLocal: true);
+        // Injector.backgroundAudioPlayer.stop();
+        Injector.backgroundAudioPlayer.play();
       } else {
         // Injector.audioPlayerBg.stop();
+        Injector.backgroundAudioPlayer.pause().then((value) => print("::::pause:::::"));
+        Injector.backgroundAudioPlayer.stop().then((value) => print("::::stop:::::"));
       }
     } catch (e) {
       print(e);
@@ -462,7 +464,7 @@ class Utils {
   }
 
   static Future<ByteData> loadAsset() async {
-    return await rootBundle.load('assets/sounds/game_bg_music.mp3');
+    // return await rootBundle.load('assets/sounds/game_bg_music.mp3');
   }
 
   static playAchievementSound() async {

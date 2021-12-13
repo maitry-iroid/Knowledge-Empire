@@ -87,7 +87,7 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                         SizedBox(height: Utils.getDeviceWidth(context) / 80),
                         Text(widget.titleText,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1.copyWith(color: ColorRes.black, fontWeight: FontWeight.w800)),
+                            style: Theme.of(context).textTheme.headline6.copyWith(color: ColorRes.black, fontWeight: FontWeight.w800)),
                         SizedBox(height: Utils.getDeviceWidth(context) / 60),
                         widget.desTextLine != null && widget.desTextLine.isNotEmpty
                             ? Expanded(

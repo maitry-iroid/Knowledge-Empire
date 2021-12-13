@@ -5,7 +5,7 @@
 // ignore_for_file: directives_ordering
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:audioplayers/web/audioplayers_web.dart';
+import 'package:assets_audio_player_web/web/assets_audio_player_web.dart';
 import 'package:connectivity_for_web/connectivity_for_web.dart';
 import 'package:device_info_plus_web/device_info_plus_web.dart';
 import 'package:firebase_analytics_web/firebase_analytics_web.dart';
@@ -23,7 +23,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 // ignore: public_member_api_docs
 void registerPlugins(Registrar registrar) {
-  AudioplayersPlugin.registerWith(registrar);
+  AssetsAudioPlayerWebPlugin.registerWith(registrar);
   ConnectivityPlugin.registerWith(registrar);
   DeviceInfoPlusPlugin.registerWith(registrar);
   FirebaseAnalyticsWeb.registerWith(registrar);

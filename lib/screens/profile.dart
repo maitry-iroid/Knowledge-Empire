@@ -340,17 +340,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               onTap: () async {
 //                                Utils.playClickSound();
-
                                 await Injector.updateMode(Injector.isBusinessMode ? Const.professionalMode : Const.businessMode);
-
                                 updateType = 1.toString();
                                 updateMode = Injector.mode.toString();
                                 await callApiForUpdateUserSetting(updateType, null);
-
-                                Utils.playBackgroundMusic();
-
+                                Utils.playBackgroundMusic("=====MODE=====");
                                 localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
-
                                 setState(() {});
                               },
                             )
@@ -370,17 +365,16 @@ class _ProfilePageState extends State<ProfilePage> {
                           Switch(
                             value: Injector.isSoundEnable != null && Injector.isSoundEnable,
                             onChanged: (value) async {
+                              print("VALUE====${value}");
                               Injector.isSoundEnable = value;
                               Injector.customerValueData.isEnableSound = Injector.isSoundEnable ? 1 : 0;
                               //Injector.setCustomerValueData(Injector.customerValueData);
-
-                              Utils.playBackgroundMusic();
-
+                              Utils.playBackgroundMusic("=====SWITCH=====");
+                              // Utils.playBgSound(value);
                               updateType = 2.toString();
                               updateIsSoundEnable = value ? 1.toString() : 0.toString();
                               updateMode = Injector.mode.toString();
                               callApiForUpdateUserSetting(updateType, null);
-
                               setState(() {});
                             },
                             activeTrackColor: Injector.isBusinessMode ? ColorRes.white : ColorRes.lightGrey,

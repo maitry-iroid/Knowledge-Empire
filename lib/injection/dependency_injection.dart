@@ -4,6 +4,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:assets_audio_player/assets_audio_player.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +101,20 @@ class Injector {
   // To play sound files
   // static AudioPlayer audioPlayerBg = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
 
+  // static AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
+  static AssetsAudioPlayer backgroundAudioPlayer = AssetsAudioPlayer()
+    ..open(
+      Audio(
+        "assets/sounds/game_bg_music.mp3",
+      ),
+      autoStart: false,
+    );
+  static AssetsAudioPlayer rewardAudioPlayer = AssetsAudioPlayer()
+    ..open(
+      Audio("assets/sounds/game_bg_music.mp3"),
+      autoStart: false,
+    );
+
   // is Development environment
   static bool isDev = true;
 
@@ -145,7 +161,7 @@ class Injector {
 
     deviceId = await getdeviceId();
 
-    updateInstance();
+    await updateInstance();
     init();
   }
 
@@ -192,13 +208,12 @@ class Injector {
 
       if (prefs.getString(PrefKeys.customerValueData) != null) {
         customerValueData = CustomerValueData.fromJson(jsonDecode(prefs.getString(PrefKeys.customerValueData)));
-
+        print(":::::customerValueData.isEnableSound:::::${customerValueData.isEnableSound}");
         isSoundEnable = customerValueData.isEnableSound == 1;
       }
 
       if (prefs.getString(PrefKeys.introData) != null) {
         introData = IntroData.fromJson(jsonDecode(prefs.getString(PrefKeys.introData)));
-
         updateIntroData();
       }
 
@@ -429,19 +444,19 @@ class Injector {
   }
 
   static performAudioAction(String type) {
-    // switch (type) {
-    //   case "start":
-    //     audioPlayerBg.resume();
-    //     break;
-    //   case "resume":
-    //     audioPlayerBg.resume();
-    //     break;
-    //   case "pause":
-    //     audioPlayerBg.pause();
-    //     break;
-    //   default:
-    //     audioPlayerBg.stop();
-    // }
+    switch (type) {
+      case "start":
+        Injector.backgroundAudioPlayer.play();
+        break;
+      case "resume":
+        Injector.backgroundAudioPlayer.play();
+        break;
+      case "pause":
+        Injector.backgroundAudioPlayer.pause();
+        break;
+      default:
+        Injector.backgroundAudioPlayer.stop();
+    }
   }
 
   static Future<String> getdeviceId() async {
