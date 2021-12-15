@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -146,8 +144,9 @@ class PushNotificationHelper {
   showLocalNotification(int id, String title, String body) async {
     print("riddhi====");
 
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails('your channel id', 'your channel name', importance: Importance.max, priority: Priority.high, ticker: 'ticker');
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel desc',
+        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
 
     //TODO keep in MIND , add config in AppDelegate.swift to get push in foreground
     const iOSPlatformChannelSpecifics = const IOSNotificationDetails(badgeNumber: 1, presentAlert: true);

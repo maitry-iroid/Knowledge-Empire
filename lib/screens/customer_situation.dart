@@ -32,7 +32,7 @@ import '../models/questions.dart';
 *
 * */
 
-List<Answer> arrAnswerSituation = List();
+// List<Answer> arrAnswerSituation = List();
 
 QuestionData questionDataCustSituation = QuestionData();
 
@@ -52,6 +52,12 @@ correctWrongImage() {
       : questionDataCustSituation.inCorrectAnswerImage;
 }
 
+correctWrongThumbImage() {
+  return questionDataCustSituation.isAnsweredCorrect == 1
+      ? questionDataCustSituation.correctAnswerThumbImage
+      : questionDataCustSituation.inCorrectAnswerThumbImage;
+}
+
 class CustomerSituationPage extends StatefulWidget {
   final HomeData homeData;
   final RefreshAnimation mRefreshAnimation;
@@ -69,7 +75,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   bool isChallenge;
   bool isCameFromNewCustomer = false;
   int existingQuesIndex = 0;
-  int index = 1;
+  // int index = 1;
 
   List alphaIndex = [
     "A",
@@ -131,7 +137,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     // questionDataCustSituation.lastName = await EncryptionManager().stringDecryption(questionDataCustomerSituation.lastName);
     //
 
-    arrAnswerSituation = questionDataCustSituation?.answer;
+    // arrAnswerSituation = questionDataCustSituation?.answer;
 
     abcdList = alphaIndex;
 
@@ -147,7 +153,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         Injector.introData.customerSituation = 1;
         await Injector.setIntroData(Injector.introData);
       }
-
       updateChallenge(true);
     } else {
       if (isCameFromNewCustomer || isChallenge) {
@@ -155,7 +160,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
         updateChallenge(false);
       }
     }
-    setState(() {});
+    // setState(() {});
   }
 
   void updateChallenge(bool isAnswer) {
@@ -247,9 +252,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                       context,
                       isAnswerCorrect(index)
                           ? ColorRes.greenDot
-                          : arrAnswerSituation[index].isSelected
+                          : questionDataCustSituation?.answer[index].isSelected
                               ? ColorRes.fontGrey
-                              : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                              : isAnswerCorrect(index) && !questionDataCustSituation?.answer[index].isSelected
                                   ? ColorRes.greenDot
                                   : ColorRes.white,
                       questionDataCustSituation.answer.elementAt(index).answer,
@@ -267,9 +272,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               //           context,
               //           isAnswerCorrect(index)
               //               ? ColorRes.greenDot
-              //               : arrAnswerSituation[index].isSelected
+              //               : questionDataCustSituation?.answer[index].isSelected
               //                   ? ColorRes.fontGrey
-              //                   : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+              //                   : isAnswerCorrect(index) && !questionDataCustSituation?.answer[index].isSelected
               //                       ? ColorRes.greenDot
               //                       : ColorRes.white,
               //           questionDataCustSituation.answer.elementAt(index).answer,
@@ -567,7 +572,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                             // navigationBloc.updateNavigation(homeData);
                             questionDataCustSituation = existingQueList[existingQuesIndex];
 
-                            arrAnswerSituation = questionDataCustSituation?.answer;
+                            questionDataCustSituation?.answer = questionDataCustSituation?.answer;
                             print("------------ type :::::::: ${questionDataCustSituation.answerType}");
                             setState(() {});
                           } else {
@@ -590,7 +595,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
     var arr = questionDataCustSituation.correctAnswerId.split(',');
 
-    if (!arr.contains(arrAnswerSituation[index].option.toString())) {
+    if (questionDataCustSituation.answer.length > 0 && (!arr.contains(questionDataCustSituation.answer[index].option.toString()))) {
       isAnswerCorrect = false;
       return false;
     }
@@ -600,7 +605,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   checkAnswerBusinessMode(int index) {
     if (isAnswerCorrect(index) == true) {
       return ColorRes.answerCorrect;
-    } else if (!isAnswerCorrect(index) && arrAnswerSituation[index].isSelected) {
+    } else if (!isAnswerCorrect(index) && questionDataCustSituation?.answer[index].isSelected) {
       return ColorRes.greyText;
     } else {
       return ColorRes.white;
@@ -614,7 +619,8 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(width: 1, color: isAnswerCorrect(index) || arrAnswerSituation[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
+          border: Border.all(
+              width: 1, color: isAnswerCorrect(index) || questionDataCustSituation?.answer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
           color: Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
@@ -641,7 +647,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             child: Padding(
                 padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: new Text(
-                  arrAnswerSituation[index].answer,
+                  questionDataCustSituation?.answer[index].answer,
                   style: TextStyle(fontSize: 17, color: (checkTextColor(index))),
                 )),
           )
@@ -651,7 +657,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   showFirstHalf(BuildContext context) {
-    print("answer====");
+    print("answer====${questionDataCustSituation?.answer.length}");
     print(questionDataCustSituation.answer[0].answer);
     return Expanded(
       flex: 1,
@@ -677,7 +683,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                         shrinkWrap: true,
                         primary: false,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: arrAnswerSituation.length,
+                        itemCount: questionDataCustSituation?.answer.length,
                         itemBuilder: (BuildContext context, index) {
                           return showItemC(index);
                         },
@@ -693,9 +699,9 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
                               context,
                               isAnswerCorrect(index)
                                   ? ColorRes.greenDot
-                                  : arrAnswerSituation[index].isSelected
+                                  : questionDataCustSituation.answer[index].isSelected
                                       ? ColorRes.fontGrey
-                                      : isAnswerCorrect(index) && !arrAnswerSituation[index].isSelected
+                                      : isAnswerCorrect(index) && !questionDataCustSituation.answer[index].isSelected
                                           ? ColorRes.greenDot
                                           : ColorRes.white,
                               questionDataCustSituation.answer.elementAt(index).answer,
@@ -799,34 +805,39 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
 
   showQueMedia(BuildContext context) {
     return InkResponse(
-        onTap: () {
-          Utils.playClickSound();
-          showDialog(
-            context: context,
-            builder: (_) => CorrectWrongMediaAlert(),
-          );
-        },
-        child: Stack(
-          children: <Widget>[
-            Card(
-              elevation: 10,
-              color: ColorRes.transparent.withOpacity(0.4),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
-              child: Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height / 2.5,
-                  padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
-                  decoration: BoxDecoration(
-//                              color:
-//                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: ColorRes.white, width: 1)),
-                  child: showMediaView(context)),
-            ),
-            showExpandIcon(context)
-          ],
-        ));
+      onTap: () {
+        Utils.playClickSound();
+        showDialog(
+          context: context,
+          builder: (_) => CorrectWrongMediaAlert(),
+        );
+      },
+      //
+      child: MediaManager().showQueMedia(
+          context, ColorRes.white, correctWrongImage(), correctWrongThumbImage() ?? "https://www.speedsecuregcc.com/uploads/products/default.jpg"),
+//         child: Stack(
+//           children: <Widget>[
+//             Card(
+//               elevation: 10,
+//               color: ColorRes.transparent.withOpacity(0.4),
+//               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+//               margin: EdgeInsets.only(top: 15, bottom: 10, right: 15, left: 10),
+//               child: Container(
+//                 alignment: Alignment.center,
+//                 height: MediaQuery.of(context).size.height / 2.5,
+//                 padding: EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+//                 decoration: BoxDecoration(
+// //                              color:
+// //                              Injector.isBusinessMode ? ColorRes.bgDescription : null,
+//                     borderRadius: BorderRadius.circular(12),
+//                     border: Border.all(color: ColorRes.white, width: 1)),
+//                 child:showMediaView(context)
+//                    ),
+//             ),
+//             showExpandIcon(context)
+//           ],
+//         )
+    );
   }
 
   showExpandIcon(BuildContext context) {
@@ -916,7 +927,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: ClampingScrollPhysics(),
-                          itemCount: arrAnswerSituation.length,
+                          itemCount: questionDataCustSituation?.answer.length,
                           itemBuilder: (BuildContext context, int index) {
                             return showItemsFullScreen(index);
                           },
@@ -980,7 +991,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
 
     var arr = questionDataCustSituation.correctAnswerId.split(',');
 
-    if (!arr.contains(arrAnswerSituation[index].option.toString())) {
+    if (!arr.contains(questionDataCustSituation?.answer[index].option.toString())) {
       isAnswerCorrect = false;
       return false;
     }
@@ -991,7 +1002,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
   checkAnswerBusinessMode(int index) {
     if (isAnswerCorrect(index) == true) {
       return ColorRes.answerCorrect;
-    } else if (!isAnswerCorrect(index) && arrAnswerSituation[index].isSelected) {
+    } else if (!isAnswerCorrect(index) && questionDataCustSituation?.answer[index].isSelected) {
       return ColorRes.greyText;
     } else {
       return ColorRes.white;
@@ -1007,7 +1018,9 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
           borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
           border: Injector.isBusinessMode
               ? null
-              : Border.all(width: 1, color: isAnswerCorrect(index) || arrAnswerSituation[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
+              : Border.all(
+                  width: 1,
+                  color: isAnswerCorrect(index) || questionDataCustSituation?.answer[index].isSelected ? ColorRes.white : ColorRes.fontGrey),
           color: Injector.isBusinessMode ? null : checkAnswerBusinessMode(index),
           image: Injector.isBusinessMode
               ? (DecorationImage(
@@ -1034,7 +1047,7 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
             child: Padding(
                 padding: EdgeInsets.only(left: 5.0, right: 5.0),
                 child: new Text(
-                  arrAnswerSituation[index].answer,
+                  questionDataCustSituation?.answer[index].answer,
                   style: TextStyle(fontSize: 17, color: (checkTextColor(index))),
                 )),
           )
@@ -1047,13 +1060,13 @@ class AlertCheckAnswersCorrectState extends State<AlertCheckAnswersCorrect> with
 checkTextColor(int index) {
   var arrCorrectAns = questionDataCustSituation.correctAnswerId.split(",");
 
-  if (arrAnswerSituation[index].isSelected == true) {
-    if (arrCorrectAns.contains(arrAnswerSituation[index].option.toString())) {
+  if (questionDataCustSituation?.answer[index].isSelected == true) {
+    if (arrCorrectAns.contains(questionDataCustSituation?.answer[index].option.toString())) {
       return ColorRes.white;
     } else {
       return ColorRes.white;
     }
-  } else if (arrCorrectAns.contains(arrAnswerSituation[index].option.toString())) {
+  } else if (arrCorrectAns.contains(questionDataCustSituation?.answer[index].option.toString())) {
     return ColorRes.white;
   } else {
     return ColorRes.textProf;
@@ -1064,13 +1077,13 @@ checkAnswer(int index) {
   var arrCorrectAns = questionDataCustSituation.correctAnswerId.split(",");
 
 //    Widget child;
-  if (arrAnswerSituation[index].isSelected == true) {
-    if (arrCorrectAns.contains(arrAnswerSituation[index].option.toString())) {
+  if (questionDataCustSituation?.answer[index].isSelected == true) {
+    if (arrCorrectAns.contains(questionDataCustSituation?.answer[index].option.toString())) {
       return Utils.getAssetsImg("bg_green");
     } else {
       return Utils.getAssetsImg("rounded_rectangle_837gray");
     }
-  } else if (arrCorrectAns.contains(arrAnswerSituation[index].option.toString())) {
+  } else if (arrCorrectAns.contains(questionDataCustSituation?.answer[index].option.toString())) {
     return Utils.getAssetsImg("bg_green");
   } else {
     return Utils.getAssetsImg("Answer_Alert_Background_White");

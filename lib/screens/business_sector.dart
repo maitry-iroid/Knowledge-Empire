@@ -70,17 +70,17 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     showIntroDialog();
   }
 
-  Future getPDF(String url) async {
-    if (selectedModule != null && url != null) {
-      _pdfPath = url;
-      // _pdfDocument = await PDFDocument.fromURL(url);
-    }
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  // Future getPDF(String url) async {
+  //   if (selectedModule != null && url != null) {
+  //     _pdfPath = url;
+  //     // _pdfDocument = await PDFDocument.fromURL(url);
+  //   }
+  //   if (mounted) {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   Future<void> initVideoController(String link) async {
     await Injector.cacheManager.getFileFromCache(link).then((fileInfo) async {
@@ -286,11 +286,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             selectedModule = arrFinalLearningModules[index];
             isSwitched = selectedModule.isDownloadEnable == 1;
 
-            if (Utils.isPdf(selectedModule.mediaLink)) {
-              Future.delayed(Duration.zero, () async {
-                await this.getPDF(selectedModule.mediaLink);
-              });
-            }
+            // if (Utils.isPdf(selectedModule.mediaLink)) {
+            //   Future.delayed(Duration.zero, () async {
+            //     await this.getPDF(selectedModule.mediaLink);
+            //   });
+            // }
 
             if (Utils.isVideo(selectedModule.mediaLink)) {
               Injector.performAudioAction(Const.stop);
@@ -438,11 +438,11 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
             if (arrLearningModules.length > 0 && (selectedModule.moduleId == null)) {
               selectedModule = arrLearningModules[0];
               isSwitched = selectedModule.isDownloadEnable == 1;
-              if (Utils.isPdf(selectedModule.mediaLink)) {
-                Future.delayed(Duration.zero, () async {
-                  await this.getPDF(selectedModule.mediaLink);
-                });
-              }
+              // if (Utils.isPdf(selectedModule.mediaLink)) {
+              //   Future.delayed(Duration.zero, () async {
+              //     await this.getPDF(selectedModule.mediaLink);
+              //   });
+              // }
 
               if (Utils.isVideo(selectedModule.mediaLink)) {
                 Injector.performAudioAction(Const.stop);

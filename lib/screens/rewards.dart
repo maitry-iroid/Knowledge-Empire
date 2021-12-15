@@ -57,17 +57,17 @@ class _RewardsPageState extends State<RewardsPage> {
     super.dispose();
   }
 
-  Future getPDF(String url) async {
-    if (selectedModule != null && url != null) {
-      _pdfPath = url;
-      // _pdfDocument = await PDFDocument.fromURL(url);
-    }
-    if (mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  // Future getPDF(String url) async {
+  //   if (selectedModule != null && url != null) {
+  //     _pdfPath = url;
+  //     // _pdfDocument = await PDFDocument.fromURL(url);
+  //   }
+  //   if (mounted) {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   Future<void> initVideoController(String link) async {
     await Injector.cacheManager.getFileFromCache(link).then((fileInfo) async {
@@ -421,11 +421,11 @@ class _RewardsPageState extends State<RewardsPage> {
             selectedIndex = index;
             _controller?.pause();
 
-            if (Utils.isPdf(selectedModule.media)) {
-              Future.delayed(Duration.zero, () async {
-                await this.getPDF(selectedModule.media);
-              });
-            }
+            // if (Utils.isPdf(selectedModule.media)) {
+            //   Future.delayed(Duration.zero, () async {
+            //     await this.getPDF(selectedModule.media);
+            //   });
+            // }
 
             if (Utils.isVideo(selectedModule.media)) {
               Injector.performAudioAction(Const.stop);
@@ -557,11 +557,11 @@ class _RewardsPageState extends State<RewardsPage> {
 
             if (arrRewards.length > 0) {
               selectedModule = arrRewards[selectedIndex];
-              if (Utils.isPdf(selectedModule.media)) {
-                Future.delayed(Duration.zero, () async {
-                  await this.getPDF(selectedModule.media);
-                });
-              }
+              // if (Utils.isPdf(selectedModule.media)) {
+              //   Future.delayed(Duration.zero, () async {
+              //     await this.getPDF(selectedModule.media);
+              //   });
+              // }
 
               if (Utils.isVideo(selectedModule.media)) {
                 Injector.performAudioAction(Const.stop);

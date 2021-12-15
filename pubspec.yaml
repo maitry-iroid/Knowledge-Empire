@@ -58,7 +58,7 @@ dependencies:
   cipher2:
   webview_flutter:
   mailto:
-#  advance_pdf_viewer: 2.0.0  # no web
+  advance_pdf_viewer: ^2.0.0 # no web
   syncfusion_flutter_pdfviewer: ^19.3.47-beta
   firebase_analytics:
   pretty_json: ^2.0.0

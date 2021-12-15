@@ -1,5 +1,6 @@
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 // import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import 'package:ke_employee/helper/constant.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/questions.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:video_player/video_player.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 VideoPlayerController _controller;
 ChewieController _chewieController;
@@ -156,30 +157,19 @@ class MediaManager {
           ],
         );
       } else if (Utils.isPdf(path)) {
-        // print("PATH++++++++++++++++++${path}");
-        // print("PATH++++++++++++++++++${pdfDocument}");
-        if (pdfDocument != null) {
-          return Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            padding: EdgeInsets.all(3),
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-//        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
-            child: SfPdfViewer.network(path),
-            // child: WebView(
-            //   initialUrl: path,
-            // ),
-          );
-        }
         return Container(
+          height: Utils.getDeviceWidth(context) / 2,
+          width: Utils.getDeviceWidth(context),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           padding: EdgeInsets.all(3),
           decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
-          child: CircularProgressIndicator(),
 //        child: Utils.pdfShow(pdfPreviewPath, isPdfLoading),
 //           child: PDFViewer(document: pdfDocument, showPicker: false),
-          // child: WebView(
-          //   initialUrl: path,
-          // ),
+          child: AbsorbPointer(
+            child: WebView(
+              initialUrl: path,
+            ),
+          ),
         );
       }
     }
@@ -202,7 +192,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
   AnimationController controller;
   Animation<double> scaleAnimation;
 
-  var document;
+  PDFDocument document;
   bool isPdfLoading = true;
 
   @override
@@ -224,14 +214,12 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
       });
     }
 
-    // if (Utils.isPdf(widget.link)) loadPdf();
+    if (Utils.isPdf(widget.link)) loadPdf();
   }
 
   Future<void> initVideoController(String link) async {
     await Injector.cacheManager.getFileFromCache(link).then((fileInfo) async {
-      _controller = Utils.getCacheFile(link) != null
-          ? VideoPlayerController.file(await Utils.getCacheFile(link).then((value) => value.file))
-          : VideoPlayerController.network(link)
+      _controller = VideoPlayerController.network(link)
         ..initialize().then((_) {
           if (mounted)
             setState(() {
@@ -252,16 +240,16 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
   }
 
   Future<void> loadPdf() async {
-    // print("----------------  pdf path :: ${widget.link}");
-    // PDFDocument doc = await PDFDocument.fromURL(widget.link);
-    // await doc.get(page: 1);
-    // if (mounted) {
-    //   setState(() {
-    //     print("----------------  pdf doc :: ${doc}");
-    //     this.document = doc;
-    //     isPdfLoading = false;
-    //   });
-    // }
+    print("----------------  pdf path :: ${widget.link}");
+    PDFDocument doc = await PDFDocument.fromURL(widget.link);
+    await doc.get(page: 1);
+    if (mounted) {
+      setState(() {
+        print("----------------  pdf doc :: ${doc}");
+        this.document = doc;
+        isPdfLoading = false;
+      });
+    }
   }
 
   bool checkimg = true;
@@ -308,12 +296,23 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                             decoration: BoxDecoration(
                               color: ColorRes.white,
                             ),
-                            child: Utils.isVideo(widget.link) && (_controller?.value?.isInitialized ?? false)
-                                ? Chewie(
-                                    controller: _chewieController,
-                                  )
+                            child: Utils.isVideo(widget.link)
+                                ? ((_controller?.value?.isInitialized ?? false)
+                                    ? Chewie(
+                                        controller: _chewieController,
+                                      )
+                                    : Center(
+                                        child: CircularProgressIndicator(),
+                                      ))
                                 : (Utils.isPdf(widget.link)
-                                    ? (document != null ? SfPdfViewer.network(widget.link) : Center(child: CircularProgressIndicator()))
+                                    ? (document != null
+                                        ? PDFViewer(
+                                            document: document,
+                                            showPicker: false,
+                                          )
+                                        : Center(
+                                            child: CircularProgressIndicator(),
+                                          ))
                                     : Container(
                                         decoration:
                                             BoxDecoration(image: DecorationImage(image: Utils.getCacheNetworkImage(widget.link), fit: BoxFit.cover)),

@@ -106,14 +106,13 @@ class Injector {
     ..open(
       Audio(
         "assets/sounds/game_bg_music.mp3",
+        // "assets/sounds/coin_sound.mp3",
       ),
       autoStart: false,
+      loopMode: LoopMode.playlist,
     );
-  static AssetsAudioPlayer rewardAudioPlayer = AssetsAudioPlayer()
-    ..open(
-      Audio("assets/sounds/game_bg_music.mp3"),
-      autoStart: false,
-    );
+
+  static AssetsAudioPlayer rewardAudioPlayer = AssetsAudioPlayer();
 
   // is Development environment
   static bool isDev = true;

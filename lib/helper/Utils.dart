@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:crypto/crypto.dart';
@@ -463,40 +464,74 @@ class Utils {
     }
   }
 
-  static Future<ByteData> loadAsset() async {
-    // return await rootBundle.load('assets/sounds/game_bg_music.mp3');
-  }
-
-  static playAchievementSound() async {
-    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
-  }
-
   static playClickSound() {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      // Injector.audioCache.play("all_button_clicks.wav");
+      Injector.rewardAudioPlayer.open(
+          Audio(
+            "assets/sounds/all_button_clicks.mp3",
+          ),
+          autoStart: true);
     }
 //    if (Injector.isSoundEnable)
 //      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
+      Injector.rewardAudioPlayer.open(
+        Audio(
+          "assets/sounds/coin_sound.mp3",
+        ),
+        autoStart: true,
+      );
+    }
 //    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
 //     if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
+      // Injector.rewardAudioPlayer.stop();
+      Injector.rewardAudioPlayer.open(
+        Audio(
+          "assets/sounds/wrong_answer.mp3",
+        ),
+        autoStart: true,
+      );
+    }
     // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static achievementSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
+      Injector.rewardAudioPlayer.open(
+          Audio(
+            "assets/sounds/achievement_music.mp3",
+          ),
+          autoStart: true);
+    }
     // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static proCorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
+      Injector.rewardAudioPlayer.open(
+          Audio(
+            "assets/sounds/pro_right_answer.mp3",
+          ),
+          autoStart: true);
+    }
     // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proIncorrectAnswerSound() async {
+    if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
+      Injector.rewardAudioPlayer.open(
+          Audio(
+            "assets/sounds/pro_wrong_answer.mp3",
+          ),
+          autoStart: true);
+    }
     // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
   }
 
@@ -504,28 +539,6 @@ class Utils {
 //    Audio audio = Audio.load(path);
 //    audio.play();
 //  }
-
-  static saveQuestionLocally(List<QuestionData> arrQuestions) async {
-//    List<String> jsonQuestionData = List();
-//    List<QuestionData> questionData_ = List();
-//
-//    if (Injector.prefs.getStringList(PrefKeys.questionData) != null) {
-//      List<String> jsonQuestionData =
-//          Injector.prefs.getStringList(PrefKeys.questionData);
-//
-//      jsonQuestionData.forEach((jsonQuestion) {
-//        questionData_.add(QuestionData.fromJson(jsonDecode(jsonQuestion)));
-//      });
-//    }
-//
-//    questionData_.addAll(arrQuestions);
-//
-//    questionData_.forEach((questionData) {
-//      jsonQuestionData.add(json.encode(questionData));
-//    });
-//
-//    await Injector.prefs.setStringList(PrefKeys.questionData, jsonQuestionData);
-  }
 
   static getCurrentFormattedDate() {
     var now = new DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch, isUtc: true);
@@ -780,6 +793,8 @@ class Utils {
   }
 
   static checkAudio(isAnsweredCorrect) {
+    print("====isAnsweredCorrect===${isAnsweredCorrect}");
+    print("====isAnsweredCorrect===${Injector.isBusinessMode}");
     if (Injector.isBusinessMode) {
       if (isAnsweredCorrect) {
         return Utils.correctAnswerSound();

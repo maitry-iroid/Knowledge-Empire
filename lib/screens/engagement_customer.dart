@@ -119,7 +119,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = questionDataEngCustomer.answer;
       abcdList = alphaIndex;
-      getPdf();
+      // getPdf();
     }
 
     if (Utils.isVideo(questionDataEngCustomer.mediaLink) && questionDataEngCustomer.answerType != Const.typeAnswerMedia) {
@@ -185,32 +185,32 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     });
   }
 
-  Future getPdf() async {
-    if (questionData != null && questionData.mediaLink != null && Utils.isPdf(questionData.mediaLink)) {
-      // if (await Utils.getCacheFile(await questionData.mediaLink).then((value) => value.file) != null) {
-      //   File fetchedFile = await Utils.getCacheFile(await questionData.mediaLink).then((value) => value.file);
-      //   _pdfPath = fetchedFile.path;
-      // } else {
-      //   File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
-      //   _pdfPath = fetchedFile.path;
-      // }
-      // _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
-      //
-      // // Load from URL
-      // print("_pdfPath+++++++++++++++++++${_pdfPath}");
-      // // _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
-      //TODO
-      // _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
-      //   print(e);
-      // });
-
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
+  // Future getPdf() async {
+  //   if (questionData != null && questionData.mediaLink != null && Utils.isPdf(questionData.mediaLink)) {
+  //     // if (await Utils.getCacheFile(await questionData.mediaLink).then((value) => value.file) != null) {
+  //     //   File fetchedFile = await Utils.getCacheFile(await questionData.mediaLink).then((value) => value.file);
+  //     //   _pdfPath = fetchedFile.path;
+  //     // } else {
+  //     //   File fetchedFile = await await DefaultCacheManager().getSingleFile(questionData.mediaLink);
+  //     //   _pdfPath = fetchedFile.path;
+  //     // }
+  //     // _previewPath = await PdfPreviewer.getPagePreview(filePath: _pdfPath, pageNumber: _pageNumber);
+  //     //
+  //     // // Load from URL
+  //     // print("_pdfPath+++++++++++++++++++${_pdfPath}");
+  //     // // _pdfDocument = await PDFDocument.fromAsset(_pdfPath).catchError((e) {
+  //     //TODO
+  //     // _pdfDocument = await PDFDocument.fromURL(questionData.mediaLink).catchError((e) {
+  //     //   print(e);
+  //     // });
+  //
+  //     if (mounted) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     }
+  //   }
+  // }
 
   selectItem(index) {
     if (mounted)

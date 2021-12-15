@@ -93,6 +93,11 @@ class QuestionData {
   int targetLevel;
   int currentRetention;
   var winningAmount;
+  String supportFileType;
+  int correctAnswerType;
+  int inCorrectAnswerType;
+  String correctAnswerThumbImage;
+  String inCorrectAnswerThumbImage;
 
   QuestionData({
     this.questionId,
@@ -129,6 +134,11 @@ class QuestionData {
     this.additionalInfoLink,
     this.targetLevel,
     this.currentRetention,
+    this.supportFileType,
+    this.correctAnswerType,
+    this.inCorrectAnswerType,
+    this.correctAnswerThumbImage,
+    this.inCorrectAnswerThumbImage,
   });
 
   QuestionData.fromJson(Map<String, dynamic> json) {
@@ -179,6 +189,11 @@ class QuestionData {
     additionalInfoLink = json['additionalInfoLink'];
     targetLevel = json['targetLevel'];
     currentRetention = json['currentRetention'];
+    supportFileType = json['supportFileType'];
+    correctAnswerType = json['correctAnswerType'];
+    inCorrectAnswerType = json['inCorrectAnswerType'];
+    correctAnswerThumbImage = json['correctAnswerThumbImage'];
+    inCorrectAnswerThumbImage = json['inCorrectAnswerThumbImage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -218,6 +233,11 @@ class QuestionData {
     data['additionalInfoLink'] = this.additionalInfoLink;
     data['targetLevel'] = this.targetLevel;
     data['currentRetention'] = this.currentRetention;
+    data['supportFileType'] = this.supportFileType;
+    data['correctAnswerType'] = this.correctAnswerType;
+    data['inCorrectAnswerType'] = this.inCorrectAnswerType;
+    data['correctAnswerThumbImage'] = this.correctAnswerThumbImage;
+    data['inCorrectAnswerThumbImage'] = this.inCorrectAnswerThumbImage;
     return data;
   }
 }
