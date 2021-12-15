@@ -408,7 +408,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ? () async {
                                 // Injector.audioCache.clearCache();
 //                                Injector.player.clear("game_bg_music.mp3");
-//                                Injector.audioPlayerBg.pause();
+                                Injector.backgroundAudioPlayer.stop();
                                 Utils.playClickSound();
                                 _asyncConfirmDialog(context);
                               }

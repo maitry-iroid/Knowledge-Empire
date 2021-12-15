@@ -123,7 +123,7 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
     }
 
     if (Utils.isVideo(questionDataEngCustomer.mediaLink) && questionDataEngCustomer.answerType != Const.typeAnswerMedia) {
-//      Injector.audioPlayerBg.stop();
+      Injector.backgroundAudioPlayer.stop();
       (Injector.isBusinessMode && (Injector.isSoundEnable ?? false))
           ? Injector.performAudioAction(Const.resume)
           : Injector.performAudioAction(Const.stop);

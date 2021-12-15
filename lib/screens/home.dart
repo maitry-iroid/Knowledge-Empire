@@ -99,7 +99,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
       if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
         //TODO AUDIO
         Injector.performAudioAction(Const.start);
-        // Injector.isBusinessMode ? Injector.audioPlayerBg.resume() : Injector.audioPlayerBg.stop();
+        Injector.isBusinessMode ? Injector.backgroundAudioPlayer.play() : Injector.backgroundAudioPlayer.stop();
+        ;
       }
     } else if (state == AppLifecycleState.inactive) {
       //TODO AUDIO
@@ -153,7 +154,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver, TickerP
                 getDrawerItemWidget(),
                 buildHeaderView(),
                 coinAnimation(),
-
                 // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeEmployee),   3.16,employeeDrainNotifier),
                 //animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeSalesPersons),   2.38,saleDrainNotifier),
                 // animatedPositioned(size, HeaderUtils.getHeaderIcon(Const.typeServicesPerson),   1.78,serviceDrainNotifier),

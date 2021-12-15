@@ -447,15 +447,8 @@ class Utils {
     print('--------in method isPlaySound-----------------$isPlaySound');
     try {
       if (isPlaySound) {
-        // final file = new File('${(await getTemporaryDirectory()).path}/music.mp3');
-        // print(file.path);
-        // await file.writeAsBytes((await loadAsset()).buffer.asUint8List());
-        // await Injector.audioPlayerBg.setReleaseMode(ReleaseMode.LOOP);
-        // Injector.audioPlayerBg.play(file.path, isLocal: true);
-        // Injector.backgroundAudioPlayer.stop();
         Injector.backgroundAudioPlayer.play();
       } else {
-        // Injector.audioPlayerBg.stop();
         Injector.backgroundAudioPlayer.pause().then((value) => print("::::pause:::::"));
         Injector.backgroundAudioPlayer.stop().then((value) => print("::::stop:::::"));
       }
@@ -472,8 +465,6 @@ class Utils {
           ),
           autoStart: true);
     }
-//    if (Injector.isSoundEnable)
-//      audioPlay('assets/sounds/all_button_clicks.wav');
   }
 
   static correctAnswerSound() async {
@@ -485,13 +476,10 @@ class Utils {
         autoStart: true,
       );
     }
-//    if (Injector.isSoundEnable) Injector.audioCache.play("right_answer.wav");
-//     if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("coin_sound.wav");
   }
 
   static incorrectAnswerSound() async {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      // Injector.rewardAudioPlayer.stop();
       Injector.rewardAudioPlayer.open(
         Audio(
           "assets/sounds/wrong_answer.mp3",
@@ -499,7 +487,6 @@ class Utils {
         autoStart: true,
       );
     }
-    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("wrong_answer.wav");
   }
 
   static achievementSound() async {
@@ -510,7 +497,6 @@ class Utils {
           ),
           autoStart: true);
     }
-    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("achievement_music.mp3");
   }
 
   static proCorrectAnswerSound() async {
@@ -521,7 +507,6 @@ class Utils {
           ),
           autoStart: true);
     }
-    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_right_answer.mp3");
   }
 
   static proIncorrectAnswerSound() async {
@@ -532,13 +517,7 @@ class Utils {
           ),
           autoStart: true);
     }
-    // if (Injector.isSoundEnable != null && Injector.isSoundEnable) Injector.audioCache.play("pro_wrong_answer.mp3");
   }
-
-//  static audioPlay(String path) async {
-//    Audio audio = Audio.load(path);
-//    audio.play();
-//  }
 
   static getCurrentFormattedDate() {
     var now = new DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch, isUtc: true);
@@ -743,7 +722,7 @@ class Utils {
 
   static performDashboardItemClick(BuildContext context, String type) async {
     if (Injector.isSoundEnable != null && Injector.isSoundEnable) {
-      // Injector.audioCache.play("all_button_clicks.wav");
+      Utils.playClickSound();
     }
 
     if (type == Const.typeOrg ||

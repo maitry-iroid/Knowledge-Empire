@@ -260,7 +260,8 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
       onTap: () {
         Utils.playClickSound();
         if (Injector.isSoundEnable) {
-          // Injector.audioPlayerBg.resume();
+          Injector.backgroundAudioPlayer.play();
+          ;
         }
         if (Utils.isVideo(widget.link)) {
           _chewieController?.pause();
@@ -326,7 +327,7 @@ class ExpandMediaState extends State<ExpandMedia> with SingleTickerProviderState
                                 onTap: () {
                                   Utils.playClickSound();
                                   if (Injector.isSoundEnable) {
-                                    // Injector.audioPlayerBg.resume();
+                                    Injector.backgroundAudioPlayer.play();
                                   }
                                   if (Utils.isVideo(widget.link)) {
                                     _chewieController?.pause();
