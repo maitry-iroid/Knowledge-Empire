@@ -39,7 +39,36 @@ QuestionData questionDataCustSituation = QuestionData();
 VideoPlayerController _controller;
 ChewieController _chewieController;
 
-List abcdList = List();
+// List abcdList = List();
+List abcdList = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
+
 List<QuestionData> existingQueList;
 
 FileInfo fileInfo;
@@ -77,35 +106,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   int existingQuesIndex = 0;
   // int index = 1;
 
-  List alphaIndex = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z"
-  ];
-
   selectItem(index) {}
 
   @override
@@ -138,9 +138,6 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
     //
 
     // arrAnswerSituation = questionDataCustSituation?.answer;
-
-    abcdList = alphaIndex;
-
     correctWrongImage();
 
     showIntroDialog();
