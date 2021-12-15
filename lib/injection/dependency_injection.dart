@@ -112,6 +112,8 @@ class Injector {
       loopMode: LoopMode.playlist,
     );
 
+  final bool playing = backgroundAudioPlayer.isPlaying.value;
+
   static AssetsAudioPlayer rewardAudioPlayer = AssetsAudioPlayer();
 
   // is Development environment
@@ -146,20 +148,13 @@ class Injector {
   static getInstance() async {
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
-
     isInternetConnected = await Utils.isInternetConnected();
-
     deviceType = Platform.operatingSystem;
     print(deviceType);
-
     firebaseMessaging = FirebaseMessaging.instance;
-
     webApi = WebApi();
-
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-    deviceId = await getdeviceId();
-
+    await getdeviceId();
     await updateInstance();
     init();
   }
@@ -472,6 +467,7 @@ class Injector {
       print('Running on ${webBrowserInfo.userAgent}');
       deviceId = webBrowserInfo.vendor; // e.g. "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0"
     }
+    print("deviceId=====");
     print(deviceId);
   }
 }

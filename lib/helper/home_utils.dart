@@ -45,7 +45,7 @@ class HomeUtils {
     localeBloc.setLocale(Utils.getIndexLocale(Injector.userData.language));
     //update userdata if privacy policy is updated.
     apiCallPrivacyPolicy(Injector.userData.userId, Const.typeGetPrivacyPolicy.toString(), Injector.userData.activeCompany, (response) {
-      if (response.isSeenPrivacyPolicy == 0) {
+      if (response?.isSeenPrivacyPolicy == 0) {
         Injector.userData.isSeenPrivacyPolicy = 0;
         Injector.setUserData(Injector.userData, false);
       }

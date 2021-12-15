@@ -657,7 +657,7 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
   }
 
   showFirstHalf(BuildContext context) {
-    print("answer====${questionDataCustSituation?.answer.length}");
+    print("answer====${questionDataCustSituation?.answer?.length}");
     print(questionDataCustSituation.answer[0].answer);
     return Expanded(
       flex: 1,

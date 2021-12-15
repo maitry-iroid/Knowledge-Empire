@@ -124,6 +124,7 @@ class PushNotificationHelper {
   void callRegisterForPush(String token) {
     Utils.isInternetConnected().then((isConnected) async {
       if (isConnected) {
+        print("===devicdId===${Injector.deviceId}");
         RegisterForPushRequest rq = RegisterForPushRequest();
         rq.userId = Injector.userId;
         rq.deviceId = Injector.deviceId;

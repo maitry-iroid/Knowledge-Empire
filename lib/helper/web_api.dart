@@ -3,13 +3,13 @@ import 'dart:io';
 
 // import 'package:ansicolor/ansicolor.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:pretty_json/pretty_json.dart';
+
 import 'constant.dart';
 
 class WebApi {
@@ -165,7 +165,7 @@ class WebApi {
     String contentTypeHeader = 'application/json';
     String authorizationHeader = Injector.userData != null && Injector.userData.accessToken != null ? "pig " + Injector.userData.accessToken : "";
     String deviceType = Injector.deviceType;
-    String deviceId = Injector.deviceId != null ? Injector.deviceId : "abcdefg";
+    String deviceId = Injector.deviceId != null ? Injector.deviceId : "";
 
     // print("contentTypeHeader " + contentTypeHeader);
     // print("accessToken " + authorizationHeader);
