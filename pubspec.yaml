@@ -43,7 +43,8 @@ dependencies:
   connectivity:
 #  audioplayers:
   pie_chart:
-  package_info:
+#  package_info:
+  package_info_plus:
   rxdart:
   charts_flutter:
   flutter_spinkit:

@@ -22,7 +22,7 @@ import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/models/update_user_setting.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../commonview/common_view.dart';

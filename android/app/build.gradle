@@ -90,7 +90,6 @@ android {
             applicationId "com.keemployee.app"
             resValue "string", "app_name", "Knowledge Empire"
         }
-
        // Privacy - Location When In Use Usage Description
     }
 

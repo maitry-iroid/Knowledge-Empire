@@ -27,7 +27,7 @@ import 'package:ke_employee/models/intro_model.dart';
 import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/on_off_feature.dart';
 import 'package:ke_employee/models/privay_policy.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /*
