@@ -33,14 +33,13 @@ class EncryptionManager {
   Future<String> stringDecryption(String cypherText) async {
     String decryptedString = "";
     try {
-      // decryption
-      // decryptedString = await Cipher2.decryptAesCbc128Padding7(cypherText, key, iv);
-      // print("testDecrytion case2: success");
+      decryptedString = await Cipher2.decryptAesCbc128Padding7(cypherText, key, iv);
+      print("testDecrytion case2: success");
     } on PlatformException catch (e) {
       if (e.code == "ERROR_INVALID_KEY_OR_IV_LENGTH") {
-        // print("testDecrytion ==${cypherText}== case2: pass : ${e.toString()}");
+        print("testDecrytion ==${cypherText}== case2: pass : ${e.toString()}");
       } else {
-        // print("testDecrytion ==${cypherText}== case2: failed : ${e.toString()}");
+        print("testDecrytion ==${cypherText}== case2: failed : ${e.toString()}");
       }
     }
     // print('-----------------------------------------');
