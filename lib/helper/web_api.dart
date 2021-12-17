@@ -184,7 +184,7 @@ class WebApi {
             ? baseUrl
             : Injector.prefs.getString(PrefKeys.mainBaseUrl),
         connectTimeout: 120000,
-        receiveTimeout: 3000,
+        receiveTimeout: 15000,
         headers: headers);
 
     // print("finalbaseUrl :  " + options.baseUrl);

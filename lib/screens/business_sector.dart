@@ -285,7 +285,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
           setState(() {
             selectedModule = arrFinalLearningModules[index];
             isSwitched = selectedModule.isDownloadEnable == 1;
-
+            print("===SELECTED MODULE====${arrFinalLearningModules[index].toJson()}");
             // if (Utils.isPdf(selectedModule.mediaLink)) {
             //   Future.delayed(Duration.zero, () async {
             //     await this.getPDF(selectedModule.mediaLink);
@@ -474,7 +474,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
 
     AssignModuleRequest rq = AssignModuleRequest();
     rq.userId = Injector.userId;
-    rq.companyId = selectedModule.companyId;
+    print("====selectedModule====${selectedModule.companyId}");
+    rq.companyId = Injector.userData.activeCompany;
     rq.moduleId = selectedModule.moduleId;
     rq.type = type;
 
@@ -697,8 +698,10 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
     Utils.isInternetConnectedWithAlert(context).then((isConnected) {
       if (isConnected) {
         if (selectedModule.isAssign == 0) {
+          print("======selectedModule.isAssign == 0=====");
           assignUserToModule(Const.subscribe);
         } else {
+          print("======selectedModule.isAssign == 1=====");
           assignUserToModule(Const.unSubscribe);
         }
       }
@@ -990,7 +993,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                 )),
             onTap: () {
               Utils.playClickSound();
-
+              print("====Utils.playClickSound====");
               if (selectedModule.isSubscribedFromBackend == 0) {
                 if (selectedModule.isAssign == 1)
                   showConfirmDialog();
