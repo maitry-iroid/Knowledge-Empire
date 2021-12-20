@@ -98,7 +98,9 @@ class IntroScreenDialogState extends State<IntroScreenDialog> {
                                         padding: EdgeInsets.only(
                                             right: Injector.isBusinessMode ? getPaddingByImage() : size.height / 30.7, left: size.height / 30.7),
                                         child: Text(widget.desTextLine,
-                                            textAlign: TextAlign.start, maxLines: null, style: Theme.of(context).textTheme.bodyText1),
+                                            textAlign: TextAlign.start,
+                                            maxLines: null,
+                                            style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 17)),
                                       ),
                                     ],
                                   ),
