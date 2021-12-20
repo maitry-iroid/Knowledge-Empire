@@ -377,7 +377,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   arrFinalRewards[index].reward,
                   maxLines: 1,
                   overflow: TextOverflow.fade,
-                  minFontSize: 7,
+                  minFontSize: 10,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.textProf,

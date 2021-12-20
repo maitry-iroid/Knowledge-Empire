@@ -241,7 +241,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         arrQuestions[index].title,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
-                        minFontSize: 4,
+                        minFontSize: 10,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: ColorRes.blue,
@@ -255,7 +255,7 @@ class _ExistingCustomerPageState extends State<ExistingCustomerPage> {
                         arrQuestions[index].moduleName,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
-                        minFontSize: 4,
+                        minFontSize: 10,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: ColorRes.blue, fontSize: 18),
                       ),

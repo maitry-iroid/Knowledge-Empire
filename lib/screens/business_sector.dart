@@ -232,7 +232,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                         arrFinalLearningModules[index].moduleName,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
-                        minFontSize: 4,
+                        minFontSize: 10,
                         style: TextStyle(
                           color: Injector.isBusinessMode ? ColorRes.blue : ColorRes.textProf,
                           fontSize: 15,
@@ -805,7 +805,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: AutoSizeText(
                 Utils.getText(context, "Target Level"),
-                minFontSize: 8,
+                minFontSize: 10,
                 maxLines: 1,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,
@@ -860,7 +860,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: AutoSizeText(
                 Utils.getText(context, "Target Retention"),
-                minFontSize: 8,
+                minFontSize: 10,
                 maxLines: 1,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
                 textAlign: TextAlign.center,

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:ke_employee/commonview/common_view.dart';
@@ -10,6 +11,7 @@ import 'package:ke_employee/models/manage_organization.dart';
 import 'package:ke_employee/models/organization.dart';
 import 'package:ke_employee/screens/refreshAnimation.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
 import '../helper/Utils.dart';
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
@@ -125,7 +127,7 @@ class _OrganizationsPage2State extends State<OrganizationsPage2> {
                       org != null && org.name != null ? org.name : "",
                       maxLines: 1,
                       overflow: TextOverflow.fade,
-                      minFontSize: 4,
+                      minFontSize: 10,
                       style: TextStyle(fontSize: 12, color: Injector.isBusinessMode ? ColorRes.textBlue : ColorRes.hintColor),
                     ),
                   ),

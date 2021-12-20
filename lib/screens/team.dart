@@ -242,7 +242,7 @@ class _TeamPageState extends State<TeamPage> {
                 text,
                 maxLines: 1,
                 overflow: TextOverflow.fade,
-                minFontSize: 4,
+                minFontSize: 10,
                 textAlign: textAlign,
                 style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 16),
               )
