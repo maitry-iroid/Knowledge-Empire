@@ -37,9 +37,9 @@ dependencies:
   flutter_cache_manager:
   cached_network_image:
 #  background_fetch: ^0.5.5
-  firebase_messaging:
+  firebase_messaging: ^11.2.3
 #  firebase_core:
-  flutter_local_notifications:
+  flutter_local_notifications: ^9.1.5
   connectivity:
 #  audioplayers:
   pie_chart:

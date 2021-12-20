@@ -39,7 +39,7 @@ class PushNotificationHelper {
       print("Localnotification exception: " + e.message);
     });
 
-    await Injector.firebaseMessaging.requestPermission();
+    // await Injector.firebaseMessaging.requestPermission();
 
     await Injector.firebaseMessaging.getToken().then((token) {
       print("token : " + token);
@@ -145,9 +145,8 @@ class PushNotificationHelper {
   showLocalNotification(int id, String title, String body) async {
     print("riddhi====");
 
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your channel id', 'your channel name', 'your channel desc',
-        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails('your channel id', 'your channel name',
+        importance: Importance.max, priority: Priority.high, ticker: 'ticker', icon: "ic_launcher");
 
     //TODO keep in MIND , add config in AppDelegate.swift to get push in foreground
     const iOSPlatformChannelSpecifics = const IOSNotificationDetails(badgeNumber: 1, presentAlert: true);
@@ -170,7 +169,9 @@ class PushNotificationHelper {
 
     Utils.addBadge();
 
+    // if (Platform.isAndroid) {
     showLocalNotification(Injector.notificationID, message.notification?.title, message?.notification?.body);
+    // }
 
     PushModel pushModel;
     if (message.data != null) {
@@ -210,7 +211,9 @@ class PushNotificationHelper {
 
       CommonView().collectorDialog(context, mPushModel, btnText);
     } else {
+      // if (Platform.isAndroid) {
       showLocalNotification(Injector.notificationID, message.notification?.title, message.notification?.body);
+      // }
     }
   }
 }
