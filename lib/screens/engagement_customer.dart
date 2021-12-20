@@ -119,6 +119,9 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = questionDataEngCustomer.answer;
       abcdList = alphaIndex;
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {});
+      });
       // getPdf();
     }
 
@@ -430,20 +433,24 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                 : Container(
                     width: 100,
                   ),
-            Container(
-              alignment: Alignment.center,
-              height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
-                  color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
-                  image:
-                      Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
-              child: Text(
-                // Utils.getText(context, StringRes.engagement),
-                questionData.title,
-                style: TextStyle(color: ColorRes.white, fontSize: 18),
-                textAlign: TextAlign.center,
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                // height: 30,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                decoration: BoxDecoration(
+                    borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(15),
+                    color: Injector.isBusinessMode ? null : ColorRes.blueMenuSelected,
+                    image:
+                        Injector.isBusinessMode ? (DecorationImage(image: AssetImage(Utils.getAssetsImg("eddit_profile")), fit: BoxFit.fill)) : null),
+                child: Text(
+                  // Utils.getText(context, StringRes.engagement),
+                  questionData.title,
+                  style: TextStyle(color: ColorRes.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
             InkResponse(
