@@ -784,8 +784,8 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               ),
               child: SingleChildScrollView(
                 child: Text(
-                  // selectedModule.targetLevel.toString() ?? "",
-                  "",
+                  "${selectedModule?.targetLevel ?? ""}" ?? "",
+                  // "",
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
                 ),
@@ -840,7 +840,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
               ),
               child: SingleChildScrollView(
                 child: Text(
-                  selectedModule.retentionRate.toString() + " %",
+                  "${selectedModule?.retentionRate ?? ""}" + " %",
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Injector.isBusinessMode ? ColorRes.white : ColorRes.textProf, fontSize: 17),
                 ),
