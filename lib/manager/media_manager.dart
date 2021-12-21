@@ -29,6 +29,7 @@ class MediaManager {
 
   showQueMedia(BuildContext context, Color borderColor, String answer, String thumbImage,
       {bool isPdfLoading = false,
+      bool isAllowExpandItem = true,
       String pdfFilePath,
       ChewieController chewieController,
       VideoPlayerController videoPlayerController,
@@ -38,7 +39,9 @@ class MediaManager {
     // print(answer);
     return InkResponse(
         onTap: () {
-          performImageClick(context, answer, pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop);
+          if (isAllowExpandItem) {
+            performImageClick(context, answer, pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop);
+          }
         },
         child: Stack(
           children: <Widget>[
@@ -59,12 +62,15 @@ class MediaManager {
                       videoPlay: videoPlay,
                       videoLoop: videoLoop)),
             ),
-            showMediaExpandIcon(context, answer, pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop)
+            isAllowExpandItem
+                ? showMediaExpandIcon(context, answer,
+                    pdfFilePath: pdfFilePath, videoPlay: videoPlay, videoLoop: videoLoop, isAllowExpandItem: isAllowExpandItem)
+                : Container()
           ],
         ));
   }
 
-  showMediaExpandIcon(BuildContext context, String link, {String pdfFilePath, int videoPlay, int videoLoop}) {
+  showMediaExpandIcon(BuildContext context, String link, {String pdfFilePath, int videoPlay, int videoLoop, bool isAllowExpandItem = true}) {
     return Positioned(
       bottom: 0,
       right: 0,
@@ -79,8 +85,10 @@ class MediaManager {
                         AssetImage(Injector.isBusinessMode ? Utils.getAssetsImg("full_expand_question_answers") : Utils.getAssetsImg("expand_pro")),
                     fit: BoxFit.fill))),
         onTap: () {
-          Utils.playClickSound();
-          showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link, videoPlay: videoPlay, videoLoop: videoLoop));
+          if (isAllowExpandItem) {
+            Utils.playClickSound();
+            showDialog(context: context, builder: (_) => ExpandMedia(pdfPath: pdfFilePath, link: link, videoPlay: videoPlay, videoLoop: videoLoop));
+          }
         },
       ),
     );

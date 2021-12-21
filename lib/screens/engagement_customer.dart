@@ -17,6 +17,7 @@ import 'package:ke_employee/manager/media_manager.dart';
 import 'package:ke_employee/models/get_customer_value.dart';
 import 'package:ke_employee/models/homedata.dart';
 import 'package:ke_employee/models/submit_challenge_question.dart';
+import 'package:pretty_json/pretty_json.dart';
 import 'package:video_player/video_player.dart';
 
 import '../commonview/common_view.dart';
@@ -118,6 +119,10 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
       questionData = questionDataEngCustomer;
       questionDataEngCustomer?.answer?.shuffle();
       arrAnswer = questionDataEngCustomer.answer;
+      print("=====ANSWER====");
+      questionDataEngCustomer.answer.forEach((element) {
+        print(prettyJson(element.toJson(), indent: 2));
+      });
       abcdList = alphaIndex;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {});
@@ -725,7 +730,6 @@ class _EngagementCustomerState extends State<EngagementCustomer> {
                         )
                       : showMediaAnswerOptions(context, true)),
             ),
-
             Align(
               alignment: Alignment.topCenter,
               child: Container(
@@ -903,6 +907,8 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
   }
 
   Widget showItemFullScree(int index) {
+    print("arrAnswer[index].answer");
+    print(arrAnswer[index].answer);
     return GestureDetector(
         onTap: () {
           Utils.playClickSound();
@@ -911,7 +917,6 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
               arrAnswer[index].isSelected = !arrAnswer[index].isSelected;
             });
           }
-
           widget.engagementCustomerState.refresh();
         },
         child: Container(
@@ -939,13 +944,25 @@ class FunkyOverlayAnswersState extends State<FunkyOverlayAnswers> with SingleTic
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                  child: new Text(
-                    arrAnswer[index].answer,
-                    style: TextStyle(fontSize: 17, color: (arrAnswer[index].isSelected ? ColorRes.white : ColorRes.textProf)),
-                  ),
-                ),
-              )
+                    padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                    child: Utils.isPdf(arrAnswer[index].answer)
+                        ? MediaManager().showQueMedia(context, ColorRes.white, arrAnswer[index].answer, arrAnswer[index].thumbImage,
+                            isPdfLoading: true, pdfFilePath: arrAnswer[index].answer)
+                        : (Utils.isVideo(arrAnswer[index].answer)
+                            ? MediaManager().showQueMedia(context, ColorRes.white, arrAnswer[index].answer, arrAnswer[index].thumbImage,
+                                videoPlayerController: _controller, chewieController: _chewieController)
+                            : (Utils.isImage(arrAnswer[index].answer)
+                                ? MediaManager().showQueMedia(
+                                    context,
+                                    ColorRes.white,
+                                    arrAnswer[index].answer,
+                                    arrAnswer[index].thumbImage,
+                                  )
+                                : new Text(
+                                    arrAnswer[index].answer,
+                                    style: TextStyle(fontSize: 17, color: (arrAnswer[index].isSelected ? ColorRes.white : ColorRes.textProf)),
+                                  )))),
+              ),
             ],
           ),
         ));
