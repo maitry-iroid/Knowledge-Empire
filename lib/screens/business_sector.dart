@@ -804,7 +804,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   borderRadius: BorderRadius.circular(20),
                   image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: AutoSizeText(
-                Utils.getText(context, "Target Level"),
+                Utils.getText(context, StringRes.targetLevel),
                 minFontSize: 10,
                 maxLines: 1,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -859,7 +859,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   borderRadius: BorderRadius.circular(20),
                   image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: AutoSizeText(
-                Utils.getText(context, "Target Retention"),
+                Utils.getText(context, StringRes.targetRetention),
                 minFontSize: 10,
                 maxLines: 1,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),
@@ -914,7 +914,7 @@ class _BusinessSectorPageState extends State<BusinessSectorPage> {
                   borderRadius: BorderRadius.circular(20),
                   image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_blue")), fit: BoxFit.fill) : null),
               child: AutoSizeText(
-                Utils.getText(context, "Certification Criteria"),
+                Utils.getText(context, StringRes.certificationCriteria),
                 minFontSize: 10,
                 maxLines: 1,
                 style: TextStyle(color: ColorRes.white, fontSize: 20),

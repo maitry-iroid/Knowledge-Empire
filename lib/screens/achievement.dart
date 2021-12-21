@@ -322,6 +322,11 @@ class _AchievementPageState extends State<AchievementPage> {
 
         data.forEach((v) {
           arrAchievementData.add(GetAchievementData.fromJson(v));
+          print("====DATA====");
+          print(GetAchievementData.fromJson(v).achievementCategory);
+          GetAchievementData.fromJson(v).subCategory.forEach((element) {
+            print(element.achievementName);
+          });
         });
 
         if (arrAchievementData.isNotEmpty) {

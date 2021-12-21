@@ -30,9 +30,10 @@ class _GroupItemState extends State<GroupItem> {
         widget.selectItem(widget.index);
       },
       child: Container(
+        alignment: Alignment.center,
         // width: Utils.getDeviceWidth(context) / (Injector.isBusinessMode ? 7.5 : 8),
-        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 8, horizontal: 0) : EdgeInsets.symmetric(vertical: 3, horizontal: 4),
-        padding: EdgeInsets.symmetric(horizontal: 0),
+        margin: Injector.isBusinessMode ? EdgeInsets.symmetric(vertical: 8, horizontal: 4) : EdgeInsets.symmetric(vertical: 3, horizontal: 4),
+        padding: EdgeInsets.symmetric(horizontal: 6),
         // alignment: Alignment.center,
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -46,6 +47,7 @@ class _GroupItemState extends State<GroupItem> {
           widget.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
           style: TextStyle(
               decoration: Injector.isBusinessMode
                   ? TextDecoration.none

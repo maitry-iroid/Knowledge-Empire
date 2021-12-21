@@ -22,6 +22,8 @@ class StringRes {
   static var profile = "profile";
   static var help = "help";
   static var strDefault = "Default";
+  static var asc = "Asc";
+  static var desc = "Desc";
 
   //profile
   static var emailId = "emailId";
@@ -77,6 +79,9 @@ class StringRes {
 
   //new customer
   static var sector = "sector";
+  static var Level = "Level";
+  static var Retention = "Retention";
+  static var DaysInLimit = "DaysInLimit";
   static var name = "name";
   static var value = "value";
   static var loyalty = "loyalty";
@@ -430,6 +435,9 @@ class StringRes {
   static String strBrandValueTitle = "strBrandValueTitle";
   static String strRanking = "strRanking";
   static String strBalance = "strBalance";
+  static String targetLevel = "targetLevel";
+  static String targetRetention = "targetRetention";
+  static String certificationCriteria = "certificationCriteria";
 
   static Map<String, Map<String, String>> localizedValues = {
     'en': {
@@ -860,6 +868,14 @@ class StringRes {
 
       'alert': "Alert",
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
+      'Asc': "Asc",
+      'Desc': "Desc",
+      'Level': "Level",
+      'Retention': "Retention",
+      'DaysInLimit': "DaysInLimit",
+      'targetLevel': "Target Level",
+      'targetRetention': "Target Retention",
+      'certificationCriteria': "Certification Criteria",
     },
     'de': {
       //Nickname
@@ -1274,6 +1290,14 @@ class StringRes {
       'unFriend': 'Freund entfernt',
       'alertUnFriend': "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
       'alert': "Achtung",
+      'Asc': "Asc",
+      'Desc': "Desc",
+      'Level': "Level",
+      'Retention': "Retention",
+      'DaysInLimit': "DaysInLimit",
+      'targetLevel': "Target Level",
+      'targetRetention': "Target Retention",
+      'certificationCriteria': "Certification Criteria",
     },
     'zh': {
       //Nickname
@@ -1655,6 +1679,14 @@ class StringRes {
       'unFriend': '成功添加朋友',
       'alertUnFriend': "您确定要与该用户成为好友吗？",
       'alert': "警告",
+      'Asc': "Asc",
+      'Desc': "Desc",
+      'Level': "Level",
+      'Retention': "Retention",
+      'DaysInLimit': "DaysInLimit",
+      'targetLevel': "Target Level",
+      'targetRetention': "Target Retention",
+      'certificationCriteria': "Certification Criteria",
     }
   };
 
@@ -2075,7 +2107,15 @@ class StringRes {
       'alertUnFriend': "Are you sure, you want to unfriend this user?",
       'addFriend': 'Friend added successfully',
       'unFriend': 'Unfriend successfully',
-      'alert': "Alert"
+      'alert': "Alert",
+      'Asc': "Asc",
+      'Desc': "Desc",
+      'Level': "Level",
+      'Retention': "Retention",
+      'DaysInLimit': "DaysInLimit",
+      'targetLevel': "Target Level",
+      'targetRetention': "Target Retention",
+      'certificationCriteria': "Certification Criteria",
     },
     'de': {
       //Nickname
@@ -2498,6 +2538,14 @@ class StringRes {
       'unFriend': 'Freund entfernt',
       'alert': "Achtung",
       'alertUnFriend': "Sind Sie sicher, dass Sie diesen Benutzer entfreunden möchten?",
+      'Asc': "Asc",
+      'Desc': "Desc",
+      'Level': "Level",
+      'Retention': "Retention",
+      'DaysInLimit': "DaysInLimit",
+      'targetLevel': "Target Level",
+      'targetRetention': "Target Retention",
+      'certificationCriteria': "Certification Criteria",
     },
     'zh': {
       //Nickname
@@ -2870,6 +2918,14 @@ class StringRes {
       'alertUnFriend': "您确定要与该用户成为好友吗？",
       'addFriend': '成功添加朋友',
       'unFriend': '成功取消朋友',
+      'Asc': "Asc",
+      'Desc': "Desc",
+      'Level': "Level",
+      'Retention': "Retention",
+      'DaysInLimit': "DaysInLimit",
+      'targetLevel': "Target Level",
+      'targetRetention': "Target Retention",
+      'certificationCriteria': "Certification Criteria",
     }
   };
 }

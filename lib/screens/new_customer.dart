@@ -134,7 +134,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 3,
             child: AutoSizeText(
-              Utils.getText(context, "Level"),
+              Utils.getText(context, StringRes.Level),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               overflow: TextOverflow.fade,
@@ -145,7 +145,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 4,
             child: AutoSizeText(
-              Utils.getText(context, "Retention"),
+              Utils.getText(context, StringRes.Retention),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               overflow: TextOverflow.fade,
@@ -156,7 +156,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           Expanded(
             flex: 2,
             child: AutoSizeText(
-              Utils.getText(context, "DaysInLimit"),
+              Utils.getText(context, StringRes.DaysInLimit),
               style: TextStyle(color: Colors.white, fontSize: 18),
               textAlign: TextAlign.center,
               overflow: TextOverflow.fade,
@@ -386,7 +386,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           fit: BoxFit.fill)
                       : null),
               child: Text(
-                "Asc",
+                Utils.getText(context, StringRes.asc),
                 style: TextStyle(
                   color: ColorRes.white,
                   fontSize: DimenRes.titleTextSize,
@@ -428,7 +428,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           fit: BoxFit.fill)
                       : null),
               child: Text(
-                "Desc",
+                Utils.getText(context, StringRes.desc),
                 style: TextStyle(
                   color: ColorRes.white,
                   fontSize: DimenRes.titleTextSize,
