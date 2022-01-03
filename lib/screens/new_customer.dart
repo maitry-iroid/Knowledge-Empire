@@ -6,10 +6,10 @@ import 'package:ke_employee/BLoC/navigation_bloc.dart';
 import 'package:ke_employee/commonview/common_view.dart';
 import 'package:ke_employee/dialogs/display_dailogs.dart';
 import 'package:ke_employee/helper/Utils.dart';
+import 'package:ke_employee/helper/header_utils.dart';
 import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
 import 'package:ke_employee/models/homedata.dart';
-
 import '../helper/constant.dart';
 import '../helper/string_res.dart';
 import '../models/questions.dart';
@@ -110,7 +110,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 4,
+            flex: 5,
             child: AutoSizeText(
               Utils.getText(context, StringRes.name),
               style: TextStyle(color: Colors.white, fontSize: 18),
@@ -121,7 +121,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 5,
             child: AutoSizeText(
               Utils.getText(context, StringRes.sector),
               style: TextStyle(color: Colors.white, fontSize: 18),
@@ -132,43 +132,70 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
             ),
           ),
           Expanded(
-            flex: 3,
-            child: AutoSizeText(
-              Utils.getText(context, StringRes.Level),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.fade,
-              maxLines: 1,
-              minFontSize: 10,
-            ),
+            flex: 2,
+            child : Container(
+                height: 26,
+                width: 26,
+                padding: EdgeInsets.all(4),
+                margin: EdgeInsets.all(4),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Injector.isBusinessMode ? ColorRes.textRecordBlue : null,
+                    border: Border.all(color: ColorRes.white)),
+                child: FittedBox(child: Icon(Icons.leaderboard, color: ColorRes.white,))),
+            // child: Icon(Icons.leaderboard, color: ColorRes.white,),
+            // child: AutoSizeText(
+            //   Utils.getText(context, StringRes.Level),
+            //   style: TextStyle(color: Colors.white, fontSize: 18),
+            //   textAlign: TextAlign.center,
+            //   overflow: TextOverflow.fade,
+            //   maxLines: 1,
+            //   minFontSize: 10,
+            // ),
           ),
           Expanded(
-            flex: 4,
-            child: AutoSizeText(
-              Utils.getText(context, StringRes.Retention),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.fade,
-              maxLines: 1,
-              minFontSize: 10,
+            flex: 2,
+            child: Container(
+              height: 26,
+              width: 26,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Injector.isBusinessMode ? ColorRes.textRecordBlue : null,
+                  border: Border.all(color: ColorRes.white)),
+              child: Image(
+                image: AssetImage(Utils.getAssetsImg(HeaderUtils.getHeaderIcon(Const.typeBrandValue))),
+              ),
             ),
+            // child: Icon(Icons.volume_up_rounded, color: ColorRes.white,),
+            // child: AutoSizeText(
+            //   Utils.getText(context, StringRes.Retention),
+            //   style: TextStyle(color: Colors.white, fontSize: 18),
+            //   textAlign: TextAlign.center,
+            //   overflow: TextOverflow.fade,
+            //   maxLines: 1,
+            //   minFontSize: 10,
+            // ),
+          ),
+          Expanded(
+            flex: 2,
+            child : Container(
+                height: 26,
+                width: 26,
+                padding: EdgeInsets.all(4),
+                margin: EdgeInsets.all(4),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Injector.isBusinessMode ? ColorRes.textRecordBlue : null,
+                    border: Border.all(color: ColorRes.white)),
+                child: FittedBox(child: Icon(Icons.calendar_today_rounded, color: ColorRes.white,))),
+             // child: AutoSizeText(
+           //    Utils.getText(context, StringRes.DaysInLimit),
+           //    style: TextStyle(color: Colors.white, fontSize: 18),
+           //    textAlign: TextAlign.center,
+           //    overflow: TextOverflow.fade,
+           //    maxLines: 1,
+           //    minFontSize: 10,
+           //  ),
           ),
           Expanded(
             flex: 2,
             child: AutoSizeText(
-              Utils.getText(context, StringRes.DaysInLimit),
-              style: TextStyle(color: Colors.white, fontSize: 18),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.fade,
-              maxLines: 1,
-              minFontSize: 10,
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: AutoSizeText(
-              Utils.getText(context, StringRes.points),
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              Utils.getText(context, Injector.isBusinessMode ? "\$" : "KP"),
+              style: TextStyle(color: Colors.white, fontSize: 20),
               textAlign: TextAlign.center,
               overflow: TextOverflow.fade,
               maxLines: 1,
@@ -177,13 +204,14 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
           ),
           Utils.isFeatureOn(Const.typeOrg)
               ? Expanded(
-                  flex: 3,
-                  child: AutoSizeText(
-                    Utils.getText(context, StringRes.resources),
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                  ),
+                  flex: 2,
+                  child: Icon(Icons.shopping_bag, color: ColorRes.white,),
+                  // child: AutoSizeText(
+                  //   Utils.getText(context, StringRes.resources),
+                  //   style: TextStyle(color: Colors.white, fontSize: 18),
+                  //   textAlign: TextAlign.center,
+                  //   maxLines: 1,
+                  // ),
                 )
               : Container(),
         ],
@@ -195,7 +223,6 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
     return InkResponse(
       onTap: () {
         Utils.playClickSound();
-
         if (Utils.isFeatureOn(Const.typeOrg)) {
           if ((Injector.customerValueData.remainingSalesPerson >= arrQuestions[index].resources &&
               Injector.customerValueData.remainingCustomerCapacity > 0)) {
@@ -231,7 +258,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Expanded(
-                          flex: 4,
+                          flex: 5,
                           child: AutoSizeText(
                             arrQuestions[index].title,
                             maxLines: 1,
@@ -245,7 +272,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           ),
                         ),
                         Expanded(
-                          flex: 4,
+                          flex: 5,
                           child: AutoSizeText(
                             arrQuestions[index].moduleName,
                             maxLines: 1,
@@ -256,7 +283,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           ),
                         ),
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: AutoSizeText(
                             arrQuestions[index].targetLevel.toString(),
                             maxLines: 1,
@@ -267,7 +294,7 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           ),
                         ),
                         Expanded(
-                          flex: 4,
+                          flex: 2,
                           child: AutoSizeText(
                             arrQuestions[index].currentRetention.toString() + " %",
                             maxLines: 1,
@@ -287,12 +314,12 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
                           ),
                         ),
                         Expanded(
-                          flex: 4,
+                          flex: 2,
                           child: kePoint(index),
                         ),
                         Utils.isFeatureOn(Const.typeOrg)
                             ? Expanded(
-                                flex: 3,
+                                flex: 2,
                                 child: Text(
                                   arrQuestions[index].resources.toString(),
                                   style: TextStyle(color: ColorRes.textRecordBlue, fontSize: 18),
@@ -352,91 +379,91 @@ class _NewCustomerPageState extends State<NewCustomerPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          Spacer(),
-          InkWell(
-            onTap: () async {
-              if (isDescSelected) {
-                isDescSelected = false;
-              }
-              isAscSelected = !isAscSelected;
-              if (isAscSelected) {
-                arrQuestions.sort((a, b) => (a.daysInList).compareTo(b.daysInList));
-                getQuestionsBloc.getQuestionSubject.sink.add(arrQuestions);
-              } else {
-                QuestionRequest rq = QuestionRequest();
-                rq.userId = Injector.userData.userId;
-                rq.type = Const.getNewQueType;
-                await getQuestionsBloc.getQuestion(rq);
-              }
-              setState(() {});
-            },
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
-                  color: Injector.isBusinessMode ? null : (isAscSelected ? ColorRes.titleBlueProf : ColorRes.lightGrey),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image: AssetImage(
-                            Utils.getAssetsImg("bg_blue"),
-                          ),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                Utils.getText(context, StringRes.asc),
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: DimenRes.titleTextSize,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () async {
-              if (isAscSelected) {
-                isAscSelected = false;
-              }
-              isDescSelected = !isDescSelected;
-              if (isDescSelected) {
-                arrQuestions.sort((a, b) => (b.daysInList).compareTo(a.daysInList));
-                getQuestionsBloc.getQuestionSubject.sink.add(arrQuestions);
-              } else {
-                QuestionRequest rq = QuestionRequest();
-                rq.userId = Injector.userData.userId;
-                rq.type = Const.getNewQueType;
-                await getQuestionsBloc.getQuestion(rq);
-              }
-              setState(() {});
-            },
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                  borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-                  border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
-                  color: Injector.isBusinessMode ? null : (isDescSelected ? ColorRes.titleBlueProf : ColorRes.lightGrey),
-                  image: Injector.isBusinessMode
-                      ? DecorationImage(
-                          image: AssetImage(
-                            Utils.getAssetsImg("bg_blue"),
-                          ),
-                          fit: BoxFit.fill)
-                      : null),
-              child: Text(
-                Utils.getText(context, StringRes.desc),
-                style: TextStyle(
-                  color: ColorRes.white,
-                  fontSize: DimenRes.titleTextSize,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
+          // Spacer(),
+          // InkWell(
+          //   onTap: () async {
+          //     if (isDescSelected) {
+          //       isDescSelected = false;
+          //     }
+          //     isAscSelected = !isAscSelected;
+          //     if (isAscSelected) {
+          //       arrQuestions.sort((a, b) => (a.daysInList).compareTo(b.daysInList));
+          //       getQuestionsBloc.getQuestionSubject.sink.add(arrQuestions);
+          //     } else {
+          //       QuestionRequest rq = QuestionRequest();
+          //       rq.userId = Injector.userData.userId;
+          //       rq.type = Const.getNewQueType;
+          //       await getQuestionsBloc.getQuestion(rq);
+          //     }
+          //     setState(() {});
+          //   },
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          //     margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 5),
+          //     decoration: BoxDecoration(
+          //         borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          //         border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+          //         color: Injector.isBusinessMode ? null : (isAscSelected ? ColorRes.titleBlueProf : ColorRes.lightGrey),
+          //         image: Injector.isBusinessMode
+          //             ? DecorationImage(
+          //                 image: AssetImage(
+          //                   Utils.getAssetsImg("bg_blue"),
+          //                 ),
+          //                 fit: BoxFit.fill)
+          //             : null),
+          //     child: Text(
+          //       Utils.getText(context, StringRes.asc),
+          //       style: TextStyle(
+          //         color: ColorRes.white,
+          //         fontSize: DimenRes.titleTextSize,
+          //       ),
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () async {
+          //     if (isAscSelected) {
+          //       isAscSelected = false;
+          //     }
+          //     isDescSelected = !isDescSelected;
+          //     if (isDescSelected) {
+          //       arrQuestions.sort((a, b) => (b.daysInList).compareTo(a.daysInList));
+          //       getQuestionsBloc.getQuestionSubject.sink.add(arrQuestions);
+          //     } else {
+          //       QuestionRequest rq = QuestionRequest();
+          //       rq.userId = Injector.userData.userId;
+          //       rq.type = Const.getNewQueType;
+          //       await getQuestionsBloc.getQuestion(rq);
+          //     }
+          //     setState(() {});
+          //   },
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          //     margin: title == StringRes.challenges ? EdgeInsets.only(right: 60) : EdgeInsets.symmetric(horizontal: 5),
+          //     decoration: BoxDecoration(
+          //         borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+          //         border: Injector.isBusinessMode ? null : Border.all(width: 1, color: ColorRes.white),
+          //         color: Injector.isBusinessMode ? null : (isDescSelected ? ColorRes.titleBlueProf : ColorRes.lightGrey),
+          //         image: Injector.isBusinessMode
+          //             ? DecorationImage(
+          //                 image: AssetImage(
+          //                   Utils.getAssetsImg("bg_blue"),
+          //                 ),
+          //                 fit: BoxFit.fill)
+          //             : null),
+          //     child: Text(
+          //       Utils.getText(context, StringRes.desc),
+          //       style: TextStyle(
+          //         color: ColorRes.white,
+          //         fontSize: DimenRes.titleTextSize,
+          //       ),
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
