@@ -176,7 +176,8 @@ class WebApi {
       HttpHeaders.contentTypeHeader: contentTypeHeader,
       HttpHeaders.authorizationHeader: authorizationHeader,
       'devicetype': deviceType,
-      'deviceid': deviceId
+      'deviceid': deviceId,
+      'passPhrase': Injector.prefs.getString(PrefKeys.companyKey) != null ? Injector.prefs.getString(PrefKeys.companyKey) : ""
     };
 
     BaseOptions options = new BaseOptions(
@@ -187,7 +188,7 @@ class WebApi {
         receiveTimeout: 15000,
         headers: headers);
 
-    // print("finalbaseUrl :  " + options.baseUrl);
+    print("finalbaseUrl 11:  " + options.baseUrl);
     dio.options = options;
     return dio;
   }

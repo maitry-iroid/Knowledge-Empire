@@ -20,6 +20,7 @@ class PrefKeys {
   static var emailId = 'emailId';
   static var companyCode = 'companyCode';
   static var appThemeColor = "appThemeColor";
+  static var companyKey = "companyKey";
 
 //  static var learningModule1= "learningModule1";
 //  static var learningModule2= "learningModule2";

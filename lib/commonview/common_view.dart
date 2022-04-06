@@ -10,12 +10,10 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/models/information_activity_log.dart';
 import 'package:ke_employee/models/push_model.dart';
 import 'package:ke_employee/screens/engagement_customer.dart';
 import 'package:ke_employee/screens/more_info.dart';
-import 'package:mailto/mailto.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -219,70 +217,70 @@ class CommonView {
     await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
   }
 
-  static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataTitle, String dataText,
-      bool isMediaQue, String dataId) {
-    return InkResponse(
-      onTap: () async {
-        Utils.playClickSound();
-        InformationActivityLogModel rq = InformationActivityLogModel();
-        rq.userId = Injector.userData.userId.toString();
-        rq.dataId = dataId;
-        rq.type = isModule ? "2" : "1";
-        rq.informationType = "1";
-
-        print("Request ::: ${rq.toJson()}");
-        WebApi().callAPI(WebApi.rqInformationActivityLog, rq.toJson()).then((data) {
-          print("data::: $data");
-          if (data != null) {
-            print("----------- Information Activity Log API called -------------");
-          } else {
-            print("----------- Data null -------------");
-          }
-        }).catchError((e) {
-          print("Information Activity Log" + e.toString());
-        });
-
-        print("MAIL before::::::::::::::::::::::::::::: $content");
-        String mail = await EncryptionManager().stringDecryption(content);
-        print("MAIL after::::::::::::::::::::::::::::: $mail");
-
-        //Generate encoded String for mail to
-        String subjectData = isModule ? "Module" : "Question";
-        String queText = isModule || isMediaQue ? "" : "Question Text:";
-        String supportReq = "Support request: [Type your message here]";
-
-        // String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}';
-        String subject = 'Support request for Knowledge Empire $subjectData: $dataTitle';
-        String body =
-            "Dear Expert, \n\nThis is a Knowledge Empire Support request: \nFrom:${Injector.userData.email} \nFor $subjectData: $dataTitle \n$queText $dataText \n$supportReq \n\nBest Regards, \nYour Knowledge Empire Team";
-
-        // Print logs and execute
-        print("title::::: $mail");
-        print("Body :::::: $body");
-        print("URL ::::: mailto:$mail?subject=$subject&body=$body");
-        // launchURL("mailto:$mail?subject=$subject&body=$body");
-        final mailtoLink = Mailto(
-          to: [mail],
-          subject: subject,
-          body: body,
-        );
-        await launch('$mailtoLink');
-      },
-      child: Container(
-          alignment: Alignment.center,
-          margin: EdgeInsets.only(left: 50, right: 50, top: 15),
-          padding: EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-              color: Injector.isBusinessMode ? Colors.transparent : ColorRes.headerBlue,
-              borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
-              image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_subscribe")), fit: BoxFit.fill) : null),
-          child: Text(
-            Utils.getText(context, title),
-            style: TextStyle(color: ColorRes.white, fontSize: 20),
-            textAlign: TextAlign.center,
-          )),
-    );
-  }
+  // static showContactExpert(BuildContext context, String title, bool checking, String content, bool isModule, String dataTitle, String dataText,
+  //     bool isMediaQue, String dataId) {
+  //   return InkResponse(
+  //     onTap: () async {
+  //       Utils.playClickSound();
+  //       InformationActivityLogModel rq = InformationActivityLogModel();
+  //       rq.userId = Injector.userData.userId.toString();
+  //       rq.dataId = dataId;
+  //       rq.type = isModule ? "2" : "1";
+  //       rq.informationType = "1";
+  //
+  //       print("Request ::: ${rq.toJson()}");
+  //       WebApi().callAPI(WebApi.rqInformationActivityLog, rq.toJson()).then((data) {
+  //         print("data::: $data");
+  //         if (data != null) {
+  //           print("----------- Information Activity Log API called -------------");
+  //         } else {
+  //           print("----------- Data null -------------");
+  //         }
+  //       }).catchError((e) {
+  //         print("Information Activity Log" + e.toString());
+  //       });
+  //
+  //       print("MAIL before::::::::::::::::::::::::::::: $content");
+  //       String mail = await EncryptionManager().stringDecryption(content);
+  //       print("MAIL after::::::::::::::::::::::::::::: $mail");
+  //
+  //       //Generate encoded String for mail to
+  //       String subjectData = isModule ? "Module" : "Question";
+  //       String queText = isModule || isMediaQue ? "" : "Question Text:";
+  //       String supportReq = "Support request: [Type your message here]";
+  //
+  //       // String subject = 'Support%20request%20for%20Knowledge%20Empire%20$subjectData:%20${dataTitle.replaceAll(" ", "%20")}';
+  //       String subject = 'Support request for Knowledge Empire $subjectData: $dataTitle';
+  //       String body =
+  //           "Dear Expert, \n\nThis is a Knowledge Empire Support request: \nFrom:${Injector.userData.email} \nFor $subjectData: $dataTitle \n$queText $dataText \n$supportReq \n\nBest Regards, \nYour Knowledge Empire Team";
+  //
+  //       // Print logs and execute
+  //       print("title::::: $mail");
+  //       print("Body :::::: $body");
+  //       print("URL ::::: mailto:$mail?subject=$subject&body=$body");
+  //       // launchURL("mailto:$mail?subject=$subject&body=$body");
+  //       final mailtoLink = Mailto(
+  //         to: [mail],
+  //         subject: subject,
+  //         body: body,
+  //       );
+  //       await launch('$mailtoLink');
+  //     },
+  //     child: Container(
+  //         alignment: Alignment.center,
+  //         margin: EdgeInsets.only(left: 50, right: 50, top: 15),
+  //         padding: EdgeInsets.symmetric(vertical: 10),
+  //         decoration: BoxDecoration(
+  //             color: Injector.isBusinessMode ? Colors.transparent : ColorRes.headerBlue,
+  //             borderRadius: Injector.isBusinessMode ? null : BorderRadius.circular(20),
+  //             image: Injector.isBusinessMode ? DecorationImage(image: AssetImage(Utils.getAssetsImg("bg_subscribe")), fit: BoxFit.fill) : null),
+  //         child: Text(
+  //           Utils.getText(context, title),
+  //           style: TextStyle(color: ColorRes.white, fontSize: 20),
+  //           textAlign: TextAlign.center,
+  //         )),
+  //   );
+  // }
 
   static showMoreInformation(BuildContext context, String title, bool checking, String url, bool isModule, String dataId) {
     return InkResponse(

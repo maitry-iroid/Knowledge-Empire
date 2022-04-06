@@ -37,9 +37,9 @@ dependencies:
   flutter_cache_manager:
   cached_network_image:
 #  background_fetch: ^0.5.5
-  firebase_messaging: ^11.2.3
+  firebase_messaging:
 #  firebase_core:
-  flutter_local_notifications: ^9.1.5
+  flutter_local_notifications:
   connectivity:
 #  audioplayers:
   pie_chart:
@@ -60,7 +60,7 @@ dependencies:
   webview_flutter:
   mailto:
   advance_pdf_viewer: ^2.0.0 # no web
-  syncfusion_flutter_pdfviewer: ^19.3.47-beta
+  syncfusion_flutter_pdfviewer: ^20.1.47-beta
   firebase_analytics:
   pretty_json: ^2.0.0
   flutter_native_timezone:

@@ -14,14 +14,15 @@ import 'package:ke_employee/helper/res.dart';
 import 'package:ke_employee/helper/string_res.dart';
 import 'package:ke_employee/helper/web_api.dart';
 import 'package:ke_employee/injection/dependency_injection.dart';
-import 'package:ke_employee/manager/encryption_manager.dart';
 import 'package:ke_employee/manager/version_manager.dart';
 import 'package:ke_employee/models/UpdateDialogModel.dart';
-import 'package:ke_employee/models/login.dart';
 import 'package:ke_employee/models/privay_policy.dart';
 import 'package:ke_employee/screens/forgot_password.dart';
 import 'package:ke_employee/screens/home.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../manager/encryption_manager.dart';
+import '../models/login.dart';
 
 class FadeRouteLogin extends PageRouteBuilder {
   final Widget page;
@@ -97,8 +98,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   preFillData() async {
-    emailController.text = await EncryptionManager().stringDecryption(Injector.prefs.get(PrefKeys.emailId));
-    codeController.text = Injector.prefs.get(PrefKeys.companyCode);
+    emailController.text = "dilip@mailinator.com";
+    codeController.text = "DILIP";
+    passwordController.text = "11";
+    // emailController.text = await EncryptionManager().stringDecryption(Injector.prefs.get(PrefKeys.emailId));
+    // codeController.text = Injector.prefs.get(PrefKeys.companyCode);
   }
 
   Future initStateMethods() async {
@@ -563,8 +567,17 @@ class _LoginPageState extends State<LoginPage> {
     Injector.prefs.remove(PrefKeys.mainBaseUrl);
     await WebApi().callAPI(WebApi.rqVerifyCompanyCode, {'companyCode': codeController.text.trim()}).then((data) async {
       CommonView.showCircularProgress(false, context);
-
-      if (data != null && data['baseUrl'] != null) {
+      print("data========${data['passPhrase']}");
+      print("HelloKey================${Injector.prefs.getString(PrefKeys.companyKey)}");
+      var keyData;
+      if (data['passPhrase'] != null && Injector.prefs.getString(PrefKeys.companyKey) == null) {
+        print("HelloKey================${Injector.prefs.getString(PrefKeys.companyKey)}");
+        keyData = await showPopBox(context: context);
+        print("keyDta===${keyData}");
+      } else {
+        keyData = "Done";
+      }
+      if (data != null && data['baseUrl'] != null && keyData != null) {
         Injector.companyCode = codeController.text.trim();
         await Injector.prefs.setString(PrefKeys.mainBaseUrl, data['baseUrl']);
         // Navigator.pop(context);
@@ -799,6 +812,68 @@ class _LoginPageState extends State<LoginPage> {
             });
           }),
     );
+  }
+
+  Future<String> showPopBox({@required BuildContext context, AlertDialog Function(BuildContext context) builder}) async {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    TextEditingController keyController = TextEditingController();
+    var key = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          scrollable: true,
+          content: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  TextFormField(
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
+                        hintText: Utils.getText(context, "KEY").toUpperCase(),
+                        hintStyle: TextStyle(color: ColorRes.greyText),
+                        border: InputBorder.none),
+                    controller: keyController,
+                    validator: (String value) {
+                      if (value.length != 16) {
+                        return 'Please Enter Valid Key';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState.validate()) {
+                        await Injector.prefs.setString(PrefKeys.companyKey, keyController.text);
+                        Navigator.pop(context, keyController.text);
+                      }
+                    },
+                    child: Text("Add Key"),
+                    style: ElevatedButton.styleFrom(
+                      primary: ColorRes.headerBlue,
+                      textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    print("key======${key}");
+    return key;
   }
 
   showForgotPasswordView() {

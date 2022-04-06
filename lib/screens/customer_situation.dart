@@ -279,19 +279,19 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
               //               "https://www.speedsecuregcc.com/uploads/products/default.jpg");
               //     }),
               Row(children: <Widget>[
-                Expanded(
-                    child: questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
-                        ? CommonView.showContactExpert(
-                            context,
-                            Utils.getText(context, StringRes.contactExpert),
-                            true,
-                            questionDataCustSituation?.expertEmail ?? "",
-                            false,
-                            questionDataCustSituation.title,
-                            questionDataCustSituation.question,
-                            true,
-                            questionDataCustSituation.questionId.toString())
-                        : Container()),
+                // Expanded(
+                //     child: questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
+                //         ? CommonView.showContactExpert(
+                //             context,
+                //             Utils.getText(context, StringRes.contactExpert),
+                //             true,
+                //             questionDataCustSituation?.expertEmail ?? "",
+                //             false,
+                //             questionDataCustSituation.title,
+                //             questionDataCustSituation.question,
+                //             true,
+                //             questionDataCustSituation.questionId.toString())
+                //         : Container()),
                 Expanded(
                     child: questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
                         ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
@@ -779,18 +779,18 @@ class _CustomerSituationPageState extends State<CustomerSituationPage> {
             children: <Widget>[
               showQueMedia(context),
               CommonView.questionAndExplanation(context, Utils.getText(context, StringRes.explanation), true, questionDataCustSituation.description),
-              questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
-                  ? CommonView.showContactExpert(
-                      context,
-                      Utils.getText(context, StringRes.contactExpert),
-                      true,
-                      questionDataCustSituation?.expertEmail ?? "",
-                      false,
-                      questionDataCustSituation.title,
-                      questionDataCustSituation.question,
-                      false,
-                      questionDataCustSituation.questionId.toString())
-                  : Container(),
+              // questionDataCustSituation.expertEmail != null && questionDataCustSituation.expertEmail != ""
+              //     ? CommonView.showContactExpert(
+              //         context,
+              //         Utils.getText(context, StringRes.contactExpert),
+              //         true,
+              //         questionDataCustSituation?.expertEmail ?? "",
+              //         false,
+              //         questionDataCustSituation.title,
+              //         questionDataCustSituation.question,
+              //         false,
+              //         questionDataCustSituation.questionId.toString())
+              //     : Container(),
               questionDataCustSituation.additionalInfoLink != null && questionDataCustSituation.additionalInfoLink != ""
                   ? CommonView.showMoreInformation(context, Utils.getText(context, StringRes.moreInformation), true,
                       questionDataCustSituation?.additionalInfoLink ?? "", false, questionDataCustSituation.questionId.toString())

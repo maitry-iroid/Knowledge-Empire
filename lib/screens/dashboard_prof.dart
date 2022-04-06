@@ -124,19 +124,21 @@ class DashboardProfPageState extends State<DashboardProfPage> {
                     fit: BoxFit.fill)),
             child: Row(
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage(Utils.getAssetsImg(getImage(type))),
-                      width: Utils.getDeviceHeight(context) / 5.8,
-                    ),
-                    Utils.isShowUnreadCount(type)
-                        ? Utils.showUnreadCount(type, 2, 2)
-                        : Container(
-                            width: 25,
-                            height: 25,
-                          )
-                  ],
+                Expanded(
+                  child: Stack(
+                    children: <Widget>[
+                      Image(
+                        image: AssetImage(Utils.getAssetsImg(getImage(type))),
+                        width: Utils.getDeviceHeight(context) / 5.8,
+                      ),
+                      Utils.isShowUnreadCount(type)
+                          ? Utils.showUnreadCount(type, 2, 2)
+                          : Container(
+                              width: 25,
+                              height: 25,
+                            )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   width: 10,

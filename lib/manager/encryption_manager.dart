@@ -1,9 +1,14 @@
 // import 'package:cipher2/cipher2.dart';
 import 'package:cipher2/cipher2.dart';
 import 'package:flutter/services.dart';
+import 'package:ke_employee/helper/prefkeys.dart';
+
+import '../injection/dependency_injection.dart';
 
 class EncryptionManager {
-  String key = '1245714587458745'; //combination of 16 character
+  String key = Injector.prefs.getString(PrefKeys.companyKey) != null
+      ? Injector.prefs.getString(PrefKeys.companyKey)
+      : '1245714587458745'; //combination of 16 character
   String iv = 'e16ce913a20dadb8';
 
   Future<String> stringEncryption(String plainText) async {
