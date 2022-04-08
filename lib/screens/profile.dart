@@ -214,6 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         onTap: () {
                           _launchInWebViewOrVC("https://www.blue-elephants-solutions.com/wp/privacy-policy");
                         },
+
                         child: Container(
                           height: 30,
                           margin: EdgeInsets.only(top: 0, bottom: 10),
