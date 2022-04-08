@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -522,7 +522,7 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/sdk/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -610,7 +610,7 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = A29DG653DY;
 				ENABLE_BITCODE = NO;
-				FLUTTER_ROOT = /Users/iroid/Documents/development/flutter;
+				FLUTTER_ROOT = /Users/iroid/Documents/sdk/flutter;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
