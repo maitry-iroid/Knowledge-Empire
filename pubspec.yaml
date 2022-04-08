@@ -32,7 +32,7 @@ dependencies:
 #  super_tooltip: ^1.0.1
   image_picker:
   dio:
-  video_player:
+  video_player: 2.1.12
 #  path:
   flutter_cache_manager:
   cached_network_image:
