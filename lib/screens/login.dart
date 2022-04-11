@@ -98,11 +98,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   preFillData() async {
-    emailController.text = "dilip@mailinator.com";
-    codeController.text = "DILIP";
-    passwordController.text = "11";
-    // emailController.text = await EncryptionManager().stringDecryption(Injector.prefs.get(PrefKeys.emailId));
-    // codeController.text = Injector.prefs.get(PrefKeys.companyCode);
+    // emailController.text = "dilip@mailinator.com";
+    // codeController.text = "DILIP";
+    // passwordController.text = "11";
+    emailController.text = await EncryptionManager().stringDecryption(Injector.prefs.get(PrefKeys.emailId));
+    codeController.text = Injector.prefs.get(PrefKeys.companyCode);
   }
 
   Future initStateMethods() async {
@@ -230,41 +230,43 @@ class _LoginPageState extends State<LoginPage> {
               )),
           Expanded(child: Container()),
           Expanded(
-              flex: 5,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  BaseRaisedButton(
-                      buttonColor: ColorRes.blue,
-                      textColor: Colors.white,
-                      borderColor: Colors.white,
-                      buttonText: Utils.getText(context, StringRes.login),
-                      onPressed: () {
-                        Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
-                          if (isConnected) validateForm();
-                        });
-                        // Navigator.of(context).pushNamed(bottomNavigationRoute);
-                      }),
-                  SizedBox(height: 10),
-                  InkResponse(
-                      onTap: () {
-                        _launchEmail("support@knowledge-empire.com");
-                      },
-                      child: Center(
-                        child: Text(Utils.getText(context, StringRes.requestDemoAccount),
-                            style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),
-                      )),
-                  Expanded(child: Container()),
-                  Center(
-                    child: Text(
-                      VersionManager.getVersion(context),
-                      style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.5), fontSize: 18),
-                      textAlign: TextAlign.right,
-                    ),
-                  )
-                ],
-              )),
+            flex: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                BaseRaisedButton(
+                    buttonColor: ColorRes.blue,
+                    textColor: Colors.white,
+                    borderColor: Colors.white,
+                    buttonText: Utils.getText(context, StringRes.login),
+                    onPressed: () {
+                      Utils.isInternetConnectedWithAlert(context).then((isConnected) async {
+                        if (isConnected) validateForm();
+                      });
+                      // Navigator.of(context).pushNamed(bottomNavigationRoute);
+                    }),
+                SizedBox(height: 10),
+                InkResponse(
+                  onTap: () {
+                    _launchEmail("support@knowledge-empire.com");
+                  },
+                  child: Center(
+                    child: Text(Utils.getText(context, StringRes.requestDemoAccount),
+                        style: TextStyle(color: ColorRes.blue, fontSize: 17, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Expanded(child: Container()),
+                Center(
+                  child: Text(
+                    VersionManager.getVersion(context),
+                    style: TextStyle(color: ColorRes.lightGrey.withOpacity(0.5), fontSize: 18),
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -315,23 +317,32 @@ class _LoginPageState extends State<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [SizedBox(width: 50), Expanded(child: showForgotPasswordView()), Expanded(child: showChangeLanguageView())],
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(width: 50),
+                                    Expanded(child: showForgotPasswordView()),
+                                    Expanded(child: showChangeLanguageView())
+                                  ],
+                                ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 8),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(width: 50),
-                                  Expanded(child: showRequestDemoAccountView()),
-                                ],
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(width: 50),
+                                    Expanded(child: showRequestDemoAccountView()),
+                                    Expanded(child: showGeneratePassPhrase(context)),
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -572,7 +583,7 @@ class _LoginPageState extends State<LoginPage> {
       var keyData;
       if (data['passPhrase'] != null && Injector.prefs.getString(PrefKeys.companyKey) == null) {
         print("HelloKey================${Injector.prefs.getString(PrefKeys.companyKey)}");
-        keyData = await showPopBox(context: context);
+        keyData = await showPassPhrasePopBox(context: context);
         print("keyDta===${keyData}");
       } else {
         keyData = "Done";
@@ -714,34 +725,36 @@ class _LoginPageState extends State<LoginPage> {
           height: 50,
         ),
         Expanded(
-            child: Container(
-                height: 45,
-                decoration: BoxDecoration(
-                    color: ColorRes.white, border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.only(left: 8),
-                child: Center(
-                  child: TextField(
-                    controller: emailController,
-                    autocorrect: Platform.isAndroid ? true : false,
-                    keyboardType: TextInputType.emailAddress,
-                    textAlignVertical: TextAlignVertical.center,
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
-                    // onSubmitted: (value) {
-                    //   _scrollController.animateTo(
-                    //     0.0,
-                    //     curve: Curves.easeOut,
-                    //     duration: const Duration(milliseconds: 300),
-                    //   );
-                    // },
-                    decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
-                        hintText: Utils.getText(context, StringRes.emailId).toUpperCase(),
-                        hintStyle: TextStyle(color: ColorRes.greyText),
-                        border: InputBorder.none),
-                  ),
-                )))
+          child: Container(
+            height: 45,
+            decoration:
+                BoxDecoration(color: ColorRes.white, border: Border.all(width: 1, color: ColorRes.white), borderRadius: BorderRadius.circular(10)),
+            margin: EdgeInsets.only(left: 8),
+            child: Center(
+              child: TextField(
+                controller: emailController,
+                autocorrect: Platform.isAndroid ? true : false,
+                keyboardType: TextInputType.emailAddress,
+                textAlignVertical: TextAlignVertical.center,
+                textAlign: TextAlign.left,
+                maxLines: 1,
+                style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
+                // onSubmitted: (value) {
+                //   _scrollController.animateTo(
+                //     0.0,
+                //     curve: Curves.easeOut,
+                //     duration: const Duration(milliseconds: 300),
+                //   );
+                // },
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
+                    hintText: Utils.getText(context, StringRes.emailId).toUpperCase(),
+                    hintStyle: TextStyle(color: ColorRes.greyText),
+                    border: InputBorder.none),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -814,7 +827,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<String> showPopBox({@required BuildContext context, AlertDialog Function(BuildContext context) builder}) async {
+  Future<String> showPassPhrasePopBox({@required BuildContext context, AlertDialog Function(BuildContext context) builder}) async {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     TextEditingController keyController = TextEditingController();
     var key = await showDialog(
@@ -838,13 +851,13 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontSize: 17, color: ColorRes.titleBlueProf),
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
-                        hintText: Utils.getText(context, "KEY").toUpperCase(),
+                        hintText: Utils.getText(context, StringRes.enterPassPhrase).toUpperCase(),
                         hintStyle: TextStyle(color: ColorRes.greyText),
                         border: InputBorder.none),
                     controller: keyController,
                     validator: (String value) {
                       if (value.length != 16) {
-                        return 'Please Enter Valid Key';
+                        return Utils.getText(context, StringRes.passPhraseCharacters);
                       }
                       return null;
                     },
@@ -859,7 +872,9 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pop(context, keyController.text);
                       }
                     },
-                    child: Text("Add Key"),
+                    child: Text(
+                      Utils.getText(context, StringRes.addKey),
+                    ),
                     style: ElevatedButton.styleFrom(
                       primary: ColorRes.headerBlue,
                       textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -911,10 +926,22 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () {
         _launchEmail("support@knowledge-empire.com");
       },
-      child: Align(
-        alignment: Alignment.centerLeft,
+      child: Text(
+        Utils.getText(context, StringRes.requestDemoAccount),
+        style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
+      ),
+    );
+  }
+
+  showGeneratePassPhrase(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: InkResponse(
+        onTap: () {
+          showPassPhrasePopBox(context: context);
+        },
         child: Text(
-          Utils.getText(context, StringRes.requestDemoAccount),
+          Utils.getText(context, StringRes.GeneratePassPhrase),
           style: TextStyle(color: ColorRes.fontDarkGrey, fontSize: 17, decoration: TextDecoration.underline),
         ),
       ),

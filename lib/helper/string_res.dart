@@ -67,10 +67,11 @@ class StringRes {
   //TODO add for other language
   static var newNickName = "newNickName";
   static var nickname = "nickName";
+  static var enterPassPhrase = "EnterparsePhrase";
 
   //TODO add for other language
   static var companyCode = "companyCode";
-
+  static var addKey = "Addkey";
 //  static var selectLanguages = "selectLanguages"; //onlu define english
 
   //organization
@@ -363,7 +364,7 @@ class StringRes {
   static var changeLanguage = 'changeLanguage';
   static var passwordChange = "passwordChange";
   static var nicknameChange = "nicknameChange";
-
+  static var passPhraseCharacters = "parsephrasemustbe16characters";
   //intro page
   static var skipTutorial = "skipTutorial";
 
@@ -394,6 +395,7 @@ class StringRes {
   static var sizeInKb = "sizeInKb";
   static var strKp = "strKp";
   static var requestDemoAccount = "requestDemoAccount";
+  static var GeneratePassPhrase = "generatePhraseCode";
   static var strVersion = "strVersion";
   static var strUrlExeption = "strUrlExeption";
   static var strOpen = "strOpen";
@@ -876,6 +878,10 @@ class StringRes {
       'targetLevel': "Target Level",
       'targetRetention': "Target Retention",
       'certificationCriteria': "Certification Criteria",
+      "generatePhraseCode": "generate pass phrase?",
+      "Addkey": "Add key",
+      "EnterparsePhrase": "Enter parse Phrase",
+      "parsephrasemustbe16characters": "parse phrase must be 16 characters",
     },
     'de': {
       //Nickname
@@ -1298,6 +1304,10 @@ class StringRes {
       'targetLevel': "Target Level",
       'targetRetention': "Target Retention",
       'certificationCriteria': "Certification Criteria",
+      "generatePhraseCode": "Passphrase generieren?",
+      "Addkey": "Schlüssel hinzufügen",
+      "EnterparsePhrase": "Geben Sie die Parsing-Phrase ein",
+      "parsephrasemustbe16characters": "Parse-Phrase muss 16 Zeichen lang sein",
     },
     'zh': {
       //Nickname
@@ -1687,6 +1697,10 @@ class StringRes {
       'targetLevel': "Target Level",
       'targetRetention': "Target Retention",
       'certificationCriteria': "Certification Criteria",
+      'generatePhraseCode': "生成密码短语？",
+      "Addkey": "添加键",
+      "EnterparsePhrase": "输入解析短语",
+      "parsephrasemustbe16characters": "解析短语必须是 16 个字符",
     }
   };
 
@@ -2116,6 +2130,10 @@ class StringRes {
       'targetLevel': "Target Level",
       'targetRetention': "Target Retention",
       'certificationCriteria': "Certification Criteria",
+      'generatePhraseCode': "generate pass phrase?",
+      "Addkey": "Add key",
+      "EnterparsePhrase": "Enter parse Phrase",
+      "parsephrasemustbe16characters": "parse phrase must be 16 characters"
     },
     'de': {
       //Nickname
@@ -2625,10 +2643,6 @@ class StringRes {
       'alertReleaseResources': '该问题将被删除，不会再产生任何知识分数，只有在下一个重复时间才能再次访问',
       'searchForKeywords': '搜索关键字',
       'somethingWrong': '出了问题',
-      'friend': '朋友',
-      'alertFriendSuccess': '成功添加朋友',
-      'alertUnFriendSuccess': '成功取消朋友',
-      'alertUChallengeSent': '挑战已成功发送',
       //Rewards module
       'redeem': '赎回',
       'costReward': '费用',
@@ -2926,6 +2940,10 @@ class StringRes {
       'targetLevel': "Target Level",
       'targetRetention': "Target Retention",
       'certificationCriteria': "Certification Criteria",
+      'generatePhraseCode': "生成密码短语？",
+      "Addkey": "添加键",
+      "EnterparsePhrase": "输入解析短语",
+      "parsephrasemustbe16characters": "解析短语必须是 16 个字符",
     }
   };
 }
