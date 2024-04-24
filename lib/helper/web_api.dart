@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 // import 'package:ansicolor/ansicolor.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:ke_employee/helper/Utils.dart';
 import 'package:ke_employee/helper/prefkeys.dart';
@@ -179,7 +181,10 @@ class WebApi {
       'deviceid': deviceId,
       'passPhrase': Injector.prefs.getString(PrefKeys.companyKey) != null ? Injector.prefs.getString(PrefKeys.companyKey) : ""
     };
-
+var baseUrlPrint=Injector.prefs.getString(PrefKeys.mainBaseUrl) == null || Injector.prefs.getString(PrefKeys.mainBaseUrl).isEmpty
+    ? baseUrl
+    : Injector.prefs.getString(PrefKeys.mainBaseUrl);
+log('baseUrlPrint : ${baseUrlPrint}');
     BaseOptions options = new BaseOptions(
         baseUrl: Injector.prefs.getString(PrefKeys.mainBaseUrl) == null || Injector.prefs.getString(PrefKeys.mainBaseUrl).isEmpty
             ? baseUrl
@@ -190,6 +195,15 @@ class WebApi {
 
     print("finalbaseUrl 11:  " + options.baseUrl);
     dio.options = options;
+
+    dio.options = options;
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+      return client;
+    };
+    //return Injector.dio;
     return dio;
   }
 

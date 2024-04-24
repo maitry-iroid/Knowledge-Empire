@@ -1,7 +1,7 @@
 import 'dart:async';
 
 // import 'package:background_fetch/background_fetch.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   int _status = 0;
 
-  final FirebaseMessaging firebaseMessaging = Injector.firebaseMessaging;
+ // final FirebaseMessaging firebaseMessaging = Injector.firebaseMessaging;
 
   @override
   void initState() {

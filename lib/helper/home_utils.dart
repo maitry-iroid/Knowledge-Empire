@@ -100,11 +100,11 @@ class HomeUtils {
 
   static void initPush(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 500), () {
-      PushNotificationHelper pushNotificationHelper = PushNotificationHelper(context);
+     // PushNotificationHelper pushNotificationHelper = PushNotificationHelper(context);
 
-      if (pushNotificationHelper != null) {
-        pushNotificationHelper.initPush();
-      }
+      // if (pushNotificationHelper != null) {
+      //   pushNotificationHelper.initPush();
+      // }
     });
   }
 

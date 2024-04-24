@@ -7,7 +7,7 @@ import 'dart:ui' as ui;
 import 'package:assets_audio_player/assets_audio_player.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -85,7 +85,7 @@ class Injector {
   static ui.Image image;
 
   // Firebase Push notification
-  static FirebaseMessaging firebaseMessaging;
+//  static FirebaseMessaging firebaseMessaging;
 
   // Local Push notification
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -151,7 +151,7 @@ class Injector {
     isInternetConnected = await Utils.isInternetConnected();
     deviceType = Platform.operatingSystem;
     print(deviceType);
-    firebaseMessaging = FirebaseMessaging.instance;
+    //firebaseMessaging = FirebaseMessaging.instance;
     webApi = WebApi();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     await getdeviceId();

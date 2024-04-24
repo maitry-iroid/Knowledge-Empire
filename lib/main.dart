@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 // import 'package:background_fetch/background_fetch.dart';
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +33,9 @@ Future setupLocator() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Injector.getInstance();
-  Const.setEnvironment(Environment.PROD);
+  // (Dio().httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+  //   client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+  //   return client;
+  Const.setEnvironment(Environment.DEV);
   runApp(MyApp());
 }
