@@ -581,7 +581,7 @@ class _LoginPageState extends State<LoginPage> {
       print("data========${data['passPhrase']}");
       print("HelloKey================${Injector.prefs.getString(PrefKeys.companyKey)}");
       var keyData;
-      if (data['passPhrase'] != null && Injector.prefs.getString(PrefKeys.companyKey) == null) {
+      if (data['passPhrase'] ==true&& Injector.prefs.getString(PrefKeys.companyKey) == null) {
         print("HelloKey================${Injector.prefs.getString(PrefKeys.companyKey)}");
         keyData = await showPassPhrasePopBox(context: context);
         print("keyDta===${keyData}");

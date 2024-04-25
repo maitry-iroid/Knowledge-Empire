@@ -36,6 +36,6 @@ Future setupLocator() async {
   // (Dio().httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
   //   client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   //   return client;
-  Const.setEnvironment(Environment.DEV);
+  Const.setEnvironment(Environment.PROD);
   runApp(MyApp());
 }
